@@ -18,7 +18,10 @@ app.get('/', function (req, res) {
 })
 
 
-var server = app.listen(6000, function () {
+function setvalue(){
+  console.log("calling setvalue.....");
+}
+var server = app.listen(8086, function () {
 var host = server.address().address
 var port = server.address().port
 console.log("Example app listening at http://%s:%s", host, port)
