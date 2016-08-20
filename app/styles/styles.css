@@ -1,5 +1,5 @@
-body, html {
-  height: 100%;
+.bg{
+  min-height: 100vh;
   background-repeat: no-repeat;
   background-image: linear-gradient(rgb(104, 145, 162), rgb(12, 97, 33));
 }
@@ -33,4 +33,13 @@ body, html {
 .form-group{
   margin: 10% auto;
   text-align: center;
+}
+.event-title{
+  padding: 5px 0 0 0;
+}
+.event-input{
+  margin: 0;
+}
+.event-checkbox{
+  margin: 3% auto;
 }
