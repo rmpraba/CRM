@@ -20,6 +20,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <div class="panel panel-default">
       <div class="panel-heading">
         <i class="fa fa-calendar fa-fw"></i> Events
+        <span class="pull-right">
+          <span class="panel-icon"><a href=""><i class="fa fa-plus" aria-hidden="true" data-toggle="modal" data-target="#addEvent"></i></a></span>
+          <span class="panel-icon"><a href=""><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></span>
+          <span class="panel-icon"><a href=""><i class="fa fa-trash" aria-hidden="true"></i></a></span>
+        </span>
       </div>
       <div class="panel-body">
         <div class="list-group">
@@ -57,6 +62,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </div>
           <div class="modal-body">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec blandit risus id lacus gravida vestibulum. Curabitur nec facilisis arcu. Praesent ut ante bibendum, facilisis sapien lobortis, lobortis tellus. Suspendisse dictum sodales auctor. In lacinia varius ante, sit amet vehicula eros egestas et. Maecenas consequat vitae augue eget gravida. In vel imperdiet justo, ac rutrum urna. Praesent non justo tincidunt, rutrum lectus eu, varius massa. Donec tempus arcu non condimentum consectetur. Sed maximus arcu scelerisque, gravida est sed, pellentesque eros. In hac habitasse platea dictumst. Nullam tincidunt elementum auctor.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal" id="addEvent" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="center-block event-title" id="eventTitle">
+             Add Event
+            </h4>
+          </div>
+          <div class="modal-body">
+            <newevent-card></newevent-card>
           </div>
         </div>
       </div>

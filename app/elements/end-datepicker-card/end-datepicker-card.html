@@ -13,7 +13,7 @@
     <!--component which invokes the predefined date picker control-->
     <div class="dpcard">
       <paper-input class="btn" label="End Date" on-click="FnShowDialog" raised value="{{showdate}}"></paper-input>
-      <paper-dialog id="dialog2" class="paper-date-picker-dialog">
+      <paper-dialog id="dialog2" class="paper-date-picker-dialog" style="left: 0 !important;">
         <paper-date-picker id="picker1" date="{{date}}"></paper-date-picker>
         <div class="buttons">
           <paper-button >Cancel</paper-button>

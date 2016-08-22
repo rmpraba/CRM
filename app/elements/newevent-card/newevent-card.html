@@ -23,32 +23,85 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <dom-module id="newevent-card">
   <template>
     <div class="row">
-      <div class="form-group col-lg-10 event-input">
+      <div class="col-sm-12 event-input">
         <paper-input label="Event Title"></paper-input>
       </div>
-      <div class="form-group col-lg-10 event-input">
+      <div class="col-sm-12 event-input">
         <paper-textarea  placeholder="Event Description" ></paper-textarea>
       </div>
-      <div class="form-group col-lg-5 event-input">
-        <paper-dropdown-menu label="Category" id="category">
-          <paper-menu on-iron-select="" valueattr="value">
-            <paper-listbox>
-              <paper-item value="competition">competition</paper-item>
-              <paper-item value="activity">activity</paper-item>
-              <paper-item value="seminar">seminar</paper-item>
-              <paper-item value="conference">conference</paper-item>
-              <paper-item value="holiday">holiday</paper-item>
-              <paper-item value="celebration">celebration</paper-item>
-            </paper-listbox>
-          </paper-menu>
+      <div class="col-sm-5 event-input">
+        <paper-dropdown-menu label="Event Type">
+          <paper-listbox class="dropdown-content">
+            <paper-item>Competition</paper-item>
+            <paper-item>Activity</paper-item>
+            <paper-item>Seminar</paper-item>
+            <paper-item>Conference</paper-item>
+            <paper-item>Holiday</paper-item>
+            <paper-item>Celebration</paper-item>
+          </paper-listbox>
         </paper-dropdown-menu>
       </div>
-      <div class="form-group col-lg-5 event-checkbox">
+      <div class="col-sm-6 event-checkbox event-checkbox-recurrence">
         <paper-checkbox>Is Recurrence Event?</paper-checkbox>
       </div>
-      <div class="form-group col-lg-12 event-input">
-        <span class="col-lg-5"><start-datepicker-card></start-datepicker-card></span>
-        <span class="col-lg-5"><end-datepicker-card></end-datepicker-card></span>
+      <div class="col-sm-6 event-input">
+        <paper-dropdown-menu label="Occurrence Frequency">
+          <paper-listbox class="dropdown-content">
+            <paper-item>Day</paper-item>
+            <paper-item>Week</paper-item>
+            <paper-item>Month</paper-item>
+            <paper-item>Year</paper-item>
+          </paper-listbox>
+        </paper-dropdown-menu>
+      </div>
+      <div class="col-sm-6 event-input">
+        <paper-input label="Occurrences"></paper-input>
+      </div>
+      <div class="col-sm-12 event-input">
+        <span class="col-sm-6"><start-datepicker-card></start-datepicker-card></span>
+        <span class="col-sm-6"><end-datepicker-card></end-datepicker-card></span>
+      </div>
+      <div class="col-sm-12">
+        <div class="col-sm-6">
+          <label><h4>Classes</h4></label>
+          <span class="event-checkbox event-checkbox-grade">
+            <paper-checkbox>Check All</paper-checkbox>
+          </span>
+        </div>
+      </div>
+      <div class="col-sm-12">
+        <div class="col-sm-3 event-checkbox">
+          <paper-checkbox>Grade 1</paper-checkbox>
+        </div>
+        <div class="col-sm-3 event-checkbox">
+          <paper-checkbox>Grade 2</paper-checkbox>
+        </div>
+        <div class="col-sm-3 event-checkbox">
+          <paper-checkbox>Grade 3</paper-checkbox>
+        </div>
+        <div class="col-sm-3 event-checkbox">
+          <paper-checkbox>Grade 4</paper-checkbox>
+        </div>
+      </div>
+      <div class="col-sm-12">
+        <div class="col-sm-3 event-checkbox">
+          <paper-checkbox>Grade 5</paper-checkbox>
+        </div>
+        <div class="col-sm-3 event-checkbox">
+          <paper-checkbox>Grade 6</paper-checkbox>
+        </div>
+        <div class="col-sm-3 event-checkbox">
+          <paper-checkbox>Grade 7</paper-checkbox>
+        </div>
+        <div class="col-sm-3 event-checkbox">
+          <paper-checkbox>Grade 8</paper-checkbox>
+        </div>
+        <div class="col-sm-3 event-checkbox">
+          <paper-checkbox>Grade 9</paper-checkbox>
+        </div>
+      </div>
+      <div class="col-md-12 form-button">
+        <button type="button" class="btn btn-primary">Add Event</button>
       </div>
     </div>
   </template>

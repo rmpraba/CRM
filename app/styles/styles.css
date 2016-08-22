@@ -43,3 +43,16 @@
 .event-checkbox{
   margin: 3% auto;
 }
+.panel-icon{
+  margin: 0 10px;
+}
+.event-checkbox-grade{
+  margin-left: 20px;
+}
+.event-checkbox-recurrence{
+  margin-top: 35px !important;
+}
+.form-button, .event-title{
+  margin: 0 auto;
+  text-align: center;
+}
