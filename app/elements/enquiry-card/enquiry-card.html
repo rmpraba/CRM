@@ -1,0 +1,183 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="enquiry-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <div class="panel panel-default">
+    <div class="panel-heading">
+      <i class="fa fa-phone" aria-hidden="true"></i> Enquiries
+        <span class="pull-right">
+          <span class="panel-icon"><a href=""><i class="fa fa-plus" aria-hidden="true" data-toggle="modal" data-target="#addEnquiry"></i></a></span>
+          <span class="panel-icon"><a href=""><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></span>
+          <span class="panel-icon"><a href=""><i class="fa fa-trash" aria-hidden="true"></i></a></span>
+        </span>
+    </div>
+    <div class="panel-body">
+      <div class="list-group">
+        <div class="col-sm-4">Enquired</div>
+        <div class="col-sm-4">Applied</div>
+        <div class="col-sm-4">Rejected</div>
+      </div>
+      <div class="list-group list-group-item enquiry-list-item">
+        <h5>Grade 1</h5>
+        <div class="col-sm-4">
+         <a href="" class="enquired">8</a>
+        </div>
+        <div class="col-sm-4">
+          <a href="" class="applied">5</a>
+        </div>
+        <div class="col-sm-4">
+          <a href="" class="rejected">6</a>
+        </div>
+      </div>
+      <div class="list-group list-group-item enquiry-list-item">
+        <h5>Grade 2</h5>
+        <div class="col-sm-4">
+          <a href="" class="enquired">9</a>
+        </div>
+        <div class="col-sm-4">
+          <a href="" class="applied">8</a>
+        </div>
+        <div class="col-sm-4">
+          <a href="" class="rejected">7</a>
+        </div>
+      </div>
+      <div class="list-group list-group-item enquiry-list-item">
+        <h5>Grade 3</h5>
+        <div class="col-sm-4">
+          <a href="" class="enquired">9</a>
+        </div>
+        <div class="col-sm-4">
+          <a href="" class="applied">7</a>
+        </div>
+        <div class="col-sm-4">
+          <a href="" class="rejected">3</a>
+        </div>
+      </div>
+      <div class="list-group list-group-item enquiry-list-item">
+        <h5>Grade 4</h5>
+        <div class="col-sm-4">
+          <a href="" class="enquired">8</a>
+        </div>
+        <div class="col-sm-4">
+          <a href="" class="applied">4</a>
+        </div>
+        <div class="col-sm-4">
+          <a href="" class="rejected">9</a>
+        </div>
+      </div>
+      <div class="list-group list-group-item enquiry-list-item">
+        <h5>Grade 5</h5>
+        <div class="col-sm-4">
+          <a href="" class="enquired">4</a>
+        </div>
+        <div class="col-sm-4">
+          <a href="" class="applied">6</a>
+        </div>
+        <div class="col-sm-4">
+          <a href="" class="rejected">5</a>
+        </div>
+      </div>
+      <div class="list-group list-group-item enquiry-list-item">
+        <h5>Grade 6</h5>
+        <div class="col-sm-4">
+          <a href="" class="enquired">3</a>
+        </div>
+        <div class="col-sm-4">
+          <a href="" class="applied">6</a>
+        </div>
+        <div class="col-sm-4">
+          <a href="" class="rejected">8</a>
+        </div>
+      </div>
+      <div class="list-group list-group-item enquiry-list-item">
+        <h5>Grade 7</h5>
+        <div class="col-sm-4">
+          <a href="" class="enquired">7</a>
+        </div>
+        <div class="col-sm-4">
+          <a href="" class="applied">6</a>
+        </div>
+        <div class="col-sm-4">
+          <a href="" class="rejected">9</a>
+        </div>
+      </div>
+      <div class="list-group list-group-item enquiry-list-item">
+        <h5>Grade 8</h5>
+        <div class="col-sm-4">
+          <a href="" class="enquired">2</a>
+        </div>
+        <div class="col-sm-4">
+          <a href="" class="applied">5</a>
+        </div>
+        <div class="col-sm-4">
+          <a href="" class="rejected">7</a>
+        </div>
+      </div>
+      <div class="list-group list-group-item enquiry-list-item">
+        <h5>Grade 9</h5>
+        <div class="col-sm-4">
+          <a href="" class="enquired">6</a>
+        </div>
+        <div class="col-sm-4">
+          <a href="" class="applied">3</a>
+        </div>
+        <div class="col-sm-4">
+          <a href="" class="rejected">1</a>
+        </div>
+      </div>
+      <div class="list-group list-group-item enquiry-list-item">
+        <h5>Grade 10</h5>
+        <div class="col-sm-4">
+          <a href="" class="enquired">6</a>
+        </div>
+        <div class="col-sm-4">
+          <a href="" class="applied">0</a>
+        </div>
+        <div class="col-sm-4">
+          <a href="" class="rejected">12</a>
+        </div>
+      </div>
+    </div>
+    <div class="modal" id="addEnquiry" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="center-block event-title" id="eventTitle">
+              New Enquiry
+            </h4>
+          </div>
+          <div class="modal-body">
+            <newenquiry-card></newenquiry-card>
+          </div>
+        </div>
+      </div>
+  </div>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'enquiry-card',
+    });
+  })();
+  </script>
+</dom-module>

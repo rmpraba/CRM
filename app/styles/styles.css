@@ -37,7 +37,7 @@
 .event-title{
   padding: 5px 0 0 0;
 }
-.event-input{
+.event-input,.enquiry-input{
   margin: 0;
 }
 .event-checkbox{
@@ -55,4 +55,25 @@
 .form-button, .event-title{
   margin: 0 auto;
   text-align: center;
+}
+.enquiry-list-item{
+  height: 75px;
+}
+.enquired{
+  color: blue;
+  margin-left: 10px;
+  font-size: 17px;
+  font-weight: 600;
+}
+.rejected{
+  color: red;
+  margin-left: 30px;
+  font-size: 17px;
+  font-weight: 600;
+}
+.applied{
+  color: darkgreen;
+  margin-left: 20px;
+  font-size: 17px;
+  font-weight: 600;
 }
