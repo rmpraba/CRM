@@ -61,8 +61,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </div>
     </div>
       <div class="col-md-12 form-button">
-        <button type="button" class="btn btn-primary">SUBMIT</button>
+        <button type="button" class="btn btn-primary" onclick="organization_success.open()">SUBMIT</button>
       </div>
+      <paper-toast class="toast-success" style="background-color: #0b8043;" id="organization_success" text="">Organization Added</paper-toast>
     </div>
   </template>
   <script>

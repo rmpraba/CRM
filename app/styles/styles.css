@@ -83,5 +83,17 @@
 .enquiry-form, .event-form{
   padding: 0 5px;
 }
+.toast-success{
+  width: 100%;
+  text-align: center;
+}
+.toast-popup{
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+}
 .form-category:nth-child(even) {background: #F2F3F4}
 .form-category:nth-child(odd) {background: #EDEDED}
+.class-age{
+  margin-top: 25px;
+}

@@ -111,8 +111,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </div>
       </div>
       <div class="col-md-12 form-button">
-        <button type="button" class="btn btn-primary">Add Event</button>
+        <button type="button" class="btn btn-primary" onclick="event_success.open()">Add Event</button>
       </div>
+      <paper-toast class="toast-success toast-popup" style="background-color: #0b8043;" id="event_success" text="">Event Added</paper-toast>
     </div>
   </template>
   <script>

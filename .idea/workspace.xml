@@ -5,7 +5,10 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/elements/dashboard-card/dashboard-card.html" afterPath="$PROJECT_DIR$/app/elements/dashboard-card/dashboard-card.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/elements/elements.html" afterPath="$PROJECT_DIR$/app/elements/elements.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/elements/navigation-bar/navigation-bar.html" afterPath="$PROJECT_DIR$/app/elements/navigation-bar/navigation-bar.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/elements/newenquiry-card/newenquiry-card.html" afterPath="$PROJECT_DIR$/app/elements/newenquiry-card/newenquiry-card.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/elements/newevent-card/newevent-card.html" afterPath="$PROJECT_DIR$/app/elements/newevent-card/newevent-card.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/elements/organization-page/organization-page.html" afterPath="$PROJECT_DIR$/app/elements/organization-page/organization-page.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/styles/styles.css" afterPath="$PROJECT_DIR$/app/styles/styles.css" />
     </list>
     <ignored path="CRM.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -29,8 +32,8 @@
       <file leaf-file-name="styles.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/styles/styles.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-14.230769">
-              <caret line="55" column="12" selection-start-line="55" selection-start-column="12" selection-end-line="55" selection-end-column="12" />
+            <state vertical-scroll-proportion="-17.5">
+              <caret line="96" column="10" selection-start-line="96" selection-start-column="1" selection-end-line="96" selection-end-column="10" />
               <folding />
             </state>
           </provider>
@@ -49,9 +52,21 @@
       <file leaf-file-name="dashboard-card.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/elements/dashboard-card/dashboard-card.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-9.807693">
+            <state vertical-scroll-proportion="-9.653846">
               <caret line="24" column="27" selection-start-line="24" selection-start-column="27" selection-end-line="24" selection-end-column="27" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="classdetails-page.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/elements/classdetails-page/classdetails-page.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.35906643">
+              <caret line="236" column="10" selection-start-line="236" selection-start-column="10" selection-end-line="236" selection-end-column="10" />
+              <folding>
+                <element signature="n#style#0;n#paper-toast#0;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -69,19 +84,23 @@
       <file leaf-file-name="newenquiry-card.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/elements/newenquiry-card/newenquiry-card.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-3.7692308">
-              <caret line="120" column="12" selection-start-line="117" selection-start-column="12" selection-end-line="120" selection-end-column="12" />
-              <folding />
+            <state vertical-scroll-proportion="-6.3846154">
+              <caret line="121" column="144" selection-start-line="121" selection-start-column="6" selection-end-line="121" selection-end-column="144" />
+              <folding>
+                <element signature="n#style#0;n#paper-toast#0;n#div#0;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="organization-page.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/elements/organization-page/organization-page.html">
+      <file leaf-file-name="newevent-card.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/elements/newevent-card/newevent-card.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6947935">
-              <caret line="63" column="60" selection-start-line="63" selection-start-column="60" selection-end-line="63" selection-end-column="60" />
-              <folding />
+            <state vertical-scroll-proportion="-19.461538">
+              <caret line="106" column="16" selection-start-line="79" selection-start-column="14" selection-end-line="106" selection-end-column="16" />
+              <folding>
+                <element signature="n#style#0;n#paper-toast#0;n#div#0;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -106,14 +125,15 @@
         <option value="$PROJECT_DIR$/app/elements/datepicker-card/datepicker-card.html" />
         <option value="$PROJECT_DIR$/app/elements/start-datepicker-card/start-datepicker-card.html" />
         <option value="$PROJECT_DIR$/app/elements/end-datepicker-card/end-datepicker-card.html" />
-        <option value="$PROJECT_DIR$/app/elements/newenquiry-card/newenquiry-card.html" />
-        <option value="$PROJECT_DIR$/app/elements/newevent-card/newevent-card.html" />
-        <option value="$PROJECT_DIR$/app/styles/styles.css" />
         <option value="$PROJECT_DIR$/app/elements/enquiry-card/enquiry-card.html" />
         <option value="$PROJECT_DIR$/app/elements/event-card/event-card.html" />
         <option value="$PROJECT_DIR$/app/elements/navigation-bar/navigation-bar.html" />
-        <option value="$PROJECT_DIR$/app/elements/dashboard-card/dashboard-card.html" />
+        <option value="$PROJECT_DIR$/app/elements/newenquiry-card/newenquiry-card.html" />
         <option value="$PROJECT_DIR$/app/elements/organization-page/organization-page.html" />
+        <option value="$PROJECT_DIR$/app/elements/newevent-card/newevent-card.html" />
+        <option value="$PROJECT_DIR$/app/elements/dashboard-card/dashboard-card.html" />
+        <option value="$PROJECT_DIR$/app/styles/styles.css" />
+        <option value="$PROJECT_DIR$/app/elements/classdetails-page/classdetails-page.html" />
       </list>
     </option>
   </component>
@@ -210,6 +230,24 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CRM" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CRM" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="styles" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -363,6 +401,28 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CRM" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CRM" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="elements" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="classdetails-page" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
     </panes>
@@ -444,7 +504,7 @@
     <editor active="true" />
     <layout>
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16666667" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16666667" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -515,7 +575,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="n#style#0;n#paper-toast#0;n#div#0;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -563,7 +625,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="n#style#0;n#paper-toast#0;n#div#0;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -701,22 +765,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/elements/newevent-card/newevent-card.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.269231">
-          <caret line="112" column="34" selection-start-line="112" selection-start-column="34" selection-end-line="112" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/styles/styles.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-14.230769">
-          <caret line="55" column="12" selection-start-line="55" selection-start-column="12" selection-end-line="55" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/elements/event-card/event-card.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-43.807693">
@@ -741,22 +789,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/elements/dashboard-card/dashboard-card.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.807693">
-          <caret line="24" column="27" selection-start-line="24" selection-start-column="27" selection-end-line="24" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/elements/newenquiry-card/newenquiry-card.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.7692308">
-          <caret line="120" column="12" selection-start-line="117" selection-start-column="12" selection-end-line="120" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.65384614">
@@ -765,11 +797,59 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/elements/newenquiry-card/newenquiry-card.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.3846154">
+          <caret line="121" column="144" selection-start-line="121" selection-start-column="6" selection-end-line="121" selection-end-column="144" />
+          <folding>
+            <element signature="n#style#0;n#paper-toast#0;n#div#0;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/elements/dashboard-card/dashboard-card.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.653846">
+          <caret line="24" column="27" selection-start-line="24" selection-start-column="27" selection-end-line="24" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/elements/organization-page/organization-page.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6947935">
-          <caret line="63" column="60" selection-start-line="63" selection-start-column="60" selection-end-line="63" selection-end-column="60" />
+        <state vertical-scroll-proportion="0.42728904">
+          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="66" selection-end-column="10" />
+          <folding>
+            <element signature="n#style#0;n#paper-toast#0;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/elements/newevent-card/newevent-card.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-19.461538">
+          <caret line="106" column="16" selection-start-line="79" selection-start-column="14" selection-end-line="106" selection-end-column="16" />
+          <folding>
+            <element signature="n#style#0;n#paper-toast#0;n#div#0;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/styles/styles.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-17.5">
+          <caret line="96" column="10" selection-start-line="96" selection-start-column="1" selection-end-line="96" selection-end-column="10" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/elements/classdetails-page/classdetails-page.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.35906643">
+          <caret line="236" column="10" selection-start-line="236" selection-start-column="10" selection-end-line="236" selection-end-column="10" />
+          <folding>
+            <element signature="n#style#0;n#paper-toast#0;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
