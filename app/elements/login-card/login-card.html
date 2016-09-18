@@ -1,6 +1,8 @@
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 <link rel="import" href="..\..\bower_components/paper-input/paper-input.html">
 <link rel="import" href="..\..\bower_components/paper-button/paper-button.html">
+<link rel="import" href="..\..\bower_components/polymerfire/polymerfire.html">
+<link rel="import" href="..\..\bower_components/firebase/firebase.js">
 <dom-module id="login-card">
   <template>
     <div class="container-fluid bg">
@@ -19,6 +21,11 @@
     'use strict';
     Polymer({
       is: 'login-card',
+
+      login:function(){
+        this.$.signInWithPopup();
+
+      }
     });
   })();
   </script>
