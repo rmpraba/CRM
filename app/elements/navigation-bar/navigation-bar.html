@@ -252,29 +252,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </div>
             <!-- /input-group -->
           </li>
-          <li>
+          <li id="dashboard">
             <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
           </li>
-          <li>
-            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a>
+          <li id="enquiry">
+            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Enquiry<span class="fa arrow"></span></a>
             <ul class="nav nav-second-level">
               <li>
-                <a href="flot.html">Flot Charts</a>
+                <a href="flot.html">Simple Form</a>
               </li>
               <li>
-                <a href="morris.html">Morris.js Charts</a>
+                <a href="morris.html">Detailed Form</a>
               </li>
             </ul>
             <!-- /.nav-second-level -->
           </li>
-          <li>
-            <a href="tables.html"><i class="fa fa-table fa-fw"></i> Tables</a>
+          <li id="followup">
+            <a href="tables.html"><i class="fa fa-table fa-fw"></i> Follow Up</a>
           </li>
-          <li>
-            <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Forms<span class="fa arrow"></span></a>
+          <li id="admform">
+            <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Admission Form<!-- <span class="fa arrow"></span> --></a>
           </li>
-          <li>
-            <a href="#"><i class="fa fa-wrench fa-fw"></i> UI Elements<span class="fa arrow"></span></a>
+          <li id="collcnentry">
+            <a href="#"><i class="fa fa-wrench fa-fw"></i> Collection Entry<span class="fa arrow"></span></a>
             <ul class="nav nav-second-level">
               <li>
                 <a href="panels-wells.html">Panels and Wells</a>
@@ -297,8 +297,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </ul>
             <!-- /.nav-second-level -->
           </li>
-          <li>
-            <a href="#"><i class="fa fa-sitemap fa-fw"></i> Multi-Level Dropdown<span class="fa arrow"></span></a>
+          <li id="admapp">
+            <a href="#"><i class="fa fa-sitemap fa-fw"></i> Admission Approval<!-- <span class="fa arrow"></span></a>
             <ul class="nav nav-second-level">
               <li>
                 <a href="#">Second Level Item</a>
@@ -321,24 +321,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                   <li>
                     <a href="#">Third Level Item</a>
                   </li>
-                </ul>
+                </ul>-->
                 <!-- /.nav-third-level -->
-              </li>
-            </ul>
+             <!--  </li>
+            </ul> -->
             <!-- /.nav-second-level -->
           </li>
-          <li>
-            <a href="#"><i class="fa fa-cog" aria-hidden="true"></i> Setting<span class="fa arrow"></span></a>
-            <ul class="nav nav-second-level">
-              <li>
-                <a href="#">Organization</a>
-              </li>
-              <li>
-                <a href="login.html">Login Page</a>
-              </li>
-            </ul>
-            <!-- /.nav-second-level -->
-          </li>
+         
         </ul>
       </div>
       <!-- /.sidebar-collapse -->
@@ -354,12 +343,47 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     Polymer({
       is: 'navigation-bar',
 
-      properties: {
-        foo: {
-          type: String,
-          value: 'navigation-bar',
-          notify: true
+      ready:function(){
+        /*alert(localStorage.getItem("enquiry")+'    '+localStorage.getItem("dashboard")+'   '+localStorage.getItem("followup")+'   '+localStorage.getItem("admissionform")+'    '+localStorage.getItem("admapproval"));
+        this.$.enquiry.hidden=localStorage.getItem("enquiry");
+        this.$.dashboard.hidden=localStorage.getItem("dashboard");
+        this.$.followup.hidden=localStorage.getItem("followup");
+        this.$.admform.hidden=localStorage.getItem("admissionform");
+        this.$.collcnentry.hidden=localStorage.getItem("collectionentry");
+        this.$.admapp.hidden=localStorage.getItem("admapproval");*/
+      },
+       /*Fn_access_rights:function(Fnenquiry,Fnfollowup,Fndashoard,Fnadmissionform,Fnadmapproval,Fncollectionentry){
+        alert(this.$.enquiry);
+        alert(Fnenquiry+'  '+Fnfollowup+'  '+Fndashoard+'  '+Fnadmissionform+'  '+Fnadmapproval+'  '+Fncollectionentry);
+
+          this.$.enquiry.hidden=Fnenquiry;
+        this.$.dashboard.hidden=Fndashoard;
+        this.$.followup.hidden=Fnfollowup;
+        this.$.admform.hidden=Fnadmissionform;
+        this.$.collcnentry.hidden=Fncollectionentry;
+        this.$.admapp.hidden=Fnadmapproval;
+      },*/
+      Fncheck:function(){
+        //alert(localStorage.getItem("enquiry")+'  2  '+localStorage.getItem("dashboard")+' 3  '+localStorage.getItem("followup")+'  4 '+localStorage.getItem("admissionform")+'  5  '+localStorage.getItem("admapproval")+'  6   '+localStorage.getItem("collectionentry"));
+        if(localStorage.getItem("enquiry")=='true'){
+          this.$.enquiry.hidden=true;  
         }
+        if(localStorage.getItem("dashboard")=='true'){
+            this.$.dashboard.hidden=true;
+        }
+        if(localStorage.getItem("followup")=='true'){
+          this.$.followup.hidden=true;
+        }
+        if(localStorage.getItem("admissionform")=='true'){
+          this.$.admform.hidden=true;
+          }
+          if(localStorage.getItem("collectionentry")=='true'){
+            this.$.collcnentry.hidden=true;
+          }
+          if(localStorage.getItem("admapproval")=='true'){
+              this.$.admapp.hidden=true;
+          }
+        
       }
     });
   })();

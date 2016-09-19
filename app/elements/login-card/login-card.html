@@ -8,13 +8,14 @@
     <div class="container-fluid bg">
       <div class="card card-container">
         <img id="profile-img" class="profile-img-card" src="../../images/schoollogo.png"/>
-          <paper-input label="Username" type="text"></paper-input>
-          <paper-input label="Password" type="password"></paper-input>
+          <paper-input label="Username" value="{{username}}" type="text"></paper-input>
+          <paper-input label="Password" value="{{password}}" type="password"></paper-input>
           <div class="form-group">
-            <paper-button class="btn btn-primary center">Sign in</paper-button>
+            <paper-button on-click="login" class="btn btn-primary center">Sign in</paper-button>
           </div>
       </div>
     </div>
+    <login-service id="login"></login-service>
   </template>
   <script>
   (function() {
@@ -23,7 +24,8 @@
       is: 'login-card',
 
       login:function(){
-        this.$.signInWithPopup();
+        this.$.login.Fn_login_userlogin(this.username,this.password);
+
 
       }
     });

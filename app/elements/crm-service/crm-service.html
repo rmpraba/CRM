@@ -1,0 +1,206 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="crm-service">
+  <template>
+  <!-- This ajax is used to submit the simple enquiry details of the student for the first time -->
+     <iron-ajax
+        method="post"
+        id="submitenquiryajax"
+        url="{{submitenquiryurl}}"
+        params="{{submitenquiryparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="submitenquiryResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <!-- It update the already entered student details with more information after the counselling using student name or enquiry number -->
+  <iron-ajax
+        method="post"
+        id="updateenquiryajax"
+        url="{{updateenquiryurl}}"
+        params="{{updateenquiryparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="updateenquiryResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+<!-- this ajax is to get the total sequence number that has been created depending on the enquiry -->
+ <iron-ajax
+        method="post"
+        id="getenquirynoajax"
+        url="{{getenquirynourl}}"
+        params="{{getenquirynoparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getenquirynoResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+<!-- this ajax is to fetch the available classes with repect to the school -->
+   <iron-ajax
+        method="post"
+        id="getclassesajax"
+        url="{{getclassesurl}}"
+        params="{{getclassesparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getclassesResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <!-- this ajax fetched the list of locations available with respect to school -->
+  <iron-ajax
+        method="post"
+        id="getlocationajax"
+        url="{{getlocationurl}}"
+        params="{{getlocationparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getlocationResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <!-- this ajax is to fetch the name of student those who filled simple enquiry form and ready to fill the detailed enquiry form after counselling -->
+  <iron-ajax
+        method="post"
+        id="getstudentnameajax"
+        url="{{getstudentnameurl}}"
+        params="{{getstudentnameparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getstudentnameResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+   var result;
+    Polymer({
+      is: 'crm-service',
+     submitenqiry:function(enqno,academicyr,classes,studentname,gender,dob,mob,source,locality,category){
+      //alert(enqno+academicyr+classes+studentname+gender+dob+mob+source+locality+category);
+        this.submitenquiryurl="http://localhost:8888/submitenquiry";
+        var obj={"id":"","schol":"","acadeyr":"","contact":"","grade":"","gender":"","stname":"","dobs":"","source":"","location":"","categories":""}
+        obj.id=enqno;
+        obj.schol="SCH001";
+        obj.acadeyr=academicyr;
+        obj.grade=classes;
+        obj.contact=mob;
+        obj.gender=gender;
+        obj.stname=studentname;
+        obj.dobs=dob;
+        obj.source=source;
+        obj.location=locality;
+        obj.categories=category;
+        this.submitenquiryparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.submitenquiryajax.generateRequest();
+     },
+     submitenquiryResponse:function(e){
+      var result=e.detail.response.returnval;
+      if(result="success"){
+        alert("Submited Successfully");
+      }
+     },
+     updateenquiryform:function(name,fathername,mothername,fatherjob,motherjob,address1,address2,address3,town,pincode,email,altermobno,tranport){
+      this.updateenquiryurl="http://localhost:8888/updateenquiry";
+        var obj={"name":"","schol":"","dadname":"","momname":"","dadjob":"","momjob":"","addr1":"","addr2":"","addr3":"","city":"","pin":"","mail":"","alterno":"","transreq":""}
+        obj.name=name;
+        obj.schol="SCH001";
+        obj.dadname=fathername;
+        obj.momname=mothername;
+        obj.dadjob=fatherjob;
+        obj.momjob=motherjob;
+        obj.addr1=address1;
+        obj.addr2=address2;
+        obj.addr3=address3;
+        obj.city=town;
+        obj.pin=pincode;
+        obj.mail=email;
+        obj.alterno=altermobno;
+        obj.transreq=tranport;
+
+        this.updateenquiryparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.updateenquiryajax.generateRequest();
+     },
+     updateenquiryResponse:function(e){
+      var result=e.detail.response.returnval;
+      if(result="success"){
+        alert("Submited Successfully");
+      }
+     },
+     getenquiryno:function(){
+      this.getenquirynourl="http://localhost:8888/getenquiryno";
+        var obj={"schol":""}
+        obj.schol="SCH001";
+        this.getenquirynoparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.getenquirynoajax.generateRequest();
+     },
+     getenquirynoResponse:function(e){
+      result=e.detail.response.returnval[0].enquiry_no;
+      var enquiryif="ENQ116000"+result;
+      document.querySelector('simple-enquiry-card').enqno=enquiryif;
+      var today = new Date(); var yyyy = today.getFullYear(); 
+      var academicyr=yyyy+'-'+(yyyy+1);
+      document.querySelector('simple-enquiry-card').academicyr=academicyr;
+
+     },
+      getclasses:function(){
+      this.getclassesurl="http://localhost:8888/getclasses";
+        var obj={"schol":""}
+        obj.schol="SCH001";
+        this.getclassesparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.getclassesajax.generateRequest();
+     },
+     getclassesResponse:function(e){
+        var result=e.detail.response.returnval;
+      document.querySelector('simple-enquiry-card').itemarr=result;        
+     },
+     getlocation:function(){
+      this.getlocationurl="http://localhost:8888/getlocation";
+        var obj={"schol":""}
+        obj.schol="SCH001";
+        this.getlocationparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.getlocationajax.generateRequest();
+     },
+     getlocationResponse:function(e){
+        var result=e.detail.response.returnval;
+        //alert(JSON.stringify(result));
+      document.querySelector('simple-enquiry-card').autocompletename(result);        
+     },
+     getstudentname:function(){
+        this.getstudentnameurl="http://localhost:8888/getstudentname";
+        var obj={"schol":""}
+        obj.schol="SCH001";
+        this.getstudentnameparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.getstudentnameajax.generateRequest();
+     },
+     getstudentnameResponse:function(e){
+      var result=e.detail.response.returnval;
+      document.querySelector('detail-enquiry-card').autocompletename(result);
+     }
+
+    });
+  })();
+  </script>
+</dom-module>

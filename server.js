@@ -5,7 +5,7 @@
    host     : 'localhost',
    user     : 'root',
    password : 'admin',
-   database : 'mlzs-crm'
+   database : 'mlzscrm'
  });
 var bodyParser = require('body-parser');
 var app = express();
@@ -17,35 +17,33 @@ app.get('/', function (req, res) {
    res.sendFile("app/index.html" );
 });
 
-/*
- app.post('/add-event' ,  urlencodedParser,function (req, res) {
-   var event = {
-     "title": req.query.title,
-     "description": req.query.description,
-     "start_date": req.startdate,
-     "end_date": req.query.enddate,
-     "event_type":req.query.event_type,
-     "occurrence_frequency": req.query.frequency,
-     "is_recurrence": req.query.is_recurrence,
-     "occurrences": req.query.occurrance,
-     "event_location": req.query.event_location,
-     "status": "1"
-   };
-   console.log('in server...');
-   console.log(event);
-   connection.query('insert into new_event set ?', [event],
-     function (err, rows) {
-       if (!err) {
-         console.log('inserted');
-         res.status(200).json({'returnval': 'success'});
-       } else {
-         console.log("error");
-         console.log(err);
-         res.status(200).json({'returnval': 'invalid'});
-       }
-     });
- });
-*/
+app.post('/loginpage',  urlencodedParser,function (req, res)
+{
+  var user={"employee_id":req.query.username};
+  var pass={"password":req.query.password};
+console.log('hi');
+       connection.query('SELECT (select name from md_school where id=e.school_id) as schoolname,e.school_id, e.employee_name,e.role_id, r.role_name, a.rt_dashboard, a.rt_enquiry,a.rt_admission_form,a.rt_adm_approval, a.rt_followup, a.rt_collectionentry FROM md_employee as e JOIN md_role as r JOIN md_access_rights as a on r.role_id=e.role_id and a.role_id=e.role_id where ? and ?',[user,pass],
+        function(err, rows)
+        {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+console.log(rows);
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': ''});
+    }
+  }
+  else{
+    console.log(err);
+  }
+});
+  });
+
 
  app.post('/add-event',  urlencodedParser,function (req, res){
    var event = {
