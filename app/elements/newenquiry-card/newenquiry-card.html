@@ -48,21 +48,16 @@
       <div class="list-group col-sm-12 panel-body form-category">
         <span class="col-sm-6"><paper-checkbox id="male" readonly class="checkbox" on-change="maleHandler">Male</paper-checkbox></span>
         <span class="col-sm-6"><paper-checkbox  id="female" readonly class="checkbox" on-change="femaleHandler">Female</paper-checkbox></span>
+        <div class="col-sm-6">
+          <paper-input label="Student Name" value="{{studentname}}"></paper-input>
+        </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
           <dateofbirth-datepicker></dateofbirth-datepicker>
         </div>
         <div class="col-sm-6">
-          <paper-input label="Age(In Years)"></paper-input>
-        </div>
-      </div>
-      <div class="list-group col-sm-12 panel-body form-category">
-        <div class="col-sm-6">
-          <paper-input label="Mobile Number" value="{{mob}}"></paper-input>
-        </div>
-        <div class="col-sm-6">
-          <paper-input label="Email" value="{{email}}"></paper-input>
+          <paper-input label="Age(In Years)" value="{{ageofyr}}"></paper-input>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
@@ -159,7 +154,7 @@
 
         var enqsource;
         var enqcategory;
-        var dob;
+        var dobdate;
         var namearr=[];
         var habitatid;
         var academicyear;
@@ -179,8 +174,8 @@ ready:function () {
           grade=(e.target.selectedItem.textContent).trim();
       },
       submit:function () {
-        alert("submit"+this.enqno+academicyear+grade+this.studentname+gender+dob+this.fathername+this.mothername+this.mob+this.email+this.textvalue);
-        this.$.service.submitenqiry(this.enqno,academicyear,grade,this.studentname,gender,dob,this.fathername,this.mothername,this.mob,this.email,this.textvalue);
+        alert("submit"+this.enqno+academicyear+grade+this.studentname+gender+dobdate+this.fathername+this.mothername+this.mob+this.email+this.textvalue);
+        this.$.service.submitenqiry(this.enqno,academicyear,grade,this.studentname,gender,dobdate,this.fathername,this.mothername,this.mob,this.email,this.textvalue);
 
       },
       Fnacademicyr:function(e){
@@ -288,7 +283,14 @@ ready:function () {
           document.querySelector('dob-datepicker-card').FnShowDialog();
         },
         getdate:function(dates){
-          this.dobdate=dates;
+          var dt1=new Date(dates);
+          dobdate=dates;
+          var dt=new Date();
+          var pr_year=dt.getFullYear();
+          var bt_year=dt1.getFullYear();
+          var diff=parseInt(pr_year-bt_year);
+          alert(diff);
+          this.ageofyr=diff+" Years";
         }
     });
   })();

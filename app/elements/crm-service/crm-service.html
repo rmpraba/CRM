@@ -178,7 +178,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      },
      getenquirynoResponse:function(e){
       seqno=e.detail.response.returnval[0].enquiry_no;
-      var enquiryif="ENQ1718000"+(seqno+1);
+      //alert(seqno);
+      seqno=seqno+1;
+      var enquiryif="ENQ1718000"+seqno;
       document.querySelector('newenquiry-card').enqno=enquiryif;
       var today = new Date(); var yyyy = today.getFullYear(); 
       var academicyr=yyyy+'-'+(yyyy+1);
