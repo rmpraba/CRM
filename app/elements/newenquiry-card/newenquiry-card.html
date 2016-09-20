@@ -35,15 +35,19 @@
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
-        <div class="col-sm-6">
-          <paper-input label="Student Name" value="{{studentname}}"></paper-input>
-        </div>
-        <div class="col-sm-6">
-          <div class="gender">
-            <span class="col-sm-6"><paper-checkbox id="male" readonly class="checkbox" on-change="maleHandler">Male</paper-checkbox></span>
-            <span class="col-sm-6"><paper-checkbox  id="female" readonly class="checkbox" on-change="femaleHandler">Female</paper-checkbox></span>
+          <div class="col-sm-4">
+            <paper-input label="Student First Name" value="{{studentname}}"></paper-input>
           </div>
-        </div>
+          <div class="col-sm-4">
+            <paper-input label="Student Middle Name" value="{{studentname}}"></paper-input>
+          </div>
+          <div class="col-sm-4">
+            <paper-input label="Student Last Name" value="{{studentname}}"></paper-input>
+          </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <span class="col-sm-6"><paper-checkbox id="male" readonly class="checkbox" on-change="maleHandler">Male</paper-checkbox></span>
+        <span class="col-sm-6"><paper-checkbox  id="female" readonly class="checkbox" on-change="femaleHandler">Female</paper-checkbox></span>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
