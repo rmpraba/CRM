@@ -1,0 +1,80 @@
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="detailed-enquiry-form">
+  <template>
+
+    <div class="row enquiry-form">
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6 enquiry-input">
+          <paper-input label="Enquiry Number"></paper-input>
+        </div>
+        <div class="col-sm-6 enquiry-input">
+          <paper-dropdown-menu label="Academic Year">
+            <paper-listbox class="dropdown-content">
+              <paper-item>AY-2015-2016</paper-item>
+              <paper-item>AY-2016-2017</paper-item>
+              <paper-item>AY-2017-2018</paper-item>
+              <paper-item>AY-2018-2019</paper-item>
+              <paper-item>AY-2019-2020</paper-item>
+              <paper-item>AY-2020-2021</paper-item>
+            </paper-listbox>
+          </paper-dropdown-menu>
+        </div>
+        <div class="col-sm-6">
+          <paper-dropdown-menu label="Grade">
+            <paper-listbox class="dropdown-content">
+              <paper-item>Nursery</paper-item>
+              <paper-item>Grade 1</paper-item>
+              <paper-item>Grade 2</paper-item>
+              <paper-item>Grade 3</paper-item>
+              <paper-item>Grade 4</paper-item>
+              <paper-item>Grade 5</paper-item>
+              <paper-item>Grade 6</paper-item>
+              <paper-item>Grade 7</paper-item>
+              <paper-item>Grade 8</paper-item>
+              <paper-item>Grade 9</paper-item>
+              <paper-item>Grade 10</paper-item>
+            </paper-listbox>
+          </paper-dropdown-menu>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <paper-input label="Student Name"></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <paper-dropdown-menu label="Gender">
+            <paper-listbox class="dropdown-content">
+              <paper-item>Male</paper-item>
+              <paper-item>Female</paper-item>
+            </paper-listbox>
+          </paper-dropdown-menu>
+        </div>
+        <div class="col-sm-6">
+          <paper-input label="Date of Birth"></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <paper-input label="Age(In Years)"></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <paper-input label="Date of Enquiry"></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <paper-input label="Mobile Number"></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <paper-input label="Email"></paper-input>
+        </div>
+      </div>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'detailed-enquiry-form',
+
+    });
+  })();
+  </script>
+</dom-module>
