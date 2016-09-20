@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cf87a71e-5582-4c0c-9b35-1815db928b04" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/elements/crm-service/crm-service.html" afterPath="$PROJECT_DIR$/app/elements/crm-service/crm-service.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/elements/dateofbirth-datepicker/dateofbirth-datepicker.html" afterPath="$PROJECT_DIR$/app/elements/dateofbirth-datepicker/dateofbirth-datepicker.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/elements/newenquiry-card/newenquiry-card.html" afterPath="$PROJECT_DIR$/app/elements/newenquiry-card/newenquiry-card.html" />
     </list>
     <ignored path="CRM.iws" />
@@ -70,8 +68,8 @@
       <file leaf-file-name="navigation-bar.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/elements/navigation-bar/navigation-bar.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.8461537">
-              <caret line="243" column="0" selection-start-line="243" selection-start-column="0" selection-end-line="253" selection-end-column="15" />
+            <state vertical-scroll-proportion="-10.461538">
+              <caret line="247" column="0" selection-start-line="247" selection-start-column="0" selection-end-line="247" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -80,8 +78,8 @@
       <file leaf-file-name="newenquiry-card.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/elements/newenquiry-card/newenquiry-card.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.48833033">
-              <caret line="52" column="14" selection-start-line="52" selection-start-column="14" selection-end-line="52" selection-end-column="14" />
+            <state vertical-scroll-proportion="0.36624774">
+              <caret line="49" column="142" selection-start-line="49" selection-start-column="142" selection-end-line="49" selection-end-column="142" />
               <folding>
                 <element signature="n#style#0;n#paper-toast#0;n#div#0;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
               </folding>
@@ -1150,8 +1148,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/elements/navigation-bar/navigation-bar.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.8461537">
-          <caret line="243" column="0" selection-start-line="243" selection-start-column="0" selection-end-line="253" selection-end-column="15" />
+        <state vertical-scroll-proportion="-10.461538">
+          <caret line="247" column="0" selection-start-line="247" selection-start-column="0" selection-end-line="247" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1168,8 +1166,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/elements/newenquiry-card/newenquiry-card.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.48833033">
-          <caret line="52" column="14" selection-start-line="52" selection-start-column="14" selection-end-line="52" selection-end-column="14" />
+        <state vertical-scroll-proportion="0.36624774">
+          <caret line="49" column="142" selection-start-line="49" selection-start-column="142" selection-end-line="49" selection-end-column="142" />
           <folding>
             <element signature="n#style#0;n#paper-toast#0;n#div#0;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
           </folding>
