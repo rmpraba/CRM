@@ -1,4 +1,5 @@
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="../dateofbirth-datepicker/dateofbirth-datepicker.html">
 
 <dom-module id="newenquiry-card">
   <template>
@@ -42,7 +43,7 @@
 
         </div>
         <div class="col-sm-6">
-          <paper-item>Date Of Birth</paper-item> : <datepicker-card></datepicker-card>
+          <dateofbirth-datepicker></dateofbirth-datepicker>
         </div>
         <div class="col-sm-6">
           <paper-input label="Age(In Years)"></paper-input>
@@ -134,7 +135,7 @@
   <script>
   (function() {
     'use strict';
-      
+
         var enqsource;
         var enqcategory;
         var dob;
@@ -252,7 +253,7 @@ ready:function () {
           document.querySelector('#zonechangeinput').selected=-1;
         }
 
-      
+
     });
   })();
   </script>
