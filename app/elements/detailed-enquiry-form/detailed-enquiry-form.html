@@ -1,70 +1,144 @@
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
-
+<link rel="import" href="../../bower_components/iron-autogrow-textarea/iron-autogrow-textarea.html">
+<link rel="import" href="../dateofbirth-datepicker/dateofbirth-datepicker.html">
 <dom-module id="detailed-enquiry-form">
   <template>
-
     <div class="row enquiry-form">
       <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-4 enquiry-input">
+          <paper-input label="First Name"></paper-input>
+        </div>
+        <div class="col-sm-4 enquiry-input">
+          <paper-input label="Middle Name"></paper-input>
+        </div>
+        <div class="col-sm-4 enquiry-input">
+          <paper-input label="Last Name"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6 enquiry-input">
-          <paper-input label="Enquiry Number"></paper-input>
+          <label>Gender</label>
+          <div class="gender">
+            <span class="col-sm-6"><paper-checkbox id="male" readonly class="checkbox" on-change="maleHandler">Male</paper-checkbox></span>
+            <span class="col-sm-6"><paper-checkbox  id="female" readonly class="checkbox" on-change="femaleHandler">Female</paper-checkbox></span>
+          </div>
         </div>
         <div class="col-sm-6 enquiry-input">
-          <paper-dropdown-menu label="Academic Year">
-            <paper-listbox class="dropdown-content">
-              <paper-item>AY-2015-2016</paper-item>
-              <paper-item>AY-2016-2017</paper-item>
-              <paper-item>AY-2017-2018</paper-item>
-              <paper-item>AY-2018-2019</paper-item>
-              <paper-item>AY-2019-2020</paper-item>
-              <paper-item>AY-2020-2021</paper-item>
-            </paper-listbox>
-          </paper-dropdown-menu>
-        </div>
-        <div class="col-sm-6">
-          <paper-dropdown-menu label="Grade">
-            <paper-listbox class="dropdown-content">
-              <paper-item>Nursery</paper-item>
-              <paper-item>Grade 1</paper-item>
-              <paper-item>Grade 2</paper-item>
-              <paper-item>Grade 3</paper-item>
-              <paper-item>Grade 4</paper-item>
-              <paper-item>Grade 5</paper-item>
-              <paper-item>Grade 6</paper-item>
-              <paper-item>Grade 7</paper-item>
-              <paper-item>Grade 8</paper-item>
-              <paper-item>Grade 9</paper-item>
-              <paper-item>Grade 10</paper-item>
-            </paper-listbox>
-          </paper-dropdown-menu>
+          <paper-input label="Class Admission Seeking for"></paper-input>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
-          <paper-input label="Student Name"></paper-input>
+          <dateofbirth-datepicker></dateofbirth-datepicker>
         </div>
         <div class="col-sm-6">
-          <paper-dropdown-menu label="Gender">
-            <paper-listbox class="dropdown-content">
-              <paper-item>Male</paper-item>
-              <paper-item>Female</paper-item>
-            </paper-listbox>
+          <paper-input label="Age as on 31st March 2016"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <paper-input label="Present School & Class"></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <paper-input label="Mother Tongue"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <paper-input label="Father's Name"></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <paper-input label="Mother's Name"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <paper-input label="Father's Qualification"></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <paper-input label="Mother's Qualification"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <paper-input label="Father's Contact Number"></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <paper-input label="Mother's Contact Number"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <paper-input label="Father's Email ID"></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <paper-input label="Mother's Email ID"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <paper-input label="Company Name"></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <paper-input label="Company Name"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <paper-input label="Designation"></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <paper-input label="Designation"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <label>Residential Address</label>
+        <iron-autogrow-textarea style="width: 100%;"></iron-autogrow-textarea>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <paper-dropdown-menu label="Enquiry Source" >
+            <paper-menu id="source" class="dropdown-content" required on-iron-select="source" valueattr="value" >
+              <paper-item >Zee Television Ads</paper-item>
+              <paper-item >Newspaper</paper-item>
+              <paper-item >Print Media</paper-item>
+              <paper-item >Poll Board</paper-item>
+              <paper-item >Direction Boards</paper-item>
+              <paper-item >Bounties</paper-item>
+              <paper-item >FM/Radio</paper-item>
+              <paper-item >BTL Activities</paper-item>
+              <paper-item >Referrer</paper-item>
+              <paper-item >Weblinks</paper-item>
+              <paper-item >Website</paper-item>
+            </paper-menu>
           </paper-dropdown-menu>
         </div>
         <div class="col-sm-6">
-          <paper-input label="Date of Birth"></paper-input>
+          <paper-input label="Names and classes of siblinngs"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <span><paper-checkbox id="male" readonly class="checkbox" on-change="maleHandler">Like to Avail Transport ?</paper-checkbox></span>
         </div>
         <div class="col-sm-6">
-          <paper-input label="Age(In Years)"></paper-input>
+          <span><paper-checkbox id="male" readonly class="checkbox" on-change="maleHandler">Like to Avail Canteen Facility ?</paper-checkbox></span>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <span><paper-checkbox class="col-sm-6" id="male" readonly class="checkbox" on-change="maleHandler">Hindi</paper-checkbox></span>
+          <span><paper-checkbox class="col-sm-6" id="male" readonly class="checkbox" on-change="maleHandler">Kannada</paper-checkbox></span>
         </div>
         <div class="col-sm-6">
-          <paper-input label="Date of Enquiry"></paper-input>
+          <span><paper-checkbox class="col-sm-3" id="male" readonly class="checkbox" on-change="maleHandler">French</paper-checkbox></span>
+          <span><paper-checkbox class="col-sm-3" id="male" readonly class="checkbox" on-change="maleHandler">Sanskrit</paper-checkbox></span>
+          <span><paper-checkbox class="col-sm-3" id="male" readonly class="checkbox" on-change="maleHandler">Kannada</paper-checkbox></span>
+          <span><paper-checkbox class="col-sm-3" id="male" readonly class="checkbox" on-change="maleHandler">Hindi</paper-checkbox></span>
         </div>
-        <div class="col-sm-6">
-          <paper-input label="Mobile Number"></paper-input>
-        </div>
-        <div class="col-sm-6">
-          <paper-input label="Email"></paper-input>
-        </div>
+      </div>
+      <div class="col-md-12 form-button">
+        <paper-button class="btn btn-primary" on-click="submit">SUBMIT</paper-button>
       </div>
   </template>
   <script>
