@@ -1,9 +1,7 @@
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 <link rel="import" href="../dateofbirth-datepicker/dateofbirth-datepicker.html">
-
 <dom-module id="newenquiry-card">
   <template>
-
     <div class="row enquiry-form">
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6 enquiry-input">
@@ -11,7 +9,7 @@
         </div>
         <div class="col-sm-6 enquiry-input">
           <paper-dropdown-menu label="Academic Year">
-            <paper-listbox class="dropdown-content">
+            <paper-listbox class="dropdown-content" on-iron-select="Fnacademicyr">
               <paper-item>AY-2015-2016</paper-item>
               <paper-item>AY-2016-2017</paper-item>
               <paper-item>AY-2017-2018</paper-item>
@@ -29,18 +27,17 @@
           </template>
         </paper-menu>
       </paper-dropdown-menu>
-
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
           <paper-input label="Student Name" value="{{studentname}}"></paper-input>
         </div>
-        <div class="col-sm-6"><div class="gender">
-          <paper-checkbox id="male" readonly class="checkbox" on-change="maleHandler">Male</paper-checkbox>
-          <paper-checkbox  id="female" readonly class="checkbox" on-change="femaleHandler">Female</paper-checkbox>
-        </div>
-
+        <div class="col-sm-6">
+          <div class="gender">
+            <paper-checkbox id="male" readonly class="checkbox" on-change="maleHandler">Male</paper-checkbox>
+            <paper-checkbox  id="female" readonly class="checkbox" on-change="femaleHandler">Female</paper-checkbox>
+          </div>
         </div>
         <div class="col-sm-6">
           <dateofbirth-datepicker></dateofbirth-datepicker>
@@ -121,7 +118,7 @@
       </div> -->
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
-          <paper-textarea label="Comments(If any)"></paper-textarea>
+          <paper-textarea label="Comments(If any)" value="{{comments}}"></paper-textarea>
         </div>
       </div>
       <div class="col-md-12 form-button">
@@ -130,7 +127,6 @@
       <paper-toast class="toast-success toast-popup" style="background-color: #0b8043;" id="enquiry_success" text="">Enquiry Added</paper-toast>
     </div>
     <crm-service id="service"></crm-service>
-
   </template>
   <script>
   (function() {
@@ -141,7 +137,8 @@
         var dob;
         var namearr=[];
         var habitatid;
-
+        var academicyear;
+        var gender;
     Polymer({
       is: 'newenquiry-card',
 ready:function () {
@@ -150,9 +147,12 @@ ready:function () {
         this.$.service.getlocation();
       },
       submit:function () {
-        //alert("submit"+this.enqno+this.academicyr+this.classes+this.studentname+gender+dob+this.mob+enqsource+this.locality+enqcategory);
-        this.$.service.submitenqiry(this.enqno,this.academicyr,this.classes,this.studentname,gender,dob,this.mob,enqsource,this.locality,enqcategory);
+        alert("submit"+this.enqno+academicyear+this.classes+this.studentname+gender+dob+this.mob+enqsource+this.locality+enqcategory+this.comments+academicyear);
+        this.$.service.submitenqiry(this.enqno,academicyear,this.classes,this.studentname,gender,dob,this.mob,enqsource,this.locality,enqcategory,this.comments);
 
+      },
+      Fnacademicyr:function(e){
+        academicyear=(e.target.selectedItem.textContent).trim();
       },
       maleHandler:function(){
         if(male.checked==true)
@@ -246,11 +246,17 @@ ready:function () {
         },
         Fnselected:function(e)
         {
-          alert('s');
+          //alert('s');
           this.querySelector('paper-listbox').style.visibility='hidden';
           this.textvalue = e.target.selectedItem.textContent.trim();
           this.itemArray=[];
-          document.querySelector('#zonechangeinput').selected=-1;
+          document.querySelector('#itemlist').selected=-1;
+        },
+        showdate:function(){
+          document.querySelector('dob-datepicker-card').FnShowDialog();
+        },
+        getdate:function(dates){
+          this.dobdate=dates;
         }
 
 

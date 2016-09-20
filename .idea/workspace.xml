@@ -2,10 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cf87a71e-5582-4c0c-9b35-1815db928b04" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/elements/dob-datepicker-card/dob-datepicker-card.html" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/elements/datepicker-card/datepicker-card.html" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/elements/elements.html" afterPath="$PROJECT_DIR$/app/elements/elements.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/elements/login-service/login-service.html" afterPath="$PROJECT_DIR$/app/elements/login-service/login-service.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/elements/newenquiry-card/newenquiry-card.html" afterPath="$PROJECT_DIR$/app/elements/newenquiry-card/newenquiry-card.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/index.html" afterPath="$PROJECT_DIR$/app/index.html" />
     </list>
     <ignored path="CRM.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -80,18 +81,29 @@
         <entry file="file://$PROJECT_DIR$/app/elements/login-service/login-service.html">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
+              <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+              <folding>
+                <marker date="1474363069215" expanded="true" signature="1043:3515" placeholder="{...}" />
+                <marker date="1474363069215" expanded="true" signature="1057:3505" placeholder="{&quot;is&quot;: &quot;login-service&quot;...}" />
+                <marker date="1474363069215" expanded="true" signature="1126:1307" placeholder="{...}" />
+                <marker date="1474363069215" expanded="true" signature="1361:1659" placeholder="{...}" />
+                <marker date="1474363069215" expanded="true" signature="1696:3490" placeholder="{...}" />
+                <marker date="1474363069215" expanded="true" signature="1816:1885" placeholder="{...}" />
+                <marker date="1474363069215" expanded="true" signature="1898:3482" placeholder="{...}" />
+                <marker date="1474363069215" expanded="true" signature="2818:2969" placeholder="/*...*/" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="newenquiry-card.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="newenquiry-card.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/elements/newenquiry-card/newenquiry-card.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-21.576923">
-              <caret line="45" column="34" selection-start-line="45" selection-start-column="34" selection-end-line="45" selection-end-column="34" />
-              <folding />
+            <state vertical-scroll-proportion="-3.4175627">
+              <caret line="129" column="13" selection-start-line="129" selection-start-column="13" selection-end-line="129" selection-end-column="13" />
+              <folding>
+                <element signature="n#style#0;n#paper-toast#0;n#div#0;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -106,10 +118,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="dateofbirth-datepicker.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="dateofbirth-datepicker.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/elements/dateofbirth-datepicker/dateofbirth-datepicker.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.4874552">
+            <state vertical-scroll-proportion="-10.461538">
               <caret line="16" column="37" selection-start-line="16" selection-start-column="37" selection-end-line="16" selection-end-column="37" />
               <folding />
             </state>
@@ -151,8 +163,8 @@
         <option value="$PROJECT_DIR$/app/elements/app-list/app-list.html" />
         <option value="$PROJECT_DIR$/app/elements/dashboard-card/dashboard-card.html" />
         <option value="$PROJECT_DIR$/app/index.html" />
-        <option value="$PROJECT_DIR$/app/elements/newenquiry-card/newenquiry-card.html" />
         <option value="$PROJECT_DIR$/app/elements/dateofbirth-datepicker/dateofbirth-datepicker.html" />
+        <option value="$PROJECT_DIR$/app/elements/newenquiry-card/newenquiry-card.html" />
       </list>
     </option>
   </component>
@@ -1116,9 +1128,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/elements/login-service/login-service.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding>
+            <marker date="1474363069215" expanded="true" signature="1043:3515" placeholder="{...}" />
+            <marker date="1474363069215" expanded="true" signature="1057:3505" placeholder="{&quot;is&quot;: &quot;login-service&quot;...}" />
+            <marker date="1474363069215" expanded="true" signature="1126:1307" placeholder="{...}" />
+            <marker date="1474363069215" expanded="true" signature="1361:1659" placeholder="{...}" />
+            <marker date="1474363069215" expanded="true" signature="1696:3490" placeholder="{...}" />
+            <marker date="1474363069215" expanded="true" signature="1816:1885" placeholder="{...}" />
+            <marker date="1474363069215" expanded="true" signature="1898:3482" placeholder="{...}" />
+            <marker date="1474363069215" expanded="true" signature="2818:2969" placeholder="/*...*/" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1185,19 +1206,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/elements/newenquiry-card/newenquiry-card.html">
+    <entry file="file://$PROJECT_DIR$/app/elements/dateofbirth-datepicker/dateofbirth-datepicker.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-21.576923">
-          <caret line="45" column="34" selection-start-line="45" selection-start-column="34" selection-end-line="45" selection-end-column="34" />
+        <state vertical-scroll-proportion="-10.461538">
+          <caret line="16" column="37" selection-start-line="16" selection-start-column="37" selection-end-line="16" selection-end-column="37" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/elements/dateofbirth-datepicker/dateofbirth-datepicker.html">
+    <entry file="file://$PROJECT_DIR$/app/elements/newenquiry-card/newenquiry-card.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4874552">
-          <caret line="16" column="37" selection-start-line="16" selection-start-column="37" selection-end-line="16" selection-end-column="37" />
-          <folding />
+        <state vertical-scroll-proportion="-3.4175627">
+          <caret line="129" column="13" selection-start-line="129" selection-start-column="13" selection-end-line="129" selection-end-column="13" />
+          <folding>
+            <element signature="n#style#0;n#paper-toast#0;n#div#0;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
