@@ -9,7 +9,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
-
+<link rel="import" href="../detailed-enquiry-form/detailed-enquiry-form.html">
 <dom-module id="navigation-bar">
   <template>
     <style>
@@ -263,7 +263,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <!-- <a href="flot.html"></a> -->
               </li>
               <li>
-                <a href="morris.html">Detailed Form</a>
+                <a href="" aria-hidden="true" data-toggle="modal" data-target="#addDetailedEnquiry">Detailed Form</a>
               </li>
             </ul>
             <!-- /.nav-second-level -->
@@ -328,7 +328,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </ul> -->
             <!-- /.nav-second-level -->
           </li>
-         
+
         </ul>
       </div>
       <!-- /.sidebar-collapse -->
@@ -352,6 +352,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </div>
         </div>
       </div>
+    <div class="modal fade bd-example-modal-lg" id="addDetailedEnquiry" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="center-block event-title" id="enquiry-title">
+              New Detailed Enquiry
+            </h4>
+          </div>
+          <div class="modal-body">
+            <detailed-enquiry-form></detailed-enquiry-form>
+          </div>
+        </div>
+      </div>
+    </div>
   </template>
   <script>
   (function() {
@@ -383,7 +400,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       Fncheck:function(){
         //alert(localStorage.getItem("enquiry")+'  2  '+localStorage.getItem("dashboard")+' 3  '+localStorage.getItem("followup")+'  4 '+localStorage.getItem("admissionform")+'  5  '+localStorage.getItem("admapproval")+'  6   '+localStorage.getItem("collectionentry"));
         if(localStorage.getItem("enquiry")=='true'){
-          this.$.enquiry.hidden=true;  
+          this.$.enquiry.hidden=true;
         }
         if(localStorage.getItem("dashboard")=='true'){
             this.$.dashboard.hidden=true;
@@ -400,7 +417,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           if(localStorage.getItem("admapproval")=='true'){
               this.$.admapp.hidden=true;
           }
-        
+
       }
     });
   })();
