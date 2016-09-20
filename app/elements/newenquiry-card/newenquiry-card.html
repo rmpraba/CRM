@@ -10,6 +10,8 @@
         <div class="col-sm-6">
           <paper-input label="Date of Enquiry" value="{{todaydate}}"></paper-input>
         </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6 enquiry-input">
           <paper-dropdown-menu label="Academic Year">
             <paper-listbox class="dropdown-content" on-iron-select="Fnacademicyr">
@@ -24,12 +26,12 @@
         </div>
         <div class="col-sm-6">
           <paper-dropdown-menu label="Select the Class" >
-        <paper-menu id="zone" class="dropdown-content" required on-iron-select="classes" valueattr="value" >
-          <template  is="dom-repeat" items="{{itemarr}}" as="view">
-            <paper-item >{{view.class}}</paper-item>
-          </template>
-        </paper-menu>
-      </paper-dropdown-menu>
+            <paper-menu id="zone" class="dropdown-content" required on-iron-select="classes" valueattr="value" >
+              <template  is="dom-repeat" items="{{itemarr}}" as="view">
+                <paper-item >{{view.class}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
@@ -37,22 +39,26 @@
           <paper-input label="Student Name" value="{{studentname}}"></paper-input>
         </div>
         <div class="col-sm-6">
+
         <div class="checkgender" style="    display: flex;
     margin-top: 8%;">
         Gender :
-          <paper-checkbox style="    margin-left: 4%; margin-top: 0%;" id="male" readonly class="checkbox" on-change="maleHandler">Male</paper-checkbox>
-          <paper-checkbox style=" margin-left: 4%;margin-top: 0%;" id="female" readonly class="checkbox" on-change="femaleHandler">Female</paper-checkbox>
+          <paper-checkbox style="margin-top: 0%;
+    margin-left: 2%;" id="male" readonly class="checkbox" on-change="maleHandler">Male</paper-checkbox>
+          <paper-checkbox style="margin-top: 0%;
+    margin-left: 2%;" id="female" readonly class="checkbox" on-change="femaleHandler">Female</paper-checkbox>
 </div>
 
         </div>
-        <div class="col-sm-6" style="margin-top: 0%;">
+      
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
           <dateofbirth-datepicker></dateofbirth-datepicker>
         </div>
         <div class="col-sm-6">
-          <paper-input label="Age(In Years)" value="{{age}}"></paper-input>
+          <paper-input label="Age(In Years)"></paper-input>
         </div>
-
-
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <!-- <div class="col-sm-6">
@@ -79,20 +85,23 @@
         <div class="col-sm-6">
           <paper-input label="Mother's Name" value="{{mothername}}"></paper-input>
         </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
           <paper-input label="Mobile Number" value="{{mob}}"></paper-input>
         </div>
         <div class="col-sm-6">
           <paper-input label="Email" value="{{email}}"></paper-input>
         </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
           <paper-input  label="Enter location.." is="" value="{{textvalue}}" on-keydown="FnInputChanged"></paper-input>
-      <paper-listbox class="dropdown-content" id="itemlist" on-iron-select="Fnselected" valueattr="value">
-        <template is="dom-repeat" items="{{itemArray}}" as="item">
-          <paper-item value="{{item.itemid}}">{{item.itemdes}}</paper-item>
-        </template>
-      </paper-listbox>
-
+          <paper-listbox class="dropdown-content" id="itemlist" on-iron-select="Fnselected" valueattr="value">
+            <template is="dom-repeat" items="{{itemArray}}" as="item">
+              <paper-item value="{{item.itemid}}">{{item.itemdes}}</paper-item>
+            </template>
+          </paper-listbox>
         </div>
         <!-- <div class="col-sm-6">
           <paper-dropdown-menu label="Enquiry Category" >
@@ -133,7 +142,7 @@
         </div>
       </div> -->
       <div class="col-md-12 form-button">
-        <paper-button class="button" on-click="submit">SUBMIT</paper-button>
+        <paper-button class="btn btn-primary" on-click="submit">SUBMIT</paper-button>
       </div>
       <paper-toast class="toast-success toast-popup" style="background-color: #0b8043;" id="enquiry_success" text="">Enquiry Added</paper-toast>
     </div>
@@ -276,8 +285,6 @@ ready:function () {
         getdate:function(dates){
           dobdate=dates;
         }
-
-
     });
   })();
   </script>
