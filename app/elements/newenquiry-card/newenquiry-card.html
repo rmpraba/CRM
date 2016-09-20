@@ -45,11 +45,8 @@
 </div>
 
         </div>
-        <div class="col-sm-6" style="margin-top: 3%;">
-          <div class="input-group input-append date" id="datePicker">
-              <input type="text" class="form-control" name="date" />
-              <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
-          </div>
+        <div class="col-sm-6" style="margin-top: 0%;">
+          <dateofbirth-datepicker></dateofbirth-datepicker>
         </div>
         <div class="col-sm-6">
           <paper-input label="Age(In Years)" value="{{age}}"></paper-input>
@@ -148,7 +145,7 @@
 
         var enqsource;
         var enqcategory;
-        var dob;
+        var dobdate;
         var namearr=[];
         var habitatid;
         var academicyear;
@@ -168,8 +165,8 @@ ready:function () {
           grade=(e.target.selectedItem.textContent).trim();
       },
       submit:function () {
-        alert("submit"+this.enqno+academicyear+grade+this.studentname+gender+dob+this.fathername+this.mothername+this.mob+this.email+this.textvalue);
-        this.$.service.submitenqiry(this.enqno,academicyear,grade,this.studentname,gender,dob,this.fathername,this.mothername,this.mob,this.email,this.textvalue);
+        alert("submit"+this.enqno+academicyear+grade+this.studentname+gender+dobdate+this.fathername+this.mothername+this.mob+this.email+this.textvalue);
+        this.$.service.submitenqiry(this.enqno,academicyear,grade,this.studentname,gender,dobdate,this.fathername,this.mothername,this.mob,this.email,this.textvalue);
 
       },
       Fnacademicyr:function(e){
@@ -277,7 +274,7 @@ ready:function () {
           document.querySelector('dob-datepicker-card').FnShowDialog();
         },
         getdate:function(dates){
-          this.dobdate=dates;
+          dobdate=dates;
         }
 
 
