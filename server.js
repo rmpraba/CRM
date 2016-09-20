@@ -21,7 +21,7 @@ app.post('/loginpage',  urlencodedParser,function (req, res)
 {
   var user={"employee_id":req.query.username};
   var pass={"password":req.query.password};
-console.log('hi');
+//console.log('hi');
        connection.query('SELECT (select name from md_school where id=e.school_id) as schoolname,e.school_id, e.employee_name,e.role_id, r.role_name, a.rt_dashboard, a.rt_enquiry,a.rt_admission_form,a.rt_adm_approval, a.rt_followup, a.rt_collectionentry FROM md_employee as e JOIN md_role as r JOIN md_access_rights as a on r.role_id=e.role_id and a.role_id=e.role_id where ? and ?',[user,pass],
         function(err, rows)
         {
@@ -29,7 +29,7 @@ console.log('hi');
     {
     if(rows.length>0)
     {
-console.log(rows);
+//console.log(rows);
       res.status(200).json({'returnval': rows});
     }
     else
@@ -40,6 +40,161 @@ console.log(rows);
   }
   else{
     console.log(err);
+  }
+});
+  });
+
+
+/*This function is used to submit the simple enquiry details of the student for the first time*/
+app.post('/submitenquiry',  urlencodedParser,function (req, res)
+{
+  var collection={"enquiry_no":req.query.id,"school_id":req.query.schol,"academic_year":req.query.acadeyr,"class":req.query.grade,"mob":req.query.contact,"gender":req.query.gender,"student_name":req.query.stname,"dob":req.query.dobs,"enquiry_source":req.query.source,"locality":req.query.location,"category":req.query.categories};
+
+       connection.query('insert into student_enquiry_details set ? ',[collection],
+        function(err, rows)
+        {
+    if(!err)
+    {
+          res.status(200).json({'returnval': 'success'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+  
+});
+  });
+
+/*It update the already entered student details with more information after the counselling using student name or enquiry number
+*/
+app.post('/updateenquiry',  urlencodedParser,function (req, res)
+{
+  var collection={"father_name":req.query.dadname,"mother_name":req.query.momname,"father_occupation":req.query.dadjob,"mother_occupation":req.query.momjob,"address1":req.query.addr1,"address2":req.query.addr2,"address3":req.query.addr3,"city":req.query.city,"pincode":req.query.pin,"email":req.query.mail,"alternate_mobno":req.query.alterno,"transport_requirment":req.query.transreq};
+  var school={"school_id":req.query.schol};
+  var enquiry={"enquiry_no":req.query.name};
+
+       connection.query('update student_enquiry_details set ? where ? and ?',[collection,enquiry,school],
+        function(err, rows)
+        {
+    if(!err)
+    {
+          res.status(200).json({'returnval': 'success'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+  
+});
+  });
+
+/*this function is to get the total sequence number that has been created depending on the enquiry*/
+app.post('/getenquiryno',  urlencodedParser,function (req, res)
+{
+  var id={"school_id":req.query.schol};
+
+       connection.query('SELECT enquiry_no from sequence where ? ',[id],
+        function(err, rows)
+        {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+//console.log(rows);
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+  }
+});
+  });
+
+
+
+/*this function is to fetch the available classes with repect to the school*/
+app.post('/getclasses',  urlencodedParser,function (req, res)
+{
+  var id={"school_id":req.query.schol};
+
+       connection.query('SELECT distinct class from class_details where ? ',[id],
+        function(err, rows)
+        {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+//console.log(rows);
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+  }
+    else{
+     console.log(err);
+  }
+});
+  });
+
+
+/*this function is to fetch the list of locations available with respect to school*/
+app.post('/getlocation',  urlencodedParser,function (req, res)
+{
+  var id={"school_id":req.query.schol};
+
+       connection.query('SELECT * from md_habitat where ? ',[id],
+        function(err, rows)
+        {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+//console.log(rows);
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+  }
+  else{
+     console.log(err);
+  }
+});
+  });
+
+
+/*this function is to fetch the name of student those who filled simple enquiry form and ready to fill the detailed enquiry form after counselling*/
+app.post('/getstudentname',  urlencodedParser,function (req, res)
+{
+  var id={"school_id":req.query.schol};
+
+       connection.query("SELECT * from student_enquiry_details where ? and pincode!=''",[id],
+        function(err, rows)
+        {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+//console.log(rows);
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+  }
+    else{
+     console.log(err);
   }
 });
   });

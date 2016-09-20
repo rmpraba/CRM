@@ -6,7 +6,7 @@
     <div class="row enquiry-form">
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6 enquiry-input">
-          <paper-input label="Enquiry Number"></paper-input>
+          <paper-input label="Enquiry Number" value="{{enqno}}"></paper-input>
         </div>
         <div class="col-sm-6 enquiry-input">
           <paper-dropdown-menu label="Academic Year">
@@ -21,37 +21,28 @@
           </paper-dropdown-menu>
         </div>
         <div class="col-sm-6">
-          <paper-dropdown-menu label="Grade">
-            <paper-listbox class="dropdown-content">
-              <paper-item>Nursery</paper-item>
-              <paper-item>Grade 1</paper-item>
-              <paper-item>Grade 2</paper-item>
-              <paper-item>Grade 3</paper-item>
-              <paper-item>Grade 4</paper-item>
-              <paper-item>Grade 5</paper-item>
-              <paper-item>Grade 6</paper-item>
-              <paper-item>Grade 7</paper-item>
-              <paper-item>Grade 8</paper-item>
-              <paper-item>Grade 9</paper-item>
-              <paper-item>Grade 10</paper-item>
-            </paper-listbox>
-          </paper-dropdown-menu>
+          <paper-dropdown-menu label="Select the Class" >
+        <paper-menu id="zone" class="dropdown-content" required on-iron-select="classes" valueattr="value" >
+          <template  is="dom-repeat" items="{{itemarr}}" as="view">
+            <paper-item >{{view.class}}</paper-item>
+          </template>
+        </paper-menu>
+      </paper-dropdown-menu>
+
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
-          <paper-input label="Student Name"></paper-input>
+          <paper-input label="Student Name" value="{{studentname}}"></paper-input>
+        </div>
+        <div class="col-sm-6"><div class="gender">
+          <paper-checkbox id="male" readonly class="checkbox" on-change="maleHandler">Male</paper-checkbox>
+          <paper-checkbox  id="female" readonly class="checkbox" on-change="femaleHandler">Female</paper-checkbox>
+        </div>
+
         </div>
         <div class="col-sm-6">
-          <paper-dropdown-menu label="Gender">
-            <paper-listbox class="dropdown-content">
-              <paper-item>Male</paper-item>
-              <paper-item>Female</paper-item>
-            </paper-listbox>
-          </paper-dropdown-menu>
-        </div>
-        <div class="col-sm-6">
-          <paper-input label="Date of Birth"></paper-input>
+          <paper-item>Date Of Birth</paper-item> : <datepicker-card></datepicker-card>
         </div>
         <div class="col-sm-6">
           <paper-input label="Age(In Years)"></paper-input>
@@ -60,35 +51,51 @@
           <paper-input label="Date of Enquiry"></paper-input>
         </div>
         <div class="col-sm-6">
-          <paper-input label="Mobile Number"></paper-input>
+          <paper-input label="Mobile Number" value="{{mob}}"></paper-input>
         </div>
         <div class="col-sm-6">
-          <paper-input label="Email"></paper-input>
+          <paper-input label="Email" value="{{email}}"></paper-input>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
-          <paper-dropdown-menu label="Enquiry source">
-            <paper-listbox class="dropdown-content">
-              <paper-item>Friends & Acquaintance</paper-item>
-              <paper-item>Online</paper-item>
-            </paper-listbox>
-          </paper-dropdown-menu>
+         <paper-dropdown-menu label="Enquiry Source" >
+        <paper-menu id="source" class="dropdown-content" required on-iron-select="source" valueattr="value" >
+            <paper-item >Zee Television Ads</paper-item>
+            <paper-item >Newspaper</paper-item>
+            <paper-item >Print Media</paper-item>
+            <paper-item >Poll Board</paper-item>
+            <paper-item >Direction Boards</paper-item>
+            <paper-item >Bounties</paper-item>
+            <paper-item >FM/Radio</paper-item>
+            <paper-item >BTL Activities</paper-item>
+            <paper-item >Referrer</paper-item>
+            <paper-item >Weblinks</paper-item>
+            <paper-item >Website</paper-item>
+        </paper-menu>
+      </paper-dropdown-menu>
+
         </div>
         <div class="col-sm-6">
-          <paper-input label="Enquiry Location"></paper-input>
+          <paper-input  label="Enter location.." is="" value="{{textvalue}}" on-keydown="FnInputChanged"></paper-input>
+      <paper-listbox class="dropdown-content" id="itemlist" on-iron-select="Fnselected" valueattr="value">
+        <template is="dom-repeat" items="{{itemArray}}" as="item">
+          <paper-item value="{{item.itemid}}">{{item.itemdes}}</paper-item>
+        </template>
+      </paper-listbox>
+
         </div>
         <div class="col-sm-6">
-          <paper-dropdown-menu label="Enquiry Category">
-            <paper-listbox class="dropdown-content">
-              <paper-item>Hot</paper-item>
-              <paper-item>Cold</paper-item>
-              <paper-item>Converted</paper-item>
-            </paper-listbox>
-          </paper-dropdown-menu>
+          <paper-dropdown-menu label="Enquiry Category" >
+        <paper-menu id="category" class="dropdown-content" required on-iron-select="category" valueattr="value" >
+            <paper-item >HOT</paper-item>
+            <paper-item >WARM</paper-item>
+            <paper-item >COLD</paper-item>
+        </paper-menu>
+      </paper-dropdown-menu>
         </div>
       </div>
-      <div class="list-group col-sm-12 panel-body form-category">
+     <!--  <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
           <paper-input label="Name"></paper-input>
         </div>
@@ -110,32 +117,142 @@
         <div class="col-sm-6">
           <paper-input label="Email"></paper-input>
         </div>
-      </div>
+      </div> -->
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
           <paper-textarea label="Comments(If any)"></paper-textarea>
         </div>
       </div>
       <div class="col-md-12 form-button">
-        <button type="button" class="btn btn-primary" onclick="enquiry_success.open()">Add Enquiry</button>
+        <paper-button class="button" on-click="submit">SUBMIT</paper-button>
       </div>
       <paper-toast class="toast-success toast-popup" style="background-color: #0b8043;" id="enquiry_success" text="">Enquiry Added</paper-toast>
     </div>
+    <crm-service id="service"></crm-service>
+
   </template>
   <script>
   (function() {
     'use strict';
+      
+        var enqsource;
+        var enqcategory;
+        var dob;
+        var namearr=[];
+        var habitatid;
 
     Polymer({
       is: 'newenquiry-card',
+ready:function () {
+        this.$.service.getenquiryno();
+        this.$.service.getclasses();
+        this.$.service.getlocation();
+      },
+      submit:function () {
+        //alert("submit"+this.enqno+this.academicyr+this.classes+this.studentname+gender+dob+this.mob+enqsource+this.locality+enqcategory);
+        this.$.service.submitenqiry(this.enqno,this.academicyr,this.classes,this.studentname,gender,dob,this.mob,enqsource,this.locality,enqcategory);
 
-      properties: {
-        foo: {
-          type: String,
-          value: 'newenquiry-card',
-          notify: true
+      },
+      maleHandler:function(){
+        if(male.checked==true)
+        {
+         document.querySelector("#female").checked=false;
+         gender="Male";
+       }
+      },
+      femaleHandler:function(){
+        if(female.checked==true)
+        {
+         document.querySelector("#male").checked=false;
+         gender="Female";
+       }
+      },
+      source:function(e){
+          enqsource=(e.target.selectedItem.textContent).trim();
+      },
+      category:function(e){
+        enqcategory=(e.target.selectedItem.textContent).trim();
+      },
+      dob:function(dateob){
+          dob=dateob;
+      },
+       autocompletename(nameitem){
+          namearr=nameitem;
+        },
+        FnInputChanged:function(e){
+          if(e.keyCode==13|| e.keyCode==40)
+            this.querySelector('paper-listbox').focus();
+          var arr=[];
+          arr.push({"itemdes":"-----Select-----"});
+          this.querySelector('paper-listbox').style.visibility='visible';
+          if(e.keyCode==8){
+            this.itemflag="true";
+            this.itemval="";
+            //alert('yes');
+            var len=(this.textvalue).length;
+            if(len<=1){
+              this.querySelector('paper-listbox').style.visibility='hidden';
+              this.itemArray="";
+              this.itemval="";
+            }
+            if(len>1){
+              this.querySelector('paper-listbox').style.visibility='visible';
+              var backsubval=(((this.textvalue).substring(0,(len-1))).trim()).toUpperCase();
+              for(var i=0;i<namearr.length;i++)
+              {
+                var subval=((namearr[i].habitat_name).trim()).substring(0,backsubval.length);
+                if((subval).toUpperCase()==(backsubval).toUpperCase())
+                {
+                  var obj={"itemdes":"","itemid":""};
+                  obj.itemdes=namearr[i].habitat_name;
+                  obj.itemid=namearr[i].habitat_id;
+                  arr.push(obj);
+                }
+              }
+              this.itemArray=arr;
+            }
+          }
+          if(e.keyCode!=8&& e.keyCode!=16&& e.keyCode!=13 && e.keyCode!=38&&e.keyCode!=40&&e.keyCode!=37&&e.keyCode!=39){
+            if(this.itemflag=="true") {
+              this.itemval = (this.textvalue).toUpperCase()+String.fromCharCode((e.keyCode)).toUpperCase();
+              this.itemflag="false";
+            }
+            else
+            this.itemval = this.textvalue +String.fromCharCode((e.keyCode));
+            if(this.itemval.length>0)
+            {
+              for(var i=0;i<namearr.length;i++){
+                var subval=((namearr[i].habitat_name).trim()).substring(0,this.itemval.length);
+                if((subval).toUpperCase()==(this.itemval).toUpperCase()){
+                  var obj={"itemdes":"","itemid":""};
+                  obj.itemdes=namearr[i].habitat_name;
+                  obj.itemid=namearr[i].habitat_id;
+                  arr.push(obj);
+                }
+              }
+              if(arr.length>0)
+                this.itemArray=arr;
+              else {
+                var obj={"itemdes":"","itemid":""};
+                  obj.itemdes=namearr[i].habitat_name;
+                  obj.itemid=namearr[i].habitat_id;
+                  arr.push(obj);
+                this.itemArray=arr;
+              }
+            }
+          }
+
+        },
+        Fnselected:function(e)
+        {
+          alert('s');
+          this.querySelector('paper-listbox').style.visibility='hidden';
+          this.textvalue = e.target.selectedItem.textContent.trim();
+          this.itemArray=[];
+          document.querySelector('#zonechangeinput').selected=-1;
         }
-      }
+
+      
     });
   })();
   </script>

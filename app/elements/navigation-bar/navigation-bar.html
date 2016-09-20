@@ -259,7 +259,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Enquiry<span class="fa arrow"></span></a>
             <ul class="nav nav-second-level">
               <li>
-                <a href="flot.html">Simple Form</a>
+              <a href="" aria-hidden="true" data-toggle="modal" data-target="#addEnquiry">Simple Form</a>
+                <!-- <a href="flot.html"></a> -->
               </li>
               <li>
                 <a href="morris.html">Detailed Form</a>
@@ -334,7 +335,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </div>
     <!-- /.navbar-static-side -->
   </nav>
-
+ <div class="modal fade bd-example-modal-lg" id="addEnquiry" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <h4 class="center-block event-title" id="eventTitle">
+                New Enquiry
+              </h4>
+            </div>
+            <div class="modal-body">
+              <newenquiry-card></newenquiry-card>
+            </div>
+          </div>
+        </div>
+      </div>
   </template>
   <script>
   (function() {
