@@ -1,13 +1,7 @@
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
-<link rel="import" href="../dob-datepicker-card/dob-datepicker-card.html">
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.min.css" />
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css" />
-
-<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js"></script>
-
+<link rel="import" href="../dateofbirth-datepicker/dateofbirth-datepicker.html">
 <dom-module id="newenquiry-card">
   <template>
-
     <div class="row enquiry-form">
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6 enquiry-input">
@@ -36,7 +30,6 @@
           </template>
         </paper-menu>
       </paper-dropdown-menu>
-
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
@@ -50,6 +43,7 @@
           <paper-checkbox style="    margin-left: 4%; margin-top: 0%;" id="male" readonly class="checkbox" on-change="maleHandler">Male</paper-checkbox>
           <paper-checkbox style=" margin-left: 4%;margin-top: 0%;" id="female" readonly class="checkbox" on-change="femaleHandler">Female</paper-checkbox>
 </div>
+
         </div>
         <div class="col-sm-6" style="margin-top: 3%;">
           <div class="input-group input-append date" id="datePicker">
@@ -60,8 +54,8 @@
         <div class="col-sm-6">
           <paper-input label="Age(In Years)" value="{{age}}"></paper-input>
         </div>
-        
-        
+
+
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <!-- <div class="col-sm-6">
@@ -147,17 +141,7 @@
       <paper-toast class="toast-success toast-popup" style="background-color: #0b8043;" id="enquiry_success" text="">Enquiry Added</paper-toast>
     </div>
     <crm-service id="service"></crm-service>
-
   </template>
-  <script>
-$(document).ready(function() {
-    $('#datePicker')
-        .datepicker({
-            format: 'mm/dd/yyyy'
-        });
-
-});
-</script>
   <script>
   (function() {
     'use strict';
@@ -296,7 +280,7 @@ ready:function () {
           this.dobdate=dates;
         }
 
-      
+
     });
   })();
   </script>
