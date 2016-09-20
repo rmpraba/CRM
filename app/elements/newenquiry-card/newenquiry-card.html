@@ -57,7 +57,7 @@
           <dateofbirth-datepicker></dateofbirth-datepicker>
         </div>
         <div class="col-sm-6">
-          <paper-input label="Age(In Years)"></paper-input>
+          <paper-input label="Age(In Years)" value="{{ageofyr}}"></paper-input>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
@@ -283,7 +283,14 @@ ready:function () {
           document.querySelector('dob-datepicker-card').FnShowDialog();
         },
         getdate:function(dates){
+          var dt1=new Date(dates);
           dobdate=dates;
+          var dt=new Date();
+          var pr_year=dt.getFullYear();
+          var bt_year=dt1.getFullYear();
+          var diff=parseInt(pr_year-bt_year);
+          alert(diff);
+          this.ageofyr=diff+" Years";
         }
     });
   })();
