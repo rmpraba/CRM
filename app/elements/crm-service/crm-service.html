@@ -85,11 +85,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         debounce-duration="300"
         >
   </iron-ajax>
+  <!-- this below ajax is to update the sequence number only when the enquiry form is submitted -->
+  <iron-ajax
+        method="post"
+        id="updateseqajax"
+        url="{{updatesequrl}}"
+        params="{{updateseqparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="updateseqResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
   </template>
   <script>
   (function() {
     'use strict';
-   var result;
+   var seqno;
     Polymer({
       is: 'crm-service',
      submitenqiry:function(enqno,academicyear,grade,studentname,gender,dob,fathername,mothername,mob,email,textvalue){
@@ -111,12 +123,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.submitenquiryparam=obj;
        //alert(JSON.stringify(obj));
         this.$.submitenquiryajax.generateRequest();
+
+
      },
      submitenquiryResponse:function(e){
       var result=e.detail.response.returnval;
       if(result="success"){
         alert("Submited Successfully");
       }
+
+      this.updatesequrl="http://localhost:8086/updateseq";
+        var obj={"id":"","schol":""}
+        obj.id=seqno;
+        obj.schol=localStorage.getItem("schoolid");
+        this.updateseqparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.updateseqajax.generateRequest();
      },
      updateenquiryform:function(name,fathername,mothername,fatherjob,motherjob,address1,address2,address3,town,pincode,email,altermobno,tranport){
       this.updateenquiryurl="http://localhost:8086/updateenquiry";
@@ -155,8 +177,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.$.getenquirynoajax.generateRequest();
      },
      getenquirynoResponse:function(e){
-      result=e.detail.response.returnval[0].enquiry_no;
-      var enquiryif="ENQ116000"+result;
+      seqno=e.detail.response.returnval[0].enquiry_no;
+      var enquiryif="ENQ1718000"+(seqno+1);
       document.querySelector('newenquiry-card').enqno=enquiryif;
       var today = new Date(); var yyyy = today.getFullYear(); 
       var academicyr=yyyy+'-'+(yyyy+1);

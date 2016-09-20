@@ -200,6 +200,30 @@ app.post('/getstudentname',  urlencodedParser,function (req, res)
   });
 
 
+/*this func is to update the sequence number only when the enquiry form is submitted*/
+
+app.post('/updateenquiry',  urlencodedParser,function (req, res)
+{
+  
+  var school={"school_id":req.query.schol};
+  var enquiry={"enquiry_no":req.query.id};
+
+       connection.query('update student_enquiry_details set ? where ? and ?',[enquiry,school],
+        function(err, rows)
+        {
+    if(!err)
+    {
+          res.status(200).json({'returnval': 'success'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+  
+});
+  });
+
  app.post('/add-event',  urlencodedParser,function (req, res){
    var event = {
      "title": req.query.title,

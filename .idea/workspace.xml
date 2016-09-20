@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cf87a71e-5582-4c0c-9b35-1815db928b04" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/elements/crm-service/crm-service.html" afterPath="$PROJECT_DIR$/app/elements/crm-service/crm-service.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/elements/newenquiry-card/newenquiry-card.html" afterPath="$PROJECT_DIR$/app/elements/newenquiry-card/newenquiry-card.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server.js" afterPath="$PROJECT_DIR$/server.js" />
     </list>
     <ignored path="CRM.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -87,8 +88,8 @@
       <file leaf-file-name="newenquiry-card.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/elements/newenquiry-card/newenquiry-card.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.03046595">
-              <caret line="46" column="12" selection-start-line="46" selection-start-column="12" selection-end-line="46" selection-end-column="12" />
+            <state vertical-scroll-proportion="1.218638">
+              <caret line="40" column="30" selection-start-line="40" selection-start-column="30" selection-end-line="40" selection-end-column="30" />
               <folding>
                 <element signature="n#style#0;n#paper-toast#0;n#div#0;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
               </folding>
@@ -1190,8 +1191,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/elements/newenquiry-card/newenquiry-card.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.03046595">
-          <caret line="46" column="12" selection-start-line="46" selection-start-column="12" selection-end-line="46" selection-end-column="12" />
+        <state vertical-scroll-proportion="1.218638">
+          <caret line="40" column="30" selection-start-line="40" selection-start-column="30" selection-end-line="40" selection-end-column="30" />
           <folding>
             <element signature="n#style#0;n#paper-toast#0;n#div#0;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
           </folding>
