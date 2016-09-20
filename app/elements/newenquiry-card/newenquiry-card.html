@@ -5,7 +5,10 @@
     <div class="row enquiry-form">
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6 enquiry-input">
-          <paper-input label="Enquiry Number" value="{{enqno}}"></paper-input>
+          <paper-input label="Enquiry Number" readonly value="{{enqno}}"></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <paper-input label="Date of Enquiry" value="{{todaydate}}"></paper-input>
         </div>
         <div class="col-sm-6 enquiry-input">
           <paper-dropdown-menu label="Academic Year">
@@ -53,10 +56,26 @@
         </div>
         <div class="col-sm-6">
           <paper-input label="Email" value="{{email}}"></paper-input>
+          <div class="checkgender" style="display: flex;margin-top: 8%;">
+          Gender :
+            <paper-checkbox style="    margin-left: 4%;" id="male" readonly class="checkbox" on-change="maleHandler">Male</paper-checkbox>
+            <paper-checkbox style=" margin-left: 4%;" id="female" readonly class="checkbox" on-change="femaleHandler">Female</paper-checkbox>
+          </div>
         </div>
+        <div class="col-sm-6" style="margin-top: 3%;">
+          <div class="input-group input-append date" id="datePicker">
+              <input type="text" class="form-control" name="date" />
+              <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <paper-input label="Age(In Years)" value="{{age}}"></paper-input>
+        </div>
+
+
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
-        <div class="col-sm-6">
+        <!-- <div class="col-sm-6">
          <paper-dropdown-menu label="Enquiry Source" >
         <paper-menu id="source" class="dropdown-content" required on-iron-select="source" valueattr="value" >
             <paper-item >Zee Television Ads</paper-item>
@@ -73,6 +92,18 @@
         </paper-menu>
       </paper-dropdown-menu>
 
+        </div>  -->
+        <div class="col-sm-6">
+          <paper-input label="Father's Name" value="{{fathername}}"></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <paper-input label="Mother's Name" value="{{mothername}}"></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <paper-input label="Mobile Number" value="{{mob}}"></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <paper-input label="Email" value="{{email}}"></paper-input>
         </div>
         <div class="col-sm-6">
           <paper-input  label="Enter location.." is="" value="{{textvalue}}" on-keydown="FnInputChanged"></paper-input>
@@ -83,7 +114,7 @@
       </paper-listbox>
 
         </div>
-        <div class="col-sm-6">
+        <!-- <div class="col-sm-6">
           <paper-dropdown-menu label="Enquiry Category" >
         <paper-menu id="category" class="dropdown-content" required on-iron-select="category" valueattr="value" >
             <paper-item >HOT</paper-item>
@@ -91,7 +122,7 @@
             <paper-item >COLD</paper-item>
         </paper-menu>
       </paper-dropdown-menu>
-        </div>
+        </div> -->
       </div>
      <!--  <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
@@ -116,11 +147,11 @@
           <paper-input label="Email"></paper-input>
         </div>
       </div> -->
-      <div class="list-group col-sm-12 panel-body form-category">
+      <!-- <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
           <paper-textarea label="Comments(If any)" value="{{comments}}"></paper-textarea>
         </div>
-      </div>
+      </div> -->
       <div class="col-md-12 form-button">
         <paper-button class="button" on-click="submit">SUBMIT</paper-button>
       </div>
@@ -139,16 +170,23 @@
         var habitatid;
         var academicyear;
         var gender;
+        var grade;
     Polymer({
       is: 'newenquiry-card',
 ready:function () {
         this.$.service.getenquiryno();
         this.$.service.getclasses();
         this.$.service.getlocation();
+        var dt=new Date();
+        this.todaydate=dt.getDate()+"/"+(dt.getMonth()+1)+"/"+dt.getFullYear();
+
+      },
+      classes:function(e){
+          grade=(e.target.selectedItem.textContent).trim();
       },
       submit:function () {
-        alert("submit"+this.enqno+academicyear+this.classes+this.studentname+gender+dob+this.mob+enqsource+this.locality+enqcategory+this.comments+academicyear);
-        this.$.service.submitenqiry(this.enqno,academicyear,this.classes,this.studentname,gender,dob,this.mob,enqsource,this.locality,enqcategory,this.comments);
+        alert("submit"+this.enqno+academicyear+grade+this.studentname+gender+dob+this.fathername+this.mothername+this.mob+this.email+this.textvalue);
+        this.$.service.submitenqiry(this.enqno,academicyear,grade,this.studentname,gender,dob,this.fathername,this.mothername,this.mob,this.email,this.textvalue);
 
       },
       Fnacademicyr:function(e){
@@ -168,12 +206,12 @@ ready:function () {
          gender="Female";
        }
       },
-      source:function(e){
+     /* source:function(e){
           enqsource=(e.target.selectedItem.textContent).trim();
       },
       category:function(e){
         enqcategory=(e.target.selectedItem.textContent).trim();
-      },
+      },*/
       dob:function(dateob){
           dob=dateob;
       },

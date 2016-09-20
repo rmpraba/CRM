@@ -92,21 +92,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
    var result;
     Polymer({
       is: 'crm-service',
-     submitenqiry:function(enqno,academicyr,classes,studentname,gender,dob,mob,source,locality,category){
+     submitenqiry:function(enqno,academicyear,grade,studentname,gender,dob,fathername,mothername,mob,email,textvalue){
       //alert(enqno+academicyr+classes+studentname+gender+dob+mob+source+locality+category);
         this.submitenquiryurl="http://localhost:8086/submitenquiry";
-        var obj={"id":"","schol":"","acadeyr":"","contact":"","grade":"","gender":"","stname":"","dobs":"","source":"","location":"","categories":""}
+        var obj={"id":"","schol":"","acadeyr":"","contact":"","grade":"","gender":"","stname":"","dobs":"","father":"","mother":"","email":"","location":""}
         obj.id=enqno;
-        obj.schol="SCH001";
-        obj.acadeyr=academicyr;
-        obj.grade=classes;
+        obj.schol=localStorage.getItem("schoolid");
+        obj.acadeyr=academicyear;
+        obj.grade=grade;
         obj.contact=mob;
         obj.gender=gender;
         obj.stname=studentname;
         obj.dobs=dob;
-        obj.source=source;
-        obj.location=locality;
-        obj.categories=category;
+        obj.father=fathername;
+        obj.mother=mothername;
+        obj.email=email;
+        obj.location=textvalue;
         this.submitenquiryparam=obj;
        //alert(JSON.stringify(obj));
         this.$.submitenquiryajax.generateRequest();
