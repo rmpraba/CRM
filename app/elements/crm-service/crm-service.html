@@ -109,6 +109,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         debounce-duration="300"
         >
   </iron-ajax>
+
+<!-- this ajax is to verify with the database whether the specific number is existing in database or not -->
+  <iron-ajax
+        method="post"
+        id="verifymobilenoajax"
+        url="{{verifymobilenourl}}"
+        params="{{verifymobilenoparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="verifymobilenoResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
   </template>
   <script>
   (function() {
@@ -144,36 +157,59 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       var result=e.detail.response.returnval;
       if(result="success"){
         alert("Submited Successfully");
-      }
 
-      this.updatesequrl="http://localhost:8086/updateseq";
+        this.updatesequrl="http://localhost:8086/updateseq";
         var obj={"id":"","schol":""}
         obj.id=seqno;
         obj.schol=localStorage.getItem("schoolid");
         this.updateseqparam=obj;
        //alert(JSON.stringify(obj));
         this.$.updateseqajax.generateRequest();
-     },
-     updateenquiryform:function(name,fathername,mothername,fatherjob,motherjob,address1,address2,address3,town,pincode,email,altermobno,tranport){
-      this.updateenquiryurl="http://localhost:8086/updateenquiry";
-        var obj={"name":"","schol":"","dadname":"","momname":"","dadjob":"","momjob":"","addr1":"","addr2":"","addr3":"","city":"","pin":"","mail":"","alterno":"","transreq":""}
-        obj.name=name;
-        obj.schol=localStorage.getItem("schoolid");
-        obj.dadname=fathername;
-        obj.momname=mothername;
-        obj.dadjob=fatherjob;
-        obj.momjob=motherjob;
-        obj.addr1=address1;
-        obj.addr2=address2;
-        obj.addr3=address3;
-        obj.city=town;
-        obj.pin=pincode;
-        obj.mail=email;
-        obj.alterno=altermobno;
-        obj.transreq=tranport;
+      }
+      else{
+        alert('Form submit interrupted');
+      }
 
+      
+     },
+     updateenquiryform:function(enqno,firstname,middlename,lastname,gender,grade,dob,oldclass,mothertongue,fathername,mothername,fatheredu,motheredu,fathermob,mothermob,fathermail,mothermail,fathercompany,mothercompany,fatherjob,motherjob,address1,address2,address3,city,pincode,enquiysource,siblingname,transportreq,canteenreq,secondlanguage,thirdlanguage){
+      this.updateenquiryurl="http://localhost:8086/updateenquiry";
+        var obj={"schol":"","enq":"","firstname":"","middlename":"","lastname":"","gender":"","grade":"","dob":"","oldclass":"","mothertongue":"","fathername":"","mothername":"","fatheredu":"","motheredu":"","fathermob":"","mothermob":"","fathermail":"","mothermail":"","fathercompany":"","mothercompany":"","fatherjob":"","motherjob":"","address1":"","address2":"","address3":"","city":"","pincode":"","enquiysource":"","siblingname":"","transportreq":"","canteenreq":"","secondlanguage":"","thirdlanguage":""}
+        obj.schol=localStorage.getItem("schoolid");
+        obj.enq=enqno;
+        obj.firstname=firstname;
+        obj.middlename=middlename;
+        obj.lastname=lastname;
+        obj.gender=gender;
+        obj.grade=grade;
+        obj.dob=dob;
+        obj.oldclass=oldclass;
+        obj.mothertongue=mothertongue;
+        obj.fathername=fathername;
+        obj.mothername=mothername;
+        obj.fatheredu=fatheredu;
+        obj.motheredu=motheredu;
+        obj.fathermob=fathermob;
+        obj.mothermob=mothermob;
+        obj.fathermail=fathermail;
+        obj.mothermail=mothermail;
+        obj.fathercompany=fathercompany;
+        obj.mothercompany=mothercompany;
+        obj.fatherjob=fatherjob;
+        obj.motherjob=motherjob;
+        obj.address1=address1;
+        obj.address2=address2;
+        obj.address3=address3;
+        obj.city=city;
+        obj.pincode=pincode;
+        obj.enquiysource=enquiysource;
+        obj.siblingname=siblingname;
+        obj.transportreq=transportreq;
+        obj.canteenreq=canteenreq;
+        obj.secondlanguage=secondlanguage;
+        obj.thirdlanguage=thirdlanguage;
         this.updateenquiryparam=obj;
-       //alert(JSON.stringify(obj));
+       alert(JSON.stringify(obj));
         this.$.updateenquiryajax.generateRequest();
      },
      updateenquiryResponse:function(e){
@@ -263,6 +299,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       document.querySelector('detailed-enquiry-form').fathermail=result[0].father_email;
       document.querySelector('detailed-enquiry-form').grade=result[0].class;
       document.querySelector('detailed-enquiry-form').Fnresult(result[0].dob,result[0].gender);
+     },
+     checkmobileno:function(mobile){
+          this.verifymobilenourl="http://localhost:8086/verifymobileno";
+        var obj={"mobileno":"","schol":""}
+        obj.mobileno=mobile;
+        obj.schol=localStorage.getItem("schoolid");
+        this.verifymobilenoparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.verifymobilenoajax.generateRequest();
+     },
+     verifymobilenoResponse:function(e){
+        var result=e.detail.response.returnval;
+        if(result.length>=0){
+
+            document.querySelector('newenquiry-card').showdialog(result[0].enquiry_no,result[0].first_name,result[0].middle_name,result[0].last_name);
+        }
      }
 
     });

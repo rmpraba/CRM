@@ -70,15 +70,17 @@ app.post('/submitenquiry',  urlencodedParser,function (req, res)
 */
 app.post('/updateenquiry',  urlencodedParser,function (req, res)
 {
-  var collection={"father_name":req.query.dadname,"mother_name":req.query.momname,"father_occupation":req.query.dadjob,"mother_occupation":req.query.momjob,"address1":req.query.addr1,"address2":req.query.addr2,"address3":req.query.addr3,"city":req.query.city,"pincode":req.query.pin,"email":req.query.mail,"alternate_mobno":req.query.alterno,"transport_requirment":req.query.transreq};
+  console.log('hello');
+  var collection={"first_name":req.query.firstname,"middle_name":req.query.middlename,"last_name":req.query.lastname,"gender":req.query.gender,"class":req.query.grade,"dob":req.query.dob,"old_class":req.query.oldclass,"mother_tongue":req.query.mothertongue,"father_name":req.query.fathername,"mother_name":req.query.mothername,"father_qualification":req.query.fatheredu,"mother_qualification":req.query.motheredu,"father_mob":req.query.fathermob,"mother_mob":req.query.mothermob,"father_email":req.query.fathermail,"mother_email":req.query.mothermail,"father_company":req.query.fathercompany,"mother_company":req.query.mothercompany,"father_occupation":req.query.fatherjob,"mother_occupation":req.query.motherjob,"address1":req.query.address1,"address2":req.query.address2,"address3":req.query.address3,"city":req.query.city,"pincode":req.query.pincode,"enquiry_source":req.query.enquiysource,"sibiling_name":req.query.siblingname,"transport_requirment":req.query.transportreq,"canteen_requirment":req.query.canteenreq,"second_language":req.query.secondlanguage,"third_language":req.query.thirdlanguage};
   var school={"school_id":req.query.schol};
-  var enquiry={"enquiry_no":req.query.name};
+  var enquiry={"enquiry_no":req.query.enq};
 
        connection.query('update student_enquiry_details set ? where ? and ?',[collection,enquiry,school],
-        function(err, rows)
-        {
+    function(err, rows)
+    {
     if(!err)
     {
+        console.log('inserted');
           res.status(200).json({'returnval': 'success'});
     }
     else
@@ -224,6 +226,28 @@ app.post('/updateenquiry',  urlencodedParser,function (req, res)
 });
   });
 
+/*this function is used to update the sequence number only when the enquiry form is submitted*/
+app.post('/updateseq',  urlencodedParser,function (req, res)
+{
+  var school={"school_id":req.query.schol};
+  var enquiry={"enquiry_no":req.query.id};
+       connection.query('update sequence set ? where ?',[enquiry,school],
+        function(err, rows)
+        {
+    if(!err)
+    {
+      console.log('updated');
+          res.status(200).json({'returnval': 'success'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+  
+});
+  });
+
  app.post('/add-event',  urlencodedParser,function (req, res){
    var event = {
      "title": req.query.title,
@@ -280,6 +304,33 @@ app.post('/getenqirydetails',  urlencodedParser,function (req, res)
 });
   });
 
+
+/*this function is used to verify with the database whether the specific number is existing in database or not*/
+
+app.post('/verifymobileno',  urlencodedParser,function (req, res)
+{
+
+       connection.query("SELECT * from student_enquiry_details where school_id='"+req.query.schol+"' and (father_mob='"+req.query.mobileno+"' or mother_mob='"+req.query.mobileno+"') ",
+        function(err, rows)
+        {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+//console.log(rows);
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': ''});
+    }
+  }
+  else{
+     console.log(err);
+  }
+});
+  });
 
 function setvalue(){
   console.log("calling setvalue.....");

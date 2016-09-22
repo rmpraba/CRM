@@ -1,14 +1,21 @@
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\..\bower_components/gold-email-input/gold-email-input.html">
 <link rel="import" href="../dateofbirth-datepicker/dateofbirth-datepicker.html">
 <dom-module id="newenquiry-card">
   <template>
+  <style type="text/css">
+      .horizontalframe{
+        display: flex;
+        @apply(--layout-horizontal);
+      }
+  </style>
     <div class="row enquiry-form">
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6 enquiry-input">
           <paper-input label="Enquiry Number" readonly value="{{enqno}}"></paper-input>
         </div>
         <div class="col-sm-6">
-          <paper-input label="Date of Enquiry" value="{{todaydate}}"></paper-input>
+          <paper-input label="Date of Enquiry" readonly value="{{todaydate}}"></paper-input>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
@@ -36,13 +43,13 @@
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
           <div class="col-sm-4">
-            <paper-input label="First Name" value="{{firstname}}"></paper-input>
+            <paper-input label="First Name" id="fname" required error-message="needs first name!" allowed-pattern="[a-zA-Z ]" value="{{firstname}}"></paper-input>
           </div>
           <div class="col-sm-4">
-            <paper-input label="Middle Name" value="{{middlename}}"></paper-input>
+            <paper-input label="Middle Name" id="mname" required error-message="needs middle name!" allowed-pattern="[a-zA-Z ]" value="{{middlename}}"></paper-input>
           </div>
           <div class="col-sm-4">
-            <paper-input label="Last Name" value="{{lastname}}"></paper-input>
+            <paper-input label="Last Name" id="lname" required error-message="needs last name!" allowed-pattern="[a-zA-Z ]" value="{{lastname}}"></paper-input>
           </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
@@ -54,7 +61,7 @@
           <dateofbirth-datepicker></dateofbirth-datepicker>
         </div>
         <div class="col-sm-6">
-          <paper-input label="Age(In Years)" value="{{ageofyr}}"></paper-input>
+          <paper-input readonly label="Age(In Years)" value="{{ageofyr}}"></paper-input>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
@@ -77,23 +84,23 @@
 
         </div>  -->
         <div class="col-sm-6">
-          <paper-input label="Father's Name" value="{{fathername}}"></paper-input>
+          <paper-input label="Father's Name" id="dadname" required error-message="needs father's name!" allowed-pattern="[a-zA-Z ]" value="{{fathername}}"></paper-input>
         </div>
         <div class="col-sm-6">
-          <paper-input label="Mother's Name" value="{{mothername}}"></paper-input>
-        </div>
-      </div>
-      <div class="list-group col-sm-12 panel-body form-category">
-        <div class="col-sm-6">
-          <paper-input label="Mobile Number" value="{{mob}}"></paper-input>
-        </div>
-        <div class="col-sm-6">
-          <paper-input label="Email" value="{{email}}"></paper-input>
+          <paper-input label="Mother's Name" id="momname" required error-message="needs mother's name!" allowed-pattern="[a-zA-Z ]" value="{{mothername}}"></paper-input>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
-          <paper-input  label="Enter location.." is="" value="{{textvalue}}" on-keydown="FnInputChanged"></paper-input>
+          <paper-input id="mobile" required error-message="needs mobile number!" label="Mobile Number" allowed-pattern="[0-9]" maxlength="10" value="{{mob}}" on-change="verifymob"></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <gold-email-input id="email" required error-message="needs email ID!" label="Email" value="{{email}}"></gold-email-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <paper-input  id="locality" required error-message="needs locality!" label="Enter location.." is="" value="{{textvalue}}" on-keydown="FnInputChanged"></paper-input>
           <paper-listbox class="dropdown-content" id="itemlist" on-iron-select="Fnselected" valueattr="value">
             <template is="dom-repeat" items="{{itemArray}}" as="item">
               <paper-item value="{{item.itemid}}">{{item.itemdes}}</paper-item>
@@ -141,6 +148,30 @@
       <div class="col-md-12 form-button">
         <paper-button class="btn btn-primary" on-click="submit">SUBMIT</paper-button>
       </div>
+
+      <paper-dialog id="confirmbox" modal>
+        <p><h3>This mobile number is already registered..</h3></p>
+        <p><h5>Do this student have siblings or already registered here..!!</h5></p>
+        <p>As - {{studentname}} - {{enquiryno}}</p>
+  <div  class="horizontalframe">
+    <div class="buttons hrspace" >
+      <paper-button style="height:33px !important;"  on-click="Confirm">YES</paper-button>
+    </div>
+    <div class="buttons hrspace">
+      <paper-button style="height:33px !important;" on-click="cancel">NO</paper-button>
+    </div>
+  </div>
+   </paper-dialog>
+<paper-dialog id="cancelbox" modal>
+        <p><h3>If no then kindly change the mobile number..</h3></p>
+        <p><h5>Or go to detailed enquiry form and do search for the respective enquiry number</h5></p>
+        <p><h2>{{enquiryno}}</h2></p>
+  <div  class="horizontalframe">
+    <div class="buttons hrspace" >
+      <paper-button style="height:33px !important;"  on-click="closedialog">OK</paper-button>
+   </paper-dialog>
+
+
       <paper-toast class="toast-success toast-popup" style="background-color: #0b8043;" id="enquiry_success" text="">Enquiry Added</paper-toast>
     </div>
     <crm-service id="service"></crm-service>
@@ -288,9 +319,61 @@ ready:function () {
           this.ageofyr=diff+" Years";
         },
         submit:function () {
-        alert("submit"+this.enqno+academicyear+grade+this.firstname+this.middlename+this.lastname+gender+dobdate+this.fathername+this.mothername+this.mob+this.email+this.textvalue);
+       // alert("submit"+this.enqno+academicyear+grade+this.firstname+this.middlename+this.lastname+gender+dobdate+this.fathername+this.mothername+this.mob+this.email+this.textvalue);
+        if(this.firstname==""||this.middlename==""||this.lastname==""||this.fathername==""||this.mothername==""||this.mob==""||this.email==""||this.textvalue==""){
+            this.$.fname.validate();
+            this.$.mname.validate();
+            this.$.lname.validate();
+            this.$.dadname.validate();
+            this.$.momname.validate();
+            this.$.mobile.validate();
+            this.$.email.validate();
+            this.$.locality.validate();
+        }
+        else if(grade==null){
+          alert('Select the grade your seeking for admission');
+        }
+        else if(gender==null){
+          alert('Select the gender of the student');
+        }
+        else if(dobdate==null){
+          alert('Select date of birth properly')
+        }
+        /*else if(academicyear==null){
+          alert('Select the respective academic year');
+        }*/
+        else{
         this.$.service.submitenqiry(this.enqno,academicyear,grade,this.firstname,this.middlename,this.lastname,gender,dobdate,this.fathername,this.mothername,this.mob,this.email,this.textvalue);
-
+      }
+      },
+      verifymob:function(){
+        alert('1');
+        this.$.service.checkmobileno(this.mob);
+      },
+      showdialog:function(enqno,fname,mname,lname){
+          this.studentname=fname+' '+mname+' '+lname;
+          this.enquiryno=enqno;
+          var id = 'confirmbox';
+        var dialog = document.getElementById(id);
+        dialog.open();
+      },
+      Confirm:function(){
+         var id = 'confirmbox';
+        var dialog = document.getElementById(id);
+        dialog.close();
+      },
+      cancel:function(){
+        var id = 'confirmbox';
+        var dialog = document.getElementById(id);
+        dialog.close();
+          var id = 'cancelbox';
+        var dialog = document.getElementById(id);
+        dialog.open();
+      },
+      closedialog:function(){
+          var id = 'cancelbox';
+        var dialog = document.getElementById(id);
+        dialog.close();
       }
     });
   })();
