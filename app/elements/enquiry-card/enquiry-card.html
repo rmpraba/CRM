@@ -1,15 +1,5 @@
-<!--
-@license
-Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
-
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
-
+<link rel="import" href="..\..\bower_components/enquiry-details-card/enquiry-details-card.html">
 <dom-module id="enquiry-card">
   <template>
     <style>
@@ -28,96 +18,96 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </div>
     <div class="panel-body">
       <div class="list-group">
-        <div class="col-sm-4">Enquired</div>
-        <div class="col-sm-4">Applied</div>
+        <div class="col-sm-6">Enquired</div>
+        <div class="col-sm-6">Applied</div>
       </div>
       <div class="list-group list-group-item enquiry-list-item">
         <h5>Grade 1</h5>
-        <div class="col-sm-4">
-         <a href="" class="enquired" id="grade1enquired">8</a>
+        <div class="col-sm-6">
+         <a href="" class="enquired" aria-hidden="true" data-toggle="modal" data-target="#grade1enquired">8</a>
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-6">
           <a href="" class="applied">5</a>
         </div>
       </div>
       <div class="list-group list-group-item enquiry-list-item">
         <h5>Grade 2</h5>
-        <div class="col-sm-4">
+        <div class="col-sm-6">
           <a href="" class="enquired">9</a>
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-6">
           <a href="" class="applied">8</a>
         </div>
       </div>
       <div class="list-group list-group-item enquiry-list-item">
         <h5>Grade 3</h5>
-        <div class="col-sm-4">
+        <div class="col-sm-6">
           <a href="" class="enquired">9</a>
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-6">
           <a href="" class="applied">7</a>
         </div>
       </div>
       <div class="list-group list-group-item enquiry-list-item">
         <h5>Grade 4</h5>
-        <div class="col-sm-4">
+        <div class="col-sm-6">
           <a href="" class="enquired">8</a>
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-6">
           <a href="" class="applied">4</a>
         </div>
       </div>
       <div class="list-group list-group-item enquiry-list-item">
         <h5>Grade 5</h5>
-        <div class="col-sm-4">
+        <div class="col-sm-6">
           <a href="" class="enquired">4</a>
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-6">
           <a href="" class="applied">6</a>
         </div>
       </div>
       <div class="list-group list-group-item enquiry-list-item">
         <h5>Grade 6</h5>
-        <div class="col-sm-4">
+        <div class="col-sm-6">
           <a href="" class="enquired">3</a>
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-6">
           <a href="" class="applied">6</a>
         </div>
       </div>
       <div class="list-group list-group-item enquiry-list-item">
         <h5>Grade 7</h5>
-        <div class="col-sm-4">
+        <div class="col-sm-6">
           <a href="" class="enquired">7</a>
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-6">
           <a href="" class="applied">6</a>
         </div>
       </div>
       <div class="list-group list-group-item enquiry-list-item">
         <h5>Grade 8</h5>
-        <div class="col-sm-4">
+        <div class="col-sm-6">
           <a href="" class="enquired">2</a>
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-6">
           <a href="" class="applied">5</a>
         </div>
       </div>
       <div class="list-group list-group-item enquiry-list-item">
         <h5>Grade 9</h5>
-        <div class="col-sm-4">
+        <div class="col-sm-6">
           <a href="" class="enquired">6</a>
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-6">
           <a href="" class="applied">3</a>
         </div>
       </div>
       <div class="list-group list-group-item enquiry-list-item">
         <h5>Grade 10</h5>
-        <div class="col-sm-4">
+        <div class="col-sm-6">
           <a href="" class="enquired">6</a>
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-6">
           <a href="" class="applied">0</a>
         </div>
       </div>
@@ -146,9 +136,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
-              <h4 class="center-block event-title" id="Enquiry Details">
-                Grade 1
-              </h4>
+              <div class="col-md-12">
+                <span class="col-md-8">
+                  <h4 class="center-block event-title" id="Enquiry Details">
+                    Grade 1
+                  </h4>
+                </span>
+                <span class="pull-right col-md-4">
+                  <paper-dropdown-menu label="Prospectus Status">
+                    <paper-listbox class="dropdown-content" on-iron-select="Fnprospectusstatus">
+                      <paper-item>>90%</paper-item>
+                      <paper-item>>75%</paper-item>
+                      <paper-item>>50%</paper-item>
+                      <paper-item><50%</paper-item>
+                      <paper-item><35%</paper-item>
+                      <paper-item><10%</paper-item>
+                    </paper-listbox>
+                  </paper-dropdown-menu>
+                </span>
+              </div>
             </div>
             <div class="modal-body">
               <enquiry-details-card></enquiry-details-card>

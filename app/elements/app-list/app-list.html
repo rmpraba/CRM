@@ -35,14 +35,16 @@
       <!-- /.row -->
       <div class="row">
         <!-- <enquiry-card></enquiry-card> -->
-      
-    
+
+
         <iron-pages selected="{{page}}" attr-for-selected="data-category">
             <section data-category="loginpage">
               <login-card></login-card>
             </section>
           <section data-category="enquiry">
-          <enquiry-card></enquiry-card>
+          <div class="col-md-6">
+            <enquiry-card></enquiry-card>
+          </div>
           </section>
           </iron-pages>
           </div>
@@ -55,7 +57,7 @@
   Polymer({
     is: "app-list",
     ready: function() {
- 
+
     this.page="enquiry";
     //this.title="Simple Enquiry Form";
    var currpage=localStorage.getItem("curr_sess_page");
@@ -74,7 +76,7 @@
   localStorage.setItem("route",null);
    //document.querySelector('app-card').setPage("loginpage");
  },
- 
+
   });
 
   </script>
