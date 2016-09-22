@@ -175,7 +175,7 @@ ready:function () {
         academicyear=(e.target.selectedItem.textContent).trim();
       },
       maleHandler:function(){
-        if(male.checked==true)
+        if(document.querySelector("#male").checked==true)
         {
          document.querySelector("#female").checked=false;
          gender="Male";
@@ -183,7 +183,7 @@ ready:function () {
        }
       },
       femaleHandler:function(){
-        if(female.checked==true)
+        if(document.querySelector("#female").checked==true)
         {
          document.querySelector("#male").checked=false;
          gender="Female";

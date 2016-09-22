@@ -29,8 +29,8 @@
         <div class="col-sm-6 enquiry-input">
           <label>Gender</label>
           <div class="gender">
-            <span class="col-sm-6"><paper-checkbox id="male" class="checkbox" on-change="maleHandler">Male</paper-checkbox></span>
-            <span class="col-sm-6"><paper-checkbox  id="female" class="checkbox" on-change="femaleHandler">Female</paper-checkbox></span>
+            <span class="col-sm-6"><paper-checkbox id="dfmale" class="checkbox" on-change="maleHandler">Male</paper-checkbox></span>
+            <span class="col-sm-6"><paper-checkbox  id="dffemale" class="checkbox" on-change="femaleHandler">Female</paper-checkbox></span>
           </div>
         </div>
         <div class="col-sm-6 enquiry-input">
@@ -174,7 +174,7 @@
   <script>
   (function() {
     'use strict';
-
+        var gender;
     Polymer({
       is: 'detailed-enquiry-form',
       search:function(){
@@ -182,18 +182,29 @@
         //alert(this.enqno+'    '+enqno);
         this.$.service.getenqirydetails(enqno);
       },
-      Fnresult:function(resultArr){
-        this.firstname=resultArr[0].first_name;
-        this.middlename=resultArr[0].middle_name;
-        this.lastname=resultArr[0].last_name;
-        this.dob=resultArr[0].dob;
-        this.fathermob=resultArr[0].father_mob;
-        this.fathername=resultArr[0].father_name;
-        this.mothername=resultArr[0].mother_name;
-        this.fathermail=resultArr[0].father_email;
-        this.grade=resultArr[0].class;
-        this.age=resultArr[0].age;
-      }
+      Fnresult:function(dob,gender){
+        alert(gender);
+        var dt1=new Date(dob);
+          
+          var dt=new Date();
+          var pr_year=dt.getFullYear();
+          var bt_year=dt1.getFullYear();
+          var diff=parseInt(pr_year-bt_year);
+          //alert(diff);
+          this.age=diff+" Years";
+
+          if(gender=='Male'){
+            gender="Male";
+           document.querySelector("#dfmale").checked=true;
+           document.querySelector("#dffemale").checked=false;
+           }
+           else{
+            gender="Female";
+            document.querySelector("#dfmale").checked=false;
+           document.querySelector("#dffemale").checked=true;
+           }
+    }
+
     });
   })();
   </script>

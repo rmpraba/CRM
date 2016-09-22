@@ -250,7 +250,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      },
      getenqirydetailsResponse:function(e){
       var result=e.detail.response.returnval;
-      document.querySelector('detail-enquiry-card').Fnresult(result);
+      //alert(JSON.stringify(result));
+      //alert(document.querySelector('detail-enquiry-form'));
+      //alert(result[0].first_name);
+      document.querySelector('detailed-enquiry-form').firstname=result[0].first_name;
+      document.querySelector('detailed-enquiry-form').middlename=result[0].middle_name;
+      document.querySelector('detailed-enquiry-form').lastname=result[0].last_name;
+      document.querySelector('detailed-enquiry-form').dob=result[0].dob;
+      document.querySelector('detailed-enquiry-form').fathermob=result[0].father_mob;
+      document.querySelector('detailed-enquiry-form').fathername=result[0].father_name;
+      document.querySelector('detailed-enquiry-form').mothername=result[0].mother_name;
+      document.querySelector('detailed-enquiry-form').fathermail=result[0].father_email;
+      document.querySelector('detailed-enquiry-form').grade=result[0].class;
+      document.querySelector('detailed-enquiry-form').Fnresult(result[0].dob,result[0].gender);
      }
 
     });
