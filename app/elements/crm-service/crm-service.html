@@ -97,6 +97,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         debounce-duration="300"
         >
   </iron-ajax>
+  <!-- this ajax is used to get the details of the particular enquiry using enquiry no -->
+  <iron-ajax
+        method="post"
+        id="getenqirydetailsajax"
+        url="{{getenqirydetailsurl}}"
+        params="{{getenqirydetailsparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getenqirydetailsResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
   </template>
   <script>
   (function() {
@@ -146,7 +158,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       this.updateenquiryurl="http://localhost:8086/updateenquiry";
         var obj={"name":"","schol":"","dadname":"","momname":"","dadjob":"","momjob":"","addr1":"","addr2":"","addr3":"","city":"","pin":"","mail":"","alterno":"","transreq":""}
         obj.name=name;
-        obj.schol="SCH001";
+        obj.schol=localStorage.getItem("schoolid");
         obj.dadname=fathername;
         obj.momname=mothername;
         obj.dadjob=fatherjob;
@@ -173,7 +185,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      getenquiryno:function(){
       this.getenquirynourl="http://localhost:8086/getenquiryno";
         var obj={"schol":""}
-        obj.schol="SCH001";
+        obj.schol=localStorage.getItem("schoolid");
         this.getenquirynoparam=obj;
        //alert(JSON.stringify(obj));
         this.$.getenquirynoajax.generateRequest();
@@ -192,7 +204,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       getclasses:function(){
       this.getclassesurl="http://localhost:8086/getclasses";
         var obj={"schol":""}
-        obj.schol="SCH001";
+        obj.schol=localStorage.getItem("schoolid");
         this.getclassesparam=obj;
        //alert(JSON.stringify(obj));
         this.$.getclassesajax.generateRequest();
@@ -204,7 +216,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      getlocation:function(){
       this.getlocationurl="http://localhost:8086/getlocation";
         var obj={"schol":""}
-        obj.schol="SCH001";
+        obj.schol=localStorage.getItem("schoolid");
         this.getlocationparam=obj;
        //alert(JSON.stringify(obj));
         this.$.getlocationajax.generateRequest();
@@ -214,10 +226,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         //alert(JSON.stringify(result));
       document.querySelector('newenquiry-card').autocompletename(result);        
      },
-     getstudentname:function(){
+/*     getstudentname:function(){
         this.getstudentnameurl="http://localhost:8086/getstudentname";
         var obj={"schol":""}
-        obj.schol="SCH001";
+        obj.schol=localStorage.getItem("schoolid");
         this.getstudentnameparam=obj;
        //alert(JSON.stringify(obj));
         this.$.getstudentnameajax.generateRequest();
@@ -225,6 +237,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      getstudentnameResponse:function(e){
       var result=e.detail.response.returnval;
       document.querySelector('detail-enquiry-card').autocompletename(result);
+     },*/
+     getenqirydetails:function(enq){
+      alert(enq);
+       this.getenqirydetailsurl="http://localhost:8086/getenqirydetails";
+        var obj={"schol":"","enqno":""}
+        obj.schol=localStorage.getItem("schoolid");
+        obj.enqno=enq;
+        this.getenqirydetailsparam=obj;
+       alert('hello   '+JSON.stringify(obj));
+        this.$.getenqirydetailsajax.generateRequest(); 
+     },
+     getenqirydetailsResponse:function(e){
+      var result=e.detail.response.returnval;
+      document.querySelector('detail-enquiry-card').Fnresult(result);
      }
 
     });

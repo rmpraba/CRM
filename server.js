@@ -251,6 +251,36 @@ app.post('/updateenquiry',  urlencodedParser,function (req, res)
        }
      });
  });
+ 
+ /*this function is used to get the details of the particular enquiry using enquiry no*/
+app.post('/getenqirydetails',  urlencodedParser,function (req, res)
+{
+  var id={"school_id":req.query.schol};
+  var enqnum={"enquiry_no":req.query.enqno};
+
+       connection.query('SELECT * from student_enquiry_details where ? and ?',[id,enqnum],
+        function(err, rows)
+        {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+//console.log(rows);
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+  }
+    else{
+     console.log(err);
+  }
+});
+  });
+
+
 function setvalue(){
   console.log("calling setvalue.....");
 }

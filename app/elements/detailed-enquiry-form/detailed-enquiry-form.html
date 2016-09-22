@@ -6,9 +6,9 @@
     <div class="row enquiry-form">
       <div class="list-group col-sm-12 panel-body form-category">
           <div class="input-group custom-search-form col-sm-6 col-md-offset-3">
-            <input type="text" class="form-control" placeholder="Enter Enquiry Number">
+            <input type="text" class="form-control" id="searchtext" placeholder="Enter Enquiry Number">
             <span class="input-group-btn">
-              <button class="btn btn-default" type="button">
+              <button class="btn btn-default" on-click="search" type="button">
                 <i class="fa fa-search"></i>
               </button>
             </span>
@@ -16,94 +16,94 @@
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-4 enquiry-input">
-          <paper-input label="First Name"></paper-input>
+          <paper-input label="First Name" value="{{firstname}}"></paper-input>
         </div>
         <div class="col-sm-4 enquiry-input">
-          <paper-input label="Middle Name"></paper-input>
+          <paper-input label="Middle Name" value="{{middlename}}"></paper-input>
         </div>
         <div class="col-sm-4 enquiry-input">
-          <paper-input label="Last Name"></paper-input>
+          <paper-input label="Last Name" value="{{lastname}}"></paper-input>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6 enquiry-input">
           <label>Gender</label>
           <div class="gender">
-            <span class="col-sm-6"><paper-checkbox id="male" readonly class="checkbox" on-change="maleHandler">Male</paper-checkbox></span>
-            <span class="col-sm-6"><paper-checkbox  id="female" readonly class="checkbox" on-change="femaleHandler">Female</paper-checkbox></span>
+            <span class="col-sm-6"><paper-checkbox id="male" class="checkbox" on-change="maleHandler">Male</paper-checkbox></span>
+            <span class="col-sm-6"><paper-checkbox  id="female" class="checkbox" on-change="femaleHandler">Female</paper-checkbox></span>
           </div>
         </div>
         <div class="col-sm-6 enquiry-input">
-          <paper-input label="Class Admission Seeking for"></paper-input>
+          <paper-input label="Class Admission Seeking for" value="{{grade}}"></paper-input>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
-          <dateofbirth-datepicker></dateofbirth-datepicker>
+          <paper-input label="Date of Birth" value="{{dob}}"></paper-input>
         </div>
         <div class="col-sm-6">
-          <paper-input label="Age as on 31st March 2016"></paper-input>
-        </div>
-      </div>
-      <div class="list-group col-sm-12 panel-body form-category">
-        <div class="col-sm-6">
-          <paper-input label="Present School & Class"></paper-input>
-        </div>
-        <div class="col-sm-6">
-          <paper-input label="Mother Tongue"></paper-input>
+          <paper-input label="Age as on 31st March 2016" value="{{age}}"></paper-input>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
-          <paper-input label="Father's Name"></paper-input>
+          <paper-input label="Present School and Class" value="{{oldclass}}"></paper-input>
         </div>
         <div class="col-sm-6">
-          <paper-input label="Mother's Name"></paper-input>
-        </div>
-      </div>
-      <div class="list-group col-sm-12 panel-body form-category">
-        <div class="col-sm-6">
-          <paper-input label="Father's Qualification"></paper-input>
-        </div>
-        <div class="col-sm-6">
-          <paper-input label="Mother's Qualification"></paper-input>
+          <paper-input label="Mother Tongue" value="{{mothertongue}}"></paper-input>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
-          <paper-input label="Father's Contact Number"></paper-input>
+          <paper-input label="Father's Name" value="{{fathername}}"></paper-input>
         </div>
         <div class="col-sm-6">
-          <paper-input label="Mother's Contact Number"></paper-input>
-        </div>
-      </div>
-      <div class="list-group col-sm-12 panel-body form-category">
-        <div class="col-sm-6">
-          <paper-input label="Father's Email ID"></paper-input>
-        </div>
-        <div class="col-sm-6">
-          <paper-input label="Mother's Email ID"></paper-input>
+          <paper-input label="Mother's Name" value="{{mothername}}"></paper-input>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
-          <paper-input label="Company Name"></paper-input>
+          <paper-input label="Father's Qualification" value="{{fatheredu}}"></paper-input>
         </div>
         <div class="col-sm-6">
-          <paper-input label="Company Name"></paper-input>
+          <paper-input label="Mother's Qualification" value="{{motheredu}}"></paper-input>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
-          <paper-input label="Designation"></paper-input>
+          <paper-input label="Father's Contact Number" value="{{fathermob}}"></paper-input>
         </div>
         <div class="col-sm-6">
-          <paper-input label="Designation"></paper-input>
+          <paper-input label="Mother's Contact Number" value="{{mothermob}}"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <paper-input label="Father's Email ID" value="{{fathermail}}"></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <paper-input label="Mother's Email ID" value="{{mothermail}}"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <paper-input label="Company Name" value="{{fathercompany}}"></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <paper-input label="Company Name" value="{{mothercompany}}"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <paper-input label="Designation" value="{{fatherjob}}"></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <paper-input label="Designation" value="{{motherjob}}"></paper-input>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <label>Residential Address</label>
-        <iron-autogrow-textarea style="width: 100%;"></iron-autogrow-textarea>
+        <iron-autogrow-textarea style="width: 100%;" value="{{address}}"></iron-autogrow-textarea>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
@@ -124,32 +124,33 @@
           </paper-dropdown-menu>
         </div>
         <div class="col-sm-6">
-          <paper-input label="Names and classes of siblinngs"></paper-input>
+          <paper-input label="Names and classes of siblinngs" value="{{siblingname}}"></paper-input>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
-          <span><paper-checkbox id="male" readonly class="checkbox" on-change="maleHandler">Like to Avail Transport ?</paper-checkbox></span>
+          <span><paper-checkbox id="transport" class="checkbox" on-change="transportHandler">Like to Avail Transport ?</paper-checkbox></span>
         </div>
         <div class="col-sm-6">
-          <span><paper-checkbox id="male" readonly class="checkbox" on-change="maleHandler">Like to Avail Canteen Facility ?</paper-checkbox></span>
+          <span><paper-checkbox id="canteen" class="checkbox" on-change="canteenHandler">Like to Avail Canteen Facility ?</paper-checkbox></span>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
-          <span><paper-checkbox class="col-sm-6" id="male" readonly class="checkbox" on-change="maleHandler">Hindi</paper-checkbox></span>
-          <span><paper-checkbox class="col-sm-6" id="male" readonly class="checkbox" on-change="maleHandler">Kannada</paper-checkbox></span>
+          <span><paper-checkbox class="col-sm-6" id="secondhindi" class="checkbox" on-change="hindiHandler">Hindi</paper-checkbox></span>
+          <span><paper-checkbox class="col-sm-6" id="secondkannada" class="checkbox" on-change="kannadaHandler">Kannada</paper-checkbox></span>
         </div>
         <div class="col-sm-6">
-          <span><paper-checkbox class="col-sm-3" id="male" readonly class="checkbox" on-change="maleHandler">French</paper-checkbox></span>
-          <span><paper-checkbox class="col-sm-3" id="male" readonly class="checkbox" on-change="maleHandler">Sanskrit</paper-checkbox></span>
-          <span><paper-checkbox class="col-sm-3" id="male" readonly class="checkbox" on-change="maleHandler">Kannada</paper-checkbox></span>
-          <span><paper-checkbox class="col-sm-3" id="male" readonly class="checkbox" on-change="maleHandler">Hindi</paper-checkbox></span>
+          <span><paper-checkbox class="col-sm-3" id="thirdfrench" class="checkbox" on-change="frenchHandler">French</paper-checkbox></span>
+          <span><paper-checkbox class="col-sm-3" id="thirdsanskrit" class="checkbox" on-change="sanskritHandler">Sanskrit</paper-checkbox></span>
+          <span><paper-checkbox class="col-sm-3" id="thirdkannada" class="checkbox" on-change="kannadaHandler">Kannada</paper-checkbox></span>
+          <span><paper-checkbox class="col-sm-3" id="thirdhindi" class="checkbox" on-change="hindiHandler">Hindi</paper-checkbox></span>
         </div>
       </div>
       <div class="col-md-12 form-button">
         <paper-button class="btn btn-primary" on-click="submit">SUBMIT</paper-button>
       </div>
+       <crm-service id="service"></crm-service>
   </template>
   <script>
   (function() {
@@ -157,7 +158,23 @@
 
     Polymer({
       is: 'detailed-enquiry-form',
-
+      search:function(){
+        var enqno=document.getElementById('searchtext').value;
+        //alert(this.enqno+'    '+enqno);
+        this.$.service.getenqirydetails(enqno);
+      },
+      Fnresult:function(resultArr){
+        this.firstname=resultArr[0].first_name;
+        this.middlename=resultArr[0].middle_name;
+        this.lastname=resultArr[0].last_name;
+        this.dob=resultArr[0].dob;
+        this.fathermob=resultArr[0].father_mob;
+        this.fathername=resultArr[0].father_name;
+        this.mothername=resultArr[0].mother_name;
+        this.fathermail=resultArr[0].father_email;
+        this.grade=resultArr[0].class;
+        this.age=resultArr[0].age;
+      }
     });
   })();
   </script>

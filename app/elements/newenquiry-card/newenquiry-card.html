@@ -170,11 +170,7 @@ ready:function () {
       classes:function(e){
           grade=(e.target.selectedItem.textContent).trim();
       },
-      submit:function () {
-        alert("submit"+this.enqno+academicyear+grade+this.firstname+this.middlename+this.lastname+gender+dobdate+this.fathername+this.mothername+this.mob+this.email+this.textvalue);
-        this.$.service.submitenqiry(this.enqno,academicyear,grade,this.firstname,this.middlename,this.lastname,gender,dobdate,this.fathername,this.mothername,this.mob,this.email,this.textvalue);
-
-      },
+      
       Fnacademicyr:function(e){
         academicyear=(e.target.selectedItem.textContent).trim();
       },
@@ -183,6 +179,7 @@ ready:function () {
         {
          document.querySelector("#female").checked=false;
          gender="Male";
+         alert(gender);
        }
       },
       femaleHandler:function(){
@@ -190,6 +187,7 @@ ready:function () {
         {
          document.querySelector("#male").checked=false;
          gender="Female";
+         alert(gender);
        }
       },
      /* source:function(e){
@@ -288,7 +286,12 @@ ready:function () {
           var diff=parseInt(pr_year-bt_year);
           //alert(diff);
           this.ageofyr=diff+" Years";
-        }
+        },
+        submit:function () {
+        alert("submit"+this.enqno+academicyear+grade+this.firstname+this.middlename+this.lastname+gender+dobdate+this.fathername+this.mothername+this.mob+this.email+this.textvalue);
+        this.$.service.submitenqiry(this.enqno,academicyear,grade,this.firstname,this.middlename,this.lastname,gender,dobdate,this.fathername,this.mothername,this.mob,this.email,this.textvalue);
+
+      }
     });
   })();
   </script>
