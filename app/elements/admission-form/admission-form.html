@@ -9,15 +9,481 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="../dateofbirth-datepicker/dateofbirth-datepicker.html">
 
 <dom-module id="admission-form">
   <template>
-    <style>
-      :host {
-        display: block;
-      }
-    </style>
-    <div>Hello from <span>{{foo}}</span></div>
+    <div class="row enquiry-form">
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6 enquiry-input">
+          <paper-input label="Application Number" readonly value=""></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <paper-textarea label="School" readonly value=""></paper-textarea>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6 enquiry-input">
+          <paper-textarea label="Contact Number" readonly value=""></paper-textarea>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-4">
+          <paper-input label="Student First Name" value="{{studentname}}"></paper-input>
+        </div>
+        <div class="col-sm-4">
+          <paper-input label="Student Middle Name" value="{{studentname}}"></paper-input>
+        </div>
+        <div class="col-sm-4">
+          <paper-input label="Student Last Name" value="{{studentname}}"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <paper-dropdown-menu label="Seeking Admission for Class" style="width: 100%;">
+            <paper-menu id="zone" class="dropdown-content" required on-iron-select="classes" valueattr="value" >
+              <template  is="dom-repeat" items="{{itemarr}}" as="view">
+                <paper-item >{{view.class}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <span class="col-sm-12"><h5>2nd Language</h5></span>
+          <span><paper-checkbox class="col-sm-6" id="male" readonly class="checkbox" on-change="maleHandler">Hindi</paper-checkbox></span>
+          <span><paper-checkbox class="col-sm-6" id="male" readonly class="checkbox" on-change="maleHandler">Kannada</paper-checkbox></span>
+        </div>
+        <div class="col-sm-6">
+          <span class="col-sm-12"><h5>3rd Language</h5></span>
+          <span><paper-checkbox class="col-sm-3" id="male" readonly class="checkbox" on-change="maleHandler">French</paper-checkbox></span>
+          <span><paper-checkbox class="col-sm-3" id="male" readonly class="checkbox" on-change="maleHandler">Sanskrit</paper-checkbox></span>
+          <span><paper-checkbox class="col-sm-3" id="male" readonly class="checkbox" on-change="maleHandler">Kannada</paper-checkbox></span>
+          <span><paper-checkbox class="col-sm-3" id="male" readonly class="checkbox" on-change="maleHandler">Hindi</paper-checkbox></span>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <dateofbirth-datepicker></dateofbirth-datepicker>
+        </div>
+        <div class="col-sm-6">
+          <paper-input label="Age as on 31st March 2016"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-8 enquiry-input">
+          <span class="col-sm-4"><h5>Gender</h5></span>
+          <span class="col-sm-4"><paper-checkbox id="male" readonly class="checkbox" on-change="maleHandler">Male</paper-checkbox></span>
+          <span class="col-sm-4"><paper-checkbox  id="female" readonly class="checkbox" on-change="femaleHandler">Female</paper-checkbox></span>
+        </div>
+      </div>
+      <div class="form-group-heading">
+        <h4>Present Address</h4>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-4">
+          <paper-input label="Flat/House No"></paper-input>
+        </div>
+        <div class="col-sm-4">
+          <paper-input label="Building Name"></paper-input>
+        </div>
+        <div class="col-sm-4">
+          <paper-input label="Street/Road"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-3">
+          <paper-input label="Village/Town"></paper-input>
+        </div>
+        <div class="col-sm-3">
+          <paper-input label="City"></paper-input>
+        </div>
+        <div class="col-sm-3">
+          <paper-input label="State"></paper-input>
+        </div>
+        <div class="col-sm-3">
+          <paper-input label="Pincode"></paper-input>
+        </div>
+      </div>
+      <div class="form-group-heading">
+        <h4>Medical Information</h4>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-4">
+          <paper-input label="Height"></paper-input>
+        </div>
+        <div class="col-sm-4">
+          <paper-input label="Weight"></paper-input>
+        </div>
+        <div class="col-sm-4">
+          <paper-dropdown-menu label="Blood Group" style="width: 100%;">
+            <paper-listbox class="dropdown-content" on-iron-select="FnBloodGroup">
+              <paper-item>A +ve</paper-item>
+              <paper-item>A -ve</paper-item>
+              <paper-item>B +ve</paper-item>
+              <paper-item>B -ve</paper-item>
+              <paper-item>O +ve</paper-item>
+              <paper-item>O -ve</paper-item>
+              <paper-item>AB +ve</paper-item>
+              <paper-item>AB -ve</paper-item>
+            </paper-listbox>
+          </paper-dropdown-menu>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-8">
+          <span class="col-sm-12"><h5>Caste</h5></span>
+          <span><paper-checkbox class="col-sm-2" id="male" readonly class="checkbox" on-change="maleHandler">SC</paper-checkbox></span>
+          <span><paper-checkbox class="col-sm-2" id="male" readonly class="checkbox" on-change="maleHandler">ST</paper-checkbox></span>
+          <span><paper-checkbox class="col-sm-2" id="male" readonly class="checkbox" on-change="maleHandler">SC</paper-checkbox></span>
+          <span><paper-checkbox class="col-sm-2" id="male" readonly class="checkbox" on-change="maleHandler">OBC</paper-checkbox></span>
+          <span><paper-checkbox class="col-sm-2" id="male" readonly class="checkbox" on-change="maleHandler">Other</paper-checkbox></span>
+        </div>
+        <div class="col-sm-4">
+          <paper-input label="Relegion"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <paper-input label="Nationality"></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <paper-input label="Mother Tongue"></paper-input>
+        </div>
+      </div>
+      <div class="form-group-heading">
+        <h4>Sibling Information</h4>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <paper-input label="Sibling Name"></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <paper-input label="Sibling Class"></paper-input>
+        </div>
+      </div>
+      <div class="form-group-heading">
+        <h4>Record of Previous Class Attended</h4>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <paper-input label="Name of School"></paper-input>
+        </div>
+        <div class="col-sm-3">
+          <paper-input label="Class From"></paper-input>
+        </div>
+        <div class="col-sm-3">
+          <paper-input label="Class To"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <paper-dropdown-menu label="Board" style="width: 100%;">
+            <paper-listbox class="dropdown-content" on-iron-select="FnBoard">
+              <paper-item>CBSE</paper-item>
+              <paper-item>ICSE</paper-item>
+              <paper-item>State</paper-item>
+            </paper-listbox>
+          </paper-dropdown-menu>
+        </div>
+        <div class="col-sm-3">
+          <paper-input label="Year From"></paper-input>
+        </div>
+        <div class="col-sm-3">
+          <paper-input label="Year To"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-5">
+          <paper-input label="Medium of Instruction"></paper-input>
+        </div>
+        <div class="col-sm-7">
+          <paper-input label="% of Marks in Last Class"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <paper-textarea label="Reason for Leaving"></paper-textarea>
+      </div>
+      <div class="form-group-heading">
+        <h4>Physical/Mental Disability and Mental History(if any)</h4>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <paper-textarea label="Physical Disability Detail"></paper-textarea>
+        </div>
+        <div class="col-sm-6">
+          <paper-input label="Physical Disability Present Status"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <paper-textarea label="Mental Disability Detail"></paper-textarea>
+        </div>
+        <div class="col-sm-6">
+          <paper-input label="Mental Disability Present Status"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <paper-textarea label="Past Illness Detail"></paper-textarea>
+        </div>
+        <div class="col-sm-6">
+          <paper-input label="Past Illness Present Status"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <paper-textarea label="Allergy Detail"></paper-textarea>
+        </div>
+        <div class="col-sm-6">
+          <paper-input label="Allergy Present Status"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <paper-textarea label="Chronic Medical Problem Detail"></paper-textarea>
+        </div>
+        <div class="col-sm-6">
+          <paper-input label="Chronic Medical Problem Present Status"></paper-input>
+        </div>
+      </div>
+      <div class="form-group-heading">
+        <h4>Achievements in Academic/Sports/Co-Curricular Field</h4>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-1">
+          <paper-textarea label="S.No"></paper-textarea>
+        </div>
+        <div class="col-sm-3">
+          <paper-textarea label="Field"></paper-textarea>
+        </div>
+        <div class="col-sm-1">
+          <paper-textarea label="Year"></paper-textarea>
+        </div>
+        <div class="col-sm-3">
+          <paper-textarea label="Event"></paper-textarea>
+        </div>
+        <div class="col-sm-3">
+          <paper-textarea label="Details of Prize/Awards/POsition"></paper-textarea>
+        </div>
+      </div>
+
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-1">
+          <paper-textarea label="S.No"></paper-textarea>
+        </div>
+        <div class="col-sm-3">
+          <paper-textarea label="Field"></paper-textarea>
+        </div>
+        <div class="col-sm-1">
+          <paper-textarea label="Year"></paper-textarea>
+        </div>
+        <div class="col-sm-3">
+          <paper-textarea label="Event"></paper-textarea>
+        </div>
+        <div class="col-sm-3">
+          <paper-textarea label="Details of Prize/Awards/POsition"></paper-textarea>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-1">
+          <paper-textarea label="S.No"></paper-textarea>
+        </div>
+        <div class="col-sm-3">
+          <paper-textarea label="Field"></paper-textarea>
+        </div>
+        <div class="col-sm-1">
+          <paper-textarea label="Year"></paper-textarea>
+        </div>
+        <div class="col-sm-3">
+          <paper-textarea label="Event"></paper-textarea>
+        </div>
+        <div class="col-sm-3">
+          <paper-textarea label="Details of Prize/Awards/POsition"></paper-textarea>
+        </div>
+      </div>
+      <div class="form-group-heading">
+        <h4>Particulars of Family</h4>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <paper-input label="Father's Name"></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <paper-input label="Mother's Name"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <paper-input label="Father's Date of Birth"></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <paper-input label="Mother's Date of Birth"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <paper-input label="Father's Edn. Professional Qualification"></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <paper-input label="Mother's Edn. Professional Qualification"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <paper-input label="Father's Occupation"></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <paper-input label="Mother's Occupation"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <paper-input label="Father's Annual Income"></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <paper-input label="Mother's Annual Income"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <paper-input label="Father's Office Tel.No"></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <paper-input label="Mother's Office Tel.No"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <paper-input label="Father's Mobile"></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <paper-input label="Mother's Mobile"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <paper-input label="Father's Email ID"></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <paper-input label="Mother's Email ID"></paper-input>
+        </div>
+      </div>
+      <div class="form-group-heading">
+        <h4>Permanent Residential Address</h4>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <paper-input label="Village/Town"></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <paper-input label="District"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <paper-input label="State"></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <paper-input label="Pincode"></paper-input>
+        </div>
+      </div>
+      <div class="form-group-heading">
+        <h4>Local Guardian</h4>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <paper-input label="Relationship"></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <paper-input label="Guardian's Name"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <paper-input label="Relationship"></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <paper-input label="Guardian's Name"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-4">
+          <paper-input label="Flat/House No"></paper-input>
+        </div>
+        <div class="col-sm-4">
+          <paper-input label="Building Name"></paper-input>
+        </div>
+        <div class="col-sm-4">
+          <paper-input label="Street/Road"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-3">
+          <paper-input label="Village/Town"></paper-input>
+        </div>
+        <div class="col-sm-3">
+          <paper-input label="City"></paper-input>
+        </div>
+        <div class="col-sm-3">
+          <paper-input label="State"></paper-input>
+        </div>
+        <div class="col-sm-3">
+          <paper-input label="Pincode"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <paper-input label="Contact No (Residential)"></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <paper-input label="Contact No (Office)"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <paper-input label="Mobile Number"></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <paper-input label="Fax"></paper-input>
+        </div>
+      </div>
+      <div class="form-group-heading">
+        <h4>Acknowledgement</h4>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+       <p class="p">I certify that information furnished above is complete and correct to the best of my knowledge</p>
+        <div class="col-sm-6">
+          <paper-input label="Date"></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <paper-input label="Signature of Father/Mother/Guardian"></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <paper-input label="Place"></paper-input>
+        </div>
+      </div>
+      <div class="form-group-heading">
+        <h4>For Office Use Only</h4>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <paper-input label="Applied for admission in class"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <paper-input label="Granted admission in class"></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <paper-input label="Authorised Signatory"></paper-input>
+        </div>
+      </div>
+    <div class="col-md-12 form-button">
+        <paper-button class="btn btn-primary" on-click="submit">SUBMIT</paper-button>
+      </div>
+    </div>
   </template>
   <script>
   (function() {
