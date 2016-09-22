@@ -10,6 +10,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 <link rel="import" href="../detailed-enquiry-form/detailed-enquiry-form.html">
+<link rel="import" href="../admission-form/admission-form.html">
 <dom-module id="navigation-bar">
   <template>
     <style>
@@ -276,7 +277,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <a href=""><i class="fa fa-calendar fa-fw"></i> Follow Up</a>
           </li>
           <li id="admission">
-            <a href=""><i class="fa fa-check fa-fw"></i>Admission</a>
+            <a href="" aria-hidden="true" data-toggle="modal" data-target="#newadmission"><i class="fa fa-check fa-fw"></i>Admission</a>
           </li>
           <li id="admform">
             <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Admission Form<!-- <span class="fa arrow"></span> --></a>
@@ -376,6 +377,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </div>
       </div>
     </div>
+    <div class="modal fade bd-example-modal-lg" id="newadmission" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="center-block event-title" id="admission-title">
+            Admission
+          </h4>
+        </div>
+        <div class="modal-body">
+          <admission-form></admission-form>
+        </div>
+      </div>
+    </div>
+  </div>
   </template>
   <script>
   (function() {
