@@ -101,9 +101,25 @@
           <paper-input label="Designation" value="{{motherjob}}"></paper-input>
         </div>
       </div>
+      <div class="form-group-heading">
+        <h4>Residential Address</h4>
+      </div>
       <div class="list-group col-sm-12 panel-body form-category">
-        <label>Residential Address</label>
-        <iron-autogrow-textarea style="width: 100%;" value="{{address}}"></iron-autogrow-textarea>
+        <div class="col-sm-6">
+          <paper-textarea label="Address Line 1"></paper-textarea>
+        </div>
+        <div class="col-sm-6">
+          <paper-textarea label="Address Line 2"></paper-textarea>
+        </div>
+        <div class="col-sm-6">
+          <paper-textarea label="Address Line 3"></paper-textarea>
+        </div>
+        <div class="col-sm-6">
+          <paper-input label="City" value="{{city}}"></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <paper-input label="Pincode" value="{{pincode}}"></paper-input>
+        </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">

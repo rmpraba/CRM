@@ -30,18 +30,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <div class="list-group">
         <div class="col-sm-4">Enquired</div>
         <div class="col-sm-4">Applied</div>
-        <div class="col-sm-4">Rejected</div>
       </div>
       <div class="list-group list-group-item enquiry-list-item">
         <h5>Grade 1</h5>
         <div class="col-sm-4">
-         <a href="" class="enquired">8</a>
+         <a href="" class="enquired" id="grade1enquired">8</a>
         </div>
         <div class="col-sm-4">
           <a href="" class="applied">5</a>
-        </div>
-        <div class="col-sm-4">
-          <a href="" class="rejected">6</a>
         </div>
       </div>
       <div class="list-group list-group-item enquiry-list-item">
@@ -52,9 +48,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <div class="col-sm-4">
           <a href="" class="applied">8</a>
         </div>
-        <div class="col-sm-4">
-          <a href="" class="rejected">7</a>
-        </div>
       </div>
       <div class="list-group list-group-item enquiry-list-item">
         <h5>Grade 3</h5>
@@ -63,9 +56,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </div>
         <div class="col-sm-4">
           <a href="" class="applied">7</a>
-        </div>
-        <div class="col-sm-4">
-          <a href="" class="rejected">3</a>
         </div>
       </div>
       <div class="list-group list-group-item enquiry-list-item">
@@ -76,9 +66,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <div class="col-sm-4">
           <a href="" class="applied">4</a>
         </div>
-        <div class="col-sm-4">
-          <a href="" class="rejected">9</a>
-        </div>
       </div>
       <div class="list-group list-group-item enquiry-list-item">
         <h5>Grade 5</h5>
@@ -87,9 +74,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </div>
         <div class="col-sm-4">
           <a href="" class="applied">6</a>
-        </div>
-        <div class="col-sm-4">
-          <a href="" class="rejected">5</a>
         </div>
       </div>
       <div class="list-group list-group-item enquiry-list-item">
@@ -100,9 +84,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <div class="col-sm-4">
           <a href="" class="applied">6</a>
         </div>
-        <div class="col-sm-4">
-          <a href="" class="rejected">8</a>
-        </div>
       </div>
       <div class="list-group list-group-item enquiry-list-item">
         <h5>Grade 7</h5>
@@ -111,9 +92,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </div>
         <div class="col-sm-4">
           <a href="" class="applied">6</a>
-        </div>
-        <div class="col-sm-4">
-          <a href="" class="rejected">9</a>
         </div>
       </div>
       <div class="list-group list-group-item enquiry-list-item">
@@ -124,9 +102,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <div class="col-sm-4">
           <a href="" class="applied">5</a>
         </div>
-        <div class="col-sm-4">
-          <a href="" class="rejected">7</a>
-        </div>
       </div>
       <div class="list-group list-group-item enquiry-list-item">
         <h5>Grade 9</h5>
@@ -136,9 +111,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <div class="col-sm-4">
           <a href="" class="applied">3</a>
         </div>
-        <div class="col-sm-4">
-          <a href="" class="rejected">1</a>
-        </div>
       </div>
       <div class="list-group list-group-item enquiry-list-item">
         <h5>Grade 10</h5>
@@ -147,9 +119,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </div>
         <div class="col-sm-4">
           <a href="" class="applied">0</a>
-        </div>
-        <div class="col-sm-4">
-          <a href="" class="rejected">12</a>
         </div>
       </div>
     </div>
@@ -166,6 +135,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </div>
             <div class="modal-body">
               <newenquiry-card></newenquiry-card>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade bd-example-modal-lg" id="grade1enquired" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <h4 class="center-block event-title" id="Enquiry Details">
+                Grade 1
+              </h4>
+            </div>
+            <div class="modal-body">
+              <enquiry-details-card></enquiry-details-card>
             </div>
           </div>
         </div>
