@@ -36,13 +36,13 @@
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
           <div class="col-sm-4">
-            <paper-input label="Student First Name" value="{{studentname}}"></paper-input>
+            <paper-input label="First Name" value="{{firstname}}"></paper-input>
           </div>
           <div class="col-sm-4">
-            <paper-input label="Student Middle Name" value="{{studentname}}"></paper-input>
+            <paper-input label="Middle Name" value="{{middlename}}"></paper-input>
           </div>
           <div class="col-sm-4">
-            <paper-input label="Student Last Name" value="{{studentname}}"></paper-input>
+            <paper-input label="Last Name" value="{{lastname}}"></paper-input>
           </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
@@ -171,8 +171,8 @@ ready:function () {
           grade=(e.target.selectedItem.textContent).trim();
       },
       submit:function () {
-        alert("submit"+this.enqno+academicyear+grade+this.studentname+gender+dobdate+this.fathername+this.mothername+this.mob+this.email+this.textvalue);
-        this.$.service.submitenqiry(this.enqno,academicyear,grade,this.studentname,gender,dobdate,this.fathername,this.mothername,this.mob,this.email,this.textvalue);
+        alert("submit"+this.enqno+academicyear+grade+this.firstname+this.middlename+this.lastname+gender+dobdate+this.fathername+this.mothername+this.mob+this.email+this.textvalue);
+        this.$.service.submitenqiry(this.enqno,academicyear,grade,this.firstname,this.middlename,this.lastname,gender,dobdate,this.fathername,this.mothername,this.mob,this.email,this.textvalue);
 
       },
       Fnacademicyr:function(e){

@@ -48,7 +48,7 @@ app.post('/loginpage',  urlencodedParser,function (req, res)
 /*This function is used to submit the simple enquiry details of the student for the first time*/
 app.post('/submitenquiry',  urlencodedParser,function (req, res)
 {
-  var collection={"enquiry_no":req.query.id,"school_id":req.query.schol,"academic_year":req.query.acadeyr,"class":req.query.grade,"mob":req.query.contact,"gender":req.query.gender,"student_name":req.query.stname,"dob":req.query.dobs,"father_name":req.query.father,"locality":req.query.location,"mother_name":req.query.mother,"email":req.query.email};
+  var collection={"enquiry_no":req.query.id,"school_id":req.query.schol,"academic_year":req.query.acadeyr,"class":req.query.grade,"mob":req.query.contact,"gender":req.query.gender,"first_name":req.query.firstname,"middle_name":req.query.middlename,"last_name":req.query.lastname,"dob":req.query.dobs,"father_name":req.query.father,"locality":req.query.location,"mother_name":req.query.mother,"email":req.query.email};
 
        connection.query('insert into student_enquiry_details set ? ',[collection],
         function(err, rows)

@@ -104,17 +104,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
    var seqno;
     Polymer({
       is: 'crm-service',
-     submitenqiry:function(enqno,academicyear,grade,studentname,gender,dob,fathername,mothername,mob,email,textvalue){
+     submitenqiry:function(enqno,academicyear,grade,Fnfirstname,Fnmiddlename,Fnlastname,gender,dob,fathername,mothername,mob,email,textvalue){
       //alert(enqno+academicyr+classes+studentname+gender+dob+mob+source+locality+category);
         this.submitenquiryurl="http://localhost:8086/submitenquiry";
-        var obj={"id":"","schol":"","acadeyr":"","contact":"","grade":"","gender":"","stname":"","dobs":"","father":"","mother":"","email":"","location":""}
+        var obj={"id":"","schol":"","acadeyr":"","contact":"","grade":"","gender":"","firstname":"","middlename":"","lastname":"","dobs":"","father":"","mother":"","email":"","location":""}
         obj.id=enqno;
         obj.schol=localStorage.getItem("schoolid");
         obj.acadeyr=academicyear;
         obj.grade=grade;
         obj.contact=mob;
         obj.gender=gender;
-        obj.stname=studentname;
+        obj.firstname=Fnfirstname;
+        obj.middlename=Fnmiddlename;
+        obj.lastname=Fnlastname;
         obj.dobs=dob;
         obj.father=fathername;
         obj.mother=mothername;
