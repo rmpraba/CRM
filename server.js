@@ -295,7 +295,7 @@ app.post('/getenqirydetails',  urlencodedParser,function (req, res)
     else
     {
       console.log(err);
-      res.status(200).json({'returnval': 'invalid'});
+      res.status(200).json({'returnval': ''});
     }
   }
     else{

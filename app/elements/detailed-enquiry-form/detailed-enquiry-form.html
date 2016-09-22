@@ -145,10 +145,13 @@
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
-          <span><paper-checkbox id="transport" class="checkbox" on-change="transportHandler">Like to Avail Transport ?</paper-checkbox></span>
+          Like to Avail Transport ?<span><paper-checkbox id="transportyes" class="checkbox" on-change="transportHandleryes">Yes</paper-checkbox></span>
+          <span><paper-checkbox id="transportno" class="checkbox" on-change="transportHandlerno">No</paper-checkbox></span>
         </div>
         <div class="col-sm-6">
-          <span><paper-checkbox id="canteen" class="checkbox" on-change="canteenHandler">Like to Avail Canteen Facility ?</paper-checkbox></span>
+        Like to Avail Canteen Facility ?
+          <span><paper-checkbox id="canteenyes" class="checkbox" on-change="canteenHandleryes">Yes</paper-checkbox></span>
+          <span><paper-checkbox id="canteenno" class="checkbox" on-change="canteenHandlerno">No</paper-checkbox></span>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
@@ -168,6 +171,8 @@
       <div class="col-md-12 form-button">
         <paper-button class="btn btn-primary" on-click="submit">SUBMIT</paper-button>
       </div>
+
+
        <crm-service id="service"></crm-service>
     </div>
   </template>
@@ -189,7 +194,7 @@
         this.$.service.getenqirydetails(enqno);
       },
       Fnresult:function(dob,gender){
-        alert(gender);
+        //alert(gender);
         var dt1=new Date(dob);
           
           var dt=new Date();
@@ -226,35 +231,64 @@
          //alert(gender);
        }
     },
-    transportHandler:function(){
-      if(document.querySelector("#transport").checked==true)
+    transportHandleryes:function(){
+      if(document.querySelector("#transportyes").checked==true)
       {
         transportreq="yes";
+        document.querySelector("#transportno").checked=false;
       }
       else{
-        transportreq="no";
+        transportreq=null;
       }
     },
-    canteenHandler:function(){
-      if(document.querySelector("#canteen").checked==true)
+    transportHandlerno:function(){
+        if(document.querySelector("#transportno").checked==true)
       {
-        canteenreq="yes";
+        transportreq="no";
+        document.querySelector("#transportyes").checked=false;
       }
       else{
-        canteenreq="no";
+        transportreq=null;
+      }
+     
+    },
+    canteenHandleryes:function(){
+      if(document.querySelector("#canteenyes").checked==true)
+      {
+        canteenreq="yes";
+        document.querySelector("#canteenno").checked=false;
+      }
+      else{
+        canteenreq=null;
       }
       
+    },
+    canteenHandlerno:function(){
+      if(document.querySelector("#canteenno").checked==true)
+      {
+        canteenreq="no";
+        document.querySelector("#canteenyes").checked=false;
+      }
+      else{
+        canteenreq=null;
+      }
     },
     secondhindiHandler:function(){
       if(document.querySelector("#secondhindi").checked==true){
         secondlanguage="Hindi";
         document.querySelector("#secondkannada").checked=false;
       }
+      else{
+        secondlanguage=null;
+      }
     },
     secondkannadaHandler:function(){
       if(document.querySelector("#secondkannada").checked==true){
         secondlanguage="Kannada";
         document.querySelector("#secondhindi").checked=false;
+      }
+      else{
+        secondlanguage=null;
       }
     },
     thirdfrenchHandler:function(){
@@ -264,22 +298,44 @@
         document.querySelector("#thirdkannada").checked=false;
         document.querySelector("#thirdsanskrit").checked=false;
       }      
+      else{
+        thirdlanguage=null;
+      }    
     },
     thirdhindiHandler:function(){
       if(document.querySelector("#thirdhindi").checked==true){
-        thirdlanguage="Hindi";
+        if(secondlanguage=='Hindi'){
+            alert("Kindly select different third language");
+            document.querySelector("#thirdhindi").checked=false;
+        }
+        else{
+            thirdlanguage="Hindi";  
+        }
+        
         document.querySelector("#thirdfrench").checked=false;
         document.querySelector("#thirdkannada").checked=false;
         document.querySelector("#thirdsanskrit").checked=false;
-      }      
+      }  
+      else{
+        thirdlanguage=null;
+      }    
     },
     thirdkannadaHandler:function(){
       if(document.querySelector("#thirdkannada").checked==true){
-        thirdlanguage="Kannada";
+        if(secondlanguage=='Kannada'){
+            alert("Kindly select different third language");
+            document.querySelector("#thirdhindi").checked=false;
+        }
+        else{
+            thirdlanguage="Kannada";  
+        }
         document.querySelector("#thirdfrench").checked=false;
         document.querySelector("#thirdhindi").checked=false;
         document.querySelector("#thirdsanskrit").checked=false;
       }      
+      else{
+        thirdlanguage=null;
+      }    
     },
     thirdsanskritHandler:function(){
       if(document.querySelector("#thirdsanskrit").checked==true){
@@ -287,6 +343,9 @@
         document.querySelector("#thirdfrench").checked=false;
         document.querySelector("#thirdhindi").checked=false;
         document.querySelector("#thirdkannada").checked=false;
+      }    
+      else{
+        thirdlanguage=null;
       }      
     },
     source:function(e){

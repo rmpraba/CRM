@@ -155,7 +155,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      },
      submitenquiryResponse:function(e){
       var result=e.detail.response.returnval;
-      if(result="success"){
+      if(result=="success"){
         alert("Submited Successfully");
 
         this.updatesequrl="http://localhost:8086/updateseq";
@@ -289,6 +289,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       //alert(JSON.stringify(result));
       //alert(document.querySelector('detail-enquiry-form'));
       //alert(result[0].first_name);
+      if(result.length>=0){
       document.querySelector('detailed-enquiry-form').firstname=result[0].first_name;
       document.querySelector('detailed-enquiry-form').middlename=result[0].middle_name;
       document.querySelector('detailed-enquiry-form').lastname=result[0].last_name;
@@ -299,6 +300,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       document.querySelector('detailed-enquiry-form').fathermail=result[0].father_email;
       document.querySelector('detailed-enquiry-form').grade=result[0].class;
       document.querySelector('detailed-enquiry-form').Fnresult(result[0].dob,result[0].gender);
+    }
+    else{
+      alert('Invalid Enquiry number');
+    }
      },
      checkmobileno:function(mobile){
           this.verifymobilenourl="http://localhost:8086/verifymobileno";
