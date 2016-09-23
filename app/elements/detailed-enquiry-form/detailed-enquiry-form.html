@@ -44,14 +44,43 @@
         <div class="col-sm-6">
           <paper-input label="Age as on 31st March 2016" value="{{age}}"></paper-input>
         </div>
+        <div class="col-sm-6">
+          <paper-dropdown-menu label="Mother Tongue" >
+            <paper-menu id="language" class="dropdown-content" required on-iron-select="language" valueattr="value" >
+              <paper-item >Assamese</paper-item>
+              <paper-item >Bengali</paper-item>
+              <paper-item >Bodo</paper-item>
+              <paper-item >Dogri</paper-item>
+              <paper-item >Gujarati</paper-item>
+              <paper-item >Hindi</paper-item>
+              <paper-item >Kannada</paper-item>
+              <paper-item >Kashmiri</paper-item>
+              <paper-item >Konkani</paper-item>
+              <paper-item >Maithili</paper-item>
+              <paper-item >Malayalam</paper-item>
+              <paper-item >Manipuri</paper-item>
+              <paper-item >Marathi</paper-item>
+              <paper-item >Nepali</paper-item>
+              <paper-item >Odia</paper-item>
+              <paper-item >Punjabi</paper-item>
+              <paper-item >Sanskrit</paper-item>
+              <paper-item >Santali</paper-item>
+              <paper-item >Sindhi</paper-item>
+              <paper-item >Tamil</paper-item>
+              <paper-item >Telugu</paper-item>
+              <paper-item >Urdu</paper-item>
+            </paper-menu>
+          </paper-dropdown-menu>
+        </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
-          <paper-input label="Present School and Class" id="oldschool" required error-message="needs old school details!" value="{{oldclass}}"></paper-input>
+          <paper-input label="Present Class" id="oldsclass" required error-message="needs currently studying grade!" value="{{oldclass}}"></paper-input>
         </div>
         <div class="col-sm-6">
-          <paper-input label="Mother Tongue" id="tongue" required error-message="needs mother tongue!" allowed-pattern="[a-zA-Z ]" value="{{mothertongue}}"></paper-input>
+          <paper-input label="Present School" id="oldschool" required error-message="needs old school details!" value="{{oldschool}}"></paper-input>
         </div>
+        
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
@@ -136,11 +165,15 @@
               <paper-item >Referrer</paper-item>
               <paper-item >Weblinks</paper-item>
               <paper-item >Website</paper-item>
+              <paper-item >Siblings</paper-item>
             </paper-menu>
           </paper-dropdown-menu>
         </div>
         <div class="col-sm-6">
-          <paper-input label="Names and classes of siblinngs" value="{{siblingname}}"></paper-input>
+          <paper-input id="sibname" label="Names of siblinngs" value="{{siblingname}}"></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <paper-input id="sibdetail" label="Classes of siblinngs" value="{{siblingdetails}}"></paper-input>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
@@ -152,6 +185,11 @@
         Like to Avail Canteen Facility ?
           <span><paper-checkbox id="canteenyes" class="checkbox" on-change="canteenHandleryes">Yes</paper-checkbox></span>
           <span><paper-checkbox id="canteenno" class="checkbox" on-change="canteenHandlerno">No</paper-checkbox></span>
+        </div>
+        <div class="col-sm-6">
+        Prospectus sold or not ?
+          <span><paper-checkbox id="prosoldyes" class="checkbox" on-change="prosoldHandleryes">Yes</paper-checkbox></span>
+          <span><paper-checkbox id="prosoldno" class="checkbox" on-change="prosoldHandlerno">No</paper-checkbox></span>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
@@ -186,8 +224,14 @@
         var canteenreq;
         var enquiysource;
         var enqno;
+        var propsold;
+        var mothertongue;
     Polymer({
       is: 'detailed-enquiry-form',
+      ready:function(){
+          this.$.sibname.disabled=true;
+          this.$.sibdetail.disabled=true;
+      },
       search:function(){
         enqno=document.getElementById('searchtext').value;
         //alert(this.enqno+'    '+enqno);
@@ -222,6 +266,9 @@
          fngender="Male";
          //alert(gender);
        }
+       else{
+        fngender=null;
+       }
     },
     femaleHandler:function(){
       if(document.querySelector("#female").checked==true)
@@ -229,6 +276,9 @@
          document.querySelector("#male").checked=false;
          fngender="Female";
          //alert(gender);
+       }
+       else{
+        fngender=null;
        }
     },
     transportHandleryes:function(){
@@ -272,6 +322,27 @@
       else{
         canteenreq=null;
       }
+    },
+    prosoldHandleryes:function(){
+      if(document.querySelector("#prosoldyes").checked==true)
+      {
+        propsold="yes";
+        document.querySelector("#prosoldno").checked=false;
+      }
+      else{
+        propsold=null;
+      }
+    },
+    prosoldHandlerno:function(){
+        if(document.querySelector("#prosoldno").checked==true)
+      {
+        propsold="no";
+        document.querySelector("#prosoldyes").checked=false;
+      }
+      else{
+        propsold=null;
+      }
+     
     },
     secondhindiHandler:function(){
       if(document.querySelector("#secondhindi").checked==true){
@@ -350,15 +421,26 @@
     },
     source:function(e){
         enquiysource=(e.target.selectedItem.textContent).trim();
+
+        if(enquiysource=="Siblings"){
+          this.$.sibname.disabled=false;
+          this.$.sibdetail.disabled=false;
+        }else{
+          this.$.sibname.disabled=true;
+          this.$.sibdetail.disabled=true;
+        }
+    },
+    language:function(){
+        mothertongue=(e.target.selectedItem.textContent).trim();
     },
     submit:function(){
-      if(this.firstname==""||this.middlename==""||this.lastname==""||this.grade==""||this.oldclass==""||this.mothertongue==""||this.fathername==""||this.mothername==""||this.fatheredu==""||this.motheredu==""||this.fathermob==""||this.mothermob==""||this.fathermail==""||this.mothermail==""||this.fathercompany==""||this.mothercompany==""||this.fatherjob==""||this.motherjob==""||this.address1==""||this.address2==""||this.address3==""||this.city==""||this.pincode==""){
+      if(this.firstname==""||this.middlename==""||this.lastname==""||this.grade==""||this.oldclass==""||this.oldschool==""||this.mothertongue==""||this.fathername==""||this.mothername==""||this.fatheredu==""||this.motheredu==""||this.fathermob==""||this.mothermob==""||this.fathermail==""||this.mothermail==""||this.fathercompany==""||this.mothercompany==""||this.fatherjob==""||this.motherjob==""||this.address1==""||this.address2==""||this.address3==""||this.city==""||this.pincode==""){
           this.$.fname.validate();
           this.$.mname.validate();
           this.$.lname.validate();
           this.$.grade.validate();
           this.$.oldschool.validate();
-          this.$.tongue.validate();
+          this.$.oldclass.validate();
           this.$.dadname.validate();
           this.$.momname.validate();
           this.$.dadedu.validate();
@@ -383,6 +465,9 @@
       else if(enquiysource==null){
           alert('Select the enquiry source');
       }
+      else if(mothertongue==null){
+          alert('Select the mother tongue');
+      }
       else if(transportreq==null){
           alert('Select the transport requirment');
       }
@@ -395,11 +480,11 @@
       else if(thirdlanguage==null){
           alert('Select the third language');
       }
-     /* else if(){
-
-      }*/
+      else if(propsold==null){
+          alert('Prospectus sold status is not marked');
+      }
       else{
-      this.$.service.updateenquiryform(enqno,this.firstname,this.middlename,this.lastname,fngender,this.grade,this.dob,this.oldclass,this.mothertongue,this.fathername,this.mothername,this.fatheredu,this.motheredu,this.fathermob,this.mothermob,this.fathermail,this.mothermail,this.fathercompany,this.mothercompany,this.fatherjob,this.motherjob,this.address1,this.address2,this.address3,this.city,this.pincode,enquiysource,this.siblingname,transportreq,canteenreq,secondlanguage,thirdlanguage);
+      this.$.service.updateenquiryform(enqno,this.firstname,this.middlename,this.lastname,fngender,this.grade,this.dob,this.oldclass,this.oldschool,mothertongue,this.fathername,this.mothername,this.fatheredu,this.motheredu,this.fathermob,this.mothermob,this.fathermail,this.mothermail,this.fathercompany,this.mothercompany,this.fatherjob,this.motherjob,this.address1,this.address2,this.address3,this.city,this.pincode,enquiysource,this.siblingname,this.siblingdetails,transportreq,canteenreq,secondlanguage,thirdlanguage,propsold);
     }
 }
     });
