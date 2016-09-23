@@ -9,15 +9,113 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\nextfollowupdate-card\nextfollowupdate-card.html">
 
 <dom-module id="followup-card">
   <template>
-    <style>
-      :host {
-        display: block;
-      }
-    </style>
-    <div>Hello from <span>{{foo}}</span></div>
+    <div class="row enquiry-form">
+      <div class="list-group col-sm-12 panel-body form-category">
+        <table class="table table-hover">
+          <thead>
+          <tr>
+            <th>Student Name</th>
+            <th>Parent Name</th>
+            <th>Mobile No</th>
+            <th>Class</th>
+            <th>Enquired On</th>
+            <th>Last Follow Up</th>
+            <th>Follow Up</th>
+            <th>Confidence Level</th>
+            <th>Next Follow Up Date</th>
+            <th>Comments</th>
+          </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="followup-field">Mark Otto</td>
+              <td class="followup-field">Mark Otto</td>
+              <td class="followup-field">9689543543</td>
+              <td class="followup-field">LKG</td>
+              <td class="followup-field">22/09/2016</td>
+              <td class="followup-field">22/09/2016</td>
+              <td class="followup-field">1</td>
+              <td>
+                <paper-dropdown-menu label="Prospectus Status">
+                  <paper-listbox class="dropdown-content" on-iron-select="Fnprospectusstatus">
+                    <paper-item>>90%</paper-item>
+                    <paper-item>>75%</paper-item>
+                    <paper-item>>50%</paper-item>
+                    <paper-item><50%</paper-item>
+                    <paper-item><35%</paper-item>
+                    <paper-item><10%</paper-item>
+                  </paper-listbox>
+                </paper-dropdown-menu>
+              </td>
+              <td>
+                <nextfollowupdate-card></nextfollowupdate-card>
+              </td>
+              <td>
+                <paper-input label="Comments" value="{{comments}}"></paper-input>
+              </td>
+            </tr>
+            <tr>
+              <td>Mark Otto</td>
+              <td>Mark Otto</td>
+              <td>9689543543</td>
+              <td>LKG</td>
+              <td>22/09/2016</td>
+              <td>22/09/2016</td>
+              <td>1</td>
+              <td>
+                <paper-dropdown-menu label="Prospectus Status">
+                  <paper-listbox class="dropdown-content" on-iron-select="Fnprospectusstatus">
+                    <paper-item>>90%</paper-item>
+                    <paper-item>>75%</paper-item>
+                    <paper-item>>50%</paper-item>
+                    <paper-item><50%</paper-item>
+                    <paper-item><35%</paper-item>
+                    <paper-item><10%</paper-item>
+                  </paper-listbox>
+                </paper-dropdown-menu>
+              </td>
+              <td>
+                <nextfollowupdate-card></nextfollowupdate-card>
+              </td>
+              <td>
+                <paper-input label="Comments" value="{{comments}}"></paper-input>
+              </td>
+            </tr>
+            <tr>
+              <td>Mark Otto</td>
+              <td>Mark Otto</td>
+              <td>9689543543</td>
+              <td>LKG</td>
+              <td>22/09/2016</td>
+              <td>22/09/2016</td>
+              <td>1</td>
+              <td>
+                <paper-dropdown-menu label="Prospectus Status">
+                  <paper-listbox class="dropdown-content" on-iron-select="Fnprospectusstatus">
+                    <paper-item>>90%</paper-item>
+                    <paper-item>>75%</paper-item>
+                    <paper-item>>50%</paper-item>
+                    <paper-item><50%</paper-item>
+                    <paper-item><35%</paper-item>
+                    <paper-item><10%</paper-item>
+                  </paper-listbox>
+                </paper-dropdown-menu>
+              </td>
+              <td>
+                <nextfollowupdate-card></nextfollowupdate-card>
+              </td>
+              <td>
+                <paper-input label="Comments" value="{{comments}}"></paper-input>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </template>
   <script>
   (function() {
@@ -26,13 +124,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     Polymer({
       is: 'followup-card',
 
-      properties: {
-        foo: {
-          type: String,
-          value: 'followup-card',
-          notify: true
-        }
-      }
     });
   })();
   </script>
