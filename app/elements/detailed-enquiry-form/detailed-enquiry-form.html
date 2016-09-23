@@ -83,7 +83,7 @@
         <div class="col-sm-6">
           <paper-input label="Present School" id="oldschool" required error-message="needs old school details!" value="{{oldschool}}"></paper-input>
         </div>
-        
+
       </div>
       <div class="form-group-heading">
         <h4>Parent Detail</h4>
@@ -121,7 +121,29 @@
         </div>
       </div>
       <div class="form-group-heading">
-        <h4>Parent Detail</h4>
+        <h4>Work Detail</h4>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <paper-dropdown-menu label="Father's Occupation" >
+            <paper-menu id="dadoccupation" class="dropdown-content" required on-iron-select="dadoccupation" valueattr="value" >
+              <paper-item >Nil</paper-item>
+              <paper-item >Self-Employed</paper-item>
+              <paper-item >Government Employee</paper-item>
+              <paper-item >Private Employee</paper-item>
+            </paper-menu>
+          </paper-dropdown-menu>
+        </div>
+        <div class="col-sm-6">
+          <paper-dropdown-menu label="Mother's Occupation" >
+            <paper-menu id="motheroccupation" class="dropdown-content" required on-iron-select="motheroccupation" valueattr="value" >
+              <paper-item >Nil</paper-item>
+              <paper-item >Self-Employed</paper-item>
+              <paper-item >Government Employee</paper-item>
+              <paper-item >Private Employee</paper-item>
+            </paper-menu>
+          </paper-dropdown-menu>
+        </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
@@ -137,6 +159,30 @@
         </div>
         <div class="col-sm-6">
           <paper-input id="momjob" required error-message="needs mother's designation!" label="Designation" allowed-pattern="[a-zA-Z ]" value="{{motherjob}}"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <paper-dropdown-menu label="Father's Salary" >
+            <paper-menu id="dadsalary" class="dropdown-content" required on-iron-select="dadsalary" valueattr="value" >
+              <paper-item >Nil</paper-item>
+              <paper-item >< 1 Lakh</paper-item>
+              <paper-item >1 Lakh to 2.5 Lakhs</paper-item>
+              <paper-item >2.5Lakhs to 5 Lakhs</paper-item>
+              <paper-item >> 5 Lakhs</paper-item>
+            </paper-menu>
+          </paper-dropdown-menu>
+        </div>
+        <div class="col-sm-6">
+          <paper-dropdown-menu label="Mother's Salary" >
+            <paper-menu id="mothersalary" class="dropdown-content" required on-iron-select="mothersalary" valueattr="value" >
+              <paper-item >Nil</paper-item>
+              <paper-item >< 1 Lakh</paper-item>
+              <paper-item >1 Lakh to 2.5 Lakhs</paper-item>
+              <paper-item >2.5Lakhs to 5 Lakhs</paper-item>
+              <paper-item >> 5 Lakhs</paper-item>
+            </paper-menu>
+          </paper-dropdown-menu>
         </div>
       </div>
       <div class="form-group-heading">
@@ -365,7 +411,7 @@
       else{
         propsold=null;
       }
-     
+
     },
     secondhindiHandler:function(){
       if(document.querySelector("#secondhindi").checked==true){
