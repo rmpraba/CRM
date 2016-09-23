@@ -207,7 +207,7 @@
           <paper-input id="city" required allowed-pattern="[a-zA-Z ]" error-message="needs city name!" label="City" value="{{city}}"></paper-input>
         </div>
         <div class="col-sm-3">
-          <paper-input label="State"></paper-input>
+          <paper-input id="state" required allowed-pattern="[a-zA-Z ]" error-message="needs state name!" label="State" value="{{state}}"></paper-input>
         </div>
         <div class="col-sm-3">
           <paper-input id="pin" required error-message="needs pincode!" allowed-pattern="[0-9]" maxlength="6" label="Pincode" value="{{pincode}}"></paper-input>
@@ -503,7 +503,7 @@
         mothertongue=(e.target.selectedItem.textContent).trim();
     },
     submit:function(){
-      if(this.firstname==""||this.middlename==""||this.lastname==""||this.grade==""||this.oldclass==""||this.oldschool==""||this.mothertongue==""||this.fathername==""||this.mothername==""||this.fatheredu==""||this.motheredu==""||this.fathermob==""||this.mothermob==""||this.fathermail==""||this.mothermail==""||this.fathercompany==""||this.mothercompany==""||this.fatherjob==""||this.motherjob==""||this.address1==""||this.address2==""||this.address3==""||this.city==""||this.pincode==""){
+      if(this.firstname==""||this.middlename==""||this.lastname==""||this.grade==""||this.oldclass==""||this.oldschool==""||this.mothertongue==""||this.fathername==""||this.mothername==""||this.fatheredu==""||this.motheredu==""||this.fathermob==""||this.mothermob==""||this.fathermail==""||this.address1==""||this.address2==""||this.address3==""||this.city==""||this.pincode==""||this.flat==""||this.state==""){
           this.$.fname.validate();
           this.$.mname.validate();
           this.$.lname.validate();
@@ -517,16 +517,13 @@
           this.$.dadmob.validate();
           this.$.dadmail.validate();
           this.$.mommob.validate();
-          this.$.mommail.validate();
-          this.$.dadjob.validate();
-          this.$.dadoff.validate();
-          this.$.momjob.validate();
-          this.$.momoff.validate();
+          this.$.flat.validate();
           this.$.add1.validate();
           this.$.add2.validate();
           this.$.add3.validate();
           this.$.city.validate();
           this.$.pin.validate();
+          this.$.state.validate();
       }
       else if(fngender==null){
           alert('Select the gender of the student');
@@ -553,7 +550,7 @@
           alert('Prospectus sold status is not marked');
       }
       else{
-      this.$.service.updateenquiryform(enqno,this.firstname,this.middlename,this.lastname,fngender,this.grade,this.dob,this.oldclass,this.oldschool,mothertongue,this.fathername,this.mothername,this.fatheredu,this.motheredu,this.fathermob,this.mothermob,this.fathermail,this.mothermail,this.fathercompany,this.mothercompany,this.fatherjob,this.motherjob,this.address1,this.address2,this.address3,this.city,this.pincode,enquiysource,this.siblingname,this.siblingdetails,transportreq,canteenreq,secondlanguage,thirdlanguage,propsold);
+      this.$.service.updateenquiryform(enqno,this.firstname,this.middlename,this.lastname,fngender,this.grade,this.dob,this.oldclass,this.oldschool,mothertongue,this.fathername,this.mothername,this.fatheredu,this.motheredu,this.fathermob,this.mothermob,this.fathermail,this.mothermail,this.fathercompany,this.mothercompany,this.fatherjob,this.motherjob,this.flat,this.address1,this.address2,this.address3,this.city,this.pincode,this.state,enquiysource,this.siblingname,this.siblingdetails,transportreq,canteenreq,secondlanguage,thirdlanguage,propsold);
     }
 }
     });
