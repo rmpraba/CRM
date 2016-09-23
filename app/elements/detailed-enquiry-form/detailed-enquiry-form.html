@@ -14,6 +14,9 @@
             </span>
           </div>
       </div>
+      <div class="form-group-heading">
+        <h4>Student Detail</h4>
+      </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-4 enquiry-input">
           <paper-input id="fname" required error-message="needs first name!" label="First Name" allowed-pattern="[a-zA-Z ]" value="{{firstname}}"></paper-input>
@@ -82,6 +85,9 @@
         </div>
         
       </div>
+      <div class="form-group-heading">
+        <h4>Parent Detail</h4>
+      </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
           <paper-input label="Father's Name" id="dadname" required error-message="needs father's name!" allowed-pattern="[a-zA-Z ]" value="{{fathername}}"></paper-input>
@@ -114,6 +120,9 @@
           <paper-input id="mommail" required error-message="needs mother's email id!" label="Mother's Email ID" value="{{mothermail}}"></paper-input>
         </div>
       </div>
+      <div class="form-group-heading">
+        <h4>Parent Detail</h4>
+      </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
           <paper-input id="dadoff" required error-message="needs father's company name!" allowed-pattern="[a-zA-Z ]" label="Company Name" value="{{fathercompany}}"></paper-input>
@@ -134,19 +143,27 @@
         <h4>Residential Address</h4>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
-        <div class="col-sm-6">
-          <paper-textarea id="add1" required error-message="needs address line 1!" label="Address Line 1" value="{{address1}}"></paper-textarea>
+        <div class="col-sm-4">
+          <paper-input label="Flat/House No" id="flat" required error-message="needs flat/House No!" value="{{flat}}"></paper-input>
         </div>
-        <div class="col-sm-6">
-          <paper-textarea id="add2" required error-message="needs address line 2!" label="Address Line 2" value="{{address2}}"></paper-textarea>
+        <div class="col-sm-4">
+          <paper-input label="Building Name" id="add1" required error-message="needs building name!" value="{{address1}}"></paper-input>
         </div>
-        <div class="col-sm-6">
-          <paper-textarea id="add3" required error-message="needs address line 3!" label="Address Line 3" value="{{address3}}"></paper-textarea>
+        <div class="col-sm-4">
+          <paper-input label="Street/Road" id="add2" required error-message="needs street/road name!" value="{{address2}}"></paper-input>
         </div>
-        <div class="col-sm-6">
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-3">
+          <paper-input label="Village/Town" id="add3" required error-message="needs village/town!" value="{{address3}}"></paper-input>
+        </div>
+        <div class="col-sm-3">
           <paper-input id="city" required allowed-pattern="[a-zA-Z ]" error-message="needs city name!" label="City" value="{{city}}"></paper-input>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-3">
+          <paper-input label="State"></paper-input>
+        </div>
+        <div class="col-sm-3">
           <paper-input id="pin" required error-message="needs pincode!" allowed-pattern="[0-9]" maxlength="6" label="Pincode" value="{{pincode}}"></paper-input>
         </div>
       </div>
@@ -176,6 +193,9 @@
           <paper-input id="sibdetail" label="Classes of siblinngs" value="{{siblingdetails}}"></paper-input>
         </div>
       </div>
+      <div class="form-group-heading">
+        <h4>Facility Detail</h4>
+      </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
           Like to Avail Transport ?<span><paper-checkbox id="transportyes" class="checkbox" on-change="transportHandleryes">Yes</paper-checkbox></span>
@@ -191,6 +211,9 @@
           <span><paper-checkbox id="prosoldyes" class="checkbox" on-change="prosoldHandleryes">Yes</paper-checkbox></span>
           <span><paper-checkbox id="prosoldno" class="checkbox" on-change="prosoldHandlerno">No</paper-checkbox></span>
         </div>
+      </div>
+      <div class="form-group-heading">
+        <h4>Language Preferences</h4>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
@@ -240,7 +263,7 @@
       Fnresult:function(dob,gender){
         //alert(gender);
         var dt1=new Date(dob);
-          
+
           var dt=new Date();
           var pr_year=dt.getFullYear();
           var bt_year=dt1.getFullYear();
@@ -300,7 +323,7 @@
       else{
         transportreq=null;
       }
-     
+
     },
     canteenHandleryes:function(){
       if(document.querySelector("#canteenyes").checked==true)
@@ -311,7 +334,7 @@
       else{
         canteenreq=null;
       }
-      
+
     },
     canteenHandlerno:function(){
       if(document.querySelector("#canteenno").checked==true)
@@ -368,10 +391,10 @@
         document.querySelector("#thirdhindi").checked=false;
         document.querySelector("#thirdkannada").checked=false;
         document.querySelector("#thirdsanskrit").checked=false;
-      }      
+      }
       else{
         thirdlanguage=null;
-      }    
+      }
     },
     thirdhindiHandler:function(){
       if(document.querySelector("#thirdhindi").checked==true){
@@ -380,16 +403,16 @@
             document.querySelector("#thirdhindi").checked=false;
         }
         else{
-            thirdlanguage="Hindi";  
+            thirdlanguage="Hindi";
         }
-        
+
         document.querySelector("#thirdfrench").checked=false;
         document.querySelector("#thirdkannada").checked=false;
         document.querySelector("#thirdsanskrit").checked=false;
-      }  
+      }
       else{
         thirdlanguage=null;
-      }    
+      }
     },
     thirdkannadaHandler:function(){
       if(document.querySelector("#thirdkannada").checked==true){
@@ -398,15 +421,15 @@
             document.querySelector("#thirdhindi").checked=false;
         }
         else{
-            thirdlanguage="Kannada";  
+            thirdlanguage="Kannada";
         }
         document.querySelector("#thirdfrench").checked=false;
         document.querySelector("#thirdhindi").checked=false;
         document.querySelector("#thirdsanskrit").checked=false;
-      }      
+      }
       else{
         thirdlanguage=null;
-      }    
+      }
     },
     thirdsanskritHandler:function(){
       if(document.querySelector("#thirdsanskrit").checked==true){
@@ -414,10 +437,10 @@
         document.querySelector("#thirdfrench").checked=false;
         document.querySelector("#thirdhindi").checked=false;
         document.querySelector("#thirdkannada").checked=false;
-      }    
+      }
       else{
         thirdlanguage=null;
-      }      
+      }
     },
     source:function(e){
         enquiysource=(e.target.selectedItem.textContent).trim();
