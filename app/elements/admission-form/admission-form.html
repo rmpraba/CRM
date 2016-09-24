@@ -9,10 +9,35 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\..\bower_components/iron-input/iron-input.html">
 <link rel="import" href="../dateofbirth-datepicker/dateofbirth-datepicker.html">
 
 <dom-module id="admission-form">
   <template>
+    <div class="list-group col-sm-12 panel-body form-category">
+      <div class="custom-search-form col-sm-5">
+        <div id="search" show$="{{show}}" on-click="toggleSearch">
+          <span><paper-input label="Enquiry No"></paper-input></span>
+        </div>
+      </div>
+      <div class="custom-search-form col-sm-2 paper-search">
+        <span><paper-icon-button icon="search"></paper-icon-button></span>
+      </div>
+      <div class="input-group col-sm-5">
+        <paper-dropdown-menu label="Blood Group" style="width: 100%;">
+          <paper-listbox class="dropdown-content" on-iron-select="FnBloodGroup">
+            <paper-item>A +ve</paper-item>
+            <paper-item>A -ve</paper-item>
+            <paper-item>B +ve</paper-item>
+            <paper-item>B -ve</paper-item>
+            <paper-item>O +ve</paper-item>
+            <paper-item>O -ve</paper-item>
+            <paper-item>AB +ve</paper-item>
+            <paper-item>AB -ve</paper-item>
+          </paper-listbox>
+        </paper-dropdown-menu>
+      </div>
+    </div>
     <div class="row enquiry-form">
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6 enquiry-input">

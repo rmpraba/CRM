@@ -7,6 +7,7 @@
    password : 'admin',
    database : 'mlzscrm'
  });
+
 var bodyParser = require('body-parser');
 var app = express();
 
@@ -48,7 +49,7 @@ app.post('/loginpage',  urlencodedParser,function (req, res)
 /*This function is used to submit the simple enquiry details of the student for the first time*/
 app.post('/submitenquiry',  urlencodedParser,function (req, res)
 {
-  var collection={"enquiry_no":req.query.id,"school_id":req.query.schol,"academic_year":req.query.acadeyr,"class":req.query.grade,"father_mob":req.query.contact,"gender":req.query.gender,"first_name":req.query.firstname,"middle_name":req.query.middlename,"last_name":req.query.lastname,"dob":req.query.dobs,"father_name":req.query.father,"locality":req.query.location,"mother_name":req.query.mother,"father_email":req.query.email,"created_by".req.query.createdby,"created_on":req.query.createdate};
+  var collection={"enquiry_no":req.query.id,"school_id":req.query.schol,"academic_year":req.query.acadeyr,"class":req.query.grade,"father_mob":req.query.contact,"gender":req.query.gender,"first_name":req.query.firstname,"middle_name":req.query.middlename,"last_name":req.query.lastname,"dob":req.query.dobs,"father_name":req.query.father,"locality":req.query.location,"mother_name":req.query.mother,"father_email":req.query.email,"created_by":req.query.createdby,"created_on":req.query.createdate};
 
        connection.query('insert into student_enquiry_details set ? ',[collection],
         function(err, rows)
@@ -62,7 +63,7 @@ app.post('/submitenquiry',  urlencodedParser,function (req, res)
       console.log(err);
       res.status(200).json({'returnval': 'invalid'});
     }
-  
+
 });
   });
 
@@ -88,7 +89,7 @@ app.post('/updateenquiry',  urlencodedParser,function (req, res)
       console.log(err);
       res.status(200).json({'returnval': 'invalid'});
     }
-  
+
 });
   });
 
@@ -206,7 +207,7 @@ app.post('/getstudentname',  urlencodedParser,function (req, res)
 
 app.post('/updateenquiry',  urlencodedParser,function (req, res)
 {
-  
+
   var school={"school_id":req.query.schol};
   var enquiry={"enquiry_no":req.query.id};
 
@@ -222,7 +223,7 @@ app.post('/updateenquiry',  urlencodedParser,function (req, res)
       console.log(err);
       res.status(200).json({'returnval': 'invalid'});
     }
-  
+
 });
   });
 
@@ -244,7 +245,7 @@ app.post('/updateseq',  urlencodedParser,function (req, res)
       console.log(err);
       res.status(200).json({'returnval': 'invalid'});
     }
-  
+
 });
   });
 
@@ -275,7 +276,7 @@ app.post('/updateseq',  urlencodedParser,function (req, res)
        }
      });
  });
- 
+
  /*this function is used to get the details of the particular enquiry using enquiry no*/
 app.post('/getenqirydetails',  urlencodedParser,function (req, res)
 {
