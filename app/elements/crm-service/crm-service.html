@@ -129,12 +129,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
    var seqno;
     Polymer({
       is: 'crm-service',
-     submitenqiry:function(enqno,academicyear,grade,Fnfirstname,Fnmiddlename,Fnlastname,gender,dob,fathername,mothername,mob,email,textvalue){
+     submitenqiry:function(enqno,academicyear,grade,Fnfirstname,Fnmiddlename,Fnlastname,gender,dob,fathername,mothername,mob,email,textvalue,todate){
       //alert(enqno+academicyr+classes+studentname+gender+dob+mob+source+locality+category);
-      var dt=new Date();
-        
+      
         this.submitenquiryurl="http://localhost:8086/submitenquiry";
-        var obj={"id":"","schol":"","acadeyr":"","contact":"","grade":"","gender":"","firstname":"","middlename":"","lastname":"","dobs":"","father":"","mother":"","email":"","location":"","createdby":"","createdate":""}
+        var obj={"id":"","schol":"","acadeyr":"","contact":"","grade":"","gender":"","firstname":"","middlename":"","lastname":"","dobs":"","father":"","mother":"","email":"","location":"","createdby":"","createdate":"","givenname":""}
         obj.id=enqno;
         obj.schol=localStorage.getItem("schoolid");
         obj.acadeyr=academicyear;
@@ -150,7 +149,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         obj.email=email;
         obj.location=textvalue;
         obj.createdby=localStorage.getItem("roleid");
-        obj.createdate==dt.getDate()+"/"+(dt.getMonth()+1)+"/"+dt.getFullYear();
+        obj.createdate=todate;
+        obj.givenname=Fnfirstname+' '+Fnmiddlename+' '+Fnlastname;
         this.submitenquiryparam=obj;
        //alert(JSON.stringify(obj));
         this.$.submitenquiryajax.generateRequest();
@@ -169,6 +169,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.updateseqparam=obj;
        //alert(JSON.stringify(obj));
         this.$.updateseqajax.generateRequest();
+
+
+        document.querySelector('newenquiry-card').Fnclear();
       }
       else{
         alert('Form submit interrupted');
@@ -176,9 +179,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       
      },
-     updateenquiryform:function(enqno,firstname,middlename,lastname,gender,grade,dob,oldclass,oldschool,mothertongue,fathername,mothername,fatheredu,motheredu,fathermob,mothermob,fathermail,mothermail,fathercompany,mothercompany,fatherjob,motherjob,flat,address1,address2,address3,city,pincode,state,enquiysource,siblingname,siblingdetail,transportreq,canteenreq,secondlanguage,thirdlanguage,propspectus){
+     updateenquiryform:function(enqno,firstname,middlename,lastname,gender,grade,dob,oldclass,oldschool,mothertongue,fathername,mothername,fatheredu,motheredu,fathermob,mothermob,fathermail,mothermail,fathercompany,mothercompany,fatherjob,motherjob,flat,address1,address2,address3,city,pincode,state,enquiysource,siblingname,siblingdetail,transportreq,canteenreq,secondlanguage,thirdlanguage,propspectus,dadpost,mompost,dadsalary,momsalary){
+      //alert(enqno+firstname+middlename+lastname+gender+grade+dob+oldclass+oldschool+mothertongue+fathername+mothername+fatheredu+motheredu+fathermob+mothermob+fathermail+mothermail+fathercompany+mothercompany+fatherjob+motherjob+flat+address1+address2+address3+city+pincode+state+enquiysource+siblingname+siblingdetail+transportreq+canteenreq+secondlanguage+thirdlanguage+propspectus+dadpost+mompost+dadsalary+momsalary);
       this.updateenquiryurl="http://localhost:8086/updateenquiry";
-        var obj={"schol":"","enq":"","firstname":"","middlename":"","lastname":"","gender":"","grade":"","dob":"","oldclass":"","oldschool":"","mothertongue":"","fathername":"","mothername":"","fatheredu":"","motheredu":"","fathermob":"","mothermob":"","fathermail":"","mothermail":"","fathercompany":"","mothercompany":"","fatherjob":"","motherjob":"","flatno":"","address1":"","address2":"","address3":"","city":"","pincode":"","statename":"","enquiysource":"","siblingname":"","siblingdetails":"","transportreq":"","canteenreq":"","secondlanguage":"","thirdlanguage":"","modified":"","propspect":""}
+        var obj={"schol":"","enq":"","firstname":"","middlename":"","lastname":"","gender":"","grade":"","dob":"","oldclass":"","oldschool":"","mothertongue":"","fathername":"","mothername":"","fatheredu":"","motheredu":"","fathermob":"","mothermob":"","fathermail":"","mothermail":"","fathercompany":"","mothercompany":"","fatherjob":"","motherjobfn":"","flatno":"","address1":"","address2":"","address3":"","city":"","pincode":"","statename":"","enquiysource":"","siblingname":"","siblingdetails":"","transportreq":"","canteenreq":"","secondlanguage":"","thirdlanguage":"","modified":"","propspect":"","daddesignation":"","momdesignation":"","dadincome":"","momincome":""}
         obj.schol=localStorage.getItem("schoolid");
         obj.enq=enqno;
         obj.firstname=firstname;
@@ -201,7 +205,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         obj.fathercompany=fathercompany;
         obj.mothercompany=mothercompany;
         obj.fatherjob=fatherjob;
-        obj.motherjob=motherjob;
+        obj.motherjobfn=motherjob;
         obj.flatno=flat;
         obj.address1=address1;
         obj.address2=address2;
@@ -218,8 +222,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         obj.thirdlanguage=thirdlanguage;
         obj.modified=localStorage.getItem("roleid");
         obj.propspect=propspectus;
+        obj.daddesignation=dadpost;
+        obj.momdesignation=mompost;
+        obj.dadincome=dadsalary;
+        obj.momincome=momsalary;
         this.updateenquiryparam=obj;
-       //alert(JSON.stringify(obj));
+       alert(JSON.stringify(obj));
         this.$.updateenquiryajax.generateRequest();
      },
      updateenquiryResponse:function(e){
@@ -291,7 +299,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         obj.schol=localStorage.getItem("schoolid");
         obj.enqno=enq;
         this.getenqirydetailsparam=obj;
-       alert('hello   '+JSON.stringify(obj));
+       //alert('hello   '+JSON.stringify(obj));
         this.$.getenqirydetailsajax.generateRequest(); 
      },
      getenqirydetailsResponse:function(e){

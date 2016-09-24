@@ -128,9 +128,10 @@
           <paper-dropdown-menu label="Father's Occupation" >
             <paper-menu id="dadoccupation" class="dropdown-content" required on-iron-select="dadoccupation" valueattr="value" >
               <paper-item >Nil</paper-item>
-              <paper-item >Self-Employed</paper-item>
+              <paper-item >Self Employed</paper-item>
               <paper-item >Government Employee</paper-item>
               <paper-item >Private Employee</paper-item>
+              <paper-item >House Keeper</paper-item>
             </paper-menu>
           </paper-dropdown-menu>
         </div>
@@ -138,9 +139,10 @@
           <paper-dropdown-menu label="Mother's Occupation" >
             <paper-menu id="motheroccupation" class="dropdown-content" required on-iron-select="motheroccupation" valueattr="value" >
               <paper-item >Nil</paper-item>
-              <paper-item >Self-Employed</paper-item>
+              <paper-item >Self Employed</paper-item>
               <paper-item >Government Employee</paper-item>
               <paper-item >Private Employee</paper-item>
+              <paper-item >House Keeper</paper-item>
             </paper-menu>
           </paper-dropdown-menu>
         </div>
@@ -162,7 +164,7 @@
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
-        <div class="col-sm-6">
+        <div id="dadsal" class="col-sm-6">
           <paper-dropdown-menu label="Father's Salary" >
             <paper-menu id="dadsalary" class="dropdown-content" required on-iron-select="dadsalary" valueattr="value" >
               <paper-item >Nil</paper-item>
@@ -173,7 +175,7 @@
             </paper-menu>
           </paper-dropdown-menu>
         </div>
-        <div class="col-sm-6">
+        <div id="momsal" class="col-sm-6">
           <paper-dropdown-menu label="Mother's Salary" >
             <paper-menu id="mothersalary" class="dropdown-content" required on-iron-select="mothersalary" valueattr="value" >
               <paper-item >Nil</paper-item>
@@ -295,11 +297,85 @@
         var enqno;
         var propsold;
         var mothertongue;
+        var dadoccup;
+        var momtheroccup;
+        var dadincome;
+        var momincome;
     Polymer({
       is: 'detailed-enquiry-form',
       ready:function(){
           this.$.sibname.disabled=true;
           this.$.sibdetail.disabled=true;
+          this.$.dadoff.hidden=true;
+          this.$.dadjob.hidden=true;
+          this.$.dadsal.hidden=true;
+          this.$.momoff.hidden=true;
+          this.$.momjob.hidden=true;
+          this.$.momsal.hidden=true;
+      },
+      Fnclear:function(){
+        this.ready();
+          document.getElementById('searchtext').value="";
+          this.firstname="";
+          this.middlename="";
+          this.lastname="";
+          fngender=null;
+          this.grade="";
+          this.dob="";
+          this.oldclass="";
+          this.oldschool="";
+          mothertongue=null;
+          this.fathername="";
+          this.mothername="";
+          this.fatheredu="";
+          this.motheredu="";
+          this.fathermob="";
+          this.mothermob="";
+          this.fathermail="";
+          this.mothermail="";
+          this.fathercompany="";
+          this.mothercompany="";
+          dadoccup=null;
+          momtheroccup=null;
+          this.flat="";
+          this.address1="";
+          this.address2="";
+          this.address3="";
+          this.city="";
+          this.pincode="";
+          this.state="";
+          enquiysource=null;
+          this.siblingname="";
+          this.siblingdetails="";
+          transportreq=null;
+          canteenreq=null;
+          secondlanguage=null;
+          thirdlanguage=null;
+          propsold=null;
+          this.fatherjob="";
+          this.motherjob="";
+          dadincome=null;
+          momincome=null;
+          this.$.language.selected=-1;
+          this.$.dadoccupation.selected=-1;
+          this.$.motheroccupation.selected=-1;
+          this.$.dadsalary.selected=-1;
+          this.$.mothersalary.selected=-1;
+          this.$.source.selected=-1;
+          this.$.dfmale.checked=false;
+          this.$.dffemale.checked=false;
+          this.$.transportyes.checked=false;
+          this.$.transportno.checked=false;
+          this.$.canteenyes.checked=false;
+          this.$.canteenno.checked=false;
+          this.$.prosoldyes.checked=false;
+          this.$.prosoldno.checked=false;
+          this.$.secondhindi.checked=false;
+          this.$.secondkannada.checked=false;
+          this.$.thirdfrench.checked=false;
+          this.$.thirdsanskrit.checked=false;
+          this.$.thirdkannada.checked=false;
+          this.$.thirdhindi.checked=false;
       },
       search:function(){
         enqno=document.getElementById('searchtext').value;
@@ -499,7 +575,7 @@
           this.$.sibdetail.disabled=true;
         }
     },
-    language:function(){
+    language:function(e){
         mothertongue=(e.target.selectedItem.textContent).trim();
     },
     submit:function(){
@@ -549,9 +625,52 @@
       else if(propsold==null){
           alert('Prospectus sold status is not marked');
       }
+      else if(dadoccup==null){
+          alert("Select Father's Occupation");
+      }
+      else if (momtheroccup==null) {
+          alert("Select Mother's Occupation");
+      }
       else{
-      this.$.service.updateenquiryform(enqno,this.firstname,this.middlename,this.lastname,fngender,this.grade,this.dob,this.oldclass,this.oldschool,mothertongue,this.fathername,this.mothername,this.fatheredu,this.motheredu,this.fathermob,this.mothermob,this.fathermail,this.mothermail,this.fathercompany,this.mothercompany,this.fatherjob,this.motherjob,this.flat,this.address1,this.address2,this.address3,this.city,this.pincode,this.state,enquiysource,this.siblingname,this.siblingdetails,transportreq,canteenreq,secondlanguage,thirdlanguage,propsold);
+        //alert(enqno+this.firstname+this.middlename+this.lastname+fngender+this.grade+this.dob+this.oldclass+this.oldschool+mothertongue+this.fathername+this.mothername+this.fatheredu+this.motheredu+this.fathermob+this.mothermob+this.fathermail+this.mothermail+this.fathercompany+this.mothercompany+dadoccup+momtheroccup+this.flat+this.address1+this.address2+this.address3+this.city+this.pincode+this.state+enquiysource+this.siblingname+this.siblingdetails+transportreq+canteenreq+secondlanguage+thirdlanguage+propsold+this.fatherjob+this.motherjob+dadincome+momincome);
+
+      this.$.service.updateenquiryform(enqno,this.firstname,this.middlename,this.lastname,fngender,this.grade,this.dob,this.oldclass,this.oldschool,mothertongue,this.fathername,this.mothername,this.fatheredu,this.motheredu,this.fathermob,this.mothermob,this.fathermail,this.mothermail,this.fathercompany,this.mothercompany,dadoccup,momtheroccup,this.flat,this.address1,this.address2,this.address3,this.city,this.pincode,this.state,enquiysource,this.siblingname,this.siblingdetails,transportreq,canteenreq,secondlanguage,thirdlanguage,propsold,this.fatherjob,this.motherjob,dadincome,momincome);
     }
+},
+dadoccupation:function(e){
+  dadoccup=(e.target.selectedItem.textContent).trim();
+if(dadoccup=="Self Employed"||dadoccup=="Government Employee"||dadoccup=="Private Employee"){
+      this.$.dadoff.hidden=false;
+      this.$.dadjob.hidden=false;
+      this.$.dadsal.hidden=false;
+          
+  }
+  else{
+      this.$.dadoff.hidden=true;
+      this.$.dadjob.hidden=true;
+      this.$.dadsal.hidden=true;
+  
+  }
+},
+motheroccupation:function(e){
+momtheroccup=(e.target.selectedItem.textContent).trim();
+alert(momtheroccup);
+if(momtheroccup=="Self Employed"||momtheroccup=="Government Employee"||momtheroccup=="Private Employee"){
+      this.$.momoff.hidden=false;
+      this.$.momjob.hidden=false;
+      this.$.momsal.hidden=false;
+}
+else{
+      this.$.momoff.hidden=true;
+      this.$.momjob.hidden=true;
+      this.$.momsal.hidden=true;
+}
+},
+dadsalary:function(e){
+  dadincome=(e.target.selectedItem.textContent).trim();
+},
+mothersalary:function(e){
+  momincome=(e.target.selectedItem.textContent).trim();
 }
     });
   })();
