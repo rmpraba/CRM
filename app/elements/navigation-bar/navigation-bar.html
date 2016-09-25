@@ -280,6 +280,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <li id="admission">
             <a href="" aria-hidden="true" data-toggle="modal" data-target="#newadmission"><i class="fa fa-check fa-fw"></i>Admission</a>
           </li>
+          <li id="payment">
+            <a href="" aria-hidden="true" data-toggle="modal" data-target="#feepayment"><i class="fa fa-money fa-fw"></i>Fee Payment</a>
+          </li>
           <li id="admform">
             <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Admission Form<!-- <span class="fa arrow"></span> --></a>
           </li>
@@ -408,6 +411,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </div>
           <div class="modal-body">
             <followup-card></followup-card>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade bd-example-modal-lg" id="feepayment" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="center-block event-title" id="">
+              Fee Payment
+            </h4>
+          </div>
+          <div class="modal-body">
+            <fee-card></fee-card>
           </div>
         </div>
       </div>
