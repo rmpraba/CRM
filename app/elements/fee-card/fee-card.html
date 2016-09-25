@@ -2,7 +2,135 @@
 
 <dom-module id="fee-card">
   <template>
+    <div class="row enquiry-form">
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6 enquiry-input">
+          <paper-input label="Academic Year"></paper-input>
+        </div>
+        <div class="col-sm-6 enquiry-input">
+          <paper-input label="Class"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="custom-search-form col-sm-5">
+          <div id="search" show$="{{show}}" on-click="toggleSearch">
+            <span><paper-input label="Enter Name of Enquiry No "></paper-input></span>
+          </div>
+        </div>
+        <div class="custom-search-form col-sm-2 paper-search">
+          <span><paper-icon-button icon="search"></paper-icon-button></span>
+        </div>
+        <div class="input-group col-sm-5">
+          <paper-dropdown-menu label="Blood Group" style="width: 100%;">
+            <paper-listbox class="dropdown-content" on-iron-select="FnBloodGroup">
+              <paper-item>A +ve</paper-item>
+              <paper-item>A -ve</paper-item>
+              <paper-item>B +ve</paper-item>
+              <paper-item>B -ve</paper-item>
+              <paper-item>O +ve</paper-item>
+              <paper-item>O -ve</paper-item>
+              <paper-item>AB +ve</paper-item>
+              <paper-item>AB -ve</paper-item>
+            </paper-listbox>
+          </paper-dropdown-menu>
+        </div>
+      </div>
+      <div class="form-group-heading">
+        <h4>Student Detail</h4>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6 enquiry-input">
+          <paper-input label="Student Name"></paper-input>
+        </div>
+        <div class="col-sm-6 enquiry-input">
+          <paper-input label="Parent Name"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6 enquiry-input">
+          <paper-input label="Date of Birth"></paper-input>
+        </div>
+      </div>
+      <div class="form-group-heading">
+        <h4>Residential Address</h4>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-4">
+          <paper-input label="Flat/House No"></paper-input>
+        </div>
+        <div class="col-sm-4">
+          <paper-input label="Building Name"></paper-input>
+        </div>
+        <div class="col-sm-4">
+          <paper-input label="Street/Road"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-3">
+          <paper-input label="Village/Town"></paper-input>
+        </div>
+        <div class="col-sm-3">
+          <paper-input label="City"></paper-input>
+        </div>
+        <div class="col-sm-3">
+          <paper-input label="State"></paper-input>
+        </div>
+        <div class="col-sm-3">
+          <paper-input label="Pincode"></paper-input>
+        </div>
+      </div>
+      <div class="form-group-heading">
+        <h4>Payment</h4>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <table class="table table-hover">
+          <thead>
+          <tr>
+            <th>Kid Fee</th>
+            <th>Tution Fee</th>
+            <th>Annual Fee</th>
+            <th>Registration Fee</th>
+            <th>Prospectus Fee</th>
+          </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>100</td>
 
+              <td>100</td>
+
+              <td>100</td>
+
+              <td>100</td>
+
+              <td>100</td>
+            </tr>
+            <tr>
+              <td></td>
+
+              <td>100</td>
+
+              <td>100</td>
+
+              <td></td>
+
+              <td></td>
+            </tr>
+            <tr>
+              <td></td>
+
+              <td>100</td>
+
+              <td>100</td>
+
+              <td></td>
+
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </template>
   <script>
   (function() {
