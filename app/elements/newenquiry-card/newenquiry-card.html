@@ -10,6 +10,9 @@
       }
   </style>
     <div class="row enquiry-form">
+      <div class="form-group-heading">
+        <h4>Enquiry Detail</h4>
+      </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6 enquiry-input">
           <paper-input label="Enquiry Number" readonly value="{{enqno}}"></paper-input>
@@ -21,7 +24,7 @@
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6 enquiry-input">
           <paper-dropdown-menu label="Academic Year">
-            <paper-listbox class="dropdown-content" on-iron-select="Fnacademicyr">
+            <paper-listbox id="academics" class="dropdown-content" on-iron-select="Fnacademicyr">
               <paper-item>AY-2015-2016</paper-item>
               <paper-item>AY-2016-2017</paper-item>
               <paper-item>AY-2017-2018</paper-item>
@@ -33,13 +36,16 @@
         </div>
         <div class="col-sm-6">
           <paper-dropdown-menu label="Select the Class" >
-            <paper-menu id="zone" class="dropdown-content" required on-iron-select="classes" valueattr="value" >
+            <paper-menu id="class" class="dropdown-content" required on-iron-select="classes" valueattr="value" >
               <template  is="dom-repeat" items="{{itemarr}}" as="view">
                 <paper-item >{{view.class}}</paper-item>
               </template>
             </paper-menu>
           </paper-dropdown-menu>
         </div>
+      </div>
+      <div class="form-group-heading">
+        <h4>Student Detail</h4>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
           <div class="col-sm-4">
@@ -63,6 +69,9 @@
         <div class="col-sm-6">
           <paper-input readonly label="Age(In Years)" value="{{ageofyr}}"></paper-input>
         </div>
+      </div>
+      <div class="form-group-heading">
+        <h4>Parent Detail</h4>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <!-- <div class="col-sm-6">
@@ -197,11 +206,34 @@ ready:function () {
         var dt=new Date();
         this.todaydate=dt.getDate()+"/"+(dt.getMonth()+1)+"/"+dt.getFullYear();
 
+      },Fnclear:function(){
+          this.ready();
+          this.$.academics.selected=-1;
+          this.$.class.selected=-1;
+          this.$.male.checked=false;
+          this.$.female.checked=false;
+          this.$.itemlist.selected=-1;
+          this.firstname="";
+          this.middlename="";
+          this.lastname="";
+          this.ageofyr="";
+          this.fathername="";
+          this.mothername="";
+          this.mob="";
+          this.email="";
+          this.textvalue="";
+          enqsource=null;
+         enqcategory=null;
+         dobdate=null;
+         habitatid=null;
+         academicyear=null;
+         gender=null;
+         grade=null;
       },
       classes:function(e){
           grade=(e.target.selectedItem.textContent).trim();
       },
-      
+
       Fnacademicyr:function(e){
         academicyear=(e.target.selectedItem.textContent).trim();
       },
@@ -343,7 +375,7 @@ ready:function () {
           alert('Select the respective academic year');
         }
         else{
-        this.$.service.submitenqiry(this.enqno,academicyear,grade,this.firstname,this.middlename,this.lastname,gender,dobdate,this.fathername,this.mothername,this.mob,this.email,this.textvalue);
+        this.$.service.submitenqiry(this.enqno,academicyear,grade,this.firstname,this.middlename,this.lastname,gender,dobdate,this.fathername,this.mothername,this.mob,this.email,this.textvalue,this.todaydate);
       }
       },
       verifymob:function(){

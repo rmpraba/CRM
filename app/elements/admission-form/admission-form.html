@@ -9,15 +9,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
 <link rel="import" href="..\..\bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
 <link rel="import" href="..\..\bower_components/paper-listbox/paper-listbox.html">
 <link rel="import" href="..\..\bower_components/paper-item/paper-item.html">
+
+<link rel="import" href="..\..\bower_components/iron-input/iron-input.html">
+
 <link rel="import" href="../dateofbirth-datepicker/dateofbirth-datepicker.html">
 <link rel="import" href="../admission-service/admission-service.html">
 <link rel="import" href="../crm-service/crm-service.html">
 
 <dom-module id="admission-form">
   <template>
+
     
    <div class="row enquiry-form">
       <div class="list-group col-sm-12 panel-body form-category">
@@ -43,6 +48,33 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </div>
     </div>
       <div class="row enquiry-form">
+=======
+    <div class="list-group col-sm-12 panel-body form-category">
+      <div class="custom-search-form col-sm-5">
+        <div id="search" show$="{{show}}" on-click="toggleSearch">
+          <span><paper-input label="Enquiry No"></paper-input></span>
+        </div>
+      </div>
+      <div class="custom-search-form col-sm-2 paper-search">
+        <span><paper-icon-button icon="search"></paper-icon-button></span>
+      </div>
+      <div class="input-group col-sm-5">
+        <paper-dropdown-menu label="Blood Group" style="width: 100%;">
+          <paper-listbox class="dropdown-content" on-iron-select="FnBloodGroup">
+            <paper-item>A +ve</paper-item>
+            <paper-item>A -ve</paper-item>
+            <paper-item>B +ve</paper-item>
+            <paper-item>B -ve</paper-item>
+            <paper-item>O +ve</paper-item>
+            <paper-item>O -ve</paper-item>
+            <paper-item>AB +ve</paper-item>
+            <paper-item>AB -ve</paper-item>
+          </paper-listbox>
+        </paper-dropdown-menu>
+      </div>
+    </div>
+    <div class="row enquiry-form">
+
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6 enquiry-input">
           <paper-input label="Application Number" readonly value="{{applicationno}}"></paper-input>
@@ -205,7 +237,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
-          <paper-input label="Name of School" value="{{schoolname}}"></paper-input>
+          <paper-input label="Name of School" value="{{prevschoolname}}"></paper-input>
         </div>
         <div class="col-sm-3">
           <paper-input label="Class From" value="{{classfrom}}"></paper-input>

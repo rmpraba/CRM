@@ -7,6 +7,7 @@
    password : 'admin',
    database : 'mlzscrm'
  });
+
 var bodyParser = require('body-parser');
 var app = express();
 
@@ -48,8 +49,7 @@ app.post('/loginpage',  urlencodedParser,function (req, res)
 /*This function is used to submit the simple enquiry details of the student for the first time*/
 app.post('/submitenquiry',  urlencodedParser,function (req, res)
 {
-  var collection={"enquiry_no":req.query.id,"school_id":req.query.schol,"academic_year":req.query.acadeyr,"class":req.query.grade,"father_mob":req.query.contact,"gender":req.query.gender,"first_name":req.query.firstname,"middle_name":req.query.middlename,"last_name":req.query.lastname,"dob":req.query.dobs,"father_name":req.query.father,"locality":req.query.location,"mother_name":req.query.mother,"father_email":req.query.email};
-
+  var collection={"enquiry_no":req.query.id,"school_id":req.query.schol,"academic_year":req.query.acadeyr,"class":req.query.grade,"father_mob":req.query.contact,"gender":req.query.gender,"first_name":req.query.firstname,"middle_name":req.query.middlename,"last_name":req.query.lastname,"dob":req.query.dobs,"father_name":req.query.father,"locality":req.query.location,"mother_name":req.query.mother,"father_email":req.query.email,"created_by":req.query.createdby,"created_on":req.query.createdate,"enquiry_name":req.query.givenname};
        connection.query('insert into student_enquiry_details set ? ',[collection],
         function(err, rows)
         {
@@ -62,7 +62,7 @@ app.post('/submitenquiry',  urlencodedParser,function (req, res)
       console.log(err);
       res.status(200).json({'returnval': 'invalid'});
     }
-  
+
 });
   });
 
@@ -71,7 +71,7 @@ app.post('/submitenquiry',  urlencodedParser,function (req, res)
 app.post('/updateenquiry',  urlencodedParser,function (req, res)
 {
   console.log('hello');
-  var collection={"first_name":req.query.firstname,"middle_name":req.query.middlename,"last_name":req.query.lastname,"gender":req.query.gender,"class":req.query.grade,"dob":req.query.dob,"old_class":req.query.oldclass,"mother_tongue":req.query.mothertongue,"father_name":req.query.fathername,"mother_name":req.query.mothername,"father_qualification":req.query.fatheredu,"mother_qualification":req.query.motheredu,"father_mob":req.query.fathermob,"mother_mob":req.query.mothermob,"father_email":req.query.fathermail,"mother_email":req.query.mothermail,"father_company":req.query.fathercompany,"mother_company":req.query.mothercompany,"father_occupation":req.query.fatherjob,"mother_occupation":req.query.motherjob,"address1":req.query.address1,"address2":req.query.address2,"address3":req.query.address3,"city":req.query.city,"pincode":req.query.pincode,"enquiry_source":req.query.enquiysource,"sibiling_name":req.query.siblingname,"transport_requirment":req.query.transportreq,"canteen_requirment":req.query.canteenreq,"second_language":req.query.secondlanguage,"third_language":req.query.thirdlanguage};
+  var collection={"first_name":req.query.firstname,"middle_name":req.query.middlename,"last_name":req.query.lastname,"gender":req.query.gender,"class":req.query.grade,"dob":req.query.dob,"old_class":req.query.oldclass,"old_school":req.query.oldschool,"mother_tongue":req.query.mothertongue,"father_name":req.query.fathername,"mother_name":req.query.mothername,"father_qualification":req.query.fatheredu,"mother_qualification":req.query.motheredu,"father_mob":req.query.fathermob,"mother_mob":req.query.mothermob,"father_email":req.query.fathermail,"mother_email":req.query.mothermail,"father_company":req.query.fathercompany,"mother_company":req.query.mothercompany,"father_occupation":req.query.fatherjob,"mother_occupation":req.query.motherjob,"flat_no":req.query.flatno,"address1":req.query.address1,"address2":req.query.address2,"address3":req.query.address3,"city":req.query.city,"pincode":req.query.pincode,"state":req.query.statename,"enquiry_source":req.query.enquiysource,"sibiling_name":req.query.siblingname,"sibling_detail":req.query.siblingdetails,"transport_requirment":req.query.transportreq,"canteen_requirment":req.query.canteenreq,"second_language":req.query.secondlanguage,"third_language":req.query.thirdlanguage,"updated_by":req.query.modified,"prospectus_sold":req.query.propspectus,"father_designation":req.query.daddesignation,"mother_designation":req.query.momdesignation,"father_income":req.query.dadincome,"mother_income":req.query.momincome};
   var school={"school_id":req.query.schol};
   var enquiry={"enquiry_no":req.query.enq};
 
@@ -88,7 +88,7 @@ app.post('/updateenquiry',  urlencodedParser,function (req, res)
       console.log(err);
       res.status(200).json({'returnval': 'invalid'});
     }
-  
+
 });
   });
 
@@ -206,7 +206,7 @@ app.post('/getstudentname',  urlencodedParser,function (req, res)
 
 app.post('/updateenquiry',  urlencodedParser,function (req, res)
 {
-  
+
   var school={"school_id":req.query.schol};
   var enquiry={"enquiry_no":req.query.id};
 
@@ -222,7 +222,7 @@ app.post('/updateenquiry',  urlencodedParser,function (req, res)
       console.log(err);
       res.status(200).json({'returnval': 'invalid'});
     }
-  
+
 });
   });
 
@@ -244,7 +244,7 @@ app.post('/updateseq',  urlencodedParser,function (req, res)
       console.log(err);
       res.status(200).json({'returnval': 'invalid'});
     }
-  
+
 });
   });
 
@@ -275,7 +275,7 @@ app.post('/updateseq',  urlencodedParser,function (req, res)
        }
      });
  });
- 
+
  /*this function is used to get the details of the particular enquiry using enquiry no*/
 app.post('/getenqirydetails',  urlencodedParser,function (req, res)
 {
@@ -334,7 +334,7 @@ app.post('/verifymobileno',  urlencodedParser,function (req, res)
 
 // Searching enquiry no for admission
 app.post('/searchenquiry',  urlencodedParser,function (req, res){
-    var qur="SELECT * FROM student_enquiry_details WHERE school_id='"+req.query.schoolid+"' and enquiry_no like '%"+req.query.enquiryno+"%' or enquiry_name like '%"+req.query.enquiryno+"%'";
+    var qur="SELECT * FROM student_enquiry_details WHERE school_id='"+req.query.schoolid+"' and enquiry_no like '%"+req.query.enquiryno+"%' or enquiry_name like '%"+req.query.enquiryno+"%' and status='Enquired'";
     console.log(qur);
     connection.query(qur,
     function(err, rows)
@@ -360,7 +360,7 @@ app.post('/searchenquiry',  urlencodedParser,function (req, res){
 
 // Fetching enquiry no for admission
 app.post('/fetchenquiryinfo',  urlencodedParser,function (req, res){
-    var qur="SELECT * FROM student_enquiry_details WHERE school_id='"+req.query.schoolid+"' and enquiry_no = '"+req.query.enquiryno+"'";
+    var qur="SELECT * FROM student_enquiry_details WHERE school_id='"+req.query.schoolid+"' and enquiry_no = '"+req.query.enquiryno+"' and status='Enquired'";
     console.log(qur);
     connection.query(qur,
     function(err, rows)

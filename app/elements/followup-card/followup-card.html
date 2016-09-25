@@ -9,7 +9,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
-<link rel="import" href="..\nextfollowupdate-card\nextfollowupdate-card.html">
+
 
 <dom-module id="followup-card">
   <template>
@@ -30,7 +30,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <th>Comments</th>
           </tr>
           </thead>
-          <tbody>
+          <tbody><!--
+          <template is="dom-repeat" items="{{followuparr}}" as="view">
+            <div class="students-atten">
+              <followup-item-card student="{{view.name}}" parentname="{{view.parentname}}" mobilenumber="{{view.mobilenumber}}" class="{{view.class}}" ></followup-item-card>
+            </div>
+          </template>-->
             <tr>
               <td class="followup-field">Mark Otto</td>
               <td class="followup-field">Mark Otto</td>
@@ -59,13 +64,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </td>
             </tr>
             <tr>
-              <td>Mark Otto</td>
-              <td>Mark Otto</td>
-              <td>9689543543</td>
-              <td>LKG</td>
-              <td>22/09/2016</td>
-              <td>22/09/2016</td>
-              <td>1</td>
+              <td class="followup-field">Mark Otto</td>
+              <td class="followup-field">Mark Otto</td>
+              <td class="followup-field">9689543543</td>
+              <td class="followup-field">LKG</td>
+              <td class="followup-field">22/09/2016</td>
+              <td class="followup-field">22/09/2016</td>
+              <td  class="followup-field">1</td>
               <td>
                 <paper-dropdown-menu label="Prospectus Status">
                   <paper-listbox class="dropdown-content" on-iron-select="Fnprospectusstatus">
@@ -86,13 +91,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </td>
             </tr>
             <tr>
-              <td>Mark Otto</td>
-              <td>Mark Otto</td>
-              <td>9689543543</td>
-              <td>LKG</td>
-              <td>22/09/2016</td>
-              <td>22/09/2016</td>
-              <td>1</td>
+              <td class="followup-field">Mark Otto</td>
+              <td class="followup-field">Mark Otto</td>
+              <td class="followup-field">9689543543</td>
+              <td class="followup-field">LKG</td>
+              <td class="followup-field">22/09/2016</td>
+              <td class="followup-field">22/09/2016</td>
+              <td class="followup-field">1</td>
               <td>
                 <paper-dropdown-menu label="Prospectus Status">
                   <paper-listbox class="dropdown-content" on-iron-select="Fnprospectusstatus">
