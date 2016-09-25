@@ -1,0 +1,110 @@
+
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="admission-service">
+  <template>
+   <!-- It would fetch the enquiry no's -->
+     <iron-ajax
+        method="post"
+        id="searchenquiryajax"
+        url="{{searchenquiryurl}}"
+        params="{{searchenquiryparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="searchenquiryResponse"
+        debounce-duration="300"
+        >
+    <!-- this ajax is to fetch the available classes with repect to the school -->
+   <iron-ajax
+        method="post"
+        id="getclassesajax"
+        url="{{getclassesurl}}"
+        params="{{getclassesparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getclassesResponse"
+        debounce-duration="300"
+        >
+    <!-- Component will fetch the selected enquiry info -->
+   <iron-ajax
+        method="post"
+        id="fetchenquiryinfoajax"
+        url="{{fetchenquiryinfourl}}"
+        params="{{fetchenquiryinfoparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchenquiryinfoResponse"
+        debounce-duration="300"
+        >
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'admission-service',
+      callSearchenquiryService:function(enquiryno){
+        // alert(enquiryno);
+        this.searchenquiryurl=sessionStorage.getItem("addrinfo")+"/searchenquiry";
+        var obj={"enquiryno":"","schoolid":""}
+        obj.enquiryno=enquiryno; 
+        obj.schoolid=localStorage.getItem("schoolid");     
+        this.searchenquiryparam=obj;       
+        this.$.searchenquiryajax.generateRequest();
+      },
+      searchenquiryResponse:function(e){        
+        document.querySelector('admission-form').enquiryarr=e.detail.response.returnval;        
+      },
+      callFetchenquiryinfoService:function(){
+        this.fetchenquiryinfourl=sessionStorage.getItem("addrinfo")+"/fetchenquiryinfo";
+        var obj={"enquiryno":"","schoolid":""}
+        obj.enquiryno=localStorage.getItem("curr_sess_enquiryno"); 
+        obj.schoolid=localStorage.getItem("schoolid");     
+        this.fetchenquiryinfoparam=obj;       
+        this.$.fetchenquiryinfoajax.generateRequest();
+      },
+      fetchenquiryinfoResponse:function(e){
+        var arr=e.detail.response.returnval;
+        document.querySelector('admission-form').enquiredyear=arr[0].academic_year;
+        document.querySelector('admission-form').firstname=arr[0].first_name;
+        document.querySelector('admission-form').middlename=arr[0].middle_name;
+        document.querySelector('admission-form').lastname=arr[0].last_name;
+        document.querySelector('admission-form').gradeselection=arr[0].class;
+        document.querySelector('admission-form').FnSetSecLanguage(arr[0].second_language); 
+        document.querySelector('admission-form').FnSetThirdLanguage(arr[0].third_language);
+        document.querySelector('dateofbirth-datepicker').FnSetDate(arr[0].dob);  
+        document.querySelector('admission-form').gender=arr[0].gender;
+
+        document.querySelector('admission-form').flatno=arr[0].flat_no;
+        document.querySelector('admission-form').buildingname=arr[0].address1;
+        document.querySelector('admission-form').street=arr[0].address2;
+        document.querySelector('admission-form').town=arr[0].address3;
+        document.querySelector('admission-form').city=arr[0].city;
+        document.querySelector('admission-form').state=arr[0].state;
+        document.querySelector('admission-form').pincode=arr[0].pincode;
+
+        document.querySelector('admission-form').FnSetTransport(arr[0].transport_requirement);
+        document.querySelector('admission-form').FnSetCanteen(arr[0].canteen_requirement);
+
+        document.querySelector('admission-form').siblingname=arr[0].sibling_name;
+        document.querySelector('admission-form').siblingclass=arr[0].sibling_detail;
+
+        document.querySelector('admission-form').fathename=arr[0].father_name;
+        document.querySelector('admission-form').mothername=arr[0].mother_name;
+        document.querySelector('admission-form').fatheroccupation=arr[0].father_occupation;
+        document.querySelector('admission-form').motheroccupation=arr[0].mother_occupation;
+        document.querySelector('admission-form').fatherqualification=arr[0].father_qualification;
+        document.querySelector('admission-form').motherqualification=arr[0].mother_qualification;
+        document.querySelector('admission-form').fathermobile=arr[0].father_mobile;
+        document.querySelector('admission-form').mothermobile=arr[0].mother_mobile;
+        document.querySelector('admission-form').fatheremail=arr[0].father_email;
+        document.querySelector('admission-form').motheremail=arr[0].mother_email;
+        // document.querySelector('admission-form').fatherincome=arr[0].father_income;
+        // document.querySelector('admission-form').motherincome=arr[0].mother_income;
+        document.querySelector('admission-form').mothertongue=arr[0].mother_tongue;
+      }
+    });
+  })();
+  </script>
+</dom-module>

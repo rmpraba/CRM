@@ -332,6 +332,57 @@ app.post('/verifymobileno',  urlencodedParser,function (req, res)
 });
   });
 
+// Searching enquiry no for admission
+app.post('/searchenquiry',  urlencodedParser,function (req, res){
+    var qur="SELECT * FROM student_enquiry_details WHERE school_id='"+req.query.schoolid+"' and enquiry_no like '%"+req.query.enquiryno+"%' or enquiry_name like '%"+req.query.enquiryno+"%'";
+    console.log(qur);
+    connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': ''});
+    }
+  }
+  else{
+     console.log(err);
+  }
+});
+  });
+
+
+// Fetching enquiry no for admission
+app.post('/fetchenquiryinfo',  urlencodedParser,function (req, res){
+    var qur="SELECT * FROM student_enquiry_details WHERE school_id='"+req.query.schoolid+"' and enquiry_no = '"+req.query.enquiryno+"'";
+    console.log(qur);
+    connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': ''});
+    }
+  }
+  else{
+     console.log(err);
+  }
+});
+  });
+
 function setvalue(){
   console.log("calling setvalue.....");
 }
