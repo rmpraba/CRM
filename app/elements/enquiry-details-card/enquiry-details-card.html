@@ -14,70 +14,17 @@
       </tr>
       </thead>
       <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td>Mark Otto</td>
-        <td>22/09/2016</td>
-        <td>>75%</td>
-        <td>2</td>
-        <td>22/09/2016</td>
-      </tr>
-      <tr>
-        <th scope="row">2</th>
-        <td>Jacob Thornton</td>
-        <td>22/09/2016</td>
+      <template  is="dom-repeat" items="{{listdetails}}" as="view">
+        
+        <tr><th scope="row">{{view.enquiry_no}}</th>
+        <td>{{view.enquiry_name}}</td>
+        <td>{{view.created_on}}</td>
         <td>>75%</td>
         <td>3</td>
         <td>22/09/2016</td>
       </tr>
-      <tr>
-        <th scope="row">3</th>
-        <td >Larry the Bird</td>
-        <td>22/09/2016</td>
-        <td>>75%</td>
-        <td>2</td>
-        <td>22/09/2016</td>
-      </tr>
-      <tr>
-        <th scope="row">3</th>
-        <td >Andreas Carson</td>
-        <td>22/09/2016</td>
-        <td><10%</td>
-        <td>2</td>
-        <td>22/09/2016</td>
-      </tr>
-      <tr>
-        <th scope="row">3</th>
-        <td >Laverne Elouan</td>
-        <td>22/09/2016</td>
-        <td><10%</td>
-        <td>2</td>
-        <td>22/09/2016</td>
-      </tr>
-      <tr>
-        <th scope="row">3</th>
-        <td >Hálfdan Golshan</td>
-        <td>22/09/2016</td>
-        <td><50%</td>
-        <td>2</td>
-        <td>22/09/2016</td>
-      </tr>
-      <tr>
-        <th scope="row">3</th>
-        <td >Elov Arnold</td>
-        <td>22/09/2016</td>
-        <td>>50%</td>
-        <td>2</td>
-        <td>22/09/2016</td>
-      </tr>
-      <tr>
-        <th scope="row">3</th>
-        <td >Gerlach Caden</td>
-        <td>22/09/2016</td>
-        <td>>90%</td>
-        <td>2</td>
-        <td>22/09/2016</td>
-      </tr>
+      </template>
+      
       </tbody>
     </table>
   </template>

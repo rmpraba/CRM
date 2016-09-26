@@ -9,108 +9,39 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
-
-<link rel="import" href="..\..\bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
-<link rel="import" href="..\..\bower_components/paper-listbox/paper-listbox.html">
-<link rel="import" href="..\..\bower_components/paper-item/paper-item.html">
-
-<link rel="import" href="..\..\bower_components/iron-input/iron-input.html">
-
 <link rel="import" href="../dateofbirth-datepicker/dateofbirth-datepicker.html">
-<link rel="import" href="../admission-service/admission-service.html">
-<link rel="import" href="../crm-service/crm-service.html">
 
 <dom-module id="admission-form">
   <template>
-
-    
-   <div class="row enquiry-form">
-      <div class="list-group col-sm-12 panel-body form-category">
-          <div class="input-group col-sm-5 ">
-            <input type="text" class="form-control" id="searchenquiry" placeholder="Enter Enquiry Number/Name" >
-            <span class="input-group-btn">
-              <button class="btn btn-default" on-click="FnSearchEnquiry" type="button">
-                <i class="fa fa-search"></i>
-              </button>
-            </span>
-          </div>
-          <div class="col-sm-7 ">            
-            <span class="input-group-btn">
-              <paper-dropdown-menu label="Select Enquiry No" on-iron-select="FnSelectEnquiry">
-                <paper-listbox class="dropdown-content">
-                  <template  is="dom-repeat" items="{{enquiryarr}}" as="item">
-                  <paper-item>{{item.enquiry_no}}-{{item.enquiry_name}}</paper-item> 
-                  </template>                 
-                </paper-listbox>
-              </paper-dropdown-menu>
-            </span>
-          </div>
-    </div>
-    </div>
-      <div class="row enquiry-form">
-=======
-    <div class="list-group col-sm-12 panel-body form-category">
-      <div class="custom-search-form col-sm-5">
-        <div id="search" show$="{{show}}" on-click="toggleSearch">
-          <span><paper-input label="Enquiry No"></paper-input></span>
-        </div>
-      </div>
-      <div class="custom-search-form col-sm-2 paper-search">
-        <span><paper-icon-button icon="search"></paper-icon-button></span>
-      </div>
-      <div class="input-group col-sm-5">
-        <paper-dropdown-menu label="Blood Group" style="width: 100%;">
-          <paper-listbox class="dropdown-content" on-iron-select="FnBloodGroup">
-            <paper-item>A +ve</paper-item>
-            <paper-item>A -ve</paper-item>
-            <paper-item>B +ve</paper-item>
-            <paper-item>B -ve</paper-item>
-            <paper-item>O +ve</paper-item>
-            <paper-item>O -ve</paper-item>
-            <paper-item>AB +ve</paper-item>
-            <paper-item>AB -ve</paper-item>
-          </paper-listbox>
-        </paper-dropdown-menu>
-      </div>
-    </div>
     <div class="row enquiry-form">
-
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6 enquiry-input">
-          <paper-input label="Application Number" readonly value="{{applicationno}}"></paper-input>
+          <paper-input label="Application Number" readonly value=""></paper-input>
         </div>
         <div class="col-sm-6">
-          <paper-textarea label="School" readonly value="{{schoolname}}"></paper-textarea>
+          <paper-textarea label="School" readonly value=""></paper-textarea>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6 enquiry-input">
-          <paper-input label="Enquired Year" value="{{enquiredyear}}"></paper-input>
-        </div>
-        <div class="col-sm-6 enquiry-input">
-          <paper-dropdown-menu label="Admission Year" on-iron-select="{{FnSelectAdmissionYear}}">
-              <paper-listbox class="dropdown-content">                
-                  <paper-item>AY 2016-2017</paper-item> 
-                  <paper-item>AY 2017-2018</paper-item>                               
-              </paper-listbox>
-          </paper-dropdown-menu>
+          <paper-textarea label="Contact Number" readonly value=""></paper-textarea>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-4">
-          <paper-input label="Student First Name" value="{{firstname}}"></paper-input>
+          <paper-input label="Student First Name" value="{{studentname}}"></paper-input>
         </div>
         <div class="col-sm-4">
-          <paper-input label="Student Middle Name" value="{{middlename}}"></paper-input>
+          <paper-input label="Student Middle Name" value="{{studentname}}"></paper-input>
         </div>
         <div class="col-sm-4">
-          <paper-input label="Student Last Name" value="{{lastname}}"></paper-input>
+          <paper-input label="Student Last Name" value="{{studentname}}"></paper-input>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
           <paper-dropdown-menu label="Seeking Admission for Class" style="width: 100%;">
-            <paper-menu id="admissiongrade" class="dropdown-content" required on-iron-select="FnSelectGrade" attr-for-selected="value" selected="{{gradeselection}}" >
+            <paper-menu id="zone" class="dropdown-content" required on-iron-select="classes" valueattr="value" >
               <template  is="dom-repeat" items="{{itemarr}}" as="view">
                 <paper-item >{{view.class}}</paper-item>
               </template>
@@ -121,15 +52,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
           <span class="col-sm-12"><h5>2nd Language</h5></span>
-          <span><paper-checkbox class="col-sm-6" id="Hindi" readonly class="checkbox" on-change="lang2Handler">Hindi</paper-checkbox></span>
-          <span><paper-checkbox class="col-sm-6" id="Kannada" readonly class="checkbox" on-change="lang2Handler">Kannada</paper-checkbox></span>
+          <span><paper-checkbox class="col-sm-6" id="male" readonly class="checkbox" on-change="maleHandler">Hindi</paper-checkbox></span>
+          <span><paper-checkbox class="col-sm-6" id="male" readonly class="checkbox" on-change="maleHandler">Kannada</paper-checkbox></span>
         </div>
         <div class="col-sm-6">
           <span class="col-sm-12"><h5>3rd Language</h5></span>
-          <span><paper-checkbox class="col-sm-3" id="French" readonly class="checkbox" on-change="lang3Handler">French</paper-checkbox></span>
-          <span><paper-checkbox class="col-sm-3" id="Sanskrit" readonly class="checkbox" on-change="lang3Handler">Sanskrit</paper-checkbox></span>
-          <span><paper-checkbox class="col-sm-3" id="Kannada" readonly class="checkbox" on-change="lang3Handler">Kannada</paper-checkbox></span>
-          <span><paper-checkbox class="col-sm-3" id="Hindi" readonly class="checkbox" on-change="lang3Handler">Hindi</paper-checkbox></span>
+          <span><paper-checkbox class="col-sm-3" id="male" readonly class="checkbox" on-change="maleHandler">French</paper-checkbox></span>
+          <span><paper-checkbox class="col-sm-3" id="male" readonly class="checkbox" on-change="maleHandler">Sanskrit</paper-checkbox></span>
+          <span><paper-checkbox class="col-sm-3" id="male" readonly class="checkbox" on-change="maleHandler">Kannada</paper-checkbox></span>
+          <span><paper-checkbox class="col-sm-3" id="male" readonly class="checkbox" on-change="maleHandler">Hindi</paper-checkbox></span>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
@@ -143,8 +74,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-8 enquiry-input">
           <span class="col-sm-4"><h5>Gender</h5></span>
-          <span class="col-sm-4"><paper-checkbox id="Male" readonly class="checkbox" on-change="genderHandler">Male</paper-checkbox></span>
-          <span class="col-sm-4"><paper-checkbox  id="Female" readonly class="checkbox" on-change="genderHandler">Female</paper-checkbox></span>
+          <span class="col-sm-4"><paper-checkbox id="male" readonly class="checkbox" on-change="maleHandler">Male</paper-checkbox></span>
+          <span class="col-sm-4"><paper-checkbox  id="female" readonly class="checkbox" on-change="femaleHandler">Female</paper-checkbox></span>
         </div>
       </div>
       <div class="form-group-heading">
@@ -152,27 +83,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-4">
-          <paper-input label="Flat/House No" value="{{flatno}}"></paper-input>
+          <paper-input label="Flat/House No"></paper-input>
         </div>
         <div class="col-sm-4">
-          <paper-input label="Building Name" value="{{bulidingname}}"></paper-input>
+          <paper-input label="Building Name"></paper-input>
         </div>
         <div class="col-sm-4">
-          <paper-input label="Street/Road" value="{{street}}"></paper-input>
+          <paper-input label="Street/Road"></paper-input>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-3">
-          <paper-input label="Village/Town" value="{{town}}"></paper-input>
+          <paper-input label="Village/Town"></paper-input>
         </div>
         <div class="col-sm-3">
-          <paper-input label="City" value="{{city}}"></paper-input>
+          <paper-input label="City"></paper-input>
         </div>
         <div class="col-sm-3">
-          <paper-input label="State" value="{{state}}"></paper-input>
+          <paper-input label="State"></paper-input>
         </div>
         <div class="col-sm-3">
-          <paper-input label="Pincode" value="{{pincode}}"></paper-input>
+          <paper-input label="Pincode"></paper-input>
         </div>
       </div>
       <div class="form-group-heading">
@@ -180,10 +111,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-4">
-          <paper-input label="Height" value="{{height}}"></paper-input>
+          <paper-input label="Height"></paper-input>
         </div>
         <div class="col-sm-4">
-          <paper-input label="Weight" value="{{weight}}"></paper-input>
+          <paper-input label="Weight"></paper-input>
         </div>
         <div class="col-sm-4">
           <paper-dropdown-menu label="Blood Group" style="width: 100%;">
@@ -203,22 +134,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-8">
           <span class="col-sm-12"><h5>Caste</h5></span>
-          <span><paper-checkbox class="col-sm-2" id="SC" readonly class="checkbox" on-change="casteHandler">SC</paper-checkbox></span>
-          <span><paper-checkbox class="col-sm-2" id="ST" readonly class="checkbox" on-change="casteHandler">ST</paper-checkbox></span>
-          <span><paper-checkbox class="col-sm-2" id="MBC" readonly class="checkbox" on-change="casteHandler">MBC</paper-checkbox></span>
-          <span><paper-checkbox class="col-sm-2" id="OBC" readonly class="checkbox" on-change="casteHandler">OBC</paper-checkbox></span>
-          <span><paper-checkbox class="col-sm-2" id="Others" readonly class="checkbox" on-change="casteHandler">Others</paper-checkbox></span>
+          <span><paper-checkbox class="col-sm-2" id="male" readonly class="checkbox" on-change="maleHandler">SC</paper-checkbox></span>
+          <span><paper-checkbox class="col-sm-2" id="male" readonly class="checkbox" on-change="maleHandler">ST</paper-checkbox></span>
+          <span><paper-checkbox class="col-sm-2" id="male" readonly class="checkbox" on-change="maleHandler">SC</paper-checkbox></span>
+          <span><paper-checkbox class="col-sm-2" id="male" readonly class="checkbox" on-change="maleHandler">OBC</paper-checkbox></span>
+          <span><paper-checkbox class="col-sm-2" id="male" readonly class="checkbox" on-change="maleHandler">Other</paper-checkbox></span>
         </div>
         <div class="col-sm-4">
-          <paper-input label="Relegion" value="{{relegion}}"></paper-input>
+          <paper-input label="Relegion"></paper-input>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
-          <paper-input label="Nationality" value="{{nationality}}"></paper-input>
+          <paper-input label="Nationality"></paper-input>
         </div>
         <div class="col-sm-6">
-          <paper-input label="Mother Tongue" value="{{mothertongue}}"></paper-input>
+          <paper-input label="Mother Tongue"></paper-input>
         </div>
       </div>
       <div class="form-group-heading">
@@ -226,10 +157,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
-          <paper-input label="Sibling Name" value="{{siblingname}}"></paper-input>
+          <paper-input label="Sibling Name"></paper-input>
         </div>
         <div class="col-sm-6">
-          <paper-input label="Sibling Class" value="{{siblingclass}}"></paper-input>
+          <paper-input label="Sibling Class"></paper-input>
         </div>
       </div>
       <div class="form-group-heading">
@@ -237,13 +168,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
-          <paper-input label="Name of School" value="{{prevschoolname}}"></paper-input>
+          <paper-input label="Name of School"></paper-input>
         </div>
         <div class="col-sm-3">
-          <paper-input label="Class From" value="{{classfrom}}"></paper-input>
+          <paper-input label="Class From"></paper-input>
         </div>
         <div class="col-sm-3">
-          <paper-input label="Class To" value="{{classto}}"></paper-input>
+          <paper-input label="Class To"></paper-input>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
@@ -257,64 +188,64 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </paper-dropdown-menu>
         </div>
         <div class="col-sm-3">
-          <paper-input label="Year From" value="{{yearfrom}}"></paper-input>
+          <paper-input label="Year From"></paper-input>
         </div>
         <div class="col-sm-3">
-          <paper-input label="Year To" value="{{yearto}}"></paper-input>
+          <paper-input label="Year To"></paper-input>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-5">
-          <paper-input label="Medium of Instruction" value="{{medium}}"></paper-input>
+          <paper-input label="Medium of Instruction"></paper-input>
         </div>
         <div class="col-sm-7">
-          <paper-input label="% of Marks in Last Class" value="{{lastclassmark}}"></paper-input>
+          <paper-input label="% of Marks in Last Class"></paper-input>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
-        <paper-textarea label="Reason for Leaving" value="{{reasonforleaving}}"></paper-textarea>
+        <paper-textarea label="Reason for Leaving"></paper-textarea>
       </div>
       <div class="form-group-heading">
         <h4>Physical/Mental Disability and Mental History(if any)</h4>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
-          <paper-textarea label="Physical Disability Detail" value="{{physicdetail}}"></paper-textarea>
+          <paper-textarea label="Physical Disability Detail"></paper-textarea>
         </div>
         <div class="col-sm-6">
-          <paper-input label="Physical Disability Present Status" value="{{physicstatus}}"></paper-input>
-        </div>
-      </div>
-      <div class="list-group col-sm-12 panel-body form-category">
-        <div class="col-sm-6">
-          <paper-textarea label="Mental Disability Detail" value="{{mentaldetail}}"></paper-textarea>
-        </div>
-        <div class="col-sm-6">
-          <paper-input label="Mental Disability Present Status" value="{{mentalstatus}}"></paper-input>
+          <paper-input label="Physical Disability Present Status"></paper-input>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
-          <paper-textarea label="Past Illness Detail" value="{{illnessdetail}}"></paper-textarea>
+          <paper-textarea label="Mental Disability Detail"></paper-textarea>
         </div>
         <div class="col-sm-6">
-          <paper-input label="Past Illness Present Status" value="{{illnessstatus}}"></paper-input>
-        </div>
-      </div>
-      <div class="list-group col-sm-12 panel-body form-category">
-        <div class="col-sm-6">
-          <paper-textarea label="Allergy Detail" value="{{allergydetail}}"></paper-textarea>
-        </div>
-        <div class="col-sm-6">
-          <paper-input label="Allergy Present Status" value="{{allergydetail}}"></paper-input>
+          <paper-input label="Mental Disability Present Status"></paper-input>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
-          <paper-textarea label="Chronic Medical Problem Detail" value="{{chronicdetail}}"></paper-textarea>
+          <paper-textarea label="Past Illness Detail"></paper-textarea>
         </div>
         <div class="col-sm-6">
-          <paper-input label="Chronic Medical Problem Present Status" value="{{chronicstatus}}"></paper-input>
+          <paper-input label="Past Illness Present Status"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <paper-textarea label="Allergy Detail"></paper-textarea>
+        </div>
+        <div class="col-sm-6">
+          <paper-input label="Allergy Present Status"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <paper-textarea label="Chronic Medical Problem Detail"></paper-textarea>
+        </div>
+        <div class="col-sm-6">
+          <paper-input label="Chronic Medical Problem Present Status"></paper-input>
         </div>
       </div>
       <div class="form-group-heading">
@@ -322,54 +253,54 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-1">
-          <paper-textarea label="S.No" value="{{sno1}}"></paper-textarea>
+          <paper-textarea label="S.No"></paper-textarea>
         </div>
         <div class="col-sm-3">
-          <paper-textarea label="Field" value="{{field1}}"></paper-textarea>
+          <paper-textarea label="Field"></paper-textarea>
         </div>
         <div class="col-sm-1">
-          <paper-textarea label="Year" value="{{year1}}"></paper-textarea>
+          <paper-textarea label="Year"></paper-textarea>
         </div>
         <div class="col-sm-3">
-          <paper-textarea label="Event" value="{{event1}}"></paper-textarea>
+          <paper-textarea label="Event"></paper-textarea>
         </div>
         <div class="col-sm-3">
-          <paper-textarea label="Details of Prize/Awards/POsition" value="{{prizedetail1}}"></paper-textarea>
+          <paper-textarea label="Details of Prize/Awards/POsition"></paper-textarea>
         </div>
       </div>
 
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-1">
-          <paper-textarea label="S.No" value="{{sno2}}"></paper-textarea>
+          <paper-textarea label="S.No"></paper-textarea>
         </div>
         <div class="col-sm-3">
-          <paper-textarea label="Field" value="{{field2}}"></paper-textarea>
+          <paper-textarea label="Field"></paper-textarea>
         </div>
         <div class="col-sm-1">
-          <paper-textarea label="Year" value="{{year2}}"></paper-textarea>
+          <paper-textarea label="Year"></paper-textarea>
         </div>
         <div class="col-sm-3">
-          <paper-textarea label="Event" value="{{event2}}"></paper-textarea>
+          <paper-textarea label="Event"></paper-textarea>
         </div>
         <div class="col-sm-3">
-          <paper-textarea label="Details of Prize/Awards/POsition" value="{{prizedetail2}}"></paper-textarea>
+          <paper-textarea label="Details of Prize/Awards/POsition"></paper-textarea>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-1">
-          <paper-textarea label="S.No" value="{{sno3}}"></paper-textarea>
+          <paper-textarea label="S.No"></paper-textarea>
         </div>
         <div class="col-sm-3">
-          <paper-textarea label="Field" value="{{field3}}"></paper-textarea>
+          <paper-textarea label="Field"></paper-textarea>
         </div>
         <div class="col-sm-1">
-          <paper-textarea label="Year" value="{{year3}}"></paper-textarea>
+          <paper-textarea label="Year"></paper-textarea>
         </div>
         <div class="col-sm-3">
-          <paper-textarea label="Event" value="{{event3}}"></paper-textarea>
+          <paper-textarea label="Event"></paper-textarea>
         </div>
         <div class="col-sm-3">
-          <paper-textarea label="Details of Prize/Awards/POsition" value="{{prizedetail3}}"></paper-textarea>
+          <paper-textarea label="Details of Prize/Awards/POsition"></paper-textarea>
         </div>
       </div>
       <div class="form-group-heading">
@@ -377,66 +308,66 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
-          <paper-input label="Father's Name" value="{{fathername}}"></paper-input>
+          <paper-input label="Father's Name"></paper-input>
         </div>
         <div class="col-sm-6">
-          <paper-input label="Mother's Name" value="{{mothername}}"></paper-input>
-        </div>
-      </div>
-      <div class="list-group col-sm-12 panel-body form-category">
-        <div class="col-sm-6">
-          <paper-input label="Father's Date of Birth" value="{{fatherdob}}"></paper-input>
-        </div>
-        <div class="col-sm-6">
-          <paper-input label="Mother's Date of Birth" value="{{motherdob}}"></paper-input>
+          <paper-input label="Mother's Name"></paper-input>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
-          <paper-input label="Father's Edn. Professional Qualification" value="{{fatherqualification}}"></paper-input>
+          <paper-input label="Father's Date of Birth"></paper-input>
         </div>
         <div class="col-sm-6">
-          <paper-input label="Mother's Edn. Professional Qualification" value="{{motherqualification}}"></paper-input>
-        </div>
-      </div>
-      <div class="list-group col-sm-12 panel-body form-category">
-        <div class="col-sm-6">
-          <paper-input label="Father's Occupation" value="{{fatheroccupation}}"></paper-input>
-        </div>
-        <div class="col-sm-6">
-          <paper-input label="Mother's Occupation" value="{{motheroccupation}}"></paper-input>
+          <paper-input label="Mother's Date of Birth"></paper-input>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
-          <paper-input label="Father's Annual Income" value="{{fatherincome}}"></paper-input>
+          <paper-input label="Father's Edn. Professional Qualification"></paper-input>
         </div>
         <div class="col-sm-6">
-          <paper-input label="Mother's Annual Income" value="{{motherincome}}"></paper-input>
-        </div>
-      </div>
-      <div class="list-group col-sm-12 panel-body form-category">
-        <div class="col-sm-6">
-          <paper-input label="Father's Office Tel.No" value="{{fathertelno}}"></paper-input>
-        </div>
-        <div class="col-sm-6">
-          <paper-input label="Mother's Office Tel.No" value="{{mothertelno}}"></paper-input>
+          <paper-input label="Mother's Edn. Professional Qualification"></paper-input>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
-          <paper-input label="Father's Mobile" value="{{fathermobile}}"></paper-input>
+          <paper-input label="Father's Occupation"></paper-input>
         </div>
         <div class="col-sm-6">
-          <paper-input label="Mother's Mobile" value="{{mothermobile}}"></paper-input>
+          <paper-input label="Mother's Occupation"></paper-input>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
-          <paper-input label="Father's Email ID" value="{{fatheremail}}"></paper-input>
+          <paper-input label="Father's Annual Income"></paper-input>
         </div>
         <div class="col-sm-6">
-          <paper-input label="Mother's Email ID" value="{{motheremail}}"></paper-input>
+          <paper-input label="Mother's Annual Income"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <paper-input label="Father's Office Tel.No"></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <paper-input label="Mother's Office Tel.No"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <paper-input label="Father's Mobile"></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <paper-input label="Mother's Mobile"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <paper-input label="Father's Email ID"></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <paper-input label="Mother's Email ID"></paper-input>
         </div>
       </div>
       <div class="form-group-heading">
@@ -444,18 +375,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
-          <paper-input label="Village/Town" value="{{ptown}}"></paper-input>
+          <paper-input label="Village/Town"></paper-input>
         </div>
         <div class="col-sm-6">
-          <paper-input label="District" value="{{pdistrict}}"></paper-input>
+          <paper-input label="District"></paper-input>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
-          <paper-input label="State" value="{{pstate}}"></paper-input>
+          <paper-input label="State"></paper-input>
         </div>
         <div class="col-sm-6">
-          <paper-input label="Pincode" value="{{ppincode}}"></paper-input>
+          <paper-input label="Pincode"></paper-input>
         </div>
       </div>
       <div class="form-group-heading">
@@ -463,59 +394,59 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
-          <paper-input label="Relationship" value="{{relationship1}}"></paper-input>
+          <paper-input label="Relationship"></paper-input>
         </div>
         <div class="col-sm-6">
-          <paper-input label="Guardian's Name" value="{{guardianname1}}"></paper-input>
+          <paper-input label="Guardian's Name"></paper-input>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
-          <paper-input label="Relationship" value="{{relationship2}}"></paper-input>
+          <paper-input label="Relationship"></paper-input>
         </div>
         <div class="col-sm-6">
-          <paper-input label="Guardian's Name" value="{{guardianname2}}"></paper-input>
+          <paper-input label="Guardian's Name"></paper-input>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-4">
-          <paper-input label="Flat/House No" value="{{guardianname}}"></paper-input>
+          <paper-input label="Flat/House No"></paper-input>
         </div>
         <div class="col-sm-4">
-          <paper-input label="Building Name" value="{{gbuildingname}}"></paper-input>
+          <paper-input label="Building Name"></paper-input>
         </div>
         <div class="col-sm-4">
-          <paper-input label="Street/Road" value="{{gstreet}}"></paper-input>
+          <paper-input label="Street/Road"></paper-input>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-3">
-          <paper-input label="Village/Town" value="{{gtown}}"></paper-input>
+          <paper-input label="Village/Town"></paper-input>
         </div>
         <div class="col-sm-3">
-          <paper-input label="City" value="{{gcity}}"></paper-input>
+          <paper-input label="City"></paper-input>
         </div>
         <div class="col-sm-3">
-          <paper-input label="State" value="{{gstate}}"></paper-input>
+          <paper-input label="State"></paper-input>
         </div>
         <div class="col-sm-3">
-          <paper-input label="Pincode" value="{{gpincode}}"></paper-input>
+          <paper-input label="Pincode"></paper-input>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
-          <paper-input label="Contact No (Residential)" value="{{gresidentialcontact}}"></paper-input>
+          <paper-input label="Contact No (Residential)"></paper-input>
         </div>
         <div class="col-sm-6">
-          <paper-input label="Contact No (Office)" value="{{gofficecontact}}"></paper-input>
+          <paper-input label="Contact No (Office)"></paper-input>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
-          <paper-input label="Mobile Number" value="{{gmobileno}}"></paper-input>
+          <paper-input label="Mobile Number"></paper-input>
         </div>
         <div class="col-sm-6">
-          <paper-input label="Fax" value="{{gfax}}"></paper-input>
+          <paper-input label="Fax"></paper-input>
         </div>
       </div>
       <div class="form-group-heading">
@@ -549,28 +480,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <paper-input label="Authorised Signatory"></paper-input>
         </div>
       </div>
-
-       <div class="list-group col-sm-12 panel-body form-category">
-        <div class="col-sm-6">
-          Like to Avail Transport ?<span><paper-checkbox id="yes" class="checkbox" on-change="transportHandleryes">Yes</paper-checkbox></span>
-          <span><paper-checkbox id="no" class="checkbox" on-change="transportHandlerno">No</paper-checkbox></span>
-        </div>
-        <div class="col-sm-6">
-        Like to Avail Canteen Facility ?
-          <span><paper-checkbox id="yes" class="checkbox" on-change="canteenHandleryes">Yes</paper-checkbox></span>
-          <span><paper-checkbox id="no" class="checkbox" on-change="canteenHandlerno">No</paper-checkbox></span>
-        </div>
-      </div>
-
     <div class="col-md-12 form-button">
-        <paper-button class="btn btn-primary" on-click="FnSubmitAdmission">Submit</paper-button>
+        <paper-button class="btn btn-primary" on-click="submit">SUBMIT</paper-button>
       </div>
     </div>
-
-    <!--Calling services-->
-    <admission-service id="admissionservice"></admission-service>
-    <crm-service id="crmservice"></crm-service>
-
   </template>
   <script>
   (function() {
@@ -578,36 +491,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     Polymer({
       is: 'admission-form',
-      ready:function(){
 
-      },
-      FnSearchEnquiry:function(){ 
-        this.$.crmservice.getclasses();
-        var enquiryno=document.getElementById('searchenquiry').value;        
-        this.$.admissionservice.callSearchenquiryService(enquiryno);
-      },
-      FnSubmitAdmission:function(){
-
-      },
-      FnSelectEnquiry:function(e){        
-        var enquiry=(e.target.selectedItem.textContent).trim();        
-        var inx=enquiry.indexOf('-');
-        var enquiry_no=enquiry.substring(0,inx);
-        var enquiry_name=enquiry.substring(inx+1);
-        localStorage.setItem("curr_sess_enquiryno",enquiry_no);
-        localStorage.setItem("curr_sess_enquiryname",enquiry_name);        
-      },
-      FnSetSecLanguage:function(value){
-        document.querySelector("#"+value).selected=true;
-      },
-      FnSetThirdLanguage:function(value){
-        document.querySelector("#"+value).selected=true;
-      },
-      FnSetTransport:function(value){
-        document.querySelector("#"+value).selected=true;
-      },
-      FnSetCanteen:function(value){
-        document.querySelector("#"+value).selected=true;
+      properties: {
+        foo: {
+          type: String,
+          value: 'admission-form',
+          notify: true
+        }
       }
     });
   })();

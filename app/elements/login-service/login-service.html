@@ -37,12 +37,12 @@
      addressResponse:function(e)
       {
         var addr=e.detail.response.address;
-        // alert(addr);
+        //alert(addr);
         sessionStorage.setItem("addrinfo",addr);
-        // alert(JSON.stringify(e.detail.response.address));
+        //alert(JSON.stringify(e.detail.response.address));
       },
       Fn_login_userlogin:function(username,password){ 
-         this.loginpageurl=sessionStorage.getItem("addrinfo")+"/loginpage";
+         this.loginpageurl="http://localhost:8086/loginpage";
         var obj={"username":"","password":""}
         obj.username=username;
         obj.password=password;
