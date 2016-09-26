@@ -24,8 +24,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <th>Class</th>
             <th>Enquired On</th>
             <th>Last Follow Up</th>
-            <th>Follow Up</th>
             <th>Confidence Level</th>
+            <th>Follow Up</th>
             <th>Next Follow Up Date</th>
             <th>Comments</th>
           </tr>
@@ -33,7 +33,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <tbody>
            <template is="dom-repeat" items="{{followuparr}}" as="view">
             <div class="students-atten">
-              <followup-item-card student="{{view.name}}" parentname="{{view.parentname}}" mobilenumber="{{view.mobilenumber}}" classreq="{{view.class}}" enquiredon="{{view.enquiredon}}" lastfollowup="{{view.lastfollowup}}" followup="{{view.followup}}"></followup-item-card>
+              <followup-item-card student="{{view.name}}" parentname="{{view.parentname}}" mobilenumber="{{view.mobilenumber}}" classreq="{{view.class}}" enquiredon="{{view.enquiredon}}" lastfollowup="{{view.lastfollowup}}" followup="{{view.followup}}" confidence="{{view.confidence_level}}" nextfollowup="{{view.nextfollowup}}" comments="{{view.comments}}"></followup-item-card>
             </div>
           </template>
           </tbody>
