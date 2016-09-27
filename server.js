@@ -23,7 +23,7 @@ app.post('/loginpage',  urlencodedParser,function (req, res)
   var user={"employee_id":req.query.username};
   var pass={"password":req.query.password};
 //console.log('hi');
-       connection.query('SELECT (select name from md_school where id=e.school_id) as schoolname,e.school_id, e.employee_name,e.role_id, r.role_name, a.rt_dashboard, a.rt_enquiry,a.rt_admission_form,a.rt_adm_approval, a.rt_followup, a.rt_collectionentry FROM md_employee as e JOIN md_role as r JOIN md_access_rights as a on r.role_id=e.role_id and a.role_id=e.role_id where ? and ?',[user,pass],
+       connection.query('SELECT (select name from md_school where id=e.school_id) as schoolname,e.school_id,e.employee_id, e.employee_name,e.role_id, r.role_name, a.rt_dashboard, a.rt_enquiry,a.rt_admission_form,a.rt_adm_approval, a.rt_followup, a.rt_collectionentry FROM md_employee as e JOIN md_role as r JOIN md_access_rights as a on r.role_id=e.role_id and a.role_id=e.role_id where ? and ?',[user,pass],
         function(err, rows)
         {
     if(!err)
@@ -488,6 +488,50 @@ app.post('/getlistdetails',  urlencodedParser,function (req, res){
   }
 });
   });
+
+
+/*this function insert the followup information in followup table*/
+app.post('/updatefollow',  urlencodedParser,function (req, res)
+{
+  var collection={"school_id":req.query.schol,"id":req.query.id,"enquiry_id":req.query.enquiryno,"schedule_no":req.query.schedule,"created_by":req.query.createdby,"created_on":req.query.createdon};
+       connection.query('insert into followup set ? ',[collection],
+        function(err, rows)
+        {
+    if(!err)
+    {
+      //console.log('inserted');
+          res.status(200).json({'returnval': 'success'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+
+});
+  });
+
+/*this below function is used to insert data in the follow up detail table */
+app.post('/updatefollowdetail',  urlencodedParser,function (req, res)
+{
+   var collection={"school_id":req.query.schol,"followup_id":req.query.id,"enquiry_id":req.query.enquiryid,"followup_1":req.query.folowup1,"followup_2":req.query.folowup2,"followup_3":req.query.folowup3,"followup_4":req.query.folowup4,"followup_5":req.query.folowup5,"followup_flag":req.query.flag,"next_followup_date":req.query.nextfolowup,"schedule":req.query.schedule};
+       connection.query('insert into followupdetail set ? ',[collection],
+        function(err, rows)
+        {
+    if(!err)
+    {
+      //console.log('inserted');
+          res.status(200).json({'returnval': 'success'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+
+});
+  });
+
 
 function setvalue(){
   console.log("calling setvalue.....");

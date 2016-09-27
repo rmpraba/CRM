@@ -63,6 +63,7 @@
           var employeename=result[0].employee_name;
           var roleid=result[0].role_id;
           var schoolid=result[0].school_id;
+          var employeeid=result[0].employee_id;
 
           var pr_dashboear=result[0].rt_dashboard;
           var pr_enquiry=result[0].rt_enquiry;
@@ -77,6 +78,7 @@
           localStorage.setItem("admapproval",pr_adm_approval);
           localStorage.setItem("followup",pr_followup);
           localStorage.setItem("collectionentry",pr_collectionentry);
+
 /*document.querySelector('navigation-bar').Fn_access_rights(pr_enquiry,pr_followup,pr_dashboear,pr_admission_form,pr_adm_approval,pr_collectionentry)*/
             
           document.querySelector('navigation-bar').Fncheck();
@@ -86,6 +88,7 @@
           localStorage.setItem("employeename",employeename);
           localStorage.setItem("schoolid",schoolid);
           localStorage.setItem("roleid",roleid);
+          localStorage.setItem("employeeid",employeeid);
 
           //alert(school+'   '+role+'    '+employeename+'    '+roleid);
           document.querySelector('CRM-app').setPage("applist");

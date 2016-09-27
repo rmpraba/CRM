@@ -170,17 +170,86 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         debounce-duration="300"
         >
   </iron-ajax>
+
+  <!-- this below ajax gets the day counts for follow up from the config file -->
+   <iron-ajax
+        auto
+        id="followupajax"
+        url="../../configfile/followups.json"
+        handle-as="json"
+        content-type="application/json"
+        on-response="followupResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+
+  <!-- this ajax is used to update the follow up info in followup table -->
+  <iron-ajax
+        method="post"
+        id="updatefollowajax"
+        url="{{updatefollowurl}}"
+        params="{{updatefollowparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="updatefollowResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+
+  <!-- this below ajax is used to insert data in the follow up detail table 
+  -->
+  <iron-ajax
+        method="post"
+        id="updatefollowdetailajax"
+        url="{{updatefollowdetailurl}}"
+        params="{{updatefollowdetailparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="updatefollowdetailResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
   </template>
   <script>
   (function() {
     'use strict';
    var seqno;
    var proseq;
+   var firstfollowup;
+   var secondfollowup;
+   var thirdfollowup;
+   var fourthfollowup;
+   var fifthfollowup;
+   var firstfollowupdate;
+   var secondfollowupdate;
+   var thirdfollowupdate;
+   var fourthfollowupdate;
+   var fifthfollowupdate;
+
     Polymer({
       is: 'crm-service',
+      followupResponse:function(e){
+        firstfollowup=e.detail.response.firstfollowup;
+        secondfollowup=e.detail.response.secondfollowup;
+         thirdfollowup=e.detail.response.thirdfollowup;
+         fourthfollowup=e.detail.response.fourthfollowup;
+         fifthfollowup=e.detail.response.fifthfollowup;
+
+         firstfollowupdate=new Date();
+         secondfollowupdate=new Date();
+         thirdfollowupdate=new Date();
+         fourthfollowupdate=new Date();
+         fifthfollowupdate=new Date();
+
+    firstfollowupdate.setDate(firstfollowupdate.getDate()+firstfollowup);
+    secondfollowupdate.setDate(secondfollowupdate.getDate()+secondfollowup);
+    thirdfollowupdate.setDate(thirdfollowupdate.getDate()+thirdfollowup);
+    fourthfollowupdate.setDate(fourthfollowupdate.getDate()+fourthfollowup);
+    fifthfollowupdate.setDate(fifthfollowupdate.getDate()+fifthfollowup);
+      },
      submitenqiry:function(enqno,academicyear,grade,Fnfirstname,Fnmiddlename,Fnlastname,gender,dob,fathername,mothername,mob,email,textvalue,todate){
       //alert(enqno+academicyr+classes+studentname+gender+dob+mob+source+locality+category);
-      
+      var generateid=Math.floor(100000 + Math.random() * 900000);
         this.submitenquiryurl="http://localhost:8086/submitenquiry";
         var obj={"id":"","schol":"","acadeyr":"","contact":"","grade":"","gender":"","firstname":"","middlename":"","lastname":"","dobs":"","father":"","mother":"","email":"","location":"","createdby":"","createdate":"","givenname":"","status":""}
         obj.id=enqno;
@@ -197,7 +266,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         obj.mother=mothername;
         obj.email=email;
         obj.location=textvalue;
-        obj.createdby=localStorage.getItem("roleid");
+        obj.createdby=localStorage.getItem("employeeid");
         obj.createdate=todate;
         obj.givenname=Fnfirstname+' '+Fnmiddlename+' '+Fnlastname;
         obj.status="Enquired";
@@ -205,7 +274,34 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        //alert(JSON.stringify(obj));
         this.$.submitenquiryajax.generateRequest();
 
+      this.updatefollowurl="http://localhost:8086/updatefollow";
+        var obj={"schol":"","id":"","enquiryno":"","schedule":"","createdby":"","createdon":""}
+        obj.schol=localStorage.getItem("schoolid");
+        obj.id=generateid;
+        obj.enquiryno=enqno;
+        obj.schedule=1;
+        obj.createdby=localStorage.getItem("employeeid");
+        obj.createdon=todate;
+        this.updatefollowparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.updatefollowajax.generateRequest();
 
+      this.updatefollowdetailurl="http://localhost:8086/updatefollowdetail";
+        var obj={"schol":"","id":"","enquiryid":"","folowup1":"","folowup2":"","folowup3":"","folowup4":"","folowup5":"","nextfolowup":"","schedule":"","flag":""}
+        obj.schol=localStorage.getItem("schoolid");
+        obj.id=generateid;
+        obj.enquiryid=enqno;
+        obj.folowup1=firstfollowupdate.getDate()+"/"+(firstfollowupdate.getMonth()+1)+"/"+firstfollowupdate.getFullYear();
+        obj.folowup2=secondfollowupdate.getDate()+"/"+(secondfollowupdate.getMonth()+1)+"/"+secondfollowupdate.getFullYear();
+        obj.folowup3=thirdfollowupdate.getDate()+"/"+(thirdfollowupdate.getMonth()+1)+"/"+thirdfollowupdate.getFullYear();
+        obj.folowup4=fourthfollowupdate.getDate()+"/"+(fourthfollowupdate.getMonth()+1)+"/"+fourthfollowupdate.getFullYear();
+        obj.folowup5=fifthfollowupdate.getDate()+"/"+(fifthfollowupdate.getMonth()+1)+"/"+fifthfollowupdate.getFullYear();
+        obj.nextfolowup=todate;
+        obj.flag=1;
+        obj.schedule=1;
+        this.updatefollowdetailparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.updatefollowdetailajax.generateRequest();
      },
      submitenquiryResponse:function(e){
       var result=e.detail.response.returnval;
@@ -270,7 +366,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         obj.canteenreq=canteenreq;
         obj.secondlanguage=secondlanguage;
         obj.thirdlanguage=thirdlanguage;
-        obj.modified=localStorage.getItem("roleid");
+        obj.modified=localStorage.getItem("employeeid");
         obj.prospectstatus=propspectus;
         obj.daddesignation=dadpost;
         obj.momdesignation=mompost;
