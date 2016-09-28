@@ -24,7 +24,8 @@ app.post('/loginpage',  urlencodedParser,function (req, res)
   var pass={"password":req.query.password};
 //console.log('hi');
 
-  connection.query('SELECT (select name from md_school where id=e.school_id) as schoolname,e.school_id, e.employee_name,e.role_id, r.role_name, a.rt_dashboard, a.rt_enquiry,a.rt_admission_form,a.rt_adm_approval, a.rt_followup, a.rt_collectionentry FROM md_employee as e JOIN md_role as r JOIN md_access_rights as a on r.role_id=e.role_id and a.role_id=e.role_id where ? and ?',[user,pass],
+       connection.query('SELECT (select name from md_school where id=e.school_id) as schoolname,e.school_id,e.employee_id, e.employee_name,e.role_id, r.role_name, a.rt_dashboard, a.rt_enquiry,a.rt_admission_form,a.rt_adm_approval, a.rt_followup, a.rt_collectionentry FROM md_employee as e JOIN md_role as r JOIN md_access_rights as a on r.role_id=e.role_id and a.role_id=e.role_id where ? and ?',[user,pass],
+
         function(err, rows)
         {
     if(!err)
@@ -72,10 +73,10 @@ app.post('/submitenquiry',  urlencodedParser,function (req, res)
 app.post('/updateenquiry',  urlencodedParser,function (req, res)
 {
   console.log('hello');
-  var collection={"first_name":req.query.firstname,"middle_name":req.query.middlename,"last_name":req.query.lastname,"gender":req.query.gender,"class":req.query.grade,"dob":req.query.dob,"old_class":req.query.oldclass,"old_school":req.query.oldschool,"mother_tongue":req.query.mothertongue,"father_name":req.query.fathername,"mother_name":req.query.mothername,"father_qualification":req.query.fatheredu,"mother_qualification":req.query.motheredu,"father_mob":req.query.fathermob,"mother_mob":req.query.mothermob,"father_email":req.query.fathermail,"mother_email":req.query.mothermail,"father_company":req.query.fathercompany,"mother_company":req.query.mothercompany,"father_occupation":req.query.fatherjob,"mother_occupation":req.query.motherjob,"flat_no":req.query.flatno,"address1":req.query.address1,"address2":req.query.address2,"address3":req.query.address3,"city":req.query.city,"pincode":req.query.pincode,"state":req.query.statename,"enquiry_source":req.query.enquiysource,"sibiling_name":req.query.siblingname,"sibling_detail":req.query.siblingdetails,"transport_requirment":req.query.transportreq,"canteen_requirment":req.query.canteenreq,"second_language":req.query.secondlanguage,"third_language":req.query.thirdlanguage,"updated_by":req.query.modified,"prospectus_sold":req.query.propspectus,"father_designation":req.query.daddesignation,"mother_designation":req.query.momdesignation,"father_income":req.query.dadincome,"mother_income":req.query.momincome};
+  var collection={"first_name":req.query.firstname,"middle_name":req.query.middlename,"last_name":req.query.lastname,"gender":req.query.gender,"class":req.query.grade,"dob":req.query.dob,"old_class":req.query.oldclass,"old_school":req.query.oldschool,"mother_tongue":req.query.mothertongue,"father_name":req.query.fathername,"mother_name":req.query.mothername,"father_qualification":req.query.fatheredu,"mother_qualification":req.query.motheredu,"father_mob":req.query.fathermob,"mother_mob":req.query.mothermob,"father_email":req.query.fathermail,"mother_email":req.query.mothermail,"father_company":req.query.fathercompany,"mother_company":req.query.mothercompany,"father_occupation":req.query.fatherjob,"mother_occupation":req.query.motherjob,"flat_no":req.query.flatno,"address1":req.query.address1,"address2":req.query.address2,"address3":req.query.address3,"city":req.query.city,"pincode":req.query.pincode,"state":req.query.statename,"enquiry_source":req.query.enquiysource,"sibiling_name":req.query.siblingname,"sibling_detail":req.query.siblingdetails,"transport_requirment":req.query.transportreq,"canteen_requirment":req.query.canteenreq,"second_language":req.query.secondlanguage,"third_language":req.query.thirdlanguage,"updated_by":req.query.modified,"prospectus_sold":req.query.prospectstatus,"father_designation":req.query.daddesignation,"mother_designation":req.query.momdesignation,"father_income":req.query.dadincome,"mother_income":req.query.momincome,"prospectus_no":req.query.prospectusno};
   var school={"school_id":req.query.schol};
   var enquiry={"enquiry_no":req.query.enq};
-
+console.log(req.query.momincome);
        connection.query('update student_enquiry_details set ? where ? and ?',[collection,enquiry,school],
     function(err, rows)
     {
@@ -712,6 +713,156 @@ app.post('/inserttransferfees',  urlencodedParser,function (req, res){
     }
 });
 });
+
+
+
+
+/*this ajax is used to take the sequence number from the table for prospectus number*/
+app.post('/getprospectno',  urlencodedParser,function (req, res){
+    var qur={"school_id":req.query.schol};
+    //console.log('qur');
+    connection.query('SELECT prospectus_no FROM sequence WHERE ?',[qur],
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      //console.log(rows);
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': ''});
+    }
+  }
+  else{
+     console.log(err);
+  }
+});
+  });
+
+/*the below function is used to update the prospectus sequence number in the table*/
+app.post('/updateprospectno',  urlencodedParser,function (req, res)
+{
+  var school={"school_id":req.query.schol};
+  var enquiry={"prospectus_no":req.query.id};
+       connection.query('update sequence set ? where ?',[enquiry,school],
+        function(err, rows)
+        {
+    if(!err)
+    {
+      console.log('updated');
+          res.status(200).json({'returnval': 'success'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+
+});
+  });
+
+
+/*this function is to get the count of enquiry takes placed by grade wise*/
+app.post('/getenquirycount',  urlencodedParser,function (req, res){
+    var qur={"school_id":req.query.schol};
+    var state={"status":req.query.status};
+    //console.log('qur');
+    connection.query('SELECT class,count(*) as total FROM `student_enquiry_details` WHERE ? and ? group by (class)',[qur,state],
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      //console.log(rows);
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': ''});
+    }
+  }
+  else{
+     console.log(err);
+  }
+});
+  });
+
+/*this function takes the detail of student who have been enquired and from gradewise list */
+app.post('/getlistdetails',  urlencodedParser,function (req, res){
+    var qur={"school_id":req.query.schol};
+    var state={"status":req.query.status};
+    var classes={"class":req.query.grade};
+    //console.log('qur');
+    connection.query('SELECT * FROM `student_enquiry_details` WHERE ? and ? and ?',[qur,state,classes],
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      //console.log(rows);
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': ''});
+    }
+  }
+  else{
+     console.log(err);
+  }
+});
+  });
+
+
+/*this function insert the followup information in followup table*/
+app.post('/updatefollow',  urlencodedParser,function (req, res)
+{
+  var collection={"school_id":req.query.schol,"id":req.query.id,"enquiry_id":req.query.enquiryno,"schedule_no":req.query.schedule,"created_by":req.query.createdby,"created_on":req.query.createdon};
+       connection.query('insert into followup set ? ',[collection],
+        function(err, rows)
+        {
+    if(!err)
+    {
+      //console.log('inserted');
+          res.status(200).json({'returnval': 'success'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+
+});
+  });
+
+/*this below function is used to insert data in the follow up detail table */
+app.post('/updatefollowdetail',  urlencodedParser,function (req, res)
+{
+   var collection={"school_id":req.query.schol,"followup_id":req.query.id,"enquiry_id":req.query.enquiryid,"followup_1":req.query.folowup1,"followup_2":req.query.folowup2,"followup_3":req.query.folowup3,"followup_4":req.query.folowup4,"followup_5":req.query.folowup5,"followup_flag":req.query.flag,"next_followup_date":req.query.nextfolowup,"schedule":req.query.schedule};
+       connection.query('insert into followupdetail set ? ',[collection],
+        function(err, rows)
+        {
+    if(!err)
+    {
+      //console.log('inserted');
+          res.status(200).json({'returnval': 'success'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+
+});
+  });
 
 
 function setvalue(){

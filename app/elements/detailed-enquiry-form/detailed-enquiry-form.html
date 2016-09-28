@@ -259,6 +259,9 @@
           <span><paper-checkbox id="prosoldyes" class="checkbox" on-change="prosoldHandleryes">Yes</paper-checkbox></span>
           <span><paper-checkbox id="prosoldno" class="checkbox" on-change="prosoldHandlerno">No</paper-checkbox></span>
         </div>
+         <div class="col-sm-4">
+          <paper-input id="prospectno" label="Prospectus No" value="{{prospectusno}}"></paper-input>
+        </div>
       </div>
       <div class="form-group-heading">
         <h4>Language Preferences</h4>
@@ -312,10 +315,12 @@
           this.$.momoff.hidden=true;
           this.$.momjob.hidden=true;
           this.$.momsal.hidden=true;
+          this.$.prospectno.hidden=true;
       },
       Fnclear:function(){
         this.ready();
           document.getElementById('searchtext').value="";
+          this.prospectusno="";
           this.firstname="";
           this.middlename="";
           this.lastname="";
@@ -473,9 +478,13 @@
       {
         propsold="yes";
         document.querySelector("#prosoldno").checked=false;
+        this.$.service.getprospectno();
+        this.$.prospectno.hidden=false;
       }
       else{
         propsold=null;
+        this.$.prospectno.hidden=true;
+        this.prospectusno="";
       }
     },
     prosoldHandlerno:function(){
@@ -483,6 +492,8 @@
       {
         propsold="no";
         document.querySelector("#prosoldyes").checked=false;
+        this.$.prospectno.hidden=true;
+        this.prospectusno="";
       }
       else{
         propsold=null;
@@ -634,7 +645,7 @@
       else{
         //alert(enqno+this.firstname+this.middlename+this.lastname+fngender+this.grade+this.dob+this.oldclass+this.oldschool+mothertongue+this.fathername+this.mothername+this.fatheredu+this.motheredu+this.fathermob+this.mothermob+this.fathermail+this.mothermail+this.fathercompany+this.mothercompany+dadoccup+momtheroccup+this.flat+this.address1+this.address2+this.address3+this.city+this.pincode+this.state+enquiysource+this.siblingname+this.siblingdetails+transportreq+canteenreq+secondlanguage+thirdlanguage+propsold+this.fatherjob+this.motherjob+dadincome+momincome);
 
-      this.$.service.updateenquiryform(enqno,this.firstname,this.middlename,this.lastname,fngender,this.grade,this.dob,this.oldclass,this.oldschool,mothertongue,this.fathername,this.mothername,this.fatheredu,this.motheredu,this.fathermob,this.mothermob,this.fathermail,this.mothermail,this.fathercompany,this.mothercompany,dadoccup,momtheroccup,this.flat,this.address1,this.address2,this.address3,this.city,this.pincode,this.state,enquiysource,this.siblingname,this.siblingdetails,transportreq,canteenreq,secondlanguage,thirdlanguage,propsold,this.fatherjob,this.motherjob,dadincome,momincome);
+      this.$.service.updateenquiryform(enqno,this.firstname,this.middlename,this.lastname,fngender,this.grade,this.dob,this.oldclass,this.oldschool,mothertongue,this.fathername,this.mothername,this.fatheredu,this.motheredu,this.fathermob,this.mothermob,this.fathermail,this.mothermail,this.fathercompany,this.mothercompany,dadoccup,momtheroccup,this.flat,this.address1,this.address2,this.address3,this.city,this.pincode,this.state,enquiysource,this.siblingname,this.siblingdetails,transportreq,canteenreq,secondlanguage,thirdlanguage,propsold,this.fatherjob,this.motherjob,dadincome,momincome,this.prospectusno);
     }
 },
 dadoccupation:function(e){
