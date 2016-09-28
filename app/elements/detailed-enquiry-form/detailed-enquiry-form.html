@@ -13,6 +13,7 @@
               </button>
             </span>
           </div>
+          <button class="btn btn-default" on-click="newenquriy" type="button">New Enquriy</button>
       </div>
       <div class="form-group-heading">
         <h4>Student Detail</h4>
@@ -281,7 +282,8 @@
         </div>
       </div>
       <div class="col-md-12 form-button">
-        <paper-button class="btn btn-primary" on-click="submit">SUBMIT</paper-button>
+        <paper-button id="searchenq" class="btn btn-primary" on-click="submit">SUBMIT</paper-button>
+        <paper-button id="newenq" class="btn btn-primary" on-click="register">REGISTER</paper-button>
       </div>
 
 
@@ -316,6 +318,7 @@
           this.$.momjob.hidden=true;
           this.$.momsal.hidden=true;
           this.$.prospectno.hidden=true;
+        this.$.newenq.hidden=true;
       },
       Fnclear:function(){
         this.ready();
@@ -410,9 +413,9 @@
            }
     },
     maleHandler:function(){
-      if(document.querySelector("#male").checked==true)
+      if(document.querySelector("#dfmale").checked==true)
         {
-         document.querySelector("#female").checked=false;
+         document.querySelector("#dffemale").checked=false;
          fngender="Male";
          //alert(gender);
        }
@@ -654,13 +657,13 @@ if(dadoccup=="Self Employed"||dadoccup=="Government Employee"||dadoccup=="Privat
       this.$.dadoff.hidden=false;
       this.$.dadjob.hidden=false;
       this.$.dadsal.hidden=false;
-          
+
   }
   else{
       this.$.dadoff.hidden=true;
       this.$.dadjob.hidden=true;
       this.$.dadsal.hidden=true;
-  
+
   }
 },
 motheroccupation:function(e){
@@ -682,7 +685,75 @@ dadsalary:function(e){
 },
 mothersalary:function(e){
   momincome=(e.target.selectedItem.textContent).trim();
-}
+},
+      setenqno:function(enqno){
+        document.getElementById('searchtext').value=enqno;
+      },
+      newenquriy:function(){
+        this.$.service.getenqno();
+        this.$.searchenq.hidden=true;
+        this.$.newenq.hidden=false;
+      },
+      register:function() {
+        if (this.firstname == "" || this.middlename == "" || this.lastname == "" || this.grade == "" || this.oldclass == "" || this.oldschool == "" || this.mothertongue == "" || this.fathername == "" || this.mothername == "" || this.fatheredu == "" || this.motheredu == "" || this.fathermob == "" || this.mothermob == "" || this.fathermail == "" || this.address1 == "" || this.address2 == "" || this.address3 == "" || this.city == "" || this.pincode == "" || this.flat == "" || this.state == "") {
+          this.$.fname.validate();
+          this.$.mname.validate();
+          this.$.lname.validate();
+          this.$.grade.validate();
+          this.$.oldschool.validate();
+          this.$.oldclass.validate();
+          this.$.dadname.validate();
+          this.$.momname.validate();
+          this.$.dadedu.validate();
+          this.$.momedu.validate();
+          this.$.dadmob.validate();
+          this.$.dadmail.validate();
+          this.$.mommob.validate();
+          this.$.flat.validate();
+          this.$.add1.validate();
+          this.$.add2.validate();
+          this.$.add3.validate();
+          this.$.city.validate();
+          this.$.pin.validate();
+          this.$.state.validate();
+        }
+        else if (fngender == null) {
+          alert('Select the gender of the student');
+        }
+        else if (enquiysource == null) {
+          alert('Select the enquiry source');
+        }
+        else if (mothertongue == null) {
+          alert('Select the mother tongue');
+        }
+        else if (transportreq == null) {
+          alert('Select the transport requirment');
+        }
+        else if (canteenreq == null) {
+          alert('Select the canteen requirment');
+        }
+        else if (secondlanguage == null) {
+          alert('Select the second language');
+        }
+        else if (thirdlanguage == null) {
+          alert('Select the third language');
+        }
+        else if (propsold == null) {
+          alert('Prospectus sold status is not marked');
+        }
+        else if (dadoccup == null) {
+          alert("Select Father's Occupation");
+        }
+        else if (momtheroccup == null) {
+          alert("Select Mother's Occupation");
+        }
+        else {
+          //alert(enqno+this.firstname+this.middlename+this.lastname+fngender+this.grade+this.dob+this.oldclass+this.oldschool+mothertongue+this.fathername+this.mothername+this.fatheredu+this.motheredu+this.fathermob+this.mothermob+this.fathermail+this.mothermail+this.fathercompany+this.mothercompany+dadoccup+momtheroccup+this.flat+this.address1+this.address2+this.address3+this.city+this.pincode+this.state+enquiysource+this.siblingname+this.siblingdetails+transportreq+canteenreq+secondlanguage+thirdlanguage+propsold+this.fatherjob+this.motherjob+dadincome+momincome);
+
+          this.$.service.registerenquiryform(enqno, this.firstname, this.middlename, this.lastname, fngender, this.grade, this.dob, this.oldclass, this.oldschool, mothertongue, this.fathername, this.mothername, this.fatheredu, this.motheredu, this.fathermob, this.mothermob, this.fathermail, this.mothermail, this.fathercompany, this.mothercompany, dadoccup, momtheroccup, this.flat, this.address1, this.address2, this.address3, this.city, this.pincode, this.state, enquiysource, this.siblingname, this.siblingdetails, transportreq, canteenreq, secondlanguage, thirdlanguage, propsold, this.fatherjob, this.motherjob, dadincome, momincome, this.prospectusno);
+
+        }
+      }
     });
   })();
   </script>
