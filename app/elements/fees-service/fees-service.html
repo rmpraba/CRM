@@ -1,0 +1,165 @@
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\..\bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="fees-service">
+  <template>
+    <!-- It would insert the cash fee -->
+     <iron-ajax
+        method="post"
+        id="insertcashfeesajax"
+        url="{{insertcashfeesurl}}"
+        params="{{insertcashfeesparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="insertcashfeesResponse"
+        debounce-duration="300"
+        >
+      <!-- It would insert the cheque fee -->
+     <iron-ajax
+        method="post"
+        id="insertchequefeesajax"
+        url="{{insertchequefeesurl}}"
+        params="{{insertchequefeesparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="insertchequefeesResponse"
+        debounce-duration="300"
+        >
+    <!-- It would insert the transfer fee -->
+     <iron-ajax
+        method="post"
+        id="inserttransferfeesajax"
+        url="{{inserttransferfeesurl}}"
+        params="{{inserttransferfeesparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="inserttransferfeesResponse"
+        debounce-duration="300"
+        >
+       
+    
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'fees-service',
+
+      callInsertCashfeesService:function(arr){
+        this.insertcashfeesurl=sessionStorage.getItem("addrinfo")+"/insertcashfees";
+        var obj={"schoolid":"","academicyear":"","enquiryno":"","admissionno":"","studentname":"","garde":"","feetype":"","feecode":"","installmenttype":"","installment":"","installmentdate":"","installmentamount":"","waiveoffamount":"","modeofpayment":"","receiptdate":"","paiddate":"","paidstatus":"","cratedon":"","createdby":"","updatedon":"","updatedby":""}
+
+        // alert(localStorage.getItem("curr_sess_admissionno"));
+
+        obj.schoolid=localStorage.getItem("schoolid"); 
+        obj.academicyear=localStorage.getItem("curr_sess_academicyear"); 
+        // obj.enquiryno=schoolid; 
+        obj.admissionno=localStorage.getItem("curr_sess_admissionno"); 
+        obj.studentname=localStorage.getItem("curr_sess_studentname"); 
+        obj.garde=localStorage.getItem("curr_sess_grade"); 
+        obj.feetype=localStorage.getItem("curr_sess_feecomponent"); 
+        obj.feecode=localStorage.getItem("curr_sess_feecode");
+        if(localStorage.getItem("curr_sess_feecomponent")=="pros_fee"){
+        for(var i=0;i<arr.length;i++){ 
+        obj.installmenttype=arr[i].installmenttype; 
+        obj.installment=arr[i].installment; 
+        obj.installmentdate=arr[i].installmentdate; 
+        obj.installmentamount=arr[i].amount; 
+        obj.waiveoffamount=arr[i].waiveoff; 
+        obj.modeofpayment=arr[i].paymentmode; 
+        obj.receiptdate=arr[i].receiptdate; 
+        obj.paiddate=arr[i].paiddate; 
+        obj.paidstatus=arr[i].paidstatus;        
+        obj.createdby=localStorage.getItem("employeename");     
+        this.insertcashfeesparam=obj; 
+        // alert(JSON.stringify(obj));      
+        this.$.insertcashfeesajax.generateRequest();
+        }
+        }
+      },
+      insertcashfeesResponse:function(e){
+          alert(e.detail.response.returnval);
+      },
+      callInsertChequefeesService:function(arr){
+        this.insertchequefeesurl=sessionStorage.getItem("addrinfo")+"/insertchequefees";
+        var obj={"schoolid":"","academicyear":"","enquiryno":"","admissionno":"","studentname":"","garde":"","feetype":"","feecode":"","installmenttype":"","installment":"","installmentdate":"","installmentamount":"","waiveoffamount":"","modeofpayment":"","receiptdate":"","paiddate":"","paidstatus":"","cratedon":"","createdby":"","updatedon":"","updatedby":""}
+
+        // alert(localStorage.getItem("curr_sess_admissionno"));
+
+        obj.schoolid=localStorage.getItem("schoolid"); 
+        obj.academicyear=localStorage.getItem("curr_sess_academicyear"); 
+        // obj.enquiryno=schoolid; 
+        obj.admissionno=localStorage.getItem("curr_sess_admissionno"); 
+        obj.studentname=localStorage.getItem("curr_sess_studentname"); 
+        obj.garde=localStorage.getItem("curr_sess_grade"); 
+        obj.feetype=localStorage.getItem("curr_sess_feecomponent"); 
+        obj.feecode=localStorage.getItem("curr_sess_feecode");
+        if(localStorage.getItem("curr_sess_feecomponent")=="pros_fee"){
+        for(var i=0;i<arr.length;i++){ 
+        obj.installmenttype=arr[i].installmenttype; 
+        obj.installment=arr[i].installment; 
+        obj.installmentdate=arr[i].installmentdate; 
+        obj.installmentamount=arr[i].amount; 
+        obj.waiveoffamount=arr[i].waiveoff; 
+        obj.modeofpayment=arr[i].paymentmode; 
+        obj.receiptdate=arr[i].receiptdate; 
+        obj.paiddate=arr[i].paiddate; 
+        obj.paidstatus=arr[i].paidstatus; 
+        obj.chequeno=arr[i].chequeno;        
+        obj.bankname=arr[i].bankname; 
+        obj.chequedate=arr[i].chequedate; 
+        obj.createdby=localStorage.getItem("employeename");     
+        this.insertchequefeesparam=obj; 
+        // alert(JSON.stringify(obj));      
+        this.$.insertchequefeesajax.generateRequest();
+        }
+        }
+      },
+      insertchequefeesResponse:function(e){
+          alert(e.detail.response.returnval);
+      },
+      callInsertTransferfeesService:function(arr){
+        this.inserttransferfeesurl=sessionStorage.getItem("addrinfo")+"/inserttransferfees";
+        var obj={"schoolid":"","academicyear":"","enquiryno":"","admissionno":"","studentname":"","garde":"","feetype":"","feecode":"","installmenttype":"","installment":"","installmentdate":"","installmentamount":"","waiveoffamount":"","modeofpayment":"","receiptdate":"","paiddate":"","paidstatus":"","cratedon":"","createdby":"","updatedon":"","updatedby":""}
+
+        // alert(localStorage.getItem("curr_sess_admissionno"));
+
+        obj.schoolid=localStorage.getItem("schoolid"); 
+        obj.academicyear=localStorage.getItem("curr_sess_academicyear"); 
+        // obj.enquiryno=schoolid; 
+        obj.admissionno=localStorage.getItem("curr_sess_admissionno"); 
+        obj.studentname=localStorage.getItem("curr_sess_studentname"); 
+        obj.garde=localStorage.getItem("curr_sess_grade"); 
+        obj.feetype=localStorage.getItem("curr_sess_feecomponent"); 
+        obj.feecode=localStorage.getItem("curr_sess_feecode");
+        if(localStorage.getItem("curr_sess_feecomponent")=="pros_fee"){
+        for(var i=0;i<arr.length;i++){ 
+        obj.installmenttype=arr[i].installmenttype; 
+        obj.installment=arr[i].installment; 
+        obj.installmentdate=arr[i].installmentdate; 
+        obj.installmentamount=arr[i].amount; 
+        obj.waiveoffamount=arr[i].waiveoff; 
+        obj.modeofpayment=arr[i].paymentmode; 
+        obj.receiptdate=arr[i].receiptdate; 
+        obj.paiddate=arr[i].paiddate; 
+        obj.paidstatus=arr[i].paidstatus; 
+        obj.referenceno=arr[i].referenceno;        
+        obj.bankname=arr[i].bankname; 
+        obj.chequedate=arr[i].chequedate;       
+        obj.createdby=localStorage.getItem("employeename");     
+        this.inserttransferfeesparam=obj; 
+        // alert(JSON.stringify(obj));      
+        this.$.inserttransferfeesajax.generateRequest();
+        }
+        }
+      },
+      inserttransfereesResponse:function(e){
+          alert(e.detail.response.returnval);
+      }
+
+    });
+  })();
+  </script>
+</dom-module>

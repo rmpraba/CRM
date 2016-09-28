@@ -23,7 +23,8 @@ app.post('/loginpage',  urlencodedParser,function (req, res)
   var user={"employee_id":req.query.username};
   var pass={"password":req.query.password};
 //console.log('hi');
-       connection.query('SELECT (select name from md_school where id=e.school_id) as schoolname,e.school_id, e.employee_name,e.role_id, r.role_name, a.rt_dashboard, a.rt_enquiry,a.rt_admission_form,a.rt_adm_approval, a.rt_followup, a.rt_collectionentry FROM md_employee as e JOIN md_role as r JOIN md_access_rights as a on r.role_id=e.role_id and a.role_id=e.role_id where ? and ?',[user,pass],
+
+  connection.query('SELECT (select name from md_school where id=e.school_id) as schoolname,e.school_id, e.employee_name,e.role_id, r.role_name, a.rt_dashboard, a.rt_enquiry,a.rt_admission_form,a.rt_adm_approval, a.rt_followup, a.rt_collectionentry FROM md_employee as e JOIN md_role as r JOIN md_access_rights as a on r.role_id=e.role_id and a.role_id=e.role_id where ? and ?',[user,pass],
         function(err, rows)
         {
     if(!err)
@@ -381,7 +382,337 @@ app.post('/fetchenquiryinfo',  urlencodedParser,function (req, res){
      console.log(err);
   }
 });
+});
+
+// Insert Admission
+app.post('/insertadmission',  urlencodedParser,function (req, res){
+
+    var response={
+        enquiry_no: req.query.enquiryno,
+        admission_no: "",
+        prospect_application_no:req.query.applicationno,
+        school_id:req.query.schoolid,
+        school_name:req.query.schoolname,
+        academic_year:req.query.admissionyear,
+        first_name:req.query.firstname,
+        middle_name:req.query.middlename,
+        last_name:req.query.lastname,
+        student_name:req.query.studentname,
+        class_for_admission:req.query.admissiongrade,
+        dob:req.query.admissiondob,
+        gender:req.query.admissiongender,
+        disabled_student:req.query.admissiondisabled,
+        canteen_availed:req.query.admissioncanteen,
+        transport_availed:req.query.admissiontransport,       
+        created_By:req.query.createdby,
+        father_name:req.query.fathername,
+        mother_name:req.query.mothername,
+        admission_year:req.query.admissionyear
+    }
+
+    var qur="SELECT * FROM auto_admission_no";
+    console.log(qur);
+    connection.query(qur,function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      response.admission_no="ENR"+rows[0].Admission_No;
+      new_admission_no=parseInt(rows[0].Admission_No)+1;
+      connection.query("INSERT INTO md_admission SET ?",[response],function(err, rows){
+       if(!err){
+        connection.query("UPDATE auto_admission_no SET Admission_No='"+new_admission_no+"'",function(err, result){
+          if(result.affectedRows>0){
+            connection.query("UPDATE student_enquiry_details SET status='Admitted' where enquiry_no='"+req.query.enquiryno+"'",function(err, result){
+              if(result.affectedRows>0){
+              res.status(200).json({'returnval': 'ENR'+response.admission_no});
+              }
+              else
+              res.status(200).json({'returnval': 'statusfail'});  
+            });
+          }
+        else
+        res.status(200).json({'returnval': 'updatefail'});  
+       
+      });
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'insertfail'});
+    }
+ 
+});
+    }
+    else
+      res.status(200).json({'returnval': 'noadmissionno'});  
+  }
   });
+});
+
+
+// Fetching enquiry no for admission
+app.post('/searchadmnenquiry',  urlencodedParser,function (req, res){
+    var qur="SELECT * FROM md_admission WHERE school_id='"+req.query.schoolid+"' and enquiry_no = '"+req.query.enquiryno+"' or first_name='"+req.query.firstname+"'";
+    console.log(qur);
+    connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': ''});
+    }
+  }
+  else{
+     console.log(err);
+  }
+});
+});
+
+
+// Fetching enquiry no for admission
+app.post('/searchadmission',  urlencodedParser,function (req, res){
+    var qur="SELECT * FROM md_admission WHERE school_id='"+req.query.schoolid+"' and admission_no = '"+req.query.admissionno+"' or first_name='"+req.query.firstname+"'";
+    console.log(qur);
+    connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': ''});
+    }
+  }
+  else{
+     console.log(err);
+  }
+});
+});
+
+
+// Fetching fees for admission
+app.post('/fetchfees',  urlencodedParser,function (req, res){
+    var qur="SELECT * FROM fee_master WHERE school_id='"+req.query.schoolid+"' and admission_year = '"+req.query.admissionyear+"' and academic_year='"+req.query.academicyear+"' and grade_id=(SELECT grade_id FROM grade_master WHERE grade_name='"+req.query.grade+"')";
+    console.log(qur);
+    connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': ''});
+    }
+  }
+  else{
+     console.log(err);
+  }
+});
+});
+
+
+// Fetching fees splitup
+app.post('/fetchfeesplitup',  urlencodedParser,function (req, res){
+    var qur="SELECT * FROM fee_splitup WHERE school_id='"+req.query.schoolid+"' and fee_code='"+req.query.feecode+"'";
+    console.log(qur);
+    connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': ''});
+    }
+  }
+  else{
+     console.log(err);
+  }
+});
+});
+
+
+// Fetching fees splitup
+app.post('/fetchnoofinstallment',  urlencodedParser,function (req, res){
+    var qur="SELECT * FROM installment_master im join installment_percentage ip on(im.feetype_code=ip.feetype_code) WHERE im.school_id='"+req.query.schoolid+"'";
+    console.log(qur);
+    connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': ''});
+    }
+  }
+  else{
+     console.log(err);
+  }
+});
+});
+
+
+
+// Fetching fees splitup
+app.post('/insertcashfees',  urlencodedParser,function (req, res){
+    var qur="INSERT INTO tr_student_fees SET ?";
+    console.log(qur);
+
+    var response={
+       school_id:req.query.schoolid,
+       academic_year:req.query.academicyear,
+        // obj.enquiryno=schoolid; 
+        admission_no:req.query.admissionno, 
+        student_name:req.query.studentname,
+        grade:req.query.garde,
+        fee_type:req.query.feetype,
+        fee_code:req.query.feecode,  
+        installment_type:req.query.installmenttype,
+        installment:req.query.installment,
+        installment_date:req.query.installmentdate, 
+        installment_amount:req.query.installmentamount,
+        waiveoff_amount:req.query.waiveoffamount,
+        mode_of_payment:req.query.modeofpayment, 
+        receipt_date:req.query.receiptdate,
+        paid_date:req.query.paiddate,
+        paid_status:req.query.paidstatus,        
+        created_by:req.query.createdby    
+        
+    };
+    connection.query(qur,[response],
+    function(err, rows)
+    {
+    if(!err)
+    {
+    
+      res.status(200).json({'returnval': 'Fee paid!'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'Fee not paid'});
+    }
+});
+});
+
+// Fetching fees splitup
+app.post('/insertchequefees',  urlencodedParser,function (req, res){
+    var qur="INSERT INTO tr_cheque_details SET ?";
+    console.log(qur);
+
+    var response={
+       school_id:req.query.schoolid,
+       academic_year:req.query.academicyear,
+        // obj.enquiryno=schoolid; 
+        admission_no:req.query.admissionno, 
+        student_name:req.query.studentname,
+        grade:req.query.garde,
+        fee_type:req.query.feetype,
+        fee_code:req.query.feecode,  
+        installment_type:req.query.installmenttype,
+        installment:req.query.installment,
+        installment_date:req.query.installmentdate, 
+        installment_amount:req.query.installmentamount,
+        waiveoff_amount:req.query.waiveoffamount,
+        mode_of_payment:req.query.modeofpayment, 
+        receipt_date:req.query.receiptdate,
+        paid_date:req.query.paiddate,
+        // paid_status:req.query.paidstatus,        
+        created_by:req.query.createdby,    
+        cheque_no:req.query.chequeno,
+        bank_name:req.query.bankname,
+        cheque_date:req.query.chequedate
+    };
+    connection.query(qur,[response],
+    function(err, rows)
+    {
+    if(!err)
+    {
+    
+      res.status(200).json({'returnval': 'Fee paid!'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'Fee not paid'});
+    }
+});
+});
+
+// Fetching fees splitup
+app.post('/inserttransferfees',  urlencodedParser,function (req, res){
+    var qur="INSERT INTO tr_transfer_details SET ?";
+    console.log(qur);
+
+    var response={
+       school_id:req.query.schoolid,
+       academic_year:req.query.academicyear,
+        // obj.enquiryno=schoolid; 
+        admission_no:req.query.admissionno, 
+        student_name:req.query.studentname,
+        grade:req.query.garde,
+        fee_type:req.query.feetype,
+        fee_code:req.query.feecode,  
+        installment_type:req.query.installmenttype,
+        installment:req.query.installment,
+        installment_date:req.query.installmentdate, 
+        installment_amount:req.query.installmentamount,
+        waiveoff_amount:req.query.waiveoffamount,
+        mode_of_payment:req.query.modeofpayment, 
+        receipt_date:req.query.receiptdate,
+        paid_date:req.query.paiddate,
+        // paid_status:req.query.paidstatus,        
+        created_by:req.query.createdby,    
+        reference_no:req.query.referenceno,
+        bank_name:req.query.bankname,
+        cheque_date:req.query.chequedate
+    };
+    connection.query(qur,[response],
+    function(err, rows)
+    {
+    if(!err)
+    {
+    
+      res.status(200).json({'returnval': 'Fee paid!'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'Fee not paid'});
+    }
+});
+});
+
 
 function setvalue(){
   console.log("calling setvalue.....");

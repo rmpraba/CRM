@@ -23,7 +23,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <dom-module id="admission-form">
   <template>
 
-    
+      
    <div class="row enquiry-form">
       <div class="list-group col-sm-12 panel-body form-category">
           <div class="input-group col-sm-5 ">
@@ -47,32 +47,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </div>
     </div>
     </div>
-      <div class="row enquiry-form">
-=======
-    <div class="list-group col-sm-12 panel-body form-category">
-      <div class="custom-search-form col-sm-5">
-        <div id="search" show$="{{show}}" on-click="toggleSearch">
-          <span><paper-input label="Enquiry No"></paper-input></span>
-        </div>
-      </div>
-      <div class="custom-search-form col-sm-2 paper-search">
-        <span><paper-icon-button icon="search"></paper-icon-button></span>
-      </div>
-      <div class="input-group col-sm-5">
-        <paper-dropdown-menu label="Blood Group" style="width: 100%;">
-          <paper-listbox class="dropdown-content" on-iron-select="FnBloodGroup">
-            <paper-item>A +ve</paper-item>
-            <paper-item>A -ve</paper-item>
-            <paper-item>B +ve</paper-item>
-            <paper-item>B -ve</paper-item>
-            <paper-item>O +ve</paper-item>
-            <paper-item>O -ve</paper-item>
-            <paper-item>AB +ve</paper-item>
-            <paper-item>AB -ve</paper-item>
-          </paper-listbox>
-        </paper-dropdown-menu>
-      </div>
-    </div>
+      
+    
     <div class="row enquiry-form">
 
       <div class="list-group col-sm-12 panel-body form-category">
@@ -88,10 +64,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <paper-input label="Enquired Year" value="{{enquiredyear}}"></paper-input>
         </div>
         <div class="col-sm-6 enquiry-input">
-          <paper-dropdown-menu label="Admission Year" on-iron-select="{{FnSelectAdmissionYear}}">
+          <paper-dropdown-menu label="Admission Year" on-iron-select="FnSelectAdmissionYear" attr-for-selected="value">
               <paper-listbox class="dropdown-content">                
-                  <paper-item>AY 2016-2017</paper-item> 
-                  <paper-item>AY 2017-2018</paper-item>                               
+                  <paper-item value="AY-2016-2017">AY-2016-2017</paper-item> 
+                  <paper-item value="AY-2017-2018">AY-2017-2018</paper-item>                               
               </paper-listbox>
           </paper-dropdown-menu>
         </div>
@@ -112,7 +88,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <paper-dropdown-menu label="Seeking Admission for Class" style="width: 100%;">
             <paper-menu id="admissiongrade" class="dropdown-content" required on-iron-select="FnSelectGrade" attr-for-selected="value" selected="{{gradeselection}}" >
               <template  is="dom-repeat" items="{{itemarr}}" as="view">
-                <paper-item >{{view.class}}</paper-item>
+                <paper-item value="{{view.class}}">{{view.class}}</paper-item>
               </template>
             </paper-menu>
           </paper-dropdown-menu>
@@ -137,7 +113,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <dateofbirth-datepicker></dateofbirth-datepicker>
         </div>
         <div class="col-sm-6">
-          <paper-input label="Age as on 31st March 2016"></paper-input>
+          <paper-input label="Age as on 31st March 2016" value="{{age}}"></paper-input>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
@@ -551,14 +527,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </div>
 
        <div class="list-group col-sm-12 panel-body form-category">
-        <div class="col-sm-6">
-          Like to Avail Transport ?<span><paper-checkbox id="yes" class="checkbox" on-change="transportHandleryes">Yes</paper-checkbox></span>
-          <span><paper-checkbox id="no" class="checkbox" on-change="transportHandlerno">No</paper-checkbox></span>
+        <div class="col-sm-4">
+          Like to Avail Transport ?<span><paper-checkbox id="Tyes" class="checkbox" on-change="transportHandler">Yes</paper-checkbox></span>
+          <span><paper-checkbox id="Tno" class="checkbox" on-change="transportHandler">No</paper-checkbox></span>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-4">
         Like to Avail Canteen Facility ?
-          <span><paper-checkbox id="yes" class="checkbox" on-change="canteenHandleryes">Yes</paper-checkbox></span>
-          <span><paper-checkbox id="no" class="checkbox" on-change="canteenHandlerno">No</paper-checkbox></span>
+          <span><paper-checkbox id="Cyes" class="checkbox" on-change="canteenHandler">Yes</paper-checkbox></span>
+          <span><paper-checkbox id="Cno" class="checkbox" on-change="canteenHandler">No</paper-checkbox></span>
+        </div>
+        <div class="col-sm-4">
+        Disabled student ?
+          <span><paper-checkbox id="Dyes" class="checkbox" on-change="disabledHandler">Yes</paper-checkbox></span>
+          <span><paper-checkbox id="Dno" class="checkbox" on-change="disabledHandler">No</paper-checkbox></span>
         </div>
       </div>
 
@@ -575,7 +556,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
   (function() {
     'use strict';
-
+    var admissionyear;
+    var admissiongrade;
+    var admissiondob;
+    var admissiongender;
+    var admissiontransport;
+    var admissioncanteen;
+    var admissiondisabled;
     Polymer({
       is: 'admission-form',
       ready:function(){
@@ -595,19 +582,64 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var enquiry_no=enquiry.substring(0,inx);
         var enquiry_name=enquiry.substring(inx+1);
         localStorage.setItem("curr_sess_enquiryno",enquiry_no);
-        localStorage.setItem("curr_sess_enquiryname",enquiry_name);        
+        localStorage.setItem("curr_sess_enquiryname",enquiry_name); 
+        this.$.admissionservice.callFetchenquiryinfoService();       
       },
       FnSetSecLanguage:function(value){
-        document.querySelector("#"+value).selected=true;
+        // alert(value);
+        // alert(document.querySelector("#"+value));
+        document.querySelector("#"+value).checked=true;
       },
       FnSetThirdLanguage:function(value){
-        document.querySelector("#"+value).selected=true;
+        document.querySelector("#"+value).checked=true;
       },
       FnSetTransport:function(value){
-        document.querySelector("#"+value).selected=true;
+        admissiontransport=value;
+        document.querySelector("#T"+value).checked=true;
       },
       FnSetCanteen:function(value){
-        document.querySelector("#"+value).selected=true;
+        admissioncanteen=value;
+        document.querySelector("#C"+value).checked=true;
+      },
+      FnSetGender:function(value){
+        admissiongender=value;
+        document.querySelector("#"+value).checked=true;
+      },
+      FnFindAge:function(value){
+          admissiondob=value;
+          var dt1=new Date(value);
+          var dobdate=value;
+          var dt=new Date();
+          var pr_year=dt.getFullYear();
+          var bt_year=dt1.getFullYear();
+          var diff=parseInt(pr_year-bt_year);          
+          this.age=diff+" Years";        
+      },
+      FnSelectAdmissionYear:function(e){
+        admissionyear=(e.target.selectedItem.textContent).trim();
+
+      },
+      FnSelectGrade:function(e){
+        admissiongrade=(e.target.selectedItem.textContent).trim();
+      },
+      genderHandler:function(e){        
+        admissiongender=e.target.id;
+      },
+      transportHandler:function(e){
+        admissiontransport=e.target.id;
+        admissiontransport=admissiontransport.substring(1);
+      },
+      canteenHandler:function(e){
+        admissioncanteen=e.target.id;
+        admissioncanteen=admissioncanteen.substring(1);
+      },
+      disabledHandler:function(e){
+        admissiondisabled=e.target.id;
+        admissiondisabled=admissiondisabled.substring(1);
+      },
+      FnSubmitAdmission:function(){
+        // alert(this.applicationno+"  "+this.schoolname+"  "+admissionyear+"  "+this.firstname+"  "+this.middlename+" "+this.lastname+" "+admissiongrade+"  "+admissiondob+" "+admissiongender+" "+admissiondisabled+" "+admissioncanteen+" "+admissiontransport);
+        this.$.admissionservice.callInsertAdmissionService(this.applicationno,this.schoolname,admissionyear,this.firstname,this.middlename,this.lastname,admissiongrade,admissiondob,admissiongender,admissiondisabled,admissioncanteen,admissiontransport,this.fathername,this.mothername);
       }
     });
   })();
