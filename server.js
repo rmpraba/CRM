@@ -73,7 +73,6 @@ app.post('/submitenquiry',  urlencodedParser,function (req, res)
 app.post('/updateenquiry',  urlencodedParser,function (req, res)
 {
   console.log('hello');
-  var collection={"first_name":req.query.firstname,"middle_name":req.query.middlename,"last_name":req.query.lastname,"gender":req.query.gender,"class":req.query.grade,"dob":req.query.dob,"old_class":req.query.oldclass,"old_school":req.query.oldschool,"mother_tongue":req.query.mothertongue,"father_name":req.query.fathername,"mother_name":req.query.mothername,"father_qualification":req.query.fatheredu,"mother_qualification":req.query.motheredu,"father_mob":req.query.fathermob,"mother_mob":req.query.mothermob,"father_email":req.query.fathermail,"mother_email":req.query.mothermail,"father_company":req.query.fathercompany,"mother_company":req.query.mothercompany,"father_occupation":req.query.fatherjob,"mother_occupation":req.query.motherjob,"flat_no":req.query.flatno,"address1":req.query.address1,"address2":req.query.address2,"address3":req.query.address3,"city":req.query.city,"pincode":req.query.pincode,"state":req.query.statename,"enquiry_source":req.query.enquiysource,"sibiling_name":req.query.siblingname,"sibling_detail":req.query.siblingdetails,"transport_requirment":req.query.transportreq,"canteen_requirment":req.query.canteenreq,"second_language":req.query.secondlanguage,"third_language":req.query.thirdlanguage,"updated_by":req.query.modified,"prospectus_sold":req.query.prospectstatus,"father_designation":req.query.daddesignation,"mother_designation":req.query.momdesignation,"father_income":req.query.dadincome,"mother_income":req.query.momincome,"prospectus_no":req.query.prospectusno};
   var school={"school_id":req.query.schol};
   var enquiry={"enquiry_no":req.query.enq};
 console.log(req.query.momincome);
@@ -94,6 +93,28 @@ console.log(req.query.momincome);
 });
   });
 
+ app.post('/registerenquiryform',  urlencodedParser,function (req, res)
+ {
+   console.log('hello2');
+   var collection={"school_id":req.query.schol,"enquiry_no":req.query.enq,"first_name":req.query.firstname,"middle_name":req.query.middlename,"last_name":req.query.lastname,"gender":req.query.gender,"class":req.query.grade,"dob":req.query.dob,"old_class":req.query.oldclass,"old_school":req.query.oldschool,"mother_tongue":req.query.mothertongue,"father_name":req.query.fathername,"mother_name":req.query.mothername,"father_qualification":req.query.fatheredu,"mother_qualification":req.query.motheredu,"father_mob":req.query.fathermob,"mother_mob":req.query.mothermob,"father_email":req.query.fathermail,"mother_email":req.query.mothermail,"father_company":req.query.fathercompany,"mother_company":req.query.mothercompany,"father_occupation":req.query.fatherjob,"mother_occupation":req.query.motherjob,"flat_no":req.query.flatno,"address1":req.query.address1,"address2":req.query.address2,"address3":req.query.address3,"city":req.query.city,"pincode":req.query.pincode,"state":req.query.statename,"enquiry_source":req.query.enquiysource,"sibiling_name":req.query.siblingname,"sibling_detail":req.query.siblingdetails,"transport_requirment":req.query.transportreq,"canteen_requirment":req.query.canteenreq,"second_language":req.query.secondlanguage,"third_language":req.query.thirdlanguage,"updated_by":req.query.modified,"prospectus_sold":req.query.prospectstatus,"father_designation":req.query.daddesignation,"mother_designation":req.query.momdesignation,"father_income":req.query.dadincome,"mother_income":req.query.momincome,"prospectus_no":req.query.prospectusno,"academic_year":req.query.academicyear,"enquiry_name":req.query.givenname,"status":req.query.status};
+   var school={"school_id":req.query.schol};
+   var enquiry={"enquiry_no":req.query.enq};
+   connection.query('insert into student_enquiry_details set ?',[collection],
+     function(err, rows)
+     {
+       if(!err)
+       {
+         console.log('inserted2');
+         res.status(200).json({'returnval': 'success'});
+       }
+       else
+       {
+         console.log(err);
+         res.status(200).json({'returnval': 'invalid'});
+       }
+
+     });
+ });
 /*this function is to get the total sequence number that has been created depending on the enquiry*/
 app.post('/getenquiryno',  urlencodedParser,function (req, res)
 {
@@ -404,7 +425,7 @@ app.post('/insertadmission',  urlencodedParser,function (req, res){
         gender:req.query.admissiongender,
         disabled_student:req.query.admissiondisabled,
         canteen_availed:req.query.admissioncanteen,
-        transport_availed:req.query.admissiontransport,       
+        transport_availed:req.query.admissiontransport,
         created_By:req.query.createdby,
         father_name:req.query.fathername,
         mother_name:req.query.mothername,
@@ -430,12 +451,12 @@ app.post('/insertadmission',  urlencodedParser,function (req, res){
               res.status(200).json({'returnval': 'ENR'+response.admission_no});
               }
               else
-              res.status(200).json({'returnval': 'statusfail'});  
+              res.status(200).json({'returnval': 'statusfail'});
             });
           }
         else
-        res.status(200).json({'returnval': 'updatefail'});  
-       
+        res.status(200).json({'returnval': 'updatefail'});
+
       });
     }
     else
@@ -443,11 +464,11 @@ app.post('/insertadmission',  urlencodedParser,function (req, res){
       console.log(err);
       res.status(200).json({'returnval': 'insertfail'});
     }
- 
+
 });
     }
     else
-      res.status(200).json({'returnval': 'noadmissionno'});  
+      res.status(200).json({'returnval': 'noadmissionno'});
   }
   });
 });
@@ -619,30 +640,32 @@ app.post('/insertcashfees',  urlencodedParser,function (req, res){
     var response={
        school_id:req.query.schoolid,
        academic_year:req.query.academicyear,
+
         enquiry_no:req.query.enquiryno, 
         admission_no:req.query.admissionno, 
+
         student_name:req.query.studentname,
         grade:req.query.garde,
         fee_type:req.query.feetype,
-        fee_code:req.query.feecode,  
+        fee_code:req.query.feecode,
         installment_type:req.query.installmenttype,
         installment:req.query.installment,
-        installment_date:req.query.installmentdate, 
+        installment_date:req.query.installmentdate,
         installment_amount:req.query.installmentamount,
         waiveoff_amount:req.query.waiveoffamount,
-        mode_of_payment:req.query.modeofpayment, 
+        mode_of_payment:req.query.modeofpayment,
         receipt_date:req.query.receiptdate,
         paid_date:req.query.paiddate,
-        paid_status:req.query.paidstatus,        
-        created_by:req.query.createdby    
-        
+        paid_status:req.query.paidstatus,
+        created_by:req.query.createdby
+
     };
     connection.query(qur,[response],
     function(err, rows)
     {
     if(!err)
     {
-    
+
       res.status(200).json({'returnval': 'Fee paid!'});
     }
     else
@@ -661,22 +684,26 @@ app.post('/insertchequefees',  urlencodedParser,function (req, res){
     var response={
        school_id:req.query.schoolid,
        academic_year:req.query.academicyear,
+
         enquiry_no:req.query.enquiryno, 
         admission_no:req.query.admissionno, 
+
         student_name:req.query.studentname,
         grade:req.query.garde,
         fee_type:req.query.feetype,
-        fee_code:req.query.feecode,  
+        fee_code:req.query.feecode,
         installment_type:req.query.installmenttype,
         installment:req.query.installment,
-        installment_date:req.query.installmentdate, 
+        installment_date:req.query.installmentdate,
         installment_amount:req.query.installmentamount,
         waiveoff_amount:req.query.waiveoffamount,
+
         mode_of_payment:req.query.modeofpayment, 
         received_date:req.query.receiveddate,
         // paid_date:req.query.paiddate,
         cheque_status:req.query.paidstatus,        
         created_by:req.query.createdby,    
+
         cheque_no:req.query.chequeno,
         bank_name:req.query.bankname,
         cheque_date:req.query.chequedate
@@ -685,7 +712,10 @@ app.post('/insertchequefees',  urlencodedParser,function (req, res){
     function(err, rows)
     {
     if(!err)
-    {    
+
+    {
+
+
       res.status(200).json({'returnval': 'Fee paid!'});
     }
     else
@@ -704,22 +734,24 @@ app.post('/inserttransferfees',  urlencodedParser,function (req, res){
     var response={
        school_id:req.query.schoolid,
        academic_year:req.query.academicyear,
-        // obj.enquiryno=schoolid; 
-        admission_no:req.query.admissionno, 
+        // obj.enquiryno=schoolid;
+        admission_no:req.query.admissionno,
         student_name:req.query.studentname,
         grade:req.query.garde,
         fee_type:req.query.feetype,
-        fee_code:req.query.feecode,  
+        fee_code:req.query.feecode,
         installment_type:req.query.installmenttype,
         installment:req.query.installment,
-        installment_date:req.query.installmentdate, 
+        installment_date:req.query.installmentdate,
         installment_amount:req.query.installmentamount,
         waiveoff_amount:req.query.waiveoffamount,
+
         mode_of_payment:req.query.modeofpayment, 
         received_date:req.query.receiveddate,
+
         paid_date:req.query.paiddate,
-        // paid_status:req.query.paidstatus,        
-        created_by:req.query.createdby,    
+        // paid_status:req.query.paidstatus,
+        created_by:req.query.createdby,
         reference_no:req.query.referenceno,
         bank_name:req.query.bankname
         
@@ -729,7 +761,7 @@ app.post('/inserttransferfees',  urlencodedParser,function (req, res){
     {
     if(!err)
     {
-    
+
       res.status(200).json({'returnval': 'Fee paid!'});
     }
     else
@@ -890,6 +922,59 @@ app.post('/updatefollowdetail',  urlencodedParser,function (req, res)
 });
   });
 
+/*this function is used to get the referrer name from parent table*/
+app.post('/getparentname',  urlencodedParser,function (req, res){
+    var qur={"school_id":req.query.schol};
+    //console.log('qur');
+    connection.query('SELECT parent_name FROM `parent` WHERE ?',[qur],
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      //console.log(rows);
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': ''});
+    }
+  }
+  else{
+     console.log(err);
+  }
+});
+  });
+
+
+/*this function is used to get the referrer name from student detail table*/
+
+app.post('/getstudentnamelist',  urlencodedParser,function (req, res){
+    var qur={"school_id":req.query.schol};
+    console.log('qur');
+    connection.query('SELECT student_name FROM `student_details` WHERE ?',[qur],
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      //console.log(rows);
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': ''});
+    }
+  }
+  else{
+     console.log(err);
+  }
+});
+  });
 
 function setvalue(){
   console.log("calling setvalue.....");

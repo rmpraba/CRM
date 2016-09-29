@@ -5,7 +5,22 @@
   <template>
     <div class="row enquiry-form">
       <div class="list-group col-sm-12 panel-body form-category">
-          <div class="input-group custom-search-form col-sm-6 col-md-offset-3">
+        <div class="input-group custom-search-form col-md-2 col-md-offset-5">
+          <button class="btn btn-default" on-click="newenquriy" type="button" id="newenquiry">New Enquriy</button>
+          <paper-dropdown-menu label="Academic Year" id="academicyear">
+            <paper-listbox id="academics" class="dropdown-content" on-iron-select="Fnacademicyr">
+              <paper-item>AY-2015-2016</paper-item>
+              <paper-item>AY-2016-2017</paper-item>
+              <paper-item>AY-2017-2018</paper-item>
+              <paper-item>AY-2018-2019</paper-item>
+              <paper-item>AY-2019-2020</paper-item>
+              <paper-item>AY-2020-2021</paper-item>
+            </paper-listbox>
+          </paper-dropdown-menu>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+          <div class="input-group custom-search-form col-sm-6 col-sm-offset-3">
             <input type="text" class="form-control" id="searchtext" placeholder="Enter Enquiry Number">
             <span class="input-group-btn">
               <button class="btn btn-default" on-click="search" type="button">
@@ -234,11 +249,19 @@
             </paper-menu>
           </paper-dropdown-menu>
         </div>
-        <div class="col-sm-4">
-          <paper-input id="sibname" label="Names of siblinngs" value="{{siblingname}}"></paper-input>
+        <div class="col-sm-4" id="sibname">
+          <paper-input  label="Names of siblinngs" value="{{siblingname}}"></paper-input>
         </div>
-        <div class="col-sm-4">
-          <paper-input id="sibdetail" label="Classes of siblinngs" value="{{siblingdetails}}"></paper-input>
+        <div class="col-sm-4" id="sibdetail">
+          <paper-input  label="Classes of siblinngs" value="{{siblingdetails}}"></paper-input>
+        </div>
+        <div class="col-sm-4" id="referrer">
+          <paper-input  required error-message="needs referrer!" label="Enter referrer name.." is="" value="{{referrername}}" on-keydown="FnInputChanged"></paper-input>
+          <paper-listbox class="dropdown-content" id="itemlist" on-iron-select="Fnselected" valueattr="value">
+            <template is="dom-repeat" items="{{itemArray}}" as="item">
+              <paper-item value="{{item.itemdes}}">{{item.itemdes}}</paper-item>
+            </template>
+          </paper-listbox>
         </div>
       </div>
       <div class="form-group-heading">
@@ -281,7 +304,8 @@
         </div>
       </div>
       <div class="col-md-12 form-button">
-        <paper-button class="btn btn-primary" on-click="submit">SUBMIT</paper-button>
+        <paper-button id="searchenq" class="btn btn-primary" on-click="submit">SUBMIT</paper-button>
+        <paper-button id="newenq" class="btn btn-primary" on-click="register">REGISTER</paper-button>
       </div>
 
 
@@ -304,11 +328,14 @@
         var momtheroccup;
         var dadincome;
         var momincome;
+        var namearr=[];
+        var academicyear;
     Polymer({
       is: 'detailed-enquiry-form',
       ready:function(){
-          this.$.sibname.disabled=true;
-          this.$.sibdetail.disabled=true;
+          this.$.sibname.hidden=true;
+          this.$.sibdetail.hidden=true;
+          this.$.referrer.hidden=true;
           this.$.dadoff.hidden=true;
           this.$.dadjob.hidden=true;
           this.$.dadsal.hidden=true;
@@ -316,6 +343,10 @@
           this.$.momjob.hidden=true;
           this.$.momsal.hidden=true;
           this.$.prospectno.hidden=true;
+          this.$.service.getreferrername();
+        this.$.newenq.hidden=true;
+        this.$.academicyear.hidden=true;
+        this.$.newenquiry.hidden=false;
       },
       Fnclear:function(){
         this.ready();
@@ -410,9 +441,9 @@
            }
     },
     maleHandler:function(){
-      if(document.querySelector("#male").checked==true)
+      if(document.querySelector("#dfmale").checked==true)
         {
-         document.querySelector("#female").checked=false;
+         document.querySelector("#dffemale").checked=false;
          fngender="Male";
          //alert(gender);
        }
@@ -579,12 +610,21 @@
         enquiysource=(e.target.selectedItem.textContent).trim();
 
         if(enquiysource=="Siblings"){
-          this.$.sibname.disabled=false;
-          this.$.sibdetail.disabled=false;
-        }else{
-          this.$.sibname.disabled=true;
-          this.$.sibdetail.disabled=true;
+          this.$.sibname.hidden=false;
+          this.$.sibdetail.hidden=false;
+          this.$.referrer.hidden=true;
         }
+        else if(enquiysource=="Referrer"){
+          this.$.referrer.hidden=false;
+          this.$.sibname.hidden=true;
+          this.$.sibdetail.hidden=true;
+        }
+        else{
+          this.$.sibname.hidden=true;
+          this.$.sibdetail.hidden=true;
+          this.$.referrer.hidden=true; 
+        }
+
     },
     language:function(e){
         mothertongue=(e.target.selectedItem.textContent).trim();
@@ -654,18 +694,18 @@ if(dadoccup=="Self Employed"||dadoccup=="Government Employee"||dadoccup=="Privat
       this.$.dadoff.hidden=false;
       this.$.dadjob.hidden=false;
       this.$.dadsal.hidden=false;
-          
+
   }
   else{
       this.$.dadoff.hidden=true;
       this.$.dadjob.hidden=true;
       this.$.dadsal.hidden=true;
-  
+
   }
 },
 motheroccupation:function(e){
 momtheroccup=(e.target.selectedItem.textContent).trim();
-alert(momtheroccup);
+//alert(momtheroccup);
 if(momtheroccup=="Self Employed"||momtheroccup=="Government Employee"||momtheroccup=="Private Employee"){
       this.$.momoff.hidden=false;
       this.$.momjob.hidden=false;
@@ -682,7 +722,152 @@ dadsalary:function(e){
 },
 mothersalary:function(e){
   momincome=(e.target.selectedItem.textContent).trim();
-}
+},
+autocompletename(nameitem){
+          namearr=nameitem;
+        },
+        FnInputChanged:function(e){
+          if(e.keyCode==13|| e.keyCode==40)
+            this.querySelector('paper-listbox').focus();
+          var arr=[];
+          arr.push({"itemdes":"-----Select-----"});
+          this.querySelector('paper-listbox').style.visibility='visible';
+          if(e.keyCode==8){
+            this.itemflag="true";
+            this.itemval="";
+            //alert('yes');
+            var len=(this.textvalue).length;
+            if(len<=1){
+              this.querySelector('paper-listbox').style.visibility='hidden';
+              this.itemArray="";
+              this.itemval="";
+            }
+            if(len>1){
+              this.querySelector('paper-listbox').style.visibility='visible';
+              var backsubval=(((this.textvalue).substring(0,(len-1))).trim()).toUpperCase();
+              for(var i=0;i<namearr.length;i++)
+              {
+                var subval=((namearr[i].name).trim()).substring(0,backsubval.length);
+                if((subval).toUpperCase()==(backsubval).toUpperCase())
+                {
+                  var obj={"itemdes":""};
+                  obj.itemdes=namearr[i].name;
+                  arr.push(obj);
+                }
+              }
+              this.itemArray=arr;
+            }
+          }
+          if(e.keyCode!=8&& e.keyCode!=16&& e.keyCode!=13 && e.keyCode!=38&&e.keyCode!=40&&e.keyCode!=37&&e.keyCode!=39){
+            if(this.itemflag=="true") {
+              this.itemval = (this.textvalue).toUpperCase()+String.fromCharCode((e.keyCode)).toUpperCase();
+              this.itemflag="false";
+            }
+            else
+            this.itemval = this.textvalue +String.fromCharCode((e.keyCode));
+            if(this.itemval.length>0)
+            {
+              for(var i=0;i<namearr.length;i++){
+                var subval=((namearr[i].name).trim()).substring(0,this.itemval.length);
+                if((subval).toUpperCase()==(this.itemval).toUpperCase()){
+                  var obj={"itemdes":""};
+                  obj.itemdes=namearr[i].name;
+                  arr.push(obj);
+                }
+              }
+              if(arr.length>0)
+                this.itemArray=arr;
+              else {
+                var obj={"itemdes":""};
+                  obj.itemdes=namearr[i].name;
+                  arr.push(obj);
+                this.itemArray=arr;
+              }
+            }
+          }
+
+        },
+        Fnselected:function(e)
+        {
+          //alert('s');
+          this.querySelector('paper-listbox').style.visibility='hidden';
+          this.referrername = e.target.selectedItem.textContent.trim();
+          this.itemArray=[];
+          document.querySelector('#itemlist').selected=-1;
+        },
+      setenqno:function(enqno){
+        document.getElementById('searchtext').value=enqno;
+      },
+      newenquriy:function(){
+        this.$.service.getenqno();
+        this.$.searchenq.hidden=true;
+        this.$.newenq.hidden=false;
+        this.$.academicyear.hidden=false;
+        this.$.newenquiry.hidden=true;
+      },
+      Fnacademicyr:function(e){
+        academicyear=(e.target.selectedItem.textContent).trim();
+      },
+      register:function() {
+        var enqnumber = document.getElementById('searchtext').value;
+        if (this.firstname == "" || this.middlename == "" || this.lastname == "" || this.grade == "" || this.oldclass == "" || this.oldschool == "" || this.mothertongue == "" || this.fathername == "" || this.mothername == "" || this.fatheredu == "" || this.motheredu == "" || this.fathermob == "" || this.mothermob == "" || this.fathermail == "" || this.address1 == "" || this.address2 == "" || this.address3 == "" || this.city == "" || this.pincode == "" || this.flat == "" || this.state == "") {
+          this.$.fname.validate();
+          this.$.mname.validate();
+          this.$.lname.validate();
+          this.$.grade.validate();
+          this.$.oldschool.validate();
+          this.$.oldclass.validate();
+          this.$.dadname.validate();
+          this.$.momname.validate();
+          this.$.dadedu.validate();
+          this.$.momedu.validate();
+          this.$.dadmob.validate();
+          this.$.dadmail.validate();
+          this.$.mommob.validate();
+          this.$.flat.validate();
+          this.$.add1.validate();
+          this.$.add2.validate();
+          this.$.add3.validate();
+          this.$.city.validate();
+          this.$.pin.validate();
+          this.$.state.validate();
+        }
+        else if (fngender == null) {
+          alert('Select the gender of the student');
+        }
+        else if (enquiysource == null) {
+          alert('Select the enquiry source');
+        }
+        else if (mothertongue == null) {
+          alert('Select the mother tongue');
+        }
+        else if (transportreq == null) {
+          alert('Select the transport requirment');
+        }
+        else if (canteenreq == null) {
+          alert('Select the canteen requirment');
+        }
+        else if (secondlanguage == null) {
+          alert('Select the second language');
+        }
+        else if (thirdlanguage == null) {
+          alert('Select the third language');
+        }
+        else if (propsold == null) {
+          alert('Prospectus sold status is not marked');
+        }
+        else if (dadoccup == null) {
+          alert("Select Father's Occupation");
+        }
+        else if (momtheroccup == null) {
+          alert("Select Mother's Occupation");
+        }
+        else {
+          //alert(enqno+this.firstname+this.middlename+this.lastname+fngender+this.grade+this.dob+this.oldclass+this.oldschool+mothertongue+this.fathername+this.mothername+this.fatheredu+this.motheredu+this.fathermob+this.mothermob+this.fathermail+this.mothermail+this.fathercompany+this.mothercompany+dadoccup+momtheroccup+this.flat+this.address1+this.address2+this.address3+this.city+this.pincode+this.state+enquiysource+this.siblingname+this.siblingdetails+transportreq+canteenreq+secondlanguage+thirdlanguage+propsold+this.fatherjob+this.motherjob+dadincome+momincome);
+          this.$.service.registerenquiryform(enqnumber, this.firstname, this.middlename, this.lastname, fngender, this.grade, this.dob, this.oldclass, this.oldschool, mothertongue, this.fathername, this.mothername, this.fatheredu, this.motheredu, this.fathermob, this.mothermob, this.fathermail, this.mothermail, this.fathercompany, this.mothercompany, dadoccup, momtheroccup, this.flat, this.address1, this.address2, this.address3, this.city, this.pincode, this.state, enquiysource, this.siblingname, this.siblingdetails, transportreq, canteenreq, secondlanguage, thirdlanguage, propsold, this.fatherjob, this.motherjob, dadincome, momincome, this.prospectusno,academicyear);
+
+        }
+      }
     });
   })();
   </script>
