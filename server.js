@@ -454,6 +454,33 @@ app.post('/insertadmission',  urlencodedParser,function (req, res){
 
 
 // Fetching enquiry no for admission
+app.post('/searchfeeenquiry',  urlencodedParser,function (req, res){
+    var qur="SELECT * FROM student_enquiry_details WHERE school_id='"+req.query.schoolid+"' and enquiry_no = '"+req.query.enquiryno+"' or first_name='"+req.query.firstname+"'";
+    console.log(qur);
+    connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': ''});
+    }
+  }
+  else{
+     console.log(err);
+  }
+});
+});
+
+
+
+// Fetching enquiry no for admission
 app.post('/searchadmnenquiry',  urlencodedParser,function (req, res){
     var qur="SELECT * FROM md_admission WHERE school_id='"+req.query.schoolid+"' and enquiry_no = '"+req.query.enquiryno+"' or first_name='"+req.query.firstname+"'";
     console.log(qur);
@@ -592,7 +619,7 @@ app.post('/insertcashfees',  urlencodedParser,function (req, res){
     var response={
        school_id:req.query.schoolid,
        academic_year:req.query.academicyear,
-        // obj.enquiryno=schoolid; 
+        enquiry_no:req.query.enquiryno, 
         admission_no:req.query.admissionno, 
         student_name:req.query.studentname,
         grade:req.query.garde,
@@ -634,7 +661,7 @@ app.post('/insertchequefees',  urlencodedParser,function (req, res){
     var response={
        school_id:req.query.schoolid,
        academic_year:req.query.academicyear,
-        // obj.enquiryno=schoolid; 
+        enquiry_no:req.query.enquiryno, 
         admission_no:req.query.admissionno, 
         student_name:req.query.studentname,
         grade:req.query.garde,
@@ -646,9 +673,9 @@ app.post('/insertchequefees',  urlencodedParser,function (req, res){
         installment_amount:req.query.installmentamount,
         waiveoff_amount:req.query.waiveoffamount,
         mode_of_payment:req.query.modeofpayment, 
-        receipt_date:req.query.receiptdate,
-        paid_date:req.query.paiddate,
-        // paid_status:req.query.paidstatus,        
+        received_date:req.query.receiveddate,
+        // paid_date:req.query.paiddate,
+        cheque_status:req.query.paidstatus,        
         created_by:req.query.createdby,    
         cheque_no:req.query.chequeno,
         bank_name:req.query.bankname,
@@ -658,8 +685,7 @@ app.post('/insertchequefees',  urlencodedParser,function (req, res){
     function(err, rows)
     {
     if(!err)
-    {
-    
+    {    
       res.status(200).json({'returnval': 'Fee paid!'});
     }
     else
@@ -690,13 +716,13 @@ app.post('/inserttransferfees',  urlencodedParser,function (req, res){
         installment_amount:req.query.installmentamount,
         waiveoff_amount:req.query.waiveoffamount,
         mode_of_payment:req.query.modeofpayment, 
-        receipt_date:req.query.receiptdate,
+        received_date:req.query.receiveddate,
         paid_date:req.query.paiddate,
         // paid_status:req.query.paidstatus,        
         created_by:req.query.createdby,    
         reference_no:req.query.referenceno,
-        bank_name:req.query.bankname,
-        cheque_date:req.query.chequedate
+        bank_name:req.query.bankname
+        
     };
     connection.query(qur,[response],
     function(err, rows)

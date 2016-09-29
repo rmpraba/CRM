@@ -57,8 +57,11 @@
       FnClear:function(){
         this.showdate = moment(new Date()).format('L');
       },
-      FnSetDate:function(value){
-        this.showdate=value;
+      setinstalldate:function(installmentdate)
+      {
+      var d1=installmentdate;
+      this.showdate=d1;
+      localStorage.setItem("localsess_curr_date",this.showdate);
       }
     });
   </script>

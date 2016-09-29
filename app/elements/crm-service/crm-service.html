@@ -374,7 +374,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         obj.momincome=momsalary;
         obj.prospectusno=prospect;
         this.updateenquiryparam=obj;
-       alert(JSON.stringify(obj));
+       // alert(JSON.stringify(obj));
         this.$.updateenquiryajax.generateRequest();
 
 
@@ -390,6 +390,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      },
      updateenquiryResponse:function(e){
       var result=e.detail.response.returnval;
+      alert(result);
       if(result="success"){
         alert("Submited Successfully");
       }

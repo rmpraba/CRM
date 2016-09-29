@@ -280,9 +280,33 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <li id="admission">
             <a href="" aria-hidden="true" data-toggle="modal" data-target="#newadmission"><i class="fa fa-check fa-fw"></i>Admission</a>
           </li>
-          <li id="payment">
+          <!-- <li id="payment">
             <a href="" aria-hidden="true" data-toggle="modal" data-target="#feepayment"><i class="fa fa-money fa-fw"></i>Fee Payment</a>
+          </li> -->
+
+           <li id="payment">
+            <a href="#" aria-hidden="true" data-toggle="modal" data-target="#feepayment"><i class="fa fa-check fa-fw"></i> Fee Payment<span class="fa arrow"></span></a>
+            <ul class="nav nav-second-level">
+              <li>
+              <a href="" aria-hidden="true" data-toggle="modal" data-target="#prospectousfee" on-click="FnProspect">Prospectus Fee</a>
+                <!-- <a href="flot.html"></a> -->
+              </li>
+              <li>
+                <a href="" aria-hidden="true" data-toggle="modal" data-target="#registerationfee" on-click="FnRegister">Registeration Fee</a>
+              </li>
+              <li>
+                <a href="" aria-hidden="true" data-toggle="modal" data-target="#kitfee">School Kit Fee</a>
+              </li>
+              <li>
+                <a href="" aria-hidden="true" data-toggle="modal" data-target="#annualfee">Tuition & Annual Fee</a>
+              </li>
+              <li>
+                <a href="" aria-hidden="true" data-toggle="modal" data-target="#miscellaneousfee">Miscellaneous Fee</a>
+              </li>
+            </ul>
+            <!-- /.nav-second-level -->
           </li>
+
           <li id="admform">
             <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Admission Form<!-- <span class="fa arrow"></span> --></a>
           </li>
@@ -416,7 +440,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </div>
     </div>
 
-    <div class="modal fade bd-example-modal-lg" id="feepayment" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal fade bd-example-modal-lg" id="prospectousfee" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
@@ -424,7 +448,43 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <span aria-hidden="true">&times;</span>
             </button>
             <h4 class="center-block event-title" id="">
-              Fee Payment
+              Prospectus Fee
+            </h4>
+          </div>
+          <div class="modal-body">
+            <prospectousfee-card></prospectousfee-card>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade bd-example-modal-lg" id="registerationfee" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="center-block event-title" id="">
+             Registeration Fee 
+            </h4>
+          </div>
+          <div class="modal-body">
+            <registerationfee-card></registerationfee-card>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade bd-example-modal-lg" id="kitfee" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="center-block event-title" id="">
+              School Kit Fee 
             </h4>
           </div>
           <div class="modal-body">
@@ -433,6 +493,44 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </div>
       </div>
     </div>
+
+    <div class="modal fade bd-example-modal-lg" id="annualfee" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="center-block event-title" id="">
+              Tuition & Annual Fee 
+            </h4>
+          </div>
+          <div class="modal-body">
+            <fee-card></fee-card>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade bd-example-modal-lg" id="miscellaneousfee" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="center-block event-title" id="">
+              Miscellaneous Fee 
+            </h4>
+          </div>
+          <div class="modal-body">
+            <fee-card></fee-card>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
   </template>
   <script>
   (function() {
@@ -444,46 +542,37 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       ready:function(){
         this.schoolname=localStorage.getItem("schoolname");
         this.username=localStorage.getItem("employeename");
-        /*alert(localStorage.getItem("enquiry")+'    '+localStorage.getItem("dashboard")+'   '+localStorage.getItem("followup")+'   '+localStorage.getItem("admissionform")+'    '+localStorage.getItem("admapproval"));
-        this.$.enquiry.hidden=localStorage.getItem("enquiry");
-        this.$.dashboard.hidden=localStorage.getItem("dashboard");
-        this.$.followup.hidden=localStorage.getItem("followup");
-        this.$.admform.hidden=localStorage.getItem("admissionform");
-        this.$.collcnentry.hidden=localStorage.getItem("collectionentry");
-        this.$.admapp.hidden=localStorage.getItem("admapproval");*/
-      },
-       /*Fn_access_rights:function(Fnenquiry,Fnfollowup,Fndashoard,Fnadmissionform,Fnadmapproval,Fncollectionentry){
-        alert(this.$.enquiry);
-        alert(Fnenquiry+'  '+Fnfollowup+'  '+Fndashoard+'  '+Fnadmissionform+'  '+Fnadmapproval+'  '+Fncollectionentry);
-
-          this.$.enquiry.hidden=Fnenquiry;
-        this.$.dashboard.hidden=Fndashoard;
-        this.$.followup.hidden=Fnfollowup;
-        this.$.admform.hidden=Fnadmissionform;
-        this.$.collcnentry.hidden=Fncollectionentry;
-        this.$.admapp.hidden=Fnadmapproval;
-      },*/
+      },    
       Fncheck:function(){
-        //alert(localStorage.getItem("enquiry")+'  2  '+localStorage.getItem("dashboard")+' 3  '+localStorage.getItem("followup")+'  4 '+localStorage.getItem("admissionform")+'  5  '+localStorage.getItem("admapproval")+'  6   '+localStorage.getItem("collectionentry"));
         if(localStorage.getItem("enquiry")=='true'){
           this.$.enquiry.hidden=true;
         }
         if(localStorage.getItem("dashboard")=='true'){
-            this.$.dashboard.hidden=true;
+          this.$.dashboard.hidden=true;
         }
         if(localStorage.getItem("followup")=='true'){
           this.$.followup.hidden=true;
         }
         if(localStorage.getItem("admissionform")=='true'){
           this.$.admform.hidden=true;
-          }
-          if(localStorage.getItem("collectionentry")=='true'){
-            this.$.collcnentry.hidden=true;
-          }
-          if(localStorage.getItem("admapproval")=='true'){
-              this.$.admapp.hidden=true;
-          }
+        }
+        if(localStorage.getItem("collectionentry")=='true'){
+          this.$.collcnentry.hidden=true;
+        }
+        if(localStorage.getItem("admapproval")=='true'){
+          this.$.admapp.hidden=true;
+        }
 
+      },
+      FnProspect:function(){
+        document.querySelector('prospectousfee-card').ready();
+        document.querySelector('prospectousfee-card').FnRefresh();
+        document.querySelector('admission-service').FnRefresh();
+      },
+      FnRegister:function(){
+        document.querySelector('registerationfee-card').ready();
+        document.querySelector('registerationfee-card').FnRefresh();
+        document.querySelector('admission-service').FnRefresh();
       }
     });
   })();

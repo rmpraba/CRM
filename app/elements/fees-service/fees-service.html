@@ -49,19 +49,17 @@
 
       callInsertCashfeesService:function(arr){
         this.insertcashfeesurl=sessionStorage.getItem("addrinfo")+"/insertcashfees";
-        var obj={"schoolid":"","academicyear":"","enquiryno":"","admissionno":"","studentname":"","garde":"","feetype":"","feecode":"","installmenttype":"","installment":"","installmentdate":"","installmentamount":"","waiveoffamount":"","modeofpayment":"","receiptdate":"","paiddate":"","paidstatus":"","cratedon":"","createdby":"","updatedon":"","updatedby":""}
-
-        // alert(localStorage.getItem("curr_sess_admissionno"));
+        var obj={"schoolid":"","academicyear":"","enquiryno":"","admissionno":"","studentname":"","garde":"","feetype":"","feecode":"","installmenttype":"","installment":"","installmentdate":"","installmentamount":"","waiveoffamount":"","modeofpayment":"","receiptdate":"","paiddate":"","paidstatus":"","cratedon":"","createdby":"","updatedon":"","updatedby":""}        
 
         obj.schoolid=localStorage.getItem("schoolid"); 
         obj.academicyear=localStorage.getItem("curr_sess_academicyear"); 
-        // obj.enquiryno=schoolid; 
+        obj.enquiryno=localStorage.getItem("curr_sess_enquiryno"); 
         obj.admissionno=localStorage.getItem("curr_sess_admissionno"); 
         obj.studentname=localStorage.getItem("curr_sess_studentname"); 
         obj.garde=localStorage.getItem("curr_sess_grade"); 
-        obj.feetype=localStorage.getItem("curr_sess_feecomponent"); 
+        obj.feetype=localStorage.getItem("curr_sess_feetype"); 
         obj.feecode=localStorage.getItem("curr_sess_feecode");
-        if(localStorage.getItem("curr_sess_feecomponent")=="pros_fee"){
+        if(localStorage.getItem("curr_sess_feetype")=="pros_fee"||localStorage.getItem("curr_sess_feetype")=="reg_fee"){
         for(var i=0;i<arr.length;i++){ 
         obj.installmenttype=arr[i].installmenttype; 
         obj.installment=arr[i].installment; 
@@ -72,7 +70,7 @@
         obj.receiptdate=arr[i].receiptdate; 
         obj.paiddate=arr[i].paiddate; 
         obj.paidstatus=arr[i].paidstatus;        
-        obj.createdby=localStorage.getItem("employeename");     
+        obj.createdby=localStorage.getItem("employeeid");     
         this.insertcashfeesparam=obj; 
         // alert(JSON.stringify(obj));      
         this.$.insertcashfeesajax.generateRequest();
@@ -81,6 +79,7 @@
       },
       insertcashfeesResponse:function(e){
           alert(e.detail.response.returnval);
+
       },
       callInsertChequefeesService:function(arr){
         this.insertchequefeesurl=sessionStorage.getItem("addrinfo")+"/insertchequefees";
@@ -96,7 +95,7 @@
         obj.garde=localStorage.getItem("curr_sess_grade"); 
         obj.feetype=localStorage.getItem("curr_sess_feecomponent"); 
         obj.feecode=localStorage.getItem("curr_sess_feecode");
-        if(localStorage.getItem("curr_sess_feecomponent")=="pros_fee"){
+        if(localStorage.getItem("curr_sess_feetype")=="pros_fee"||localStorage.getItem("curr_sess_feetype")=="reg_fee"){
         for(var i=0;i<arr.length;i++){ 
         obj.installmenttype=arr[i].installmenttype; 
         obj.installment=arr[i].installment; 
@@ -104,13 +103,13 @@
         obj.installmentamount=arr[i].amount; 
         obj.waiveoffamount=arr[i].waiveoff; 
         obj.modeofpayment=arr[i].paymentmode; 
-        obj.receiptdate=arr[i].receiptdate; 
-        obj.paiddate=arr[i].paiddate; 
+        obj.receiveddate=arr[i].receiveddate; 
+        // obj.paiddate=arr[i].paiddate; 
         obj.paidstatus=arr[i].paidstatus; 
         obj.chequeno=arr[i].chequeno;        
         obj.bankname=arr[i].bankname; 
         obj.chequedate=arr[i].chequedate; 
-        obj.createdby=localStorage.getItem("employeename");     
+        obj.createdby=localStorage.getItem("employeeid");     
         this.insertchequefeesparam=obj; 
         // alert(JSON.stringify(obj));      
         this.$.insertchequefeesajax.generateRequest();
@@ -142,20 +141,20 @@
         obj.installmentamount=arr[i].amount; 
         obj.waiveoffamount=arr[i].waiveoff; 
         obj.modeofpayment=arr[i].paymentmode; 
-        obj.receiptdate=arr[i].receiptdate; 
+        obj.receiveddate=arr[i].receiveddate; 
         obj.paiddate=arr[i].paiddate; 
         obj.paidstatus=arr[i].paidstatus; 
         obj.referenceno=arr[i].referenceno;        
         obj.bankname=arr[i].bankname; 
         obj.chequedate=arr[i].chequedate;       
-        obj.createdby=localStorage.getItem("employeename");     
+        obj.createdby=localStorage.getItem("employeeid");     
         this.inserttransferfeesparam=obj; 
         // alert(JSON.stringify(obj));      
         this.$.inserttransferfeesajax.generateRequest();
         }
         }
       },
-      inserttransfereesResponse:function(e){
+      inserttransferfeesResponse:function(e){
           alert(e.detail.response.returnval);
       }
 
