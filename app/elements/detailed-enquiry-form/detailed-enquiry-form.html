@@ -234,11 +234,19 @@
             </paper-menu>
           </paper-dropdown-menu>
         </div>
-        <div class="col-sm-4">
-          <paper-input id="sibname" label="Names of siblinngs" value="{{siblingname}}"></paper-input>
+        <div class="col-sm-4" id="sibname">
+          <paper-input  label="Names of siblinngs" value="{{siblingname}}"></paper-input>
         </div>
-        <div class="col-sm-4">
-          <paper-input id="sibdetail" label="Classes of siblinngs" value="{{siblingdetails}}"></paper-input>
+        <div class="col-sm-4" id="sibdetail">
+          <paper-input  label="Classes of siblinngs" value="{{siblingdetails}}"></paper-input>
+        </div>
+        <div class="col-sm-4" id="referrer">
+          <paper-input  required error-message="needs referrer!" label="Enter referrer name.." is="" value="{{referrername}}" on-keydown="FnInputChanged"></paper-input>
+          <paper-listbox class="dropdown-content" id="itemlist" on-iron-select="Fnselected" valueattr="value">
+            <template is="dom-repeat" items="{{itemArray}}" as="item">
+              <paper-item value="{{item.itemid}}">{{item.itemdes}}</paper-item>
+            </template>
+          </paper-listbox>
         </div>
       </div>
       <div class="form-group-heading">
@@ -304,11 +312,13 @@
         var momtheroccup;
         var dadincome;
         var momincome;
+        var namearr=[];
     Polymer({
       is: 'detailed-enquiry-form',
       ready:function(){
-          this.$.sibname.disabled=true;
-          this.$.sibdetail.disabled=true;
+          this.$.sibname.hidden=true;
+          this.$.sibdetail.hidden=true;
+          this.$.referrer.hidden=true;
           this.$.dadoff.hidden=true;
           this.$.dadjob.hidden=true;
           this.$.dadsal.hidden=true;
@@ -316,6 +326,7 @@
           this.$.momjob.hidden=true;
           this.$.momsal.hidden=true;
           this.$.prospectno.hidden=true;
+          this.$.service.getreferrername();
       },
       Fnclear:function(){
         this.ready();
@@ -579,12 +590,18 @@
         enquiysource=(e.target.selectedItem.textContent).trim();
 
         if(enquiysource=="Siblings"){
-          this.$.sibname.disabled=false;
-          this.$.sibdetail.disabled=false;
-        }else{
-          this.$.sibname.disabled=true;
-          this.$.sibdetail.disabled=true;
+          this.$.sibname.hidden=false;
+          this.$.sibdetail.hidden=false;
         }
+        else if(enquiysource=="Referrer"){
+          this.$.referrer.hidden=false;
+        }
+        else{
+          this.$.sibname.hidden=true;
+          this.$.sibdetail.hidden=true;
+          this.$.referrer.hidden=true; 
+        }
+
     },
     language:function(e){
         mothertongue=(e.target.selectedItem.textContent).trim();
@@ -665,7 +682,7 @@ if(dadoccup=="Self Employed"||dadoccup=="Government Employee"||dadoccup=="Privat
 },
 motheroccupation:function(e){
 momtheroccup=(e.target.selectedItem.textContent).trim();
-alert(momtheroccup);
+//alert(momtheroccup);
 if(momtheroccup=="Self Employed"||momtheroccup=="Government Employee"||momtheroccup=="Private Employee"){
       this.$.momoff.hidden=false;
       this.$.momjob.hidden=false;
@@ -682,7 +699,82 @@ dadsalary:function(e){
 },
 mothersalary:function(e){
   momincome=(e.target.selectedItem.textContent).trim();
-}
+},
+autocompletename(nameitem){
+          namearr=nameitem;
+        },
+        FnInputChanged:function(e){
+          if(e.keyCode==13|| e.keyCode==40)
+            this.querySelector('paper-listbox').focus();
+          var arr=[];
+          arr.push({"itemdes":"-----Select-----"});
+          this.querySelector('paper-listbox').style.visibility='visible';
+          if(e.keyCode==8){
+            this.itemflag="true";
+            this.itemval="";
+            //alert('yes');
+            var len=(this.textvalue).length;
+            if(len<=1){
+              this.querySelector('paper-listbox').style.visibility='hidden';
+              this.itemArray="";
+              this.itemval="";
+            }
+            if(len>1){
+              this.querySelector('paper-listbox').style.visibility='visible';
+              var backsubval=(((this.textvalue).substring(0,(len-1))).trim()).toUpperCase();
+              for(var i=0;i<namearr.length;i++)
+              {
+                var subval=((namearr[i].habitat_name).trim()).substring(0,backsubval.length);
+                if((subval).toUpperCase()==(backsubval).toUpperCase())
+                {
+                  var obj={"itemdes":"","itemid":""};
+                  obj.itemdes=namearr[i].habitat_name;
+                  obj.itemid=namearr[i].habitat_id;
+                  arr.push(obj);
+                }
+              }
+              this.itemArray=arr;
+            }
+          }
+          if(e.keyCode!=8&& e.keyCode!=16&& e.keyCode!=13 && e.keyCode!=38&&e.keyCode!=40&&e.keyCode!=37&&e.keyCode!=39){
+            if(this.itemflag=="true") {
+              this.itemval = (this.textvalue).toUpperCase()+String.fromCharCode((e.keyCode)).toUpperCase();
+              this.itemflag="false";
+            }
+            else
+            this.itemval = this.textvalue +String.fromCharCode((e.keyCode));
+            if(this.itemval.length>0)
+            {
+              for(var i=0;i<namearr.length;i++){
+                var subval=((namearr[i].habitat_name).trim()).substring(0,this.itemval.length);
+                if((subval).toUpperCase()==(this.itemval).toUpperCase()){
+                  var obj={"itemdes":"","itemid":""};
+                  obj.itemdes=namearr[i].habitat_name;
+                  obj.itemid=namearr[i].habitat_id;
+                  arr.push(obj);
+                }
+              }
+              if(arr.length>0)
+                this.itemArray=arr;
+              else {
+                var obj={"itemdes":"","itemid":""};
+                  obj.itemdes=namearr[i].habitat_name;
+                  obj.itemid=namearr[i].habitat_id;
+                  arr.push(obj);
+                this.itemArray=arr;
+              }
+            }
+          }
+
+        },
+        Fnselected:function(e)
+        {
+          //alert('s');
+          this.querySelector('paper-listbox').style.visibility='hidden';
+          this.referrername = e.target.selectedItem.textContent.trim();
+          this.itemArray=[];
+          document.querySelector('#itemlist').selected=-1;
+        }
     });
   })();
   </script>

@@ -209,6 +209,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         debounce-duration="300"
         >
   </iron-ajax>
+
+  <!-- this ajax is to get the referrer name from parent table -->
+  <iron-ajax
+        method="post"
+        id="getparentnameajax"
+        url="{{getparentnameurl}}"
+        params="{{getparentnameparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getparentnameResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <!-- this ajax is used to fetch the referrer name from student detail table -->
+  <iron-ajax
+        method="post"
+        id="getstudentnameajax"
+        url="{{getstudentnameurl}}"
+        params="{{getstudentnameparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getstudentnameResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
   </template>
   <script>
   (function() {
@@ -225,6 +250,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
    var thirdfollowupdate;
    var fourthfollowupdate;
    var fifthfollowupdate;
+   var parentarr=[];
+   var studentarr=[];
+   var namelistarr=[];
 
     Polymer({
       is: 'crm-service',
@@ -318,6 +346,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
         document.querySelector('newenquiry-card').Fnclear();
+
+        this.getenquirycount();
       }
       else{
         alert('Form submit interrupted');
@@ -374,7 +404,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         obj.momincome=momsalary;
         obj.prospectusno=prospect;
         this.updateenquiryparam=obj;
-       alert(JSON.stringify(obj));
+       //alert(JSON.stringify(obj));
         this.$.updateenquiryajax.generateRequest();
 
 
@@ -530,12 +560,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var obj={"schol":""}
         obj.schol=localStorage.getItem("schoolid");
         this.getprospectnoparam=obj;
-       alert(JSON.stringify(obj));
+       //alert(JSON.stringify(obj));
         this.$.getprospectnoajax.generateRequest();
      },
      getprospectnoResponse:function(e){
       var result=e.detail.response.returnval[0].prospectus_no;
-      alert(result);
+      //alert(result);
       var dt=new Date();
       var year=dt.getFullYear();
       var mnth=dt.getMonth()+1;
@@ -545,6 +575,44 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
       var prospectus="PROS"+year+(year+1)+proseq;
       document.querySelector('detailed-enquiry-form').prospectusno=prospectus;
+     },
+     getreferrername:function(){
+      this.getparentnameurl="http://localhost:8086/getparentname";
+      var obj={"schol":""}
+      obj.schol=localStorage.getItem("schoolid");
+      this.getparentnameparam=obj;
+      this.$.getparentnameajax.generateRequest();
+
+          
+     },
+     getparentnameResponse:function(e){
+      parentarr=e.detail.response.returnval;
+      //alert(JSON.stringify(parentarr));
+      /*for(var i=0;i<=parentarr.length;i++){
+        var obj={"name":""}
+        obj.name=parentarr[i].parent_name;
+        namelistarr.push(obj);
+      }*/
+
+      this.getstudentnameurl="http://localhost:8086/getstudentnamelist";
+      var obj={"schol":""}
+      obj.schol=localStorage.getItem("schoolid");
+      this.getstudentnameparam=obj;
+      //alert(JSON.stringify(obj));
+      this.$.getstudentnameajax.generateRequest();  
+
+     },
+     getstudentnameResponse:function(e){
+        studentarr=e.detail.response.returnval;
+        //alert(JSON.stringify(studentarr));
+/*
+        for(var i=0;i<=studentarr.length;i++){
+        var obj={"name":""}
+        obj.name=studentarr[i].student_name;
+        namelistarr.push(obj);
+      }*/
+
+      //alert(JSON.stringify(namelistarr));
      }
 
     });

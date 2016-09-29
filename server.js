@@ -532,6 +532,59 @@ app.post('/updatefollowdetail',  urlencodedParser,function (req, res)
 });
   });
 
+/*this function is used to get the referrer name from parent table*/
+app.post('/getparentname',  urlencodedParser,function (req, res){
+    var qur={"school_id":req.query.schol};
+    //console.log('qur');
+    connection.query('SELECT parent_name FROM `parent` WHERE ?',[qur],
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      //console.log(rows);
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': ''});
+    }
+  }
+  else{
+     console.log(err);
+  }
+});
+  });
+
+
+/*this function is used to get the referrer name from student detail table*/
+
+app.post('/getstudentnamelist',  urlencodedParser,function (req, res){
+    var qur={"school_id":req.query.schol};
+    console.log('qur');
+    connection.query('SELECT student_name FROM `student_details` WHERE ?',[qur],
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      //console.log(rows);
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': ''});
+    }
+  }
+  else{
+     console.log(err);
+  }
+});
+  });
 
 function setvalue(){
   console.log("calling setvalue.....");
