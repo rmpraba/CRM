@@ -5,11 +5,8 @@
   <template>
     <div class="row enquiry-form">
       <div class="list-group col-sm-12 panel-body form-category">
-        <div class="col-sm-3"></div>
-        <div class="col-sm-2 enquiry-input">
-          <button class="btn btn-default" on-click="newenquriy" type="button">New Enquriy</button>
-        </div>
-        <div class="col-sm-6 enquiry-input">
+        <div class="input-group custom-search-form col-md-2 col-md-offset-5">
+          <button class="btn btn-default" on-click="newenquriy" type="button" id="newenquiry">New Enquriy</button>
           <paper-dropdown-menu label="Academic Year" id="academicyear">
             <paper-listbox id="academics" class="dropdown-content" on-iron-select="Fnacademicyr">
               <paper-item>AY-2015-2016</paper-item>
@@ -349,6 +346,7 @@
           this.$.service.getreferrername();
         this.$.newenq.hidden=true;
         this.$.academicyear.hidden=true;
+        this.$.newenquiry.hidden=false;
       },
       Fnclear:function(){
         this.ready();
@@ -805,6 +803,7 @@ autocompletename(nameitem){
         this.$.searchenq.hidden=true;
         this.$.newenq.hidden=false;
         this.$.academicyear.hidden=false;
+        this.$.newenquiry.hidden=true;
       },
       Fnacademicyr:function(e){
         academicyear=(e.target.selectedItem.textContent).trim();
