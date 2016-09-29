@@ -558,7 +558,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'admission-form',
 
 
-      },
+      
       FnSelectEnquiry:function(e){        
         var enquiry=(e.target.selectedItem.textContent).trim();        
         var inx=enquiry.indexOf('-');
@@ -623,7 +623,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       FnSubmitAdmission:function(){
         // alert(this.applicationno+"  "+this.schoolname+"  "+admissionyear+"  "+this.firstname+"  "+this.middlename+" "+this.lastname+" "+admissiongrade+"  "+admissiondob+" "+admissiongender+" "+admissiondisabled+" "+admissioncanteen+" "+admissiontransport);
         this.$.admissionservice.callInsertAdmissionService(this.applicationno,this.schoolname,admissionyear,this.firstname,this.middlename,this.lastname,admissiongrade,admissiondob,admissiongender,admissiondisabled,admissioncanteen,admissiontransport,this.fathername,this.mothername);
-
+}
     });
   })();
   </script>

@@ -698,11 +698,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      getparentnameResponse:function(e){
       parentarr=e.detail.response.returnval;
       //alert(JSON.stringify(parentarr));
-      /*for(var i=0;i<=parentarr.length;i++){
+      
+
+      for(var i=0;i<parentarr.length;i++){
+        //alert(parentarr[i].parent_name);
         var obj={"name":""}
         obj.name=parentarr[i].parent_name;
         namelistarr.push(obj);
-      }*/
+      }
 
       this.getstudentnameurl="http://localhost:8086/getstudentnamelist";
       var obj={"schol":""}
@@ -715,14 +718,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      getstudentnameResponse:function(e){
         studentarr=e.detail.response.returnval;
         //alert(JSON.stringify(studentarr));
-/*
-        for(var i=0;i<=studentarr.length;i++){
+
+        for(var i=0;i<studentarr.length;i++){
         var obj={"name":""}
         obj.name=studentarr[i].student_name;
         namelistarr.push(obj);
-      }*/
+      }
 
       //alert(JSON.stringify(namelistarr));
+      document.querySelector('detailed-enquiry-form').autocompletename(namelistarr);
      }
 
 
