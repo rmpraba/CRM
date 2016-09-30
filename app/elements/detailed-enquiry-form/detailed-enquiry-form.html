@@ -622,7 +622,7 @@
         else{
           this.$.sibname.hidden=true;
           this.$.sibdetail.hidden=true;
-          this.$.referrer.hidden=true; 
+          this.$.referrer.hidden=true;
         }
 
     },
@@ -630,13 +630,13 @@
         mothertongue=(e.target.selectedItem.textContent).trim();
     },
     submit:function(){
-      if(this.firstname==""||this.middlename==""||this.lastname==""||this.grade==""||this.oldclass==""||this.oldschool==""||this.mothertongue==""||this.fathername==""||this.mothername==""||this.fatheredu==""||this.motheredu==""||this.fathermob==""||this.mothermob==""||this.fathermail==""||this.address1==""||this.address2==""||this.address3==""||this.city==""||this.pincode==""||this.flat==""||this.state==""){
+      if(this.firstname == "" || this.lastname == "" || this.grade == ""|| this.mothertongue == "" || this.fathername == "" || this.mothername == "" || this.fatheredu == "" || this.motheredu == "" || this.fathermob == "" || this.mothermob == "" || this.fathermail == "" || this.address1 == ""|| this.city == "" || this.pincode == "" || this.flat == "" || this.state == ""){
           this.$.fname.validate();
-          this.$.mname.validate();
+          //this.$.mname.validate();
           this.$.lname.validate();
           this.$.grade.validate();
-          this.$.oldschool.validate();
-          this.$.oldclass.validate();
+          //this.$.oldschool.validate();
+          //this.$.oldclass.validate();
           this.$.dadname.validate();
           this.$.momname.validate();
           this.$.dadedu.validate();
@@ -646,8 +646,8 @@
           this.$.mommob.validate();
           this.$.flat.validate();
           this.$.add1.validate();
-          this.$.add2.validate();
-          this.$.add3.validate();
+          //this.$.add2.validate();
+          //this.$.add3.validate();
           this.$.city.validate();
           this.$.pin.validate();
           this.$.state.validate();
@@ -670,9 +670,9 @@
       else if(secondlanguage==null){
           alert('Select the second language');
       }
-      else if(thirdlanguage==null){
+      /*else if(thirdlanguage==null){
           alert('Select the third language');
-      }
+      }*/
       else if(propsold==null){
           alert('Prospectus sold status is not marked');
       }
@@ -810,13 +810,13 @@ autocompletename(nameitem){
       },
       register:function() {
         var enqnumber = document.getElementById('searchtext').value;
-        if (this.firstname == "" || this.middlename == "" || this.lastname == "" || this.grade == "" || this.oldclass == "" || this.oldschool == "" || this.mothertongue == "" || this.fathername == "" || this.mothername == "" || this.fatheredu == "" || this.motheredu == "" || this.fathermob == "" || this.mothermob == "" || this.fathermail == "" || this.address1 == "" || this.address2 == "" || this.address3 == "" || this.city == "" || this.pincode == "" || this.flat == "" || this.state == "") {
+        if (this.firstname == "" || this.lastname == "" || this.grade == ""|| this.mothertongue == "" || this.fathername == "" || this.mothername == "" || this.fatheredu == "" || this.motheredu == "" || this.fathermob == "" || this.mothermob == "" || this.fathermail == "" || this.address1 == ""|| this.city == "" || this.pincode == "" || this.flat == "" || this.state == "") {
           this.$.fname.validate();
-          this.$.mname.validate();
+          //this.$.mname.validate();
           this.$.lname.validate();
           this.$.grade.validate();
-          this.$.oldschool.validate();
-          this.$.oldclass.validate();
+          //this.$.oldschool.validate();
+          //this.$.oldclass.validate();
           this.$.dadname.validate();
           this.$.momname.validate();
           this.$.dadedu.validate();
@@ -826,8 +826,8 @@ autocompletename(nameitem){
           this.$.mommob.validate();
           this.$.flat.validate();
           this.$.add1.validate();
-          this.$.add2.validate();
-          this.$.add3.validate();
+          //this.$.add2.validate();
+          //this.$.add3.validate();
           this.$.city.validate();
           this.$.pin.validate();
           this.$.state.validate();
@@ -850,9 +850,9 @@ autocompletename(nameitem){
         else if (secondlanguage == null) {
           alert('Select the second language');
         }
-        else if (thirdlanguage == null) {
+        /*else if (thirdlanguage == null) {
           alert('Select the third language');
-        }
+        }*/
         else if (propsold == null) {
           alert('Prospectus sold status is not marked');
         }
