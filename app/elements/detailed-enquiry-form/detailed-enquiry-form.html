@@ -52,7 +52,24 @@
           </div>
         </div>
         <div class="col-sm-6 enquiry-input">
-          <paper-input id="grade" required error-message="needs grade seeking for!" label="Class Admission Seeking for" value="{{grade}}"></paper-input>
+          <!--<paper-input id="grade" required error-message="needs grade seeking for!" label="Class Admission Seeking for" value="{{grade}}"></paper-input>-->
+          <paper-dropdown-menu label="Class Admission Seeking for" >
+            <paper-menu id="grade" class="dropdown-content" required on-iron-select="classseeking" valueattr="value" >
+              <paper-item >Pre KG</paper-item>
+              <paper-item >LKG</paper-item>
+              <paper-item >UKG</paper-item>
+              <paper-item >Grade 1</paper-item>
+              <paper-item >Grade 2</paper-item>
+              <paper-item >Grade 3</paper-item>
+              <paper-item >Grade 4</paper-item>
+              <paper-item >Grade 5</paper-item>
+              <paper-item >Grade 6</paper-item>
+              <paper-item >Grade 7</paper-item>
+              <paper-item >Grade 8</paper-item>
+              <paper-item >Grade 9</paper-item>
+              <paper-item >Grade 10</paper-item>
+            </paper-menu>
+          </paper-dropdown-menu>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
@@ -322,6 +339,7 @@
         var canteenreq;
         var enquiysource;
         var enqno;
+        var grade;
         var propsold;
         var mothertongue;
         var dadoccup;
@@ -393,6 +411,7 @@
           dadincome=null;
           momincome=null;
           this.$.language.selected=-1;
+          this.$.grade.selected=-1;
           this.$.dadoccupation.selected=-1;
           this.$.motheroccupation.selected=-1;
           this.$.dadsalary.selected=-1;
@@ -629,12 +648,15 @@
     language:function(e){
         mothertongue=(e.target.selectedItem.textContent).trim();
     },
+      classseeking:function(e){
+        grade=(e.target.selectedItem.textContent).trim();
+      },
     submit:function(){
-      if(this.firstname == "" || this.lastname == "" || this.grade == ""|| this.mothertongue == "" || this.fathername == "" || this.mothername == "" || this.fatheredu == "" || this.motheredu == "" || this.fathermob == "" || this.mothermob == "" || this.fathermail == "" || this.address1 == ""|| this.city == "" || this.pincode == "" || this.flat == "" || this.state == ""){
+      if(this.firstname == "" || this.lastname == ""|| this.mothertongue == "" || this.fathername == "" || this.mothername == "" || this.fatheredu == "" || this.motheredu == "" || this.fathermob == "" || this.mothermob == "" || this.fathermail == "" || this.address1 == ""|| this.city == "" || this.pincode == "" || this.flat == "" || this.state == ""){
           this.$.fname.validate();
           //this.$.mname.validate();
           this.$.lname.validate();
-          this.$.grade.validate();
+          //this.$.grade.validate();
           //this.$.oldschool.validate();
           //this.$.oldclass.validate();
           this.$.dadname.validate();
@@ -657,6 +679,9 @@
       }
       else if(enquiysource==null){
           alert('Select the enquiry source');
+      }
+      else if(grade==null){
+        alert('Select the Class seeking for admission');
       }
       else if(mothertongue==null){
           alert('Select the mother tongue');
@@ -810,11 +835,11 @@ autocompletename(nameitem){
       },
       register:function() {
         var enqnumber = document.getElementById('searchtext').value;
-        if (this.firstname == "" || this.lastname == "" || this.grade == ""|| this.mothertongue == "" || this.fathername == "" || this.mothername == "" || this.fatheredu == "" || this.motheredu == "" || this.fathermob == "" || this.mothermob == "" || this.fathermail == "" || this.address1 == ""|| this.city == "" || this.pincode == "" || this.flat == "" || this.state == "") {
+        if (this.firstname == "" || this.lastname == ""|| this.mothertongue == "" || this.fathername == "" || this.mothername == "" || this.fatheredu == "" || this.motheredu == "" || this.fathermob == "" || this.mothermob == "" || this.fathermail == "" || this.address1 == ""|| this.city == "" || this.pincode == "" || this.flat == "" || this.state == "") {
           this.$.fname.validate();
           //this.$.mname.validate();
           this.$.lname.validate();
-          this.$.grade.validate();
+          //this.$.grade.validate();
           //this.$.oldschool.validate();
           //this.$.oldclass.validate();
           this.$.dadname.validate();
@@ -837,6 +862,9 @@ autocompletename(nameitem){
         }
         else if (enquiysource == null) {
           alert('Select the enquiry source');
+        }
+        else if(grade==null){
+          alert('Select the Class seeking for admission');
         }
         else if (mothertongue == null) {
           alert('Select the mother tongue');
