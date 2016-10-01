@@ -707,6 +707,14 @@
       else if (momtheroccup==null) {
           alert("Select Mother's Occupation");
       }
+      else if(thirdlanguage==null){
+        alert(grade);
+        if(grade == "Pre KG"||"LKG"||"UKG"||"Grade 1"||"Grade 2"||"Grade 3"){
+          this.$.service.updateenquiryform(enqno,this.firstname,this.middlename,this.lastname,fngender,grade,this.dob,this.oldclass,this.oldschool,mothertongue,this.fathername,this.mothername,this.fatheredu,this.motheredu,this.fathermob,this.mothermob,this.fathermail,this.mothermail,this.fathercompany,this.mothercompany,dadoccup,momtheroccup,this.flat,this.address1,this.address2,this.address3,this.city,this.pincode,this.state,enquiysource,this.siblingname,this.siblingdetails,transportreq,canteenreq,secondlanguage,propsold,this.fatherjob,this.motherjob,dadincome,momincome,this.prospectusno);
+        } else {
+          alert('Select the third language');
+        }
+      }
       else{
         //alert(enqno+this.firstname+this.middlename+this.lastname+fngender+this.grade+this.dob+this.oldclass+this.oldschool+mothertongue+this.fathername+this.mothername+this.fatheredu+this.motheredu+this.fathermob+this.mothermob+this.fathermail+this.mothermail+this.fathercompany+this.mothercompany+dadoccup+momtheroccup+this.flat+this.address1+this.address2+this.address3+this.city+this.pincode+this.state+enquiysource+this.siblingname+this.siblingdetails+transportreq+canteenreq+secondlanguage+thirdlanguage+propsold+this.fatherjob+this.motherjob+dadincome+momincome);
 
@@ -889,6 +897,14 @@ autocompletename(nameitem){
         }
         else if (momtheroccup == null) {
           alert("Select Mother's Occupation");
+        }
+        else if(thirdlanguage==null){
+          alert(grade);
+          if(grade == "Pre KG"||"LKG"||"UKG"||"Grade 1"||"Grade 2"||"Grade 3"){
+            this.$.service.registerenquiryform(enqno,this.firstname,this.middlename,this.lastname,fngender,grade,this.dob,this.oldclass,this.oldschool,mothertongue,this.fathername,this.mothername,this.fatheredu,this.motheredu,this.fathermob,this.mothermob,this.fathermail,this.mothermail,this.fathercompany,this.mothercompany,dadoccup,momtheroccup,this.flat,this.address1,this.address2,this.address3,this.city,this.pincode,this.state,enquiysource,this.siblingname,this.siblingdetails,transportreq,canteenreq,secondlanguage,propsold,this.fatherjob,this.motherjob,dadincome,momincome,this.prospectusno);
+          } else {
+            alert('Select the third language');
+          }
         }
         else {
           //alert(enqno+this.firstname+this.middlename+this.lastname+fngender+this.grade+this.dob+this.oldclass+this.oldschool+mothertongue+this.fathername+this.mothername+this.fatheredu+this.motheredu+this.fathermob+this.mothermob+this.fathermail+this.mothermail+this.fathercompany+this.mothercompany+dadoccup+momtheroccup+this.flat+this.address1+this.address2+this.address3+this.city+this.pincode+this.state+enquiysource+this.siblingname+this.siblingdetails+transportreq+canteenreq+secondlanguage+thirdlanguage+propsold+this.fatherjob+this.motherjob+dadincome+momincome);
