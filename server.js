@@ -138,9 +138,6 @@ app.post('/getenquiryno',  urlencodedParser,function (req, res)
   }
 });
   });
-
-
-
 /*this function is to fetch the available classes with repect to the school*/
 app.post('/getclasses',  urlencodedParser,function (req, res)
 {
@@ -641,8 +638,8 @@ app.post('/insertcashfees',  urlencodedParser,function (req, res){
        school_id:req.query.schoolid,
        academic_year:req.query.academicyear,
 
-        enquiry_no:req.query.enquiryno, 
-        admission_no:req.query.admissionno, 
+        enquiry_no:req.query.enquiryno,
+        admission_no:req.query.admissionno,
 
         student_name:req.query.studentname,
         grade:req.query.garde,
@@ -685,8 +682,8 @@ app.post('/insertchequefees',  urlencodedParser,function (req, res){
        school_id:req.query.schoolid,
        academic_year:req.query.academicyear,
 
-        enquiry_no:req.query.enquiryno, 
-        admission_no:req.query.admissionno, 
+        enquiry_no:req.query.enquiryno,
+        admission_no:req.query.admissionno,
 
         student_name:req.query.studentname,
         grade:req.query.garde,
@@ -698,11 +695,11 @@ app.post('/insertchequefees',  urlencodedParser,function (req, res){
         installment_amount:req.query.installmentamount,
         waiveoff_amount:req.query.waiveoffamount,
 
-        mode_of_payment:req.query.modeofpayment, 
+        mode_of_payment:req.query.modeofpayment,
         received_date:req.query.receiveddate,
         // paid_date:req.query.paiddate,
-        cheque_status:req.query.paidstatus,        
-        created_by:req.query.createdby,    
+        cheque_status:req.query.paidstatus,
+        created_by:req.query.createdby,
 
         cheque_no:req.query.chequeno,
         bank_name:req.query.bankname,
@@ -746,7 +743,7 @@ app.post('/inserttransferfees',  urlencodedParser,function (req, res){
         installment_amount:req.query.installmentamount,
         waiveoff_amount:req.query.waiveoffamount,
 
-        mode_of_payment:req.query.modeofpayment, 
+        mode_of_payment:req.query.modeofpayment,
         received_date:req.query.receiveddate,
 
         paid_date:req.query.paiddate,
@@ -754,7 +751,7 @@ app.post('/inserttransferfees',  urlencodedParser,function (req, res){
         created_by:req.query.createdby,
         reference_no:req.query.referenceno,
         bank_name:req.query.bankname
-        
+
     };
     connection.query(qur,[response],
     function(err, rows)
@@ -969,8 +966,7 @@ app.post('/getstudentnamelist',  urlencodedParser,function (req, res){
       console.log(err);
       res.status(200).json({'returnval': ''});
     }
-  }
-  else{
+  } else {
      console.log(err);
   }
 });

@@ -275,7 +275,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <!-- /.nav-second-level -->
           </li>
           <li id="">
-            <a href="" aria-hidden="true" data-toggle="modal" data-target="#followUp"><i class="fa fa-calendar fa-fw"></i> Follow Up</a>
+            <a href="" aria-hidden="true" data-toggle="modal" data-target="#followUp" on-click="followupdashboard"><i class="fa fa-calendar fa-fw"></i> Follow Up</a>
           </li>
           <li id="admission">
             <a href="" aria-hidden="true" data-toggle="modal" data-target="#newadmission"><i class="fa fa-check fa-fw"></i>Admission</a>
@@ -466,7 +466,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <span aria-hidden="true">&times;</span>
             </button>
             <h4 class="center-block event-title" id="">
-             Registeration Fee 
+             Registeration Fee
             </h4>
           </div>
           <div class="modal-body">
@@ -484,7 +484,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <span aria-hidden="true">&times;</span>
             </button>
             <h4 class="center-block event-title" id="">
-              School Kit Fee 
+              School Kit Fee
             </h4>
           </div>
           <div class="modal-body">
@@ -502,7 +502,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <span aria-hidden="true">&times;</span>
             </button>
             <h4 class="center-block event-title" id="">
-              Tuition & Annual Fee 
+              Tuition & Annual Fee
             </h4>
           </div>
           <div class="modal-body">
@@ -520,7 +520,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <span aria-hidden="true">&times;</span>
             </button>
             <h4 class="center-block event-title" id="">
-              Miscellaneous Fee 
+              Miscellaneous Fee
             </h4>
           </div>
           <div class="modal-body">
@@ -542,7 +542,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       ready:function(){
         this.schoolname=localStorage.getItem("schoolname");
         this.username=localStorage.getItem("employeename");
-      },    
+      },
       Fncheck:function(){
         if(localStorage.getItem("enquiry")=='true'){
           this.$.enquiry.hidden=true;
@@ -573,7 +573,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         document.querySelector('registerationfee-card').ready();
         document.querySelector('registerationfee-card').FnRefresh();
         document.querySelector('admission-service').FnRefresh();
-      }
+      },
+      followupdashboard:function(){
+      document.querySelector('app-list').setPage("folllow-up");
+    }
     });
   })();
   </script>

@@ -12,28 +12,26 @@
 <dom-module id="CRM-app">
 <template>
   <span id="browser-sync-binding"></span>
-        <iron-pages selected="{{page}}" attr-for-selected="data-category">
-        <section data-category="loginpage">
-          <login-card></login-card>
-        </section>
-        <section data-category="applist">
-          <app-list></app-list>
-        </section>
-        
-           </iron-pages>
-            
-           </template>
-  
+    <iron-pages selected="{{page}}" attr-for-selected="data-category">
+      <section data-category="loginpage">
+        <login-card></login-card>
+      </section>
+      <section data-category="applist">
+        <app-list></app-list>
+      </section>
+    </iron-pages>
+</template>
+
 <script>
   Polymer({
     is: "CRM-app",
-    ready: function() 
+    ready: function()
     {
-    
+
 
       this.page="loginpage";
-    
-    
+
+
   },
   setPage:function(page)
     {

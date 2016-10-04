@@ -634,8 +634,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      verifymobilenoResponse:function(e){
         var result=e.detail.response.returnval;
         if(result.length>=0){
-
-            document.querySelector('newenquiry-card').showdialog(result[0].enquiry_no,result[0].first_name,result[0].middle_name,result[0].last_name);
+          document.querySelector('newenquiry-card').showdialog(result[0].enquiry_no,result[0].first_name,result[0].middle_name,result[0].last_name);
         }
      },
      getenquirycount:function(){
@@ -694,12 +693,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       this.getparentnameparam=obj;
       this.$.getparentnameajax.generateRequest();
 
-          
+
      },
      getparentnameResponse:function(e){
       parentarr=e.detail.response.returnval;
       //alert(JSON.stringify(parentarr));
-      
+
 
       for(var i=0;i<parentarr.length;i++){
         //alert(parentarr[i].parent_name);
@@ -713,7 +712,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       obj.schol=localStorage.getItem("schoolid");
       this.getstudentnameparam=obj;
       //alert(JSON.stringify(obj));
-      this.$.getstudentnameajax.generateRequest();  
+      this.$.getstudentnameajax.generateRequest();
 
      },
      getstudentnameResponse:function(e){
