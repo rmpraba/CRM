@@ -1,0 +1,77 @@
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="fees-card">
+  <template>
+    <div class="row enquiry-form">
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6 enquiry-input">
+          <paper-dropdown-menu label="School" on-iron-select="FnSelectAdmissionYear" attr-for-selected="value">
+            <paper-listbox class="dropdown-content">
+              <template   is="dom-repeat" items="{{schoolarr}}" as="view">
+                <paper-item value="view.school_id">{{view.school_name}}</paper-item>
+              </template>
+            </paper-listbox>
+          </paper-dropdown-menu>
+        </div>
+        <div class="col-sm-6">
+          <paper-dropdown-menu label="Academic Year" on-iron-select="FnSelectAdmissionYear" attr-for-selected="value">
+            <paper-listbox class="dropdown-content">
+              <paper-item value="AY-2016-2017">AY-2016-2017</paper-item>
+              <paper-item value="AY-2017-2018">AY-2017-2018</paper-item>
+            </paper-listbox>
+          </paper-dropdown-menu>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6 enquiry-input">
+          <paper-dropdown-menu label="Admission Year" on-iron-select="FnSelectAdmissionYear" attr-for-selected="value">
+            <paper-listbox class="dropdown-content">
+              <paper-item value="AY-2016-2017">AY-2016-2017</paper-item>
+              <paper-item value="AY-2017-2018">AY-2017-2018</paper-item>
+            </paper-listbox>
+          </paper-dropdown-menu>
+        </div>
+        <div class="col-sm-6 enquiry-input">
+          <paper-dropdown-menu label="Grade" >
+            <paper-menu id="grade" class="dropdown-content" required on-iron-select="grade" valueattr="value" >
+              <paper-item >Pre KG</paper-item>
+              <paper-item >LKG</paper-item>
+              <paper-item >UKG</paper-item>
+              <paper-item >Grade 1</paper-item>
+              <paper-item >Grade 2</paper-item>
+              <paper-item >Grade 3</paper-item>
+              <paper-item >Grade 4</paper-item>
+              <paper-item >Grade 5</paper-item>
+              <paper-item >Grade 6</paper-item>
+              <paper-item >Grade 7</paper-item>
+              <paper-item >Grade 8</paper-item>
+              <paper-item >Grade 9</paper-item>
+              <paper-item >Grade 10</paper-item>
+            </paper-menu>
+          </paper-dropdown-menu>
+        </div>
+        <div class="list-group col-sm-12 panel-body form-category">
+          <div class="col-sm-6 enquiry-input">
+            <paper-input label="Fee" value=""></paper-input>
+          </div>
+          <div class="col-sm-6 enquiry-input">
+            <paper-input  label="Fee Code" value=""></paper-input>
+          </div>
+        </div>
+        <div class="col-md-12 form-button">
+          <paper-button class="btn btn-primary" on-click="submit">SUBMIT</paper-button>
+        </div>
+      </div>
+    </div>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'fees-card',
+
+    });
+  })();
+  </script>
+</dom-module>
