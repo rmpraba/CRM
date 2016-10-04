@@ -2,7 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cf87a71e-5582-4c0c-9b35-1815db928b04" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/elements/schedulefee-card/schedulefee-card.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/elements/admission-form/admission-form.html" afterPath="$PROJECT_DIR$/app/elements/admission-form/admission-form.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/elements/admission-service/admission-service.html" afterPath="$PROJECT_DIR$/app/elements/admission-service/admission-service.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/elements/annualfee-card/annualfee-card.html" afterPath="$PROJECT_DIR$/app/elements/annualfee-card/annualfee-card.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/elements/elements.html" afterPath="$PROJECT_DIR$/app/elements/elements.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/elements/fees-card/fees-card.html" afterPath="$PROJECT_DIR$/app/elements/fees-card/fees-card.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/elements/fees-service/fees-service.html" afterPath="$PROJECT_DIR$/app/elements/fees-service/fees-service.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/elements/installment-card/installment-card.html" afterPath="$PROJECT_DIR$/app/elements/installment-card/installment-card.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/elements/navigation-bar/navigation-bar.html" afterPath="$PROJECT_DIR$/app/elements/navigation-bar/navigation-bar.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server.js" afterPath="$PROJECT_DIR$/server.js" />
     </list>
     <ignored path="CRM.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -53,11 +62,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="fees-card.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/elements/fees-card/fees-card.html">
+      <file leaf-file-name="dateofbirth-datepicker.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/elements/dateofbirth-datepicker/dateofbirth-datepicker.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-1.4327586">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state vertical-scroll-proportion="-16.346153">
+              <caret line="25" column="49" selection-start-line="0" selection-start-column="0" selection-end-line="73" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="installment-date-picker.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/elements/installment-date-picker/installment-date-picker.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-19.615385">
+              <caret line="30" column="34" selection-start-line="30" selection-start-column="34" selection-end-line="30" selection-end-column="34" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="elements.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/elements/elements.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.76551723">
+              <caret line="91" column="51" selection-start-line="91" selection-start-column="51" selection-end-line="91" selection-end-column="51" />
               <folding />
             </state>
           </provider>
@@ -77,8 +106,27 @@
         <entry file="file://$PROJECT_DIR$/app/elements/admission-form/admission-form.html">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="-353.07693">
-              <caret line="543" column="12" selection-start-line="541" selection-start-column="4" selection-end-line="543" selection-end-column="12" />
-              <folding />
+              <caret line="545" column="12" selection-start-line="541" selection-start-column="4" selection-end-line="543" selection-end-column="12" />
+              <folding>
+                <marker date="1475567610741" expanded="true" signature="22809:26151" placeholder="{...}" />
+                <marker date="1475567610741" expanded="true" signature="23016:26145" placeholder="{&quot;is&quot;: 'admission-form'...}" />
+                <marker date="1475567610741" expanded="true" signature="23081:23307" placeholder="{...}" />
+                <marker date="1475567610741" expanded="true" signature="23343:23773" placeholder="{...}" />
+                <marker date="1475567610741" expanded="true" signature="23813:23956" placeholder="{...}" />
+                <marker date="1475567610741" expanded="true" signature="23823:23892" placeholder="//..." />
+                <marker date="1475567610741" expanded="true" signature="23998:24063" placeholder="{...}" />
+                <marker date="1475567610741" expanded="true" signature="24101:24201" placeholder="{...}" />
+                <marker date="1475567610741" expanded="true" signature="24237:24335" placeholder="{...}" />
+                <marker date="1475567610741" expanded="true" signature="24370:24466" placeholder="{...}" />
+                <marker date="1475567610741" expanded="true" signature="24499:24810" placeholder="{...}" />
+                <marker date="1475567610741" expanded="true" signature="24851:24927" placeholder="{...}" />
+                <marker date="1475567610741" expanded="true" signature="24960:25036" placeholder="{...}" />
+                <marker date="1475567610741" expanded="true" signature="25069:25123" placeholder="{...}" />
+                <marker date="1475567610741" expanded="true" signature="25159:25268" placeholder="{...}" />
+                <marker date="1475567610741" expanded="true" signature="25302:25405" placeholder="{...}" />
+                <marker date="1475567610741" expanded="true" signature="25440:25546" placeholder="{...}" />
+                <marker date="1475567610741" expanded="true" signature="25582:26137" placeholder="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -86,38 +134,18 @@
       <file leaf-file-name="navigation-bar.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/elements/navigation-bar/navigation-bar.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.6538463">
-              <caret line="277" column="104" selection-start-line="277" selection-start-column="104" selection-end-line="277" selection-end-column="104" />
+            <state vertical-scroll-proportion="1.2307693">
+              <caret line="268" column="104" selection-start-line="268" selection-start-column="104" selection-end-line="268" selection-end-column="104" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="login-service.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/elements/login-service/login-service.html">
+      <file leaf-file-name="fees-card.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/elements/fees-card/fees-card.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.269231">
-              <caret line="83" column="9" selection-start-line="83" selection-start-column="9" selection-end-line="83" selection-end-column="9" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CRM-app.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/elements/CRM-app/CRM-app.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-13.807693">
-              <caret line="35" column="20" selection-start-line="35" selection-start-column="20" selection-end-line="35" selection-end-column="20" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="app-list.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/elements/app-list/app-list.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.8727274">
-              <caret line="48" column="44" selection-start-line="48" selection-start-column="34" selection-end-line="48" selection-end-column="44" />
+            <state vertical-scroll-proportion="45.03846">
+              <caret line="1" column="75" selection-start-line="1" selection-start-column="52" selection-end-line="1" selection-end-column="75" />
               <folding />
             </state>
           </provider>
@@ -172,6 +200,8 @@
         <option value="$PROJECT_DIR$/app/elements/follow-up-dashboard-item-card/follow-up-dashboard-item-card.html" />
         <option value="$PROJECT_DIR$/app/elements/followup-dashboard/followup-dashboard.html" />
         <option value="$PROJECT_DIR$/app/elements/fees-card/fees-card.html" />
+        <option value="$PROJECT_DIR$/app/elements/installment-date-picker/installment-date-picker.html" />
+        <option value="$PROJECT_DIR$/app/elements/elements.html" />
       </list>
     </option>
   </component>
@@ -480,6 +510,28 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="login-card" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CRM" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CRM" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="elements" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="installment-date-picker" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1105,20 +1157,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/elements/enquiry-card/enquiry-card.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="155" column="116" selection-start-line="155" selection-start-column="116" selection-end-line="155" selection-end-column="116" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/elements/newenquiry-card/newenquiry-card.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/elements/newevent-card/newevent-card.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1294,13 +1332,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/elements/dateofbirth-datepicker/dateofbirth-datepicker.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.46896553">
-          <caret line="25" column="49" selection-start-line="25" selection-start-column="49" selection-end-line="25" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/elements/nextfollowupdate-card/nextfollowupdate-card.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.762069">
@@ -1394,7 +1425,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="1000" column="3" selection-start-line="1000" selection-start-column="3" selection-end-line="1000" selection-end-column="3" />
           <folding>
-            <marker date="1475563805160" expanded="true" signature="23226:23369" placeholder="{...}" />
+            <marker date="1475567610805" expanded="true" signature="23221:23364" placeholder="{...}" />
           </folding>
         </state>
       </provider>
@@ -1425,8 +1456,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/elements/navigation-bar/navigation-bar.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.6538463">
-          <caret line="277" column="104" selection-start-line="277" selection-start-column="104" selection-end-line="277" selection-end-column="104" />
+        <state vertical-scroll-proportion="1.2307693">
+          <caret line="268" column="104" selection-start-line="268" selection-start-column="104" selection-end-line="268" selection-end-column="104" />
           <folding />
         </state>
       </provider>
@@ -1458,8 +1489,27 @@
     <entry file="file://$PROJECT_DIR$/app/elements/admission-form/admission-form.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-353.07693">
-          <caret line="543" column="12" selection-start-line="541" selection-start-column="4" selection-end-line="543" selection-end-column="12" />
-          <folding />
+          <caret line="545" column="12" selection-start-line="541" selection-start-column="4" selection-end-line="543" selection-end-column="12" />
+          <folding>
+            <marker date="1475567610741" expanded="true" signature="22809:26151" placeholder="{...}" />
+            <marker date="1475567610741" expanded="true" signature="23016:26145" placeholder="{&quot;is&quot;: 'admission-form'...}" />
+            <marker date="1475567610741" expanded="true" signature="23081:23307" placeholder="{...}" />
+            <marker date="1475567610741" expanded="true" signature="23343:23773" placeholder="{...}" />
+            <marker date="1475567610741" expanded="true" signature="23813:23956" placeholder="{...}" />
+            <marker date="1475567610741" expanded="true" signature="23823:23892" placeholder="//..." />
+            <marker date="1475567610741" expanded="true" signature="23998:24063" placeholder="{...}" />
+            <marker date="1475567610741" expanded="true" signature="24101:24201" placeholder="{...}" />
+            <marker date="1475567610741" expanded="true" signature="24237:24335" placeholder="{...}" />
+            <marker date="1475567610741" expanded="true" signature="24370:24466" placeholder="{...}" />
+            <marker date="1475567610741" expanded="true" signature="24499:24810" placeholder="{...}" />
+            <marker date="1475567610741" expanded="true" signature="24851:24927" placeholder="{...}" />
+            <marker date="1475567610741" expanded="true" signature="24960:25036" placeholder="{...}" />
+            <marker date="1475567610741" expanded="true" signature="25069:25123" placeholder="{...}" />
+            <marker date="1475567610741" expanded="true" signature="25159:25268" placeholder="{...}" />
+            <marker date="1475567610741" expanded="true" signature="25302:25405" placeholder="{...}" />
+            <marker date="1475567610741" expanded="true" signature="25440:25546" placeholder="{...}" />
+            <marker date="1475567610741" expanded="true" signature="25582:26137" placeholder="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1471,10 +1521,34 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/elements/dateofbirth-datepicker/dateofbirth-datepicker.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-16.346153">
+          <caret line="25" column="49" selection-start-line="0" selection-start-column="0" selection-end-line="73" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/elements/fees-card/fees-card.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.4327586">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state vertical-scroll-proportion="45.03846">
+          <caret line="1" column="75" selection-start-line="1" selection-start-column="52" selection-end-line="1" selection-end-column="75" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/elements/installment-date-picker/installment-date-picker.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-19.615385">
+          <caret line="30" column="34" selection-start-line="30" selection-start-column="34" selection-end-line="30" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/elements/elements.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.76551723">
+          <caret line="91" column="51" selection-start-line="91" selection-start-column="51" selection-end-line="91" selection-end-column="51" />
           <folding />
         </state>
       </provider>

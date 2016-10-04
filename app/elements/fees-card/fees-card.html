@@ -1,5 +1,5 @@
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
-
+<link rel="import" href="../installment-date-picker/installment-date-picker.html">
 <dom-module id="fees-card">
   <template>
     <div class="row enquiry-form">
@@ -56,6 +56,39 @@
           </div>
           <div class="col-sm-6 enquiry-input">
             <paper-input  label="Fee Code" value=""></paper-input>
+          </div>
+        </div>
+
+        <div class="list-group col-sm-12 panel-body form-category">
+          <div class="col-sm-6 enquiry-input">
+            <paper-input label="Fee Name" value=""></paper-input>
+          </div>
+          <div class="col-sm-6 enquiry-input">
+            <paper-input  label="Amount" value=""></paper-input>
+          </div>
+        </div>
+        <div class="list-group col-sm-12 panel-body form-category">
+          <div class="col-sm-6 enquiry-input">
+            <paper-dropdown-menu label="Grade" >
+              <paper-menu id="Installment" class="dropdown-content" required on-iron-select="installment" valueattr="value" >
+                <paper-item >1</paper-item>
+                <paper-item >2</paper-item>
+                <paper-item >3</paper-item>
+                <paper-item >4</paper-item>
+                <paper-item >5</paper-item>
+              </paper-menu>
+            </paper-dropdown-menu>
+          </div>
+          <div class="col-sm-6 enquiry-input">
+            <paper-input  label="Installment Amount" value=""></paper-input>
+          </div>
+        </div>
+        <div class="list-group col-sm-12 panel-body form-category">
+          <div class="col-sm-6 enquiry-input">
+            <paper-input label="Installmemt Percentage" value=""></paper-input>
+          </div>
+          <div class="col-sm-6 enquiry-input">
+            <installment-date-picker></installment-date-picker>
           </div>
         </div>
         <div class="col-md-12 form-button">
