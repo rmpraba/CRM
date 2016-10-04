@@ -190,7 +190,7 @@
       },
       fetchenquiryinfoResponse:function(e){
         var arr=e.detail.response.returnval;
-        alert(JSON.stringify(arr));
+        // alert(JSON.stringify(arr));
         document.querySelector('admission-form').schoolname=localStorage.getItem("schoolname");
         document.querySelector('admission-form').applicationno=arr[0].prospectus_no;
         document.querySelector('admission-form').enquiredyear=arr[0].academic_year;
@@ -346,6 +346,7 @@
       },
       searchadmnenquiryResponse:function(e){
         var arr=e.detail.response.returnval;
+        alert(JSON.stringify(arr));
         if(localStorage.getItem("curr_sess_feetype")=="reg_fee"){ 
         document.querySelector('registerationfee-card').admissionno=arr[0].admission_no;
         document.querySelector('registerationfee-card').academicyear=arr[0].academic_year;
@@ -353,6 +354,15 @@
         document.querySelector('registerationfee-card').studentname=arr[0].student_name;
         document.querySelector('registerationfee-card').parentname=arr[0].father_name;
         document.querySelector('registerationfee-card').dob=arr[0].dob;
+        }
+        if(localStorage.getItem("curr_sess_feetype")=="ann_fee"){ 
+        // alert(document.querySelector('annualfee-card').admissionno);
+        document.querySelector('annualfee-card').admissionno=arr[0].admission_no;
+        document.querySelector('annualfee-card').academicyear=arr[0].academic_year;
+        document.querySelector('annualfee-card').enquiredclass=arr[0].class_for_admission;
+        document.querySelector('annualfee-card').studentname=arr[0].student_name;
+        document.querySelector('annualfee-card').parentname=arr[0].father_name;
+        document.querySelector('annualfee-card').dob=arr[0].dob;
         }
         localStorage.setItem("curr_sess_enquiryno",arr[0].enquiry_no);      
         localStorage.setItem("curr_sess_admissionno",arr[0].admission_no);
@@ -407,6 +417,7 @@
       },
       fetchfeesResponse:function(e){        
         var arr=e.detail.response.returnval;
+        alert(JSON.stringify(arr));
         localStorage.setItem("curr_sess_feecode",arr[0].fee_code);
         
       },
@@ -419,7 +430,8 @@
         this.$.fetchfeesplitupajax.generateRequest();
       },
       fetchfeesplitupResponse:function(e){
-        var arr=e.detail.response.returnval;        
+        var arr=e.detail.response.returnval;    
+        alert(JSON.stringify(arr));    
         if(localStorage.getItem("curr_sess_feetype")=="pros_fee"){ 
           document.querySelector('prospectousfee-card').fees=arr[0].prospectous_fee;
           localStorage.setItem("curr_sess_prospectousfee",arr[0].prospectous_fee);
@@ -427,6 +439,10 @@
         if(localStorage.getItem("curr_sess_feetype")=="reg_fee"){ 
           document.querySelector('registerationfee-card').fees=arr[0].registeration_fee;
           localStorage.setItem("curr_sess_registerationfee",arr[0].registeration_fee);
+        }
+        if(localStorage.getItem("curr_sess_feetype")=="ann_fee"){ 
+          document.querySelector('annualfee-card').fees=arr[0].annual_fee;
+          localStorage.setItem("curr_sess_annualfee",arr[0].annual_fee);
         }
       
       },
@@ -488,6 +504,10 @@
         if(localStorage.getItem("curr_sess_feetype")=="reg_fee"){         
         document.querySelector('registerationfee-card').regarr=reg;
         document.querySelector('registerationfee-card').FnHiddenPayment();
+        }
+        if(localStorage.getItem("curr_sess_feetype")=="ann_fee"){         
+        document.querySelector('annualfee-card').annarr=annual;
+        document.querySelector('annualfee-card').FnHiddenPayment();
         }
       },
       FnRefresh:function(){

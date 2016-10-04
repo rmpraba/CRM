@@ -5,7 +5,7 @@
 <link rel="import" href="..\installment-card/installment-card.html">
 <link rel="import" href="..\fees-service/fees-service.html">
 
-<dom-module id="registerationfee-card">
+<dom-module id="annualfee-card">
 <style>
   .horizontalframe,.inshead{
      @apply(--layout-horizontal);
@@ -82,7 +82,7 @@
                     <div style="width: 30%;margin-left:0%;position: absolute; left: 80%;" hidden$="{{receiptdate}}">Receipt Date</div>                 
             </div>
             <div style="margin-left:12%;" hidden$="{{hiddeninstallment}}"> 
-              <template  is="dom-repeat" items="{{regarr}}" as="view">
+              <template  is="dom-repeat" items="{{annarr}}" as="view">
                 <installment-card installment="{{view.installment}}" amount="{{view.amount}}" installmentdate="{{view.date}}"></installment-card>
               </template>
             </div>
@@ -110,7 +110,7 @@
       var installment="";
       var paymentmode="";
     Polymer({
-      is: 'registerationfee-card',
+      is: 'annualfee-card',
       ready:function(){
         this.hiddenpayment=true;
         this.receiptdate=true;
@@ -120,7 +120,8 @@
         localStorage.setItem("curr_sess_waiveofamount",0);
       },
       FnSearchEnquiry:function(){
-        localStorage.setItem("curr_sess_feetype","reg_fee");
+        localStorage.setItem("curr_sess_feetype","ann_fee");
+        // alert(this.enquiryno);
         this.$.admissionservice.callSearchadmnenquiryService(this.enquiryno);
       },
       FnHiddenPayment:function(){
