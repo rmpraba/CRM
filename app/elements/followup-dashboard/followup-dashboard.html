@@ -9,6 +9,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\followup-dashboard-item-card/followup-dashboard-item-card.html">
+
 
 <dom-module id="followup-dashboard">
   <template>
@@ -18,16 +20,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <th>Total  Follow-up</th>
         <th>Pending Follow-up</th>
         <th>Completed  Follow-up</th>
-        <th>Completed  Follow-up</th>
+        <th>Upcoming  Follow-up</th>
       </tr>
       </thead>
       <tbody>
       <tr>
-        <template is="dom-repeat" items="{{itemArray}}" as="item">
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+        <template  is="dom-repeat" items="{{gradewisearr}}" as="view">
+          <follow-up-dashboard-item-card total="{{view.total}}" pending="{{view.pending}}" completed="{{view.completed}}" upcoming="{{view.upcoming}}"></follow-up-dashboard-item-card>
         </template>
       </tr>
       </tbody>
