@@ -826,7 +826,7 @@ app.post('/getenquirycount',  urlencodedParser,function (req, res){
     var qur={"school_id":req.query.schol};
     var state={"status":req.query.status};
     //console.log('qur');
-    connection.query('SELECT class,count(*) as total FROM `student_enquiry_details` WHERE ? and ? group by (class)',[qur,state],
+    connection.query('SELECT *,class,count(*) as total FROM `student_enquiry_details` WHERE ? and ? group by (class)',[qur,state],
     function(err, rows)
     {
     if(!err)
@@ -971,6 +971,36 @@ app.post('/getstudentnamelist',  urlencodedParser,function (req, res){
   }
 });
   });
+
+
+/*this function is used to fetch the detail of students, who have been enrolled for the enquiry*/
+
+
+app.post('/getfollowupcount',  urlencodedParser,function (req, res){
+    var qur={"school_id":req.query.schol};
+    //console.log('qur');
+    connection.query('SELECT student_name FROM `student_details` WHERE ?',[qur],
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      //console.log(rows);
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': ''});
+    }
+  }
+  else{
+     console.log(err);
+  }
+});
+  });
+
 
 function setvalue(){
   console.log("calling setvalue.....");

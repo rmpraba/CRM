@@ -256,6 +256,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         debounce-duration="300"
         >
   </iron-ajax>
+  <!-- this ajax is to fetch the detail of student who have been enquired -->
+    <iron-ajax
+        method="post"
+        id="getfollowupcountajax"
+        url="{{getfollowupcounturl}}"
+        params="{{getfollowupcountparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getfollowupcountResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
   </template>
   <script>
   (function() {
@@ -727,6 +739,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       //alert(JSON.stringify(namelistarr));
       document.querySelector('detailed-enquiry-form').autocompletename(namelistarr);
+     },
+     getfollowupcount:function(){
+      var dt=new Date();
+        this.getfollowupcounturl="http://localhost:8086/getfollowupcount";
+        var obj={"schol":"","today":""}
+        obj.schol=localStorage.getItem("schoolid");
+        obj.today=dt.getDate()+"/"+(dt.getMonth()+1)+"/"+dt.getFullYear();
+        this.getfollowupcountparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.getfollowupcountajax.generateRequest();
+     },
+     getfollowupcountResponse:function(e){
+      var res=e.detail.response.returnval;
      }
 
 

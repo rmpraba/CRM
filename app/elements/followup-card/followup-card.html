@@ -40,6 +40,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </table>
       </div>
     </div>
+    <crm-service id="service"></crm-service>
   </template>
   <script>
   (function() {
@@ -47,7 +48,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     Polymer({
       is: 'followup-card',
-
+      ready:function(){
+        //this.$.service.getfollowup();
+      }
     });
   })();
   </script>
