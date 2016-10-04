@@ -564,7 +564,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       FnSearchEnquiry:function(){ 
         this.$.crmservice.getclasses();
-        var enquiryno=document.getElementById('searchenquiry').value;        
+        var enquiryno=document.getElementById('searchenquiry').value;  
+        // alert(enquiryno);      
         this.$.admissionservice.callSearchenquiryService(enquiryno);
       },
 

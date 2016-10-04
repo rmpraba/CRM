@@ -190,7 +190,7 @@
       },
       fetchenquiryinfoResponse:function(e){
         var arr=e.detail.response.returnval;
-        // alert(JSON.stringify(arr));
+        alert(JSON.stringify(arr));
         document.querySelector('admission-form').schoolname=localStorage.getItem("schoolname");
         document.querySelector('admission-form').applicationno=arr[0].prospectus_no;
         document.querySelector('admission-form').enquiredyear=arr[0].academic_year;

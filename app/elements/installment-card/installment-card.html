@@ -131,17 +131,17 @@
           }
           if(localStorage.getItem("curr_sess_feetype")=="annual_fee")
           {
-            obj.installmenttype="pros_fee";
+           obj.installmenttype=localStorage.getItem("curr_sess_feetype");
             obj.installment=this.installment;
             obj.amount=this.amount;
-            obj.waiveoff=0;
+            obj.waiveoff=localStorage.getItem("curr_sess_waiveofamount");
             obj.paymentmode=paymenttype;
             obj.installmentdate=this.installmentdate;            
             obj.paiddate=current_date;
             obj.receiptdate=current_date;
             obj.paidstatus="paid";
             installmentarr.push(obj);
-            document.querySelector('annualfee-card').FnSetfee(paymenttype,installmentarr);            
+            document.querySelector('prospectousfee-card').FnSetfee(paymenttype,installmentarr);              
           }
           if(localStorage.getItem("curr_sess_feetype")=="caution_fee")
           {
@@ -215,20 +215,21 @@
           }
           if(localStorage.getItem("curr_sess_feetype")=="annual_fee")
           {
-            obj.installmenttype="annual_fee";
+             obj.installmenttype=localStorage.getItem("curr_sess_feetype");
             obj.installment=this.installment;
             obj.amount=this.amount;
-            obj.waiveoff=0;
+            obj.waiveoff=localStorage.getItem("curr_sess_waiveofamount");
             obj.paymentmode=paymenttype;
             obj.installmentdate=this.installmentdate;
-            obj.chequeno=this.chequeno,
-            obj.bankname=this.bankname,
-            obj.chequedate=this.chequedate,
-            obj.receiptdate=this.installmentdate;
-            obj.paiddate=this.installmentdate;
-            obj.paidstatus="paid";
+            obj.chequeno=this.chequeno;
+            obj.bankname=this.bankname;
+            obj.chequedate=localStorage.getItem("localsess_curr_date");
+            obj.receiveddate=current_date;
+            // obj.realiseddate=this.installmentdate;
+            obj.chequestatus="inprogress";            
             installmentarr.push(obj);
-            document.querySelector('annualfee-card').FnSetfee(paymenttype,installmentarr);            
+            // installmentarr.push(obj);
+            document.querySelector('registerationfee-card').FnSetfee(paymenttype,installmentarr);              
           }
           if(localStorage.getItem("curr_sess_feetype")=="caution_fee")
           {
@@ -307,17 +308,17 @@
             obj.installmenttype="annual_fee";
             obj.installment=this.installment;
             obj.amount=this.amount;
-            obj.waiveoff=0;
+            obj.waiveoff=localStorage.getItem("curr_sess_waiveofamount");
             obj.paymentmode=paymenttype;
             obj.installmentdate=this.installmentdate;
-            obj.referenceno=this.referenceno,
-            obj.bankname=this.bankname,
-            obj.chequedate=this.chequedate,
-            obj.receiptdate=this.installmentdate;
-            obj.paiddate=this.installmentdate;
+            obj.referenceno=this.referenceno;
+            obj.bankname=this.bankname;
+            obj.chequedate=localStorage.getItem("localsess_curr_date");
+            obj.receiveddate=current_date;
+            obj.paiddate=localStorage.getItem("localsess_curr_date");;
             obj.paidstatus="paid";
             installmentarr.push(obj);
-            document.querySelector('annualfee-card').FnSetfee(paymenttype,installmentarr);            
+            document.querySelector('prospectousfee-card').FnSetfee(paymenttype,installmentarr);       
           }
           if(localStorage.getItem("curr_sess_feetype")=="caution_fee")
           {
