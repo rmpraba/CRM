@@ -264,7 +264,7 @@
                 <a href="" aria-hidden="true" data-toggle="modal" data-target="#addDetailedEnquiry">Detailed Form</a>
               </li>
             </ul>
-            
+
           </li>
           <li id="">
             <a href="" aria-hidden="true" on-click="followupdashboard"><i class="fa fa-calendar fa-fw"></i> Follow Up</a>
@@ -302,16 +302,10 @@
            <li id="admission">
             <a href="" aria-hidden="true" data-toggle="modal" data-target="#feeschedule"><i class="fa fa-check fa-fw"></i>Schedule Fees</a>
           </li>
-
-
-
-
-
-
-
-
            <li id="admission">
             <a href="" aria-hidden="true" data-toggle="modal" data-target="#followupdet"><i class="fa fa-check fa-fw"></i>Follow Up Detail</a>
+          <li id="followupdetails">
+            <a href="" aria-hidden="true" data-toggle="modal" data-target="#followupstudentdetails"><i class="fa fa-check fa-fw"></i>Schedule Fees</a>
           </li>
           <li id="admform">
             <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Admission Form<!-- <span class="fa arrow"></span> --></a>
@@ -555,6 +549,25 @@
       </div>
     </div>
 
+    <div class="modal fade bd-example-modal-lg" id="followupstudentdetails" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="center-block event-title" id="">
+              Follow Up Student Details
+            </h4>
+          </div>
+          <div class="modal-body">
+            <followup-student-datail></followup-student-datail>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<crm-service id="service"></crm-service>
 
 
 
@@ -622,6 +635,7 @@
         document.querySelector('app-list').setPage("follow-up");
       },
       enquiry:function(){
+        this.$.service.getfollowupcount();
         document.querySelector('app-list').setPage("enquiry");
       }
     });
