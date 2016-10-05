@@ -48,7 +48,14 @@
           var dd1=new Date();
           var dd2=new Date(pickdate);
           var days=parseInt((dd1 - dd2) / (1000 * 60 * 60 * 24));
-          this.showdate = moment(this.$.picker.date).format('L');
+          if(days<=0){
+            document.querySelector('newenquiry-card').dateclear();
+          document.querySelector('admission-form').dateclear();      
+          document.querySelector('detailed-enquiry-form').dateclear();
+          this.showdate="";
+          }
+          else{
+            this.showdate = moment(this.$.picker.date).format('L');
           localStorage.setItem("localsess_start_date",this.showdate);
           //this.$.service.datepickinsta1(this.date);
           //this.$.service.datepickinsta2(this.date);
@@ -56,7 +63,11 @@
           //this.$.service.datepickinsta2cheque(this.date);
           //this.$.service.feereport(this.showdate);
           document.querySelector('newenquiry-card').getdate(this.showdate);
-          document.querySelector('admission-form').getdate(this.showdate);
+          document.querySelector('admission-form').getdate(this.showdate);  
+
+          document.querySelector('detailed-enquiry-form').getdate(this.showdate);  
+          }
+          
         }
       },
       FnClear:function(){

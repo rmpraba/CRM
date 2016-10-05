@@ -565,6 +565,8 @@
       </div>
     </div>
 
+<crm-service id="service"></crm-service>
+
   </template>
   <script>
   (function() {
@@ -612,6 +614,7 @@
         document.querySelector('app-list').setPage("follow-up");
       },
       enquiry:function(){
+        this.$.service.getfollowupcount();
         document.querySelector('app-list').setPage("enquiry");
       }
     });
