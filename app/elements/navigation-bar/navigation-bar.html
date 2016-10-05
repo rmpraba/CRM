@@ -253,7 +253,7 @@
             <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
           </li>
           <li id="enquiry">
-            <a href="#"><i class="fa fa-phone-square fa-fw"></i> Enquiry<span class="fa arrow"></span></a>
+            <a href="" aria-hidden="true" on-click="enquiry"><i class="fa fa-phone-square fa-fw"></i> Enquiry<span class="fa arrow"></span></a>
             <ul class="nav nav-second-level">
               <li>
               <a href="" aria-hidden="true" data-toggle="modal" data-target="#addEnquiry">Simple Form</a>
@@ -263,10 +263,10 @@
                 <a href="" aria-hidden="true" data-toggle="modal" data-target="#addDetailedEnquiry">Detailed Form</a>
               </li>
             </ul>
-            <!-- /.nav-second-level -->
+            
           </li>
           <li id="">
-            <a href="" aria-hidden="true" data-toggle="modal" data-target="#followUp" on-click="followupdashboard"><i class="fa fa-calendar fa-fw"></i> Follow Up</a>
+            <a href="" aria-hidden="true" on-click="followupdashboard"><i class="fa fa-calendar fa-fw"></i> Follow Up</a>
           </li>
           <li id="admission">
             <a href="" aria-hidden="true" data-toggle="modal" data-target="#newadmission"><i class="fa fa-check fa-fw"></i>Admission</a>
@@ -276,7 +276,7 @@
           </li> -->
 
            <li id="payment">
-            <a href="#" aria-hidden="true" data-toggle="modal" data-target="#feepayment"><i class="fa fa-check fa-fw"></i> Fee Payment<span class="fa arrow"></span></a>
+            <a href="#" aria-hidden="true" data-toggle="modal" data-target="#feepayment"><i class="fa fa-money fa-fw"></i> Fee Payment<span class="fa arrow"></span></a>
             <ul class="nav nav-second-level">
               <li>
               <a href="" aria-hidden="true" data-toggle="modal" data-target="#prospectousfee" on-click="FnProspect">Prospectus Fee</a>
@@ -417,7 +417,7 @@
         </div>
       </div>
     </div>
-    <div class="modal fade bd-example-modal-lg" id="followUp" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<!--    <div class="modal fade bd-example-modal-lg" id="followUp" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
@@ -433,7 +433,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div>-->
 
     <div class="modal fade bd-example-modal-lg" id="prospectousfee" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg">
@@ -534,7 +534,7 @@
               <span aria-hidden="true">&times;</span>
             </button>
             <h4 class="center-block event-title" id="">
-              Schedule Fees 
+              Schedule Fees
             </h4>
           </div>
           <div class="modal-body">
@@ -589,8 +589,11 @@
         document.querySelector('admission-service').FnRefresh();
       },
       followupdashboard:function(){
-      document.querySelector('app-list').setPage("folllow-up");
-    }
+        document.querySelector('app-list').setPage("follow-up");
+      },
+      enquiry:function(){
+        document.querySelector('app-list').setPage("enquiry");
+      }
     });
   })();
   </script>
