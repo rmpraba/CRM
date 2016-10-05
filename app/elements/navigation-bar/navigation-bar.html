@@ -263,7 +263,7 @@
                 <a href="" aria-hidden="true" data-toggle="modal" data-target="#addDetailedEnquiry">Detailed Form</a>
               </li>
             </ul>
-            
+
           </li>
           <li id="">
             <a href="" aria-hidden="true" on-click="followupdashboard"><i class="fa fa-calendar fa-fw"></i> Follow Up</a>
@@ -544,7 +544,7 @@
       </div>
     </div>
 
-
+<crm-service id="service"></crm-service>
   </template>
   <script>
   (function() {
@@ -592,6 +592,7 @@
         document.querySelector('app-list').setPage("follow-up");
       },
       enquiry:function(){
+        this.$.service.getfollowupcount();
         document.querySelector('app-list').setPage("enquiry");
       }
     });
