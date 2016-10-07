@@ -268,6 +268,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         debounce-duration="300"               
         >
   </iron-ajax>
+  <iron-ajax
+        method="post"
+        id="followupdetailsajax"
+        url="{{followupdetailsurl}}"
+        params="{{followupdetailsparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="followupdetailsResponse"
+        debounce-duration="300"               
+        >
+  </iron-ajax>
   </template>
   <script>
   (function() {
@@ -623,6 +634,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        //alert(JSON.stringify(obj));
         this.$.getlocationajax.generateRequest();
      },
+      folloudetails:function(){
+      this.followupdetailsurl="http://localhost:8086/followup-service";
+        var obj={"schol":""}
+        obj.schol=localStorage.getItem("schoolid");
+        this.followupdetailsparamll=obj;
+        alert("hi1");
+        alert(JSON.stringify(obj));
+        this.$.followupdetailsajax.generateRequest();
+     },
      getlocationResponse:function(e){
         var result=e.detail.response.returnval;
         //alert(JSON.stringify(result));
@@ -650,6 +670,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        //alert('hello   '+JSON.stringify(obj));
         this.$.getenqirydetailsajax.generateRequest();
      },
+
      getenqirydetailsResponse:function(e){
       var result=e.detail.response.returnval;
       //alert(JSON.stringify(result));

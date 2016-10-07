@@ -651,7 +651,7 @@
         }
       },
     submit:function(){
-      alert("hi2");
+      
       if(this.firstname == "" || this.lastname == ""|| this.mothertongue == "" || this.fathername == "" || this.mothername == "" || this.fatheredu == "" || this.motheredu == "" || this.fathermob == "" || this.mothermob == "" || this.fathermail == "" || this.address1 == ""|| this.city == "" || this.pincode == "" || this.flat == "" || this.state == ""){
           this.$.fname.validate();
           //this.$.mname.validate();
@@ -709,10 +709,10 @@
       }
       else if(thirdlanguage==null){
         alert(grade);
-        alert("hi3");
+       
         if(grade == "Nursery"||"LKG"||"UKG"||"Grade-1"||"Grade-2"||"Grade-3"||"Grade-4"){
           this.$.service.updateenquiryform(enqno,this.firstname,this.middlename,this.lastname,fngender,grade,dobdate,this.oldclass,this.oldschool,mothertongue,this.fathername,this.mothername,this.fatheredu,this.motheredu,this.fathermob,this.mothermob,this.fathermail,this.mothermail,this.fathercompany,this.mothercompany,dadoccup,momtheroccup,this.flat,this.address1,this.address2,this.address3,this.city,this.pincode,this.state,enquiysource,this.siblingname,this.siblingdetails,transportreq,canteenreq,secondlanguage,propsold,this.fatherjob,this.motherjob,dadincome,momincome,this.prospectusno);
-          alert("hi4");
+         
           
         } else {
           alert('Select the third language');
