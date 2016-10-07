@@ -9,6 +9,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
 <dom-module id="followup-details">
   <template>
     <style>
@@ -28,20 +30,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <th>view</th>
           </tr>
         </thead>
-        <tbody>
-        <template is="dom-repeat" items="{{tabarr}}">
-          <tr>
-            <th scope="row" value="{{id}}">1</th>
-            <td> <paper-input value="{{name}}"></paper-input></td>
-            <td> <paper-input value="{{confidence}}"></paper-input></td>
-            <td> <paper-input value="{{follow}}"></paper-input></td>
-            <td> <button class="btn">View Details</button></td>
-            
-         
+        <tr>
+        <template is="dom-repeat" items="{{followuparr}}" as="view">
+            <div class="students-atten">
+              <followup-details-items student="{{view.name}}" parentname="{{view.parentname}}" mobilenumber="{{view.mobilenumber}}" classreq="{{view.class}}" enquiredon="{{view.enquiredon}}" lastfollowup="{{view.lastfollowup}}" followup="{{view.followup}}" confidence="{{view.confidence_level}}" nextfollowup="{{view.nextfollowup}}" comments="{{view.comments}}"></followup-details-items>
+            </div>                
+          </template>
           </tr>
-        </tbody>
-      </table>
-        </template>
+    </table>
+       
     </div>
     </div>
   </template>
