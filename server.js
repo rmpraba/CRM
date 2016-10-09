@@ -977,9 +977,9 @@ app.post('/getstudentnamelist',  urlencodedParser,function (req, res){
 
 
 app.post('/getfollowupcount',  urlencodedParser,function (req, res){
-    var qur={"school_id":req.query.schol};
+    
     //console.log('qur');
-    connection.query('SELECT student_name FROM `student_details` WHERE ?',[qur],
+    connection.query("SELECT d.followup_status, f.class, COUNT( * ) AS total FROM  `followupdetail` AS d, student_enquiry_details AS f WHERE d.`school_id` =  '"+req.query.schol+"' AND d.followup_status =  '"+req.query.status+"' AND f.enquiry_no = d.enquiry_id GROUP BY class ORDER BY (`class`)",
     function(err, rows)
     {
     if(!err)
@@ -992,7 +992,7 @@ app.post('/getfollowupcount',  urlencodedParser,function (req, res){
     else
     {
       console.log(err);
-      res.status(200).json({'returnval': ''});
+      res.status(200).json({'returnval': 0});
     }
   }
   else{

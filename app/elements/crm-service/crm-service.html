@@ -256,18 +256,55 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         debounce-duration="300"
         >
   </iron-ajax>
-  <!-- this ajax is to fetch the detail of student who have been enquired -->
+  <!-- this ajax is to fetch the detail of student who have been enquired newly and yet done a single follow up-->
     <iron-ajax
         method="post"
-        id="getfollowupcountajax"
-        url="{{getfollowupcounturl}}"
-        params="{{getfollowupcountparam}}"
+        id="getopenfollowupcountajax"
+        url="{{getopenfollowupcounturl}}"
+        params="{{getopenfollowupcountparam}}"
         handle-as="json"
         content-type="application/json"
-        on-response="getfollowupcountResponse"
+        on-response="getopenfollowupcountResponse"
         debounce-duration="300"
         >
   </iron-ajax>
+  <!-- this ajax used to fetch the detail of student who have been enquired and been in process for follow up -->
+  <iron-ajax
+        method="post"
+        id="getprocessfollowupcountajax"
+        url="{{getprocessfollowupcounturl}}"
+        params="{{getprocessfollowupcountparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getprocessfollowupcountResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <!-- this ajax used to fetch the detail of student who have been enquired and status have been in closed for follow up -->
+  <iron-ajax
+        method="post"
+        id="getclosedfollowupcountajax"
+        url="{{getclosedfollowupcounturl}}"
+        params="{{getclosedfollowupcountparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getclosedfollowupcountResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <!-- this ajax used to fetch the detail of student who have been enquired and status have been in exhausted for follow up -->
+  <iron-ajax
+        method="post"
+        id="getexhaustfollowupcountajax"
+        url="{{getexhaustfollowupcounturl}}"
+        params="{{getexhaustfollowupcountparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getexhaustfollowupcountResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  
   </template>
   <script>
   (function() {
@@ -779,16 +816,55 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      },
      getfollowupcount:function(){
       var dt=new Date();
-        this.getfollowupcounturl="http://localhost:8086/getfollowupcount";
-        var obj={"schol":"","today":""}
+        this.getopenfollowupcounturl="http://localhost:8086/getfollowupcount";
+        var obj={"schol":"","status":""}
+        obj.status="Open";
         obj.schol=localStorage.getItem("schoolid");
-        obj.today=dt.getDate()+"/"+(dt.getMonth()+1)+"/"+dt.getFullYear();
-        this.getfollowupcountparam=obj;
+        this.getopenfollowupcountparam=obj;
        //alert(JSON.stringify(obj));
-        this.$.getfollowupcountajax.generateRequest();
+        this.$.getopenfollowupcountajax.generateRequest();
+
+        this.getclosedfollowupcounturl="http://localhost:8086/getfollowupcount";
+        var obj={"schol":"","status":""}
+        obj.status="Closed";
+        obj.schol=localStorage.getItem("schoolid");
+        this.getclosedfollowupcountparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.getclosedfollowupcountajax.generateRequest();
+
+
+        this.getprocessfollowupcounturl="http://localhost:8086/getfollowupcount";
+        var obj={"schol":"","status":""}
+        obj.status="Process";
+        obj.schol=localStorage.getItem("schoolid");
+        this.getprocessfollowupcountparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.getprocessfollowupcountajax.generateRequest();
+
+
+        this.getexhaustfollowupcounturl="http://localhost:8086/getfollowupcount";
+        var obj={"schol":"","status":""}
+        obj.status="Exhausted";
+        obj.schol=localStorage.getItem("schoolid");
+        this.getexhaustfollowupcountparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.getexhaustfollowupcountajax.generateRequest();
      },
-     getfollowupcountResponse:function(e){
+     getopenfollowupcountResponse:function(e){
       var res=e.detail.response.returnval;
+      document.querySelector('followup-dashboard').openarr=res;
+     },
+     getclosedfollowupcountResponse:function(e){
+      var res=e.detail.response.returnval;
+      document.querySelector('followup-dashboard').closearr=res;
+     },
+     getprocessfollowupcountResponse:function(e){
+      var res=e.detail.response.returnval;
+      document.querySelector('followup-dashboard').processarr=res;
+     },
+     getexhaustfollowupcountResponse:function(e){
+      var res=e.detail.response.returnval;
+      document.querySelector('followup-dashboard').exhaustedarr=res;
      }
 
 

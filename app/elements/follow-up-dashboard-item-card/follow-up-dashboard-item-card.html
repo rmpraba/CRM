@@ -17,9 +17,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: block;
       }
     </style>
-    <div>
+    <div class="list-group list-group-item enquiry-list-item">
+        <h5>{{grade}}</h5>
+        <div class="col-sm-6">
+         <a href="" class="enquired" on-click="getdetails" aria-hidden="true" data-toggle="modal" data-target="#grade1enquired">{{enquirygrade}}</a>
+        </div>
+        <div class="col-sm-6">
+        <paper-input value="{{status}}"></paper-input>
+       </div>
+      </div>
 
-    </div>
+        <crm-service id="service"></crm-service>
   </template>
   <script>
   (function() {
@@ -27,7 +35,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     Polymer({
       is: 'follow-up-dashboard-item-card',
-
+      getdetails:function(){
+        alert(this.grade,this.enquirygrade,this.status);
+      }
     });
   })();
   </script>
