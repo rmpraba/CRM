@@ -12,63 +12,155 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <dom-module id="followup-student-datail">
   <template>
-    <div class="container">
-      <div class="row enq-details">
-        <div class="col-md-6">
-          <paper-input label="Enquiry No"></paper-input>
+    <div class="row enquiry-form">
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="list-group col-sm-12 panel-body form-category">
+          <div class="col-sm-6">
+            <paper-input label="Enquiry No" value="{{enqno}}"></paper-input>
+          </div>
+          <div class="col-sm-6">
+            <paper-input label="Name" value="{{name}}"></paper-input>
+          </div>
         </div>
-        <div class="col-md-6">
-          <paper-input label="Student Name"></paper-input>
+        <div class="list-group col-sm-12 panel-body form-category">
+          <div class="col-sm-6">
+            <paper-input label="Grade" value="{{enqno}}"></paper-input>
+          </div>
+          <div class="col-sm-6">
+            <paper-input label="Enquired On" value="{{name}}"></paper-input>
+          </div>
+        </div>        <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <paper-input label="Parent Name" value="{{enqno}}"></paper-input>
         </div>
-        <div class="col-md-6">
-          <paper-input label="Grade"></paper-input>
+        <div class="col-sm-6">
+          <paper-input label="Mobile No" value="{{name}}"></paper-input>
         </div>
-        <div class="col-md-6">
-          <paper-input label="Enquired On"></paper-input>
-        </div>
-        <div class="col-md-6">
-          <paper-input label="Parent Name"></paper-input>
-        </div>
-        <div class="col-md-6">
-          <paper-input label="Contact No"></paper-input>
-        </div>
+      </div>
       </div>
       <table class="table table-striped">
         <thead>
         <tr>
           <th>S.No</th>
           <th>Date</th>
-          <th>Last Name</th>
-          <th>Username</th>
+          <th>Confidence Level</th>
+          <th>Comment</th>
         </tr>
         </thead>
         <tbody>
         <tr>
           <th scope="row">1</th>
-          <td><paper-input label="Date"></paper-input><span><button class="btn glyphicon glyphicon-pencil"></button></span></td>
           <td>
-            <paper-dropdown-menu label="Mother Tongue" >
-              <paper-menu id="language" class="dropdown-content" required on-iron-select="language" valueattr="value" >
-                <paper-item >>95%</paper-item>
-                <paper-item >Bengali</paper-item>
-                <paper-item >Bodo</paper-item>
-                <paper-item >Dogri</paper-item>
-              </paper-menu>
+            <span class="col-sm-8"><paper-input label="Date"></paper-input></span>
+            <span class="col-sm-4 glyph-button"><button class="btn glyphicon glyphicon-pencil"></button></span>
+          </td>
+          <td>
+            <paper-dropdown-menu label="Confidence Level">
+              <paper-listbox class="dropdown-content" on-iron-select="Fnprospectusstatus">
+                <paper-item>>90%</paper-item>
+                <paper-item>>75%</paper-item>
+                <paper-item>>50%</paper-item>
+                <paper-item><50%</paper-item>
+                <paper-item><35%</paper-item>
+                <paper-item><10%</paper-item>
+              </paper-listbox>
             </paper-dropdown-menu>
           </td>
-          <td>@mdo</td>
+          <td>
+            <span class="col-sm-8"><paper-input label="Comments"></paper-input></span>
+            <span class="col-sm-4 glyph-button"><button class="btn glyphicon glyphicon-floppy-disk"></button></span>
+          </td>
         </tr>
         <tr>
           <th scope="row">2</th>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
+          <td>
+            <span class="col-sm-8"><paper-input label="Date"></paper-input></span>
+            <span class="col-sm-4 glyph-button"><button class="btn glyphicon glyphicon-pencil"></button></span>
+          </td>
+          <td>
+            <paper-dropdown-menu label="Confidence Level">
+              <paper-listbox class="dropdown-content" on-iron-select="Fnprospectusstatus">
+                <paper-item>>90%</paper-item>
+                <paper-item>>75%</paper-item>
+                <paper-item>>50%</paper-item>
+                <paper-item><50%</paper-item>
+                <paper-item><35%</paper-item>
+                <paper-item><10%</paper-item>
+              </paper-listbox>
+            </paper-dropdown-menu>
+          </td>
+          <td>
+            <span class="col-sm-8"><paper-input label="Comments"></paper-input></span>
+            <span class="col-sm-4 glyph-button"><button class="btn glyphicon glyphicon-floppy-disk"></button></span>
+          </td>
         </tr>
         <tr>
           <th scope="row">3</th>
-          <td>Larry</td>
-          <td>the Bird</td>
-          <td>@twitter</td>
+          <td>
+            <span class="col-sm-8"><paper-input label="Date"></paper-input></span>
+            <span class="col-sm-4 glyph-button"><button class="btn glyphicon glyphicon-pencil"></button></span>
+          </td>
+          <td>
+            <paper-dropdown-menu label="Confidence Level">
+              <paper-listbox class="dropdown-content" on-iron-select="Fnprospectusstatus">
+                <paper-item>>90%</paper-item>
+                <paper-item>>75%</paper-item>
+                <paper-item>>50%</paper-item>
+                <paper-item><50%</paper-item>
+                <paper-item><35%</paper-item>
+                <paper-item><10%</paper-item>
+              </paper-listbox>
+            </paper-dropdown-menu>
+          </td>
+          <td>
+            <span class="col-sm-8"><paper-input label="Comments"></paper-input></span>
+            <span class="col-sm-4 glyph-button"><button class="btn glyphicon glyphicon-floppy-disk"></button></span>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">4</th>
+          <td>
+            <span class="col-sm-8"><paper-input label="Date"></paper-input></span>
+            <span class="col-sm-4 glyph-button"><button class="btn glyphicon glyphicon-pencil"></button></span>
+          </td>
+          <td>
+            <paper-dropdown-menu label="Confidence Level">
+              <paper-listbox class="dropdown-content" on-iron-select="Fnprospectusstatus">
+                <paper-item>>90%</paper-item>
+                <paper-item>>75%</paper-item>
+                <paper-item>>50%</paper-item>
+                <paper-item><50%</paper-item>
+                <paper-item><35%</paper-item>
+                <paper-item><10%</paper-item>
+              </paper-listbox>
+            </paper-dropdown-menu>
+          </td>
+          <td>
+            <span class="col-sm-8"><paper-input label="Comments"></paper-input></span>
+            <span class="col-sm-4 glyph-button"><button class="btn glyphicon glyphicon-floppy-disk"></button></span>
+          </td>
+        </tr><tr>
+          <th scope="row">5</th>
+          <td>
+            <span class="col-sm-8"><paper-input label="Date"></paper-input></span>
+            <span class="col-sm-4 glyph-button"><button class="btn glyphicon glyphicon-pencil"></button></span>
+          </td>
+          <td>
+            <paper-dropdown-menu label="Confidence Level">
+              <paper-listbox class="dropdown-content" on-iron-select="Fnprospectusstatus">
+                <paper-item>>90%</paper-item>
+                <paper-item>>75%</paper-item>
+                <paper-item>>50%</paper-item>
+                <paper-item><50%</paper-item>
+                <paper-item><35%</paper-item>
+                <paper-item><10%</paper-item>
+              </paper-listbox>
+            </paper-dropdown-menu>
+          </td>
+          <td>
+            <span class="col-sm-8"><paper-input label="Comments"></paper-input></span>
+            <span class="col-sm-4 glyph-button"><button class="btn glyphicon glyphicon-floppy-disk"></button></span>
+          </td>
         </tr>
         </tbody>
       </table>

@@ -3,10 +3,11 @@
 <link rel="import" href="../detailed-enquiry-form/detailed-enquiry-form.html">
 <link rel="import" href="../admission-form/admission-form.html">
 <link rel="import" href="../followup-card/followup-card.html">
+<link rel="import" href="../followup-details/followup-details.html">
 <dom-module id="navigation-bar">
   <template>
     <style>
-      :host {
+      /*:host{
         display: block;
       }
     </style>    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
@@ -21,8 +22,7 @@
 
     </div>
 
-    <!-- /.navbar-header -->
-
+   
     <ul class="nav navbar-top-links navbar-right">
 
       <li class="dropdown">
@@ -301,7 +301,8 @@
            <li id="admission">
             <a href="" aria-hidden="true" data-toggle="modal" data-target="#feeschedule"><i class="fa fa-check fa-fw"></i>Schedule Fees</a>
           </li>
-
+           <li id="admission">
+            <a href="" aria-hidden="true" data-toggle="modal" data-target="#followupdet"><i class="fa fa-check fa-fw"></i>Follow Up Detail</a>
           <li id="followupdetails">
             <a href="" aria-hidden="true" data-toggle="modal" data-target="#followupstudentdetails"><i class="fa fa-check fa-fw"></i>Schedule Fees</a>
           </li>
@@ -567,6 +568,25 @@
 
 <crm-service id="service"></crm-service>
 
+
+
+    <div class="modal fade bd-example-modal-lg" id="followupdet" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="center-block event-title" id="">
+              Follow Up Detail
+            </h4>
+          </div>
+          <div class="modal-body">
+            <followup-details></followup-details>
+          </div>
+        </div>
+      </div>
+    </div>
   </template>
   <script>
   (function() {

@@ -331,7 +331,7 @@ app.post('/verifymobileno',  urlencodedParser,function (req, res)
 {
 
        connection.query("SELECT * from student_enquiry_details where school_id='"+req.query.schol+"' and (father_mob='"+req.query.mobileno+"' or mother_mob='"+req.query.mobileno+"') ",
-        function(err, rows)
+  function(err, rows)
         {
     if(!err)
     {

@@ -266,7 +266,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         content-type="application/json"
         on-response="getopenfollowupcountResponse"
         debounce-duration="300"
-        >
+  </iron-ajax>
+  <iron-ajax
+        method="post"
+        id="followupdetailsajax"
+        url="{{followupdetailsurl}}"
+        params="{{followupdetailsparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="followupdetailsResponse"
+        debounce-duration="300"               
   </iron-ajax>
   <!-- this ajax used to fetch the detail of student who have been enquired and been in process for follow up -->
   <iron-ajax
@@ -328,8 +337,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     Polymer({
       is: 'crm-service',
       followupResponse:function(e){
-        firstfollowup=e.detail.response.firstfollowup;
-        secondfollowup=e.detail.response.secondfollowup;
+         firstfollowup=e.detail.response.firstfollowup;
+         secondfollowup=e.detail.response.secondfollowup;
          thirdfollowup=e.detail.response.thirdfollowup;
          fourthfollowup=e.detail.response.fourthfollowup;
          fifthfollowup=e.detail.response.fifthfollowup;
@@ -345,7 +354,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     thirdfollowupdate.setDate(thirdfollowupdate.getDate()+thirdfollowup);
     fourthfollowupdate.setDate(fourthfollowupdate.getDate()+fourthfollowup);
     fifthfollowupdate.setDate(fifthfollowupdate.getDate()+fifthfollowup);
-      },
+     },
      submitenqiry:function(enqno,academicyear,grade,Fnfirstname,Fnmiddlename,Fnlastname,gender,dob,fathername,mothername,mob,email,textvalue,todate){
       //alert(enqno+academicyr+classes+studentname+gender+dob+mob+source+locality+category);
       var generateid=Math.floor(100000 + Math.random() * 900000);
@@ -477,7 +486,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         obj.momincome=momsalary;
         obj.prospectusno=prospect;
         this.updateenquiryparam=obj;
-
+         alert(JSON.stringify(obj));
         this.$.updateenquiryajax.generateRequest();
 
 
@@ -497,6 +506,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       if(result="success"){
         alert("Submited Successfully");
       }
+      
      },
 
       registerenquiryform:function(enqno,firstname,middlename,lastname,gender,grade,dob,oldclass,oldschool,mothertongue,fathername,mothername,fatheredu,motheredu,fathermob,mothermob,fathermail,mothermail,fathercompany,mothercompany,fatherjob,motherjob,flat,address1,address2,address3,city,pincode,state,enquiysource,siblingname,siblingdetail,transportreq,canteenreq,secondlanguage,thirdlanguage,propspectus,dadpost,mompost,dadsalary,momsalary,prospect, academicyear){
@@ -553,7 +563,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         obj.givenname=firstname + middlename + lastname;
         obj.status="Enquired";
         this.registerenquiryformparam=obj;
-        //alert(JSON.stringify(obj));
+         //alert(JSON.stringify(obj));
         this.$.registerenquiryformajax.generateRequest();
 
 
@@ -659,6 +669,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        //alert(JSON.stringify(obj));
         this.$.getlocationajax.generateRequest();
      },
+      folloudetails:function(){
+      this.followupdetailsurl="http://localhost:8086/followup-service";
+        var obj={"schol":""}
+        obj.schol=localStorage.getItem("schoolid");
+        this.followupdetailsparamll=obj;
+        alert("hi1");
+        alert(JSON.stringify(obj));
+        this.$.followupdetailsajax.generateRequest();
+     },
      getlocationResponse:function(e){
         var result=e.detail.response.returnval;
         //alert(JSON.stringify(result));
@@ -686,6 +705,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        //alert('hello   '+JSON.stringify(obj));
         this.$.getenqirydetailsajax.generateRequest();
      },
+
      getenqirydetailsResponse:function(e){
       var result=e.detail.response.returnval;
       //alert(JSON.stringify(result));
@@ -808,7 +828,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var obj={"listname":""}
         obj.listname=studentarr[i].student_name;
         namelistarr.push(obj);
-          }
+         }
 
       //alert(JSON.stringify(namelistarr));
       //alert(document.querySelector('detailed-enquiry-form').Fnautocompletename(namelistarr));
