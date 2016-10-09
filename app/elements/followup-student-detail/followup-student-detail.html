@@ -10,7 +10,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 
-<dom-module id="followup-student-datail">
+<dom-module id="followup-student-detail">
   <template>
     <div class="row enquiry-form">
       <div class="list-group col-sm-12 panel-body form-category">
@@ -24,17 +24,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </div>
         <div class="list-group col-sm-12 panel-body form-category">
           <div class="col-sm-6">
-            <paper-input label="Grade" value="{{enqno}}"></paper-input>
+            <paper-input label="Grade" value="{{grade}}"></paper-input>
           </div>
           <div class="col-sm-6">
-            <paper-input label="Enquired On" value="{{name}}"></paper-input>
+            <paper-input label="Enquired On" value="{{enquiredon}}"></paper-input>
           </div>
         </div>        <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
-          <paper-input label="Parent Name" value="{{enqno}}"></paper-input>
+          <paper-input label="Parent Name" value="{{parentname}}"></paper-input>
         </div>
         <div class="col-sm-6">
-          <paper-input label="Mobile No" value="{{name}}"></paper-input>
+          <paper-input label="Mobile No" value="{{mobileno}}"></paper-input>
         </div>
       </div>
       </div>
@@ -44,19 +44,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <th>S.No</th>
           <th>Date</th>
           <th>Confidence Level</th>
-          <th>Comment</th>
+          <th>Comments</th>
         </tr>
         </thead>
         <tbody>
         <tr>
           <th scope="row">1</th>
           <td>
-            <span class="col-sm-8"><paper-input label="Date"></paper-input></span>
+            <span class="col-sm-8"><paper-input label="Date" value="{{followupdate1}}"></paper-input></span>
             <span class="col-sm-4 glyph-button"><button class="btn glyphicon glyphicon-pencil"></button></span>
           </td>
           <td>
             <paper-dropdown-menu label="Confidence Level">
-              <paper-listbox class="dropdown-content" on-iron-select="Fnprospectusstatus">
+              <paper-listbox class="dropdown-content" on-iron-select="FnConfidenceLevel">
                 <paper-item>>90%</paper-item>
                 <paper-item>>75%</paper-item>
                 <paper-item>>50%</paper-item>
@@ -67,8 +67,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </paper-dropdown-menu>
           </td>
           <td>
-            <span class="col-sm-8"><paper-input label="Comments"></paper-input></span>
-            <span class="col-sm-4 glyph-button"><button class="btn glyphicon glyphicon-floppy-disk"></button></span>
+            <span class="col-sm-8"><paper-input label="Comments" value="{{comments}}"></paper-input></span>
+            <span class="col-sm-4 glyph-button"><button class="btn glyphicon glyphicon-floppy-disk" on-click="FollowUp1"></button></span>
           </td>
         </tr>
         <tr>
@@ -79,19 +79,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </td>
           <td>
             <paper-dropdown-menu label="Confidence Level">
-              <paper-listbox class="dropdown-content" on-iron-select="Fnprospectusstatus">
+              <paper-menu id="confidencelevel" class="dropdown-content" required on-iron-select="FnConfidenceLevel" valueattr="value" >
                 <paper-item>>90%</paper-item>
                 <paper-item>>75%</paper-item>
                 <paper-item>>50%</paper-item>
                 <paper-item><50%</paper-item>
                 <paper-item><35%</paper-item>
                 <paper-item><10%</paper-item>
-              </paper-listbox>
+              </paper-menu>>
             </paper-dropdown-menu>
           </td>
           <td>
             <span class="col-sm-8"><paper-input label="Comments"></paper-input></span>
-            <span class="col-sm-4 glyph-button"><button class="btn glyphicon glyphicon-floppy-disk"></button></span>
+            <span class="col-sm-4 glyph-button"><button class="btn glyphicon glyphicon-floppy-disk" on-click="FollowUp2"></button></span>
           </td>
         </tr>
         <tr>
@@ -114,7 +114,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </td>
           <td>
             <span class="col-sm-8"><paper-input label="Comments"></paper-input></span>
-            <span class="col-sm-4 glyph-button"><button class="btn glyphicon glyphicon-floppy-disk"></button></span>
+            <span class="col-sm-4 glyph-button"><button class="btn glyphicon glyphicon-floppy-disk" on-click="FollowUp3"></button></span>
           </td>
         </tr>
         <tr>
@@ -137,7 +137,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </td>
           <td>
             <span class="col-sm-8"><paper-input label="Comments"></paper-input></span>
-            <span class="col-sm-4 glyph-button"><button class="btn glyphicon glyphicon-floppy-disk"></button></span>
+            <span class="col-sm-4 glyph-button"><button class="btn glyphicon glyphicon-floppy-disk" on-click="FollowUp4"></button></span>
           </td>
         </tr><tr>
           <th scope="row">5</th>
@@ -159,26 +159,65 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </td>
           <td>
             <span class="col-sm-8"><paper-input label="Comments"></paper-input></span>
-            <span class="col-sm-4 glyph-button"><button class="btn glyphicon glyphicon-floppy-disk"></button></span>
+            <span class="col-sm-4 glyph-button"><button class="btn glyphicon glyphicon-floppy-disk" on-click="FollowUp5"></button></span>
           </td>
         </tr>
         </tbody>
       </table>
     </div>
+    <button type="button" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false" on-click="followupstatus">Launch modal</button>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Set status for Follow-up</h4>
+          </div>
+          <div class="modal-body col-sm-6 col-sm-offset-3" style="height: 100px;">
+            <paper-dropdown-menu label="Status">
+              <paper-listbox class="dropdown-content" on-iron-select="FnConfidenceLevel">
+                <paper-item>In Progress</paper-item>
+                <paper-item>Closed</paper-item>
+                <paper-item>Exhausted</paper-item>
+                <paper-item>Schedule New Followup</paper-item>
+              </paper-listbox>
+            </paper-dropdown-menu>
+            <button type="button" class="btn btn-primary col-sm-4 col-sm-offset-4" data-dismiss="modal">Submit</button>
+          </div>
+          <div class="modal-footer">
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <crm-service id="service"></crm-service>
   </template>
   <script>
   (function() {
     'use strict';
-
+    var confidencelevel;
     Polymer({
-      is: 'followup-student-datail',
-
-      properties: {
-        foo: {
-          type: String,
-          value: 'followup-student-datail',
-          notify: true
-        }
+      is: 'followup-student-detail',
+      FnConfidenceLevel:function(e){
+        confidencelevel=(e.target.selectedItem.textContent).trim();
+      },
+      FollowUp1:function(){
+        this.$.service.FollowUp1(this.enqno,this.followupdate1,confidencelevel,this.comments);
+      },
+      FollowUp2:function(){
+        this.$.service.FollowUp2(this.enqno,this.followupdate2,confidencelevel,this.comments);
+      },
+      FollowUp3:function(){
+        this.$.service.FollowUp3(this.enqno,this.followupdate3,confidencelevel,this.comments);
+      },
+      FollowUp4:function(){
+        this.$.service.FollowUp4(this.enqno,this.followupdate4,confidencelevel,this.comments);
+      },
+      FollowUp5:function(){
+        this.$.service.FollowUp5(this.enqno,this.followupdate5,confidencelevel,this.comments);
       }
     });
   })();

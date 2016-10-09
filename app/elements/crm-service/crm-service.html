@@ -313,7 +313,62 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         debounce-duration="300"
         >
   </iron-ajax>
-  
+
+    <iron-ajax
+      method="post"
+      id="followup1ajax"
+      url="{{followup1url}}"
+      params="{{followup1param}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="FollowUp1Response"
+      debounce-duration="300"
+    >
+    </iron-ajax>
+    <iron-ajax
+      method="post"
+      id="followup2ajax"
+      url="{{followup2url}}"
+      params="{{followup2param}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="FollowUp2Response"
+      debounce-duration="300"
+    >
+    </iron-ajax>
+    <iron-ajax
+    method="post"
+    id="followup3ajax"
+    url="{{followup3url}}"
+    params="{{followup3param}}"
+    handle-as="json"
+    content-type="application/json"
+    on-response="FollowUp3Response"
+    debounce-duration="300"
+  >
+  </iron-ajax>
+    <iron-ajax
+    method="post"
+    id="followup4ajax"
+    url="{{followup4url}}"
+    params="{{followup4param}}"
+    handle-as="json"
+    content-type="application/json"
+    on-response="FollowUp4Response"
+    debounce-duration="300"
+  >
+  </iron-ajax>
+    <iron-ajax
+    method="post"
+    id="followup5ajax"
+    url="{{followup5url}}"
+    params="{{followup5param}}"
+    handle-as="json"
+    content-type="application/json"
+    on-response="FollowUp5Response"
+    debounce-duration="300"
+  >
+  </iron-ajax>
   </template>
   <script>
   (function() {
@@ -885,9 +940,92 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      getexhaustfollowupcountResponse:function(e){
       var res=e.detail.response.returnval;
       document.querySelector('followup-dashboard').exhaustedarr=res;
-     }
-
-
+     },
+      FollowUp1:function(enqno,followupdate1,confidencelevel,comments){
+        this.followup1url="http://localhost:8086/followup1";
+        var obj={"schol":"","enqno":"","followupdate1":"","confidencelevel":"","comments":""};
+        obj.schol=localStorage.getItem("schoolid");
+        obj.enqno=enqno;
+        obj.followupdate1 = followupdate1;
+        obj.confidencelevel = confidencelevel;
+        obj.comments = comments;
+        obj.status="In Progress";
+        this.followup1param=obj;
+        alert(JSON.stringify(obj));
+        this.$.followup1ajax.generateRequest();
+      },
+      FollowUp1Response:function(e){
+        var res=e.detail.response.returnval;
+        alert(res);
+      },
+      FollowUp2:function(enqno,followupdate2,confidencelevel,comments){
+        this.followup2url="http://localhost:8086/followup2";
+        var obj={"schol":"","enqno":"","followupdate2":"","confidencelevel":"","comments":""};
+        obj.schol=localStorage.getItem("schoolid");
+        obj.enqno=enqno;
+        obj.followupdate2 = followupdate2;
+        obj.confidencelevel = confidencelevel;
+        obj.comments = comments;
+        obj.status="In Progress";
+        this.followup2param=obj;
+        alert(JSON.stringify(obj));
+        this.$.followup2ajax.generateRequest();
+      },
+      FollowUp2Response:function(e){
+        var res=e.detail.response.returnval;
+        alert(res);
+      },
+      FollowUp3:function(enqno,followupdate3,confidencelevel,comments){
+        this.followup3url="http://localhost:8086/followup3";
+        var obj={"schol":"","enqno":"","followupdate3":"","confidencelevel":"","comments":""};
+        obj.schol=localStorage.getItem("schoolid");
+        obj.enqno=enqno;
+        obj.followupdate3 = followupdate3;
+        obj.confidencelevel = confidencelevel;
+        obj.comments = comments;
+        obj.status="In Progress";
+        this.followup3param=obj;
+        alert(JSON.stringify(obj));
+        this.$.followup3ajax.generateRequest();
+      },
+      FollowUp3Response:function(e){
+        var res=e.detail.response.returnval;
+        alert(res);
+      },
+      FollowUp4:function(enqno,followupdate4,confidencelevel,comments){
+        this.followup4url="http://localhost:8086/followup4";
+        var obj={"schol":"","enqno":"","followupdate4":"","confidencelevel":"","comments":""};
+        obj.schol=localStorage.getItem("schoolid");
+        obj.enqno=enqno;
+        obj.followupdate4 = followupdate4;
+        obj.confidencelevel = confidencelevel;
+        obj.comments = comments;
+        obj.status="In Progress";
+        this.followup4param=obj;
+        alert(JSON.stringify(obj));
+        this.$.followup4ajax.generateRequest();
+      },
+      FollowUp4Response:function(e){
+        var res=e.detail.response.returnval;
+        alert(res);
+      },
+      FollowUp5:function(enqno,followupdate5,confidencelevel,comments){
+        this.followup5url="http://localhost:8086/followup5";
+        var obj={"schol":"","enqno":"","followupdate5":"","confidencelevel":"","comments":""};
+        obj.schol=localStorage.getItem("schoolid");
+        obj.enqno=enqno;
+        obj.followupdate5 = followupdate5;
+        obj.confidencelevel = confidencelevel;
+        obj.comments = comments;
+        obj.status="In Progress";
+        this.followup5param=obj;
+        alert(JSON.stringify(obj));
+        this.$.followup5ajax.generateRequest();
+      },
+      FollowUp5Response:function(e){
+        var res=e.detail.response.returnval;
+        alert(res);
+      }
     });
   })();
   </script>

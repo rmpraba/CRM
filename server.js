@@ -999,9 +999,123 @@ app.post('/getfollowupcount',  urlencodedParser,function (req, res){
      console.log(err);
   }
 });
-  });
+});
 
+ app.post('/followup1',  urlencodedParser,function (req, res)
+ {
+   var school={"school_id":req.query.schol};
+   var enquiry={"enquiry_no":req.query.enqno};
+   var followupdate={"followup_1":req.query.followupdate1};
+   var comments = {"followup_1_remarks":req.query.comments};
+   var confidencelevel = {"confidence_level_1":req.query.confidencelevel};
+   connection.query('update student_enquiry_details set ? where ? and ?',[collection,enquiry,school],
+     function(err, rows)
+     {
+       if(!err)
+       {
+         console.log('inserted');
+         res.status(200).json({'returnval': 'success'});
+       }
+       else
+       {
+         console.log(err);
+         res.status(200).json({'returnval': 'invalid'});
+       }
 
+     });
+ });
+ app.post('/followup2',  urlencodedParser,function (req, res)
+ {
+   var school={"school_id":req.query.schol};
+   var enquiry={"enquiry_no":req.query.enqno};
+   var followupdate={"followup_2":req.query.followupdate2};
+   var comments = {"followup_2_remarks":req.query.comments};
+   var confidencelevel = {"confidence_level_2":req.query.confidencelevel};
+   connection.query('update student_enquiry_details set ? where ? and ?',[collection,enquiry,school],
+     function(err, rows)
+     {
+       if(!err)
+       {
+         console.log('inserted');
+         res.status(200).json({'returnval': 'success'});
+       }
+       else
+       {
+         console.log(err);
+         res.status(200).json({'returnval': 'invalid'});
+       }
+
+     });
+ });
+ app.post('/followup3',  urlencodedParser,function (req, res)
+ {
+   var school={"school_id":req.query.schol};
+   var enquiry={"enquiry_no":req.query.enqno};
+   var followupdate={"followup_3":req.query.followupdate3};
+   var comments = {"followup_3_remarks":req.query.comments};
+   var confidencelevel = {"confidence_level_3":req.query.confidencelevel};
+   connection.query('update student_enquiry_details set ? where ? and ?',[collection,enquiry,school],
+     function(err, rows)
+     {
+       if(!err)
+       {
+         console.log('inserted');
+         res.status(200).json({'returnval': 'success'});
+       }
+       else
+       {
+         console.log(err);
+         res.status(200).json({'returnval': 'invalid'});
+       }
+
+     });
+ });
+ app.post('/followup4',  urlencodedParser,function (req, res)
+ {
+   var school={"school_id":req.query.schol};
+   var enquiry={"enquiry_no":req.query.enqno};
+   var followupdate={"followup_4":req.query.followupdate4};
+   var comments = {"followup_4_remarks":req.query.comments};
+   var confidencelevel = {"confidence_level_4":req.query.confidencelevel};
+   connection.query('update student_enquiry_details set ? where ? and ?',[collection,enquiry,school],
+     function(err, rows)
+     {
+       if(!err)
+       {
+         console.log('inserted');
+         res.status(200).json({'returnval': 'success'});
+       }
+       else
+       {
+         console.log(err);
+         res.status(200).json({'returnval': 'invalid'});
+       }
+
+     });
+ });
+ app.post('/followup5',  urlencodedParser,function (req, res)
+ {
+   var school={"school_id":req.query.schol};
+   var enquiry={"enquiry_no":req.query.enqno};
+   var followupdate={"followup_5":req.query.followupdate5};
+   var comments = {"followup_5_remarks":req.query.comments};
+   var confidencelevel = {"confidence_level_5":req.query.confidencelevel};
+   connection.query('update student_enquiry_details set ? where ? and ?',[collection,enquiry,school],
+     function(err, rows)
+     {
+       if(!err)
+       {
+         console.log('inserted');
+         res.status(200).json({'returnval': 'success'});
+       }
+       else
+       {
+         console.log(err);
+         res.status(200).json({'returnval': 'invalid'});
+       }
+
+     });
+ });
 function setvalue(){
   console.log("calling setvalue.....");
 }
