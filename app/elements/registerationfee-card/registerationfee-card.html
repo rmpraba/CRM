@@ -80,8 +80,8 @@
                     <div style="width: 12%;margin-left:8%;">Amount</div>                    
                     <div style="margin-left:10%; width: 30%;">Mode of Payment</div>
                     <div style="width: 30%;margin-left:0%;position: absolute; left: 80%;" hidden$="{{receiptdate}}">Receipt Date</div>                 
-            </div>
-            <div style="margin-left:12%;" hidden$="{{hiddeninstallment}}"> 
+      </div>
+      <div style="margin-left:12%;" hidden$="{{hiddeninstallment}}"> 
               <template  is="dom-repeat" items="{{regarr}}" as="view">
                 <installment-card installment="{{view.installment}}" amount="{{view.amount}}" installmentdate="{{view.date}}"></installment-card>
               </template>

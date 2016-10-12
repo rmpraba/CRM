@@ -348,7 +348,24 @@ ready:function () {
           var bt_year=dt1.getFullYear();
           var diff=parseInt(pr_year-bt_year);
           //alert(diff);
-          this.ageofyr=diff+" Years";
+         if(diff==0){
+             alert("this is the current date")
+          }
+          else if(diff==2){
+            this.ageofyr=diff+" Years";
+            alert("hi");
+          }
+
+        else if(diff<=1||diff<3){
+            alert("min age for LKG")
+          }
+        else if(diff==2){
+            this.ageofyr=diff+" Years";
+           
+          }
+       else {
+            this.ageofyr=diff+" Years";
+          }
         },
         submit:function () {
        // alert("submit"+this.enqno+academicyear+grade+this.firstname+this.middlename+this.lastname+gender+dobdate+this.fathername+this.mothername+this.mob+this.email+this.textvalue);
@@ -406,6 +423,10 @@ ready:function () {
           var id = 'cancelbox';
         var dialog = document.getElementById(id);
         dialog.close();
+      },
+      dateclear:function(){
+        alert("Select DOB properly, it cannot be future date");
+        
       }
     });
   })();

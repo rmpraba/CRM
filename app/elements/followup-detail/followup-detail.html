@@ -10,31 +10,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 
-<dom-module id="follow-up-dashboard-item-card">
+<dom-module id="followup-datail">
   <template>
     <style>
       :host {
         display: block;
       }
     </style>
-    <div class="list-group list-group-item enquiry-list-item">
-        <h5>{{grade}}</h5>
-        <div class="col-sm-3">
-          <a href="" class="enquired" on-click="getdetails" aria-hidden="true" data-toggle="modal" data-target="#grade1enquired">{{enquirygrade}}</a>
-        </div>
-      </div>
-
-        <crm-service id="service"></crm-service>
-
+    <div>Hello from <span>{{foo}}</span></div>
   </template>
   <script>
   (function() {
     'use strict';
 
     Polymer({
-      is: 'follow-up-dashboard-item-card',
-      getdetails:function(){
-        alert(this.grade,this.enquirygrade,this.status);
+      is: 'followup-datail',
+
+      properties: {
+        foo: {
+          type: String,
+          value: 'followup-datail',
+          notify: true
+        }
       }
     });
   })();

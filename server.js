@@ -471,7 +471,7 @@ app.post('/verifymobileno',  urlencodedParser,function (req, res)
 {
 
        connection.query("SELECT * from student_enquiry_details where school_id='"+req.query.schol+"' and (father_mob='"+req.query.mobileno+"' or mother_mob='"+req.query.mobileno+"') ",
-        function(err, rows)
+  function(err, rows)
         {
     if(!err)
     {
@@ -1041,7 +1041,7 @@ app.post('/updatefollow',  urlencodedParser,function (req, res)
 /*this below function is used to insert data in the follow up detail table */
 app.post('/updatefollowdetail',  urlencodedParser,function (req, res)
 {
-   var collection={"school_id":req.query.schol,"followup_id":req.query.id,"enquiry_id":req.query.enquiryid,"followup_1":req.query.folowup1,"followup_2":req.query.folowup2,"followup_3":req.query.folowup3,"followup_4":req.query.folowup4,"followup_5":req.query.folowup5,"followup_flag":req.query.flag,"next_followup_date":req.query.nextfolowup,"schedule":req.query.schedule};
+   var collection={"school_id":req.query.schol,"followup_id":req.query.id,"enquiry_id":req.query.enquiryid,"followup_1":req.query.folowup1,"followup_2":req.query.folowup2,"followup_3":req.query.folowup3,"followup_4":req.query.folowup4,"followup_5":req.query.folowup5,"followup_flag":req.query.flag,"next_followup_date":req.query.nextfolowup,"schedule":req.query.schedule,"followup_status":req.query.status};
        connection.query('insert into followupdetail set ? ',[collection],
         function(err, rows)
         {
@@ -1117,9 +1117,9 @@ app.post('/getstudentnamelist',  urlencodedParser,function (req, res){
 
 
 app.post('/getfollowupcount',  urlencodedParser,function (req, res){
-    var qur={"school_id":req.query.schol};
+    
     //console.log('qur');
-    connection.query('SELECT student_name FROM `student_details` WHERE ?',[qur],
+    connection.query("SELECT d.followup_status, f.class, COUNT( * ) AS total FROM  `followupdetail` AS d, student_enquiry_details AS f WHERE d.`school_id` =  '"+req.query.schol+"' AND d.followup_status =  '"+req.query.status+"' AND f.enquiry_no = d.enquiry_id GROUP BY class ORDER BY (`class`)",
     function(err, rows)
     {
     if(!err)
@@ -1132,7 +1132,7 @@ app.post('/getfollowupcount',  urlencodedParser,function (req, res){
     else
     {
       console.log(err);
-      res.status(200).json({'returnval': ''});
+      res.status(200).json({'returnval': 0});
     }
   }
   else{
@@ -1142,10 +1142,121 @@ app.post('/getfollowupcount',  urlencodedParser,function (req, res){
 });
 
 
+ app.post('/followup1',  urlencodedParser,function (req, res)
+ {
+   var school={"school_id":req.query.schol};
+   var enquiry={"enquiry_no":req.query.enqno};
+   var followupdate={"followup_1":req.query.followupdate1};
+   var comments = {"followup_1_remarks":req.query.comments};
+   var confidencelevel = {"confidence_level_1":req.query.confidencelevel};
+   connection.query('update student_enquiry_details set ? where ? and ?',[collection,enquiry,school],
+     function(err, rows)
+     {
+       if(!err)
+       {
+         console.log('inserted');
+         res.status(200).json({'returnval': 'success'});
+       }
+       else
+       {
+         console.log(err);
+         res.status(200).json({'returnval': 'invalid'});
+       }
 
+     });
+ });
+ app.post('/followup2',  urlencodedParser,function (req, res)
+ {
+   var school={"school_id":req.query.schol};
+   var enquiry={"enquiry_no":req.query.enqno};
+   var followupdate={"followup_2":req.query.followupdate2};
+   var comments = {"followup_2_remarks":req.query.comments};
+   var confidencelevel = {"confidence_level_2":req.query.confidencelevel};
+   connection.query('update student_enquiry_details set ? where ? and ?',[collection,enquiry,school],
+     function(err, rows)
+     {
+       if(!err)
+       {
+         console.log('inserted');
+         res.status(200).json({'returnval': 'success'});
+       }
+       else
+       {
+         console.log(err);
+         res.status(200).json({'returnval': 'invalid'});
+       }
 
+     });
+ });
+ app.post('/followup3',  urlencodedParser,function (req, res)
+ {
+   var school={"school_id":req.query.schol};
+   var enquiry={"enquiry_no":req.query.enqno};
+   var followupdate={"followup_3":req.query.followupdate3};
+   var comments = {"followup_3_remarks":req.query.comments};
+   var confidencelevel = {"confidence_level_3":req.query.confidencelevel};
+   connection.query('update student_enquiry_details set ? where ? and ?',[collection,enquiry,school],
+     function(err, rows)
+     {
+       if(!err)
+       {
+         console.log('inserted');
+         res.status(200).json({'returnval': 'success'});
+       }
+       else
+       {
+         console.log(err);
+         res.status(200).json({'returnval': 'invalid'});
+       }
 
+     });
+ });
+ app.post('/followup4',  urlencodedParser,function (req, res)
+ {
+   var school={"school_id":req.query.schol};
+   var enquiry={"enquiry_no":req.query.enqno};
+   var followupdate={"followup_4":req.query.followupdate4};
+   var comments = {"followup_4_remarks":req.query.comments};
+   var confidencelevel = {"confidence_level_4":req.query.confidencelevel};
+   connection.query('update student_enquiry_details set ? where ? and ?',[collection,enquiry,school],
+     function(err, rows)
+     {
+       if(!err)
+       {
+         console.log('inserted');
+         res.status(200).json({'returnval': 'success'});
+       }
+       else
+       {
+         console.log(err);
+         res.status(200).json({'returnval': 'invalid'});
+       }
 
+     });
+ });
+ app.post('/followup5',  urlencodedParser,function (req, res)
+ {
+   var school={"school_id":req.query.schol};
+   var enquiry={"enquiry_no":req.query.enqno};
+   var followupdate={"followup_5":req.query.followupdate5};
+   var comments = {"followup_5_remarks":req.query.comments};
+   var confidencelevel = {"confidence_level_5":req.query.confidencelevel};
+   connection.query('update student_enquiry_details set ? where ? and ?',[collection,enquiry,school],
+     function(err, rows)
+     {
+       if(!err)
+       {
+         console.log('inserted');
+         res.status(200).json({'returnval': 'success'});
+       }
+       else
+       {
+         console.log(err);
+         res.status(200).json({'returnval': 'invalid'});
+       }
+
+     });
+ });
 function setvalue(){
   console.log("calling setvalue.....");
 }

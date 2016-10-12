@@ -3,11 +3,15 @@
 <link rel="import" href="../detailed-enquiry-form/detailed-enquiry-form.html">
 <link rel="import" href="../admission-form/admission-form.html">
 <link rel="import" href="../followup-card/followup-card.html">
+
 <link rel="import" href="../schedulefee-card/schedulefee-card.html">
+
+<link rel="import" href="../followup-details/followup-details.html">
+
 <dom-module id="navigation-bar">
   <template>
     <style>
-      :host {
+      /*:host{
         display: block;
       }
     </style>    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
@@ -22,8 +26,7 @@
 
     </div>
 
-    <!-- /.navbar-header -->
-
+   
     <ul class="nav navbar-top-links navbar-right">
 
       <li class="dropdown">
@@ -254,7 +257,7 @@
             <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
           </li>
           <li id="enquiry">
-            <a href="#"><i class="fa fa-phone-square fa-fw"></i> Enquiry<span class="fa arrow"></span></a>
+            <a href="" aria-hidden="true" on-click="enquiry"><i class="fa fa-phone-square fa-fw"></i> Enquiry<span class="fa arrow"></span></a>
             <ul class="nav nav-second-level">
               <li>
               <a href="" aria-hidden="true" data-toggle="modal" data-target="#addEnquiry">Simple Form</a>
@@ -264,10 +267,10 @@
                 <a href="" aria-hidden="true" data-toggle="modal" data-target="#addDetailedEnquiry">Detailed Form</a>
               </li>
             </ul>
-            <!-- /.nav-second-level -->
+
           </li>
           <li id="">
-            <a href="" aria-hidden="true" data-toggle="modal" data-target="#followUp" on-click="followupdashboard"><i class="fa fa-calendar fa-fw"></i> Follow Up</a>
+            <a href="" aria-hidden="true" on-click="followupdashboard"><i class="fa fa-calendar fa-fw"></i> Follow Up</a>
           </li>
           <li id="admission">
             <a href="" aria-hidden="true" data-toggle="modal" data-target="#newadmission"><i class="fa fa-check fa-fw"></i>Admission</a>
@@ -277,7 +280,7 @@
           </li> -->
 
            <li id="payment">
-            <a href="#" aria-hidden="true" data-toggle="modal" data-target="#feepayment"><i class="fa fa-check fa-fw"></i> Fee Payment<span class="fa arrow"></span></a>
+            <a href="#" aria-hidden="true" data-toggle="modal" data-target="#feepayment"><i class="fa fa-money fa-fw"></i> Fee Payment<span class="fa arrow"></span></a>
             <ul class="nav nav-second-level">
               <li>
               <a href="" aria-hidden="true" data-toggle="modal" data-target="#prospectousfee" on-click="FnProspect">Prospectus Fee</a>
@@ -302,7 +305,11 @@
            <li id="admission">
             <a href="" aria-hidden="true" data-toggle="modal" data-target="#schedulefee"><i class="fa fa-check fa-fw"></i>Schedule Fees</a>
           </li>
-
+           <li id="admission">
+            <a href="" aria-hidden="true" data-toggle="modal" data-target="#followupdet"><i class="fa fa-check fa-fw"></i>Follow Up Detail</a>
+          <li id="followupdetails">
+            <a href="" aria-hidden="true" data-toggle="modal" data-target="#followupstudentdetails"><i class="fa fa-check fa-fw"></i>Schedule Fees</a>
+          </li>
           <li id="admform">
             <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Admission Form<!-- <span class="fa arrow"></span> --></a>
           </li>
@@ -418,7 +425,7 @@
         </div>
       </div>
     </div>
-    <div class="modal fade bd-example-modal-lg" id="followUp" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<!--    <div class="modal fade bd-example-modal-lg" id="followUp" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
@@ -434,7 +441,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div>-->
 
     <div class="modal fade bd-example-modal-lg" id="prospectousfee" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg">
@@ -535,7 +542,7 @@
               <span aria-hidden="true">&times;</span>
             </button>
             <h4 class="center-block event-title" id="">
-              Schedule Fees 
+              Schedule Fees
             </h4>
           </div>
           <div class="modal-body">
@@ -545,7 +552,45 @@
       </div>
     </div>
 
+    <div class="modal fade bd-example-modal-lg" id="followupstudentdetails" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="center-block event-title" id="">
+              Follow Up Student Details
+            </h4>
+          </div>
+          <div class="modal-body">
+            <followup-student-detail></followup-student-detail>
+          </div>
+        </div>
+      </div>
+    </div>
 
+<crm-service id="service"></crm-service>
+
+
+
+    <div class="modal fade bd-example-modal-lg" id="followupdet" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="center-block event-title" id="">
+              Follow Up Detail
+            </h4>
+          </div>
+          <div class="modal-body">
+            <followup-details></followup-details>
+          </div>
+        </div>
+      </div>
+    </div>
   </template>
   <script>
   (function() {
@@ -590,8 +635,12 @@
         document.querySelector('admission-service').FnRefresh();
       },
       followupdashboard:function(){
-      document.querySelector('app-list').setPage("folllow-up");
-    }
+        document.querySelector('app-list').setPage("follow-up");
+      },
+      enquiry:function(){
+        this.$.service.getfollowupcount();
+        document.querySelector('app-list').setPage("enquiry");
+      }
     });
   })();
   </script>
