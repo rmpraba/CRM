@@ -24,7 +24,7 @@ app.post('/loginpage',  urlencodedParser,function (req, res)
   var pass={"password":req.query.password};
 //console.log('hi');
 
-  connection.query('SELECT (select name from md_school where id=e.school_id) as schoolname,e.school_id,e.employee_id, e.employee_name,e.role_id, r.role_name, a.rt_dashboard, a.rt_enquiry,a.rt_admission_form,a.rt_adm_approval, a.rt_followup, a.rt_collectionentry FROM md_employee as e JOIN md_role as r JOIN md_access_rights as a on r.role_id=e.role_id and a.role_id=e.role_id where ? and ?',[user,pass],
+  connection.query('SELECT (select short_name from md_school where id=e.school_id) as shortname,(select name from md_school where id=e.school_id) as schoolname,e.school_id,e.employee_id, e.employee_name,e.role_id, r.role_name, a.rt_dashboard, a.rt_enquiry,a.rt_admission_form,a.rt_adm_approval, a.rt_followup, a.rt_collectionentry FROM md_employee as e JOIN md_role as r JOIN md_access_rights as a on r.role_id=e.role_id and a.role_id=e.role_id where ? and ?',[user,pass],
 
         function(err, rows)
         {
@@ -45,7 +45,147 @@ app.post('/loginpage',  urlencodedParser,function (req, res)
     console.log(err);
   }
 });
-  });
+});
+
+
+app.post('/fetchgrade-service',  urlencodedParser,function (req, res){
+    var qur={"school_id":req.query.schol};    
+    connection.query('SELECT * FROM grade_master',
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      //console.log(rows);
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': ''});
+    }
+  }
+  else{
+     console.log(err);
+  }
+});
+});
+
+
+app.post('/generatefeecode-service',  urlencodedParser,function (req, res){
+    var schoolid=req.query.schoolid;  
+    var prefixid=req.query.prefixid;    
+    var response={"prefixname":""};
+    connection.query("SELECT * FROM prefix_master WHERE prefix_id='"+prefixid+"'",function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      response.prefixname=rows[0].prefix_name;      
+      connection.query("SELECT * FROM fee_code_sequence WHERE school_id='"+schoolid+"'",function(err, rows){
+        if(rows.length>0){
+          var feecode=response.prefixname+rows[0].fee_sequence;
+          var new_seq=parseInt(rows[0].fee_sequence)+1;
+          connection.query("UPDATE fee_code_sequence SET fee_sequence='"+new_seq+"' WHERE school_id='"+schoolid+"'",function(err, rows){
+          if(!err)
+          res.status(200).json({'returnval': feecode});
+          });
+        }
+        else{
+          res.status(200).json({'returnval': 'seqfail'});
+        }
+      });
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'prefixfail'});
+    }
+  }
+  else{
+     console.log(err);
+  }
+});
+});
+
+
+app.post('/createfeecode-service',  urlencodedParser,function (req, res){
+    var response={
+      school_id:req.query.schoolid,
+      academic_year:req.query.academicyear,
+      admission_year:req.query.admissionyear,
+      grade_id:req.query.grade,
+      fee_code:req.query.feecode,
+      fee_name:req.query.feename
+    };  
+    connection.query('INSERT INTO fee_master SET ?',[response],
+    function(err, rows)
+    {
+    if(!err)
+    {   
+      res.status(200).json({'returnval': 'Fee code generated'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'Problem in generating feecode'});
+    }
+    });
+});
+
+
+app.post('/feecodesplitup-service',  urlencodedParser,function (req, res){
+    var response={
+      school_id:req.query.schoolid,
+      fee_code:req.query.feecode,
+      fee_type:req.query.feetype,
+      fee_type_code:req.query.feetypecode,
+      total_fee:req.query.totalfees,
+      no_of_installment:req.query.installment        
+    };  
+    connection.query('INSERT INTO fee_splitup SET ?',[response],
+    function(err, rows)
+    {
+    if(!err)
+    {   
+      res.status(200).json({'returnval': 'succ'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'fail'});
+    }
+    });
+});
+
+
+app.post('/createinstallment-service',  urlencodedParser,function (req, res){
+    var response={
+      school_id:req.query.schoolid,
+      fee_code:req.query.feecode,
+      fee_type:req.query.feetype,
+      fee_type_code:req.query.feetypecode,      
+      no_of_installment:req.query.installment,
+      installment_name:req.query.installmentname,
+      installment_amount:req.query.installmentamount,
+      installment_date:req.query.installmentdate        
+    };  
+    connection.query('INSERT INTO installment_master SET ?',[response],
+    function(err, rows)
+    {
+    if(!err)
+    {   
+      res.status(200).json({'returnval': 'succ'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'fail'});
+    }
+    });
+});
 
 
 /*This function is used to submit the simple enquiry details of the student for the first time*/
@@ -999,7 +1139,11 @@ app.post('/getfollowupcount',  urlencodedParser,function (req, res){
      console.log(err);
   }
 });
-  });
+});
+
+
+
+
 
 
 function setvalue(){

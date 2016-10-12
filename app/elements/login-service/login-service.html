@@ -58,6 +58,7 @@
           alert("Username and Password is incorrect..!");
         }
         else{
+          var shortname= result[0].shortname;
           var school= result[0].schoolname;
           var role=result[0].role_name;
           var employeename=result[0].employee_name;
@@ -72,6 +73,7 @@
           var pr_followup=result[0].rt_followup;
           var pr_collectionentry=result[0].rt_collectionentry;
 
+
           localStorage.setItem("dashboard",pr_dashboear);
           localStorage.setItem("enquiry",pr_enquiry);
           localStorage.setItem("admissionform",pr_admission_form);
@@ -83,7 +85,7 @@
             
           document.querySelector('navigation-bar').Fncheck();
 
-
+          localStorage.setItem("shortname",shortname);
           localStorage.setItem("schoolname",school);
           localStorage.setItem("employeename",employeename);
           localStorage.setItem("schoolid",schoolid);
