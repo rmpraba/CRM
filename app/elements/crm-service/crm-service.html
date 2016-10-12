@@ -275,7 +275,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         handle-as="json"
         content-type="application/json"
         on-response="followupdetailsResponse"
-        debounce-duration="300"               
+        debounce-duration="300"
   </iron-ajax>
   <!-- this ajax used to fetch the detail of student who have been enquired and been in process for follow up -->
   <iron-ajax
@@ -560,8 +560,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       alert(result);
       if(result="success"){
         alert("Submited Successfully");
+        document.querySelector('detailed-enquiry-form').Fnclear();
       }
-      
+
      },
 
       registerenquiryform:function(enqno,firstname,middlename,lastname,gender,grade,dob,oldclass,oldschool,mothertongue,fathername,mothername,fatheredu,motheredu,fathermob,mothermob,fathermail,mothermail,fathercompany,mothercompany,fatherjob,motherjob,flat,address1,address2,address3,city,pincode,state,enquiysource,siblingname,siblingdetail,transportreq,canteenreq,secondlanguage,thirdlanguage,propspectus,dadpost,mompost,dadsalary,momsalary,prospect, academicyear){
@@ -667,6 +668,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var result=e.detail.response.returnval;
         if(result="success"){
           alert("Submited Successfully");
+          document.querySelector('detailed-enquiry-form').Fnclear();
         }
       },
      getenquiryno:function(){
