@@ -191,6 +191,7 @@
       fetchenquiryinfoResponse:function(e){
         var arr=e.detail.response.returnval;
         // alert(JSON.stringify(arr));
+        // alert(document.querySelector('admission-form').schoolname);
         document.querySelector('admission-form').schoolname=localStorage.getItem("schoolname");
         document.querySelector('admission-form').applicationno=arr[0].prospectus_no;
         document.querySelector('admission-form').enquiredyear=arr[0].academic_year;
@@ -199,6 +200,8 @@
         document.querySelector('admission-form').lastname=arr[0].last_name;
         document.querySelector('admission-form').gradeselection=arr[0].class;
         document.querySelector('admission-form').FnSetSecLanguage(arr[0].second_language); 
+        if(arr[0].class=="Nursery"||arr[0].class=="Junior KG"||arr[0].class=="Senior KG"||arr[0].class=="Grade-1"||arr[0].class=="Grade-2"||arr[0].class=="Grade-3"||arr[0].class=="Grade-4"){}
+        else
         document.querySelector('admission-form').FnSetThirdLanguage(arr[0].third_language);
         document.querySelector('dateofbirth-datepicker').FnSetDate(arr[0].dob); 
         document.querySelector('admission-form').FnFindAge(arr[0].dob);  

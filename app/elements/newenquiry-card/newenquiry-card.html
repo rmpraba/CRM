@@ -369,9 +369,9 @@ ready:function () {
         },
         submit:function () {
        // alert("submit"+this.enqno+academicyear+grade+this.firstname+this.middlename+this.lastname+gender+dobdate+this.fathername+this.mothername+this.mob+this.email+this.textvalue);
-        if(this.firstname==""||this.middlename==""||this.lastname==""||this.fathername==""||this.mothername==""||this.mob==""||this.email==""||this.textvalue==""){
+        if(this.firstname==""||this.lastname==""||this.fathername==""||this.mothername==""||this.mob==""||this.email==""||this.textvalue==""){
             this.$.fname.validate();
-            this.$.mname.validate();
+            // this.$.mname.validate();
             this.$.lname.validate();
             this.$.dadname.validate();
             this.$.momname.validate();
