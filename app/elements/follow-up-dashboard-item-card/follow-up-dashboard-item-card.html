@@ -20,9 +20,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <div class="list-group list-group-item enquiry-list-item">
         <h5>{{grade}}</h5>
         <div class="col-sm-3">
-          <a href="" class="enquired" on-click="getfollowupdetails" aria-hidden="true" data-toggle="modal" data-target="#grade1enquired">{{enquirygrade}}</a>
+          <a href="" class="enquired" on-click="getfollowupdetails" aria-hidden="true" data-toggle="modal" data-target="#followupdet">{{enquirygrade}}</a>
         </div>
       </div>
+
+    <div class="modal fade bd-example-modal-lg" id="followupdet" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="center-block event-title" id="">
+              Follow Up Detail
+            </h4>
+          </div>
+          <div class="modal-body">
+            <followup-details></followup-details>
+          </div>
+        </div>
+      </div>
+    </div>
 
         <crm-service id="service"></crm-service>
 
@@ -35,7 +53,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'follow-up-dashboard-item-card',
       getfollowupdetails:function(){
         this.$.service.getfollowupstudents(this.grade,this.status);
-      }
+      },
     });
   })();
   </script>
