@@ -20,7 +20,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <div class="list-group list-group-item enquiry-list-item">
         <h5>{{grade}}</h5>
         <div class="col-sm-3">
-          <a href="" class="enquired" on-click="getdetails" aria-hidden="true" data-toggle="modal" data-target="#grade1enquired">{{enquirygrade}}</a>
+          <a href="" class="enquired" on-click="getfollowupdetails" aria-hidden="true" data-toggle="modal" data-target="#grade1enquired">{{enquirygrade}}</a>
         </div>
       </div>
 
@@ -33,8 +33,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     Polymer({
       is: 'follow-up-dashboard-item-card',
-      getdetails:function(){
-        alert(this.grade,this.enquirygrade,this.status);
+      getfollowupdetails:function(){
+        this.$.service.getfollowupstudents(this.grade,this.status);
       }
     });
   })();

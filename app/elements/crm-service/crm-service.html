@@ -369,6 +369,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     debounce-duration="300"
   >
   </iron-ajax>
+    <iron-ajax
+      method="post"
+      id="getfollowupstudentsajax"
+      url="{{getfollowupstudentsurl}}"
+      params="{{getfollowupstudentsparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="getfollowupstudentsResponse"
+      debounce-duration="300"
+    >
+    </iron-ajax>
   </template>
   <script>
   (function() {
@@ -1027,7 +1038,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       FollowUp5Response:function(e){
         var res=e.detail.response.returnval;
         alert(res);
-      }
+      },
+      getfollowupstudents:function(grade, status){
+        this.getfollowupstudentsurl="http://localhost:8086/getfollowupstudents";
+        var obj={"schol":"","grade":"","status":""};
+        obj.schol=localStorage.getItem("schoolid");
+        obj.grade=grade;
+        obj.status = status;
+        this.getfollowupstudentsparam=obj;
+        alert(JSON.stringify(obj));
+        this.$.getfollowupstudentsajax.generateRequest();
+
+      },
+      getfollowupstudentsResponse:function(e){
+        var res=e.detail.response.returnval;
+        document.querySelector('followup-details-items').followuparr=res;
+      },
     });
   })();
   </script>

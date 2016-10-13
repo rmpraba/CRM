@@ -49,7 +49,7 @@ app.post('/loginpage',  urlencodedParser,function (req, res)
 
 
 app.post('/fetchgrade-service',  urlencodedParser,function (req, res){
-    var qur={"school_id":req.query.schol};    
+    var qur={"school_id":req.query.schol};
     connection.query('SELECT * FROM grade_master',
     function(err, rows)
     {
@@ -74,8 +74,8 @@ app.post('/fetchgrade-service',  urlencodedParser,function (req, res){
 
 
 app.post('/generatefeecode-service',  urlencodedParser,function (req, res){
-    var schoolid=req.query.schoolid;  
-    var prefixid=req.query.prefixid;    
+    var schoolid=req.query.schoolid;
+    var prefixid=req.query.prefixid;
     var response={"prefixname":""};
     connection.query("SELECT * FROM prefix_master WHERE prefix_id='"+prefixid+"'",function(err, rows)
     {
@@ -83,7 +83,7 @@ app.post('/generatefeecode-service',  urlencodedParser,function (req, res){
     {
     if(rows.length>0)
     {
-      response.prefixname=rows[0].prefix_name;      
+      response.prefixname=rows[0].prefix_name;
       connection.query("SELECT * FROM fee_code_sequence WHERE school_id='"+schoolid+"'",function(err, rows){
         if(rows.length>0){
           var feecode=response.prefixname+rows[0].fee_sequence;
@@ -119,12 +119,12 @@ app.post('/createfeecode-service',  urlencodedParser,function (req, res){
       grade_id:req.query.grade,
       fee_code:req.query.feecode,
       fee_name:req.query.feename
-    };  
+    };
     connection.query('INSERT INTO fee_master SET ?',[response],
     function(err, rows)
     {
     if(!err)
-    {   
+    {
       res.status(200).json({'returnval': 'Fee code generated'});
     }
     else
@@ -143,13 +143,13 @@ app.post('/feecodesplitup-service',  urlencodedParser,function (req, res){
       fee_type:req.query.feetype,
       fee_type_code:req.query.feetypecode,
       total_fee:req.query.totalfees,
-      no_of_installment:req.query.installment        
-    };  
+      no_of_installment:req.query.installment
+    };
     connection.query('INSERT INTO fee_splitup SET ?',[response],
     function(err, rows)
     {
     if(!err)
-    {   
+    {
       res.status(200).json({'returnval': 'succ'});
     }
     else
@@ -166,17 +166,17 @@ app.post('/createinstallment-service',  urlencodedParser,function (req, res){
       school_id:req.query.schoolid,
       fee_code:req.query.feecode,
       fee_type:req.query.feetype,
-      fee_type_code:req.query.feetypecode,      
+      fee_type_code:req.query.feetypecode,
       no_of_installment:req.query.installment,
       installment_name:req.query.installmentname,
       installment_amount:req.query.installmentamount,
-      installment_date:req.query.installmentdate        
-    };  
+      installment_date:req.query.installmentdate
+    };
     connection.query('INSERT INTO installment_master SET ?',[response],
     function(err, rows)
     {
     if(!err)
-    {   
+    {
       res.status(200).json({'returnval': 'succ'});
     }
     else
@@ -1118,7 +1118,7 @@ app.post('/getstudentnamelist',  urlencodedParser,function (req, res){
 
 
 app.post('/getfollowupcount',  urlencodedParser,function (req, res){
-    
+
     //console.log('qur');
     connection.query("SELECT d.followup_status, f.class, COUNT( * ) AS total FROM  `followupdetail` AS d, student_enquiry_details AS f WHERE d.`school_id` =  '"+req.query.schol+"' AND d.followup_status =  '"+req.query.status+"' AND f.enquiry_no = d.enquiry_id GROUP BY class ORDER BY (`class`)",
     function(err, rows)
@@ -1249,6 +1249,30 @@ app.post('/getfollowupcount',  urlencodedParser,function (req, res){
        {
          console.log('inserted');
          res.status(200).json({'returnval': 'success'});
+       }
+       else
+       {
+         console.log(err);
+         res.status(200).json({'returnval': 'invalid'});
+       }
+
+     });
+ });
+
+ app.post('/getfollowupstudents',  urlencodedParser,function (req, res)
+ {
+   var school={"school_id":req.query.schol};
+   var grade={"class":req.query.grade};
+   var status={"status":req.query.status};
+   var qur = "SELECT DISTINCT f.enquiry_id,f.followup_flag,s.enquiry_name FROM followupdetail f join student_enquiry_details s on f.enquiry_id=s.enquiry_no WHERE f.followup_status='"+req.query.status+"' and s.class='"+req.query.grade+"' and s.school_id = '"+req.query.schol+"'";
+   console.log(qur);
+   connection.query(qur,
+     function(err, rows)
+     {
+       if(!err)
+       {
+         console.log('inserted');
+         res.status(200).json({'returnval': rows});
        }
        else
        {
