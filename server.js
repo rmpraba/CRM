@@ -1265,7 +1265,6 @@ app.post('/getfollowupcount',  urlencodedParser,function (req, res){
    var grade={"class":req.query.grade};
    var status={"status":req.query.status};
    var qur = "SELECT DISTINCT f.enquiry_id,f.followup_flag,s.enquiry_name FROM followupdetail f join student_enquiry_details s on f.enquiry_id=s.enquiry_no WHERE f.followup_status='"+req.query.status+"' and s.class='"+req.query.grade+"' and s.school_id = '"+req.query.schol+"'";
-   console.log(qur);
    connection.query(qur,
      function(err, rows)
      {
