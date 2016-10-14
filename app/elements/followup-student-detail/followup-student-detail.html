@@ -67,14 +67,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </paper-dropdown-menu>
           </td>
           <td>
-            <span class="col-sm-8"><paper-input label="Comments" value="{{comments}}"></paper-input></span>
+            <span class="col-sm-8"><paper-input label="Comments" value="{{comments1}}"></paper-input></span>
             <span class="col-sm-4 glyph-button"><button class="btn glyphicon glyphicon-floppy-disk" on-click="FollowUp1"></button></span>
           </td>
         </tr>
         <tr>
           <th scope="row">2</th>
           <td>
-            <span class="col-sm-8"><paper-input label="Date"></paper-input></span>
+            <span class="col-sm-8"><paper-input label="Date" value="{{followupdate2}}"></paper-input></span>
             <span class="col-sm-4 glyph-button"><button class="btn glyphicon glyphicon-pencil"></button></span>
           </td>
           <td>
@@ -90,14 +90,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </paper-dropdown-menu>
           </td>
           <td>
-            <span class="col-sm-8"><paper-input label="Comments"></paper-input></span>
+            <span class="col-sm-8"><paper-input label="Comments" value="{{comments2}}"></paper-input></span>
             <span class="col-sm-4 glyph-button"><button class="btn glyphicon glyphicon-floppy-disk" on-click="FollowUp2"></button></span>
           </td>
         </tr>
         <tr>
           <th scope="row">3</th>
           <td>
-            <span class="col-sm-8"><paper-input label="Date"></paper-input></span>
+            <span class="col-sm-8"><paper-input label="Date" value="{{followupdate3}}"></paper-input></span>
             <span class="col-sm-4 glyph-button"><button class="btn glyphicon glyphicon-pencil"></button></span>
           </td>
           <td>
@@ -113,14 +113,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </paper-dropdown-menu>
           </td>
           <td>
-            <span class="col-sm-8"><paper-input label="Comments"></paper-input></span>
+            <span class="col-sm-8"><paper-input label="Comments" value="{{comments3}}"></paper-input></span>
             <span class="col-sm-4 glyph-button"><button class="btn glyphicon glyphicon-floppy-disk" on-click="FollowUp3"></button></span>
           </td>
         </tr>
         <tr>
           <th scope="row">4</th>
           <td>
-            <span class="col-sm-8"><paper-input label="Date"></paper-input></span>
+            <span class="col-sm-8"><paper-input label="Date" value="{{followupdate4}}"></paper-input></span>
             <span class="col-sm-4 glyph-button"><button class="btn glyphicon glyphicon-pencil"></button></span>
           </td>
           <td>
@@ -136,13 +136,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </paper-dropdown-menu>
           </td>
           <td>
-            <span class="col-sm-8"><paper-input label="Comments"></paper-input></span>
+            <span class="col-sm-8"><paper-input label="Comments" value="{{comments4}}"></paper-input></span>
             <span class="col-sm-4 glyph-button"><button class="btn glyphicon glyphicon-floppy-disk" on-click="FollowUp4"></button></span>
           </td>
         </tr><tr>
           <th scope="row">5</th>
           <td>
-            <span class="col-sm-8"><paper-input label="Date"></paper-input></span>
+            <span class="col-sm-8"><paper-input label="Date" value="{{followupdate5}}"></paper-input></span>
             <span class="col-sm-4 glyph-button"><button class="btn glyphicon glyphicon-pencil"></button></span>
           </td>
           <td>
@@ -158,7 +158,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </paper-dropdown-menu>
           </td>
           <td>
-            <span class="col-sm-8"><paper-input label="Comments"></paper-input></span>
+            <span class="col-sm-8"><paper-input label="Comments" value="{{comments5}}"></paper-input></span>
             <span class="col-sm-4 glyph-button"><button class="btn glyphicon glyphicon-floppy-disk" on-click="FollowUp5"></button></span>
           </td>
         </tr>
@@ -193,7 +193,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       </div>
     </div>
-    <crm-service id="service"></crm-service>
+
   </template>
   <script>
   (function() {
@@ -218,6 +218,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       FollowUp5:function(){
         this.$.service.FollowUp5(this.enqno,this.followupdate5,confidencelevel,this.comments);
+      },
+      callingfunc:function(no){
+        this.enqno=no;
+        alert('come'+no);
       }
     });
   })();

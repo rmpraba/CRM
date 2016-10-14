@@ -3,19 +3,41 @@
   <template>
    <div>
      <div class="row">
-       <table>
+       <table class="table">
          <tbody>
            <tr>
-             <td> {{enquiryid}}</td>
-             <td> {{student}}</td>
-             <td>{{followupflag}}</td>
+             <td>{{id}}</td>
+             <td>{{student}}</td>
              <td>75%</td>
-             <td> <button class="btn">View Details</button></td>
+             <td>{{followupflag}}</td>
+             <td> <button class="btn btn-primary"  on-click="viewdetail" data-toggle="modal" data-target="#studentfollowup">View Details</button></td>
+             <paper-input hidden value = "{{id}}"></paper-input>
            </tr>
          </tbody>
        </table>
-    </div>
+
+
+       <div class="modal fade bd-example-modal-lg" id="studentfollowup" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+         <div class="modal-dialog modal-lg">
+           <div class="modal-content">
+             <div class="modal-header">
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                 <span aria-hidden="true">&times;</span>
+               </button>
+               <h4 class="center-block event-title" id="">
+                 Follow Up Detail
+               </h4>
+             </div>
+             <div class="modal-body">
+               <followup-student-detail></followup-student-detail>
+             </div>
+           </div>
+         </div>
+       </div>
+
+     </div>
   </div>
+    <crm-service id="service"></crm-service>
     </template>
   <script>
   (function() {
@@ -23,7 +45,9 @@
 
     Polymer({
       is: 'followup-details-items',
-
+      viewdetail:function(){
+        this.$.service.viewdetail(this.id);
+      }
     });
   })();
   </script>

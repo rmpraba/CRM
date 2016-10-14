@@ -22,8 +22,10 @@
         </thead>
         <tbody>
           <template is="dom-repeat" items="{{followuparr}}" as="view">
-            <tr colspan="5">
+            <tr>
+              <td colspan="6">
               <followup-details-items id="{{view.enquiry_id}}" student="{{view.enquiry_name}}" confidencelevel = {{75%}} followupflag = "{{view.followup_flag}}"></followup-details-items>
+              </td>
             </tr>
           </template>
         </tbody>
@@ -38,14 +40,6 @@
 
     Polymer({
       is: 'followup-details',
-
-      properties: {
-        foo: {
-          type: String,
-          value: 'followup-details',
-          notify: true
-        }
-      }
     });
   })();
   </script>
