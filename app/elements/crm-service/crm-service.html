@@ -380,6 +380,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       debounce-duration="300"
     >
     </iron-ajax>
+    <iron-ajax
+      method="post"
+      id="viewdetailajax"
+      url="{{viewdetailurl}}"
+      params="{{viewdetailparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="viewdetailResponse"
+      debounce-duration="300"
+    >
+    </iron-ajax>
   </template>
   <script>
   (function() {
@@ -1054,6 +1065,49 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var res=e.detail.response.returnval;
         document.querySelector('followup-details').followuparr=res;
       },
+      viewdetail:function(id){
+        this.viewdetailurl="http://localhost:8086/viewdetail";
+        var obj={"schol":"","id":""};
+        obj.schol=localStorage.getItem("schoolid");
+        obj.id=id;
+        this.viewdetailparam=obj;
+        this.$.viewdetailajax.generateRequest();
+      },
+      viewdetailResponse:function(e){
+        var res=e.detail.response.returnval;
+        var enqno = JSON.stringify(res[0].enquiry_no);
+        var name = JSON.stringify(res[0].enquiry_name);
+        var grade = JSON.stringify(res[0].class);
+        var enquiredon = JSON.stringify(res[0].created_on);
+        var parentname = JSON.stringify(res[0].father_name);
+        var mobileno = JSON.stringify(res[0].father_mob);
+        var followupdate1 = JSON.stringify(res[0].followup_1);
+        var followupdate2 = JSON.stringify(res[0].followup_2);
+        var followupdate3 = JSON.stringify(res[0].followup_3);
+        var followupdate4 = JSON.stringify(res[0].followup_4);
+        var followupdate5 = JSON.stringify(res[0].followup_5);
+        var comments1 = JSON.stringify(res[0].followup1_remarks);
+        var comments2 = JSON.stringify(res[0].followup2_remarks);
+        var comments3 = JSON.stringify(res[0].followup3_remarks);
+        var comments4 = JSON.stringify(res[0].followup4_remarks);
+        var comments5 = JSON.stringify(res[0].followup5_remarks);
+        document.querySelector('followup-student-detail').enqno=enqno;
+        document.querySelector('followup-student-detail').name=name;
+        document.querySelector('followup-student-detail').grade=grade;
+        document.querySelector('followup-student-detail').enquiredon=enquiredon;
+        document.querySelector('followup-student-detail').parentname=parentname;
+        document.querySelector('followup-student-detail').mobileno=mobileno;
+        document.querySelector('followup-student-detail').followupdate1=followupdate1;
+        document.querySelector('followup-student-detail').followupdate2=followupdate2;
+        document.querySelector('followup-student-detail').followupdate3=followupdate3;
+        document.querySelector('followup-student-detail').followupdate4=followupdate4;
+        document.querySelector('followup-student-detail').followupdate5=followupdate5;
+        document.querySelector('followup-student-detail').comments1=comments1;
+        document.querySelector('followup-student-detail').comments2=comments2;
+        document.querySelector('followup-student-detail').comments3=comments3;
+        document.querySelector('followup-student-detail').comments4=comments4;
+        document.querySelector('followup-student-detail').comments5=comments5;
+      }
     });
   })();
   </script>

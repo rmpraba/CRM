@@ -15,8 +15,27 @@
            </tr>
          </tbody>
        </table>
-    </div>
+       <div class="modal fade bd-example-modal-lg" id="studentfollowup" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+         <div class="modal-dialog modal-lg">
+           <div class="modal-content">
+             <div class="modal-header">
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                 <span aria-hidden="true">&times;</span>
+               </button>
+               <h4 class="center-block event-title" id="">
+                 Follow Up Detail
+               </h4>
+             </div>
+             <div class="modal-body">
+               <followup-student-detail></followup-student-detail>
+             </div>
+           </div>
+         </div>
+       </div>
+
+     </div>
   </div>
+    <crm-service id="service"></crm-service>
     </template>
   <script>
   (function() {
@@ -24,10 +43,16 @@
 
     Polymer({
       is: 'followup-details-items',
+<<<<<<< HEAD
       clicked:function(){
         alert(this.id+"    "+this.student);
       }
 
+=======
+      viewdetail:function(){
+        this.$.service.viewdetail(this.id);
+      }
+>>>>>>> origin/master
     });
   })();
   </script>
