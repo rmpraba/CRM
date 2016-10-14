@@ -385,6 +385,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   (function() {
     'use strict';
    var seqno;
+   var seqno1;
    var proseq;
    var firstfollowup;
    var secondfollowup;
@@ -710,9 +711,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.$.getenquiryno1ajax.generateRequest();
       },
       getenqno1Response:function(e){
-        seqno=e.detail.response.returnval[0].enquiry_no;
+        seqno1=e.detail.response.returnval[0].enquiry_no;
         //alert(seqno);
-        seqno=seqno+1;
+        seqno1=seqno1+1;
         var enquiryif="ENQ1718"+seqno;
         document.querySelector('detailed-enquiry-form').setenqno(enquiryif);
       },

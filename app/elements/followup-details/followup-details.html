@@ -21,14 +21,14 @@
           </tr>
         </thead>
         <tbody>
-          <template is="dom-repeat" items="{{followuparr}}" as="view">
-            <tr colspan="5">
-              <followup-details-items id="{{view.enquiry_id}}" student="{{view.enquiry_name}}" confidencelevel = {{75%}} followupflag = "{{view.followup_flag}}"></followup-details-items>
-            </tr>
-          </template>
+          
         </tbody>
     </table>
-
+<template is="dom-repeat" items="{{followuparr}}" as="view">
+            
+              <followup-details-items id="{{view.enquiry_id}}" student="{{view.enquiry_name}}" confidencelevel = "{{view.current_confidence_level}}" followupflag = "{{view.followup_flag}}"></followup-details-items>
+            
+          </template>
     </div>
     </div>
   </template>

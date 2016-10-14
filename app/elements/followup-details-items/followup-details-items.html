@@ -3,14 +3,15 @@
   <template>
    <div>
      <div class="row">
-       <table>
+       <table class="table table-hover">
          <tbody>
            <tr>
-             <td> {{enquiryid}}</td>
+             <td> {{id}}</td>
              <td> {{student}}</td>
+             
+             <td>{{confidencelevel}}</td>
              <td>{{followupflag}}</td>
-             <td>75%</td>
-             <td> <button class="btn">View Details</button></td>
+             <td> <button class="btn" on-click="clicked">View Details</button></td>
            </tr>
          </tbody>
        </table>
@@ -23,6 +24,9 @@
 
     Polymer({
       is: 'followup-details-items',
+      clicked:function(){
+        alert(this.id+"    "+this.student);
+      }
 
     });
   })();

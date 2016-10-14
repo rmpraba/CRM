@@ -8,7 +8,7 @@
         <div class="input-group custom-search-form col-md-2 col-md-offset-5">
           <button class="btn btn-default" on-click="newenquriy" type="button" id="newenquiry">New Enquriy</button>
           <paper-dropdown-menu label="Academic Year" id="academicyear">
-            <paper-listbox id="academics" class="dropdown-content" on-iron-select="Fnacademicyr">
+            <paper-listbox id="academics" class="dropdown-content" on-iron-select="Fnacademicyr"> 
               <paper-item>AY-2015-2016</paper-item>
               <paper-item>AY-2016-2017</paper-item>
               <paper-item>AY-2017-2018</paper-item>
@@ -422,6 +422,19 @@
           this.$.thirdsanskrit.checked=false;
           this.$.thirdkannada.checked=false;
           this.$.thirdhindi.checked=false;
+          document.querySelector("#dfmale").checked=false;
+          document.querySelector("#dffemale").checked=false;
+          document.querySelector("#transportyes").checked=false;
+          document.querySelector("#transportno").checked=false;
+          document.querySelector("#canteenyes").checked=false;
+          document.querySelector("#canteenno").checked=false;
+          document.querySelector("#secondkannada").checked=false;
+          document.querySelector("#secondhindi").checked=false;
+          document.querySelector("#thirdhindi").checked=false;
+          document.querySelector("#thirdkannada").checked=false;
+          document.querySelector("#thirdsanskrit").checked=false;
+          document.querySelector("#thirdfrench").checked=false;
+
       },
       search:function(){
         enqno=document.getElementById('searchtext').value;
