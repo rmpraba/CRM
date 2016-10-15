@@ -25,7 +25,9 @@
      <template  is="dom-repeat" items="{{gradewisearr}}" as="view">
         <grade-count-itemcard grade="{{view.class}}" enquirygrade="{{view.total}}" admissiongrade="{{view.noofadmitted}}"></grade-count-itemcard>
       </template>
-      
+      <template  is="dom-repeat" items="{{gradewiseadmissionarr}}" as="view">
+        <grade-count-itemcard grade="{{view.class}}" enquirygrade="{{view.total}}" admissiongrade="{{view.noofadmitted}}"></grade-count-itemcard>
+      </template>
     </div>
       <div class="modal fade bd-example-modal-lg" id="addEnquiry" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">

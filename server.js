@@ -586,10 +586,10 @@ app.post('/insertadmission',  urlencodedParser,function (req, res){
           if(result.affectedRows>0){
             connection.query("UPDATE student_enquiry_details SET status='Admitted' where enquiry_no='"+req.query.enquiryno+"'",function(err, result){
               if(result.affectedRows>0){
-              res.status(200).json({'returnval': 'ENR'+response.admission_no});
+              res.status(200).json({'returnval': response.admission_no});
               }
               else
-              res.status(200).json({'returnval': 'statusfail'});
+              res.status(200).json({'returnval': 'admissionfail'});
             });
           }
         else
@@ -1302,6 +1302,34 @@ app.post('/getfollowupcount',  urlencodedParser,function (req, res){
 
      });
  });
+
+/*this function is to get the count of admission takes placed by grade wise*/
+app.post('/getadmissioncount',  urlencodedParser,function (req, res){
+    var qur={"school_id":req.query.schol};
+    var state={"status":req.query.status};
+    //console.log('qur');
+    connection.query('SELECT *,class,count(*) as total FROM `student_enquiry_details` WHERE ? and ? group by (class)',[qur,state],
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      //console.log(rows);
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': ''});
+    }
+  }
+  else{
+     console.log(err);
+  }
+});
+});
+
 function setvalue(){
   console.log("calling setvalue.....");
 }

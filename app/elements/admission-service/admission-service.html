@@ -161,6 +161,17 @@
         on-response="fetchnoofinstallmentResponse"
         debounce-duration="300"
         >
+    <!-- this below ajax gives the total number of enquiry appeared categorized based on the grade -->
+    <iron-ajax
+        method="post"
+        id="getadmissioncountajax"
+        url="{{getadmissioncounturl}}"
+        params="{{getadmissioncountparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getadmissioncountResponse"
+        debounce-duration="300"
+        >    
   </template>
   <script>
   (function() {
@@ -266,6 +277,8 @@
       },
       insertadmissionResponse:function(e){
         alert("Enrollment No genererated!!!"+e.detail.response.returnval);
+        if(e.detail.response.returnval!='admissionfail')
+        this.callfetchadmissioncountService();
       },
       callInsertStudentService:function(){
         this.insertstudenturl=sessionStorage.getItem("addrinfo")+"/insertstudent";
@@ -519,7 +532,20 @@
         localStorage.setItem("curr_sess_academicyear","");
         localStorage.setItem("curr_sess_grade","");
         localStorage.setItem("curr_sess_studentname","");
-      }
+      },
+      callfetchadmissioncountService:function(){         
+        this.getadmissioncounturl=sessionStorage.getItem("addrinfo")+"/getadmissioncount";
+        var obj={"schol":"","status":""}
+        obj.schol=localStorage.getItem("schoolid");
+        obj.status="Admitted";
+        this.getadmissioncountparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.getadmissioncountajax.generateRequest();
+     },     
+     getadmissioncountResponse:function(){
+        var result=e.detail.response.returnval;
+        document.querySelector('enquiry-card').gradewiseadmissionarr=result;
+     }
 
     });
   })();

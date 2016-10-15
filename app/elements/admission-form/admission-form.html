@@ -78,13 +78,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
-          <paper-dropdown-menu label="Seeking Admission for Class" style="width: 100%;">
+          <paper-input label="Seeking Admission for Class" value="{{gradeselection}}"></paper-input>
+          <!-- <paper-dropdown-menu label="Seeking Admission for Class" style="width: 100%;">
             <paper-menu id="admissiongrade" class="dropdown-content" required on-iron-select="FnSelectGrade" attr-for-selected="value" selected="{{gradeselection}}" >
               <template  is="dom-repeat" items="{{itemarr}}" as="view">
                 <paper-item value="{{view.class}}">{{view.class}}</paper-item>
               </template>
             </paper-menu>
-          </paper-dropdown-menu>
+          </paper-dropdown-menu> -->
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
