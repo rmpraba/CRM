@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cf87a71e-5582-4c0c-9b35-1815db928b04" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/elements/app-list/app-list.html" afterPath="$PROJECT_DIR$/app/elements/app-list/app-list.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/elements/crm-service/crm-service.html" afterPath="$PROJECT_DIR$/app/elements/crm-service/crm-service.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/elements/follow-up-dashboard-item-card/follow-up-dashboard-item-card.html" afterPath="$PROJECT_DIR$/app/elements/follow-up-dashboard-item-card/follow-up-dashboard-item-card.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/elements/navigation-bar/navigation-bar.html" afterPath="$PROJECT_DIR$/app/elements/navigation-bar/navigation-bar.html" />
     </list>
     <ignored path="CRM.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -72,8 +68,8 @@
       <file leaf-file-name="crm-service.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/elements/crm-service/crm-service.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.35172415">
-              <caret line="1084" column="62" selection-start-line="1084" selection-start-column="62" selection-end-line="1084" selection-end-column="62" />
+            <state vertical-scroll-proportion="0.20862068">
+              <caret line="1077" column="0" selection-start-line="1077" selection-start-column="0" selection-end-line="1078" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -1202,7 +1198,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
@@ -1607,8 +1603,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/elements/crm-service/crm-service.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.35172415">
-          <caret line="1084" column="62" selection-start-line="1084" selection-start-column="62" selection-end-line="1084" selection-end-column="62" />
+        <state vertical-scroll-proportion="0.20862068">
+          <caret line="1077" column="0" selection-start-line="1077" selection-start-column="0" selection-end-line="1078" selection-end-column="0" />
           <folding />
         </state>
       </provider>
