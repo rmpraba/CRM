@@ -1081,6 +1081,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         document.querySelector('followup-student-detail').enquiredon=res[0].created_on;
         document.querySelector('followup-student-detail').parentname=res[0].father_name;
         document.querySelector('followup-student-detail').mobileno=res[0].father_mob;
+        document.querySelector('followup-student-detail').confidencelvl1(res[0].confidence_level_1);
+        document.querySelector('followup-student-detail').confidencelvl2(res[0].confidence_level_2);
+        document.querySelector('followup-student-detail').confidencelvl3(res[0].confidence_level_3);
+        document.querySelector('followup-student-detail').confidencelvl4(res[0].confidence_level_4);
+        document.querySelector('followup-student-detail').confidencelvl5(res[0].confidence_level_5);
         document.querySelector('followup-student-detail').followupdate1=res[0].followup_1;
         document.querySelector('followup-student-detail').followupdate2=res[0].followup_2;
         document.querySelector('followup-student-detail').followupdate3=res[0].followup_3;
