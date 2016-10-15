@@ -3,15 +3,14 @@
   <template>
    <div>
      <div class="row">
-       <table class="table table-hover">
+       <table>
          <tbody>
            <tr>
-             <td> {{id}}</td>
-             <td> {{student}}</td>
-
-             <td>{{confidencelevel}}</td>
-             <td>{{followupflag}}</td>
-             <td> <button class="btn" on-click="viewdetail" data-toggle="modal" data-target="#studentfollowup">View Details</button></td>
+             <td style="width:10%">{{id}}</td>
+             <td style="width:10%">{{student}}</td>
+           <td style="width:10%">{{confidencelevel}}75%</td>
+             <td style="width:10%">{{followupflag}}</td>
+             <td style="width:10%"> <button class="btn" on-click="viewdetail" data-toggle="modal" data-target="#studentfollowup">View Details</button></td>
            </tr>
          </tbody>
        </table>
