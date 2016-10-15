@@ -1074,7 +1074,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.$.viewdetailajax.generateRequest();
       },
       viewdetailResponse:function(e){
-        var res=e.detail.response.returnval;
+        var res=e.detail.response.returnval;/*
         var enqno = JSON.stringify(res[0].enquiry_no);
         var name = JSON.stringify(res[0].enquiry_name);
         var grade = JSON.stringify(res[0].class);
@@ -1090,23 +1090,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var comments2 = JSON.stringify(res[0].followup2_remarks);
         var comments3 = JSON.stringify(res[0].followup3_remarks);
         var comments4 = JSON.stringify(res[0].followup4_remarks);
-        var comments5 = JSON.stringify(res[0].followup5_remarks);
-        document.querySelector('followup-student-detail').enqno=enqno;
-        document.querySelector('followup-student-detail').name=name;
-        document.querySelector('followup-student-detail').grade=grade;
-        document.querySelector('followup-student-detail').enquiredon=enquiredon;
-        document.querySelector('followup-student-detail').parentname=parentname;
-        document.querySelector('followup-student-detail').mobileno=mobileno;
-        document.querySelector('followup-student-detail').followupdate1=followupdate1;
-        document.querySelector('followup-student-detail').followupdate2=followupdate2;
-        document.querySelector('followup-student-detail').followupdate3=followupdate3;
-        document.querySelector('followup-student-detail').followupdate4=followupdate4;
-        document.querySelector('followup-student-detail').followupdate5=followupdate5;
-        document.querySelector('followup-student-detail').comments1=comments1;
-        document.querySelector('followup-student-detail').comments2=comments2;
-        document.querySelector('followup-student-detail').comments3=comments3;
-        document.querySelector('followup-student-detail').comments4=comments4;
-        document.querySelector('followup-student-detail').comments5=comments5;
+        var comments5 = JSON.stringify(res[0].followup5_remarks);*/
+        document.querySelector('followup-student-detail').enqno=res[0].enquiry_no;
+        document.querySelector('followup-student-detail').name=res[0].enquiry_name;
+        document.querySelector('followup-student-detail').grade=res[0].class;
+        document.querySelector('followup-student-detail').enquiredon=res[0].created_on;
+        document.querySelector('followup-student-detail').parentname=res[0].father_name;
+        document.querySelector('followup-student-detail').mobileno=res[0].father_mob;
+        document.querySelector('followup-student-detail').followupdate1=res[0].followup_1;
+        document.querySelector('followup-student-detail').followupdate2=res[0].followup_2;
+        document.querySelector('followup-student-detail').followupdate3=res[0].followup_3;
+        document.querySelector('followup-student-detail').followupdate4=res[0].followup_4;
+        document.querySelector('followup-student-detail').followupdate5=res[0].followup_5;
+        document.querySelector('followup-student-detail').comments1=res[0].followup1_remarks;
+        document.querySelector('followup-student-detail').comments2=res[0].followup2_remarks;
+        document.querySelector('followup-student-detail').comments3=res[0].followup3_remarks;
+        document.querySelector('followup-student-detail').comments4=res[0].followup4_remarks;
+        document.querySelector('followup-student-detail').comments5=res[0].followup5_remarks;
       }
     });
   })();
