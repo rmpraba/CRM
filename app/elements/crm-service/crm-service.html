@@ -976,12 +976,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         obj.comments = comments;
         obj.status="In Progress";
         this.followup1param=obj;
-        alert(JSON.stringify(obj));
         this.$.followup1ajax.generateRequest();
       },
       FollowUp1Response:function(e){
         var res=e.detail.response.returnval;
-        alert(res);
+        if(res == "success"){
+          document.querySelector('followup-student-detail').mydialog();
+        }
       },
       FollowUp2:function(enqno,followupdate2,confidencelevel,comments){
         this.followup2url="http://localhost:8086/followup2";
@@ -998,7 +999,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       FollowUp2Response:function(e){
         var res=e.detail.response.returnval;
-        alert(res);
+        if(res == "success"){
+          document.querySelector('followup-student-detail').mydialog();
+        }
       },
       FollowUp3:function(enqno,followupdate3,confidencelevel,comments){
         this.followup3url="http://localhost:8086/followup3";
@@ -1015,7 +1018,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       FollowUp3Response:function(e){
         var res=e.detail.response.returnval;
-        alert(res);
+        if(res == "success"){
+          document.querySelector('followup-student-detail').mydialog();
+        }
       },
       FollowUp4:function(enqno,followupdate4,confidencelevel,comments){
         this.followup4url="http://localhost:8086/followup4";
@@ -1032,7 +1037,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       FollowUp4Response:function(e){
         var res=e.detail.response.returnval;
-        alert(res);
+        if(res == "success"){
+          document.querySelector('followup-student-detail').mydialog();
+        }
       },
       FollowUp5:function(enqno,followupdate5,confidencelevel,comments){
         this.followup5url="http://localhost:8086/followup5";
@@ -1049,7 +1056,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       FollowUp5Response:function(e){
         var res=e.detail.response.returnval;
-        alert(res);
+        if(res == "success"){
+          document.querySelector('followup-student-detail').mydialog();
+        }
       },
       getfollowupstudents:function(grade, status){
         this.getfollowupstudentsurl="http://localhost:8086/getfollowupstudents";

@@ -165,16 +165,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </tbody>
       </table>
     </div>
-    <button type="button" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false" on-click="followupstatus">Launch modal</button>
+    <button type="button" data-toggle="modal" on-click="mydialog" data-backdrop="static" data-keyboard="false" on-click="followupstatus">Launch modal</button>
     <!-- Modal -->
-    <div class="modal fade" id="myModal" role="dialog">
-      <div class="modal-dialog">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-          <div class="modal-header">
+    <paper-dialog modal id="myModal">
             <h4 class="modal-title">Set status for Follow-up</h4>
-          </div>
           <div class="modal-body col-sm-6 col-sm-offset-3" style="height: 100px;">
             <paper-dropdown-menu label="Status">
               <paper-listbox class="dropdown-content" on-iron-select="FnConfidenceLevel">
@@ -184,15 +178,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <paper-item>Schedule New Followup</paper-item>
               </paper-listbox>
             </paper-dropdown-menu>
-            <button type="button" class="btn btn-primary col-sm-4 col-sm-offset-4" data-dismiss="modal">Submit</button>
+            <button type="button" class="btn btn-primary col-sm-4 col-sm-offset-4" on-click="closedialog">Submit</button>
           </div>
-          <div class="modal-footer">
-
-          </div>
-        </div>
-
-      </div>
-    </div>
+    </paper-dialog>
         <crm-service id="service"></crm-service>
   </template>
   <script>
@@ -301,6 +289,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         } else {
           document.querySelector('#confidencelevel5').selected=-1;
         }
+      },
+      mydialog:function(){
+        document.querySelector('#myModal').open();
+      },
+      closedialog:function(){
+        document.querySelector('#myModal').close();
       }
     });
   })();
