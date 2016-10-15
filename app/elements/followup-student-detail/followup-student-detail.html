@@ -193,6 +193,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       </div>
     </div>
+        <crm-service id="service"></crm-service>
   </template>
   <script>
   (function() {
@@ -204,19 +205,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         confidencelevel=(e.target.selectedItem.textContent).trim();
       },
       FollowUp1:function(){
-        this.$.service.FollowUp1(this.enqno,this.followupdate1,confidencelevel,this.comments);
+        this.$.service.FollowUp1(this.enqno,this.followupdate1,confidencelevel,this.comments1);
       },
       FollowUp2:function(){
-        this.$.service.FollowUp2(this.enqno,this.followupdate2,confidencelevel,this.comments);
+        this.$.service.FollowUp2(this.enqno,this.followupdate2,confidencelevel,this.comments2);
       },
       FollowUp3:function(){
-        this.$.service.FollowUp3(this.enqno,this.followupdate3,confidencelevel,this.comments);
+        this.$.service.FollowUp3(this.enqno,this.followupdate3,confidencelevel,this.comments3);
       },
       FollowUp4:function(){
-        this.$.service.FollowUp4(this.enqno,this.followupdate4,confidencelevel,this.comments);
+        this.$.service.FollowUp4(this.enqno,this.followupdate4,confidencelevel,this.comments4);
       },
       FollowUp5:function(){
-        this.$.service.FollowUp5(this.enqno,this.followupdate5,confidencelevel,this.comments);
+        this.$.service.FollowUp5(this.enqno,this.followupdate5,confidencelevel,this.comments5);
       },
       confidencelvl1:function(confidencelevel1){
         if( confidencelevel1 == ">90%" ){

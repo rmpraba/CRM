@@ -1146,11 +1146,10 @@ app.post('/getfollowupcount',  urlencodedParser,function (req, res){
  app.post('/followup1',  urlencodedParser,function (req, res)
  {
    var school={"school_id":req.query.schol};
-   var enquiry={"enquiry_no":req.query.enqno};
-   var followupdate={"followup_1":req.query.followupdate1};
-   var comments = {"followup_1_remarks":req.query.comments};
-   var confidencelevel = {"confidence_level_1":req.query.confidencelevel};
-   connection.query('update student_enquiry_details set ? where ? and ?',[collection,enquiry,school],
+   var enquiry={"enquiry_id":req.query.enqno};
+   var collection = {"followup1_remarks":req.query.comments,"confidence_level_1":req.query.confidencelevel,"followup_1":req.query.followupdate1};
+   console.log(collection);
+   connection.query('update followupdetail set ? where ? and ?',[collection,enquiry,school],
      function(err, rows)
      {
        if(!err)
@@ -1169,11 +1168,10 @@ app.post('/getfollowupcount',  urlencodedParser,function (req, res){
  app.post('/followup2',  urlencodedParser,function (req, res)
  {
    var school={"school_id":req.query.schol};
-   var enquiry={"enquiry_no":req.query.enqno};
-   var followupdate={"followup_2":req.query.followupdate2};
-   var comments = {"followup_2_remarks":req.query.comments};
-   var confidencelevel = {"confidence_level_2":req.query.confidencelevel};
-   connection.query('update student_enquiry_details set ? where ? and ?',[collection,enquiry,school],
+   var enquiry={"enquiry_id":req.query.enqno};
+   var collection = {"followup2_remarks":req.query.comments,"confidence_level_2":req.query.confidencelevel,"followup_2":req.query.followupdate2};
+   console.log(collection);
+   connection.query('update followupdetail set ? where ? and ?',[collection,enquiry,school],
      function(err, rows)
      {
        if(!err)
@@ -1189,14 +1187,14 @@ app.post('/getfollowupcount',  urlencodedParser,function (req, res){
 
      });
  });
+
  app.post('/followup3',  urlencodedParser,function (req, res)
  {
    var school={"school_id":req.query.schol};
-   var enquiry={"enquiry_no":req.query.enqno};
-   var followupdate={"followup_3":req.query.followupdate3};
-   var comments = {"followup_3_remarks":req.query.comments};
-   var confidencelevel = {"confidence_level_3":req.query.confidencelevel};
-   connection.query('update student_enquiry_details set ? where ? and ?',[collection,enquiry,school],
+   var enquiry={"enquiry_id":req.query.enqno};
+   var collection = {"followup3_remarks":req.query.comments,"confidence_level_3":req.query.confidencelevel,"followup_3":req.query.followupdate3};
+   console.log(collection);
+   connection.query('update followupdetail set ? where ? and ?',[collection,enquiry,school],
      function(err, rows)
      {
        if(!err)
@@ -1212,14 +1210,14 @@ app.post('/getfollowupcount',  urlencodedParser,function (req, res){
 
      });
  });
+
  app.post('/followup4',  urlencodedParser,function (req, res)
  {
    var school={"school_id":req.query.schol};
-   var enquiry={"enquiry_no":req.query.enqno};
-   var followupdate={"followup_4":req.query.followupdate4};
-   var comments = {"followup_4_remarks":req.query.comments};
-   var confidencelevel = {"confidence_level_4":req.query.confidencelevel};
-   connection.query('update student_enquiry_details set ? where ? and ?',[collection,enquiry,school],
+   var enquiry={"enquiry_id":req.query.enqno};
+   var collection = {"followup4_remarks":req.query.comments,"confidence_level_4":req.query.confidencelevel,"followup_4":req.query.followupdate4};
+   console.log(collection);
+   connection.query('update followupdetail set ? where ? and ?',[collection,enquiry,school],
      function(err, rows)
      {
        if(!err)
@@ -1235,14 +1233,14 @@ app.post('/getfollowupcount',  urlencodedParser,function (req, res){
 
      });
  });
+
  app.post('/followup5',  urlencodedParser,function (req, res)
  {
    var school={"school_id":req.query.schol};
-   var enquiry={"enquiry_no":req.query.enqno};
-   var followupdate={"followup_5":req.query.followupdate5};
-   var comments = {"followup_5_remarks":req.query.comments};
-   var confidencelevel = {"confidence_level_5":req.query.confidencelevel};
-   connection.query('update student_enquiry_details set ? where ? and ?',[collection,enquiry,school],
+   var enquiry={"enquiry_id":req.query.enqno};
+   var collection = {"followup5_remarks":req.query.comments,"confidence_level_5":req.query.confidencelevel,"followup_5":req.query.followupdate5};
+   console.log(collection);
+   connection.query('update followupdetail set ? where ? and ?',[collection,enquiry,school],
      function(err, rows)
      {
        if(!err)
@@ -1259,6 +1257,29 @@ app.post('/getfollowupcount',  urlencodedParser,function (req, res){
      });
  });
 
+
+ app.post('/followup1',  urlencodedParser,function (req, res)
+ {
+   var school={"school_id":req.query.schol};
+   var enquiry={"enquiry_id":req.query.enqno};
+   var collection = {"followup1_remarks":req.query.comments,"confidence_level_1":req.query.confidencelevel,"followup_1":req.query.followupdate1};
+   console.log(collection);
+   connection.query('update followupdetail set ? where ? and ?',[collection,enquiry,school],
+     function(err, rows)
+     {
+       if(!err)
+       {
+         console.log('inserted');
+         res.status(200).json({'returnval': 'success'});
+       }
+       else
+       {
+         console.log(err);
+         res.status(200).json({'returnval': 'invalid'});
+       }
+
+     });
+ });
  app.post('/getfollowupstudents',  urlencodedParser,function (req, res)
  {
    var school={"school_id":req.query.schol};
