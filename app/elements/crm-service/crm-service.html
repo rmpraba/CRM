@@ -266,6 +266,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         content-type="application/json"
         on-response="getopenfollowupcountResponse"
         debounce-duration="300"
+        >
   </iron-ajax>
   <iron-ajax
         method="post"
@@ -276,6 +277,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         content-type="application/json"
         on-response="followupdetailsResponse"
         debounce-duration="300"
+        >
   </iron-ajax>
   <!-- this ajax used to fetch the detail of student who have been enquired and been in process for follow up -->
   <iron-ajax
@@ -388,6 +390,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       handle-as="json"
       content-type="application/json"
       on-response="viewdetailResponse"
+      debounce-duration="300"
+    >
+    </iron-ajax>
+    <iron-ajax
+      method="post"
+      id="submitstatusajax"
+      url="{{submitstatusurl}}"
+      params="{{submitstatusparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="SubmitStatusResponse"
       debounce-duration="300"
     >
     </iron-ajax>
@@ -1105,6 +1118,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         document.querySelector('followup-student-detail').comments3=res[0].followup3_remarks;
         document.querySelector('followup-student-detail').comments4=res[0].followup4_remarks;
         document.querySelector('followup-student-detail').comments5=res[0].followup5_remarks;
+      },
+      SubmitStatus:function(id,status){
+        this.submitstatusurl="http://localhost:8086/submitstatus";
+        var obj={"schol":"","id":"","status":""};
+        obj.schol=localStorage.getItem("schoolid");
+        obj.id=id;
+        obj.status=status;
+        this.submitstatusparam=obj;
+        this.$.submitstatusajax.generateRequest();
+      },
+      SubmitStatusResponse:function(e){
+        var res=e.detail.response.returnval;
+        if(res == "success"){
+          document.querySelector('followup-student-detail').closedialog();
+        }
       }
     });
   })();

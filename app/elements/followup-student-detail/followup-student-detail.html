@@ -171,14 +171,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <h4 class="modal-title">Set status for Follow-up</h4>
           <div class="modal-body col-sm-6 col-sm-offset-3" style="height: 100px;">
             <paper-dropdown-menu label="Status">
-              <paper-listbox class="dropdown-content" on-iron-select="FnConfidenceLevel">
-                <paper-item>In Progress</paper-item>
+              <paper-listbox class="dropdown-content" on-iron-select="FnStatus">
+                <paper-item>Process</paper-item>
                 <paper-item>Closed</paper-item>
                 <paper-item>Exhausted</paper-item>
+                <paper-item>Ready For Admission</paper-item>
                 <paper-item>Schedule New Followup</paper-item>
               </paper-listbox>
             </paper-dropdown-menu>
-            <button type="button" class="btn btn-primary col-sm-4 col-sm-offset-4" on-click="closedialog">Submit</button>
+            <button type="button" class="btn btn-primary col-sm-6 col-sm-offset-3" on-click="submitstatus">Submit</button>
           </div>
     </paper-dialog>
         <crm-service id="service"></crm-service>
@@ -187,6 +188,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   (function() {
     'use strict';
     var confidencelevel;
+    var follupupstatus;
     Polymer({
       is: 'followup-student-detail',
       FnConfidenceLevel:function(e){
@@ -295,6 +297,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       closedialog:function(){
         document.querySelector('#myModal').close();
+      },
+      FnStatus:function(e){
+        follupupstatus=(e.target.selectedItem.textContent).trim();
+      },
+      submitstatus:function(){
+        alert(this.enqno);
+        alert(follupupstatus);
+        this.$.service.SubmitStatus(this.enqno,follupupstatus);
       }
     });
   })();

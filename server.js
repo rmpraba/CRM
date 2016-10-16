@@ -1350,7 +1350,29 @@ app.post('/getadmissioncount',  urlencodedParser,function (req, res){
   }
 });
 });
+ app.post('/submitstatus',  urlencodedParser,function (req, res)
+ {
+   var school={"school_id":req.query.schol};
+   var enquiry={"enquiry_id":req.query.id};
+   var status = {"followup_status":req.query.status};
+   console.log(status);
+   console.log(school);
+   console.log(enquiry);
+   connection.query('update followupdetail set ? where ? and ?',[status,enquiry,school],
+     function(err, rows)
+     {
+       if(!err)
+       {
+         res.status(200).json({'returnval': 'success'});
+       }
+       else
+       {
+         console.log(err);
+         res.status(200).json({'returnval': 'invalid'});
+       }
 
+     });
+ });
 function setvalue(){
   console.log("calling setvalue.....");
 }
