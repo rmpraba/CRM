@@ -640,9 +640,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         obj.prospectusno=prospect;
         obj.academicyear=academicyear;
         obj.givenname=firstname + middlename + lastname;
-        obj.status="Enquired";
+        obj.status="Open";
         this.registerenquiryformparam=obj;
-         //alert(JSON.stringify(obj));
+        alert(JSON.stringify(obj));
         this.$.registerenquiryformajax.generateRequest();
 
 
