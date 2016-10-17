@@ -59,8 +59,8 @@
           </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
-        <span class="col-sm-6"><paper-checkbox id="male" readonly class="checkbox" on-change="maleHandler">Male</paper-checkbox></span>
-        <span class="col-sm-6"><paper-checkbox  id="female" readonly class="checkbox" on-change="femaleHandler">Female</paper-checkbox></span>
+        <span class="col-sm-6"><paper-checkbox id="male" readonly class="checkbox" on-change="maleHandler">Boy</paper-checkbox></span>
+        <span class="col-sm-6"><paper-checkbox  id="female" readonly class="checkbox" on-change="femaleHandler">Girl</paper-checkbox></span>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
@@ -361,7 +361,7 @@ ready:function () {
           }
         else if(diff==2){
             this.ageofyr=diff+" Years";
-           
+
           }
        else {
             this.ageofyr=diff+" Years";
@@ -426,7 +426,7 @@ ready:function () {
       },
       dateclear:function(){
         alert("Select DOB properly, it cannot be future date");
-        
+
       }
     });
   })();

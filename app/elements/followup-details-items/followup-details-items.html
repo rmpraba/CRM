@@ -1,9 +1,13 @@
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 <dom-module id="followup-details-items">
+  <style>
+    .striped:nth-child(even) {background: #F2F3F4}
+    .striped:nth-child(odd) {background: #EDEDED}
+  </style>
   <template>
    <div>
      <div class="row">
-       <table>
+       <table class="striped" style="margin: 2% 0 0 5%;">
          <tbody>
            <tr>
              <td style="width:10%">{{id}}</td>

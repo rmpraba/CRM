@@ -8,7 +8,7 @@
         <div class="input-group custom-search-form col-md-2 col-md-offset-5">
           <button class="btn btn-default" on-click="newenquriy" type="button" id="newenquiry">New Enquriy</button>
           <paper-dropdown-menu label="Academic Year" id="academicyear">
-            <paper-listbox id="academics" class="dropdown-content" on-iron-select="Fnacademicyr"> 
+            <paper-listbox id="academics" class="dropdown-content" on-iron-select="Fnacademicyr">
               <paper-item>AY-2015-2016</paper-item>
               <paper-item>AY-2016-2017</paper-item>
               <paper-item>AY-2017-2018</paper-item>
@@ -47,8 +47,8 @@
         <div class="col-sm-6 enquiry-input">
           <label>Gender</label>
           <div class="gender">
-            <span class="col-sm-6"><paper-checkbox id="dfmale" class="checkbox" on-change="maleHandler">Male</paper-checkbox></span>
-            <span class="col-sm-6"><paper-checkbox  id="dffemale" class="checkbox" on-change="femaleHandler">Female</paper-checkbox></span>
+            <span class="col-sm-6"><paper-checkbox id="dfmale" class="checkbox" on-change="maleHandler">Boy</paper-checkbox></span>
+            <span class="col-sm-6"><paper-checkbox  id="dffemale" class="checkbox" on-change="femaleHandler">Girl</paper-checkbox></span>
           </div>
         </div>
         <div class="col-sm-6 enquiry-input">
@@ -351,7 +351,7 @@
           this.$.momjob.hidden=true;
           this.$.momsal.hidden=true;
           this.$.prospectno.hidden=true;
-         
+
         this.$.newenq.hidden=true;
         this.$.academicyear.hidden=true;
         this.$.newenquiry.hidden=false;
@@ -658,13 +658,13 @@
         if((grade=="Nursery")||(grade=="LKG")||(grade=="UKG")||(grade=="Grade-1")||(grade=="Grade-2")||(grade=="Grade-3")||(grade=="Grade-4")){
             this.$.thirdlanguage.hidden=true;
         }
-        
+
         else{
             this.$.thirdlanguage.hidden=false;
         }
       },
     submit:function(){
-      
+
       if(this.firstname == "" || this.lastname == ""|| this.mothertongue == "" || this.fathername == "" || this.mothername == "" || this.fatheredu == "" || this.fathermob == "" || this.fathermail == "" || this.address1 == ""|| this.city == "" || this.pincode == "" || this.flat == "" || this.state == ""){
           this.$.fname.validate();
           //this.$.mname.validate();
@@ -722,12 +722,12 @@
       }
       else if(thirdlanguage==null){
         // alert(grade);
-       
+
         if(grade == "Nursery"||"LKG"||"UKG"||"Grade-1"||"Grade-2"||"Grade-3"||"Grade-4"){
           // alert('coming');
           this.$.service.updateenquiryform(enqno,this.firstname,this.middlename,this.lastname,fngender,grade,dobdate,this.oldclass,this.oldschool,mothertongue,this.fathername,this.mothername,this.fatheredu,this.motheredu,this.fathermob,this.mothermob,this.fathermail,this.mothermail,this.fathercompany,this.mothercompany,dadoccup,momtheroccup,this.flat,this.address1,this.address2,this.address3,this.city,this.pincode,this.state,enquiysource,this.siblingname,this.siblingdetails,transportreq,canteenreq,secondlanguage,"",propsold,this.fatherjob,this.motherjob,dadincome,momincome,this.prospectusno);
-         
-           
+
+
         } else {
           alert('Select the third language');
         }
@@ -937,7 +937,7 @@ Fnlistbox:function(nameitem){
 
       dateclear:function(){
         alert("Select DOB properly, it cannot be future date");
-        
+
       },
        getdate:function(dates){
           var dt1=new Date(dates);
