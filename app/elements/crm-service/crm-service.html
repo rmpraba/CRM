@@ -743,7 +743,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       getclasses:function(){
       this.getclassesurl="http://localhost:8086/getclasses";
-        var obj={"schol":""}
+        var obj={"schol":""};
         obj.schol=localStorage.getItem("schoolid");
         this.getclassesparam=obj;
        //alert(JSON.stringify(obj));
@@ -756,7 +756,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      },
      getlocation:function(){
       this.getlocationurl="http://localhost:8086/getlocation";
-        var obj={"schol":""}
+        var obj={"schol":""};
         obj.schol=localStorage.getItem("schoolid");
         this.getlocationparam=obj;
        //alert(JSON.stringify(obj));
@@ -767,8 +767,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var obj={"schol":""}
         obj.schol=localStorage.getItem("schoolid");
         this.followupdetailsparamll=obj;
-        alert("hi1");
-        alert(JSON.stringify(obj));
         this.$.followupdetailsajax.generateRequest();
      },
      getlocationResponse:function(e){
@@ -813,7 +811,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       document.querySelector('detailed-enquiry-form').fathername=result[0].father_name;
       document.querySelector('detailed-enquiry-form').mothername=result[0].mother_name;
       document.querySelector('detailed-enquiry-form').fathermail=result[0].father_email;
-      document.querySelector('detailed-enquiry-form').grade=result[0].class;
+      document.querySelector('detailed-enquiry-form').Fngrade(result[0].class);
       document.querySelector('detailed-enquiry-form').Fnresult(result[0].dob,result[0].gender);
     }
     else{
