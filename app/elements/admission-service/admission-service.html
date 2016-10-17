@@ -270,9 +270,10 @@
         obj.createdby=localStorage.getItem("employeename");
         obj.academicyear=admissionyear;
         obj.fathername=fathername;
-        obj.mothername=mothername;   
-            
-        this.insertadmissionparam=obj;       
+        obj.mothername=mothername; 
+          
+        this.insertadmissionparam=obj;     
+        alert(JSON.stringify(obj));  
         this.$.insertadmissionajax.generateRequest();
       },
       insertadmissionResponse:function(e){
