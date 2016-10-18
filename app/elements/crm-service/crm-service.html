@@ -977,15 +977,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       var res=e.detail.response.returnval;
       document.querySelector('followup-dashboard').exhaustedarr=res;
      },
-      FollowUp1:function(enqno,followupdate1,confidencelevel,comments){
+      FollowUp1:function(enqno,followupid,followupdate1,confidencelevel,comments){
         this.followup1url="http://localhost:8086/followup1";
-        var obj={"schol":"","enqno":"","followupdate1":"","confidencelevel":"","comments":""};
+        var obj={"schol":"","enqno":"","followupdate1":"","confidencelevel":"","comments":"","followupid":""};
         obj.schol=localStorage.getItem("schoolid");
         obj.enqno=enqno;
         obj.followupdate1 = followupdate1;
         obj.confidencelevel = confidencelevel;
         obj.comments = comments;
-        obj.status="In Progress";
+        obj.followupid=followupid;
         this.followup1param=obj;
         this.$.followup1ajax.generateRequest();
       },
@@ -995,15 +995,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           document.querySelector('followup-student-detail').mydialog();
         }
       },
-      FollowUp2:function(enqno,followupdate2,confidencelevel,comments){
+      FollowUp2:function(enqno,followupid,followupdate2,confidencelevel,comments){
         this.followup2url="http://localhost:8086/followup2";
-        var obj={"schol":"","enqno":"","followupdate2":"","confidencelevel":"","comments":""};
+        var obj={"schol":"","enqno":"","followupdate2":"","confidencelevel":"","comments":"","followupid":""};
         obj.schol=localStorage.getItem("schoolid");
         obj.enqno=enqno;
         obj.followupdate2 = followupdate2;
         obj.confidencelevel = confidencelevel;
         obj.comments = comments;
-        obj.status="In Progress";
+        obj.followupid=followupid;
         this.followup2param=obj;
         alert(JSON.stringify(obj));
         this.$.followup2ajax.generateRequest();
@@ -1014,15 +1014,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           document.querySelector('followup-student-detail').mydialog();
         }
       },
-      FollowUp3:function(enqno,followupdate3,confidencelevel,comments){
+      FollowUp3:function(enqno,followupid,followupdate3,confidencelevel,comments){
         this.followup3url="http://localhost:8086/followup3";
-        var obj={"schol":"","enqno":"","followupdate3":"","confidencelevel":"","comments":""};
+        var obj={"schol":"","enqno":"","followupdate3":"","confidencelevel":"","comments":"","followupid":""};
         obj.schol=localStorage.getItem("schoolid");
         obj.enqno=enqno;
         obj.followupdate3 = followupdate3;
         obj.confidencelevel = confidencelevel;
         obj.comments = comments;
-        obj.status="In Progress";
+        obj.followupid=followupid;
         this.followup3param=obj;
         alert(JSON.stringify(obj));
         this.$.followup3ajax.generateRequest();
@@ -1033,15 +1033,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           document.querySelector('followup-student-detail').mydialog();
         }
       },
-      FollowUp4:function(enqno,followupdate4,confidencelevel,comments){
+      FollowUp4:function(enqno,followupid,followupdate4,confidencelevel,comments){
         this.followup4url="http://localhost:8086/followup4";
-        var obj={"schol":"","enqno":"","followupdate4":"","confidencelevel":"","comments":""};
+        var obj={"schol":"","enqno":"","followupdate4":"","confidencelevel":"","comments":"","followupid":""};
         obj.schol=localStorage.getItem("schoolid");
         obj.enqno=enqno;
         obj.followupdate4 = followupdate4;
         obj.confidencelevel = confidencelevel;
         obj.comments = comments;
-        obj.status="In Progress";
+        obj.followupid=followupid;
         this.followup4param=obj;
         alert(JSON.stringify(obj));
         this.$.followup4ajax.generateRequest();
@@ -1052,15 +1052,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           document.querySelector('followup-student-detail').mydialog();
         }
       },
-      FollowUp5:function(enqno,followupdate5,confidencelevel,comments){
+      FollowUp5:function(enqno,followupid,followupdate5,confidencelevel,comments){
         this.followup5url="http://localhost:8086/followup5";
-        var obj={"schol":"","enqno":"","followupdate5":"","confidencelevel":"","comments":""};
+        var obj={"schol":"","enqno":"","followupdate5":"","confidencelevel":"","comments":"","followupid":""};
         obj.schol=localStorage.getItem("schoolid");
         obj.enqno=enqno;
         obj.followupdate5 = followupdate5;
         obj.confidencelevel = confidencelevel;
         obj.comments = comments;
-        obj.status="In Progress";
+        obj.followupid=followupid;
         this.followup5param=obj;
         alert(JSON.stringify(obj));
         this.$.followup5ajax.generateRequest();
@@ -1096,6 +1096,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       viewdetailResponse:function(e){
         var res=e.detail.response.returnval;
         document.querySelector('followup-student-detail').enqno=res[0].enquiry_no;
+        document.querySelector('followup-student-detail').followupid=res[0].followup_id;
         document.querySelector('followup-student-detail').name=res[0].enquiry_name;
         document.querySelector('followup-student-detail').grade=res[0].class;
         document.querySelector('followup-student-detail').enquiredon=res[0].created_on;
