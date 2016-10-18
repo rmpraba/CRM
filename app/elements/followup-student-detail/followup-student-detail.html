@@ -9,6 +9,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="../followup1datapicker-card/followup1datapicker-card.html">
+<link rel="import" href="../followup2datapicker-card/followup2datapicker-card.html">
 
 <dom-module id="followup-student-detail">
   <template>
@@ -51,11 +53,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <tr>
           <th scope="row">1</th>
           <td>
-            <span class="col-sm-8"><paper-input label="Date" value="{{followupdate1}}"></paper-input></span>
-            <span class="col-sm-4 glyph-button"><button class="btn glyphicon glyphicon-pencil"></button></span>
+            <span class="col-sm-8"><paper-input id="date1" disabled label="Date" value="{{followupdate1}}"></paper-input></span>
+    
+            <span class="col-sm-4 glyph-button"><button on-click="dialogfollowup1" id="followedit1" class="btn glyphicon glyphicon-pencil"></span>
           </td>
           <td>
-            <paper-dropdown-menu label="Confidence Level">
+            <paper-dropdown-menu id="followdrop1" label="Confidence Level">
               <paper-listbox class="dropdown-content" on-iron-select="FnConfidenceLevel">
                 <paper-item>>90%</paper-item>
                 <paper-item>>75%</paper-item>
@@ -67,18 +70,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </paper-dropdown-menu>
           </td>
           <td>
-            <span class="col-sm-8"><paper-input label="Comments" value="{{comments1}}"></paper-input></span>
-            <span class="col-sm-4 glyph-button"><button class="btn glyphicon glyphicon-floppy-disk" on-click="FollowUp1"></button></span>
+            <span class="col-sm-8"><paper-input id="followbox1" label="Comments" value="{{comments1}}"></paper-input></span>
+            <span class="col-sm-4 glyph-button"><button class="btn glyphicon glyphicon-floppy-disk" id="followdisk1" on-click="FollowUp1"></button></span>
           </td>
         </tr>
         <tr>
           <th scope="row">2</th>
           <td>
-            <span class="col-sm-8"><paper-input label="Date" value="{{followupdate2}}"></paper-input></span>
-            <span class="col-sm-4 glyph-button"><button class="btn glyphicon glyphicon-pencil"></button></span>
+            <span class="col-sm-8"><paper-input id="date2" disabled label="Date" value="{{followupdate2}}"></paper-input></span>
+            <span class="col-sm-4 glyph-button"><button on-click="dialogfollowup2" id="followedit2" class="btn glyphicon glyphicon-pencil"></button></span>
           </td>
           <td>
-            <paper-dropdown-menu label="Confidence Level">
+            <paper-dropdown-menu label="Confidence Level"id="followdrop2">
               <paper-menu id="confidencelevel" class="dropdown-content" required on-iron-select="FnConfidenceLevel" valueattr="value" >
                 <paper-item>>90%</paper-item>
                 <paper-item>>75%</paper-item>
@@ -90,18 +93,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </paper-dropdown-menu>
           </td>
           <td>
-            <span class="col-sm-8"><paper-input label="Comments" value="{{comments2}}"></paper-input></span>
-            <span class="col-sm-4 glyph-button"><button class="btn glyphicon glyphicon-floppy-disk" on-click="FollowUp2"></button></span>
+            <span class="col-sm-8"><paper-input id="followbox2" label="Comments" value="{{comments2}}"></paper-input></span>
+            <span class="col-sm-4 glyph-button"><button id="followdisk2" class="btn glyphicon glyphicon-floppy-disk" on-click="FollowUp2"></button></span>
           </td>
         </tr>
         <tr>
           <th scope="row">3</th>
           <td>
-            <span class="col-sm-8"><paper-input label="Date" value="{{followupdate3}}"></paper-input></span>
-            <span class="col-sm-4 glyph-button"><button class="btn glyphicon glyphicon-pencil"></button></span>
+            <span class="col-sm-8"><paper-input id="date3" disabled label="Date" value="{{followupdate3}}"></paper-input></span>
+            <span class="col-sm-4 glyph-button"><button id="followedit3" on-click="dialogfollowup3" class="btn glyphicon glyphicon-pencil"></button></span>
           </td>
           <td>
-            <paper-dropdown-menu label="Confidence Level">
+            <paper-dropdown-menu label="Confidence Level" id="followdrop3">
               <paper-listbox class="dropdown-content" on-iron-select="Fnprospectusstatus">
                 <paper-item>>90%</paper-item>
                 <paper-item>>75%</paper-item>
@@ -113,18 +116,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </paper-dropdown-menu>
           </td>
           <td>
-            <span class="col-sm-8"><paper-input label="Comments" value="{{comments3}}"></paper-input></span>
-            <span class="col-sm-4 glyph-button"><button class="btn glyphicon glyphicon-floppy-disk" on-click="FollowUp3"></button></span>
+            <span class="col-sm-8"><paper-input label="Comments" id="followbox3" value="{{comments3}}"></paper-input></span>
+            <span class="col-sm-4 glyph-button"><button id="followdisk3" class="btn glyphicon glyphicon-floppy-disk" on-click="FollowUp3"></button></span>
           </td>
         </tr>
         <tr>
           <th scope="row">4</th>
           <td>
-            <span class="col-sm-8"><paper-input label="Date" value="{{followupdate4}}"></paper-input></span>
-            <span class="col-sm-4 glyph-button"><button class="btn glyphicon glyphicon-pencil"></button></span>
+            <span class="col-sm-8"><paper-input id="date4" disabled label="Date" value="{{followupdate4}}"></paper-input></span>
+            <span class="col-sm-4 glyph-button"><button id="followedit4" on-click="dialogfollowup4" class="btn glyphicon glyphicon-pencil"></button></span>
           </td>
           <td>
-            <paper-dropdown-menu label="Confidence Level">
+            <paper-dropdown-menu label="Confidence Level" id="followdrop4">
               <paper-listbox class="dropdown-content" on-iron-select="Fnprospectusstatus">
                 <paper-item>>90%</paper-item>
                 <paper-item>>75%</paper-item>
@@ -136,17 +139,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </paper-dropdown-menu>
           </td>
           <td>
-            <span class="col-sm-8"><paper-input label="Comments" value="{{comments4}}"></paper-input></span>
-            <span class="col-sm-4 glyph-button"><button class="btn glyphicon glyphicon-floppy-disk" on-click="FollowUp4"></button></span>
+            <span class="col-sm-8"><paper-input label="Comments" id="followbox4" value="{{comments4}}"></paper-input></span>
+            <span class="col-sm-4 glyph-button"><button id="followdisk4" class="btn glyphicon glyphicon-floppy-disk" on-click="FollowUp4"></button></span>
           </td>
-        </tr><tr>
+        </tr>
+        <tr>
           <th scope="row">5</th>
           <td>
-            <span class="col-sm-8"><paper-input label="Date" value="{{followupdate5}}"></paper-input></span>
-            <span class="col-sm-4 glyph-button"><button class="btn glyphicon glyphicon-pencil"></button></span>
+            <span class="col-sm-8"><paper-input id="date5" disabled label="Date" value="{{followupdate5}}"></paper-input></span>
+            <span class="col-sm-4 glyph-button"><button id="followedit5" on-click="dialogfollowup5" class="btn glyphicon glyphicon-pencil"></button></span>
           </td>
           <td>
-            <paper-dropdown-menu label="Confidence Level">
+            <paper-dropdown-menu label="Confidence Level" id="followdrop5">
               <paper-listbox class="dropdown-content" on-iron-select="Fnprospectusstatus">
                 <paper-item>>90%</paper-item>
                 <paper-item>>75%</paper-item>
@@ -158,8 +162,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </paper-dropdown-menu>
           </td>
           <td>
-            <span class="col-sm-8"><paper-input label="Comments" value="{{comments5}}"></paper-input></span>
-            <span class="col-sm-4 glyph-button"><button class="btn glyphicon glyphicon-floppy-disk" on-click="FollowUp5"></button></span>
+            <span class="col-sm-8"><paper-input id="followbox5" label="Comments" value="{{comments5}}"></paper-input></span>
+            <span class="col-sm-4 glyph-button"><button id="followdisk5" class="btn glyphicon glyphicon-floppy-disk" on-click="FollowUp5"></button></span>
           </td>
         </tr>
         </tbody>
@@ -193,6 +197,58 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       </div>
     </div>
+
+
+    <div class="card">
+    
+      <paper-dialog id="dialog1" class="paper-date-picker-dialog">
+        <paper-date-picker id="picker" date="{{date}}"></paper-date-picker>
+        <div class="buttons">
+          <paper-button on-click="close1">Cancel</paper-button>
+          <paper-button on-click="FnDismissDialog1">OK</paper-button>
+        </div>
+      </paper-dialog>
+    </div>
+    <div class="card">
+    
+      <paper-dialog id="dialog2" class="paper-date-picker-dialog">
+        <paper-date-picker id="picker" date="{{date}}"></paper-date-picker>
+        <div class="buttons">
+          <paper-button on-click="close2">Cancel</paper-button>
+          <paper-button on-click="FnDismissDialog2">OK</paper-button>
+        </div>
+      </paper-dialog>
+    </div>
+    <div class="card">
+    
+      <paper-dialog id="dialog3" class="paper-date-picker-dialog">
+        <paper-date-picker id="picker" date="{{date}}"></paper-date-picker>
+        <div class="buttons">
+          <paper-button on-click="close3">Cancel</paper-button>
+          <paper-button on-click="FnDismissDialog3">OK</paper-button>
+        </div>
+      </paper-dialog>
+    </div>
+    <div class="card">
+    
+      <paper-dialog id="dialog4" class="paper-date-picker-dialog">
+        <paper-date-picker id="picker" date="{{date}}"></paper-date-picker>
+        <div class="buttons">
+          <paper-button on-click="close4">Cancel</paper-button>
+          <paper-button on-click="FnDismissDialog4">OK</paper-button>
+        </div>
+      </paper-dialog>
+    </div>
+    <div class="card">
+    
+      <paper-dialog id="dialog5" class="paper-date-picker-dialog">
+        <paper-date-picker id="picker" date="{{date}}"></paper-date-picker>
+        <div class="buttons">
+          <paper-button on-click="close5">Cancel</paper-button>
+          <paper-button on-click="FnDismissDialog5">OK</paper-button>
+        </div>
+      </paper-dialog>
+    </div>
         <crm-service id="service"></crm-service>
   </template>
   <script>
@@ -201,6 +257,68 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var confidencelevel;
     Polymer({
       is: 'followup-student-detail',
+      check:function(){
+        if(this.comments1==null){
+            this.$.followedit1.disabled=false;
+              this.$.followdrop1.disabled=false;
+              this.$.followbox1.disabled=false;
+              this.$.followdisk1.disabled=false;
+        }
+        else{
+          this.$.followedit1.disabled=true;
+              this.$.followdrop1.disabled=true;
+              this.$.followbox1.disabled=true;
+              this.$.followdisk1.disabled=true; 
+        }
+        if(this.comments2==null){
+            this.$.followedit2.disabled=false;
+              this.$.followdrop2.disabled=false;
+              this.$.followbox2.disabled=false;
+              this.$.followdisk2.disabled=false;
+        }
+        else{
+           this.$.followedit2.disabled=true;
+              this.$.followdrop2.disabled=true;
+              this.$.followbox2.disabled=true;
+              this.$.followdisk2.disabled=true;
+        }
+        if(this.comments3==null){
+            this.$.followedit3.disabled=false;
+              this.$.followdrop3.disabled=false;
+              this.$.followbox3.disabled=false;
+              this.$.followdisk3.disabled=false;
+        }
+        else{
+
+            this.$.followedit3.disabled=true;
+              this.$.followdrop3.disabled=true;
+              this.$.followbox3.disabled=true;
+              this.$.followdisk3.disabled=true;
+        }
+        if(this.comments4==null){
+            this.$.followedit4.disabled=false;
+              this.$.followdrop4.disabled=false;
+              this.$.followbox4.disabled=false;
+              this.$.followdisk4.disabled=false;
+        }
+        else{
+            this.$.followedit4.disabled=true;
+              this.$.followdrop4.disabled=true;
+              this.$.followbox4.disabled=true;
+              this.$.followdisk4.disabled=true;}
+        if(this.comments5==null){
+            this.$.followedit5.disabled=false;
+              this.$.followdrop5.disabled=false;
+              this.$.followbox5.disabled=false;
+              this.$.followdisk5.disabled=false;
+        }
+        else{
+            this.$.followedit5.disabled=true;
+              this.$.followdrop5.disabled=true;
+              this.$.followbox5.disabled=true;
+              this.$.followdisk5.disabled=true;}
+
+      },
       FnConfidenceLevel:function(e){
         confidencelevel=(e.target.selectedItem.textContent).trim();
       },
@@ -222,7 +340,122 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       callingfunc:function(no){
         this.enqno=no;
         alert('come'+no);
-      }
+      },
+      dialogfollowup1:function(){
+        this.date=new Date();
+    var id = 'dialog1';
+      var dialog = document.getElementById(id);
+      dialog.opened=true;     
+      this.$.date1.disabled=false;
+      this.$.date1.readonly=true;
+      },
+      FnDismissDialog1:function(e)
+      {
+      var pickdate=moment(this.$.picker.date).format('L');
+      var dt=new Date(pickdate);
+      this.followupdate1 = dt.getDate()+'/'+(dt.getMonth()+1)+'/'+dt.getFullYear();
+       var id = 'dialog1';
+      var dialog = document.getElementById(id);
+      dialog.opened=false;
+    },
+      dialogfollowup2:function(){
+        this.date=new Date();
+    var id = 'dialog2';
+      var dialog = document.getElementById(id);
+      dialog.opened=true;     
+      this.$.date2.disabled=false;
+      this.$.date2.readonly=true;
+      },
+      FnDismissDialog2:function(e)
+      {
+      var pickdate=moment(this.$.picker.date).format('L');
+       var dt=new Date(pickdate);
+      this.followupdate2 = dt.getDate()+'/'+(dt.getMonth()+1)+'/'+dt.getFullYear();
+       var id = 'dialog2';
+      var dialog = document.getElementById(id);
+      dialog.opened=false;
+    },
+      dialogfollowup3:function(){
+        this.date=new Date();
+    var id = 'dialog3';
+      var dialog = document.getElementById(id);
+      dialog.opened=true;     
+      this.$.date3.disabled=false;
+      this.$.date3.readonly=true;
+      },
+      FnDismissDialog3:function(e)
+      {
+      var pickdate=moment(this.$.picker.date).format('L');
+       var dt=new Date(pickdate);
+      this.followupdate3 = dt.getDate()+'/'+(dt.getMonth()+1)+'/'+dt.getFullYear();
+       var id = 'dialog3';
+      var dialog = document.getElementById(id);
+      dialog.opened=false;
+    },
+      dialogfollowup4:function(){
+        this.date=new Date();
+    var id = 'dialog4';
+      var dialog = document.getElementById(id);
+      dialog.opened=true;     
+      this.$.date4.disabled=false;
+      this.$.date4.readonly=true;
+      },
+      FnDismissDialog4:function(e)
+      {
+      var pickdate=moment(this.$.picker.date).format('L');
+       var dt=new Date(pickdate);
+      this.followupdate4 = dt.getDate()+'/'+(dt.getMonth()+1)+'/'+dt.getFullYear();
+       var id = 'dialog4';
+      var dialog = document.getElementById(id);
+      dialog.opened=false;
+    },
+      dialogfollowup5:function(){
+        this.date=new Date();
+    var id = 'dialog5';
+      var dialog = document.getElementById(id);
+      dialog.opened=true;     
+      this.$.date5.disabled=false;
+      this.$.date5.readonly=true;
+      },
+      FnDismissDialog5:function(e)
+      {
+      var pickdate=moment(this.$.picker.date).format('L');
+       var dt=new Date(pickdate);
+      this.followupdate5 = dt.getDate()+'/'+(dt.getMonth()+1)+'/'+dt.getFullYear();
+       var id = 'dialog5';
+      var dialog = document.getElementById(id);
+      dialog.opened=false;
+    },
+    close1:function(){
+         var id = 'dialog1';
+      var dialog = document.getElementById(id);
+      dialog.opened=false;
+      this.$.date1.disabled=true;
+    },
+    close2:function(){
+         var id = 'dialog2';
+      var dialog = document.getElementById(id);
+      dialog.opened=false;
+      this.$.date2.disabled=true;
+    },
+    close3:function(){
+         var id = 'dialog3';
+      var dialog = document.getElementById(id);
+      dialog.opened=false;
+      this.$.date3.disabled=true;
+    },
+    close4:function(){
+         var id = 'dialog4';
+      var dialog = document.getElementById(id);
+      dialog.opened=false;
+      this.$.date4.disabled=true;
+    },
+    close5:function(){
+         var id = 'dialog5';
+      var dialog = document.getElementById(id);
+      dialog.opened=false;
+      this.$.date5.disabled=true;
+    }
     });
   })();
   </script>
