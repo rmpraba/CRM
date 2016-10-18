@@ -194,7 +194,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 </paper-dialog>
 
 
-    <div class="card">
     
       <paper-dialog id="dialog1" class="paper-date-picker-dialog">
         <paper-date-picker id="picker" date="{{date}}"></paper-date-picker>
@@ -203,8 +202,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <paper-button on-click="FnDismissDialog1">OK</paper-button>
         </div>
       </paper-dialog>
-    </div>
-    <div class="card">
     
       <paper-dialog id="dialog2" class="paper-date-picker-dialog">
         <paper-date-picker id="picker" date="{{date}}"></paper-date-picker>
@@ -213,8 +210,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <paper-button on-click="FnDismissDialog2">OK</paper-button>
         </div>
       </paper-dialog>
-    </div>
-    <div class="card">
     
       <paper-dialog id="dialog3" class="paper-date-picker-dialog">
         <paper-date-picker id="picker" date="{{date}}"></paper-date-picker>
@@ -223,8 +218,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <paper-button on-click="FnDismissDialog3">OK</paper-button>
         </div>
       </paper-dialog>
-    </div>
-    <div class="card">
     
       <paper-dialog id="dialog4" class="paper-date-picker-dialog">
         <paper-date-picker id="picker" date="{{date}}"></paper-date-picker>
@@ -233,8 +226,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <paper-button on-click="FnDismissDialog4">OK</paper-button>
         </div>
       </paper-dialog>
-    </div>
-    <div class="card">
     
       <paper-dialog id="dialog5" class="paper-date-picker-dialog">
         <paper-date-picker id="picker" date="{{date}}"></paper-date-picker>
@@ -243,7 +234,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <paper-button on-click="FnDismissDialog5">OK</paper-button>
         </div>
       </paper-dialog>
-    </div>
         <crm-service id="service"></crm-service>
   </template>
   <script>
@@ -546,9 +536,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       this.$.date5.disabled=true;
     },
       submitstatus:function(){
-        alert(this.enqno);
-        alert(follupupstatus);
+        //alert(this.enqno);
+        //alert(follupupstatus);
+        if(follupupstatus=='Schedule New Followup'){
+          this.$.service.changestatus(this.followupid,this.enqno);
+        }
+        else{
         this.$.service.SubmitStatus(this.enqno,follupupstatus);
+      }
       }
     });
   })();

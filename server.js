@@ -1042,7 +1042,7 @@ app.post('/updatefollow',  urlencodedParser,function (req, res)
 /*this below function is used to insert data in the follow up detail table */
 app.post('/updatefollowdetail',  urlencodedParser,function (req, res)
 {
-   var collection={"school_id":req.query.schol,"followup_id":req.query.id,"enquiry_id":req.query.enquiryid,"followup_1":req.query.folowup1,"followup_2":req.query.folowup2,"followup_3":req.query.folowup3,"followup_4":req.query.folowup4,"followup_5":req.query.folowup5,"followup_flag":req.query.flag,"next_followup_date":req.query.nextfolowup,"schedule":req.query.schedule,"followup_status":req.query.status};
+   var collection={"school_id":req.query.schol,"followup_id":req.query.id,"enquiry_id":req.query.enquiryid,"followup_1":req.query.folowup1,"followup_2":req.query.folowup2,"followup_3":req.query.folowup3,"followup_4":req.query.folowup4,"followup_5":req.query.folowup5,"followup_flag":req.query.flag,"created_on":req.query.nextfolowup,"schedule":req.query.schedule,"followup_status":req.query.status};
        connection.query('insert into followupdetail set ? ',[collection],
         function(err, rows)
         {
@@ -1373,6 +1373,56 @@ app.post('/getadmissioncount',  urlencodedParser,function (req, res){
 
      });
  });
+
+/*this function is to change the current followup status in the followdetail table*/
+app.post('/changestatus',  urlencodedParser,function (req, res)
+{
+  var school={"school_id":req.query.schol};
+  var enquiry={"enquiry_id":req.query.id};
+  var followupid={"followup_id":req.query.fid};
+  var status={"followup_status":"Rescheduled"};
+       connection.query('update followupdetail set ? where ? and ? and ?',[status,followupid,enquiry,school],
+        function(err, rows)
+        {
+    if(!err)
+    {
+      console.log('updated');
+          res.status(200).json({'returnval': 'success'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+
+});
+  });
+
+/*this function is to update the new reschedule date and new folllowup id in the follow table*/
+app.post('/updateschedule',  urlencodedParser,function (req, res)
+{
+
+  var school={"school_id":req.query.schol};
+  var enquiry={"enquiry_id":req.query.id};
+  var collection={"id":req.query.followid,"schedule_no":req.query.schedule,"rescheduled_on":req.query.rescheduledon};
+  
+       connection.query('update followup set ? where ? and ?',[collection,enquiry,school],
+        function(err, rows)
+        {
+    if(!err)
+    {
+      console.log('updatedsche');
+          res.status(200).json({'returnval': 'success'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+
+});
+  });
+
 function setvalue(){
   console.log("calling setvalue.....");
 }

@@ -404,6 +404,42 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       debounce-duration="300"
     >
     </iron-ajax>
+    <!-- this below ajax is used to change the status in folloupdetail table as rescheduled -->
+    <iron-ajax
+      method="post"
+      id="changestatusajax"
+      url="{{changestatusurl}}"
+      params="{{changestatusparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="changeStatusResponse"
+      debounce-duration="300"
+    >
+    </iron-ajax>
+    <!-- this ajax is to generate the followup id then update id and reschedule no in the followup table -->
+    <iron-ajax
+      method="post"
+      id="updatescheduleajax"
+      url="{{updatescheduleurl}}"
+      params="{{updatescheduleparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="updatescheduleResponse"
+      debounce-duration="300"
+    >
+    </iron-ajax>
+    <!-- this is to insert new follow up detail in the followup detail table -->
+    <iron-ajax
+      method="post"
+      id="insertrescheduleajax"
+      url="{{insertrescheduleurl}}"
+      params="{{insertrescheduleparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="insertrescheduleResponse"
+      debounce-duration="300"
+    >
+    </iron-ajax>
   </template>
   <script>
   (function() {
@@ -424,6 +460,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
    var parentarr=[];
    var studentarr=[];
    var namelistarr=[];
+   var reschedule;
+   var xenquiryidd;
 
     Polymer({
       is: 'crm-service',
@@ -1134,7 +1172,77 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         if(res == "success"){
           document.querySelector('followup-student-detail').closedialog();
         }
+      },
+      changestatus:function(folowupid,enquiryidd){
+        xenquiryidd=enquiryidd;
+        this.changestatusurl="http://localhost:8086/changestatus";
+        var obj={"schol":"","id":"","fid":""};
+        obj.schol=localStorage.getItem("schoolid");
+        obj.id=enquiryidd;
+        obj.fid=folowupid;
+        this.changestatusparam=obj;
+        this.$.changestatusajax.generateRequest();  
+      },
+      changeStatusResponse:function(e){
+        var res=e.detail.response.returnval;
+        if(res=='success'){
+        var dat=new Date();
+        reschedule=Math.floor(100000 + Math.random() * 900000);
+        this.updatescheduleurl="http://localhost:8086/updateschedule";
+        var obj={"schol":"","id":"","fid":""};
+        obj.schol=localStorage.getItem("schoolid");
+        obj.id=xenquiryidd;
+        obj.followid=reschedule;
+        obj.schedule=2;
+        obj.rescheduledon=dat.getDate()+"/"+(dat.getMonth()+1)+"/"+dat.getFullYear();
+        this.updatescheduleparam=obj;
+        this.$.updatescheduleajax.generateRequest();  
       }
+      },
+      updatescheduleResponse:function(e){
+          var res=e.detail.response.returnval;
+          if(res=='success'){
+
+            var firstdate=new Date();
+           var seconddate=new Date();
+           var thirddate=new Date();
+           var fourthdate=new Date();
+           var fifthdate=new Date();
+
+    firstdate.setDate(firstfollowupdate.getDate()+firstfollowup);
+    seconddate.setDate(secondfollowupdate.getDate()+secondfollowup);
+    thirddate.setDate(thirdfollowupdate.getDate()+thirdfollowup);
+    fourthdate.setDate(fourthfollowupdate.getDate()+fourthfollowup);
+    fifthdate.setDate(fifthfollowupdate.getDate()+fifthfollowup);
+
+
+var dat=new Date();
+
+
+
+               this.updatefollowdetailurl="http://localhost:8086/updatefollowdetail";
+        var obj={"schol":"","id":"","enquiryid":"","folowup1":"","folowup2":"","folowup3":"","folowup4":"","folowup5":"","nextfolowup":"","schedule":"","flag":"","status":""}
+        obj.schol=localStorage.getItem("schoolid");
+        obj.id=reschedule;
+        obj.enquiryid=xenquiryidd;
+        obj.folowup1=firstdate.getDate()+"/"+(firstdate.getMonth()+1)+"/"+firstdate.getFullYear();
+        obj.folowup2=seconddate.getDate()+"/"+(seconddate.getMonth()+1)+"/"+seconddate.getFullYear();
+        obj.folowup3=thirddate.getDate()+"/"+(thirddate.getMonth()+1)+"/"+thirddate.getFullYear();
+        obj.folowup4=fourthdate.getDate()+"/"+(fourthdate.getMonth()+1)+"/"+fourthdate.getFullYear();
+        obj.folowup5=fifthdate.getDate()+"/"+(fifthdate.getMonth()+1)+"/"+fifthdate.getFullYear();
+        obj.nextfolowup=dat.getDate()+"/"+(dat.getMonth()+1)+"/"+dat.getFullYear();
+        obj.flag=1;
+        obj.schedule=2;
+        obj.status="Open";
+        this.updatefollowdetailparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.updatefollowdetailajax.generateRequest();
+
+        alert('Re-Schedule is done Successfully');
+          }
+          alert('Re-Schedule is not done');
+      }
+
     });
   })();
   </script>
