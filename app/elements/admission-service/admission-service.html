@@ -105,7 +105,7 @@
         on-response="searchfeeenquiryResponse"
         debounce-duration="300"
         >
-        
+
             <!-- Component will insert student co curricular info-->
    <iron-ajax
         method="post"
@@ -171,32 +171,32 @@
         content-type="application/json"
         on-response="getadmissioncountResponse"
         debounce-duration="300"
-        >    
+        >
   </template>
   <script>
   (function() {
     'use strict';
-       
+
     Polymer({
       is: 'admission-service',
       callSearchenquiryService:function(enquiryno){
         // alert(enquiryno);
         this.searchenquiryurl=sessionStorage.getItem("addrinfo")+"/searchenquiry";
-        var obj={"enquiryno":"","schoolid":""}
-        obj.enquiryno=enquiryno; 
-        obj.schoolid=localStorage.getItem("schoolid");     
-        this.searchenquiryparam=obj;       
+        var obj={"enquiryno":"","schoolid":""};
+        obj.enquiryno=enquiryno;
+        obj.schoolid=localStorage.getItem("schoolid");
+        this.searchenquiryparam=obj;
         this.$.searchenquiryajax.generateRequest();
       },
-      searchenquiryResponse:function(e){        
-        document.querySelector('admission-form').enquiryarr=e.detail.response.returnval;        
+      searchenquiryResponse:function(e){
+        document.querySelector('admission-form').enquiryarr=e.detail.response.returnval;
       },
       callFetchenquiryinfoService:function(){
         this.fetchenquiryinfourl=sessionStorage.getItem("addrinfo")+"/fetchenquiryinfo";
         var obj={"enquiryno":"","schoolid":""}
-        obj.enquiryno=localStorage.getItem("curr_sess_enquiryno"); 
-        obj.schoolid=localStorage.getItem("schoolid");     
-        this.fetchenquiryinfoparam=obj;       
+        obj.enquiryno=localStorage.getItem("curr_sess_enquiryno");
+        obj.schoolid=localStorage.getItem("schoolid");
+        this.fetchenquiryinfoparam=obj;
         this.$.fetchenquiryinfoajax.generateRequest();
       },
       fetchenquiryinfoResponse:function(e){
@@ -210,12 +210,12 @@
         document.querySelector('admission-form').middlename=arr[0].middle_name;
         document.querySelector('admission-form').lastname=arr[0].last_name;
         document.querySelector('admission-form').gradeselection=arr[0].class;
-        document.querySelector('admission-form').FnSetSecLanguage(arr[0].second_language); 
+        document.querySelector('admission-form').FnSetSecLanguage(arr[0].second_language);
         if(arr[0].class=="Nursery"||arr[0].class=="Junior KG"||arr[0].class=="Senior KG"||arr[0].class=="Grade-1"||arr[0].class=="Grade-2"||arr[0].class=="Grade-3"||arr[0].class=="Grade-4"){}
         else
         document.querySelector('admission-form').FnSetThirdLanguage(arr[0].third_language);
-        document.querySelector('dateofbirth-datepicker').FnSetDate(arr[0].dob); 
-        document.querySelector('admission-form').FnFindAge(arr[0].dob);  
+        document.querySelector('dateofbirth-datepicker').FnSetDate(arr[0].dob);
+        document.querySelector('admission-form').FnFindAge(arr[0].dob);
         document.querySelector('admission-form').FnSetGender(arr[0].gender);
 
         document.querySelector('admission-form').flatno=arr[0].flat_no;
@@ -226,7 +226,7 @@
         document.querySelector('admission-form').state=arr[0].state;
         document.querySelector('admission-form').pincode=arr[0].pincode;
 
-        document.querySelector('admission-form').mothertongue=arr[0].mother_tongue;       
+        document.querySelector('admission-form').mothertongue=arr[0].mother_tongue;
 
         document.querySelector('admission-form').siblingname=arr[0].sibiling_name;
         document.querySelector('admission-form').siblingclass=arr[0].sibling_detail;
@@ -247,7 +247,7 @@
         document.querySelector('admission-form').motherincome=arr[0].mother_income;
         document.querySelector('admission-form').FnSetTransport(arr[0].transport_requirment);
         document.querySelector('admission-form').FnSetCanteen(arr[0].canteen_requirment);
-               
+
       },
       callInsertAdmissionService:function(applicationno,schoolname,admissionyear,firstname,middlename,lastname,admissiongrade,admissiondob,admissiongender,admissiondisabled,admissioncanteen,admissiontransport,fathername,mothername){
         this.insertadmissionurl=sessionStorage.getItem("addrinfo")+"/insertadmission";
@@ -266,14 +266,14 @@
         obj.admissiongender=admissiongender;
         obj.admissiondisabled=admissiondisabled;
         obj.admissioncanteen=admissioncanteen;
-        obj.admissiontransport=admissiontransport;        
+        obj.admissiontransport=admissiontransport;
         obj.createdby=localStorage.getItem("employeename");
         obj.academicyear=admissionyear;
         obj.fathername=fathername;
-        obj.mothername=mothername; 
-          
-        this.insertadmissionparam=obj;     
-        alert(JSON.stringify(obj));  
+        obj.mothername=mothername;
+
+        this.insertadmissionparam=obj;
+        alert(JSON.stringify(obj));
         this.$.insertadmissionajax.generateRequest();
       },
       insertadmissionResponse:function(e){
@@ -284,9 +284,9 @@
       callInsertStudentService:function(){
         this.insertstudenturl=sessionStorage.getItem("addrinfo")+"/insertstudent";
         var obj={"enquiryno":"","schoolid":""}
-        obj.enquiryno=enquiryno; 
-        obj.schoolid=localStorage.getItem("schoolid");     
-        this.insertstudentparam=obj;       
+        obj.enquiryno=enquiryno;
+        obj.schoolid=localStorage.getItem("schoolid");
+        this.insertstudentparam=obj;
         this.$.insertstudentajax.generateRequest();
       },
       insertstudentResponse:function(e){
@@ -295,9 +295,9 @@
       callInsertStudentHistoryService:function(){
         this.insertstudenthistoryurl=sessionStorage.getItem("addrinfo")+"/insertstudenthistory";
         var obj={"enquiryno":"","schoolid":""}
-        obj.enquiryno=enquiryno; 
-        obj.schoolid=localStorage.getItem("schoolid");     
-        this.insertstudenthistoryparam=obj;       
+        obj.enquiryno=enquiryno;
+        obj.schoolid=localStorage.getItem("schoolid");
+        this.insertstudenthistoryparam=obj;
         this.$.insertstudenthistoryajax.generateRequest();
       },
       insertstudenthistoryResponse:function(e){
@@ -306,9 +306,9 @@
       callInsertDisabilityInfoService:function(){
         this.insertdisabilityinfourl=sessionStorage.getItem("addrinfo")+"/insertdisabilityinfo";
         var obj={"enquiryno":"","schoolid":""}
-        obj.enquiryno=enquiryno; 
-        obj.schoolid=localStorage.getItem("schoolid");     
-        this.insertdisabilityinfoparam=obj;       
+        obj.enquiryno=enquiryno;
+        obj.schoolid=localStorage.getItem("schoolid");
+        this.insertdisabilityinfoparam=obj;
         this.$.insertdisabilityinfoajax.generateRequest();
       },
       insertdisabilityinfoResponse:function(e){
@@ -317,9 +317,9 @@
       callInsertCocurricularInfoService:function(){
         this.insertcocurricularinfourl=sessionStorage.getItem("addrinfo")+"/insertcocurricularinfo";
         var obj={"enquiryno":"","schoolid":""}
-        obj.enquiryno=enquiryno; 
-        obj.schoolid=localStorage.getItem("schoolid");     
-        this.insertcocurricularinfoparam=obj;       
+        obj.enquiryno=enquiryno;
+        obj.schoolid=localStorage.getItem("schoolid");
+        this.insertcocurricularinfoparam=obj;
         this.$.insertcocurricularinfoajax.generateRequest();
       },
       insertcocurricularinfoResponse:function(e){
@@ -328,21 +328,21 @@
       callSearchfeeenquiryService:function(enquiryno){
         this.searchfeeenquiryurl=sessionStorage.getItem("addrinfo")+"/searchfeeenquiry";
         var obj={"enquiryno":"","schoolid":""}
-        obj.enquiryno=enquiryno; 
-        obj.schoolid=localStorage.getItem("schoolid");     
-        this.searchfeeenquiryparam=obj;       
+        obj.enquiryno=enquiryno;
+        obj.schoolid=localStorage.getItem("schoolid");
+        this.searchfeeenquiryparam=obj;
         this.$.searchfeeenquiryajax.generateRequest();
       },
       searchfeeenquiryResponse:function(e){
-        var arr=e.detail.response.returnval;        
-        if(localStorage.getItem("curr_sess_feetype")=="pros_fee"){        
+        var arr=e.detail.response.returnval;
+        if(localStorage.getItem("curr_sess_feetype")=="pros_fee"){
         document.querySelector('prospectousfee-card').academicyear=arr[0].academic_year;
         document.querySelector('prospectousfee-card').enquiredclass=arr[0].class;
         document.querySelector('prospectousfee-card').studentname=arr[0].enquiry_name;
         document.querySelector('prospectousfee-card').parentname=arr[0].father_name;
         document.querySelector('prospectousfee-card').dob=arr[0].dob;
         }
-        localStorage.setItem("curr_sess_enquiryno",arr[0].enquiry_no);      
+        localStorage.setItem("curr_sess_enquiryno",arr[0].enquiry_no);
         localStorage.setItem("curr_sess_academicyear",arr[0].academic_year);
         localStorage.setItem("curr_sess_grade",arr[0].class);
         localStorage.setItem("curr_sess_studentname",arr[0].enquiry_name);
@@ -356,15 +356,15 @@
       callSearchadmnenquiryService:function(enquiryno){
         this.searchadmnenquiryurl=sessionStorage.getItem("addrinfo")+"/searchadmnenquiry";
         var obj={"enquiryno":"","schoolid":""}
-        obj.enquiryno=enquiryno; 
-        obj.schoolid=localStorage.getItem("schoolid");     
-        this.searchadmnenquiryparam=obj;       
+        obj.enquiryno=enquiryno;
+        obj.schoolid=localStorage.getItem("schoolid");
+        this.searchadmnenquiryparam=obj;
         this.$.searchadmnenquiryajax.generateRequest();
       },
       searchadmnenquiryResponse:function(e){
         var arr=e.detail.response.returnval;
         alert(JSON.stringify(arr));
-        if(localStorage.getItem("curr_sess_feetype")=="reg_fee"){ 
+        if(localStorage.getItem("curr_sess_feetype")=="reg_fee"){
         document.querySelector('registerationfee-card').admissionno=arr[0].admission_no;
         document.querySelector('registerationfee-card').academicyear=arr[0].academic_year;
         document.querySelector('registerationfee-card').enquiredclass=arr[0].class_for_admission;
@@ -372,7 +372,7 @@
         document.querySelector('registerationfee-card').parentname=arr[0].father_name;
         document.querySelector('registerationfee-card').dob=arr[0].dob;
         }
-        if(localStorage.getItem("curr_sess_feetype")=="ann_fee"){ 
+        if(localStorage.getItem("curr_sess_feetype")=="ann_fee"){
         alert(document.querySelector('annualfee-card').admissionno);
         document.querySelector('annualfee-card').admissionno=arr[0].admission_no;
         document.querySelector('annualfee-card').academicyear=arr[0].academic_year;
@@ -381,7 +381,7 @@
         document.querySelector('annualfee-card').parentname=arr[0].father_name;
         document.querySelector('annualfee-card').dob=arr[0].dob;
         }
-        localStorage.setItem("curr_sess_enquiryno",arr[0].enquiry_no);      
+        localStorage.setItem("curr_sess_enquiryno",arr[0].enquiry_no);
         localStorage.setItem("curr_sess_admissionno",arr[0].admission_no);
         localStorage.setItem("curr_sess_academicyear",arr[0].academic_year);
         localStorage.setItem("curr_sess_grade",arr[0].class_for_admission);
@@ -396,9 +396,9 @@
       callSearchadmissionService:function(admissionno){
         this.searchadmissionurl=sessionStorage.getItem("addrinfo")+"/searchadmission";
         var obj={"admissionno":"","schoolid":""}
-        obj.admissionno=admissionno; 
-        obj.schoolid=localStorage.getItem("schoolid");     
-        this.searchadmissionparam=obj;       
+        obj.admissionno=admissionno;
+        obj.schoolid=localStorage.getItem("schoolid");
+        this.searchadmissionparam=obj;
         this.$.searchadmissionajax.generateRequest();
       },
       searchadmissionResponse:function(e){
@@ -425,49 +425,49 @@
       callfetchfeesService:function(){
         this.fetchfeesurl=sessionStorage.getItem("addrinfo")+"/fetchfees";
         var obj={"schoolid":"","academicyear":"","admissionyear":"","grade":""}
-        obj.admissionyear=this.admissionyear; 
-        obj.academicyear=this.academicyear; 
-        obj.grade=this.grade; 
-        obj.schoolid=localStorage.getItem("schoolid");     
-        this.fetchfeesparam=obj;       
+        obj.admissionyear=this.admissionyear;
+        obj.academicyear=this.academicyear;
+        obj.grade=this.grade;
+        obj.schoolid=localStorage.getItem("schoolid");
+        this.fetchfeesparam=obj;
         this.$.fetchfeesajax.generateRequest();
       },
-      fetchfeesResponse:function(e){        
+      fetchfeesResponse:function(e){
         var arr=e.detail.response.returnval;
         alert(JSON.stringify(arr));
         localStorage.setItem("curr_sess_feecode",arr[0].fee_code);
-        
+
       },
       fetchfeesplitup:function(){
         this.fetchfeesplitupurl=sessionStorage.getItem("addrinfo")+"/fetchfeesplitup";
-        var obj={"schoolid":"","feecode":""}        
+        var obj={"schoolid":"","feecode":""}
         obj.feecode=localStorage.getItem("curr_sess_feecode");
-        obj.schoolid=localStorage.getItem("schoolid");     
-        this.fetchfeesplitupparam=obj;       
+        obj.schoolid=localStorage.getItem("schoolid");
+        this.fetchfeesplitupparam=obj;
         this.$.fetchfeesplitupajax.generateRequest();
       },
       fetchfeesplitupResponse:function(e){
-        var arr=e.detail.response.returnval;    
-        alert(JSON.stringify(arr));    
-        if(localStorage.getItem("curr_sess_feetype")=="pros_fee"){ 
+        var arr=e.detail.response.returnval;
+        alert(JSON.stringify(arr));
+        if(localStorage.getItem("curr_sess_feetype")=="pros_fee"){
           document.querySelector('prospectousfee-card').fees=arr[0].prospectous_fee;
           localStorage.setItem("curr_sess_prospectousfee",arr[0].prospectous_fee);
         }
-        if(localStorage.getItem("curr_sess_feetype")=="reg_fee"){ 
+        if(localStorage.getItem("curr_sess_feetype")=="reg_fee"){
           document.querySelector('registerationfee-card').fees=arr[0].registeration_fee;
           localStorage.setItem("curr_sess_registerationfee",arr[0].registeration_fee);
         }
-        if(localStorage.getItem("curr_sess_feetype")=="ann_fee"){ 
+        if(localStorage.getItem("curr_sess_feetype")=="ann_fee"){
           document.querySelector('annualfee-card').fees=arr[0].annual_fee;
           localStorage.setItem("curr_sess_annualfee",arr[0].annual_fee);
         }
-      
+
       },
       callfetchnoofinstallmentService:function(){
         this.fetchnoofinstallmenturl=sessionStorage.getItem("addrinfo")+"/fetchnoofinstallment";
-        var obj={"schoolid":""}         
-        obj.schoolid=localStorage.getItem("schoolid");     
-        this.fetchnoofinstallmentparam=obj;       
+        var obj={"schoolid":""}
+        obj.schoolid=localStorage.getItem("schoolid");
+        this.fetchnoofinstallmentparam=obj;
         this.$.fetchnoofinstallmentajax.generateRequest();
       },
       fetchnoofinstallmentResponse:function(e){
@@ -500,7 +500,7 @@
           var regfee=localStorage.getItem("curr_sess_registerationfee");
           obj.amount=parseFloat(regfee)*(parseFloat(percent)/100);
           reg.push(obj);
-        }       
+        }
         if(arr[i].feetype_code=="kit_fee"){
           var percent=arr[i].installment_percentage;
           var kitfee=localStorage.getItem("curr_sess_kitfee");
@@ -514,27 +514,27 @@
           caution.push(obj);
         }
         }
-        if(localStorage.getItem("curr_sess_feetype")=="pros_fee"){         
+        if(localStorage.getItem("curr_sess_feetype")=="pros_fee"){
         document.querySelector('prospectousfee-card').prosarr=pros;
         document.querySelector('prospectousfee-card').FnHiddenPayment();
         }
-        if(localStorage.getItem("curr_sess_feetype")=="reg_fee"){         
+        if(localStorage.getItem("curr_sess_feetype")=="reg_fee"){
         document.querySelector('registerationfee-card').regarr=reg;
         document.querySelector('registerationfee-card').FnHiddenPayment();
         }
-        if(localStorage.getItem("curr_sess_feetype")=="ann_fee"){         
+        if(localStorage.getItem("curr_sess_feetype")=="ann_fee"){
         document.querySelector('annualfee-card').annarr=annual;
         document.querySelector('annualfee-card').FnHiddenPayment();
         }
       },
       FnRefresh:function(){
-        localStorage.setItem("curr_sess_enquiryno","");      
+        localStorage.setItem("curr_sess_enquiryno","");
         localStorage.setItem("curr_sess_admissionno","");
         localStorage.setItem("curr_sess_academicyear","");
         localStorage.setItem("curr_sess_grade","");
         localStorage.setItem("curr_sess_studentname","");
       },
-      callfetchadmissioncountService:function(){         
+      callfetchadmissioncountService:function(){
         this.getadmissioncounturl=sessionStorage.getItem("addrinfo")+"/getadmissioncount";
         var obj={"schol":"","status":""}
         obj.schol=localStorage.getItem("schoolid");
@@ -542,7 +542,7 @@
         this.getadmissioncountparam=obj;
        //alert(JSON.stringify(obj));
         this.$.getadmissioncountajax.generateRequest();
-     },     
+     },
      getadmissioncountResponse:function(){
         var result=e.detail.response.returnval;
         document.querySelector('enquiry-card').gradewiseadmissionarr=result;

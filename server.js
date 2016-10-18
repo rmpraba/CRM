@@ -438,12 +438,10 @@ app.post('/updateseq',  urlencodedParser,function (req, res)
  });
 
  /*this function is used to get the details of the particular enquiry using enquiry no*/
-app.post('/getenqirydetails',  urlencodedParser,function (req, res)
-{
-  var id={"school_id":req.query.schol};
-  var enqnum={"enquiry_no":req.query.enqno};
+app.post('/getenqirydetails',  urlencodedParser,function (req, res){
+  var qur="SELECT * FROM student_enquiry_details WHERE school_id='"+req.query.schol+"' and enquiry_no like '%"+req.query.enqno+"%' or enquiry_name like '%"+req.query.enqno+"%'";
+  connection.query(qur,
 
-       connection.query('SELECT * from student_enquiry_details where ? and ?',[id,enqnum],
         function(err, rows)
         {
     if(!err)
@@ -1373,6 +1371,31 @@ app.post('/getadmissioncount',  urlencodedParser,function (req, res){
 
      });
  });
+ app.post('/fetchdetailedenquiryinfo', urlencodedParser,function (req, res){
+
+   //console.log('qur');
+   connection.query("SELECT * from student_enquiry_details where school_id = '"+req.query.schoolid+"' and enquiry_no= '"+req.query.enquiryno+"'",
+     function(err, rows)
+     {
+       if(!err)
+       {
+         if(rows.length>0)
+         {
+           //console.log(rows);
+           res.status(200).json({'returnval': rows});
+         }
+         else
+         {
+           console.log(err);
+           res.status(200).json({'returnval': 0});
+         }
+       }
+       else{
+         console.log(err);
+       }
+     });
+ });
+
 function setvalue(){
   console.log("calling setvalue.....");
 }
