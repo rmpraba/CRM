@@ -54,9 +54,9 @@
         <div class="col-sm-6 enquiry-input">
           <!--<paper-input id="grade" required error-message="needs grade seeking for!" label="Class Admission Seeking for" value="{{grade}}"></paper-input>-->
          <paper-dropdown-menu label="Select the Class" >
-            <paper-menu id="class" class="dropdown-content" required on-iron-select="classseeking" valueattr="value" >
+            <paper-menu id="class" class="dropdown-content" required on-iron-select="classseeking" attr-for-selected="value" selected="{{grades}}">
               <template  is="dom-repeat" items="{{itemarr}}" as="view">
-                <paper-item >{{view.class}}</paper-item>
+                <paper-item value="{{view.class}}">{{view.class}}</paper-item>
               </template>
             </paper-menu>
           </paper-dropdown-menu>
@@ -313,8 +313,6 @@
         <paper-button id="searchenq" class="btn btn-primary" on-click="submit">SUBMIT</paper-button>
         <paper-button id="newenq" class="btn btn-primary" on-click="register">REGISTER</paper-button>
       </div>
-
-
        <crm-service id="service"></crm-service>
     </div>
   </template>
@@ -351,11 +349,10 @@
           this.$.momjob.hidden=true;
           this.$.momsal.hidden=true;
           this.$.prospectno.hidden=true;
-         
-        this.$.newenq.hidden=true;
-        this.$.academicyear.hidden=true;
-        this.$.newenquiry.hidden=false;
-        this.$.thirdlanguage.hidden=true;
+          this.$.newenq.hidden=true;
+          this.$.academicyear.hidden=true;
+          this.$.newenquiry.hidden=false;
+          this.$.thirdlanguage.hidden=true;
       },
       Fnclear:function(){
         this.ready();
@@ -442,15 +439,13 @@
         this.$.service.getenqirydetails(enqno);
       },
       Fnresult:function(dob,gender){
-        //alert(gender);
         var dt1=new Date(dob);
 
           var dt=new Date();
           var pr_year=dt.getFullYear();
           var bt_year=dt1.getFullYear();
-          var diff=parseInt(pr_year-bt_year);
-          //alert(diff);
-          this.age=diff+" Years";
+          var diff=parseInt(pr_year - bt_year);
+          this.ageofyr=diff+" Years";
 
           if(gender=='Male'){
             fngender="Male";
@@ -727,7 +722,7 @@
           // alert('coming');
           this.$.service.updateenquiryform(enqno,this.firstname,this.middlename,this.lastname,fngender,grade,dobdate,this.oldclass,this.oldschool,mothertongue,this.fathername,this.mothername,this.fatheredu,this.motheredu,this.fathermob,this.mothermob,this.fathermail,this.mothermail,this.fathercompany,this.mothercompany,dadoccup,momtheroccup,this.flat,this.address1,this.address2,this.address3,this.city,this.pincode,this.state,enquiysource,this.siblingname,this.siblingdetails,transportreq,canteenreq,secondlanguage,"",propsold,this.fatherjob,this.motherjob,dadincome,momincome,this.prospectusno);
          
-          
+           
         } else {
           alert('Select the third language');
         }
@@ -738,7 +733,7 @@
       this.$.service.updateenquiryform(enqno,this.firstname,this.middlename,this.lastname,fngender,grade,dobdate,this.oldclass,this.oldschool,mothertongue,this.fathername,this.mothername,this.fatheredu,this.motheredu,this.fathermob,this.mothermob,this.fathermail,this.mothermail,this.fathercompany,this.mothercompany,dadoccup,momtheroccup,this.flat,this.address1,this.address2,this.address3,this.city,this.pincode,this.state,enquiysource,this.siblingname,this.siblingdetails,transportreq,canteenreq,secondlanguage,thirdlanguage,propsold,this.fatherjob,this.motherjob,dadincome,momincome,this.prospectusno);
 
     }
-    this.Fnclear();
+   // this.Fnclear();
 },
 dadoccupation:function(e){
   dadoccup=(e.target.selectedItem.textContent).trim();
@@ -922,8 +917,7 @@ Fnlistbox:function(nameitem){
         else if(thirdlanguage==null){
           alert(grade);
           if(grade == "Pre KG"||"LKG"||"UKG"||"Grade 1"||"Grade 2"||"Grade 3"){
-            this.$.service.registerenquiryform(enqno,this.firstname,this.middlename,this.lastname,fngender,grade,dobdate,this.oldclass,this.oldschool,mothertongue,this.fathername,this.mothername,this.fatheredu,this.motheredu,this.fathermob,this.mothermob,this.fathermail,this.mothermail,this.fathercompany,this.mothercompany,dadoccup,momtheroccup,this.flat,this.address1,this.address2,this.address3,this.city,this.pincode,this.state,enquiysource,this.siblingname,this.siblingdetails,transportreq,canteenreq,secondlanguage,propsold,this.fatherjob,this.motherjob,dadincome,momincome,this.prospectusno);
-            alert("hi1");
+            this.$.service.registerenquiryform(enqnumber,this.firstname,this.middlename,this.lastname,fngender,grade,dobdate,this.oldclass,this.oldschool,mothertongue,this.fathername,this.mothername,this.fatheredu,this.motheredu,this.fathermob,this.mothermob,this.fathermail,this.mothermail,this.fathercompany,this.mothercompany,dadoccup,momtheroccup,this.flat,this.address1,this.address2,this.address3,this.city,this.pincode,this.state,enquiysource,this.siblingname,this.siblingdetails,transportreq,canteenreq,secondlanguage,thirdlanguage,propsold,this.fatherjob,this.motherjob,dadincome,momincome,this.prospectusno);
           } else {
             alert('Select the third language');
           }
@@ -947,7 +941,10 @@ Fnlistbox:function(nameitem){
           var diff=parseInt(pr_year-bt_year);
           //alert(diff);
           this.ageofyr=diff+" Years";
-        }
+       },
+      Fngrade:function(grades){
+        this.grades = grades;
+      }
     });
   })();
   </script>
