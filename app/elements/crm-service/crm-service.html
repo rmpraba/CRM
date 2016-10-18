@@ -1190,7 +1190,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         obj.id=enquiryidd;
         obj.fid=folowupid;
         this.changestatusparam=obj;
-        this.$.changestatusajax.generateRequest();  
+        this.$.changestatusajax.generateRequest();
       },
       changeStatusResponse:function(e){
         var res=e.detail.response.returnval;
@@ -1205,7 +1205,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         obj.schedule=2;
         obj.rescheduledon=dat.getDate()+"/"+(dat.getMonth()+1)+"/"+dat.getFullYear();
         this.updatescheduleparam=obj;
-        this.$.updatescheduleajax.generateRequest();  
+        this.$.updatescheduleajax.generateRequest();
+        document.querySelector('followup-student-detail').closedialog();
+        document.querySelector('followup-student-detail').check();
       }
       },
       updatescheduleResponse:function(e){

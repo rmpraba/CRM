@@ -55,7 +55,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <th scope="row">1</th>
           <td>
             <span class="col-sm-8"><paper-input id="date1" disabled label="Date" value="{{followupdate1}}"></paper-input></span>
-    
+
             <span class="col-sm-4 glyph-button"><button on-click="dialogfollowup1" id="followedit1" class="btn glyphicon glyphicon-pencil"></span>
           </td>
           <td>
@@ -194,7 +194,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 </paper-dialog>
 
 
-    
+
       <paper-dialog id="dialog1" class="paper-date-picker-dialog">
         <paper-date-picker id="picker" date="{{date}}"></paper-date-picker>
         <div class="buttons">
@@ -202,7 +202,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <paper-button on-click="FnDismissDialog1">OK</paper-button>
         </div>
       </paper-dialog>
-    
+
       <paper-dialog id="dialog2" class="paper-date-picker-dialog">
         <paper-date-picker id="picker" date="{{date}}"></paper-date-picker>
         <div class="buttons">
@@ -210,7 +210,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <paper-button on-click="FnDismissDialog2">OK</paper-button>
         </div>
       </paper-dialog>
-    
+
       <paper-dialog id="dialog3" class="paper-date-picker-dialog">
         <paper-date-picker id="picker" date="{{date}}"></paper-date-picker>
         <div class="buttons">
@@ -218,7 +218,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <paper-button on-click="FnDismissDialog3">OK</paper-button>
         </div>
       </paper-dialog>
-    
+
       <paper-dialog id="dialog4" class="paper-date-picker-dialog">
         <paper-date-picker id="picker" date="{{date}}"></paper-date-picker>
         <div class="buttons">
@@ -226,7 +226,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <paper-button on-click="FnDismissDialog4">OK</paper-button>
         </div>
       </paper-dialog>
-    
+
       <paper-dialog id="dialog5" class="paper-date-picker-dialog">
         <paper-date-picker id="picker" date="{{date}}"></paper-date-picker>
         <div class="buttons">
@@ -254,7 +254,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           this.$.followedit1.disabled=true;
               this.$.followdrop1.disabled=true;
               this.$.followbox1.disabled=true;
-              this.$.followdisk1.disabled=true; 
+              this.$.followdisk1.disabled=true;
         }
         if(this.comments2==null){
             this.$.followedit2.disabled=false;
@@ -327,7 +327,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       confidencelvl1:function(confidencelevel1){
         if( confidencelevel1 == ">90%" ){
           document.querySelector('#confidencelevel1').selected=0;
-        } else if ( confidencelevel1 == ">75%" ){       
+        } else if ( confidencelevel1 == ">75%" ){
           document.querySelector('#confidencelevel1').selected=1;
         } else if ( confidencelevel1 == ">50%" ){
           document.querySelector('#confidencelevel1').selected=2;
@@ -335,8 +335,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           document.querySelector('#confidencelevel1').selected=3;
         } else if ( confidencelevel1 == "<35%" ){
           document.querySelector('#confidencelevel1').selected=4;
-        } else {
+        } else if ( confidencelevel1 == "<10%" ){
           document.querySelector('#confidencelevel1').selected=5;
+        } else {
+          document.querySelector('#confidencelevel1').selected=-1;
         }
       },
       confidencelvl2:function(confidencelevel2){
@@ -424,7 +426,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.date=new Date();
     var id = 'dialog1';
       var dialog = document.getElementById(id);
-      dialog.opened=true;     
+      dialog.opened=true;
       this.$.date1.disabled=false;
       this.$.date1.readonly=true;
       },
@@ -441,7 +443,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.date=new Date();
     var id = 'dialog2';
       var dialog = document.getElementById(id);
-      dialog.opened=true;     
+      dialog.opened=true;
       this.$.date2.disabled=false;
       this.$.date2.readonly=true;
       },
@@ -458,7 +460,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.date=new Date();
     var id = 'dialog3';
       var dialog = document.getElementById(id);
-      dialog.opened=true;     
+      dialog.opened=true;
       this.$.date3.disabled=false;
       this.$.date3.readonly=true;
       },
@@ -475,7 +477,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.date=new Date();
     var id = 'dialog4';
       var dialog = document.getElementById(id);
-      dialog.opened=true;     
+      dialog.opened=true;
       this.$.date4.disabled=false;
       this.$.date4.readonly=true;
       },
@@ -492,7 +494,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.date=new Date();
     var id = 'dialog5';
       var dialog = document.getElementById(id);
-      dialog.opened=true;     
+      dialog.opened=true;
       this.$.date5.disabled=false;
       this.$.date5.readonly=true;
       },
