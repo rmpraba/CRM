@@ -172,6 +172,36 @@
         on-response="getadmissioncountResponse"
         debounce-duration="300"
         >
+        <iron-ajax
+        method="post"
+        id="studentfulldetailsajax"
+        url="{{studentfulldetailsurl}}"
+        params="{{studentfulldetailsparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="studentfulldetailsResponse"
+        debounce-duration="300"
+        >
+        <iron-ajax
+        method="post"
+        id="studentcocurricularajax"
+        url="{{studentcocurricularurl}}"
+        params="{{studentcocurricularparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="studentcocurricularResponse"
+        debounce-duration="300"
+        >
+        <iron-ajax
+        method="post"
+        id="studenthistoryajax"
+        url="{{studenthistoryurl}}"
+        params="{{studenthistoryparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="studenthistoryResponse"
+        debounce-duration="300"
+        >
   </template>
   <script>
   (function() {
@@ -201,7 +231,7 @@
       },
       fetchenquiryinfoResponse:function(e){
         var arr=e.detail.response.returnval;
-        // alert(JSON.stringify(arr));
+         //alert(JSON.stringify(arr));
         // alert(document.querySelector('admission-form').schoolname);
         document.querySelector('admission-form').schoolname=localStorage.getItem("schoolname");
         document.querySelector('admission-form').applicationno=arr[0].prospectus_no;
@@ -249,9 +279,11 @@
         document.querySelector('admission-form').FnSetCanteen(arr[0].canteen_requirment);
 
       },
-      callInsertAdmissionService:function(applicationno,schoolname,admissionyear,firstname,middlename,lastname,admissiongrade,admissiondob,admissiongender,admissiondisabled,admissioncanteen,admissiontransport,fathername,mothername){
+      callInsertAdmissionService:function(applicationno,schoolname,admissionyear,firstname,middlename,lastname,gradeselection,admissiondob,admissiongender,admissiondisabled,admissioncanteen,admissiontransport,fathername,mothername,flatno,bulidingname,street,town,city,state,pincode,height,weight,relegion,nationality,mothertongue,siblingname,siblingclass,prevschoolname,classfrom,classto,yearfrom,yearto,medium,lastclassmark,reasonforleaving,physicdetail,physicstatus,mentaldetail,mentalstatus,illnessdetail,illnessstatus,allergydetail,allergystatus,chronicdetail,chronicstatus,sno1,field1,year1,event1,prizedetail1,sno2,field2,year2,event2,prizedetail2,sno3,field3,year3,event3,prizedetail3,fatherdob,motherdob,fatherqualification,motherqualification,fatheroccupation,motheroccupation,fatherincome,motherincome,fathertelno,mothertelno,fathermobile,mothermobile,fatheremail,motheremail,ptown,pdistrict,pstate,ppincode,relationship1,guardianname1,relationship2,guardianname2,guardianname,gbuildingname,gstreet,gtown,gcity,gstate,gpincode,gresidentialcontact,gofficecontact,gmobileno,gfax,date,fsign,place,admissionclass,gradeadmin,authorizsign,FnBlood,relegions,FnBo){
+
+
         this.insertadmissionurl=sessionStorage.getItem("addrinfo")+"/insertadmission";
-        var obj={"enquiryno":"","applicationno":"","schoolid":"","schoolname":"","admissionyear":"","firstname":"","middlename":"","lastname":"","studentname":"","admissiongrade":"","admissiondob":"","admissiongender":"","admissiondisabled":"","admissioncanteen":"","admissiontransport":"","createdby":"","academicyear":"","fathername":"","mothername":""}
+        var obj={"enquiryno":"","applicationno":"","schoolid":"","schoolname":"","admissionyear":"","firstname":"","middlename":"","lastname":"","studentname":"","gradeselection":"","admissiondob":"","admissiongender":"","admissiondisabled":"","admissioncanteen":"","admissiontransport":"","createdby":"","academicyear":"","fathername":"","mothername":"","flatno":"","bulidingname":"","street":"","town":"","city":"","state":"","pincode":"","height":"","weight":"","relegion":"","nationality":"","mothertongue":"","siblingname":"","siblingclass":"","prevschoolname":"","classfrom":"","classto":"","yearfrom":"","yearto":"","medium":"","lastclassmark":"","reasonforleaving":"","physicdetail":"","physicstatus":"","mentaldetail":"","mentalstatus":"","illnessdetail":"","illnessstatus":"","allergydetail":"","allergystatus":"","chronicdetail":"","chronicstatus":"","sno1":"","field1":"","year1":"","event1":"","prizedetail1":"","sno2":"","field2":"","year2":"","event2":"","prizedetail2":"","sno3":"","field3":"","year3":"","event3":"","prizedetail3":"","fatherdob":"","motherdob":"","fatherqualification":"","motherqualification":"","fatheroccupation":"","motheroccupation":"","fatherincome":"","motherincome":"","fathertelno":"","mothertelno":"","fathermobile":"","mothermobile":"","fatheremail":"","motheremail":"","ptown":"","pdistrict":"","pstate":"","ppincode":"","relationship1":"","guardianname1":"","relationship2":"","guardianname2":"","guardianname":"","gbuildingname":"","gstreet":"","gtown":"","gcity":"","gstate":"","gpincode":"","gresidentialcontact":"","gofficecontact":"","gmobileno":"","gfax":"","date":"","fsign":"","place":"","admissionclass":"","gradeadmin":"","authorizsign":"","FnBlood":"","relegions":"","FnBo":""}
         obj.enquiryno=localStorage.getItem("curr_sess_enquiryno");
         obj.applicationno=applicationno;
         obj.schoolid=localStorage.getItem("schoolid");
@@ -261,7 +293,7 @@
         obj.middlename=middlename;
         obj.lastname=lastname;
         obj.studentname=firstname+' '+middlename+' '+lastname;
-        obj.admissiongrade=admissiongrade;
+        obj.gradeselection=gradeselection;
         obj.admissiondob=admissiondob;
         obj.admissiongender=admissiongender;
         obj.admissiondisabled=admissiondisabled;
@@ -271,11 +303,232 @@
         obj.academicyear=admissionyear;
         obj.fathername=fathername;
         obj.mothername=mothername;
-
+        obj.flatno=flatno;
+        obj.bulidingname=bulidingname;
+        obj.street=street;
+        obj.town=town;
+        obj.city=city;
+        obj.state=state;
+        obj.pincode=pincode;
+        obj.height=height;
+        obj.weight=weight;
+        obj.relegions=relegions;
+        obj.nationality=nationality;
+obj.mothertongue=mothertongue;
+obj.siblingname=siblingname;
+obj.siblingclass=siblingclass;
+obj.prevschoolname=prevschoolname;
+obj.classfrom=classfrom;
+obj.classto=classto;
+obj.yearfrom=yearfrom;
+obj.yearto=yearto;
+obj.medium=medium;
+obj.lastclassmark=lastclassmark;
+obj.reasonforleaving=reasonforleaving;
+obj.physicdetail=physicdetail;
+obj.physicstatus=physicstatus;
+obj.mentaldetail=mentaldetail;
+obj.mentalstatus=mentalstatus;
+obj.illnessdetail=illnessdetail;
+obj.illnessstatus=illnessstatus;
+obj.allergydetail=allergydetail;
+obj.allergystatus=allergystatus;
+obj.chronicdetail=chronicdetail;
+obj.chronicstatus=chronicstatus;
+obj.sno1=sno1;
+obj.field1=field1;
+obj.year1=year1;
+obj.event1=event1;
+obj.prizedetail1=prizedetail1;
+obj.sno2=sno2;
+obj.field2=field2;
+obj.year2=year2;
+obj.event2=event2;
+obj.prizedetail2=prizedetail2;
+obj.sno3=sno3;
+obj.field3=field3;
+obj.year3=year3;
+obj.event3=event3;
+obj.prizedetail3=prizedetail3;
+obj.fatherdob=fatherdob;
+obj.motherdob=motherdob;
+obj.fatherqualification=fatherqualification;
+obj.motherqualification=motherqualification;
+obj.fatheroccupation=fatheroccupation;
+obj.motheroccupation=motheroccupation;
+obj.fatherincome=fatherincome;
+obj.motherincome=motherincome;
+obj.fathertelno=fathertelno;
+obj.mothertelno=mothertelno;
+obj.fathermobile=fathermobile;
+obj.mothermobile=mothermobile;
+obj.fatheremail=fatheremail;
+obj.motheremail=motheremail;
+obj.ptown=ptown;
+obj.pdistrict=pdistrict;
+obj.pstate=pstate;
+obj.ppincode=ppincode;
+obj.relationship1=relationship1;
+obj.guardianname1=guardianname1;
+obj.relationship2=relationship2;
+obj.guardianname2=guardianname2;
+obj.guardianname=guardianname;
+obj.gbuildingname=gbuildingname;
+obj.gstreet=gstreet;
+obj.gtown=gtown;
+obj.gcity=gcity;
+obj.gstate=gstate;
+obj.gpincode=gpincode;
+obj.gresidentialcontact=gresidentialcontact;
+obj.gofficecontact=gofficecontact;
+obj.gmobileno=gmobileno;gfax
+obj.gfax=gfax;
+obj.date=date;
+obj.fsign=fsign;
+obj.admissionclass=admissionclass;
+obj.gradeadmin=gradeadmin;
+obj.authorizsign=authorizsign;
+obj.FnBlood=FnBlood;
+obj.relegion=relegion;
+obj.FnBo=FnBo;
         this.insertadmissionparam=obj;
-        alert(JSON.stringify(obj));
-        this.$.insertadmissionajax.generateRequest();
+    alert(JSON.stringify(obj));
+         this.$.insertadmissionajax.generateRequest();
+        this.studentfulldetailsurl=sessionStorage.getItem("addrinfo")+"/studentfulldetailsurl";
+        {
+       var obj={"enquiryno":"","applicationno":"","schoolid":"","schoolname":"","admissionyear":"","firstname":"","middlename":"","lastname":"","studentname":"","gradeselection":"","admissiondob":"","admissiongender":"","admissiondisabled":"","admissioncanteen":"","admissiontransport":"","createdby":"","academicyear":"","fathername":"","mothername":"","flatno":"","bulidingname":"","street":"","town":"","city":"","state":"","pincode":"","height":"","weight":"","relegion":"","nationality":"","mothertongue":"","siblingname":"","siblingclass":"","prevschoolname":"","classfrom":"","classto":"","yearfrom":"","yearto":"","medium":"","lastclassmark":"","reasonforleaving":"","physicdetail":"","physicstatus":"","mentaldetail":"","mentalstatus":"","illnessdetail":"","illnessstatus":"","allergydetail":"","allergystatus":"","chronicdetail":"","chronicstatus":"","sno1":"","field1":"","year1":"","event1":"","prizedetail1":"","sno2":"","field2":"","year2":"","event2":"","prizedetail2":"","sno3":"","field3":"","year3":"","event3":"","prizedetail3":"","fatherdob":"","motherdob":"","fatherqualification":"","motherqualification":"","fatheroccupation":"","motheroccupation":"","fatherincome":"","motherincome":"","fathertelno":"","mothertelno":"","fathermobile":"","mothermobile":"","fatheremail":"","motheremail":"","ptown":"","pdistrict":"","pstate":"","ppincode":"","relationship1":"","guardianname1":"","relationship2":"","guardianname2":"","guardianname":"","gbuildingname":"","gstreet":"","gtown":"","gcity":"","gstate":"","gpincode":"","gresidentialcontact":"","gofficecontact":"","gmobileno":"","gfax":"","date":"","fsign":"","place":"","admissionclass":"","gradeadmin":"","authorizsign":"","FnBlood":"","relegions":"","FnBo":""}
+        obj.enquiryno=localStorage.getItem("curr_sess_enquiryno");
+        obj.applicationno=applicationno;
+        obj.schoolid=localStorage.getItem("schoolid");
+        obj.schoolname=schoolname;
+        obj.admissionyear=admissionyear;
+        obj.firstname=firstname;
+        obj.middlename=middlename;
+        obj.lastname=lastname;
+        obj.studentname=firstname+' '+middlename+' '+lastname;
+        obj.gradeselection=gradeselection;
+        obj.admissiondob=admissiondob;
+        obj.admissiongender=admissiongender;
+        obj.admissiondisabled=admissiondisabled;
+        obj.admissioncanteen=admissioncanteen;
+        obj.admissiontransport=admissiontransport;
+        obj.createdby=localStorage.getItem("employeename");
+        obj.academicyear=admissionyear;
+        obj.fathername=fathername;
+        obj.mothername=mothername;
+        obj.flatno=flatno;
+        obj.bulidingname=bulidingname;
+        obj.street=street;
+        obj.town=town;
+        obj.city=city;
+        obj.state=state;
+        obj.pincode=pincode;
+        obj.height=height;
+        obj.weight=weight;
+        obj.relegions=relegions;
+        obj.nationality=nationality;
+obj.mothertongue=mothertongue;
+obj.siblingname=siblingname;
+obj.siblingclass=siblingclass;
+obj.prevschoolname=prevschoolname;
+obj.classfrom=classfrom;
+obj.classto=classto;
+obj.yearfrom=yearfrom;
+obj.yearto=yearto;
+obj.medium=medium;
+obj.lastclassmark=lastclassmark;
+obj.reasonforleaving=reasonforleaving;
+obj.physicdetail=physicdetail;
+obj.physicstatus=physicstatus;
+obj.mentaldetail=mentaldetail;
+obj.mentalstatus=mentalstatus;
+obj.illnessdetail=illnessdetail;
+obj.illnessstatus=illnessstatus;
+obj.allergydetail=allergydetail;
+obj.allergystatus=allergystatus;
+obj.chronicdetail=chronicdetail;
+obj.chronicstatus=chronicstatus;
+obj.sno1=sno1;
+obj.field1=field1;
+obj.year1=year1;
+obj.event1=event1;
+obj.prizedetail1=prizedetail1;
+obj.sno2=sno2;
+obj.field2=field2;
+obj.year2=year2;
+obj.event2=event2;
+obj.prizedetail2=prizedetail2;
+obj.sno3=sno3;
+obj.field3=field3;
+obj.year3=year3;
+obj.event3=event3;
+obj.prizedetail3=prizedetail3;
+obj.fatherdob=fatherdob;
+obj.motherdob=motherdob;
+obj.fatherqualification=fatherqualification;
+obj.motherqualification=motherqualification;
+obj.fatheroccupation=fatheroccupation;
+obj.motheroccupation=motheroccupation;
+obj.fatherincome=fatherincome;
+obj.motherincome=motherincome;
+obj.fathertelno=fathertelno;
+obj.mothertelno=mothertelno;
+obj.fathermobile=fathermobile;
+obj.mothermobile=mothermobile;
+obj.fatheremail=fatheremail;
+obj.motheremail=motheremail;
+obj.ptown=ptown;
+obj.pdistrict=pdistrict;
+obj.pstate=pstate;
+obj.ppincode=ppincode;
+obj.relationship1=relationship1;
+obj.guardianname1=guardianname1;
+obj.relationship2=relationship2;
+obj.guardianname2=guardianname2;
+obj.guardianname=guardianname;
+obj.gbuildingname=gbuildingname;
+obj.gstreet=gstreet;
+obj.gtown=gtown;
+obj.gcity=gcity;
+obj.gstate=gstate;
+obj.gpincode=gpincode;
+obj.gresidentialcontact=gresidentialcontact;
+obj.gofficecontact=gofficecontact;
+obj.gmobileno=gmobileno;gfax
+obj.gfax=gfax;
+obj.date=date;
+obj.fsign=fsign;
+obj.admissionclass=admissionclass;
+obj.gradeadmin=gradeadmin;
+obj.authorizsign=authorizsign;
+obj.FnBlood=FnBlood;
+obj.relegion=relegion;
+obj.FnBo=FnBo;
+        }
+        this.studentcocurricularurl=sessionStorage.getItem("addrinfo")+"/insertadmission";
+        {
+        var obj={"enquiryno":"","schoolid":""}
+        obj.enquiryno=enquiryno;
+        obj.schoolid=localStorage.getItem("schoolid");
+        this.insertstudentparam=obj;
+        this.$.insertstudentajax.generateRequest();  
+       
+        }
+        this.studenthistoryurl=sessionStorage.getItem("addrinfo")+"/insertadmission";
+        {
+        var obj={"enquiryno":"","schoolid":""}
+        obj.enquiryno=enquiryno;
+        obj.schoolid=localStorage.getItem("schoolid");
+        this.insertstudentparam=obj;
+        this.$.insertstudentajax.generateRequest();  
+       
+        }
+        
+
+
       },
+
+
       insertadmissionResponse:function(e){
         alert("Enrollment No genererated!!!"+e.detail.response.returnval);
         if(e.detail.response.returnval!='admissionfail')

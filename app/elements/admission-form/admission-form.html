@@ -123,8 +123,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <div class="list-group col-sm-12 panel-body form-category">
        <div class="col-sm-4">
          present address are same the parmanent address?
-          <span><paper-checkbox id="Dyes" class="checkbox" on-change="disabledHandler">Yes</paper-checkbox></span>
-          <span><paper-checkbox id="Dno" class="checkbox" on-change="disabledHandler">No</paper-checkbox></span>
+          <span><paper-checkbox id="pyes" class="checkbox" on-change="addresshander">Yes</paper-checkbox></span>
+          <span><paper-checkbox id="pno" class="checkbox" on-change="addresshander">No</paper-checkbox></span>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
@@ -254,14 +254,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <div class="form-group-heading">
         <h4>Physical/Mental Disability and Mental History(if any)</h4>
       </div>
-        <div class="list-group col-sm-12 panel-body form-category">
+        <div class="list-group col-sm-12 panel-body form-category" >
        <div class="col-sm-4">
         Disabled student ?
           <span><paper-checkbox id="Dyes" class="checkbox" on-change="disabledHandler">Yes</paper-checkbox></span>
-          <span><paper-checkbox id="Dno" class="checkbox" on-change="disabledHandler">No</paper-checkbox></span>
+          <span><paper-checkbox id="Dno" class="checkbox" on-change="disabledHandler1">No</paper-checkbox></span>
         </div>
       </div>
-
+<div  id="physicdetailhandler">
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
           <paper-textarea label="Physical Disability Detail" value="{{physicdetail}}"></paper-textarea>
@@ -302,6 +302,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <paper-input label="Chronic Medical Problem Present Status" value="{{chronicstatus}}"></paper-input>
         </div>
       </div>
+     </div>
       <div class="form-group-heading">
         <h4>Achievements in Academic/Sports/Co-Curricular Field</h4>
       </div>
@@ -546,12 +547,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <span><paper-checkbox id="Cyes" class="checkbox" on-change="canteenHandler">Yes</paper-checkbox></span>
           <span><paper-checkbox id="Cno" class="checkbox" on-change="canteenHandler">No</paper-checkbox></span>
         </div>
-        <div class="col-sm-4">
-        Disabled student ?
-          <span><paper-checkbox id="Dyes" class="checkbox" on-change="disabledHandler">Yes</paper-checkbox></span>
-          <span><paper-checkbox id="Dno" class="checkbox" on-change="disabledHandler">No</paper-checkbox></span>
-        </div>
-      </div>
+       
 
     <div class="col-md-12 form-button">
         <paper-button class="btn btn-primary" on-click="FnSubmitAdmission">Submit</paper-button>
@@ -574,23 +570,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var FnBlood;
     var FnBo;
     var relegions;
+    var handler;
+    var paddress;
     Polymer({
       is: 'admission-form',
-
+        
+        ready:function(){
+        this.$.physicdetailhandler.hidden=true;
+        },
       FnSearchEnquiry:function(){
         this.$.crmservice.getclasses();
         var enquiryno=document.getElementById('searchenquiry').value;
         // alert(enquiryno);
         this.$.admissionservice.callSearchenquiryService(enquiryno);
-        alert("hi");
-        alert(this.gradeselection);
-        alert("hi2");
-        if(this.gradeselection=="Nursery"||this.gradeselection=="LKG"||this.gradeselection=="UKG"||this.gradeselection=="Grade-1"||this.gradeselection=="Grade-2"||this.gradeselection=="Grade-3"|| this.gradeselection=="Grade-4"){
-          this.$.lang3Handler.hidden=true;
-          }
-        else{
-          this.$.lang3Handler.hidden=false;
-          }
+       
 
 },
       FnSelectEnquiry:function(e){
@@ -601,6 +594,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         localStorage.setItem("curr_sess_enquiryno",enquiry_no);
         localStorage.setItem("curr_sess_enquiryname",enquiry_name);
         this.$.admissionservice.callFetchenquiryinfoService();
+        this.prime();
+      },
+   prime:function(){
+       alert(this.gradeselection);
+        alert("hi2");
+        if(this.gradeselection=="Nursery"||this.gradeselection=="LKG"||this.gradeselection=="UKG"||this.gradeselection=="Grade-1"||this.gradeselection=="Grade-2"||this.gradeselection=="Grade-3"|| this.gradeselection=="Grade-4"){
+          this.$.lang3Handler.hidden=true;
+          }
+        else{
+        this.$.lang3Handler.hidden=false;
+          }
       },
       FnSetSecLanguage:function(value){
         // alert(value);
@@ -652,10 +656,41 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         admissioncanteen=e.target.id;
         admissioncanteen=admissioncanteen.substring(1);
       },
-      disabledHandler:function(e){
+     disabledHandler:function(e){
         admissiondisabled=e.target.id;
         admissiondisabled=admissiondisabled.substring(1);
+        if(document.querySelector("#Dyes").checked==true){
+           handler="yes";
+           this.$.physicdetailhandler.hidden=false;
+            document.querySelector("#Dno").checked=false;
+          }
+          else{handler=null;}
+
       },
+      disabledHandler1:function(e){
+        if(document.querySelector("#Dno").checked==true){
+              handler="No";
+             document.querySelector("#Dyes").checked=false;
+             this.$.physicdetailhandler.hidden=true;
+          }
+             else{handler=null;}
+        },
+
+       addresshander:function(e){
+             if(document.querySelector("#pyes").checked==true){
+              paddress="yes";
+             document.querySelector("#pno").checked=false;
+
+          }
+             else{paddress=null;}
+         },
+        addresshander1:function(e){
+              if(document.querySelector("#pno").checked==true){
+              paddress="No";
+             document.querySelector("#pyes").checked=false;
+          }
+             else{paddress=null;}   
+        },  
       FnBoard:function(e){
         FnBo=(e.target.selectedItem.textContent).trim();
 
@@ -666,11 +701,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
    casteHandlersc:function(){
 
        if(document.querySelector("#SC").checked==true){
-        relegion="SC";
+        relegions="SC";
         document.querySelector("#ST").checked=false;
         document.querySelector("#MBC").checked=false;
         document.querySelector("#OBC").checked=false;
-         document.querySelector("#Others").checked=false;
+        document.querySelector("#Others").checked=false;
       }
       else{
         relegions=null;
@@ -728,8 +763,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
       FnSubmitAdmission:function(){
+        alert( this.applicationno+this.schoolname+admissionyear+this.firstname+this.middlename+this.lastname+this.gradeselection+admissiondob+admissiongender+admissiondisabled+admissioncanteen+admissiontransport+this.fathername+this.mothername+this.flatno+this.bulidingname+this.street+this.town+this.city+this.state+this.pincode+this.height+this.weight+this.relegion+this.nationality+this.mothertongue+this.siblingname+this.siblingclass+this.prevschoolname+this.classfrom+this.classto+this.yearfrom+this.yearto+this.medium+this.lastclassmark+this.reasonforleaving+this.physicdetail+this.physicstatus+this.mentaldetail+this.mentalstatus+this.illnessdetail+this.illnessstatus+this.allergydetail+this.allergystatus+this.chronicdetail+this.chronicstatus+this.sno1+this.field1+this.year1+this.event1+this.prizedetail1+this.sno2+this.field2+this.year2+this.event2+this.prizedetail2+this.sno3+this.field3+this.year3+this.event3+this.prizedetail3+this.fatherdob+this.motherdob+this.fatherqualification+this.motherqualification+this.fatheroccupation+this.motheroccupation+this.fatherincome+this.motherincome+this.fathertelno+this.mothertelno+this.fathermobile+this.mothermobile+this.fatheremail+this.motheremail+this.ptown+this.pdistrict+this.pstate+this.ppincode+this.relationship1+this.guardianname1+this.relationship2+this.guardianname2+this.guardianname+this.gbuildingname+this.gstreet+this.gtown+this.gcity+this.gstate+this.gpincode+this.gresidentialcontact+this.gofficecontact+this.gmobileno+this.gmobileno+this.gfax+this.date+this.fsign+this.place+this.admissionclass+this.gradeadmin+this.authorizsign+FnBo+relegions+FnBlood);
 
-        // alert(this.applicationno+"  "+this.schoolname+"  "+admissionyear+"  "+this.firstname+"  "+this.middlename+" "+this.lastname+" "+admissiongrade+"  "+admissiondob+" "+admissiongender+" "+admissiondisabled+" "+admissioncanteen+" "+admissiontransport);
+        // alert(this.applicationno+"  "+this.schoolname+"  "+admissionyear+"  "+this.firstname+"  "+this.middlename+" "+this.lastname+" "++"  "+admissiondob+" "+admissiongender+" "+admissiondisabled+" "+admissioncanteen+" "+admissiontransporadmissiongradet);
+
 
           if(this.ptown==""||this.ppincode==""||this.pdistrict==""||this.pstate=="")
           {
@@ -749,7 +786,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
 
           else{
-       this.$.admissionservice.callInsertAdmissionService(this.applicationno,this.schoolname,admissionyear,this.firstname,this.middlename,this.lastname,admissiongrade,admissiondob,admissiongender,admissiondisabled,admissioncanteen,admissiontransport,this.fathername,this.mothername,this.flatno,bulidingname,street,town,city,state,pincode,height,weight,relegion,nationality,mothertongue,siblingname,siblingclass,prevschoolname,classfrom,classto,yearfrom,yearto,medium,lastclassmark,reasonforleaving,physicdetail,physicstatus,mentaldetail,mentalstatus,illnessdetail,illnessstatus,allergydetail,allergystatus,chronicdetail,chronicstatus,sno1,field1,year1,event1,prizedetail1,sno2,field2,year2,event2,prizedetail2,sno3,field3,year3,event3,prizedetail3,fatherdob,motherdob,fatherqualification,motherqualification,fatheroccupation,motheroccupation,fatherincome,motherincome,fathertelno,mothertelno,fathermobile,mothermobile,fatheremail,motheremail,ptown,pdistrict,pstate,ppincode,relationship1,guardianname1,relationship2,guardianname2,guardianname,gbuildingname,gstreet,gtown,gcity,gstate,gpincode,gresidentialcontact,gofficecontact,gmobileno,gmobileno,gfax,date,fsign,place,admissionclass,gradeadmin,authorizsign);
+              alert("GGG");
+       this.$.admissionservice.callInsertAdmissionService(this.applicationno,this.schoolname,admissionyear,this.firstname,this.middlename,this.lastname,this.gradeselection,admissiondob,admissiongender,admissiondisabled,admissioncanteen,admissiontransport,this.fathername,this.mothername,this.flatno,this.bulidingname,this.street,this.town,this.city,this.state,this.pincode,this.height,this.weight,this.relegion,this.nationality,this.mothertongue,this.siblingname,this.siblingclass,this.prevschoolname,this.classfrom,this.classto,this.yearfrom,this.yearto,this.medium,this.lastclassmark,this.reasonforleaving,this.physicdetail,this.physicstatus,this.mentaldetail,this.mentalstatus,this.illnessdetail,this.illnessstatus,this.allergydetail,this.allergystatus,this.chronicdetail,this.chronicstatus,this.sno1,this.field1,this.year1,this.event1,this.prizedetail1,this.sno2,this.field2,this.year2,this.event2,this.prizedetail2,this.sno3,this.field3,this.year3,this.event3,this.prizedetail3,this.fatherdob,this.motherdob,this.fatherqualification,this.motherqualification,this.fatheroccupation,this.motheroccupation,this.fatherincome,this.motherincome,this.fathertelno,this.mothertelno,this.fathermobile,this.mothermobile,this.fatheremail,this.motheremail,this.ptown,this.pdistrict,this.pstate,this.ppincode,this.relationship1,this.guardianname1,this.relationship2,this.guardianname2,this.guardianname,this.gbuildingname,this.gstreet,this.gtown,this.gcity,this.gstate,this.gpincode,this.gresidentialcontact,this.gofficecontact,this.gmobileno,this.gmobileno,this.gfax,this.date,this.fsign,this.place,this.admissionclass,this.gradeadmin,this.authorizsign,FnBo,relegions,FnBlood); 
+      
        }
 }
 
