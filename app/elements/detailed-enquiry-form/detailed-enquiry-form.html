@@ -42,7 +42,7 @@
         </div>
       </div>
       <div class="form-group-heading">
-        <h4>Student Detail</h4>
+        <h4>Student Details</h4>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-4 enquiry-input">
@@ -65,7 +65,7 @@
         </div>
         <div class="col-sm-6 enquiry-input">
           <!--<paper-input id="grade" required error-message="needs grade seeking for!" label="Class Admission Seeking for" value="{{grade}}"></paper-input>-->
-         <paper-dropdown-menu label="Select the Class" >
+         <paper-dropdown-menu label="Select Grade" >
             <paper-menu id="class" class="dropdown-content" required on-iron-select="classseeking" attr-for-selected="value" selected="{{grades}}">
               <template  is="dom-repeat" items="{{itemarr}}" as="view">
                 <paper-item value="{{view.class}}">{{view.class}}</paper-item>
@@ -112,39 +112,14 @@
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
-          <paper-input label="Present Class" id="oldsclass" required error-message="needs currently studying grade!" value="{{oldclass}}"></paper-input>
+          <paper-input label="Presently Studing Grade" id="oldsclass" required error-message="needs currently studying grade!" value="{{oldclass}}"></paper-input>
         </div>
         <div class="col-sm-6">
-          <paper-input label="Present School" id="oldschool" required error-message="needs old school details!" value="{{oldschool}}"></paper-input>
+          <paper-input label="Presently Studing School" id="oldschool" required error-message="needs old school details!" value="{{oldschool}}"></paper-input>
         </div>
       </div>
       <div class="form-group-heading">
-        <h4>Admission Test Details</h4>
-      </div>
-      <div class="list-group col-sm-12 panel-body form-category">
-        <div class="col-sm-4 enquiry-input">
-          <label>Admission Test</label>
-          <div class="gender">
-            <span class="col-sm-6"><paper-checkbox id="admissiontestyes" class="checkbox" on-change="admissiontestyesHandler">Yes</paper-checkbox></span>
-            <span class="col-sm-6"><paper-checkbox  id="admissiontestno" class="checkbox" on-change="admissiontestnoHandler">No</paper-checkbox></span>
-          </div>
-        </div>
-        <div class="col-sm-4 enquiry-input">
-          <label>Test Subjects</label>
-          <div class="gender">
-            <span class="col-sm-4"><paper-checkbox id="english" class="checkbox" on-change="englishHandler">English</paper-checkbox></span>
-            <span class="col-sm-4"><paper-checkbox  id="maths" class="checkbox" on-change="mathsHandler">Maths</paper-checkbox></span>
-            <span class="col-sm-4"><paper-checkbox  id="evs" class="checkbox" on-change="evsHandler">EVS</paper-checkbox></span>
-          </div>
-        </div>
-        <div class="col-sm-4 enquiry-input">
-          <div class="gender">
-            <admission-datepicker></admission-datepicker>
-          </div>
-        </div>
-      </div>
-      <div class="form-group-heading">
-        <h4>Parent Detail</h4>
+        <h4>Parent Details</h4>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
@@ -179,7 +154,7 @@
         </div>
       </div>
       <div class="form-group-heading">
-        <h4>Work Detail</h4>
+        <h4>Work Details</h4>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
@@ -219,6 +194,19 @@
         </div>
         <div class="col-sm-6">
           <paper-input id="momjob" required error-message="needs mother's designation!" label="Designation" allowed-pattern="[a-zA-Z ]" value="{{motherjob}}"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category" hidden$="{{hideguardian}}">
+        <div class="col-sm-6">
+          <paper-input id="guardianname" required error-message="needs guardian's name!" label="Guardian Name" allowed-pattern="[a-zA-Z ]" value="{{guardianname}}"></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <paper-input id="guardianmobile" required error-message="needs gauardian's mobile no!" label="Guardian's Contact Number" maxlength="10" allowed-pattern="[0-9]" value="{{guardianmobile}}"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category" hidden$="{{hideguardian}}">
+        <div class="col-sm-6">
+          <paper-input id="guardianemail" required error-message="needs guardian's email!" label="Guardian Email" value="{{guardianemail}}"></paper-input>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
@@ -308,7 +296,32 @@
         </div>
       </div>
       <div class="form-group-heading">
-        <h4>Facility Detail</h4>
+        <h4>Admission Test Details</h4>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-4 enquiry-input">
+          <label>Admission Test</label>
+          <div class="gender">
+            <span class="col-sm-6"><paper-checkbox id="admissiontestyes" class="checkbox" on-change="admissiontestyesHandler">Yes</paper-checkbox></span>
+            <span class="col-sm-6"><paper-checkbox  id="admissiontestno" class="checkbox" on-change="admissiontestnoHandler">No</paper-checkbox></span>
+          </div>
+        </div>
+        <div class="col-sm-4 enquiry-input">
+          <label>Test Subjects</label>
+          <div class="gender">
+            <span class="col-sm-4"><paper-checkbox id="english" class="checkbox" on-change="englishHandler">English</paper-checkbox></span>
+            <span class="col-sm-4"><paper-checkbox  id="maths" class="checkbox" on-change="mathsHandler">Maths</paper-checkbox></span>
+            <span class="col-sm-4"><paper-checkbox  id="evs" class="checkbox" on-change="evsHandler">EVS</paper-checkbox></span>
+          </div>
+        </div>
+        <div class="col-sm-4 enquiry-input">
+          <div class="gender">
+            <admission-datepicker></admission-datepicker>
+          </div>
+        </div>
+      </div>
+      <div class="form-group-heading">
+        <h4>Facility Details</h4>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-4">
@@ -381,6 +394,7 @@
     Polymer({
       is: 'detailed-enquiry-form',
       ready:function(){
+          this.hideguardian=true;
           this.$.sibname.hidden=true;
           this.$.sibdetail.hidden=true;
           this.$.referrer.hidden=true;
@@ -1067,6 +1081,9 @@ Fnlistbox:function(nameitem){
        },
       Fngrade:function(grades){
         this.grades = grades;
+      },
+      Fnshowguardian:function(){
+        this.hideguardian=false;
       }
     });
   })();
