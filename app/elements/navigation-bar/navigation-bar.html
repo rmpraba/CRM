@@ -6,7 +6,9 @@
 
 <link rel="import" href="../schedulefee-card/schedulefee-card.html">
 
+<link rel="import" href="../fee-card/fee-card.html">
 <link rel="import" href="../followup-details/followup-details.html">
+
 
 <dom-module id="navigation-bar">
   <template>
@@ -260,11 +262,11 @@
             <a href="" aria-hidden="true" on-click="enquiry"><i class="fa fa-phone-square fa-fw"></i> Enquiry<span class="fa arrow"></span></a>
             <ul class="nav nav-second-level">
               <li>
-              <a href="" aria-hidden="true" data-toggle="modal" data-target="#addEnquiry">Simple Form</a>
+              <a href="" aria-hidden="true" data-toggle="modal" data-target="#addEnquiry">Pre Apps</a>
                 <!-- <a href="flot.html"></a> -->
               </li>
               <li>
-                <a href="" aria-hidden="true" data-toggle="modal" data-target="#addDetailedEnquiry">Detailed Form</a>
+                <a href="" aria-hidden="true" data-toggle="modal" data-target="#addDetailedEnquiry">Enquiry Form</a>
               </li>
             </ul>
 
@@ -283,20 +285,20 @@
             <a href="#" aria-hidden="true" data-toggle="modal" data-target="#feepayment"><i class="fa fa-money fa-fw"></i> Fee Payment<span class="fa arrow"></span></a>
             <ul class="nav nav-second-level">
               <li>
-              <a href="" aria-hidden="true" data-toggle="modal" data-target="#prospectousfee" on-click="FnProspect">Prospectus Fee</a>
+              <a href="" aria-hidden="true" data-toggle="modal" data-target="#prospectousfee" on-click="FnProspect">Application fee</a>
                 <!-- <a href="flot.html"></a> -->
               </li>
               <li>
-                <a href="" aria-hidden="true" data-toggle="modal" data-target="#registerationfee" on-click="FnRegister">Registeration Fee</a>
+                <a href="" aria-hidden="true" data-toggle="modal" data-target="#registerationfee" on-click="FnRegister">Registration fee</a>
               </li>
               <li>
-                <a href="" aria-hidden="true" data-toggle="modal" data-target="#kitfee">School Kit Fee</a>
+                <a href="" aria-hidden="true" data-toggle="modal" data-target="#kitfee" on-click="FnKit">Kit fee</a>
               </li>
               <li>
-                <a href="" aria-hidden="true" data-toggle="modal" data-target="#annualfee">Tuition & Annual Fee</a>
+                <a href="" aria-hidden="true" data-toggle="modal" data-target="#annualfee" on-click="FnAnnual">Annual fee</a>
               </li>
               <li>
-                <a href="" aria-hidden="true" data-toggle="modal" data-target="#miscellaneousfee">Miscellaneous Fee</a>
+                <a href="" aria-hidden="true" data-toggle="modal" data-target="#miscellaneousfee" on-click="FnMiscellaneous">Miscellaneous fee</a>
               </li>
             </ul>
             <!-- /.nav-second-level -->
@@ -377,7 +379,7 @@
                 <span aria-hidden="true">&times;</span>
               </button>
               <h4 class="center-block event-title" id="eventTitle">
-                New Enquiry
+                Pre Apps
               </h4>
             </div>
             <div class="modal-body">
@@ -394,7 +396,7 @@
               <span aria-hidden="true">&times;</span>
             </button>
             <h4 class="center-block event-title" id="enquiry-title">
-              New Detailed Enquiry
+              Enquiry Form
             </h4>
           </div>
           <div class="modal-body">
@@ -450,7 +452,8 @@
             </h4>
           </div>
           <div class="modal-body">
-            <prospectousfee-card></prospectousfee-card>
+            <!-- <prospectousfee-card></prospectousfee-card> -->
+            <fees-card></fees-card>
           </div>
         </div>
       </div>
@@ -468,7 +471,9 @@
             </h4>
           </div>
           <div class="modal-body">
-            <registerationfee-card></registerationfee-card>
+            <!-- <registerationfee-card></registerationfee-card> -->
+            <!-- <prospectousfee-card></prospectousfee-card> -->
+            <fees-card></fees-card>
           </div>
         </div>
       </div>
@@ -486,7 +491,7 @@
             </h4>
           </div>
           <div class="modal-body">
-            <fee-card></fee-card>
+            <fees-card></fees-card>
           </div>
         </div>
       </div>
@@ -504,7 +509,7 @@
             </h4>
           </div>
           <div class="modal-body">
-            <annualfee-card></annualfee-card>
+            <fees-card></fees-card>
           </div>
         </div>
       </div>
@@ -522,7 +527,7 @@
             </h4>
           </div>
           <div class="modal-body">
-            <fee-card></fee-card>
+            <fees-card></fees-card>
           </div>
         </div>
       </div>
@@ -546,12 +551,7 @@
         </div>
       </div>
     </div>
-
-
-<crm-service id="service"></crm-service>
-
-
-
+    <crm-service id="service"></crm-service>
   </template>
   <script>
   (function() {
@@ -585,18 +585,34 @@
         }
 
       },
-      FnProspect:function(){
-        document.querySelector('prospectousfee-card').ready();
-        document.querySelector('prospectousfee-card').FnRefresh();
-        document.querySelector('admission-service').FnRefresh();
+      FnProspect:function(e){  
+      // alert(e.target.text);      
+        localStorage.setItem("curr_sess_feetype",e.target.text);  
+        this.FnRefresh();       
       },
-      FnRegister:function(){
-        document.querySelector('registerationfee-card').ready();
-        document.querySelector('registerationfee-card').FnRefresh();
-        document.querySelector('admission-service').FnRefresh();
+      FnRegister:function(e){
+        localStorage.setItem("curr_sess_feetype",e.target.text);
+        this.FnRefresh();
+      },
+      FnAnnual:function(e){
+        localStorage.setItem("curr_sess_feetype",e.target.text); 
+        this.FnRefresh();  
+      },
+      FnKit:function(e){
+        localStorage.setItem("curr_sess_feetype",e.target.text);  
+        this.FnRefresh(); 
+      },
+      FnMiscellaneous:function(e){
+        localStorage.setItem("curr_sess_feetype",e.target.text);  
+        this.FnRefresh(); 
       },
       followupdashboard:function(){
         document.querySelector('app-list').setPage("follow-up");
+      },
+      FnRefresh:function(){
+        document.querySelector('fees-card').ready();
+        document.querySelector('fees-card').FnRefresh();
+        document.querySelector('admission-service').FnRefresh();
       },
       enquiry:function(){
         this.$.service.getfollowupcount();

@@ -1,4 +1,3 @@
-<!--Component import-->
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../../bower_components/paper-item/paper-item.html">
@@ -9,26 +8,28 @@
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 
 
-
-<dom-module id="dateofbirth-datepicker">
+<dom-module id="admission-datepicker">
   <template>
-  <!--component which invokes the predefined date picker control-->
-  <div class="datepicker">
-    <paper-input label="Date of Birth" class="btn" on-click="FnShowDialog" raised value="{{showdate}}"></paper-input>
-    <paper-dialog id="dialog" class="paper-date-picker-dialog" modal on-iron-overlay-closed="FnDismissDialog" style="left: 0 !important;">
-      <paper-date-picker id="picker" date="{{date}}"></paper-date-picker>
-      <div class="buttons">
-        <paper-button dialog-dismiss>Cancel</paper-button>
-        <paper-button dialog-confirm>OK</paper-button>
-      </div>
-    </paper-dialog>
-  </div>
-  <dialog-page id="ID_Show_Dialog"></dialog-page>
-  <transport-service id="service"></transport-service>
-</template>
+    <!--component which invokes the predefined date picker control-->
+    <div class="datepicker">
+      <paper-input label="Admission Test Date" class="btn" on-click="FnShowDialog" raised value="{{showdate}}"></paper-input>
+      <paper-dialog id="dialog" class="paper-date-picker-dialog" modal on-iron-overlay-closed="FnDismissDialog" style="left: 0 !important;">
+        <paper-date-picker id="picker" date="{{date}}"></paper-date-picker>
+        <div class="buttons">
+          <paper-button dialog-dismiss>Cancel</paper-button>
+          <paper-button dialog-confirm>OK</paper-button>
+        </div>
+      </paper-dialog>
+    </div>
+    <dialog-page id="ID_Show_Dialog"></dialog-page>
+    <transport-service id="service"></transport-service>
+  </template>
+  <!--Calling dialog control-->
+
+  <!--JS file import-->
   <script>
     Polymer({
-      is: 'dateofbirth-datepicker',
+      is: 'admission-datepicker',
 
       ready:function()
       {
@@ -48,36 +49,18 @@
           var dd1=new Date();
           var dd2=new Date(pickdate);
           var days=parseInt((dd1 - dd2) / (1000 * 60 * 60 * 24));
-          if(days<=0){
-            document.querySelector('newenquiry-card').dateclear();
-          // document.querySelector('admission-form').dateclear();
-          document.querySelector('detailed-enquiry-form').dateclear();
-          this.showdate="";
-          }
-          else{
-            this.showdate = moment(this.$.picker.date).format('L');
-          localStorage.setItem("localsess_start_date",this.showdate);
+          this.showdate = moment(this.$.picker.date).format('L');
+          localStorage.setItem("localsess_admission_date",this.showdate);
+          document.querySelector("detailed-enquiry-form").getadmissiondate();
           //this.$.service.datepickinsta1(this.date);
           //this.$.service.datepickinsta2(this.date);
           //this.$.service.datepickinsta1cheque(this.date);
           //this.$.service.datepickinsta2cheque(this.date);
           //this.$.service.feereport(this.showdate);
-          document.querySelector('newenquiry-card').getdate(this.showdate);
-          document.querySelector('detailed-enquiry-form').getdate(this.showdate);
-          // document.querySelector('admission-form').getdate(this.showdate);
-
-          }
-
         }
       },
       FnClear:function(){
         this.showdate = moment(new Date()).format('L');
-
-      },
-      FnSetDate:function(value){
-        // alert(value);
-        this.showdate=moment(new Date(value)).format('L');
-
       }
     });
   </script>

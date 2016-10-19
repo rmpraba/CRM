@@ -34,8 +34,6 @@
       <!-- /.row -->
       <div class="row">
         <!-- <enquiry-card></enquiry-card> -->
-
-
         <iron-pages selected="{{page}}" attr-for-selected="data-category">
             <section data-category="loginpage">
               <login-card></login-card>
@@ -56,6 +54,13 @@
               <followup-details></followup-details>
             </div>
           </section>
+
+        <!--   <section data-category="feereceipt-outcard">
+            <div class="col-md-12">
+              <feereceipt-outcard></feereceipt-outcard>
+            </div>
+          </section> -->
+
           </iron-pages>
           </div>
           </div>
@@ -82,7 +87,7 @@
  signout:function()
  {
   window.location.href="../index.html";
- localStorage.setItem("userinfo",null);
+  localStorage.setItem("userinfo",null);
   localStorage.setItem("route",null);
    //document.querySelector('app-card').setPage("loginpage");
  },

@@ -53,6 +53,7 @@
           this.showdate = moment(this.$.picker.date).format('L');
           localStorage.setItem("localsess_end_date",this.showdate);
           document.querySelector('newenquiry-card').getdate(this.showdate);
+          document.querySelector('detailed-enquiry-card').getdate(this.showdate);
           //this.$.service.datepickinsta1(this.date);
           //this.$.service.datepickinsta2(this.date);
           //this.$.service.datepickinsta1cheque(this.date);

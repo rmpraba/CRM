@@ -106,6 +106,20 @@
         debounce-duration="300"
         >
 
+
+            <!-- Component will insert student co curricular info-->
+   <iron-ajax
+        method="post"
+        id="fetchfeeajax"
+        url="{{fetchfeeurl}}"
+        params="{{fetchfeeparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchfeeResponse"
+        debounce-duration="300"
+        >
+        
+
             <!-- Component will insert student co curricular info-->
    <iron-ajax
         method="post"
@@ -209,8 +223,7 @@
 
     Polymer({
       is: 'admission-service',
-      callSearchenquiryService:function(enquiryno){
-        // alert(enquiryno);
+      callSearchenquiryService:function(enquiryno){        
         this.searchenquiryurl=sessionStorage.getItem("addrinfo")+"/searchenquiry";
         var obj={"enquiryno":"","schoolid":""};
         obj.enquiryno=enquiryno;
@@ -587,6 +600,63 @@ obj.FnBo=FnBo;
         this.$.searchfeeenquiryajax.generateRequest();
       },
       searchfeeenquiryResponse:function(e){
+
+        var arr=e.detail.response.returnval;       
+        document.querySelector('fees-card').academicyear=arr[0].academic_year;
+        document.querySelector('fees-card').enquiredclass=arr[0].class;
+        document.querySelector('fees-card').studentname=arr[0].enquiry_name;
+        document.querySelector('fees-card').parentname=arr[0].father_name;
+        document.querySelector('fees-card').dob=arr[0].dob;
+        localStorage.setItem("curr_sess_academicyear",arr[0].academic_year); 
+        localStorage.setItem("curr_sess_enquiryno",arr[0].enquiry_no); 
+        // localStorage.setItem("curr_sess_admissionno"); 
+        localStorage.setItem("curr_sess_studentname",arr[0].enquiry_name); 
+        localStorage.setItem("curr_sess_grade",arr[0].class);   
+        this.academicyear=arr[0].academic_year;
+        this.admissionyear=arr[0].academic_year;        
+        this.grade=arr[0].class;
+        this.callfetchfeesService();      
+      },
+      callfetchfeesService:function(){
+        this.fetchfeesurl=sessionStorage.getItem("addrinfo")+"/fetchfees";
+        var obj={"schoolid":"","academicyear":"","admissionyear":"","grade":""}        
+        obj.admissionyear=this.admissionyear; 
+        obj.academicyear=this.academicyear; 
+        obj.grade=this.grade; 
+        obj.schoolid=localStorage.getItem("schoolid");     
+        this.fetchfeesparam=obj;       
+        this.$.fetchfeesajax.generateRequest();
+      },
+      fetchfeesResponse:function(e){        
+        var arr=e.detail.response.returnval;        
+        if(arr.length>0){
+            localStorage.setItem("curr_sess_feecode",arr[0].fee_code); 
+            this.fetchfeesplitup();
+        }           
+      },
+      fetchfeesplitup:function(){
+        this.fetchfeesplitupurl=sessionStorage.getItem("addrinfo")+"/fetchfeesplitup";
+        var obj={"schoolid":"","feecode":"","feetype":""}        
+        obj.feecode=localStorage.getItem("curr_sess_feecode");
+        obj.schoolid=localStorage.getItem("schoolid");  
+        obj.feetype=localStorage.getItem("curr_sess_feetype");    
+        this.fetchfeesplitupparam=obj;       
+        this.$.fetchfeesplitupajax.generateRequest();
+      },
+      fetchfeesplitupResponse:function(e){
+        var arr=e.detail.response.returnval;                  
+          document.querySelector('fees-card').fees=arr[0].total_fee;
+          localStorage.setItem("curr_sess_fee",arr[0].total_fee);
+          this.callfetchnoofinstallmentService();    
+      },
+      callfetchnoofinstallmentService:function(){
+        this.fetchnoofinstallmenturl=sessionStorage.getItem("addrinfo")+"/fetchnoofinstallment";
+        var obj={"schoolid":"","feecode":"","feetype":""}         
+        obj.feecode=localStorage.getItem("curr_sess_feecode");
+        obj.schoolid=localStorage.getItem("schoolid");  
+        obj.feetype=localStorage.getItem("curr_sess_feetype");       
+        this.fetchnoofinstallmentparam=obj;       
+
         var arr=e.detail.response.returnval;
         if(localStorage.getItem("curr_sess_feetype")=="pros_fee"){
         document.querySelector('prospectousfee-card').academicyear=arr[0].academic_year;
@@ -721,21 +791,20 @@ obj.FnBo=FnBo;
         var obj={"schoolid":""}
         obj.schoolid=localStorage.getItem("schoolid");
         this.fetchnoofinstallmentparam=obj;
+
         this.$.fetchnoofinstallmentajax.generateRequest();
       },
       fetchnoofinstallmentResponse:function(e){
-        var arr=e.detail.response.returnval;
-        // alert(JSON.stringify(arr));
-        var annual=[];
-        var pros=[];
-        var reg=[];
-        var tuition=[];
-        var kit=[];
-        var caution=[];
+        var arr=e.detail.response.returnval;        
+        var feeinstallmentarr=[];
         for(var i=0;i<arr.length;i++){
           var obj={"installment":"","amount":"","date":""};
           obj.installment=arr[i].installment_name;
           obj.date=arr[i].installment_date;
+
+          obj.amount=arr[i].installment_amount;
+          feeinstallmentarr.push(obj);
+
         if(arr[i].feetype_code=="ann_fee"){
           var percent=arr[i].installment_percentage;
           var annualfee=localStorage.getItem("curr_sess_annualfee")+localStorage.getItem("curr_sess_tutionfee");
@@ -778,7 +847,11 @@ obj.FnBo=FnBo;
         if(localStorage.getItem("curr_sess_feetype")=="ann_fee"){
         document.querySelector('annualfee-card').annarr=annual;
         document.querySelector('annualfee-card').FnHiddenPayment();
+
+
         }
+        document.querySelector('fees-card').feearr=feeinstallmentarr;
+        document.querySelector('fees-card').FnHiddenPayment();
       },
       FnRefresh:function(){
         localStorage.setItem("curr_sess_enquiryno","");
@@ -793,7 +866,6 @@ obj.FnBo=FnBo;
         obj.schol=localStorage.getItem("schoolid");
         obj.status="Admitted";
         this.getadmissioncountparam=obj;
-       //alert(JSON.stringify(obj));
         this.$.getadmissioncountajax.generateRequest();
      },
      getadmissioncountResponse:function(){
