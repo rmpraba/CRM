@@ -1476,6 +1476,62 @@ app.post('/updateschedule',  urlencodedParser,function (req, res)
      });
  });
 
+ 
+ app.post('/fetchadmissiontestinfo', urlencodedParser,function (req, res){
+
+   //console.log('qur');
+   var qur="SELECT * FROM student_enquiry_details WHERE school_id='"+req.query.schoolid+"' and enquiry_no='"+req.query.enquiryno+"' and status='Enquired' and admission_test='Yes'";
+   console.log(qur);
+   connection.query(qur,
+     function(err, rows)
+     {
+       if(!err)
+       {
+         if(rows.length>0)
+         {
+           //console.log(rows);
+           res.status(200).json({'returnval': rows});
+         }
+         else
+         {
+           console.log(err);
+           res.status(200).json({'returnval': 0});
+         }
+       }
+       else{
+         console.log(err);
+       }
+     });
+ });
+
+ 
+  app.post('/updateteststatus', urlencodedParser,function (req, res){
+
+   //console.log('qur');
+   var qur="UPDATE student_enquiry_details SET admission_status='"+req.query.status+"' WHERE school_id='"+req.query.schoolid+"' and enquiry_no='"+req.query.enquiryno+"' and status='Enquired' and admission_test='Yes'";
+   console.log(qur);
+   connection.query(qur,
+     function(err, result)
+     {
+       if(!err)
+       {
+         if(result.affectedRows>0)
+         {
+           //console.log(rows);
+           res.status(200).json({'returnval': 'updated!'});
+         }
+         else
+         {
+           console.log(err);
+           res.status(200).json({'returnval': 'not updated!'});
+         }
+       }
+       else{
+         console.log(err);
+       }
+     });
+ });
+
 function setvalue(){
   console.log("calling setvalue.....");
 }
