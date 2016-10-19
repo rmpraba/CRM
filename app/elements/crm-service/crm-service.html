@@ -494,11 +494,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     fourthfollowupdate.setDate(fourthfollowupdate.getDate()+fourthfollowup);
     fifthfollowupdate.setDate(fifthfollowupdate.getDate()+fifthfollowup);
      },
-     submitenqiry:function(enqno,academicyear,grade,Fnfirstname,Fnmiddlename,Fnlastname,gender,dob,fathername,mothername,mob,email,textvalue,todate){
+     submitenqiry:function(enqno,academicyear,grade,Fnfirstname,Fnmiddlename,Fnlastname,gender,dob,fathername,mothername,mob,email,textvalue,todate,gemail,gmob,Guardianname){
       //alert(enqno+academicyr+classes+studentname+gender+dob+mob+source+locality+category);
       var generateid=Math.floor(100000 + Math.random() * 900000);
         this.submitenquiryurl="http://localhost:8086/submitenquiry";
-        var obj={"id":"","schol":"","acadeyr":"","contact":"","grade":"","gender":"","firstname":"","middlename":"","lastname":"","dobs":"","father":"","mother":"","email":"","location":"","createdby":"","createdate":"","givenname":"","status":""}
+        var obj={"id":"","schol":"","acadeyr":"","contact":"","grade":"","gender":"","firstname":"","middlename":"","lastname":"","dobs":"","father":"","mother":"","email":"","location":"","createdby":"","createdate":"","givenname":"","status":"","gemail":"","gmob":"","Guardianname":""}
         obj.id=enqno;
         obj.schol=localStorage.getItem("schoolid");
         obj.acadeyr=academicyear;
@@ -517,10 +517,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         obj.createdate=todate;
         obj.givenname=Fnfirstname+' '+Fnmiddlename+' '+Fnlastname;
         obj.status="Enquired";
+        obj.gemail=gemail;
+        obj.gmob=gmob;
+        obj.Guardianname=Guardianname;
         this.submitenquiryparam=obj;
-       //alert(JSON.stringify(obj));
+        alert(JSON.stringify(obj));
         this.$.submitenquiryajax.generateRequest();
-
       this.updatefollowurl="http://localhost:8086/updatefollow";
         var obj={"schol":"","id":"","enquiryno":"","schedule":"","createdby":"","createdon":""}
         obj.schol=localStorage.getItem("schoolid");
