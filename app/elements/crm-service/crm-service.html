@@ -1178,7 +1178,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         document.querySelector('followup-student-detail').comments3=res[0].followup3_remarks;
         document.querySelector('followup-student-detail').comments4=res[0].followup4_remarks;
         document.querySelector('followup-student-detail').comments5=res[0].followup5_remarks;
-
+        document.querySelector('followup-student-detail').schedule=res[0].schedule;
         document.querySelector('followup-student-detail').check();
       },
       SubmitStatus:function(id,status){
@@ -1194,6 +1194,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var res=e.detail.response.returnval;
         if(res == "success"){
           document.querySelector('followup-student-detail').closedialog();
+           document.querySelector('followup-student-detail').check();
         }
       },
       changestatus:function(folowupid,enquiryidd){
@@ -1228,18 +1229,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           var res=e.detail.response.returnval;
           if(res=='success'){
 
-            var firstdate=new Date();
-           var seconddate=new Date();
-           var thirddate=new Date();
-           var fourthdate=new Date();
-           var fifthdate=new Date();
-
-    firstdate.setDate(firstfollowupdate.getDate()+firstfollowup);
-    seconddate.setDate(secondfollowupdate.getDate()+secondfollowup);
-    thirddate.setDate(thirdfollowupdate.getDate()+thirdfollowup);
-    fourthdate.setDate(fourthfollowupdate.getDate()+fourthfollowup);
-    fifthdate.setDate(fifthfollowupdate.getDate()+fifthfollowup);
-
 
 var dat=new Date();
 
@@ -1250,11 +1239,11 @@ var dat=new Date();
         obj.schol=localStorage.getItem("schoolid");
         obj.id=reschedule;
         obj.enquiryid=xenquiryidd;
-        obj.folowup1=firstdate.getDate()+"/"+(firstdate.getMonth()+1)+"/"+firstdate.getFullYear();
-        obj.folowup2=seconddate.getDate()+"/"+(seconddate.getMonth()+1)+"/"+seconddate.getFullYear();
-        obj.folowup3=thirddate.getDate()+"/"+(thirddate.getMonth()+1)+"/"+thirddate.getFullYear();
-        obj.folowup4=fourthdate.getDate()+"/"+(fourthdate.getMonth()+1)+"/"+fourthdate.getFullYear();
-        obj.folowup5=fifthdate.getDate()+"/"+(fifthdate.getMonth()+1)+"/"+fifthdate.getFullYear();
+        obj.folowup1=firstfollowupdate.getDate()+"/"+(firstfollowupdate.getMonth()+1)+"/"+firstfollowupdate.getFullYear();
+        obj.folowup2=secondfollowupdate.getDate()+"/"+(secondfollowupdate.getMonth()+1)+"/"+secondfollowupdate.getFullYear();
+        obj.folowup3=thirdfollowupdate.getDate()+"/"+(thirdfollowupdate.getMonth()+1)+"/"+thirdfollowupdate.getFullYear();
+        obj.folowup4=fourthfollowupdate.getDate()+"/"+(fourthfollowupdate.getMonth()+1)+"/"+fourthfollowupdate.getFullYear();
+        obj.folowup5=fifthfollowupdate.getDate()+"/"+(fifthfollowupdate.getMonth()+1)+"/"+fifthfollowupdate.getFullYear();
         obj.nextfolowup=dat.getDate()+"/"+(dat.getMonth()+1)+"/"+dat.getFullYear();
         obj.flag=1;
         obj.schedule=2;
@@ -1264,8 +1253,11 @@ var dat=new Date();
         this.$.updatefollowdetailajax.generateRequest();
 
         alert('Re-Schedule is done Successfully');
+        document.querySelector('followup-student-detail').check();
           }
+          else{
           alert('Re-Schedule is not done');
+        }
       },
       callFetchenquiryinfoService:function(){
         this.fetchenquiryinfourl=sessionStorage.getItem("addrinfo")+"/fetchdetailedenquiryinfo";
