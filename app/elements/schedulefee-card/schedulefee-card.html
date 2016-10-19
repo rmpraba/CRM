@@ -44,7 +44,7 @@
         </div>
         </div>
 
-        <div class="list-group col-sm-12 panel-body form-category">         
+        <div class="list-group col-sm-12 panel-body form-category" hidden$="{{hidefeeshow}}">         
           <div class="col-sm-6 enquiry-input">
             <paper-input  label="Fee Code" value="{{feecode}}"></paper-input>
           </div>
@@ -75,7 +75,7 @@
 
         <div class="list-group col-sm-12 panel-body form-category" hidden$="{{hideinstallment}}">
         <template  is="dom-repeat" items="{{installmentarr}}" as="item">
-        <fee-installment-itemcard installment="{{item.installment}}"></fee-installment-itemcard>
+        <fee-installment-itemcard installment="{{item.installment}}" installmentname="{{item.installmentname}}"></fee-installment-itemcard>
         </template>
          <!--  <div class="col-sm-4 enquiry-input">
             <paper-input  label="Installment Amount" value="{{installmentamount}}"></paper-input>
@@ -106,6 +106,7 @@
         this.hideinstallment=true;
         this.hidefeecard=true;
         this.hidesubmit=true;
+        this.hidefeeshow=true;
       },
       FnSelectGrade:function(e){
         grade=(e.target.selectedItem.textContent).trim();
@@ -121,7 +122,8 @@
         
         var insarr=[];
         for(var i=0;i<parseInt(installment);i++){
-          var obj={"installment":"","installmentdate":""}
+          var obj={"installmentname":"","installment":"","installmentdate":""}
+          obj.installmentname="Installment"+(i+1);
           obj.installment="Installment"+(i+1)+" amount";
           insarr.push(obj);
         }
@@ -134,6 +136,7 @@
         this.hidegenerate=true;
         this.hidesubmit=false;
         this.hidefeecard=false;
+        this.hidefeeshow=false;
       },
       FnCreateFeeCode:function(){
         this.$.schedulefee.createfeecodeService(this.schoolname,grade,admissionyear,academicyear,this.totalfees,this.feecode,this.feename);
@@ -144,6 +147,7 @@
         this.$.schedulefee.createinstallmentService(installmentarr,this.schoolname,this.feetype,this.totalfees,installment,this.feecode);
         }
         this.FnRefresh();
+        document.querySelector('fee-installment-itemcard').FnRefresh();
       },
       FnSetInstallment:function(arr){
         installmentarr=arr;

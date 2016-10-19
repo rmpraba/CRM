@@ -10,6 +10,7 @@
 
         <div class="list-group col-sm-12 panel-body form-category">
           <div class="col-sm-5 enquiry-input">
+            <paper-input  label="{{installmentname}}" hidden></paper-input>
             <paper-input  label="{{installment}}" value="{{installmentamount}}" on-change="{{FnChangeAmount}}"></paper-input>
           </div>
           <div class="col-sm-5 enquiry-input">
@@ -29,11 +30,14 @@
       is: 'fee-installment-itemcard',
       FnSave:function(){
         var obj={"name":"","amount":"","date":""};
-        obj.name=installment;
+        obj.name=this.installmentname;
         obj.amount=this.installmentamount;
         obj.date=localStorage.getItem("localsess_start_date");
         installmentarr.push(obj);
         document.querySelector('schedulefee-card').FnSetInstallment(installmentarr);
+      },
+      FnRefresh:function(){
+        installmentarr=[];
       }
     });
   })();

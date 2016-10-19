@@ -35,7 +35,7 @@
       ready:function()
       {
         this.showdate=moment(new Date()).format('L');
-        localStorage.setItem("localsess_curr_date",this.showdate);
+        localStorage.setItem("curr_sess_chequedate",this.showdate);
         //this.$.service.feereport(this.showdate);
       },
       FnShowDialog:function(){
@@ -51,7 +51,7 @@
           var dd2=new Date(pickdate);
           var days=parseInt((dd1 - dd2) / (1000 * 60 * 60 * 24));
           this.showdate = moment(this.$.picker.date).format('L');
-          localStorage.setItem("curr_sess_receiptdate",this.showdate);          
+          localStorage.setItem("curr_sess_chequedate",this.showdate);          
         }
       },
       FnClear:function(){
@@ -61,7 +61,7 @@
       {
       var d1=installmentdate;
       this.showdate=d1;
-      localStorage.setItem("localsess_curr_date",this.showdate);
+      localStorage.setItem("curr_sess_chequedate",this.showdate);
       }
     });
   </script>
