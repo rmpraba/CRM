@@ -363,41 +363,85 @@ ready:function () {
           }
         },
         submit:function () {
-      
-        if(this.firstname==""||this.lastname==""||this.fathername==""||this.mothername==""||this.mob==""||this.email==""||this.textvalue==""||this.Guardianname==""||this.gmob==""||this.gemail==""){
+      // alert('submit!');
+      if(paga=="gardians"){
+        if(this.firstname==""||this.lastname==""||this.textvalue==""||this.Guardianname==""||this.gemail==""||this.gmob==""){
+           // alert('1');
            this.$.fname.validate();
             // this.$.mname.validate();
             this.$.lname.validate();
            this.$.locality.validate();
+           this.$.Guardianname.validate();
+            this.$.gmobile.validate();
+            this.$.gemail.validate();
+      }
+       else if(grade==null){
+          // alert('4');
+          alert('Select the grade your seeking for admission');
+        }
+        else if(gender==null){
+          // alert('5');
+          alert('Select the gender of the student');
+        }
+        else if(dobdate==null){
+          // alert('6');
+          alert('Select date of birth properly')
+        }
+        else if(academicyear==null){
+          // alert('7');
+          alert('Select the respective academic year');
+        }
+        else if(this.textvalue==null||this.textvalue==""){
+          // alert('7');
+          alert('Select the Location');
+        }
+        else{
+          // alert('coming........');
+        this.$.service.submitenqiry(this.enqno,academicyear,grade,this.firstname,this.middlename,this.lastname,gender,dobdate,this.fathername,this.mothername,this.mob,this.email,this.textvalue,this.todaydate,this.gemail,this.gmob,this.Guardianname);
+      }
               
       }
         else if(paga=="parents")
           {
+            if(this.firstname==""||this.lastname==""||this.textvalue==""||this.fathername==""||this.mothername==""||this.mob==""||this.email==""){
+            // alert('2');
+          this.$.fname.validate();
+            // this.$.mname.validate();
+            this.$.lname.validate();
+           this.$.locality.validate();
             this.$.dadname.validate();
             this.$.momname.validate();
             this.$.mobile.validate();
             this.$.email.validate();
           }
-         else if(paga=="parents"){
-           this.$.Guardianname.validate();
-            this.$.gmobile.validate();
-            this.$.gemail.validate();
-         }
-        else if(grade==null){
+           else if(grade==null){
+          // alert('4');
           alert('Select the grade your seeking for admission');
         }
         else if(gender==null){
+          // alert('5');
           alert('Select the gender of the student');
         }
         else if(dobdate==null){
+          // alert('6');
           alert('Select date of birth properly')
         }
         else if(academicyear==null){
+          // alert('7');
           alert('Select the respective academic year');
         }
+        else if(this.textvalue==null||this.textvalue==""){
+          // alert('7');
+          alert('Select the Location');
+        }
         else{
+          // alert('coming........');
         this.$.service.submitenqiry(this.enqno,academicyear,grade,this.firstname,this.middlename,this.lastname,gender,dobdate,this.fathername,this.mothername,this.mob,this.email,this.textvalue,this.todaydate,this.gemail,this.gmob,this.Guardianname);
       }
+          }
+
+       
+        
       },
       verifymob:function(){
         //alert('1');

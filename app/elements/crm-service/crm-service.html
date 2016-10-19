@@ -521,7 +521,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         obj.gmob=gmob;
         obj.Guardianname=Guardianname;
         this.submitenquiryparam=obj;
-        alert(JSON.stringify(obj));
+        // alert(JSON.stringify(obj));
         this.$.submitenquiryajax.generateRequest();
       this.updatefollowurl="http://localhost:8086/updatefollow";
         var obj={"schol":"","id":"","enquiryno":"","schedule":"","createdby":"","createdon":""}
@@ -555,6 +555,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      },
      submitenquiryResponse:function(e){
       var result=e.detail.response.returnval;
+      // alert(JSON.stringify(result));
       if(result=="success"){
         alert("Submited Successfully");
 
@@ -888,7 +889,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      },
      verifymobilenoResponse:function(e){
         var result=e.detail.response.returnval;
-        if(result.length>=0){
+        if(result.length>0){
           document.querySelector('newenquiry-card').showdialog(result[0].enquiry_no,result[0].first_name,result[0].middle_name,result[0].last_name);
         }
      },
