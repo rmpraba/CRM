@@ -59,8 +59,13 @@
           </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
-        <span class="col-sm-6"><paper-checkbox id="male" readonly class="checkbox" on-change="maleHandler">Male</paper-checkbox></span>
-        <span class="col-sm-6"><paper-checkbox  id="female" readonly class="checkbox" on-change="femaleHandler">Female</paper-checkbox></span>
+        <div class="col-sm-6 enquiry-input">
+          <label>Gender</label>
+          <div class="gender">
+            <span class="col-sm-6"><paper-checkbox id="male"  class="checkbox" on-change="maleHandler">Boy</paper-checkbox></span>
+            <span class="col-sm-6"><paper-checkbox  id="female" class="checkbox" on-change="femaleHandler">Girl</paper-checkbox></span>
+          </div>
+        </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
@@ -71,42 +76,46 @@
         </div>
       </div>
       <div class="form-group-heading">
-        <h4>Parent Detail</h4>
+        <h4>Parent/Guardian Detail</h4>
       </div>
-      <div class="list-group col-sm-12 panel-body form-category">
-        <!-- <div class="col-sm-6">
-         <paper-dropdown-menu label="Enquiry Source" >
-        <paper-menu id="source" class="dropdown-content" required on-iron-select="source" valueattr="value" >
-            <paper-item >Zee Television Ads</paper-item>
-            <paper-item >Newspaper</paper-item>
-            <paper-item >Print Media</paper-item>
-            <paper-item >Poll Board</paper-item>
-            <paper-item >Direction Boards</paper-item>
-            <paper-item >Bounties</paper-item>
-            <paper-item >FM/Radio</paper-item>
-            <paper-item >BTL Activities</paper-item>
-            <paper-item >Referrer</paper-item>
-            <paper-item >Weblinks</paper-item>
-            <paper-item >Website</paper-item>
-        </paper-menu>
-      </paper-dropdown-menu>
 
-        </div>  -->
+      <div class="list-group col-sm-12 panel-body form-category">
+         <div class="col-sm-6 enquiry-input">
+           <div class="gender">
+            <span class="col-sm-6"><paper-checkbox id="gardians"  class="checkbox" on-change="gardiansHandler"><h5>gardians</h5></paper-checkbox></span>
+            <span class="col-sm-6"><paper-checkbox  id="parents" class="checkbox" on-change="parentsHandler"><h5>parents</h5></paper-checkbox></span>
+           </div>  
+        </div>    
+      </div> 
+
+     <div  class="list-group col-sm-12 panel-body form-category" id="fathersdetails">   
         <div class="col-sm-6">
           <paper-input label="Father's Name" id="dadname" required error-message="needs father's name!" allowed-pattern="[a-zA-Z ]" value="{{fathername}}"></paper-input>
         </div>
         <div class="col-sm-6">
           <paper-input label="Mother's Name" id="momname" required error-message="needs mother's name!" allowed-pattern="[a-zA-Z ]" value="{{mothername}}"></paper-input>
         </div>
-      </div>
-      <div class="list-group col-sm-12 panel-body form-category">
-        <div class="col-sm-6">
+        <div>
+         <div class="col-sm-6">
           <paper-input id="mobile" required error-message="needs mobile number!" label="Mobile Number" allowed-pattern="[0-9]" maxlength="10" value="{{mob}}" on-change="verifymob"></paper-input>
-        </div>
-        <div class="col-sm-6">
+         </div>
+         <div class="col-sm-6">
           <gold-email-input id="email" required error-message="needs email ID!" label="Email" value="{{email}}"></gold-email-input>
-        </div>
+         </div>
       </div>
+    </div>
+      
+     <div class="list-group col-sm-12 panel-body form-category"  id="Guardiandetails">   
+          <div class="col-sm-6">
+          <paper-input label="Guardian's Name" id="Guardianname" required error-message="needs Guardian's Name!" allowed-pattern="[a-zA-Z ]" value="{{Guardianname}}"></paper-input>
+          </div>
+          <div class="col-sm-6">
+          <paper-input id="gmobile" required error-message="needs mobile number!" label="Mobile Number" allowed-pattern="[0-9]" maxlength="10" value="{{gmob}}" on-change="gverifymob"></paper-input>
+          </div>
+          <div class="col-sm-6">
+                <gold-email-input id="gemail" required error-message="needs email ID!" label="Email" value="{{gemail}}"></gold-email-input>
+          </div>
+     </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
           <paper-input  id="locality" required error-message="needs locality!" label="Enter location.." is="" value="{{textvalue}}" on-keydown="FnInputChanged"></paper-input>
@@ -116,44 +125,8 @@
             </template>
           </paper-listbox>
         </div>
-        <!-- <div class="col-sm-6">
-          <paper-dropdown-menu label="Enquiry Category" >
-        <paper-menu id="category" class="dropdown-content" required on-iron-select="category" valueattr="value" >
-            <paper-item >HOT</paper-item>
-            <paper-item >WARM</paper-item>
-            <paper-item >COLD</paper-item>
-        </paper-menu>
-      </paper-dropdown-menu>
-        </div> -->
-      </div>
-     <!--  <div class="list-group col-sm-12 panel-body form-category">
-        <div class="col-sm-6">
-          <paper-input label="Name"></paper-input>
-        </div>
-        <div class="col-sm-6">
-          <paper-input label="Qualification"></paper-input>
-        </div>
-        <div class="col-sm-6">
-          <paper-input label="Company"></paper-input>
-        </div>
-        <div class="col-sm-6">
-          <paper-input label="Designation"></paper-input>
-        </div>
-        <div class="col-sm-6">
-          <paper-input label="Company Address"></paper-input>
-        </div>
-        <div class="col-sm-6">
-          <paper-input label="Contact No"></paper-input>
-        </div>
-        <div class="col-sm-6">
-          <paper-input label="Email"></paper-input>
-        </div>
-      </div> -->
-      <!-- <div class="list-group col-sm-12 panel-body form-category">
-        <div class="col-sm-6">
-          <paper-textarea label="Comments(If any)" value="{{comments}}"></paper-textarea>
-        </div>
-      </div> -->
+           </div>
+     
       <div class="col-md-12 form-button">
         <paper-button class="btn btn-primary" on-click="submit">SUBMIT</paper-button>
       </div>
@@ -188,7 +161,6 @@
   <script>
   (function() {
     'use strict';
-
         var enqsource;
         var enqcategory;
         var dobdate;
@@ -197,12 +169,15 @@
         var academicyear;
         var gender;
         var grade;
+        var paga;
     Polymer({
       is: 'newenquiry-card',
 ready:function () {
         this.$.service.getenquiryno();
         this.$.service.getclasses();
         this.$.service.getlocation();
+        this.$.fathersdetails.hidden=true;
+        this.$.Guardiandetails.hidden=true;
         var dt=new Date();
         this.todaydate=dt.getDate()+"/"+(dt.getMonth()+1)+"/"+dt.getFullYear();
 
@@ -250,6 +225,26 @@ ready:function () {
         {
          document.querySelector("#male").checked=false;
          gender="Female";
+         //alert(gender);
+       }
+      },
+        gardiansHandler:function(){
+        if(document.querySelector("#gardians").checked==true)
+        {
+         document.querySelector("#parents").checked=false;
+         paga="gardians";
+         this.$.fathersdetails.hidden=true;
+         this.$.Guardiandetails.hidden=false;
+         //alert(gender);
+       }
+      },
+      parentsHandler:function(){
+        if(document.querySelector("#parents").checked==true)
+        {
+         document.querySelector("#gardians").checked=false;
+         paga="parents";
+          this.$.Guardiandetails.hidden=true;
+          this.$.fathersdetails.hidden=false;
          //alert(gender);
        }
       },
@@ -361,24 +356,33 @@ ready:function () {
           }
         else if(diff==2){
             this.ageofyr=diff+" Years";
-           
+
           }
        else {
             this.ageofyr=diff+" Years";
           }
         },
         submit:function () {
-       // alert("submit"+this.enqno+academicyear+grade+this.firstname+this.middlename+this.lastname+gender+dobdate+this.fathername+this.mothername+this.mob+this.email+this.textvalue);
-        if(this.firstname==""||this.lastname==""||this.fathername==""||this.mothername==""||this.mob==""||this.email==""||this.textvalue==""){
-            this.$.fname.validate();
+      
+        if(this.firstname==""||this.lastname==""||this.fathername==""||this.mothername==""||this.mob==""||this.email==""||this.textvalue==""||this.Guardianname==""||this.gmob==""||this.gemail==""){
+           this.$.fname.validate();
             // this.$.mname.validate();
             this.$.lname.validate();
+           this.$.locality.validate();
+              
+      }
+        else if(paga=="parents")
+          {
             this.$.dadname.validate();
             this.$.momname.validate();
             this.$.mobile.validate();
             this.$.email.validate();
-            this.$.locality.validate();
-        }
+          }
+         else if(paga=="parents"){
+           this.$.Guardianname.validate();
+            this.$.gmobile.validate();
+            this.$.gemail.validate();
+         }
         else if(grade==null){
           alert('Select the grade your seeking for admission');
         }
@@ -392,13 +396,18 @@ ready:function () {
           alert('Select the respective academic year');
         }
         else{
-        this.$.service.submitenqiry(this.enqno,academicyear,grade,this.firstname,this.middlename,this.lastname,gender,dobdate,this.fathername,this.mothername,this.mob,this.email,this.textvalue,this.todaydate);
+        this.$.service.submitenqiry(this.enqno,academicyear,grade,this.firstname,this.middlename,this.lastname,gender,dobdate,this.fathername,this.mothername,this.mob,this.email,this.textvalue,this.todaydate,this.gemail,this.gmob,this.Guardianname);
       }
       },
       verifymob:function(){
         //alert('1');
         this.$.service.checkmobileno(this.mob);
       },
+       gverifymob:function(){
+        //alert('1');
+        this.$.service.checkmobileno(this.gmob);
+      },
+
       showdialog:function(enqno,fname,mname,lname){
           this.studentname=fname+' '+mname+' '+lname;
           this.enquiryno=enqno;
@@ -426,7 +435,7 @@ ready:function () {
       },
       dateclear:function(){
         alert("Select DOB properly, it cannot be future date");
-        
+
       }
     });
   })();
