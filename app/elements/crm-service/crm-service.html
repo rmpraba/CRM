@@ -485,6 +485,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
    var reschedule;
    var xenquiryidd;
 
+   var fwupcmnt1;
+   var fwupcmnt2;
+   var fwupcmnt3;
+   var fwupcmnt4;
+   var fwupcmnt5;
     Polymer({
       is: 'crm-service',
       followupResponse:function(e){
@@ -1051,6 +1056,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       document.querySelector('followup-dashboard').exhaustedarr=res;
      },
       FollowUp1:function(enqno,followupid,followupdate1,confidencelevel,comments){
+        fwupcmnt1=comments;
         this.followup1url="http://localhost:8086/followup1";
         var obj={"schol":"","enqno":"","followupdate1":"","confidencelevel":"","comments":"","followupid":""};
         obj.schol=localStorage.getItem("schoolid");
@@ -1064,11 +1070,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       FollowUp1Response:function(e){
         var res=e.detail.response.returnval;
-        if(res == "success"){
+        if((res == "success")&&(fwupcmnt1!='null'||fwupcmnt1!='')){
           document.querySelector('followup-student-detail').mydialog();
         }
       },
       FollowUp2:function(enqno,followupid,followupdate2,confidencelevel,comments){
+        fwupcmnt2=comments;
         this.followup2url="http://localhost:8086/followup2";
         var obj={"schol":"","enqno":"","followupdate2":"","confidencelevel":"","comments":"","followupid":""};
         obj.schol=localStorage.getItem("schoolid");
@@ -1083,11 +1090,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       FollowUp2Response:function(e){
         var res=e.detail.response.returnval;
-        if(res == "success"){
+        if((res == "success")&&(fwupcmnt2!='null'||fwupcmnt2!='')){
           document.querySelector('followup-student-detail').mydialog();
         }
       },
       FollowUp3:function(enqno,followupid,followupdate3,confidencelevel,comments){
+        fwupcmnt3=comments;
         this.followup3url="http://localhost:8086/followup3";
         var obj={"schol":"","enqno":"","followupdate3":"","confidencelevel":"","comments":"","followupid":""};
         obj.schol=localStorage.getItem("schoolid");
@@ -1102,11 +1110,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       FollowUp3Response:function(e){
         var res=e.detail.response.returnval;
-        if(res == "success"){
+        if((res == "success")&&(fwupcmnt3!='null'||fwupcmnt3!='')){
           document.querySelector('followup-student-detail').mydialog();
         }
       },
       FollowUp4:function(enqno,followupid,followupdate4,confidencelevel,comments){
+        fwupcmnt4=comments;
         this.followup4url="http://localhost:8086/followup4";
         var obj={"schol":"","enqno":"","followupdate4":"","confidencelevel":"","comments":"","followupid":""};
         obj.schol=localStorage.getItem("schoolid");
@@ -1121,11 +1130,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       FollowUp4Response:function(e){
         var res=e.detail.response.returnval;
-        if(res == "success"){
+        if((res == "success")&&(fwupcmnt4!='null'||fwupcmnt4!='')){
           document.querySelector('followup-student-detail').mydialog();
         }
       },
       FollowUp5:function(enqno,followupid,followupdate5,confidencelevel,comments){
+        fwupcmnt5=comments;
         this.followup5url="http://localhost:8086/followup5";
         var obj={"schol":"","enqno":"","followupdate5":"","confidencelevel":"","comments":"","followupid":""};
         obj.schol=localStorage.getItem("schoolid");
@@ -1140,7 +1150,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       FollowUp5Response:function(e){
         var res=e.detail.response.returnval;
-        if(res == "success"){
+        if((res == "success")&&(fwupcmnt5!='null'||fwupcmnt5!='')){
           document.querySelector('followup-student-detail').mydialog();
         }
       },
