@@ -1312,7 +1312,7 @@ app.post('/getfollowupcount',  urlencodedParser,function (req, res){
    var school={"school_id":req.query.schol};
    var grade={"class":req.query.grade};
    var status={"status":req.query.status};
-   var qur = "SELECT f.enquiry_id,f.followup_flag,s.enquiry_name FROM followupdetail f join student_enquiry_details s on f.enquiry_id=s.enquiry_no WHERE f.followup_status='"+req.query.status+"' and s.class='"+req.query.grade+"' and s.school_id = '"+req.query.schol+"'";
+   var qur = "SELECT f.enquiry_id,f.followup_flag,s.enquiry_name,f.followup_status,f.followup_id,f.current_confidence_level FROM followupdetail f join student_enquiry_details s on f.enquiry_id=s.enquiry_no WHERE f.followup_status='"+req.query.status+"' and s.class='"+req.query.grade+"' and s.school_id = '"+req.query.schol+"'";
    connection.query(qur,
      function(err, rows)
      {
@@ -1333,7 +1333,7 @@ app.post('/getfollowupcount',  urlencodedParser,function (req, res){
  {
    var school={"school_id":req.query.schol};
    var id={"enquiry_no":req.query.id};
-   var qur = "SELECT s.enquiry_no, s.enquiry_name, s.class, s.created_on, s.father_name, s.father_mob,f.followup_id, f.followup_1, f.followup1_remarks, f.confidence_level_1, f.followup_2, f.followup2_remarks, f.confidence_level_2, f.followup_3, f.followup3_remarks, f.confidence_level_3, f.followup_4, f.followup4_remarks, f.confidence_level_4, f.followup_5, f.followup5_remarks, f.confidence_level_5,f.schedule FROM student_enquiry_details s JOIN followupdetail f on s.enquiry_no=f.enquiry_id WHERE f.enquiry_id='"+req.query.id+"' and f.school_id='"+req.query.schol+"'";
+   var qur = "SELECT s.enquiry_no, s.enquiry_name, s.class, s.created_on, s.father_name, s.father_mob,f.followup_id, f.followup_1, f.followup1_remarks, f.confidence_level_1, f.followup_2, f.followup2_remarks, f.confidence_level_2, f.followup_3, f.followup3_remarks, f.confidence_level_3, f.followup_4, f.followup4_remarks, f.confidence_level_4, f.followup_5, f.followup5_remarks, f.confidence_level_5,f.schedule FROM student_enquiry_details s JOIN followupdetail f on s.enquiry_no=f.enquiry_id WHERE f.enquiry_id='"+req.query.id+"' and f.school_id='"+req.query.schol+"' and f.followup_status='"+req.query.fstatus+"' and f.followup_id='"+req.query.fid+"'";
    connection.query(qur,
      function(err, rows)
      {
@@ -1531,6 +1531,39 @@ app.post('/updateschedule',  urlencodedParser,function (req, res)
        }
      });
  });
+
+
+
+
+
+
+
+
+
+  app.post('/insertcallhistory',  urlencodedParser,function (req, res){
+    var response={
+      "school_id":req.query.schol,
+      "enquiry_id":req.query.enid,
+      "followup_id":req.query.fid,
+      "followup_no":req.query.fno,
+      "follwup_date":req.query.fdate,
+      "call_comments":req.query.callstatus,
+      "schedule":req.query.schedule
+    };
+    connection.query('INSERT INTO call_history SET ?',[response],
+    function(err, rows)
+    {
+    if(!err)
+    {
+      res.status(200).json({'returnval': 'success'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'no'});
+    }
+    });
+});
 
 function setvalue(){
   console.log("calling setvalue.....");

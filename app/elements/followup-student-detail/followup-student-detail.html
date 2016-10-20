@@ -32,7 +32,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <div class="col-sm-6">
             <paper-input label="Enquired On" readonly value="{{enquiredon}}"></paper-input>
           </div>
-        </div>        <div class="list-group col-sm-12 panel-body form-category">
+        </div>        
+        <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
           <paper-input label="Parent Name" readonly value="{{parentname}}"></paper-input>
         </div>
@@ -250,7 +251,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </paper-dialog>
 
 
-       <paper-dialog id="listcall">
+       <paper-dialog id="listcall" modal>
             <div class="content">
               <paper-dropdown-menu label="Select the call status">
                 <paper-listbox class="dropdown-content" on-iron-select="callstatusdrop">
@@ -286,76 +287,46 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     Polymer({
       is: 'followup-student-detail',
       check:function(){
-        if(this.comments1==null){
-            this.$.followedit1.disabled=false;
-              this.$.followdrop1.disabled=false;
-              this.$.followbox1.disabled=false;
-              this.$.followdisk1.disabled=false;
-              this.$.followcheck1.disabled=false;
+        this.close();
+        if(this.comments1==null||this.comments1==''){
+              this.$.yescall1.disabled=false;
+               this.$.nocall1.disabled=false;
         }
         else{
-          this.$.followedit1.disabled=true;
-              this.$.followdrop1.disabled=true;
-              this.$.followbox1.disabled=true;
-              this.$.followdisk1.disabled=true;
-              this.$.followcheck1.disabled=true;
+               this.$.yescall1.disabled=true;
+               this.$.nocall1.disabled=true;
         }
-        if(this.comments2==null){
-            this.$.followedit2.disabled=false;
-              this.$.followdrop2.disabled=false;
-              this.$.followbox2.disabled=false;
-              this.$.followdisk2.disabled=false;
-              this.$.followcheck2.disabled=false;
+        if(this.comments2==null||this.comments2==''){
+               this.$.yescall2.disabled=false;
+               this.$.nocall2.disabled=false;
         }
         else{
-           this.$.followedit2.disabled=true;
-              this.$.followdrop2.disabled=true;
-              this.$.followbox2.disabled=true;
-              this.$.followdisk2.disabled=true;
-              this.$.followcheck2.disabled=true;
+              this.$.yescall2.disabled=true;
+               this.$.nocall2.disabled=true;
         }
-        if(this.comments3==null){
-            this.$.followedit3.disabled=false;
-              this.$.followdrop3.disabled=false;
-              this.$.followbox3.disabled=false;
-              this.$.followdisk3.disabled=false;
-              this.$.followcheck3.disabled=false;
+        if(this.comments3==null||this.comments3==''){
+               this.$.yescall3.disabled=false;
+               this.$.nocall3.disabled=false;
         }
         else{
-
-            this.$.followedit3.disabled=true;
-              this.$.followdrop3.disabled=true;
-              this.$.followbox3.disabled=true;
-              this.$.followdisk3.disabled=true;
-              this.$.followcheck3.disabled=true;
+              this.$.yescall3.disabled=true;
+               this.$.nocall3.disabled=true;
         }
-        if(this.comments4==null){
-            this.$.followedit4.disabled=false;
-              this.$.followdrop4.disabled=false;
-              this.$.followbox4.disabled=false;
-              this.$.followdisk4.disabled=false;
-              this.$.followcheck4.disabled=false;
+        if(this.comments4==null||this.comments4==''){
+               this.$.yescall4.disabled=false;
+               this.$.nocall4.disabled=false;
         }
         else{
-            this.$.followedit4.disabled=true;
-              this.$.followdrop4.disabled=true;
-              this.$.followbox4.disabled=true;
-              this.$.followdisk4.disabled=true;
-              this.$.followcheck4.disabled=true;
+             this.$.yescall4.disabled=true;
+               this.$.nocall4.disabled=true;
             }
-        if(this.comments5==null){
-            this.$.followedit5.disabled=false;
-              this.$.followdrop5.disabled=false;
-              this.$.followbox5.disabled=false;
-              this.$.followdisk5.disabled=false;
-              this.$.followcheck5.disabled=false;
+        if(this.comments5==null||this.comments5==''){
+               this.$.yescall5.disabled=false;
+               this.$.nocall5.disabled=false;
         }
         else{
-            this.$.followedit5.disabled=true;
-              this.$.followdrop5.disabled=true;
-              this.$.followbox5.disabled=true;
-              this.$.followdisk5.disabled=true;
-              this.$.followcheck5.disabled=true;
+             this.$.yescall5.disabled=true;
+               this.$.nocall5.disabled=true;
             }
 
       },
@@ -798,30 +769,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       callstatusdrop:function(e){
         callpickstatus=(e.target.selectedItem.textContent).trim();
-        alert(callpickstatus);
+        //alert(callpickstatus);
         if(followupno==1){
           alert(followupno+followcall1+this.followupdate1+this.enqno+this.followupid+this.schedule);
-            //this.$.service.updatecallstatus(followupno,followcall1,this.followupdate1,this.enqno,this.followupid,this.schedule);
+            this.$.service.updatecallstatus(followupno,callpickstatus,this.followupdate1,this.enqno,this.followupid,this.schedule);
         }
         else if(followupno==2){
           alert(followupno+followcall2+this.followupdate2+this.enqno+this.followupid+this.schedule);
-            //this.$.service.updatecallstatus(followupno,followcall2,this.followupdate2,this.enqno,this.followupid,this.schedule);
+            this.$.service.updatecallstatus(followupno,callpickstatus,this.followupdate2,this.enqno,this.followupid,this.schedule);
         }
         else if(followupno==3){
           alert(followupno+followcall3+this.followupdate3+this.enqno+this.followupid+this.schedule);
-            //this.$.service.updatecallstatus(followupno,followcall3,this.followupdate3,this.enqno,this.followupid,this.schedule);
+            this.$.service.updatecallstatus(followupno,callpickstatus,this.followupdate3,this.enqno,this.followupid,this.schedule);
         }
         else if(followupno==4){
           alert(followupno+followcall4+this.followupdate4+this.enqno+this.followupid+this.schedule);
-            //this.$.service.updatecallstatus(followupno,followcall4,this.followupdate4,this.enqno,this.followupid,this.schedule);
+            this.$.service.updatecallstatus(followupno,callpickstatus,this.followupdate4,this.enqno,this.followupid,this.schedule);
         }
         else if(followupno==5){
           alert(followupno+followcall5+this.followupdate5+this.enqno+this.followupid+this.schedule);
-            //this.$.service.updatecallstatus(followupno,followcall5,this.followupdate5,this.enqno,this.followupid,this.schedule);
+            this.$.service.updatecallstatus(followupno,callpickstatus,this.followupdate5,this.enqno,this.followupid,this.schedule);
         }
-         var id = 'listcall';
-      var dialog = document.getElementById(id);
-      dialog.opened=false;
+       
       },
       close:function(){
          var id = 'listcall';
@@ -834,11 +803,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       document.querySelector("#nocall4").checked=false;
       document.querySelector("#nocall5").checked=false;
 
+      this.followup1yes();
+      this.followup2yes();
+      this.followup3yes();
+      this.followup4yes();
+      this.followup5yes();
       this.follow1no();
       this.follow2no();
       this.follow3no();
       this.follow4no();
       this.follow5no();
+      },
+      exit:function(){
+            var id = 'listcall';
+      var dialog = document.getElementById(id);
+      dialog.opened=false;
       }
     });
   })();

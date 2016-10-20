@@ -450,6 +450,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       debounce-duration="300"
     >
     </iron-ajax>
+    <!-- this below ajax is used to insert the call history of the follow up for the which the call is not properly attend -->
+    <iron-ajax
+      method="post"
+      id="insertcallhistoryajax"
+      url="{{insertcallhistoryurl}}"
+      params="{{insertcallhistoryparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="insertcallhistoryResponse"
+      debounce-duration="300"
+    >
+    </iron-ajax>
   </template>
   <script>
   (function() {
@@ -1146,11 +1158,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var res=e.detail.response.returnval;
         document.querySelector('followup-details').followuparr=res;
       },
-      viewdetail:function(id){
+      viewdetail:function(id,status,followid){
         this.viewdetailurl="http://localhost:8086/viewdetail";
-        var obj={"schol":"","id":""};
+        var obj={"schol":"","id":"","fid":"","fstatus":""};
         obj.schol=localStorage.getItem("schoolid");
         obj.id=id;
+        obj.fid=followid;
+        obj.fstatus=status;
         this.viewdetailparam=obj;
         this.$.viewdetailajax.generateRequest();
       },
@@ -1298,6 +1312,26 @@ var dat=new Date();
         } else {
           alert('Invalid Enquiry number');
         }
+      },
+      updatecallstatus:function(followno,followupcall,followdate,enqno,followupid,schedule){
+          this.insertcallhistoryurl="http://localhost:8086/insertcallhistory";
+        var obj={"schol":"","enid":"","fno":"","fid":"","fdate":"","callstatus":"","schedule":""};
+        obj.schol=localStorage.getItem("schoolid");
+        obj.enid=enqno;
+        obj.fno=followno;
+        obj.fid=followupid;
+        obj.fdate=followdate;
+        obj.callstatus=followupcall;
+        obj.schedule=schedule;
+        this.insertcallhistoryparam=obj;
+        this.$.insertcallhistoryajax.generateRequest();
+      },
+      insertcallhistoryResponse:function(e){
+          var res=e.detail.response.returnval;
+          if(res=='success'){
+            alert('Kindly Reschedule the current follow up date');
+            document.querySelector('followup-student-detail').exit();
+          }
       }
 
     });

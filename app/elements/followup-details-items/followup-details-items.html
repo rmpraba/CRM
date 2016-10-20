@@ -7,6 +7,7 @@
   <template>
    <div>
      <div class="row">
+     <div hidden>{{status}}/{{followupid}}</div>
        <table class="striped" style="margin: 2% 0 0 5%;">
          <tbody>
            <tr>
@@ -48,7 +49,8 @@
       is: 'followup-details-items',
 
       viewdetail:function(){
-        this.$.service.viewdetail(this.id);
+        //alert(this.status+   +this.followupid);
+        this.$.service.viewdetail(this.id,this.status,this.followupid);
       }
     });
   })();
