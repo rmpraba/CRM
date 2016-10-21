@@ -196,11 +196,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <div class="modal-body col-sm-6 col-sm-offset-3" style="height: 100px;">
             <paper-dropdown-menu label="Status">
               <paper-listbox class="dropdown-content" on-iron-select="FnStatus">
-                <paper-item>Process</paper-item>
+                <paper-item>Inprogress</paper-item>
                 <paper-item>Closed</paper-item>
                 <paper-item>Exhausted</paper-item>
-                <paper-item>Ready For Admission</paper-item>
-                <paper-item>Schedule New Followup</paper-item>
+                <paper-item>Rejected</paper-item>
+                <paper-item>Not Interested</paper-item>
               </paper-listbox>
             </paper-dropdown-menu>
             <button type="button" class="btn btn-primary col-sm-6 col-sm-offset-3" on-click="submitstatus">Submit</button>
@@ -334,17 +334,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         confidencelevel=(e.target.selectedItem.textContent).trim();
       },
       FollowUp1:function(){
-        alert(this.followupid);
-        this.$.service.FollowUp1(this.enqno,this.followupid,this.followupdate1,confidencelevel,this.comments1);
+        //alert(this.followupid);
+        this.$.service.FollowUp1(this.enqno,this.followupid,this.followupdate1,confidencelevel,this.comments1,this.followupdate2);
       },
       FollowUp2:function(){
-        this.$.service.FollowUp2(this.enqno,this.followupid,this.followupdate2,confidencelevel,this.comments2);
+        this.$.service.FollowUp2(this.enqno,this.followupid,this.followupdate2,confidencelevel,this.comments2,this.followupdate3);
       },
       FollowUp3:function(){
-        this.$.service.FollowUp3(this.enqno,this.followupid,this.followupdate3,confidencelevel,this.comments3);
+        this.$.service.FollowUp3(this.enqno,this.followupid,this.followupdate3,confidencelevel,this.comments3,this.followupdate4);
       },
       FollowUp4:function(){
-        this.$.service.FollowUp4(this.enqno,this.followupid,this.followupdate4,confidencelevel,this.comments4);
+        this.$.service.FollowUp4(this.enqno,this.followupid,this.followupdate4,confidencelevel,this.comments4,this.followupdate5);
       },
       FollowUp5:function(){
         this.$.service.FollowUp5(this.enqno,this.followupid,this.followupdate5,confidencelevel,this.comments5);

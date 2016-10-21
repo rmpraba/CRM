@@ -462,6 +462,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       debounce-duration="300"
     >
     </iron-ajax>
+    <!-- this ajax is used to update the flag and next followup date in the database -->
+    <iron-ajax
+      method="post"
+      id="updatedateajax"
+      url="{{updatedateurl}}"
+      params="{{updatedateparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="updatedateResponse"
+      debounce-duration="300"
+    >
+    </iron-ajax>
   </template>
   <script>
   (function() {
@@ -490,6 +502,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
    var fwupcmnt3;
    var fwupcmnt4;
    var fwupcmnt5;
+
+   var fwupdate2;
+   var fwupdate3;
+   var fwupdate4;
+   var fwupdate5;
+
+   var fwupid1;
+   var fwupid2;
+   var fwupid3;
+   var fwupid4;
+
+   var fwupenqno1;
+   var fwupenqno2;
+   var fwupenqno3;
+   var fwupenqno4;
+
     Polymer({
       is: 'crm-service',
       followupResponse:function(e){
@@ -774,7 +802,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         obj.folowup3=thirdfollowupdate.getDate()+"/"+(thirdfollowupdate.getMonth()+1)+"/"+thirdfollowupdate.getFullYear();
         obj.folowup4=fourthfollowupdate.getDate()+"/"+(fourthfollowupdate.getMonth()+1)+"/"+fourthfollowupdate.getFullYear();
         obj.folowup5=fifthfollowupdate.getDate()+"/"+(fifthfollowupdate.getMonth()+1)+"/"+fifthfollowupdate.getFullYear();
-        obj.nextfolowup=dat.getDate()+"/"+(dat.getMonth()+1)+"/"+dat.getFullYear();
+        obj.nextfolowup=firstfollowupdate.getDate()+"/"+(firstfollowupdate.getMonth()+1)+"/"+firstfollowupdate.getFullYear();
         obj.flag=1;
         obj.schedule=1;
         obj.status="Open";
@@ -1039,7 +1067,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         this.getprocessfollowupcounturl="http://localhost:8086/getfollowupcount";
         var obj={"schol":"","status":""}
-        obj.status="Process";
+        obj.status="Inprogress";
         obj.schol=localStorage.getItem("schoolid");
         this.getprocessfollowupcountparam=obj;
        //alert(JSON.stringify(obj));
@@ -1070,7 +1098,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       var res=e.detail.response.returnval;
       document.querySelector('followup-dashboard').exhaustedarr=res;
      },
-      FollowUp1:function(enqno,followupid,followupdate1,confidencelevel,comments){
+      FollowUp1:function(enqno,followupid,followupdate1,confidencelevel,comments,fdate2){
+        fwupdate2=fdate2;
+        fwupid1=followupid;
+        fwupenqno1=enqno;
         fwupcmnt1=comments;
         this.followup1url="http://localhost:8086/followup1";
         var obj={"schol":"","enqno":"","followupdate1":"","confidencelevel":"","comments":"","followupid":""};
@@ -1086,10 +1117,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       FollowUp1Response:function(e){
         var res=e.detail.response.returnval;
         if((res == "success")&&(fwupcmnt1!='null'||fwupcmnt1!='')){
-          document.querySelector('followup-student-detail').mydialog();
+
+        this.updatedateurl="http://localhost:8086/updatedate";
+        var obj={"schol":"","enqno":"","fwupid":"","nextdate":"","nextflag":""}
+        obj.schol=localStorage.getItem("schoolid");
+        obj.enqno=fwupenqno1;
+        obj.fwupid=fwupid1;
+        obj.nextflag=2;
+        obj.nextdate=fwupdate2;
+        this.updatedateparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.updatedateajax.generateRequest();
         }
       },
-      FollowUp2:function(enqno,followupid,followupdate2,confidencelevel,comments){
+      FollowUp2:function(enqno,followupid,followupdate2,confidencelevel,comments,fdate3){
+        fwupdate3=fdate3;
+         fwupid2=followupid;
+        fwupenqno2=enqno;
         fwupcmnt2=comments;
         this.followup2url="http://localhost:8086/followup2";
         var obj={"schol":"","enqno":"","followupdate2":"","confidencelevel":"","comments":"","followupid":""};
@@ -1106,10 +1150,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       FollowUp2Response:function(e){
         var res=e.detail.response.returnval;
         if((res == "success")&&(fwupcmnt2!='null'||fwupcmnt2!='')){
-          document.querySelector('followup-student-detail').mydialog();
+
+           this.updatedateurl="http://localhost:8086/updatedate";
+        var obj={"schol":"","enqno":"","fwupid":"","nextdate":"","nextflag":""}
+        obj.schol=localStorage.getItem("schoolid");
+        obj.enqno=fwupenqno2;
+        obj.fwupid=fwupid2;
+        obj.nextflag=3;
+        obj.nextdate=fwupdate3;
+        this.updatedateparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.updatedateajax.generateRequest();
         }
       },
-      FollowUp3:function(enqno,followupid,followupdate3,confidencelevel,comments){
+      FollowUp3:function(enqno,followupid,followupdate3,confidencelevel,comments,fdate4){
+        fwupdate4=fdate4;
+         fwupid3=followupid;
+        fwupenqno3=enqno;
         fwupcmnt3=comments;
         this.followup3url="http://localhost:8086/followup3";
         var obj={"schol":"","enqno":"","followupdate3":"","confidencelevel":"","comments":"","followupid":""};
@@ -1126,10 +1183,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       FollowUp3Response:function(e){
         var res=e.detail.response.returnval;
         if((res == "success")&&(fwupcmnt3!='null'||fwupcmnt3!='')){
-          document.querySelector('followup-student-detail').mydialog();
+           this.updatedateurl="http://localhost:8086/updatedate";
+        var obj={"schol":"","enqno":"","fwupid":"","nextdate":"","nextflag":""}
+        obj.schol=localStorage.getItem("schoolid");
+        obj.enqno=fwupenqno3;
+        obj.fwupid=fwupid3;
+        obj.nextflag=4;
+        obj.nextdate=fwupdate4;
+        this.updatedateparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.updatedateajax.generateRequest();
         }
       },
-      FollowUp4:function(enqno,followupid,followupdate4,confidencelevel,comments){
+      FollowUp4:function(enqno,followupid,followupdate4,confidencelevel,comments,fdate5){
+        fwupdate5=fdate5;
+         fwupid4=followupid;
+        fwupenqno4=enqno;
         fwupcmnt4=comments;
         this.followup4url="http://localhost:8086/followup4";
         var obj={"schol":"","enqno":"","followupdate4":"","confidencelevel":"","comments":"","followupid":""};
@@ -1146,7 +1215,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       FollowUp4Response:function(e){
         var res=e.detail.response.returnval;
         if((res == "success")&&(fwupcmnt4!='null'||fwupcmnt4!='')){
-          document.querySelector('followup-student-detail').mydialog();
+       
+           this.updatedateurl="http://localhost:8086/updatedate";
+        var obj={"schol":"","enqno":"","fwupid":"","nextdate":"","nextflag":""}
+        obj.schol=localStorage.getItem("schoolid");
+        obj.enqno=fwupenqno4;
+        obj.fwupid=fwupid4;
+        obj.nextflag=5;
+        obj.nextdate=fwupdate5;
+        this.updatedateparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.updatedateajax.generateRequest();
         }
       },
       FollowUp5:function(enqno,followupid,followupdate5,confidencelevel,comments){
@@ -1167,7 +1246,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var res=e.detail.response.returnval;
         if((res == "success")&&(fwupcmnt5!='null'||fwupcmnt5!='')){
           document.querySelector('followup-student-detail').mydialog();
+
         }
+      },
+      updatedateResponse:function(e){
+          var res=e.detail.response.returnval;
+          if(res=='success'){
+                 document.querySelector('followup-student-detail').mydialog();
+
+          }
       },
       getfollowupstudents:function(grade, status){
         this.getfollowupstudentsurl="http://localhost:8086/getfollowupstudents";
@@ -1234,7 +1321,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         if(res == "success"){
           document.querySelector('followup-student-detail').closedialog();
            document.querySelector('followup-student-detail').check();
+           alert('Comments and Other details are updated Successfully ');
         }
+        
       },
       changestatus:function(folowupid,enquiryidd){
         xenquiryidd=enquiryidd;
@@ -1283,7 +1372,7 @@ var dat=new Date();
         obj.folowup3=thirdfollowupdate.getDate()+"/"+(thirdfollowupdate.getMonth()+1)+"/"+thirdfollowupdate.getFullYear();
         obj.folowup4=fourthfollowupdate.getDate()+"/"+(fourthfollowupdate.getMonth()+1)+"/"+fourthfollowupdate.getFullYear();
         obj.folowup5=fifthfollowupdate.getDate()+"/"+(fifthfollowupdate.getMonth()+1)+"/"+fifthfollowupdate.getFullYear();
-        obj.nextfolowup=dat.getDate()+"/"+(dat.getMonth()+1)+"/"+dat.getFullYear();
+        obj.nextfolowup=firstfollowupdate.getDate()+"/"+(firstfollowupdate.getMonth()+1)+"/"+firstfollowupdate.getFullYear();
         obj.flag=1;
         obj.schedule=2;
         obj.status="Open";

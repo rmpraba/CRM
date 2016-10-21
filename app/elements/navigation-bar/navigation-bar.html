@@ -629,8 +629,9 @@
         this.FnRefresh(); 
       },
       followupdashboard:function(){
+        this.$.service.getfollowupcount();
         document.querySelector('app-list').setPage("follow-up");
-      },
+      }, 
       FnRefresh:function(){
         document.querySelector('fees-card').ready();
         document.querySelector('fees-card').FnRefresh();
