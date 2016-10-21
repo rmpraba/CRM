@@ -82,7 +82,7 @@
       <div class="list-group col-sm-12 panel-body form-category">
          <div class="col-sm-6 enquiry-input">
            <div class="gender">
-            <span class="col-sm-6"><paper-checkbox id="gardians"  class="checkbox" on-change="gardiansHandler"><h5>gardians</h5></paper-checkbox></span>
+            <span class="col-sm-6"><paper-checkbox id="Gurdians"  class="checkbox" on-change="gardiansHandler"><h5>Gurdians</h5></paper-checkbox></span>
             <span class="col-sm-6"><paper-checkbox  id="parents" class="checkbox" on-change="parentsHandler"><h5>parents</h5></paper-checkbox></span>
            </div>  
         </div>    
@@ -187,9 +187,14 @@ ready:function () {
           this.$.class.selected=-1;
           this.$.male.checked=false;
           this.$.female.checked=false;
+          this.$.parents.checked=false;
+          this.$.Gurdians.checked=false;
           this.$.itemlist.selected=-1;
           this.firstname="";
           this.middlename="";
+          this.Guardianname="";
+          this.gmob="";
+          this.gemail="";
           this.lastname="";
           this.ageofyr="";
           this.fathername="";
@@ -197,6 +202,7 @@ ready:function () {
           this.mob="";
           this.email="";
           this.textvalue="";
+          this.datepekar="";
           enqsource=null;
          enqcategory=null;
          dobdate=null;
@@ -204,6 +210,7 @@ ready:function () {
          //academicyear=null;
          gender=null;
          grade=null;
+         paga=null;
       },
       classes:function(e){
           grade=(e.target.selectedItem.textContent).trim();
@@ -229,10 +236,10 @@ ready:function () {
        }
       },
         gardiansHandler:function(){
-        if(document.querySelector("#gardians").checked==true)
+        if(document.querySelector("#Gurdians").checked==true)
         {
          document.querySelector("#parents").checked=false;
-         paga="gardians";
+         paga="Gurdians";
          this.$.fathersdetails.hidden=true;
          this.$.Guardiandetails.hidden=false;
          //alert(gender);
@@ -241,7 +248,7 @@ ready:function () {
       parentsHandler:function(){
         if(document.querySelector("#parents").checked==true)
         {
-         document.querySelector("#gardians").checked=false;
+         document.querySelector("#Gurdians").checked=false;
          paga="parents";
           this.$.Guardiandetails.hidden=true;
           this.$.fathersdetails.hidden=false;
@@ -348,7 +355,7 @@ ready:function () {
           }
           else if(diff==2){
             this.ageofyr=diff+" Years";
-            alert("hi");
+           
           }
 
         else if(diff<=1||diff<3){
@@ -364,7 +371,7 @@ ready:function () {
         },
         submit:function () {
       // alert('submit!');
-      if(paga=="gardians"){
+      if(paga=="Gurdians"){
         if(this.firstname==""||this.lastname==""||this.textvalue==""||this.Guardianname==""||this.gemail==""||this.gmob==""){
            // alert('1');
            this.$.fname.validate();
@@ -397,7 +404,7 @@ ready:function () {
         }
         else{
           // alert('coming........');
-        this.$.service.submitenqiry(this.enqno,academicyear,grade,this.firstname,this.middlename,this.lastname,gender,dobdate,this.fathername,this.mothername,this.mob,this.email,this.textvalue,this.todaydate,this.gemail,this.gmob,this.Guardianname);
+        this.$.service.submitenqiry(this.enqno,academicyear,grade,this.firstname,this.middlename,this.lastname,gender,dobdate,this.fathername,this.mothername,this.mob,this.email,this.textvalue,this.todaydate,this.gemail,this.gmob,this.Guardianname,paga);
       }
               
       }
@@ -436,7 +443,7 @@ ready:function () {
         }
         else{
           // alert('coming........');
-        this.$.service.submitenqiry(this.enqno,academicyear,grade,this.firstname,this.middlename,this.lastname,gender,dobdate,this.fathername,this.mothername,this.mob,this.email,this.textvalue,this.todaydate,this.gemail,this.gmob,this.Guardianname);
+        this.$.service.submitenqiry(this.enqno,academicyear,grade,this.firstname,this.middlename,this.lastname,gender,dobdate,this.fathername,this.mothername,this.mob,this.email,this.textvalue,this.todaydate,this.gemail,this.gmob,this.Guardianname,paga);
       }
           }
 

@@ -196,7 +196,7 @@ app.post('/submitenquiry',  urlencodedParser,function (req, res)
   "first_name":req.query.firstname,"middle_name":req.query.middlename,"last_name":req.query.lastname,
   "dob":req.query.dobs,"father_name":req.query.father,"locality":req.query.location,"mother_name":req.query.mother,
   "father_email":req.query.email,"created_by":req.query.createdby,"created_on":req.query.createdate,
-  "enquiry_name":req.query.givenname,"gemail":req.query.gemail,"gmob":req.query.gmob,"Guardianname":req.query.Guardianname,"status":"Enquired"};
+  "enquiry_name":req.query.givenname,"gemail":req.query.gemail,"gmob":req.query.gmob,"parent_or_guardian":req.query.paga,"Guardianname":req.query.Guardianname,"status":"Enquired"};
        connection.query('insert into student_enquiry_details set ? ',[collection],
         function(err, rows)
         {
@@ -987,6 +987,7 @@ app.post('/updateprospectno',  urlencodedParser,function (req, res)
 
 });
   });
+
 
 
 /*this function is to get the count of enquiry takes placed by grade wise*/
