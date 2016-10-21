@@ -19,32 +19,36 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <div class="list-group col-sm-12 panel-body form-category">
           <paper-input hidden value="{{followupid}}"></paper-input>
           <div class="col-sm-6">
-            <paper-input label="Enquiry No" value="{{enqno}}"></paper-input>
+            <paper-input label="Enquiry No" readonly value="{{enqno}}"></paper-input>
           </div>
           <div class="col-sm-6">
-            <paper-input label="Name" value="{{name}}"></paper-input>
+            <paper-input label="Name" readonly value="{{name}}"></paper-input>
           </div>
         </div>
         <div class="list-group col-sm-12 panel-body form-category">
           <div class="col-sm-6">
-            <paper-input label="Grade" value="{{grade}}"></paper-input>
+            <paper-input label="Grade" readonly value="{{grade}}"></paper-input>
           </div>
           <div class="col-sm-6">
-            <paper-input label="Enquired On" value="{{enquiredon}}"></paper-input>
+            <paper-input label="Enquired On" readonly value="{{enquiredon}}"></paper-input>
           </div>
-        </div>        <div class="list-group col-sm-12 panel-body form-category">
+        </div>        
+        <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
-          <paper-input label="Parent Name" value="{{parentname}}"></paper-input>
+          <paper-input label="Parent Name" readonly value="{{parentname}}"></paper-input>
         </div>
         <div class="col-sm-6">
-          <paper-input label="Mobile No" value="{{mobileno}}"></paper-input>
+          <paper-input label="Mobile No" readonly value="{{mobileno}}"></paper-input>
         </div>
       </div>
       </div>
+      <div><p><center><strong style="font-size: larger;">FollowUp Schedule - {{schedule}}</strong></center></p></div>
+
       <table class="table table-striped">
         <thead>
         <tr>
           <th>S.No</th>
+          <th>   Call picked</th>
           <th>Date</th>
           <th>Confidence Level</th>
           <th>Comments</th>
@@ -53,6 +57,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <tbody>
         <tr>
           <th scope="row">1</th>
+          <td><span><div id='followcheck1'><paper-checkbox class="col-sm-6" id="yescall1" class="checkbox" on-change="followup1yes">Yes</paper-checkbox>
+          <paper-checkbox class="col-sm-6" id="nocall1" class="checkbox" on-change="follow1no">No</paper-checkbox></div></span></td>
           <td>
             <span class="col-sm-8"><paper-input id="date1" disabled label="Date" value="{{followupdate1}}"></paper-input></span>
 
@@ -78,6 +84,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </tr>
         <tr>
           <th scope="row">2</th>
+          <td><span><div id='followcheck2'><paper-checkbox class="col-sm-6" id="yescall2" class="checkbox" on-change="followup2yes">Yes</paper-checkbox>
+          <paper-checkbox class="col-sm-6" id="nocall2" class="checkbox" on-change="follow2no">No</paper-checkbox></div></span></td>
+          
           <td>
             <span class="col-sm-8"><paper-input id="date2" disabled label="Date" value="{{followupdate2}}"></paper-input></span>
             <span class="col-sm-4 glyph-button"><button on-click="dialogfollowup2" id="followedit2" class="btn glyphicon glyphicon-pencil"></button></span>
@@ -102,6 +111,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </tr>
         <tr>
           <th scope="row">3</th>
+          <td><span><div id='followcheck3'><paper-checkbox class="col-sm-6" id="yescall3" class="checkbox" on-change="followup3yes">Yes</paper-checkbox>
+          <paper-checkbox class="col-sm-6" id="nocall3" class="checkbox" on-change="follow3no">No</paper-checkbox></div></span></td>
           <td>
             <span class="col-sm-8"><paper-input id="date3" disabled label="Date" value="{{followupdate3}}"></paper-input></span>
             <span class="col-sm-4 glyph-button"><button id="followedit3" on-click="dialogfollowup3" class="btn glyphicon glyphicon-pencil"></button></span>
@@ -109,7 +120,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <td>
 
             <paper-dropdown-menu  id="followdrop3" label="Confidence Level">
-              <paper-listbox id="confidencelevel3" class="dropdown-content" on-iron-select="Fnprospectusstatus">
+              <paper-listbox id="confidencelevel3" class="dropdown-content" on-iron-select="FnConfidenceLevel">
                 <paper-item value=1>>90%</paper-item>
                 <paper-item value=2>>75%</paper-item>
                 <paper-item value=3>>50%</paper-item>
@@ -126,6 +137,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </tr>
         <tr>
           <th scope="row">4</th>
+          <td><span><div id='followcheck4'><paper-checkbox class="col-sm-6" id="yescall4" class="checkbox" on-change="followup4yes">Yes</paper-checkbox>
+          <paper-checkbox class="col-sm-6" id="nocall4" class="checkbox" on-change="follow4no">No</paper-checkbox></div></span></td>
           <td>
             <span class="col-sm-8"><paper-input id="date4" disabled label="Date" value="{{followupdate4}}"></paper-input></span>
             <span class="col-sm-4 glyph-button"><button id="followedit4" on-click="dialogfollowup4" class="btn glyphicon glyphicon-pencil"></button></span>
@@ -133,7 +146,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <td>
 
             <paper-dropdown-menu id="followdrop4" label="Confidence Level">
-              <paper-listbox id="confidencelevel4" class="dropdown-content" on-iron-select="Fnprospectusstatus">
+              <paper-listbox id="confidencelevel4" class="dropdown-content" on-iron-select="FnConfidenceLevel">
                 <paper-item value=1>>90%</paper-item>
                 <paper-item value=2>>75%</paper-item>
                 <paper-item value=3>>50%</paper-item>
@@ -150,6 +163,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </tr>
         <tr>
           <th scope="row">5</th>
+          <td><span><div id='followcheck5'><paper-checkbox class="col-sm-6" id="yescall5" class="checkbox" on-change="followup5yes">Yes</paper-checkbox>
+          <paper-checkbox class="col-sm-6" id="nocall5" class="checkbox" on-change="follow5no">No</paper-checkbox></div></span></td>
           <td>
             <span class="col-sm-8"><paper-input id="date5" disabled label="Date" value="{{followupdate5}}"></paper-input></span>
             <span class="col-sm-4 glyph-button"><button id="followedit5" on-click="dialogfollowup5" class="btn glyphicon glyphicon-pencil"></button></span>
@@ -157,7 +172,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <td>
 
             <paper-dropdown-menu id="followdrop5" label="Confidence Level">
-              <paper-listbox id="confidencelevel5" class="dropdown-content" on-iron-select="Fnprospectusstatus">
+              <paper-listbox id="confidencelevel5" class="dropdown-content" on-iron-select="FnConfidenceLevel">
                 <paper-item value=1>>90%</paper-item>
                 <paper-item value=2>>75%</paper-item>
                 <paper-item value=3>>50%</paper-item>
@@ -234,6 +249,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <paper-button on-click="FnDismissDialog5">OK</paper-button>
         </div>
       </paper-dialog>
+
+
+       <paper-dialog id="listcall" modal>
+            <div class="content">
+              <paper-dropdown-menu label="Select the call status">
+                <paper-listbox class="dropdown-content" on-iron-select="callstatusdrop">
+                  <paper-item>Didn’t pick up</paper-item>
+                  <paper-item>Switch off</paper-item>
+                  <paper-item>Wrong number</paper-item>
+                  <paper-item>Busy</paper-item>
+                  <paper-item>Not reachable</paper-item>
+                  <paper-item>Not available</paper-item>
+                </paper-listbox>
+              </paper-dropdown-menu>
+            </div>
+            <div class="buttons">
+          <paper-button on-click="close">Close</paper-button>
+        </div>
+      </paper-dialog>
+
         <crm-service id="service"></crm-service>
   </template>
   <script>
@@ -241,68 +276,58 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     'use strict';
     var confidencelevel;
     var follupupstatus;
+    var followcall1;
+    var followcall2;
+    var followcall3;
+    var followcall4;
+    var followcall5;
+    var callpickstatus;
+    var followupno;
+
     Polymer({
       is: 'followup-student-detail',
       check:function(){
-        if(this.comments1==null){
-            this.$.followedit1.disabled=false;
-              this.$.followdrop1.disabled=false;
-              this.$.followbox1.disabled=false;
-              this.$.followdisk1.disabled=false;
+        this.close();
+        if(this.comments1==null||this.comments1==''){
+              this.$.yescall1.disabled=false;
+               this.$.nocall1.disabled=false;
         }
         else{
-          this.$.followedit1.disabled=true;
-              this.$.followdrop1.disabled=true;
-              this.$.followbox1.disabled=true;
-              this.$.followdisk1.disabled=true;
+               this.$.yescall1.disabled=true;
+               this.$.nocall1.disabled=true;
         }
-        if(this.comments2==null){
-            this.$.followedit2.disabled=false;
-              this.$.followdrop2.disabled=false;
-              this.$.followbox2.disabled=false;
-              this.$.followdisk2.disabled=false;
+        if(this.comments2==null||this.comments2==''){
+               this.$.yescall2.disabled=false;
+               this.$.nocall2.disabled=false;
         }
         else{
-           this.$.followedit2.disabled=true;
-              this.$.followdrop2.disabled=true;
-              this.$.followbox2.disabled=true;
-              this.$.followdisk2.disabled=true;
+              this.$.yescall2.disabled=true;
+               this.$.nocall2.disabled=true;
         }
-        if(this.comments3==null){
-            this.$.followedit3.disabled=false;
-              this.$.followdrop3.disabled=false;
-              this.$.followbox3.disabled=false;
-              this.$.followdisk3.disabled=false;
+        if(this.comments3==null||this.comments3==''){
+               this.$.yescall3.disabled=false;
+               this.$.nocall3.disabled=false;
         }
         else{
-
-            this.$.followedit3.disabled=true;
-              this.$.followdrop3.disabled=true;
-              this.$.followbox3.disabled=true;
-              this.$.followdisk3.disabled=true;
+              this.$.yescall3.disabled=true;
+               this.$.nocall3.disabled=true;
         }
-        if(this.comments4==null){
-            this.$.followedit4.disabled=false;
-              this.$.followdrop4.disabled=false;
-              this.$.followbox4.disabled=false;
-              this.$.followdisk4.disabled=false;
+        if(this.comments4==null||this.comments4==''){
+               this.$.yescall4.disabled=false;
+               this.$.nocall4.disabled=false;
         }
         else{
-            this.$.followedit4.disabled=true;
-              this.$.followdrop4.disabled=true;
-              this.$.followbox4.disabled=true;
-              this.$.followdisk4.disabled=true;}
-        if(this.comments5==null){
-            this.$.followedit5.disabled=false;
-              this.$.followdrop5.disabled=false;
-              this.$.followbox5.disabled=false;
-              this.$.followdisk5.disabled=false;
+             this.$.yescall4.disabled=true;
+               this.$.nocall4.disabled=true;
+            }
+        if(this.comments5==null||this.comments5==''){
+               this.$.yescall5.disabled=false;
+               this.$.nocall5.disabled=false;
         }
         else{
-            this.$.followedit5.disabled=true;
-              this.$.followdrop5.disabled=true;
-              this.$.followbox5.disabled=true;
-              this.$.followdisk5.disabled=true;}
+             this.$.yescall5.disabled=true;
+               this.$.nocall5.disabled=true;
+            }
 
       },
       FnConfidenceLevel:function(e){
@@ -546,6 +571,253 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         else{
         this.$.service.SubmitStatus(this.enqno,follupupstatus);
       }
+      },
+      followup1yes:function(){
+          if(document.querySelector("#yescall1").checked==true){
+        followcall1='Yes';
+        document.querySelector("#nocall1").checked=false;
+        this.$.followbox1.disabled=false;
+        this.$.followdrop1.disabled=false;
+        this.$.followdisk1.disabled=false;
+        this.$.followedit1.disabled=true;
+      }
+      else{
+        followcall1=null;
+        this.$.followbox1.disabled=true;
+        this.$.followdrop1.disabled=true;
+        this.$.followdisk1.disabled=true;
+        this.$.followedit1.disabled=true;
+      }
+      },
+      followup2yes:function(){
+          if(document.querySelector("#yescall2").checked==true){
+        followcall2='Yes';
+        document.querySelector("#nocall2").checked=false;
+        this.$.followbox2.disabled=false;
+        this.$.followdrop2.disabled=false;
+        this.$.followdisk2.disabled=false;
+        this.$.followedit2.disabled=true;
+      }
+      else{
+        followcall2=null;
+         this.$.followbox2.disabled=true;
+        this.$.followdrop2.disabled=true;
+        this.$.followdisk2.disabled=true;
+        this.$.followedit2.disabled=true;
+      }
+      },
+      followup3yes:function(){
+          if(document.querySelector("#yescall3").checked==true){
+        followcall3='Yes';
+        document.querySelector("#nocall3").checked=false;
+        this.$.followbox3.disabled=false;
+        this.$.followdrop3.disabled=false;
+        this.$.followdisk3.disabled=false;
+        this.$.followedit3.disabled=true;
+      }
+      else{
+        followcall3=null;
+        this.$.followbox3.disabled=true;
+        this.$.followdrop3.disabled=true;
+        this.$.followdisk3.disabled=true;
+        this.$.followedit3.disabled=true;
+      }
+      },
+      followup4yes:function(){
+          if(document.querySelector("#yescall4").checked==true){
+        followcall4='Yes';
+        document.querySelector("#nocall4").checked=false;
+        this.$.followbox4.disabled=false;
+        this.$.followdrop4.disabled=false;
+        this.$.followdisk4.disabled=false;
+        this.$.followedit4.disabled=true;
+      }
+      else{
+        followcall4=null;
+        this.$.followbox4.disabled=true;
+        this.$.followdrop4.disabled=true;
+        this.$.followdisk4.disabled=true;
+        this.$.followedit4.disabled=true;
+      }
+      },
+      followup5yes:function(){
+          if(document.querySelector("#yescall5").checked==true){
+        followcall5='Yes';
+        document.querySelector("#nocall5").checked=false;
+        this.$.followbox5.disabled=false;
+        this.$.followdrop5.disabled=false;
+        this.$.followdisk5.disabled=false;
+        this.$.followedit5.disabled=true;
+      }
+      else{
+        followcall5=null;
+        this.$.followbox5.disabled=true;
+        this.$.followdrop5.disabled=true;
+        this.$.followdisk5.disabled=true;
+        this.$.followedit5.disabled=true;
+      }
+      },
+      follow1no:function(){
+           if(document.querySelector("#nocall1").checked==true){
+        followcall1='No';
+        document.querySelector("#yescall1").checked=false;
+        this.$.followedit1.disabled=false;
+        this.$.followdisk1.disabled=false;
+        this.$.followbox1.disabled=true;
+        this.$.followdrop1.disabled=true;
+        followupno=1;
+        var id = 'listcall';
+      var dialog = document.getElementById(id);
+      dialog.opened=true;
+              }
+      else{
+        followcall1=null;
+        this.$.followedit1.disabled=true;
+        this.$.followdisk1.disabled=true;
+        this.$.followbox1.disabled=true;
+        this.$.followdrop1.disabled=true;
+        followupno=null;
+      }
+      },
+      follow2no:function(){
+               if(document.querySelector("#nocall2").checked==true){
+        followcall2='No';
+        document.querySelector("#yescall2").checked=false;
+        this.$.followedit2.disabled=false;
+        this.$.followdisk2.disabled=false;
+        this.$.followbox2.disabled=true;
+        this.$.followdrop2.disabled=true;
+        followupno=2;
+         var id = 'listcall';
+      var dialog = document.getElementById(id);
+      dialog.opened=true;
+      }
+      else{
+        followcall2=null;
+        this.$.followedit2.disabled=true;
+        this.$.followdisk2.disabled=true;
+        this.$.followbox2.disabled=true;
+        this.$.followdrop2.disabled=true;
+        followupno=null;
+      }
+      },
+      follow3no:function(){
+               if(document.querySelector("#nocall3").checked==true){
+        followcall3='No';
+        document.querySelector("#yescall3").checked=false;
+        this.$.followedit3.disabled=false;
+        this.$.followdisk3.disabled=false;
+        this.$.followbox3.disabled=true;
+        this.$.followdrop3.disabled=true;
+        followupno=3;
+         var id = 'listcall';
+      var dialog = document.getElementById(id);
+      dialog.opened=true;
+      }
+      else{
+        followcall3=null;
+        this.$.followedit3.disabled=true;
+        this.$.followdisk3.disabled=true;
+        this.$.followbox3.disabled=true;
+        this.$.followdrop3.disabled=true;
+        followupno=null;
+      }
+      },
+      follow4no:function(){
+             if(document.querySelector("#nocall4").checked==true){
+        followcall4='No';
+        document.querySelector("#yescall4").checked=false;
+        this.$.followedit4.disabled=false;
+        this.$.followdisk4.disabled=false;
+        this.$.followbox4.disabled=true;
+        this.$.followdrop4.disabled=true;
+        followupno=4;
+         var id = 'listcall';
+      var dialog = document.getElementById(id);
+      dialog.opened=true;
+      }
+      else{
+        followcall4=null;
+        this.$.followedit4.disabled=true;
+        this.$.followdisk4.disabled=true;
+        this.$.followbox4.disabled=true;
+        this.$.followdrop4.disabled=true;
+        followupno=null;
+      }
+      },
+      follow5no:function(){
+             if(document.querySelector("#nocall5").checked==true){
+        followcall5='No';
+        document.querySelector("#yescall5").checked=false;
+        this.$.followedit5.disabled=false;
+        this.$.followdisk5.disabled=false;
+        this.$.followbox5.disabled=true;
+        this.$.followdrop5.disabled=true;
+        followupno=5;
+         var id = 'listcall';
+      var dialog = document.getElementById(id);
+      dialog.opened=true;
+      }
+      else{
+        followcall5=null;
+        this.$.followedit5.disabled=true;
+        this.$.followdisk5.disabled=true;
+        this.$.followbox5.disabled=true;
+        this.$.followdrop5.disabled=true;
+        followupno=null;
+      }
+      },
+      callstatusdrop:function(e){
+        callpickstatus=(e.target.selectedItem.textContent).trim();
+        //alert(callpickstatus);
+        if(followupno==1){
+          alert(followupno+followcall1+this.followupdate1+this.enqno+this.followupid+this.schedule);
+            this.$.service.updatecallstatus(followupno,callpickstatus,this.followupdate1,this.enqno,this.followupid,this.schedule);
+        }
+        else if(followupno==2){
+          alert(followupno+followcall2+this.followupdate2+this.enqno+this.followupid+this.schedule);
+            this.$.service.updatecallstatus(followupno,callpickstatus,this.followupdate2,this.enqno,this.followupid,this.schedule);
+        }
+        else if(followupno==3){
+          alert(followupno+followcall3+this.followupdate3+this.enqno+this.followupid+this.schedule);
+            this.$.service.updatecallstatus(followupno,callpickstatus,this.followupdate3,this.enqno,this.followupid,this.schedule);
+        }
+        else if(followupno==4){
+          alert(followupno+followcall4+this.followupdate4+this.enqno+this.followupid+this.schedule);
+            this.$.service.updatecallstatus(followupno,callpickstatus,this.followupdate4,this.enqno,this.followupid,this.schedule);
+        }
+        else if(followupno==5){
+          alert(followupno+followcall5+this.followupdate5+this.enqno+this.followupid+this.schedule);
+            this.$.service.updatecallstatus(followupno,callpickstatus,this.followupdate5,this.enqno,this.followupid,this.schedule);
+        }
+       
+      },
+      close:function(){
+         var id = 'listcall';
+      var dialog = document.getElementById(id);
+      dialog.opened=false;
+
+      document.querySelector("#nocall1").checked=false;
+      document.querySelector("#nocall2").checked=false;
+      document.querySelector("#nocall3").checked=false;
+      document.querySelector("#nocall4").checked=false;
+      document.querySelector("#nocall5").checked=false;
+
+      this.followup1yes();
+      this.followup2yes();
+      this.followup3yes();
+      this.followup4yes();
+      this.followup5yes();
+      this.follow1no();
+      this.follow2no();
+      this.follow3no();
+      this.follow4no();
+      this.follow5no();
+      },
+      exit:function(){
+            var id = 'listcall';
+      var dialog = document.getElementById(id);
+      dialog.opened=false;
       }
     });
   })();

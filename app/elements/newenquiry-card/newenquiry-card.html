@@ -35,7 +35,7 @@
           </paper-dropdown-menu>
         </div>
         <div class="col-sm-6">
-          <paper-dropdown-menu label="Select the Class" >
+          <paper-dropdown-menu label="Grade" >
             <paper-menu id="class" class="dropdown-content" required on-iron-select="classes" valueattr="value" >
               <template  is="dom-repeat" items="{{itemarr}}" as="view">
                 <paper-item >{{view.class}}</paper-item>
@@ -84,6 +84,7 @@
            <div class="gender">
             <span class="col-sm-6"><paper-checkbox id="Gurdians"  class="checkbox" on-change="gardiansHandler"><h5>Gurdians</h5></paper-checkbox></span>
             <span class="col-sm-6"><paper-checkbox  id="parents" class="checkbox" on-change="parentsHandler"><h5>parents</h5></paper-checkbox></span>
+
            </div>  
         </div>    
       </div> 

@@ -1178,7 +1178,7 @@ app.post('/getfollowupcount',  urlencodedParser,function (req, res){
    var followupid={"followup_id":req.query.followupid};
    var collection = {"followup1_remarks":req.query.comments,"confidence_level_1":req.query.confidencelevel,"followup_1":req.query.followupdate1};
    console.log(collection);
-   connection.query('update followupdetail set ? where ? and ?',[collection,enquiry,school,followupid],
+   connection.query('update followupdetail set ? where ? and ? and ?',[collection,enquiry,school,followupid],
      function(err, rows){
        if(!err){
          console.log('inserted');
@@ -1196,7 +1196,7 @@ app.post('/getfollowupcount',  urlencodedParser,function (req, res){
    var followupid={"followup_id":req.query.followupid};
    var collection = {"followup2_remarks":req.query.comments,"confidence_level_2":req.query.confidencelevel,"followup_2":req.query.followupdate2};
    console.log(collection);
-   connection.query('update followupdetail set ? where ? and ?',[collection,enquiry,school,followupid],
+   connection.query('update followupdetail set ? where ? and ? and ?',[collection,enquiry,school,followupid],
      function(err, rows)
      {
        if(!err)
@@ -1220,7 +1220,7 @@ app.post('/getfollowupcount',  urlencodedParser,function (req, res){
    var followupid={"followup_id":req.query.followupid};
    var collection = {"followup3_remarks":req.query.comments,"confidence_level_3":req.query.confidencelevel,"followup_3":req.query.followupdate3};
    console.log(collection);
-   connection.query('update followupdetail set ? where ? and ?',[collection,enquiry,school,followupid],
+   connection.query('update followupdetail set ? where ? and ? and ?',[collection,enquiry,school,followupid],
      function(err, rows)
      {
        if(!err)
@@ -1244,7 +1244,7 @@ app.post('/getfollowupcount',  urlencodedParser,function (req, res){
    var followupid={"followup_id":req.query.followupid};
    var collection = {"followup4_remarks":req.query.comments,"confidence_level_4":req.query.confidencelevel,"followup_4":req.query.followupdate4};
    console.log(collection);
-   connection.query('update followupdetail set ? where ? and ?',[collection,enquiry,school,followupid],
+   connection.query('update followupdetail set ? where ? and ? and ?',[collection,enquiry,school,followupid],
      function(err, rows)
      {
        if(!err)
@@ -1286,34 +1286,12 @@ app.post('/getfollowupcount',  urlencodedParser,function (req, res){
  });
 
 
- app.post('/followup1',  urlencodedParser,function (req, res)
- {
-   var school={"school_id":req.query.schol};
-   var enquiry={"enquiry_id":req.query.enqno};
-   var collection = {"followup1_remarks":req.query.comments,"confidence_level_1":req.query.confidencelevel,"followup_1":req.query.followupdate1};
-   console.log(collection);
-   connection.query('update followupdetail set ? where ? and ?',[collection,enquiry,school],
-     function(err, rows)
-     {
-       if(!err)
-       {
-         console.log('inserted');
-         res.status(200).json({'returnval': 'success'});
-       }
-       else
-       {
-         console.log(err);
-         res.status(200).json({'returnval': 'invalid'});
-       }
-
-     });
- });
  app.post('/getfollowupstudents',  urlencodedParser,function (req, res)
  {
    var school={"school_id":req.query.schol};
    var grade={"class":req.query.grade};
    var status={"status":req.query.status};
-   var qur = "SELECT DISTINCT f.enquiry_id,f.followup_flag,s.enquiry_name FROM followupdetail f join student_enquiry_details s on f.enquiry_id=s.enquiry_no WHERE f.followup_status='"+req.query.status+"' and s.class='"+req.query.grade+"' and s.school_id = '"+req.query.schol+"'";
+   var qur = "SELECT f.enquiry_id,f.followup_flag,s.enquiry_name,f.followup_status,f.followup_id,f.current_confidence_level FROM followupdetail f join student_enquiry_details s on f.enquiry_id=s.enquiry_no WHERE f.followup_status='"+req.query.status+"' and s.class='"+req.query.grade+"' and s.school_id = '"+req.query.schol+"'";
    connection.query(qur,
      function(err, rows)
      {
@@ -1334,7 +1312,7 @@ app.post('/getfollowupcount',  urlencodedParser,function (req, res){
  {
    var school={"school_id":req.query.schol};
    var id={"enquiry_no":req.query.id};
-   var qur = "SELECT s.enquiry_no, s.enquiry_name, s.class, s.created_on, s.father_name, s.father_mob,f.followup_id, f.followup_1, f.followup1_remarks, f.confidence_level_1, f.followup_2, f.followup2_remarks, f.confidence_level_2, f.followup_3, f.followup3_remarks, f.confidence_level_3, f.followup_4, f.followup4_remarks, f.confidence_level_4, f.followup_5, f.followup5_remarks, f.confidence_level_5 FROM student_enquiry_details s JOIN followupdetail f on s.enquiry_no=f.enquiry_id WHERE f.enquiry_id='"+req.query.id+"' and f.school_id='"+req.query.schol+"'";
+   var qur = "SELECT s.enquiry_no, s.enquiry_name, s.class, s.created_on, s.father_name, s.father_mob,f.followup_id, f.followup_1, f.followup1_remarks, f.confidence_level_1, f.followup_2, f.followup2_remarks, f.confidence_level_2, f.followup_3, f.followup3_remarks, f.confidence_level_3, f.followup_4, f.followup4_remarks, f.confidence_level_4, f.followup_5, f.followup5_remarks, f.confidence_level_5,f.schedule FROM student_enquiry_details s JOIN followupdetail f on s.enquiry_no=f.enquiry_id WHERE f.enquiry_id='"+req.query.id+"' and f.school_id='"+req.query.schol+"' and f.followup_status='"+req.query.fstatus+"' and f.followup_id='"+req.query.fid+"'";
    connection.query(qur,
      function(err, rows)
      {
@@ -1384,9 +1362,9 @@ app.post('/getadmissioncount',  urlencodedParser,function (req, res){
    var school={"school_id":req.query.schol};
    var enquiry={"enquiry_id":req.query.id};
    var status = {"followup_status":req.query.status};
-   console.log(status);
+   /*console.log(status);
    console.log(school);
-   console.log(enquiry);
+   console.log(enquiry);*/
    connection.query('update followupdetail set ? where ? and ?',[status,enquiry,school],
      function(err, rows)
      {
@@ -1476,6 +1454,95 @@ app.post('/updateschedule',  urlencodedParser,function (req, res)
        }
      });
  });
+
+ 
+ app.post('/fetchadmissiontestinfo', urlencodedParser,function (req, res){
+
+   //console.log('qur');
+   var qur="SELECT * FROM student_enquiry_details WHERE school_id='"+req.query.schoolid+"' and enquiry_no='"+req.query.enquiryno+"' and status='Enquired' and admission_test='Yes'";
+   console.log(qur);
+   connection.query(qur,
+     function(err, rows)
+     {
+       if(!err)
+       {
+         if(rows.length>0)
+         {
+           //console.log(rows);
+           res.status(200).json({'returnval': rows});
+         }
+         else
+         {
+           console.log(err);
+           res.status(200).json({'returnval': 0});
+         }
+       }
+       else{
+         console.log(err);
+       }
+     });
+ });
+
+ 
+  app.post('/updateteststatus', urlencodedParser,function (req, res){
+
+   //console.log('qur');
+   var qur="UPDATE student_enquiry_details SET admission_status='"+req.query.status+"' WHERE school_id='"+req.query.schoolid+"' and enquiry_no='"+req.query.enquiryno+"' and status='Enquired' and admission_test='Yes'";
+   console.log(qur);
+   connection.query(qur,
+     function(err, result)
+     {
+       if(!err)
+       {
+         if(result.affectedRows>0)
+         {
+           //console.log(rows);
+           res.status(200).json({'returnval': 'updated!'});
+         }
+         else
+         {
+           console.log(err);
+           res.status(200).json({'returnval': 'not updated!'});
+         }
+       }
+       else{
+         console.log(err);
+       }
+     });
+ });
+
+
+
+
+
+
+
+
+
+  app.post('/insertcallhistory',  urlencodedParser,function (req, res){
+    var response={
+      "school_id":req.query.schol,
+      "enquiry_id":req.query.enid,
+      "followup_id":req.query.fid,
+      "followup_no":req.query.fno,
+      "follwup_date":req.query.fdate,
+      "call_comments":req.query.callstatus,
+      "schedule":req.query.schedule
+    };
+    connection.query('INSERT INTO call_history SET ?',[response],
+    function(err, rows)
+    {
+    if(!err)
+    {
+      res.status(200).json({'returnval': 'success'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'no'});
+    }
+    });
+});
 
 function setvalue(){
   console.log("calling setvalue.....");

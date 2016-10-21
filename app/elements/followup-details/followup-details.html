@@ -22,7 +22,7 @@
         </thead>
         </table>
       <template is="dom-repeat" items="{{followuparr}}" as="view">
-            <followup-details-items id="{{view.enquiry_id}}" student="{{view.enquiry_name}}" confidencelevel = "{{view.currentz_confidence_level}}" followupflag = "{{view.followup_flag}}"></followup-details-items>
+            <followup-details-items id="{{view.enquiry_id}}" student="{{view.enquiry_name}}" confidencelevel = "{{view.current_confidence_level}}" followupflag = "{{view.followup_flag}}" status="{{view.followup_status}}" followupid="{{view.followup_id}}"></followup-details-items>
       </template>
      </br>
     </div>

@@ -2,15 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cf87a71e-5582-4c0c-9b35-1815db928b04" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/elements/crm-service/crm-service.html" afterPath="$PROJECT_DIR$/app/elements/crm-service/crm-service.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/elements/dateofbirth-datepicker/dateofbirth-datepicker.html" afterPath="$PROJECT_DIR$/app/elements/dateofbirth-datepicker/dateofbirth-datepicker.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/elements/detailed-enquiry-form/detailed-enquiry-form.html" afterPath="$PROJECT_DIR$/app/elements/detailed-enquiry-form/detailed-enquiry-form.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/elements/dob-datepicker-card/dob-datepicker-card.html" afterPath="$PROJECT_DIR$/app/elements/dob-datepicker-card/dob-datepicker-card.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/elements/elements.html" afterPath="$PROJECT_DIR$/app/elements/elements.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/elements/followup-details/followup-details.html" afterPath="$PROJECT_DIR$/app/elements/followup-details/followup-details.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/elements/navigation-bar/navigation-bar.html" afterPath="$PROJECT_DIR$/app/elements/navigation-bar/navigation-bar.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server.js" afterPath="$PROJECT_DIR$/server.js" />
     </list>
     <ignored path="CRM.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -31,21 +24,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="crm-service.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/elements/crm-service/crm-service.html">
+      <file leaf-file-name="detailed-enquiry-form.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/elements/detailed-enquiry-form/detailed-enquiry-form.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="2.1272728">
-              <caret line="1286" column="65" selection-start-line="1286" selection-start-column="57" selection-end-line="1286" selection-end-column="65" />
+            <state vertical-scroll-proportion="1.4936479">
+              <caret line="156" column="24" selection-start-line="156" selection-start-column="24" selection-end-line="156" selection-end-column="24" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="admission-form.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/elements/admission-form/admission-form.html">
+      <file leaf-file-name="crm-service.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/elements/crm-service/crm-service.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-107.30769">
-              <caret line="595" column="32" selection-start-line="595" selection-start-column="32" selection-end-line="595" selection-end-column="32" />
+            <state vertical-scroll-proportion="7.7272725">
+              <caret line="1276" column="48" selection-start-line="1276" selection-start-column="48" selection-end-line="1276" selection-end-column="48" />
               <folding />
             </state>
           </provider>
@@ -54,48 +47,8 @@
       <file leaf-file-name="server.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="69.793106">
-              <caret line="1288" column="60" selection-start-line="1288" selection-start-column="59" selection-end-line="1288" selection-end-column="60" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="detailed-enquiry-form.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/elements/detailed-enquiry-form/detailed-enquiry-form.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.11615245">
-              <caret line="295" column="46" selection-start-line="295" selection-start-column="46" selection-end-line="295" selection-end-column="46" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="dateofbirth-datepicker.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/elements/dateofbirth-datepicker/dateofbirth-datepicker.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="20.192308">
-              <caret line="25" column="49" selection-start-line="25" selection-start-column="49" selection-end-line="25" selection-end-column="49" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="admission-datepicker.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/elements/admission-datepicker/admission-datepicker.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-9.230769">
-              <caret line="53" column="74" selection-start-line="53" selection-start-column="74" selection-end-line="53" selection-end-column="74" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="navigation-bar.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/elements/navigation-bar/navigation-bar.html">
-          <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="266" column="112" selection-start-line="266" selection-start-column="112" selection-end-line="266" selection-end-column="112" />
+              <caret line="1293" column="60" selection-start-line="1293" selection-start-column="59" selection-end-line="1293" selection-end-column="60" />
               <folding />
             </state>
           </provider>
@@ -156,10 +109,10 @@
         <option value="$PROJECT_DIR$/app/elements/followup-details/followup-details.html" />
         <option value="$PROJECT_DIR$/app/elements/navigation-bar/navigation-bar.html" />
         <option value="$PROJECT_DIR$/server.js" />
-        <option value="$PROJECT_DIR$/app/elements/crm-service/crm-service.html" />
         <option value="$PROJECT_DIR$/app/elements/dob-datepicker-card/dob-datepicker-card.html" />
         <option value="$PROJECT_DIR$/app/elements/admission-datepicker/admission-datepicker.html" />
         <option value="$PROJECT_DIR$/app/elements/dateofbirth-datepicker/dateofbirth-datepicker.html" />
+        <option value="$PROJECT_DIR$/app/elements/crm-service/crm-service.html" />
         <option value="$PROJECT_DIR$/app/elements/detailed-enquiry-form/detailed-enquiry-form.html" />
       </list>
     </option>
@@ -1597,14 +1550,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="69.793106">
-          <caret line="1288" column="60" selection-start-line="1288" selection-start-column="59" selection-end-line="1288" selection-end-column="60" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/elements/dob-datepicker-card/dob-datepicker-card.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-9.884615">
@@ -1621,34 +1566,42 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/elements/crm-service/crm-service.html">
+    <entry file="file://$PROJECT_DIR$/app/elements/admission-form/admission-form.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.1272728">
-          <caret line="1286" column="65" selection-start-line="1286" selection-start-column="57" selection-end-line="1286" selection-end-column="65" />
+        <state vertical-scroll-proportion="4.8689656">
+          <caret line="595" column="32" selection-start-line="595" selection-start-column="32" selection-end-line="595" selection-end-column="32" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/elements/dateofbirth-datepicker/dateofbirth-datepicker.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="20.192308">
-          <caret line="25" column="49" selection-start-line="25" selection-start-column="49" selection-end-line="25" selection-end-column="49" />
+        <state vertical-scroll-proportion="0.38448277">
+          <caret line="69" column="0" selection-start-line="69" selection-start-column="0" selection-end-line="69" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/elements/admission-form/admission-form.html">
+    <entry file="file://$PROJECT_DIR$/server.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-107.30769">
-          <caret line="595" column="32" selection-start-line="595" selection-start-column="32" selection-end-line="595" selection-end-column="32" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1293" column="60" selection-start-line="1293" selection-start-column="59" selection-end-line="1293" selection-end-column="60" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/elements/crm-service/crm-service.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="7.7272725">
+          <caret line="1276" column="48" selection-start-line="1276" selection-start-column="48" selection-end-line="1276" selection-end-column="48" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/elements/detailed-enquiry-form/detailed-enquiry-form.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.11615245">
-          <caret line="295" column="46" selection-start-line="295" selection-start-column="46" selection-end-line="295" selection-end-column="46" />
+        <state vertical-scroll-proportion="1.4936479">
+          <caret line="156" column="24" selection-start-line="156" selection-start-column="24" selection-end-line="156" selection-end-column="24" />
           <folding />
         </state>
       </provider>

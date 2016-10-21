@@ -186,6 +186,29 @@
         on-response="getadmissioncountResponse"
         debounce-duration="300"
         >
+
+        <!-- this below fetch the admission test info-->
+    <iron-ajax
+        method="post"
+        id="fetchadmissiontestinfoajax"
+        url="{{fetchadmissiontestinfourl}}"
+        params="{{fetchadmissiontestinfoparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchadmissiontestinfoResponse"
+        debounce-duration="300"
+        >
+
+
+ <iron-ajax
+        method="post"
+        id="updateteststatusajax"
+        url="{{updateteststatusurl}}"
+        params="{{updateteststatusparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="updateteststatusResponse"
+
         <iron-ajax
         method="post"
         id="studentfulldetailsajax"
@@ -214,6 +237,7 @@
         handle-as="json"
         content-type="application/json"
         on-response="studenthistoryResponse"
+
         debounce-duration="300"
         >
   </template>
@@ -233,6 +257,7 @@
       },
       searchenquiryResponse:function(e){
         document.querySelector('admission-form').enquiryarr=e.detail.response.returnval;
+        document.querySelector('admission-approval-card').enquiryarr=e.detail.response.returnval;
       },
       callFetchenquiryinfoService:function(){
         this.fetchenquiryinfourl=sessionStorage.getItem("addrinfo")+"/fetchenquiryinfo";
@@ -1077,8 +1102,34 @@ obj.FnBo=FnBo;
      getadmissioncountResponse:function(){
         var result=e.detail.response.returnval;
         document.querySelector('enquiry-card').gradewiseadmissionarr=result;
+     },
+     callFetchadmissiontestinfo:function(enquiryno){
+       this.fetchadmissiontestinfourl=sessionStorage.getItem("addrinfo")+"/fetchadmissiontestinfo";
+        var obj={"schoolid":"","enquiryno":""}
+        obj.schoolid=localStorage.getItem("schoolid");
+        obj.enquiryno=enquiryno;
+        this.fetchadmissiontestinfoparam=obj;
+        this.$.fetchadmissiontestinfoajax.generateRequest(); 
+     },
+     fetchadmissiontestinfoResponse:function(e){
+        // alert(e.detail.response.returnval);
+        var arr=e.detail.response.returnval;
+        document.querySelector('admission-approval-card').enquiryno=arr[0].enquiry_no;
+        document.querySelector('admission-approval-card').studentname=arr[0].enquiry_name;
+        document.querySelector('admission-approval-card').grade=arr[0].class;
+     },
+     callUpdateteststatus:function(enquiryno,status){
+        this.updateteststatusurl=sessionStorage.getItem("addrinfo")+"/updateteststatus";
+        var obj={"schoolid":"","enquiryno":"","status":""}
+        obj.schoolid=localStorage.getItem("schoolid");
+        obj.enquiryno=enquiryno;
+        obj.status=status;
+        this.updateteststatusparam=obj;
+        this.$.updateteststatusajax.generateRequest(); 
+     },
+     updateteststatusResponse:function(e){
+        alert(e.detail.response.returnval);
      }
-
     });
   })();
   </script>

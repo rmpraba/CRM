@@ -1,14 +1,7 @@
-<!--
-@license
-Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="../admission-service/admission-service.html">
+<link rel="import" href="../crm-service/crm-service.html">
 
 <dom-module id="admission-approval-card">
   <template>
@@ -16,22 +9,90 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host {
         display: block;
       }
+      paper-button{
+        text-transform: none;
+      }
     </style>
-    <div>Hello from <span>{{foo}}</span></div>
+    
+      <div class="row enquiry-form">
+      <div class="list-group col-sm-12 panel-body form-category">
+          <div class="col-sm-5 ">
+            <paper-input label="Enter Enquiry Number/Name" value="{{enquiryno}}"><paper-icon-button suffix icon="search" on-click="FnSearchEnquiry"></paper-icon-button></paper-input>
+            <!-- <paper-input type="text" class="form-control" id="searchenquiry" placeholder="Enter Enquiry Number/Name" ></paper-input>
+            <span class="input-group-btn">
+              <button class="btn btn-default" on-click="FnSearchEnquiry" type="button">
+                <i class="fa fa-search"></i>
+              </button>
+            </span> -->
+          </div>
+          <div class="col-sm-7" style="margin-top: 10px;">
+            <span class="input-group-btn">
+              <paper-dropdown-menu label="Select Enquiry No" on-iron-select="FnSelectEnquiry">
+                <paper-listbox class="dropdown-content">
+                  <template  is="dom-repeat" items="{{enquiryarr}}" as="item">
+                  <paper-item>{{item.enquiry_no}}-{{item.enquiry_name}}</paper-item>
+                  </template>
+                </paper-listbox>
+              </paper-dropdown-menu>
+            </span>
+          </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category" hidden$="{{hidetable}}">
+          <div class="input-group col-sm-12 ">
+          <table width="900px">
+            <tr style="background-color: grey;"><th>Enquiry No</th><th>Student Name</th><th>Grade</th><th>Test Status</th><th></th></tr>
+            <tr><td>{{enquiryno}}</td><td>{{studentname}}</td><td>{{grade}}</td>
+            <td>
+              <paper-dropdown-menu label="Status" on-iron-select="FnSelectStatus">
+                <paper-listbox class="dropdown-content">
+                  
+                  <paper-item>Pass</paper-item>
+                  <paper-item>Fail</paper-item>
+                  
+                </paper-listbox>
+              </paper-dropdown-menu>
+            </td>
+            <td><paper-button on-click="FnUpdate">update</paper-button></td></tr>
+            <!-- <template  is="dom-repeat" items="{{enquiryarr}}" as="item">
+            </template> -->
+          </table>
+          </div>
+      </div>
+
+
+    </div>
+    <admission-service id="admissionservice"></admission-service>
+    <!-- <admission-service id="crmservice"></admission-service> -->
   </template>
   <script>
   (function() {
     'use strict';
-
+    var status="";
     Polymer({
       is: 'admission-approval-card',
+      ready:function(){
+        this.hidetable=true;
+      },
 
-      properties: {
-        foo: {
-          type: String,
-          value: 'admission-approval-card',
-          notify: true
-        }
+      FnSearchEnquiry:function(){        
+        var enquiryno=this.enquiryno;        
+        this.$.admissionservice.callSearchenquiryService(enquiryno);  
+      },
+      FnSelectEnquiry:function(e){
+        this.hidetable=false;
+        var enquiry=(e.target.selectedItem.textContent).trim();
+        var inx=enquiry.indexOf('-');
+        var enquiry_no=enquiry.substring(0,inx);
+        var enquiry_name=enquiry.substring(inx+1);
+        localStorage.setItem("curr_sess_enquiryno",enquiry_no);
+        localStorage.setItem("curr_sess_enquiryname",enquiry_name);
+        this.$.admissionservice.callFetchadmissiontestinfo(enquiry_no);
+      },
+      FnSelectStatus:function(e){
+        status=(e.target.selectedItem.textContent).trim();
+      },
+      FnUpdate:function(){
+        this.$.admissionservice.callUpdateteststatus(this.enquiryno,status);
       }
     });
   })();
