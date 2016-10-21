@@ -196,19 +196,6 @@
           <paper-input id="momjob" required error-message="needs mother's designation!" label="Designation" allowed-pattern="[a-zA-Z ]" value="{{motherjob}}"></paper-input>
         </div>
       </div>
-      <div class="list-group col-sm-12 panel-body form-category" hidden$="{{hideguardian}}">
-        <div class="col-sm-6">
-          <paper-input id="guardianname" required error-message="needs guardian's name!" label="Guardian Name" allowed-pattern="[a-zA-Z ]" value="{{guardianname}}"></paper-input>
-        </div>
-        <div class="col-sm-6">
-          <paper-input id="guardianmobile" required error-message="needs gauardian's mobile no!" label="Guardian's Contact Number" maxlength="10" allowed-pattern="[0-9]" value="{{guardianmobile}}"></paper-input>
-        </div>
-      </div>
-      <div class="list-group col-sm-12 panel-body form-category" hidden$="{{hideguardian}}">
-        <div class="col-sm-6">
-          <paper-input id="guardianemail" required error-message="needs guardian's email!" label="Guardian Email" value="{{guardianemail}}"></paper-input>
-        </div>
-      </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div id="dadsal" class="col-sm-6">
           <paper-dropdown-menu label="Father's Salary" >
@@ -224,6 +211,58 @@
         <div id="momsal" class="col-sm-6">
           <paper-dropdown-menu label="Mother's Salary" >
             <paper-menu id="mothersalary" class="dropdown-content" required on-iron-select="mothersalary" valueattr="value" >
+              <paper-item >Nil</paper-item>
+              <paper-item >< 1 Lakh</paper-item>
+              <paper-item >1 Lakh to 2.5 Lakhs</paper-item>
+              <paper-item >2.5Lakhs to 5 Lakhs</paper-item>
+              <paper-item >> 5 Lakhs</paper-item>
+            </paper-menu>
+          </paper-dropdown-menu>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category" style="margin: 10px 5px;" hidden$="{{guardianinfo}}">
+        <paper-checkbox  id="guardianinfo" class="checkbox" on-change="guardianinfoHandler">Need to Store Guardian Information ?</paper-checkbox>
+      </div>
+      <div class="form-group-heading" hidden$="{{hideguardian}}">
+        <h4>Guardian Details</h4>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category"  hidden$="{{hideguardian}}">
+        <div class="col-sm-6">
+          <paper-input id="guardianname" required error-message="needs guardian's name!" label="Guardian Name" allowed-pattern="[a-zA-Z ]" value="{{guardianname}}"></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <paper-input id="guardianmobile" required error-message="needs gauardian's mobile no!" label="Guardian's Contact Number" maxlength="10" allowed-pattern="[0-9]" value="{{guardianmobile}}"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category"  hidden$="{{hideguardian}}">
+        <div class="col-sm-6">
+          <paper-input id="guardianemail" required error-message="needs guardian's email!" label="Guardian Email" value="{{guardianemail}}"></paper-input>
+        </div>
+      </div>
+        <div class="list-group col-sm-12 panel-body form-category" hidden$="{{hideguardian}}">
+          <div class="col-sm-6">
+            <paper-dropdown-menu  label="Guardian's Occupation" >
+              <paper-menu id="guardianoccupation" class="dropdown-content" required on-iron-select="guardianoccupation" valueattr="value" >
+                <paper-item >Self Employed</paper-item>
+                <paper-item >Government Employee</paper-item>
+                <paper-item >Private Employee</paper-item>
+                <paper-item >Home Maker</paper-item>
+                <paper-item >Others</paper-item>
+              </paper-menu>
+            </paper-dropdown-menu>
+          </div>
+        <div class="col-sm-6">
+          <paper-input id="guardianoff" required error-message="needs guardian's company name!" allowed-pattern="[a-zA-Z ]" label="Organization Name" value="{{guardiancompany}}"></paper-input>
+
+        </div>
+        </div>
+      <div class="list-group col-sm-12 panel-body form-category" hidden$="{{hideguardian}}">
+        <div class="col-sm-6">
+          <paper-input id="guardianjob" required error-message="needs guardian's designation!" label="Designation" allowed-pattern="[a-zA-Z ]" value="{{guardianjob}}"></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <paper-dropdown-menu label="Guardian's Salary" >
+            <paper-menu id="guardiansalary" class="dropdown-content" required on-iron-select="guardiansalary" valueattr="value" >
               <paper-item >Nil</paper-item>
               <paper-item >< 1 Lakh</paper-item>
               <paper-item >1 Lakh to 2.5 Lakhs</paper-item>
@@ -380,9 +419,11 @@
         var propsold;
         var mothertongue;
         var dadoccup;
+        var guardianoccup;
         var momtheroccup;
         var dadincome;
         var momincome;
+        var guardianincome;
         var namearr=[];
         var academicyear;
         var dobdate;
@@ -395,10 +436,14 @@
       is: 'detailed-enquiry-form',
       ready:function(){
           this.hideguardian=true;
+          this.guardianinfo=true;
           this.$.sibname.hidden=true;
           this.$.sibdetail.hidden=true;
           this.$.referrer.hidden=true;
           this.$.dadoff.hidden=true;
+          this.$.guardianoff.hidden=true;
+          this.$.guardianjob.hidden=true;
+          this.$.guardiansalary.hidden=true;
           this.$.dadjob.hidden=true;
           this.$.dadsal.hidden=true;
           this.$.momoff.hidden=true;
@@ -433,8 +478,10 @@
           this.fathermail="";
           this.mothermail="";
           this.fathercompany="";
+          this.guardiancompany="";
           this.mothercompany="";
           dadoccup=null;
+          guardianoccup == null;
           momtheroccup=null;
           this.flat="";
           this.address1="";
@@ -461,9 +508,11 @@
           this.$.language.selected=-1;
           this.$.grade.selected=-1;
           this.$.dadoccupation.selected=-1;
+          this.$.guardianoccupation.selected=-1;
           this.$.motheroccupation.selected=-1;
           this.$.dadsalary.selected=-1;
           this.$.mothersalary.selected=-1;
+          this.$.guardiansal.selected=-1;
           this.$.source.selected=-1;
           this.$.dfmale.checked=false;
           this.$.dffemale.checked=false;
@@ -501,6 +550,9 @@
         enqno=document.getElementById('searchtext').value;
         //alert(this.enqno+'    '+enqno);
         this.$.service.getenqirydetails(enqno);
+      },
+      guardianinfoHandler:function(){
+        this.hideguardian=false;
       },
       Fnresult:function(dob,gender){
         var dt1=new Date(dob);
@@ -836,6 +888,9 @@
       else if(dadoccup==null){
           alert("Select Father's Occupation");
       }
+      else if (guardianoccup == null) {
+        alert("Select Guardian's Occupation");
+      }
       else if (momtheroccup==null) {
           alert("Select Mother's Occupation");
       }
@@ -844,7 +899,7 @@
 
         if(grade == "Nursery"||"LKG"||"UKG"||"Grade-1"||"Grade-2"||"Grade-3"||"Grade-4"){
           alert('coming');
-          this.$.service.updateenquiryform(this.enqno,this.firstname,this.middlename,this.lastname,fngender,grade,dobdate,this.oldclass,this.oldschool,mothertongue,this.fathername,this.mothername,this.fatheredu,this.motheredu,this.fathermob,this.mothermob,this.fathermail,this.mothermail,this.fathercompany,this.mothercompany,dadoccup,momtheroccup,this.flat,this.address1,this.address2,this.address3,this.city,this.pincode,this.state,enquiysource,this.siblingname,this.siblingdetails,transportreq,canteenreq,secondlanguage,"",propsold,this.fatherjob,this.motherjob,dadincome,momincome,this.prospectusno,admissiontest,admissiontestdate,admissiontestenglish,admissiontestmaths,admissiontestevs);
+          this.$.service.updateenquiryform(this.enqno,this.firstname,this.middlename,this.lastname,fngender,grade,dobdate,this.oldclass,this.oldschool,mothertongue,this.fathername,this.mothername,this.fatheredu,this.motheredu,this.fathermob,this.mothermob,this.fathermail,this.mothermail,this.fathercompany,this.mothercompany,dadoccup,momtheroccup,this.flat,this.address1,this.address2,this.address3,this.city,this.pincode,this.state,enquiysource,this.siblingname,this.siblingdetails,transportreq,canteenreq,secondlanguage,"",propsold,this.fatherjob,this.motherjob,dadincome,momincome,this.prospectusno,admissiontest,admissiontestdate,admissiontestenglish,admissiontestmaths,admissiontestevs, this.guardianname,this.guardianmobile, this.guardianemail,this.guardiancompany,this.guardianjob,guardianoccup,guardianincome);
 
 
         } else {
@@ -854,7 +909,7 @@
       else{
         //alert(enqno+this.firstname+this.middlename+this.lastname+fngender+this.grade+this.dob+this.oldclass+this.oldschool+mothertongue+this.fathername+this.mothername+this.fatheredu+this.motheredu+this.fathermob+this.mothermob+this.fathermail+this.mothermail+this.fathercompany+this.mothercompany+dadoccup+momtheroccup+this.flat+this.address1+this.address2+this.address3+this.city+this.pincode+this.state+enquiysource+this.siblingname+this.siblingdetails+transportreq+canteenreq+secondlanguage+thirdlanguage+propsold+this.fatherjob+this.motherjob+dadincome+momincome);
 
-      this.$.service.updateenquiryform(this.enqno,this.firstname,this.middlename,this.lastname,fngender,grade,dobdate,this.oldclass,this.oldschool,mothertongue,this.fathername,this.mothername,this.fatheredu,this.motheredu,this.fathermob,this.mothermob,this.fathermail,this.mothermail,this.fathercompany,this.mothercompany,dadoccup,momtheroccup,this.flat,this.address1,this.address2,this.address3,this.city,this.pincode,this.state,enquiysource,this.siblingname,this.siblingdetails,transportreq,canteenreq,secondlanguage,thirdlanguage,propsold,this.fatherjob,this.motherjob,dadincome,momincome,this.prospectusno,admissiontest,admissiontestdate,admissiontestenglish,admissiontestmaths,admissiontestevs);
+      this.$.service.updateenquiryform(this.enqno,this.firstname,this.middlename,this.lastname,fngender,grade,dobdate,this.oldclass,this.oldschool,mothertongue,this.fathername,this.mothername,this.fatheredu,this.motheredu,this.fathermob,this.mothermob,this.fathermail,this.mothermail,this.fathercompany,this.mothercompany,dadoccup,momtheroccup,this.flat,this.address1,this.address2,this.address3,this.city,this.pincode,this.state,enquiysource,this.siblingname,this.siblingdetails,transportreq,canteenreq,secondlanguage,thirdlanguage,propsold,this.fatherjob,this.motherjob,dadincome,momincome,this.prospectusno,admissiontest,admissiontestdate,admissiontestenglish,admissiontestmaths,admissiontestevs,this.guardianname,this.guardianmobile, this.guardianemail,this.guardiancompany,this.guardianjob,guardianoccup,guardianincome);
 
     }
    // this.Fnclear();
@@ -874,6 +929,21 @@ if(dadoccup=="Self Employed"||dadoccup=="Government Employee"||dadoccup=="Privat
 
   }
 },
+  guardianoccupation:function(e){
+        guardianoccup=(e.target.selectedItem.textContent).trim();
+        if(guardianoccup=="Self Employed"||guardianoccup=="Government Employee"||guardianoccup=="Private Employee"){
+          this.$.guardianoff.hidden=false;
+          this.$.guardianjob.hidden=false;
+          this.$.guardiansalary.hidden=false;
+
+        }
+        else{
+          this.$.guardianoff.hidden=true;
+          this.$.guardianjob.hidden=true;
+          this.$.guardiansalary.hidden=true;
+
+        }
+      },
 motheroccupation:function(e){
 momtheroccup=(e.target.selectedItem.textContent).trim();
 //alert(momtheroccup);
@@ -894,6 +964,9 @@ dadsalary:function(e){
 mothersalary:function(e){
   momincome=(e.target.selectedItem.textContent).trim();
 },
+      guardiansalary:function(e){
+        guardianincome=(e.target.selectedItem.textContent).trim();
+      },
 Fnlistbox:function(nameitem){
           namearr=nameitem;
           alert("kajshdkfdskj");
@@ -977,6 +1050,8 @@ Fnlistbox:function(nameitem){
         this.$.newenq.hidden=false;
         this.$.academicyear.hidden=false;
         this.$.newenquiry.hidden=true;
+        this.guardianinfo=false;
+
       },
       Fnacademicyr:function(e){
         academicyear=(e.target.selectedItem.textContent).trim();
@@ -1041,19 +1116,22 @@ Fnlistbox:function(nameitem){
         else if (dadoccup == null) {
           alert("Select Father's Occupation");
         }
+        else if (guardianoccup == null) {
+          alert("Select Guardian's Occupation");
+        }
         else if (momtheroccup == null) {
           alert("Select Mother's Occupation");
         }
         else if(thirdlanguage==null){
           alert(grade);
           if(grade == "Pre KG"||"LKG"||"UKG"||"Grade 1"||"Grade 2"||"Grade 3"){
-            this.$.service.registerenquiryform(enqnumber ,this.firstname,this.middlename,this.lastname,fngender,grade,dobdate,this.oldclass,this.oldschool,mothertongue,this.fathername,this.mothername,this.fatheredu,this.motheredu,this.fathermob,this.mothermob,this.fathermail,this.mothermail,this.fathercompany,this.mothercompany,dadoccup,momtheroccup,this.flat,this.address1,this.address2,this.address3,this.city,this.pincode,this.state,enquiysource,this.siblingname,this.siblingdetails,transportreq,canteenreq,secondlanguage,thirdlanguage,propsold,this.fatherjob,this.motherjob,dadincome,momincome,this.prospectusno,admissiontest,admissiontestdate,admissiontestenglish,admissiontestmaths,admissiontestevs);
+            this.$.service.registerenquiryform(enqnumber ,this.firstname,this.middlename,this.lastname,fngender,grade,dobdate,this.oldclass,this.oldschool,mothertongue,this.fathername,this.mothername,this.fatheredu,this.motheredu,this.fathermob,this.mothermob,this.fathermail,this.mothermail,this.fathercompany,this.mothercompany,dadoccup,momtheroccup,this.flat,this.address1,this.address2,this.address3,this.city,this.pincode,this.state,enquiysource,this.siblingname,this.siblingdetails,transportreq,canteenreq,secondlanguage,thirdlanguage,propsold,this.fatherjob,this.motherjob,dadincome,momincome,this.prospectusno,admissiontest,admissiontestdate,admissiontestenglish,admissiontestmaths,admissiontestevs, this.guardianname,this.guardianmobile, this.guardianemail,this.guardiancompany,this.guardianjob,guardianoccup,guardianincome);
           } else {
             alert('Select the third language');
           }
         } else {
           //alert(enqno+this.firstname+this.middlename+this.lastname+fngender+this.grade+this.dob+this.oldclass+this.oldschool+mothertongue+this.fathername+this.mothername+this.fatheredu+this.motheredu+this.fathermob+this.mothermob+this.fathermail+this.mothermail+this.fathercompany+this.mothercompany+dadoccup+momtheroccup+this.flat+this.address1+this.address2+this.address3+this.city+this.pincode+this.state+enquiysource+this.siblingname+this.siblingdetails+transportreq+canteenreq+secondlanguage+thirdlanguage+propsold+this.fatherjob+this.motherjob+dadincome+momincome);
-          this.$.service.registerenquiryform(enqnumber , this.firstname, this.middlename, this.lastname, fngender, grade, dobdate, this.oldclass, this.oldschool, mothertongue, this.fathername, this.mothername, this.fatheredu, this.motheredu, this.fathermob, this.mothermob, this.fathermail, this.mothermail, this.fathercompany, this.mothercompany, dadoccup, momtheroccup, this.flat, this.address1, this.address2, this.address3, this.city, this.pincode, this.state, enquiysource, this.siblingname, this.siblingdetails, transportreq, canteenreq, secondlanguage, thirdlanguage, propsold, this.fatherjob, this.motherjob, dadincome, momincome, this.prospectusno,academicyear,admissiontest,admissiontestdate,admissiontestenglish,admissiontestmaths,admissiontestevs);
+          this.$.service.registerenquiryform(enqnumber , this.firstname, this.middlename, this.lastname, fngender, grade, dobdate, this.oldclass, this.oldschool, mothertongue, this.fathername, this.mothername, this.fatheredu, this.motheredu, this.fathermob, this.mothermob, this.fathermail, this.mothermail, this.fathercompany, this.mothercompany, dadoccup, momtheroccup, this.flat, this.address1, this.address2, this.address3, this.city, this.pincode, this.state, enquiysource, this.siblingname, this.siblingdetails, transportreq, canteenreq, secondlanguage, thirdlanguage, propsold, this.fatherjob, this.motherjob, dadincome, momincome, this.prospectusno,academicyear,admissiontest,admissiontestdate,admissiontestenglish,admissiontestmaths,admissiontestevs, this.guardianname,this.guardianmobile, this.guardianemail,this.guardiancompany,this.guardianjob,guardianoccup,guardianincome);
         }
       },
       FnSelectEnquiry:function(e){

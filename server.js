@@ -217,7 +217,7 @@ app.post('/submitenquiry',  urlencodedParser,function (req, res)
 */
 app.post('/updateenquiry',  urlencodedParser,function (req, res)
 {
-   var collection={"first_name":req.query.firstname,"middle_name":req.query.middlename,"last_name":req.query.lastname,"gender":req.query.gender,"class":req.query.grade,"dob":req.query.dob,"old_class":req.query.oldclass,"old_school":req.query.oldschool,"mother_tongue":req.query.mothertongue,"father_name":req.query.fathername,"mother_name":req.query.mothername,"father_qualification":req.query.fatheredu,"mother_qualification":req.query.motheredu,"father_mob":req.query.fathermob,"mother_mob":req.query.mothermob,"father_email":req.query.fathermail,"mother_email":req.query.mothermail,"father_company":req.query.fathercompany,"mother_company":req.query.mothercompany,"father_occupation":req.query.fatherjob,"mother_occupation":req.query.motherjob,"flat_no":req.query.flatno,"address1":req.query.address1,"address2":req.query.address2,"address3":req.query.address3,"city":req.query.city,"pincode":req.query.pincode,"state":req.query.statename,"enquiry_source":req.query.enquiysource,"sibiling_name":req.query.siblingname,"sibling_detail":req.query.siblingdetails,"transport_requirment":req.query.transportreq,"canteen_requirment":req.query.canteenreq,"second_language":req.query.secondlanguage,"third_language":req.query.thirdlanguage,"updated_by":req.query.modified,"prospectus_sold":req.query.prospectstatus,"father_designation":req.query.daddesignation,"mother_designation":req.query.momdesignation,"father_income":req.query.dadincome,"mother_income":req.query.momincome,"prospectus_no":req.query.prospectusno,"admission_test":req.query.admissiontest,"admission_date":req.query.admissiondate,'admission_test_english':req.query.admissiontestenglish,"admission_test_maths":req.query.admissiontestmaths,"admission_test_evs":req.query.admissiontestevs};
+   var collection={"first_name":req.query.firstname,"middle_name":req.query.middlename,"last_name":req.query.lastname,"gender":req.query.gender,"class":req.query.grade,"dob":req.query.dob,"old_class":req.query.oldclass,"old_school":req.query.oldschool,"mother_tongue":req.query.mothertongue,"father_name":req.query.fathername,"mother_name":req.query.mothername,"father_qualification":req.query.fatheredu,"mother_qualification":req.query.motheredu,"father_mob":req.query.fathermob,"mother_mob":req.query.mothermob,"father_email":req.query.fathermail,"mother_email":req.query.mothermail,"father_company":req.query.fathercompany,"mother_company":req.query.mothercompany,"father_occupation":req.query.fatherjob,"mother_occupation":req.query.motherjob,"flat_no":req.query.flatno,"address1":req.query.address1,"address2":req.query.address2,"address3":req.query.address3,"city":req.query.city,"pincode":req.query.pincode,"state":req.query.statename,"enquiry_source":req.query.enquiysource,"sibiling_name":req.query.siblingname,"sibling_detail":req.query.siblingdetails,"transport_requirment":req.query.transportreq,"canteen_requirment":req.query.canteenreq,"second_language":req.query.secondlanguage,"third_language":req.query.thirdlanguage,"updated_by":req.query.modified,"prospectus_sold":req.query.prospectstatus,"father_designation":req.query.daddesignation,"mother_designation":req.query.momdesignation,"father_income":req.query.dadincome,"mother_income":req.query.momincome,"prospectus_no":req.query.prospectusno,"admission_test":req.query.admissiontest,"admission_date":req.query.admissiondate,'admission_test_english':req.query.admissiontestenglish,"admission_test_maths":req.query.admissiontestmaths,"admission_test_evs":req.query.admissiontestevs,"Guardianname":req.query.guardianname,"gmob":req.query.guardianmobile,"gemail":req.query.guardianemail,"guardian_company":req.query.guardiancompany,"guardian_job":req.query.guardianjob,"guardian_occup":req.query.guardianoccup,"guardian_income":req.query.guardianincome};
 
     var school={"school_id":req.query.schol};
     var enquiry={"enquiry_no":req.query.enq};
@@ -244,7 +244,7 @@ app.post('/updateenquiry',  urlencodedParser,function (req, res)
  app.post('/registerenquiryform',  urlencodedParser,function (req, res)
  {
    console.log('hello2');
-   var collection={"school_id":req.query.schol,"enquiry_no":req.query.enq,"first_name":req.query.firstname,"middle_name":req.query.middlename,"last_name":req.query.lastname,"gender":req.query.gender,"class":req.query.grade,"dob":req.query.dob,"old_class":req.query.oldclass,"old_school":req.query.oldschool,"mother_tongue":req.query.mothertongue,"father_name":req.query.fathername,"mother_name":req.query.mothername,"father_qualification":req.query.fatheredu,"mother_qualification":req.query.motheredu,"father_mob":req.query.fathermob,"mother_mob":req.query.mothermob,"father_email":req.query.fathermail,"mother_email":req.query.mothermail,"father_company":req.query.fathercompany,"mother_company":req.query.mothercompany,"father_occupation":req.query.fatherjob,"mother_occupation":req.query.motherjob,"flat_no":req.query.flatno,"address1":req.query.address1,"address2":req.query.address2,"address3":req.query.address3,"city":req.query.city,"pincode":req.query.pincode,"state":req.query.statename,"enquiry_source":req.query.enquiysource,"sibiling_name":req.query.siblingname,"sibling_detail":req.query.siblingdetails,"transport_requirment":req.query.transportreq,"canteen_requirment":req.query.canteenreq,"second_language":req.query.secondlanguage,"third_language":req.query.thirdlanguage,"updated_by":req.query.modified,"prospectus_sold":req.query.prospectstatus,"father_designation":req.query.daddesignation,"mother_designation":req.query.momdesignation,"father_income":req.query.dadincome,"mother_income":req.query.momincome,"prospectus_no":req.query.prospectusno,"academic_year":req.query.academicyear,"enquiry_name":req.query.givenname,"status":req.query.status,"admission_test":req.query.admissiontest,"admission_date":req.query.admissiondate,'admission_test_english':req.query.admissiontestenglish,"admission_test_maths":req.query.admissiontestmaths,"admission_test_evs":req.query.admissiontestevs};
+   var collection={"school_id":req.query.schol,"enquiry_no":req.query.enq,"first_name":req.query.firstname,"middle_name":req.query.middlename,"last_name":req.query.lastname,"gender":req.query.gender,"class":req.query.grade,"dob":req.query.dob,"old_class":req.query.oldclass,"old_school":req.query.oldschool,"mother_tongue":req.query.mothertongue,"father_name":req.query.fathername,"mother_name":req.query.mothername,"father_qualification":req.query.fatheredu,"mother_qualification":req.query.motheredu,"father_mob":req.query.fathermob,"mother_mob":req.query.mothermob,"father_email":req.query.fathermail,"mother_email":req.query.mothermail,"father_company":req.query.fathercompany,"mother_company":req.query.mothercompany,"father_occupation":req.query.fatherjob,"mother_occupation":req.query.motherjob,"flat_no":req.query.flatno,"address1":req.query.address1,"address2":req.query.address2,"address3":req.query.address3,"city":req.query.city,"pincode":req.query.pincode,"state":req.query.statename,"enquiry_source":req.query.enquiysource,"sibiling_name":req.query.siblingname,"sibling_detail":req.query.siblingdetails,"transport_requirment":req.query.transportreq,"canteen_requirment":req.query.canteenreq,"second_language":req.query.secondlanguage,"third_language":req.query.thirdlanguage,"updated_by":req.query.modified,"prospectus_sold":req.query.prospectstatus,"father_designation":req.query.daddesignation,"mother_designation":req.query.momdesignation,"father_income":req.query.dadincome,"mother_income":req.query.momincome,"prospectus_no":req.query.prospectusno,"academic_year":req.query.academicyear,"enquiry_name":req.query.givenname,"status":req.query.status,"admission_test":req.query.admissiontest,"admission_date":req.query.admissiondate,'admission_test_english':req.query.admissiontestenglish,"admission_test_maths":req.query.admissiontestmaths,"admission_test_evs":req.query.admissiontestevs,"Guardianname":req.query.guardianname,"gmob":req.query.guardianmobile,"gemail":req.query.guardianemail,"guardian_company":req.query.guardiancompany,"guardian_job":req.query.guardianjob,"guardian_occup":req.query.guardianoccup,"guardian_income":req.query.guardianincome};
    console.log(collection);
    var school={"school_id":req.query.schol};
    var enquiry={"enquiry_no":req.query.enq};
@@ -699,8 +699,8 @@ app.post('/searchadmission',  urlencodedParser,function (req, res){
 
 // Fetching fees for admission
 app.post('/fetchfees',  urlencodedParser,function (req, res){
-    
-    var qur="SELECT * FROM fee_master WHERE school_id='"+req.query.schoolid+"' and admission_year = '"+req.query.admissionyear+"' and academic_year='"+req.query.academicyear+"' and grade_id='"+req.query.grade+"'";  
+
+    var qur="SELECT * FROM fee_master WHERE school_id='"+req.query.schoolid+"' and admission_year = '"+req.query.admissionyear+"' and academic_year='"+req.query.academicyear+"' and grade_id='"+req.query.grade+"'";
     console.log(qur);
     connection.query(qur,
     function(err, rows)
@@ -804,7 +804,7 @@ app.post('/insertcashfees',  urlencodedParser,function (req, res){
         receipt_no:""
     };
     connection.query("SELECT * FROM receipt_sequence",function(err, rows){
-    response.receipt_no="REC-"+response.academic_year+"-"+rows[0].receipt_seq; 
+    response.receipt_no="REC-"+response.academic_year+"-"+rows[0].receipt_seq;
     var new_receipt_no=parseInt(rows[0].receipt_seq)+1;
     connection.query(qur,[response],
     function(err, rows)
@@ -817,7 +817,7 @@ app.post('/insertcashfees',  urlencodedParser,function (req, res){
         else
           res.status(200).json({'returnval': 'Seq not updated!'});
       });
-      
+
     }
     else
     {
@@ -862,7 +862,7 @@ app.post('/insertchequefees',  urlencodedParser,function (req, res){
         ack_no:""
     };
     connection.query("SELECT * FROM receipt_sequence",function(err, rows){
-    response.ack_no="ACK-"+response.academic_year+"-"+rows[0].acknowledge_seq; 
+    response.ack_no="ACK-"+response.academic_year+"-"+rows[0].acknowledge_seq;
     var new_ack_no=parseInt(rows[0].acknowledge_seq)+1;
     connection.query(qur,[response],
     function(err, rows)
@@ -909,14 +909,14 @@ app.post('/inserttransferfees',  urlencodedParser,function (req, res){
         received_date:req.query.receiveddate,
 
         paid_date:req.query.paiddate,
-        paid_status:req.query.paidstatus,        
+        paid_status:req.query.paidstatus,
         reference_no:req.query.referenceno,
         bank_name:req.query.bankname,
         "receipt_no":""
 
     };
     connection.query("SELECT * FROM receipt_sequence",function(err, rows){
-    response.receipt_no="REC-"+response.academic_year+"-"+rows[0].receipt_seq; 
+    response.receipt_no="REC-"+response.academic_year+"-"+rows[0].receipt_seq;
     var new_receipt_no=parseInt(rows[0].receipt_seq)+1;
     connection.query(qur,[response],
     function(err, rows)
@@ -1455,7 +1455,7 @@ app.post('/updateschedule',  urlencodedParser,function (req, res)
      });
  });
 
- 
+
  app.post('/fetchadmissiontestinfo', urlencodedParser,function (req, res){
 
    //console.log('qur');
@@ -1483,7 +1483,7 @@ app.post('/updateschedule',  urlencodedParser,function (req, res)
      });
  });
 
- 
+
   app.post('/updateteststatus', urlencodedParser,function (req, res){
 
    //console.log('qur');
