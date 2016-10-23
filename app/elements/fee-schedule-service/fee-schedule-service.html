@@ -67,7 +67,8 @@
     Polymer({
       is: 'fee-schedule-service',
       fetchgradeService:function(){
-        this.fetchgradeurl=sessionStorage.getItem("addrinfo")+"/fetchgrade-service";
+       /* this.fetchgradeurl=sessionStorage.getItem("addrinfo")+"/fetchgrade-service";*/
+       this.fetchgradeurl="http://localhost:8086/fetchgrade-service"
         this.$.fetchgradeajax.generateRequest();
       },
       fetchgradeResponse:function(e){

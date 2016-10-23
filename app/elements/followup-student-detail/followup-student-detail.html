@@ -458,8 +458,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       FnDismissDialog1:function(e)
       {
       var pickdate=moment(this.$.picker.date).format('L');
-      var dt=new Date(pickdate);
-      this.followupdate1 = dt.getDate()+'/'+(dt.getMonth()+1)+'/'+dt.getFullYear();
+     var dt=new Date(pickdate);
+       var datesx=dt.getDate()+'/'+(dt.getMonth()+1)+'/'+dt.getFullYear();
+
+      if(this.followupdate2==datesx){
+          alert('Date Repeated! Please select difference date..');
+      }
+      else if(this.followupdate3==datesx){
+          alert('Date Repeated! Please select difference date..');
+      }
+      else if(this.followupdate4==datesx){
+          alert('Date Repeated! Please select difference date..');
+      }
+      else if(this.followupdate5==datesx){  
+          alert('Date Repeated! Please select difference date..');
+      }
+      else {
+          this.followupdate1 = dt.getDate()+'/'+(dt.getMonth()+1)+'/'+dt.getFullYear();
+        }
+
        var id = 'dialog1';
       var dialog = document.getElementById(id);
       dialog.opened=false;
@@ -475,8 +492,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       FnDismissDialog2:function(e)
       {
       var pickdate=moment(this.$.picker.date).format('L');
-       var dt=new Date(pickdate);
-      this.followupdate2 = dt.getDate()+'/'+(dt.getMonth()+1)+'/'+dt.getFullYear();
+      
+      var dt=new Date(pickdate);
+       var datesx=dt.getDate()+'/'+(dt.getMonth()+1)+'/'+dt.getFullYear();
+
+      if(this.followupdate3==datesx){
+          alert('Date Repeated! Please select difference date..');
+      }
+      else if(this.followupdate4==datesx){
+          alert('Date Repeated! Please select difference date..');
+      }
+      else if(this.followupdate5==datesx){  
+          alert('Date Repeated! Please select difference date..');
+      }
+      else {
+          this.followupdate2 = dt.getDate()+'/'+(dt.getMonth()+1)+'/'+dt.getFullYear();
+        }
        var id = 'dialog2';
       var dialog = document.getElementById(id);
       dialog.opened=false;
@@ -492,8 +523,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       FnDismissDialog3:function(e)
       {
       var pickdate=moment(this.$.picker.date).format('L');
-       var dt=new Date(pickdate);
-      this.followupdate3 = dt.getDate()+'/'+(dt.getMonth()+1)+'/'+dt.getFullYear();
+       
+      var dt=new Date(pickdate);
+       var datesx=dt.getDate()+'/'+(dt.getMonth()+1)+'/'+dt.getFullYear();
+
+      if(this.followupdate4==datesx){
+          alert('Date Repeated! Please select difference date..');
+      }
+      else if(this.followupdate5==datesx){  
+          alert('Date Repeated! Please select difference date..');
+      }
+      else {
+          this.followupdate3 = dt.getDate()+'/'+(dt.getMonth()+1)+'/'+dt.getFullYear();
+        }
+
        var id = 'dialog3';
       var dialog = document.getElementById(id);
       dialog.opened=false;
@@ -509,8 +552,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       FnDismissDialog4:function(e)
       {
       var pickdate=moment(this.$.picker.date).format('L');
-       var dt=new Date(pickdate);
-      this.followupdate4 = dt.getDate()+'/'+(dt.getMonth()+1)+'/'+dt.getFullYear();
+      var dt=new Date(pickdate);
+       var datesx=dt.getDate()+'/'+(dt.getMonth()+1)+'/'+dt.getFullYear();
+
+     if(this.followupdate5==datesx){  
+          alert('Date Repeated! Please select difference date..');
+      }
+      else {
+          this.followupdate4 = dt.getDate()+'/'+(dt.getMonth()+1)+'/'+dt.getFullYear();
+        }
+
        var id = 'dialog4';
       var dialog = document.getElementById(id);
       dialog.opened=false;
