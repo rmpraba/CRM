@@ -985,7 +985,7 @@ Fnlistbox:function(nameitem){
             this.itemflag="true";
             this.itemval="";
             //alert('yes');
-            var len=(this.textvalue).length;
+            var len=(this.referrername).length;
             if(len<=1){
               this.querySelector('paper-listbox').style.visibility='hidden';
               this.itemArray="";
@@ -993,14 +993,14 @@ Fnlistbox:function(nameitem){
             }
             if(len>1){
               this.querySelector('paper-listbox').style.visibility='visible';
-              var backsubval=(((this.textvalue).substring(0,(len-1))).trim()).toUpperCase();
+              var backsubval=(((this.referrername).substring(0,(len-1))).trim()).toUpperCase();
               for(var i=0;i<namearr.length;i++)
               {
-                var subval=((namearr[i].name).trim()).substring(0,backsubval.length);
-                if((subval).toUpperCase()==(backsubval).toUpperCase())
+                var subval=((namearr[i].listname).trim()).substring(0,backsubval.length);
+                if((namearr[i].listname).toUpperCase().indexOf((this.refferername).toUpperCase())!=-1)
                 {
                   var obj={"itemdes":""};
-                  obj.itemdes=namearr[i].name;
+                  obj.itemdes=namearr[i].listname;
                   arr.push(obj);
                 }
               }
@@ -1009,18 +1009,19 @@ Fnlistbox:function(nameitem){
           }
           if(e.keyCode!=8&& e.keyCode!=16&& e.keyCode!=13 && e.keyCode!=38&&e.keyCode!=40&&e.keyCode!=37&&e.keyCode!=39){
             if(this.itemflag=="true") {
-              this.itemval = (this.textvalue).toUpperCase()+String.fromCharCode((e.keyCode)).toUpperCase();
+              this.itemval = (this.referrername).toUpperCase()+String.fromCharCode((e.keyCode)).toUpperCase();
               this.itemflag="false";
             }
             else
-            this.itemval = this.textvalue +String.fromCharCode((e.keyCode));
+            this.itemval = this.referrername +String.fromCharCode((e.keyCode));
             if(this.itemval.length>0)
             {
               for(var i=0;i<namearr.length;i++){
-                var subval=((namearr[i].name).trim()).substring(0,this.itemval.length);
-                if((subval).toUpperCase()==(this.itemval).toUpperCase()){
+                var subval=((namearr[i].listname).trim()).substring(0,this.itemval.length);
+                if((namearr[i].listname).toUpperCase().indexOf((this.itemval).toUpperCase())!=-1)
+                {
                   var obj={"itemdes":""};
-                  obj.itemdes=namearr[i].name;
+                  obj.itemdes=namearr[i].listname;
                   arr.push(obj);
                 }
               }
@@ -1028,7 +1029,7 @@ Fnlistbox:function(nameitem){
                 this.itemArray=arr;
               else {
                 var obj={"itemdes":""};
-                  obj.itemdes=namearr[i].name;
+                  obj.itemdes="NO Item Found";
                   arr.push(obj);
                 this.itemArray=arr;
               }

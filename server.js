@@ -1019,11 +1019,11 @@ app.post('/getenquirycount',  urlencodedParser,function (req, res){
 
 /*this function takes the detail of student who have been enquired and from gradewise list */
 app.post('/getlistdetails',  urlencodedParser,function (req, res){
-    var qur={"school_id":req.query.schol};
+    var qur={"s.school_id":req.query.schol};
     var state={"status":req.query.status};
     var classes={"class":req.query.grade};
     //console.log('qur');
-    connection.query('SELECT * FROM `student_enquiry_details` WHERE ? and ? and ?',[qur,state,classes],
+    connection.query('SELECT f.current_confidence_level,f.enquiry_id,f.followup_flag,s.enquiry_name, s.enquiry_no,s.created_on FROM followupdetail f join student_enquiry_details s on f.enquiry_id=s.enquiry_no WHERE ? and ? and ?',[qur,state,classes],
     function(err, rows)
     {
     if(!err)
