@@ -1401,7 +1401,7 @@ var dat=new Date();
       fetchenquiryinfoResponse:function(e){
         var result =e.detail.response.returnval;
         if(result.length>=0){
-          if(result[0].parent_or_guardian == "Parent"){
+            if(result[0].parent_or_guardian == "parents"){
             document.querySelector('detailed-enquiry-form').enqno=result[0].enquiry_no;
             document.querySelector('detailed-enquiry-form').firstname=result[0].first_name;
             document.querySelector('detailed-enquiry-form').middlename=result[0].middle_name;
