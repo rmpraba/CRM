@@ -687,7 +687,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        obj.guardianoccup=guardianoccup;
        obj.guardianincome=guardianincome;
         this.updateenquiryparam=obj;
-        alert(JSON.stringify(obj));
+        //alert(JSON.stringify(obj));
         this.$.updateenquiryajax.generateRequest();
 
 
@@ -778,7 +778,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         obj.guardianoccup=guardianoccup;
         obj.guardianincome=guardianincome;
         this.registerenquiryformparam=obj;
-        alert(JSON.stringify(obj));
+        //alert(JSON.stringify(obj));
         this.$.registerenquiryformajax.generateRequest();
 
 
@@ -1218,7 +1218,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       FollowUp4Response:function(e){
         var res=e.detail.response.returnval;
         if((res == "success")&&(fwupcmnt4!='null'||fwupcmnt4!='')){
-       
+
            this.updatedateurl="http://localhost:8086/updatedate";
         var obj={"schol":"","enqno":"","fwupid":"","nextdate":"","nextflag":""}
         obj.schol=localStorage.getItem("schoolid");
@@ -1326,7 +1326,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
            document.querySelector('followup-student-detail').check();
            alert('Comments and Other details are updated Successfully ');
         }
-        
+
       },
       changestatus:function(folowupid,enquiryidd){
         xenquiryidd=enquiryidd;

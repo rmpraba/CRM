@@ -813,7 +813,7 @@
     },
       getadmissiondate:function(date){
         admissiontestdate = localStorage.getItem("localsess_admission_date");
-        alert(admissiontestdate);
+        //(admissiontestdate);
       },
     language:function(e){
         mothertongue=(e.target.selectedItem.textContent).trim();
@@ -903,7 +903,7 @@
           // alert(grade);
 
           if(grade == "Nursery"||"LKG"||"UKG"||"Grade-1"||"Grade-2"||"Grade-3"||"Grade-4"){
-            alert('coming');
+            //alert('coming');
             this.$.service.updateenquiryform(this.enqno,this.firstname,this.middlename,this.lastname,fngender,grade,dobdate,this.oldclass,this.oldschool,mothertongue,this.fathername,this.mothername,this.fatheredu,this.motheredu,this.fathermob,this.mothermob,this.fathermail,this.mothermail,this.fathercompany,this.mothercompany,dadoccup,momtheroccup,this.flat,this.address1,this.address2,this.address3,this.city,this.pincode,this.state,enquiysource,this.siblingname,this.siblingdetails,transportreq,canteenreq,secondlanguage,"",propsold,this.fatherjob,this.motherjob,dadincome,momincome,this.prospectusno,admissiontest,admissiontestdate,admissiontestenglish,admissiontestmaths,admissiontestevs, this.guardianname,this.guardianmobile, this.guardianemail,this.guardiancompany,this.guardianjob,guardianoccup,guardianincome);
 
 
@@ -972,8 +972,6 @@ mothersalary:function(e){
       },
 Fnlistbox:function(nameitem){
           namearr=nameitem;
-          alert("kajshdkfdskj");
-          alert("sdlkjgfkjsaldf         "+JSON.stringify(namearr));
         },
         FnInputChanged:function(e){
           if(e.keyCode==13|| e.keyCode==40)
@@ -1134,7 +1132,6 @@ Fnlistbox:function(nameitem){
             alert("Select Mother's Occupation");
           }
           else if (thirdlanguage == null) {
-            alert(grade);
             if (grade == "Pre KG" || "LKG" || "UKG" || "Grade 1" || "Grade 2" || "Grade 3") {
               this.$.service.registerenquiryform(enqnumber, this.firstname, this.middlename, this.lastname, fngender, grade, dobdate, this.oldclass, this.oldschool, mothertongue, this.fathername, this.mothername, this.fatheredu, this.motheredu, this.fathermob, this.mothermob, this.fathermail, this.mothermail, this.fathercompany, this.mothercompany, dadoccup, momtheroccup, this.flat, this.address1, this.address2, this.address3, this.city, this.pincode, this.state, enquiysource, this.siblingname, this.siblingdetails, transportreq, canteenreq, secondlanguage, thirdlanguage, propsold, this.fatherjob, this.motherjob, dadincome, momincome, this.prospectusno, admissiontest, admissiontestdate, admissiontestenglish, admissiontestmaths, admissiontestevs, this.guardianname, this.guardianmobile, this.guardianemail, this.guardiancompany, this.guardianjob, guardianoccup, guardianincome);
             } else {
