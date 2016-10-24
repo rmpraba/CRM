@@ -518,6 +518,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
    var fwupenqno3;
    var fwupenqno4;
 
+   var scheduleno;
+
     Polymer({
       is: 'crm-service',
       followupResponse:function(e){
@@ -1328,8 +1330,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
 
       },
-      changestatus:function(folowupid,enquiryidd){
+      changestatus:function(folowupid,enquiryidd,schedule){
         xenquiryidd=enquiryidd;
+        scheduleno=schedule;
         this.changestatusurl="http://localhost:8086/changestatus";
         var obj={"schol":"","id":"","fid":""};
         obj.schol=localStorage.getItem("schoolid");
@@ -1348,7 +1351,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         obj.schol=localStorage.getItem("schoolid");
         obj.id=xenquiryidd;
         obj.followid=reschedule;
-        obj.schedule=2;
+        obj.schedule=scheduleno+1;
         obj.rescheduledon=dat.getDate()+"/"+(dat.getMonth()+1)+"/"+dat.getFullYear();
         this.updatescheduleparam=obj;
         this.$.updatescheduleajax.generateRequest();
@@ -1377,7 +1380,7 @@ var dat=new Date();
         obj.folowup5=fifthfollowupdate.getDate()+"/"+(fifthfollowupdate.getMonth()+1)+"/"+fifthfollowupdate.getFullYear();
         obj.nextfolowup=firstfollowupdate.getDate()+"/"+(firstfollowupdate.getMonth()+1)+"/"+firstfollowupdate.getFullYear();
         obj.flag=1;
-        obj.schedule=2;
+        obj.schedule=scheduleno+1;
         obj.status="Open";
         this.updatefollowdetailparam=obj;
        //alert(JSON.stringify(obj));

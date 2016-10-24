@@ -1291,7 +1291,14 @@ app.post('/getfollowupcount',  urlencodedParser,function (req, res){
    var school={"school_id":req.query.schol};
    var grade={"class":req.query.grade};
    var status={"status":req.query.status};
-   var qur = "SELECT f.enquiry_id,f.followup_flag,s.enquiry_name,f.followup_status,f.followup_id,f.current_confidence_level FROM followupdetail f join student_enquiry_details s on f.enquiry_id=s.enquiry_no WHERE f.followup_status='"+req.query.status+"' and s.class='"+req.query.grade+"' and s.school_id = '"+req.query.schol+"'";
+   var checkstatus=req.query.status;
+   if((checkstatus=='Closed')||(checkstatus=='Exhausted')){
+        var qur = "SELECT f.enquiry_id,f.followup_flag,s.enquiry_name,f.followup_status,f.followup_id,f.current_confidence_level FROM followupdetail f join student_enquiry_details s on f.enquiry_id=s.enquiry_no WHERE f.followup_status='"+req.query.status+"' and s.class='"+req.query.grade+"' and s.school_id = '"+req.query.schol+"' ORDER BY (next_followup_date) DESC";
+   }
+   else{
+        var qur = "SELECT f.enquiry_id,f.followup_flag,s.enquiry_name,f.followup_status,f.followup_id,f.current_confidence_level FROM followupdetail f join student_enquiry_details s on f.enquiry_id=s.enquiry_no WHERE f.followup_status='"+req.query.status+"' and s.class='"+req.query.grade+"' and s.school_id = '"+req.query.schol+"' ORDER BY (next_followup_date)"; 
+   }
+   
    connection.query(qur,
      function(err, rows)
      {
@@ -1387,7 +1394,7 @@ app.post('/changestatus',  urlencodedParser,function (req, res)
   var school={"school_id":req.query.schol};
   var enquiry={"enquiry_id":req.query.id};
   var followupid={"followup_id":req.query.fid};
-  var status={"followup_status":"Rescheduled"};
+  var status={"followup_status":"Exhausted"};
        connection.query('update followupdetail set ? where ? and ? and ?',[status,followupid,enquiry,school],
         function(err, rows)
         {
