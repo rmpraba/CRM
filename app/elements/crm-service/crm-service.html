@@ -474,6 +474,104 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       debounce-duration="300"
     >
     </iron-ajax>
+
+    <!-- this ajax is to get the count of enquiry and followup done with the respective percentage of greater than 95 confidence level -->
+
+    <iron-ajax
+      method="post"
+      id="greater95ajax"
+      url="{{greater95url}}"
+      params="{{greater95param}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="greater95Response"
+      debounce-duration="300"
+    >
+    </iron-ajax>
+
+    <!-- this ajax is to get the count of enquiry and followup done with the respective percentage of greater than 75 confidence level -->
+
+    <iron-ajax
+      method="post"
+      id="greater75ajax"
+      url="{{greater75url}}"
+      params="{{greater75param}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="greater75Response"
+      debounce-duration="300"
+    >
+    </iron-ajax>
+
+    <!-- this ajax is to get the count of enquiry and followup done with the respective percentage of greater than 50 confidence level -->
+
+    <iron-ajax
+      method="post"
+      id="greater50ajax"
+      url="{{greater50url}}"
+      params="{{greater50param}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="greater50Response"
+      debounce-duration="300"
+    >
+    </iron-ajax>
+
+    <!-- this ajax is to get the count of enquiry and followup done with the respective percentage of less than 50 confidence level -->
+
+    <iron-ajax
+      method="post"
+      id="less50ajax"
+      url="{{less50url}}"
+      params="{{less50param}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="less50Response"
+      debounce-duration="300"
+    >
+    </iron-ajax>
+
+    <!-- this ajax is to get the count of enquiry and followup done with the respective percentage of less than 35 confidence level -->
+
+    <iron-ajax
+      method="post"
+      id="less35ajax"
+      url="{{less35url}}"
+      params="{{less35param}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="less35Response"
+      debounce-duration="300"
+    >
+    </iron-ajax>
+
+    <!-- this ajax is to get the count of enquiry and followup done with the respective percentage of less than 10 confidence level -->
+
+    <iron-ajax
+      method="post"
+      id="less10ajax"
+      url="{{less10url}}"
+      params="{{less10param}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="less10Response"
+      debounce-duration="300"
+    >
+    </iron-ajax>
+
+    <!-- this ajax is to get the count of enquiry and followup done with the respective percentage of TBD confidence level -->
+
+    <iron-ajax
+      method="post"
+      id="TBDajax"
+      url="{{TBDurl}}"
+      params="{{TBDparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="TBDResponse"
+      debounce-duration="300"
+    >
+    </iron-ajax>
   </template>
   <script>
   (function() {
@@ -710,6 +808,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         alert("Submited Successfully");
         document.querySelector('detailed-enquiry-form').Fnclear();
         document.querySelector('enquiry-card').ready();
+        this.getenquirycount();
       }
 
      },
@@ -1086,6 +1185,65 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.getexhaustfollowupcountparam=obj;
        //alert(JSON.stringify(obj));
         this.$.getexhaustfollowupcountajax.generateRequest();
+
+
+        this.greater95url="http://localhost:8086/getconfidencecount";
+        var obj={"schol":"","status":""}
+        obj.status=">90%";
+        obj.schol=localStorage.getItem("schoolid");
+        this.greater95param=obj;
+       //alert(JSON.stringify(obj));
+        this.$.greater95ajax.generateRequest();
+
+         this.greater75url="http://localhost:8086/getconfidencecount";
+        var obj={"schol":"","status":""}
+        obj.status=">75%";
+        obj.schol=localStorage.getItem("schoolid");
+        this.greater75param=obj;
+       //alert(JSON.stringify(obj));
+        this.$.greater75ajax.generateRequest();
+
+         this.greater50url="http://localhost:8086/getconfidencecount";
+        var obj={"schol":"","status":""}
+        obj.status=">50%";
+        obj.schol=localStorage.getItem("schoolid");
+        this.greater50param=obj;
+       //alert(JSON.stringify(obj));
+        this.$.greater50ajax.generateRequest();
+
+         this.less50url="http://localhost:8086/getconfidencecount";
+        var obj={"schol":"","status":""}
+        obj.status="<50%";
+        obj.schol=localStorage.getItem("schoolid");
+        this.less50param=obj;
+       //alert(JSON.stringify(obj));
+        this.$.less50ajax.generateRequest();
+
+         this.less35url="http://localhost:8086/getconfidencecount";
+        var obj={"schol":"","status":""}
+        obj.status="<35%";
+        obj.schol=localStorage.getItem("schoolid");
+        this.less35param=obj;
+       //alert(JSON.stringify(obj));
+        this.$.less35ajax.generateRequest();
+
+        this.less10url="http://localhost:8086/getconfidencecount";
+        var obj={"schol":"","status":""}
+        obj.status="<15%";
+        obj.schol=localStorage.getItem("schoolid");
+        this.less10param=obj;
+       //alert(JSON.stringify(obj));
+        this.$.less10ajax.generateRequest();
+
+        this.TBDurl="http://localhost:8086/getconfidencecount";
+        var obj={"schol":"","status":""}
+        obj.status="TBD";
+        obj.schol=localStorage.getItem("schoolid");
+        this.TBDparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.TBDajax.generateRequest();
+
+
      },
      getopenfollowupcountResponse:function(e){
       var res=e.detail.response.returnval;
@@ -1102,6 +1260,34 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      getexhaustfollowupcountResponse:function(e){
       var res=e.detail.response.returnval;
       document.querySelector('followup-dashboard').exhaustedarr=res;
+     },
+     greater95Response:function(e){
+       var res=e.detail.response.returnval;
+      document.querySelector('followup-dashboard').arr90greater=res;
+     },
+     greater75Response:function(e){
+       var res=e.detail.response.returnval;
+      document.querySelector('followup-dashboard').arr75greater=res;
+     },
+     greater50Response:function(e){
+       var res=e.detail.response.returnval;
+      document.querySelector('followup-dashboard').arr50greater=res;
+     },
+     less50Response:function(e){
+       var res=e.detail.response.returnval;
+      document.querySelector('followup-dashboard').arr50lesser=res;
+     },
+     less35Response:function(e){
+       var res=e.detail.response.returnval;
+      document.querySelector('followup-dashboard').arr35lesser=res;
+     },
+     less10Response:function(e){
+       var res=e.detail.response.returnval;
+      document.querySelector('followup-dashboard').arr10lesser=res;
+     },
+     TBDResponse:function(e){
+       var res=e.detail.response.returnval;
+      document.querySelector('followup-dashboard').arrtbd=res;
      },
       FollowUp1:function(enqno,followupid,followupdate1,confidencelevel,comments,fdate2){
         fwupdate2=fdate2;

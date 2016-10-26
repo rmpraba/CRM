@@ -53,7 +53,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <table class="table table-hover col-sm-4 col-sm-offset-1" style="width: 35% !important;" >
     <thead>
       <tr>
-        <th>>95%</th>
+        <th>>90%</th>
         <th>>75%</th>
         <th>>50%</th>
         <th><50%</th>
@@ -63,6 +63,51 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </tr>
       </thead>
       <tbody>
+      <tr>
+        <td>
+          <template  is="dom-repeat" items="{{arr90greater}}" as="view">
+          <confidence-item-card grade="{{view.class}}" enquirygrade="{{view.total}}">
+          </confidence-item-card>
+        </template>
+        </td>
+        <td>
+          <template  is="dom-repeat" items="{{arr75greater}}" as="view">
+          <confidence-item-card grade="{{view.class}}" enquirygrade="{{view.total}}">
+          </confidence-item-card>
+        </template>
+        </td>
+        <td>
+        <template  is="dom-repeat" items="{{arr50greater}}" as="view">
+          <confidence-item-card grade="{{view.class}}" enquirygrade="{{view.total}}">
+          </confidence-item-card>
+        </template>
+        </td>
+        <td>
+          <template  is="dom-repeat" items="{{arr50lesser}}" as="view">
+          <confidence-item-card grade="{{view.class}}" enquirygrade="{{view.total}}">
+          </confidence-item-card>
+        </template>
+        </td>
+        <td>
+          <template  is="dom-repeat" items="{{arr35lesser}}" as="view">
+          <confidence-item-card grade="{{view.class}}" enquirygrade="{{view.total}}">
+          </confidence-item-card>
+        </template>
+        </td>
+        <td>
+          <template  is="dom-repeat" items="{{arr10lesser}}" as="view">
+          <confidence-item-card grade="{{view.class}}" enquirygrade="{{view.total}}">
+          </confidence-item-card>
+        </template>
+        </td>
+        <td>
+          <template  is="dom-repeat" items="{{arrtbd}}" as="view">
+          <confidence-item-card grade="{{view.class}}" enquirygrade="{{view.total}}">
+          </confidence-item-card>
+        </template>
+        </td>
+      </tr>
+      </tbody>
     </table>
     </div>
     <crm-service id="service"></crm-service>

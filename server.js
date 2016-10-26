@@ -1658,6 +1658,40 @@ app.post('/updateschedule',  urlencodedParser,function (req, res)
 
 
 
+app.post('/getconfidencecount',  urlencodedParser,function (req, res){
+
+    //console.log('qur');
+    connection.query("SELECT d.followup_status, f.class, COUNT( * ) AS total FROM  `followupdetail` AS d, student_enquiry_details AS f WHERE d.`school_id` =  '"+req.query.schol+"' AND d.current_confidence_level =  '"+req.query.status+"' AND f.enquiry_no = d.enquiry_id and f.status='Enquired' GROUP BY class ORDER BY (`class`)",
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      //console.log(rows);
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 0});
+    }
+  }
+  else{
+     console.log(err);
+  }
+});
+});
+
+
+
+
+
+
+
+
+
+
 
 function setvalue(){
   console.log("calling setvalue.....");
