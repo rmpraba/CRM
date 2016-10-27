@@ -617,6 +617,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
    var fwupenqno4;
 
    var scheduleno;
+   var successbox;
 
     Polymer({
       is: 'crm-service',
@@ -641,6 +642,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      },
      submitenqiry:function(enqno,academicyear,grade,Fnfirstname,Fnmiddlename,Fnlastname,gender,dob,fathername,mothername,mob,email,textvalue,todate,gemail,gmob,Guardianname,paga){
       //alert(enqno+academicyr+classes+studentname+gender+dob+mob+source+locality+category);
+      successbox=enqno;
       var generateid=Math.floor(100000 + Math.random() * 900000);
         this.submitenquiryurl="http://localhost:8086/submitenquiry";
         var obj={"id":"","schol":"","acadeyr":"","contact":"","grade":"","gender":"","firstname":"","middlename":"","lastname":"","dobs":"","father":"","mother":"","email":"","location":"","createdby":"","createdate":"","givenname":"","status":"","gemail":"","gmob":"","Guardianname":"","paga":""}
@@ -703,8 +705,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       var result=e.detail.response.returnval;
       // alert(JSON.stringify(result));
       if(result=="success"){
-        alert("Submited Successfully");
-
+        alert("Submited Successfully for Enquiry ID :"+successbox);
+//document.querySelector('newenquiry-card').showsuccess();
         this.updatesequrl="http://localhost:8086/updateseq";
         var obj={"id":"","schol":""};
         obj.id=seqno;
@@ -713,11 +715,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        //alert(JSON.stringify(obj));
         this.$.updateseqajax.generateRequest();
 
+        //this.getenquirycount();
+          document.querySelector('enquiry-card').ready();
 
         document.querySelector('newenquiry-card').Fnclear();
-        document.querySelector('enquiry-card').ready();
 
-        this.getenquirycount();
+      
       }
       else{
         alert('Form submit interrupted');
@@ -806,9 +809,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       // alert(result);
       if(result="success"){
         alert("Submited Successfully");
-        document.querySelector('detailed-enquiry-form').Fnclear();
         document.querySelector('enquiry-card').ready();
-        this.getenquirycount();
+       // this.getenquirycount();
+        document.querySelector('detailed-enquiry-form').Fnclear();
+        
       }
 
      },
@@ -949,7 +953,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       var today = new Date(); var yyyy = today.getFullYear();
       var academicyr=yyyy+'-'+(yyyy+1);
       document.querySelector('newenquiry-card').academicyr=academicyr;
-
+      document.querySelector('newenquiry-card').complete();
      },
       getenqno:function(){
         this.getenquiryno1url="http://localhost:8086/getenquiryno";

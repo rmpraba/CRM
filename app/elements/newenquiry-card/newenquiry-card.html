@@ -1,6 +1,7 @@
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 <link rel="import" href="..\..\bower_components/gold-email-input/gold-email-input.html">
 <link rel="import" href="../dateofbirth-datepicker/dateofbirth-datepicker.html">
+<link rel="import" href="..\..\bower_components/paper-dialog/paper-dialog.html">
 <dom-module id="newenquiry-card">
   <template>
   <style type="text/css">
@@ -14,11 +15,12 @@
         <h4>Enquiry Detail</h4>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
-        <div class="col-sm-6 enquiry-input">
-          <paper-input label="Enquiry Number" readonly value="{{enqno}}"></paper-input>
-        </div>
+       
         <div class="col-sm-6">
           <paper-input label="Date of Enquiry" readonly value="{{todaydate}}"></paper-input>
+        </div>
+         <div class="col-sm-6 enquiry-input">
+          <paper-input label="Enquiry Number" hidden value="{{enqno}}"></paper-input>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
@@ -152,11 +154,24 @@
   <div  class="horizontalframe">
     <div class="buttons hrspace" >
       <paper-button style="height:33px !important;"  on-click="closedialog">OK</paper-button>
+      </div>
+      </div>
+   </paper-dialog>
+
+      <paper-toast class="toast-success toast-popup" style="background-color: #0b8043;" id="enquiry_success" text="">Enquiry Added</paper-toast>
+    
+
+    <paper-dialog id="successbox">
+        <p><h2>Enquiry is Registered Successfully!</h1></p>
+        <p><h4>Your Enquiry id is - </h4><h1>{{enquiryno}}</h1></p>
+  <div  class="horizontalframe">
+    <div class="buttons hrspace" >
+      <paper-button style="height:33px !important;"  on-click="closediaz">OK</paper-button>
+      </div>
+      </div>
    </paper-dialog>
 
 
-      <paper-toast class="toast-success toast-popup" style="background-color: #0b8043;" id="enquiry_success" text="">Enquiry Added</paper-toast>
-    </div>
     <crm-service id="service"></crm-service>
   </template>
   <script>
@@ -174,14 +189,13 @@
     Polymer({
       is: 'newenquiry-card',
 ready:function () {
-        this.$.service.getenquiryno();
         this.$.service.getclasses();
         this.$.service.getlocation();
         this.$.fathersdetails.hidden=true;
         this.$.Guardiandetails.hidden=true;
         var dt=new Date();
         this.todaydate=dt.getDate()+"/"+(dt.getMonth()+1)+"/"+dt.getFullYear();
-
+          this.$.itemlist.hidden=true;
       },Fnclear:function(){
           this.ready();
           //this.$.academics.selected=-1;
@@ -272,6 +286,7 @@ ready:function () {
           namearr=nameitem;
         },
         FnInputChanged:function(e){
+          this.$.itemlist.hidden=false;
           if(e.keyCode==13|| e.keyCode==40)
             this.querySelector('paper-listbox').focus();
           var arr=[];
@@ -342,6 +357,7 @@ ready:function () {
           this.textvalue = e.target.selectedItem.textContent.trim();
           this.itemArray=[];
           document.querySelector('#itemlist').selected=-1;
+          this.$.itemlist.hidden=true;
         },
         showdate:function(){
           document.querySelector('dob-datepicker-card').FnShowDialog();
@@ -360,7 +376,70 @@ ready:function () {
         },
         submit:function () {
       // alert('submit!');
-      if(paga=="Gurdians"){
+     
+        this.$.service.getenquiryno();
+       
+        
+      },
+      verifymob:function(){
+        //alert('1');
+        if(this.mob.length==10){
+        this.$.service.checkmobileno(this.mob);
+        }
+        else{
+            alert('Mobile Number should be in 10 digits');
+            //this.mob='';
+             this.$.mobile.validate();
+        }
+      },
+       gverifymob:function(){
+        //alert('1');
+        if(this.gmob.length==10){
+            this.$.service.checkmobileno(this.gmob);
+        }
+        else{
+            alert('Mobile Number should be in 10 digits');
+            //this.gmob='';
+             this.$.gmobile.validate();
+        }
+      },
+
+      showdialog:function(enqno,fname,mname,lname){
+          this.studentname=fname+' '+mname+' '+lname;
+          this.enquiryno=enqno;
+          var id = 'confirmbox';
+        var dialog = document.getElementById(id);
+        dialog.open();
+      },
+      Confirm:function(){
+         var id = 'confirmbox';
+        var dialog = document.getElementById(id);
+        dialog.close();
+      },
+      cancel:function(){
+        var id = 'confirmbox';
+        var dialog = document.getElementById(id);
+        dialog.close();
+          var id = 'cancelbox';
+        var dialog = document.getElementById(id);
+        dialog.open();
+      },
+      closedialog:function(){
+          var id = 'cancelbox';
+        var dialog = document.getElementById(id);
+        dialog.close();
+      },
+      closediaz:function(){
+          var id = 'successbox';
+        var dialog = document.getElementById(id);
+        dialog.close();
+      },
+      dateclear:function(){
+        alert("Select DOB properly, it cannot be future date");
+
+      },
+      complete:function(){
+         if(paga=="Gurdians"){
         if(this.firstname==""||this.lastname==""||this.textvalue==""||this.Guardianname==""||this.gemail==""||this.gmob==""){
            // alert('1');
            this.$.fname.validate();
@@ -436,60 +515,12 @@ ready:function () {
       }
           }
 
-       
-        
       },
-      verifymob:function(){
-        //alert('1');
-        if(this.mob.length==10){
-        this.$.service.checkmobileno(this.mob);
-        }
-        else{
-            alert('Please check the mobile number properly');
-            //this.mob='';
-             this.$.mobile.validate();
-        }
-      },
-       gverifymob:function(){
-        //alert('1');
-        if(this.gmob.length==10){
-            this.$.service.checkmobileno(this.gmob);
-        }
-        else{
-            alert('Please check the mobile number properly');
-            //this.gmob='';
-             this.$.gmobile.validate();
-        }
-      },
-
-      showdialog:function(enqno,fname,mname,lname){
-          this.studentname=fname+' '+mname+' '+lname;
-          this.enquiryno=enqno;
-          var id = 'confirmbox';
+      showsuccess:function(){
+        alert('hi');
+         var id = 'successbox';
         var dialog = document.getElementById(id);
         dialog.open();
-      },
-      Confirm:function(){
-         var id = 'confirmbox';
-        var dialog = document.getElementById(id);
-        dialog.close();
-      },
-      cancel:function(){
-        var id = 'confirmbox';
-        var dialog = document.getElementById(id);
-        dialog.close();
-          var id = 'cancelbox';
-        var dialog = document.getElementById(id);
-        dialog.open();
-      },
-      closedialog:function(){
-          var id = 'cancelbox';
-        var dialog = document.getElementById(id);
-        dialog.close();
-      },
-      dateclear:function(){
-        alert("Select DOB properly, it cannot be future date");
-
       }
     });
   })();
