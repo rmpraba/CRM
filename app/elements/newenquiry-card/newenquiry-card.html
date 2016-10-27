@@ -102,7 +102,7 @@
         </div>
         <div>
          <div class="col-sm-6">
-          <paper-input id="mobile" required error-message="needs mobile number!" label="Mobile Number" allowed-pattern="[0-9]" maxlength="10" value="{{mob}}" on-change="verifymob"></paper-input>
+          <paper-input id="mobile" required error-message="enter proper mobile no!" label="Mobile Number" allowed-pattern="[0-9]" maxlength="10" value="{{mob}}" on-change="verifymob"></paper-input>
          </div>
          <div class="col-sm-6">
           <gold-email-input id="email" required error-message="needs email ID!" label="Email" value="{{email}}"></gold-email-input>
@@ -115,7 +115,7 @@
           <paper-input label="Guardian's Name" id="Guardianname" required error-message="needs Guardian's Name!" allowed-pattern="[a-zA-Z ]" value="{{Guardianname}}"></paper-input>
           </div>
           <div class="col-sm-6">
-          <paper-input id="gmobile" required error-message="needs mobile number!" label="Mobile Number" allowed-pattern="[0-9]" maxlength="10" value="{{gmob}}" on-change="gverifymob"></paper-input>
+          <paper-input id="gmobile" required error-message="enter proper mobile no!" label="Mobile Number" allowed-pattern="[0-9]" maxlength="10" value="{{gmob}}" on-change="gverifymob"></paper-input>
           </div>
           <div class="col-sm-6">
                 <gold-email-input id="gemail" required error-message="needs email ID!" label="Email" value="{{gemail}}"></gold-email-input>
@@ -217,6 +217,9 @@ ready:function () {
          gender=null;
          grade=null;
          paga=null;
+         dobdate=null;
+
+         document.querySelector('dateofbirth-datepicker').FnClear();
       },
       classes:function(e){
           grade=(e.target.selectedItem.textContent).trim();
@@ -373,7 +376,7 @@ ready:function () {
           }
        else {
             this.ageofyr=diff+" Years";
-          }
+
         },
         submit:function () {
       // alert('submit!');
@@ -454,11 +457,25 @@ ready:function () {
       },
       verifymob:function(){
         //alert('1');
+        if(this.mob.length==10){
         this.$.service.checkmobileno(this.mob);
+        }
+        else{
+            alert('Please check the mobile number properly');
+            //this.mob='';
+             this.$.mobile.validate();
+        }
       },
        gverifymob:function(){
         //alert('1');
-        this.$.service.checkmobileno(this.gmob);
+        if(this.gmob.length==10){
+            this.$.service.checkmobileno(this.gmob);
+        }
+        else{
+            alert('Please check the mobile number properly');
+            //this.gmob='';
+             this.$.gmobile.validate();
+        }
       },
 
       showdialog:function(enqno,fname,mname,lname){

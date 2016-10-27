@@ -283,12 +283,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var followcall5;
     var callpickstatus;
     var followupno;
+    var today;
 
     Polymer({
       is: 'followup-student-detail',
+      ready:function(){
+          var dt=new Date();
+          today=dt.getDate()+'/'+(dt.getMonth()+1)+'/'+dt.getFullYear();
+      },
       check:function(){
         this.close();
-        if(this.comments1==null||this.comments1==''){
+
+        if((this.comments1==null||this.comments1=='')&&(today==this.followupdate1)){
               this.$.yescall1.disabled=false;
                this.$.nocall1.disabled=false;
         }
@@ -296,7 +302,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                this.$.yescall1.disabled=true;
                this.$.nocall1.disabled=true;
         }
-        if(this.comments2==null||this.comments2==''){
+        if((this.comments2==null||this.comments2=='')&&(today==this.followupdate2)){
                this.$.yescall2.disabled=false;
                this.$.nocall2.disabled=false;
         }
@@ -304,7 +310,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               this.$.yescall2.disabled=true;
                this.$.nocall2.disabled=true;
         }
-        if(this.comments3==null||this.comments3==''){
+        if((this.comments3==null||this.comments3=='')&&(today==this.followupdate3)){
                this.$.yescall3.disabled=false;
                this.$.nocall3.disabled=false;
         }
@@ -312,7 +318,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               this.$.yescall3.disabled=true;
                this.$.nocall3.disabled=true;
         }
-        if(this.comments4==null||this.comments4==''){
+        if((this.comments4==null||this.comments4=='')&&(today==this.followupdate4)){
                this.$.yescall4.disabled=false;
                this.$.nocall4.disabled=false;
         }
@@ -320,7 +326,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
              this.$.yescall4.disabled=true;
                this.$.nocall4.disabled=true;
             }
-        if(this.comments5==null||this.comments5==''){
+        if((this.comments5==null||this.comments5=='')&&(today==this.followupdate5)){
                this.$.yescall5.disabled=false;
                this.$.nocall5.disabled=false;
         }
@@ -445,7 +451,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       callingfunc:function(no){
         this.enqno=no;
-        alert('come'+no);
+        //alert('come'+no);
       },
       dialogfollowup1:function(){
         this.date=new Date();
@@ -616,8 +622,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       submitstatus:function(){
         //alert(this.enqno);
         //alert(follupupstatus);
-        if(follupupstatus=='Schedule New Followup'){
-          this.$.service.changestatus(this.followupid,this.enqno);
+        if((follupupstatus=='Inprogress')&&((this.comments5!="")||(this.comments5!=null))){
+          this.$.service.changestatus(this.followupid,this.enqno,this.schedule);
         }
         else{
         this.$.service.SubmitStatus(this.enqno,follupupstatus);
@@ -822,23 +828,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         callpickstatus=(e.target.selectedItem.textContent).trim();
         //alert(callpickstatus);
         if(followupno==1){
-          alert(followupno+followcall1+this.followupdate1+this.enqno+this.followupid+this.schedule);
+          //alert(followupno+followcall1+this.followupdate1+this.enqno+this.followupid+this.schedule);
             this.$.service.updatecallstatus(followupno,callpickstatus,this.followupdate1,this.enqno,this.followupid,this.schedule);
         }
         else if(followupno==2){
-          alert(followupno+followcall2+this.followupdate2+this.enqno+this.followupid+this.schedule);
+          //alert(followupno+followcall2+this.followupdate2+this.enqno+this.followupid+this.schedule);
             this.$.service.updatecallstatus(followupno,callpickstatus,this.followupdate2,this.enqno,this.followupid,this.schedule);
         }
         else if(followupno==3){
-          alert(followupno+followcall3+this.followupdate3+this.enqno+this.followupid+this.schedule);
+          //alert(followupno+followcall3+this.followupdate3+this.enqno+this.followupid+this.schedule);
             this.$.service.updatecallstatus(followupno,callpickstatus,this.followupdate3,this.enqno,this.followupid,this.schedule);
         }
         else if(followupno==4){
-          alert(followupno+followcall4+this.followupdate4+this.enqno+this.followupid+this.schedule);
+          //alert(followupno+followcall4+this.followupdate4+this.enqno+this.followupid+this.schedule);
             this.$.service.updatecallstatus(followupno,callpickstatus,this.followupdate4,this.enqno,this.followupid,this.schedule);
         }
         else if(followupno==5){
-          alert(followupno+followcall5+this.followupdate5+this.enqno+this.followupid+this.schedule);
+          //alert(followupno+followcall5+this.followupdate5+this.enqno+this.followupid+this.schedule);
             this.$.service.updatecallstatus(followupno,callpickstatus,this.followupdate5,this.enqno,this.followupid,this.schedule);
         }
        
