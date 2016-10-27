@@ -62,9 +62,13 @@
         <div class="col-sm-6 enquiry-input">
           <label>Gender</label>
           <div class="gender">
-            <span class="col-sm-6"><paper-checkbox id="male"  class="checkbox" on-change="maleHandler">Boy</paper-checkbox></span>
-            <span class="col-sm-6"><paper-checkbox  id="female" class="checkbox" on-change="femaleHandler">Girl</paper-checkbox></span>
+            <span class="col-sm-4"><paper-checkbox id="male"  class="checkbox" on-change="maleHandler">Boy</paper-checkbox></span>
+            <span class="col-sm-4"><paper-checkbox  id="female" class="checkbox" on-change="femaleHandler">Girl</paper-checkbox></span>
           </div>
+        </div>
+        <div class="col-sm-6 enquiry-input">
+          <label>Right To Education</label>
+          <span><paper-checkbox id="rtestudent"  class="checkbox" on-change="rteHandler">Student From RTE</paper-checkbox></span>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
@@ -85,11 +89,11 @@
             <span class="col-sm-6"><paper-checkbox id="Gurdians"  class="checkbox" on-change="gardiansHandler"><h5>Gurdians</h5></paper-checkbox></span>
             <span class="col-sm-6"><paper-checkbox  id="parents" class="checkbox" on-change="parentsHandler"><h5>parents</h5></paper-checkbox></span>
 
-           </div>  
-        </div>    
-      </div> 
+           </div>
+        </div>
+      </div>
 
-     <div  class="list-group col-sm-12 panel-body form-category" id="fathersdetails">   
+     <div  class="list-group col-sm-12 panel-body form-category" id="fathersdetails">
         <div class="col-sm-6">
           <paper-input label="Father's Name" id="dadname" required error-message="needs father's name!" allowed-pattern="[a-zA-Z ]" value="{{fathername}}"></paper-input>
         </div>
@@ -105,8 +109,8 @@
          </div>
       </div>
     </div>
-      
-     <div class="list-group col-sm-12 panel-body form-category"  id="Guardiandetails">   
+
+     <div class="list-group col-sm-12 panel-body form-category"  id="Guardiandetails">
           <div class="col-sm-6">
           <paper-input label="Guardian's Name" id="Guardianname" required error-message="needs Guardian's Name!" allowed-pattern="[a-zA-Z ]" value="{{Guardianname}}"></paper-input>
           </div>
@@ -127,7 +131,7 @@
           </paper-listbox>
         </div>
            </div>
-     
+
       <div class="col-md-12 form-button">
         <paper-button class="btn btn-primary" on-click="submit">SUBMIT</paper-button>
       </div>
@@ -171,6 +175,7 @@
         var gender;
         var grade;
         var paga;
+        var rtestudent;
     Polymer({
       is: 'newenquiry-card',
 ready:function () {
@@ -356,7 +361,7 @@ ready:function () {
           }
           else if(diff==2){
             this.ageofyr=diff+" Years";
-           
+
           }
 
         else if(diff<=1||diff<3){
@@ -407,7 +412,7 @@ ready:function () {
           // alert('coming........');
         this.$.service.submitenqiry(this.enqno,academicyear,grade,this.firstname,this.middlename,this.lastname,gender,dobdate,this.fathername,this.mothername,this.mob,this.email,this.textvalue,this.todaydate,this.gemail,this.gmob,this.Guardianname,paga);
       }
-              
+
       }
         else if(paga=="parents")
           {
@@ -444,12 +449,8 @@ ready:function () {
         }
         else{
           // alert('coming........');
-        this.$.service.submitenqiry(this.enqno,academicyear,grade,this.firstname,this.middlename,this.lastname,gender,dobdate,this.fathername,this.mothername,this.mob,this.email,this.textvalue,this.todaydate,this.gemail,this.gmob,this.Guardianname,paga);
-      }
-          }
-
-       
-        
+        this.$.service.submitenqiry(this.enqno,academicyear,grade,this.firstname,this.middlename,this.lastname,gender,dobdate,this.fathername,this.mothername,this.mob,this.email,this.textvalue,this.todaydate,this.gemail,this.gmob,this.Guardianname,paga,rtestudent);
+      }}
       },
       verifymob:function(){
         //alert('1');
@@ -488,6 +489,9 @@ ready:function () {
       dateclear:function(){
         alert("Select DOB properly, it cannot be future date");
 
+      },
+      rteHandler:function(e){
+        rtestudent = "RTE Student"
       }
     });
   })();

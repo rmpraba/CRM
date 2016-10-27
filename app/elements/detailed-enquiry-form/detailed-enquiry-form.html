@@ -6,41 +6,31 @@
   <template>
     <div class="row enquiry-form">
       <div class="list-group col-sm-12 panel-body form-category">
-        <div class="input-group custom-search-form col-md-2 col-md-offset-5">
-          <button class="btn btn-default" on-click="newenquriy" type="button" id="newenquiry">New Enquriy</button>
-          <button class="btn btn-default" on-click="Fnclear" type="button" id="clear">Clear</button>
-          <paper-dropdown-menu label="Academic Year" id="academicyear">
-            <paper-listbox id="academics" class="dropdown-content" on-iron-select="Fnacademicyr">
-              <paper-item>AY-2015-2016</paper-item>
-              <paper-item>AY-2016-2017</paper-item>
-              <paper-item>AY-2017-2018</paper-item>
-              <paper-item>AY-2018-2019</paper-item>
-              <paper-item>AY-2019-2020</paper-item>
-              <paper-item>AY-2020-2021</paper-item>
-            </paper-listbox>
-          </paper-dropdown-menu>
-        </div>
-      </div>
-      <div class="list-group col-sm-12 panel-body form-category">
-          <div class="input-group custom-search-form col-sm-6 col-sm-offset-3">
-            <input type="text" class="form-control" id="searchtext" value="{{enqno}}" placeholder="Enter Enquiry Number">
-            <span class="input-group-btn">
-              <button class="btn btn-default" on-click="search" type="button">
-                <i class="fa fa-search"></i>
-              </button>
-            </span>
-          </div>
-      </div>
-      <div class="list-group col-sm-12 panel-body form-category">
-        <div class="input-group custom-search-form col-sm-4 col-sm-offset-4">
-          <paper-dropdown-menu label="Select Enquiry No" on-iron-select="FnSelectEnquiry">
-            <paper-menu class="dropdown-content" id="searchenquiry" class="dropdown-content">
+        <span class="col-sm-6">
+          <paper-input id="searchtext" label="Enter Enquiry Number/Name" value="{{enqno}}">
+            <paper-icon-button suffix icon="search" on-click="search" title="Search"></paper-icon-button>
+          </paper-input>
+        </span>
+        <span class="col-sm-5">
+          <paper-dropdown-menu id="searchenquiry" label="Select Enquiry No" on-iron-select="FnSelectEnquiry"  style="margin-top: 3%;">
+            <paper-menu class="dropdown-content"  class="dropdown-content">
               <template  is="dom-repeat" items="{{enquiryarr}}" as="item">
                 <paper-item>{{item.enquiry_no}}-{{item.enquiry_name}}</paper-item>
               </template>
             </paper-menu>
           </paper-dropdown-menu>
-        </div>
+        </span>
+        <span class="col-sm-1">
+          <paper-icon-button style="margin-top: 60%; background-color: #AEB6BF;" class="pull-left" icon="add" title="New Enquiry" on-click="newenquriy" id="newenquiry" ></paper-icon-button>
+        </span>
+        <span class="col-sm-6">
+          <paper-dropdown-menu label="Academic Year" id="academicyear" style="margin-top: 3%;">
+            <paper-listbox id="academics" class="dropdown-content" on-iron-select="Fnacademicyr">
+              <paper-item>AY-2016-2017</paper-item>
+              <paper-item>AY-2017-2018</paper-item>
+            </paper-listbox>
+          </paper-dropdown-menu>
+        </span>
       </div>
       <div class="form-group-heading">
         <h4>Student Details</h4>
@@ -57,14 +47,21 @@
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
-        <div class="col-sm-6 enquiry-input">
+        <div class="col-sm-3 enquiry-input">
           <label>Gender</label>
           <div class="gender">
             <span class="col-sm-6"><paper-checkbox id="dfmale" class="checkbox" on-change="maleHandler">Boy</paper-checkbox></span>
             <span class="col-sm-6"><paper-checkbox  id="dffemale" class="checkbox" on-change="femaleHandler">Girl</paper-checkbox></span>
           </div>
         </div>
-        <div class="col-sm-6 enquiry-input">
+        <div class="col-sm-3 enquiry-input">
+          <label>Right To Education</label>
+          <span><paper-checkbox id="rtestudent"  class="checkbox" on-change="rteHandler">Student From RTE</paper-checkbox></span>
+        </div>
+        <div class="col-sm-3 enquiry-input">
+          <paper-input id="rtereference" required error-message="needs last name!" label="RTE Reference Number"></paper-input>
+        </div>
+        <div class="col-sm-3 enquiry-input">
           <!--<paper-input id="grade" required error-message="needs grade seeking for!" label="Class Admission Seeking for" value="{{grade}}"></paper-input>-->
          <paper-dropdown-menu label="Select Grade" >
             <paper-menu id="class" class="dropdown-content" required on-iron-select="classseeking" attr-for-selected="value" selected="{{grades}}">
@@ -222,7 +219,7 @@
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category" style="margin: 10px 5px;" hidden$="{{guardianinfo}}">
-        <paper-checkbox  id="guardianinfo" class="checkbox" on-change="guardianinfoHandler">Need to Store Guardian Information ?</paper-checkbox>
+        <paper-checkbox  id="guardianinfo" class="checkbox" on-change="guardianinfoHandler">Need to Store Local Guardian Information ?</paper-checkbox>
       </div>
       <div class="form-group-heading" hidden$="{{hideguardian}}">
         <h4>Guardian Details</h4>
@@ -288,16 +285,24 @@
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
-        <div class="col-sm-3">
+        <div class="col-sm-4">
           <paper-input label="Village/Town" id="add3" required error-message="needs village/town!" value="{{address3}}"></paper-input>
         </div>
-        <div class="col-sm-3">
+        <div class="col-sm-4">
+          <paper-input id="location" required allowed-pattern="[a-zA-Z ]" error-message="needs location name!" label="Location" value="{{location}}"></paper-input>
+        </div>
+        <div class="col-sm-4">
           <paper-input id="city" required allowed-pattern="[a-zA-Z ]" error-message="needs city name!" label="City" value="{{city}}"></paper-input>
         </div>
-        <div class="col-sm-3">
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-4">
           <paper-input id="state" required allowed-pattern="[a-zA-Z ]" error-message="needs state name!" label="State" value="{{state}}"></paper-input>
         </div>
-        <div class="col-sm-3">
+        <div class="col-sm-4">
+          <paper-input id="country" required allowed-pattern="[a-zA-Z ]" error-message="needs country name!" label="Country" value="{{state}}"></paper-input>
+        </div>
+        <div class="col-sm-4">
           <paper-input id="pin" required error-message="needs pincode!" allowed-pattern="[0-9]" maxlength="6" label="Pincode" value="{{pincode}}"></paper-input>
         </div>
       </div>
@@ -575,7 +580,11 @@
         this.$.service.getenqirydetails(enqno);
       },
       guardianinfoHandler:function(){
-        this.hideguardian=false;
+        if(document.querySelector("#guardianinfo").checked==true){
+          this.hideguardian=false;
+        } else {
+          this.hideguardian=true;
+        }
       },
       Fnresult:function(dob,gender){
         var dt1=new Date(dob);
@@ -1070,18 +1079,52 @@ Fnlistbox:function(nameitem){
         document.getElementById('searchtext').value=enqno;
       },
       newenquriy:function(){
-        this.$.service.getenqno();
+
         this.$.searchenq.hidden=true;
         this.$.newenq.hidden=false;
+        this.$.searchenquiry.hidden=true;
         this.$.academicyear.hidden=false;
         this.$.newenquiry.hidden=true;
         this.guardianinfo=false;
+
 
       },
       Fnacademicyr:function(e){
         academicyear=(e.target.selectedItem.textContent).trim();
       },
       register:function() {
+        this.$.service.getenqno();
+      },
+      FnSelectEnquiry:function(e){
+        var enquiry=(e.target.selectedItem.textContent).trim();
+        var inx=enquiry.indexOf('-');
+        var enquiry_no=enquiry.substring(0,inx);
+        var enquiry_name=enquiry.substring(inx+1);
+        localStorage.setItem("curr_sess_enquiryno",enquiry_no);
+        localStorage.setItem("curr_sess_enquiryname",enquiry_name);
+        this.$.service.callFetchenquiryinfoService();
+      },
+      dateclear:function(){
+        alert("Select DOB properly, it cannot be future date");
+
+      },
+       getdate:function(dates){
+          var dt1=new Date(dates);
+          dobdate=dates;
+          var dt=new Date();
+          var pr_year=dt.getFullYear();
+          var bt_year=dt1.getFullYear();
+          var diff=parseInt(pr_year-bt_year);
+          //alert(diff);
+          this.ageofyr=diff+" Years";
+       },
+      Fngrade:function(grades){
+        this.grades = grades;
+      },
+      Fnshowguardian:function(){
+        this.hideguardian=false;
+      },
+      complete:function(){
         var enqnumber = document.getElementById('searchtext').value;
         var fathermobile = this.fathermob;
         var mobilemobile = this.mothermob;
@@ -1139,18 +1182,18 @@ Fnlistbox:function(nameitem){
             alert('Select the second language');
           }
           /*else if (thirdlanguage == null) {
-          alert('Select the third language');
-        }*/
+           alert('Select the third language');
+           }*/
           else if (propsold == null) {
             alert('Prospectus sold status is not marked');
-        }
+          }
           else if (dadoccup == null) {
             alert("Select Father's Occupation");
-        }
+          }
           /*
-        else if (guardianoccup == null) {
-          alert("Select Guardian's Occupation");
-        }*/
+           else if (guardianoccup == null) {
+           alert("Select Guardian's Occupation");
+           }*/
           else if (momtheroccup == null) {
             alert("Select Mother's Occupation");
           }
@@ -1165,35 +1208,6 @@ Fnlistbox:function(nameitem){
             this.$.service.registerenquiryform(enqnumber, this.firstname, this.middlename, this.lastname, fngender, grade, dobdate, this.oldclass, this.oldschool, mothertongue, this.fathername, this.mothername, this.fatheredu, this.motheredu, this.fathermob, this.mothermob, this.fathermail, this.mothermail, this.fathercompany, this.mothercompany, dadoccup, momtheroccup, this.flat, this.address1, this.address2, this.address3, this.city, this.pincode, this.state, enquiysource, this.siblingname, this.siblingdetails, transportreq, canteenreq, secondlanguage, thirdlanguage, propsold, this.fatherjob, this.motherjob, dadincome, momincome, this.prospectusno, academicyear, admissiontest, admissiontestdate, admissiontestenglish, admissiontestmaths, admissiontestevs, this.guardianname, this.guardianmobile, this.guardianemail, this.guardiancompany, this.guardianjob, guardianoccup, guardianincome);
           }
         }
-      },
-      FnSelectEnquiry:function(e){
-        var enquiry=(e.target.selectedItem.textContent).trim();
-        var inx=enquiry.indexOf('-');
-        var enquiry_no=enquiry.substring(0,inx);
-        var enquiry_name=enquiry.substring(inx+1);
-        localStorage.setItem("curr_sess_enquiryno",enquiry_no);
-        localStorage.setItem("curr_sess_enquiryname",enquiry_name);
-        this.$.service.callFetchenquiryinfoService();
-      },
-      dateclear:function(){
-        alert("Select DOB properly, it cannot be future date");
-
-      },
-       getdate:function(dates){
-          var dt1=new Date(dates);
-          dobdate=dates;
-          var dt=new Date();
-          var pr_year=dt.getFullYear();
-          var bt_year=dt1.getFullYear();
-          var diff=parseInt(pr_year-bt_year);
-          //alert(diff);
-          this.ageofyr=diff+" Years";
-       },
-      Fngrade:function(grades){
-        this.grades = grades;
-      },
-      Fnshowguardian:function(){
-        this.hideguardian=false;
       }
     });
   })();
