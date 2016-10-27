@@ -1,6 +1,7 @@
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 <link rel="import" href="..\..\bower_components/gold-email-input/gold-email-input.html">
 <link rel="import" href="../dateofbirth-datepicker/dateofbirth-datepicker.html">
+<link rel="import" href="..\..\bower_components/paper-dialog/paper-dialog.html">
 <dom-module id="newenquiry-card">
   <template>
   <style type="text/css">
@@ -14,27 +15,22 @@
         <h4>Enquiry Detail</h4>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
-        <div class="col-sm-6 enquiry-input">
-          <paper-input label="Enquiry Number" readonly value="{{enqno}}"></paper-input>
-        </div>
-        <div class="col-sm-6">
+
+        <div class="col-sm-3">
           <paper-input label="Date of Enquiry" readonly value="{{todaydate}}"></paper-input>
         </div>
+         <div class="col-sm-3">
+         <paper-checkbox id="nextyear" class="checkbox" on-change="nextyearfhandler"> Next Full Year</paper-checkbox>
+         </div>
+         <div class="col-sm-3">
+         <paper-checkbox id="midyear" class="checkbox" on-change="midyearfhandler"> Mid Year</paper-checkbox>
+         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
-        <div class="col-sm-6 enquiry-input">
-          <paper-dropdown-menu label="Academic Year">
-            <paper-listbox id="academics" class="dropdown-content" on-iron-select="Fnacademicyr">
-              <paper-item>AY-2015-2016</paper-item>
-              <paper-item>AY-2016-2017</paper-item>
-              <paper-item>AY-2017-2018</paper-item>
-              <paper-item>AY-2018-2019</paper-item>
-              <paper-item>AY-2019-2020</paper-item>
-              <paper-item>AY-2020-2021</paper-item>
-            </paper-listbox>
-          </paper-dropdown-menu>
+        <div class="col-sm-3 enquiry-input">
+         <paper-input label="Academics Year" id="acyr" required error-message="needs academics year!" allowed-pattern="[a-zA-Z ]" value="{{academicyear}}"></paper-input>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-3">
           <paper-dropdown-menu label="Grade" >
             <paper-menu id="class" class="dropdown-content" required on-iron-select="classes" valueattr="value" >
               <template  is="dom-repeat" items="{{itemarr}}" as="view">
@@ -42,6 +38,9 @@
               </template>
             </paper-menu>
           </paper-dropdown-menu>
+        </div>
+        <div class="col-sm-3 enquiry-input">
+          <paper-input label="Enquiry Number" hidden value="{{enqno}}"></paper-input>
         </div>
       </div>
       <div class="form-group-heading">
@@ -156,11 +155,24 @@
   <div  class="horizontalframe">
     <div class="buttons hrspace" >
       <paper-button style="height:33px !important;"  on-click="closedialog">OK</paper-button>
+      </div>
+      </div>
+   </paper-dialog>
+
+      <paper-toast class="toast-success toast-popup" style="background-color: #0b8043;" id="enquiry_success" text="">Enquiry Added</paper-toast>
+
+
+    <paper-dialog id="successbox">
+        <p><h2>Enquiry is Registered Successfully!</h1></p>
+        <p><h4>Your Enquiry id is - </h4><h1>{{enquiryno}}</h1></p>
+  <div  class="horizontalframe">
+    <div class="buttons hrspace" >
+      <paper-button style="height:33px !important;"  on-click="closediaz">OK</paper-button>
+      </div>
+      </div>
    </paper-dialog>
 
 
-      <paper-toast class="toast-success toast-popup" style="background-color: #0b8043;" id="enquiry_success" text="">Enquiry Added</paper-toast>
-    </div>
     <crm-service id="service"></crm-service>
   </template>
   <script>
@@ -171,22 +183,24 @@
         var dobdate;
         var namearr=[];
         var habitatid;
-        var academicyear;
+        //var academicyear;
         var gender;
         var grade;
         var paga;
         var rtestudent;
+        var enrolltype;
+        var yr1;
+        var yr2;
     Polymer({
       is: 'newenquiry-card',
 ready:function () {
-        this.$.service.getenquiryno();
         this.$.service.getclasses();
         this.$.service.getlocation();
         this.$.fathersdetails.hidden=true;
         this.$.Guardiandetails.hidden=true;
         var dt=new Date();
         this.todaydate=dt.getDate()+"/"+(dt.getMonth()+1)+"/"+dt.getFullYear();
-
+          this.$.itemlist.hidden=true;
       },Fnclear:function(){
           this.ready();
           //this.$.academics.selected=-1;
@@ -218,16 +232,17 @@ ready:function () {
          grade=null;
          paga=null;
          dobdate=null;
-
+         document.querySelector('#nextyear').checked=false;
+         document.querySelector('#midyear').checked=false;
          document.querySelector('dateofbirth-datepicker').FnClear();
       },
       classes:function(e){
           grade=(e.target.selectedItem.textContent).trim();
       },
 
-      Fnacademicyr:function(e){
+     /* Fnacademicyr:function(e){
         academicyear=(e.target.selectedItem.textContent).trim();
-      },
+      },*/
       maleHandler:function(){
         if(document.querySelector("#male").checked==true)
         {
@@ -277,6 +292,7 @@ ready:function () {
           namearr=nameitem;
         },
         FnInputChanged:function(e){
+          this.$.itemlist.hidden=false;
           if(e.keyCode==13|| e.keyCode==40)
             this.querySelector('paper-listbox').focus();
           var arr=[];
@@ -347,6 +363,7 @@ ready:function () {
           this.textvalue = e.target.selectedItem.textContent.trim();
           this.itemArray=[];
           document.querySelector('#itemlist').selected=-1;
+          this.$.itemlist.hidden=true;
         },
         showdate:function(){
           document.querySelector('dob-datepicker-card').FnShowDialog();
@@ -380,8 +397,71 @@ ready:function () {
         },
         submit:function () {
       // alert('submit!');
-      if(paga=="Gurdians"){
-        if(this.firstname==""||this.lastname==""||this.textvalue==""||this.Guardianname==""||this.gemail==""||this.gmob==""){
+
+        this.$.service.getenquiryno();
+
+
+      },
+      verifymob:function(){
+        //alert('1');
+        if(this.mob.length==10){
+        this.$.service.checkmobileno(this.mob);
+        }
+        else{
+            alert('Mobile Number should be in 10 digits');
+            //this.mob='';
+             this.$.mobile.validate();
+        }
+      },
+       gverifymob:function(){
+        //alert('1');
+        if(this.gmob.length==10){
+            this.$.service.checkmobileno(this.gmob);
+        }
+        else{
+            alert('Mobile Number should be in 10 digits');
+            //this.gmob='';
+             this.$.gmobile.validate();
+        }
+      },
+
+      showdialog:function(enqno,fname,mname,lname){
+          this.studentname=fname+' '+mname+' '+lname;
+          this.enquiryno=enqno;
+          var id = 'confirmbox';
+        var dialog = document.getElementById(id);
+        dialog.open();
+      },
+      Confirm:function(){
+         var id = 'confirmbox';
+        var dialog = document.getElementById(id);
+        dialog.close();
+      },
+      cancel:function(){
+        var id = 'confirmbox';
+        var dialog = document.getElementById(id);
+        dialog.close();
+          var id = 'cancelbox';
+        var dialog = document.getElementById(id);
+        dialog.open();
+      },
+      closedialog:function(){
+          var id = 'cancelbox';
+        var dialog = document.getElementById(id);
+        dialog.close();
+      },
+      closediaz:function(){
+          var id = 'successbox';
+        var dialog = document.getElementById(id);
+        dialog.close();
+      },
+      dateclear:function(){
+        alert("Select DOB properly, it cannot be future date");
+
+      },
+      complete:function(){
+         if(paga=="Gurdians"){
+        if(this.firstname==""||this.lastname==""||this.textvalue==""||this.Guardianname==""||this.gemail==""||this.gmob==""||this.academicyear==''){
            // alert('1');
            this.$.fname.validate();
             // this.$.mname.validate();
@@ -390,6 +470,7 @@ ready:function () {
            this.$.Guardianname.validate();
             this.$.gmobile.validate();
             this.$.gemail.validate();
+            this.$.acyr.validate();
       }
        else if(grade==null){
           // alert('4');
@@ -403,23 +484,23 @@ ready:function () {
           // alert('6');
           alert('Select date of birth properly')
         }
-        else if(academicyear==null){
-          // alert('7');
-          alert('Select the respective academic year');
-        }
+
         else if(this.textvalue==null||this.textvalue==""){
           // alert('7');
           alert('Select the Location');
         }
+        else if(enrolltype==null){
+           alert('Select the Academics Year Type');
+        }
         else{
           // alert('coming........');
-        this.$.service.submitenqiry(this.enqno,academicyear,grade,this.firstname,this.middlename,this.lastname,gender,dobdate,this.fathername,this.mothername,this.mob,this.email,this.textvalue,this.todaydate,this.gemail,this.gmob,this.Guardianname,paga);
+        this.$.service.submitenqiry(this.enqno,this.academicyear,grade,this.firstname,this.middlename,this.lastname,gender,dobdate,this.fathername,this.mothername,this.mob,this.email,this.textvalue,this.todaydate,this.gemail,this.gmob,this.Guardianname,paga,enrolltype);
       }
 
       }
         else if(paga=="parents")
           {
-            if(this.firstname==""||this.lastname==""||this.textvalue==""||this.fathername==""||this.mothername==""||this.mob==""||this.email==""){
+            if(this.firstname==""||this.lastname==""||this.textvalue==""||this.fathername==""||this.mothername==""||this.mob==""||this.email==""||this.academicyear==""){
             // alert('2');
           this.$.fname.validate();
             // this.$.mname.validate();
@@ -429,6 +510,7 @@ ready:function () {
             this.$.momname.validate();
             this.$.mobile.validate();
             this.$.email.validate();
+            this.$.acyr.validate();
           }
            else if(grade==null){
           // alert('4');
@@ -442,13 +524,13 @@ ready:function () {
           // alert('6');
           alert('Select date of birth properly')
         }
-        else if(academicyear==null){
-          // alert('7');
-          alert('Select the respective academic year');
-        }
+
         else if(this.textvalue==null||this.textvalue==""){
           // alert('7');
           alert('Select the Location');
+        }
+        else if(enrolltype==null){
+           alert('Select the Academic Year Type');
         }
         else{
           // alert('coming........');
@@ -484,31 +566,63 @@ ready:function () {
           var id = 'confirmbox';
         var dialog = document.getElementById(id);
         dialog.open();
+        this.$.service.submitenqiry(this.enqno,this.academicyear,grade,this.firstname,this.middlename,this.lastname,gender,dobdate,this.fathername,this.mothername,this.mob,this.email,this.textvalue,this.todaydate,this.gemail,this.gmob,this.Guardianname,paga,enrolltype);
+      }
+          }
+
       },
-      Confirm:function(){
-         var id = 'confirmbox';
-        var dialog = document.getElementById(id);
-        dialog.close();
-      },
-      cancel:function(){
-        var id = 'confirmbox';
-        var dialog = document.getElementById(id);
-        dialog.close();
-          var id = 'cancelbox';
+      showsuccess:function(){
+        //alert('hi');
+         var id = 'successbox';
         var dialog = document.getElementById(id);
         dialog.open();
       },
-      closedialog:function(){
-          var id = 'cancelbox';
-        var dialog = document.getElementById(id);
-        dialog.close();
+      nextyearfhandler:function(){
+          if(document.querySelector('#nextyear').checked==true){
+              document.querySelector('#midyear').checked=false;
+              enrolltype="fullyear";
+              var dt=new Date();
+              if((dt.getMonth()+1)>=7){
+               yr1=(dt1.getFullYear()+1)-2000;
+               yr2=(dt1.getFullYear()+2)-2000;
+              this.academicyear='AY - '+yr1+' - '+yr2;
+            }
+            else{
+              yr1=(dt1.getFullYear())-2000;
+               yr2=(dt1.getFullYear()+1)-2000;
+             this.academicyear='AY - '+yr1+' - '+yr2;
+            }
+          }
+          else{
+            enrolltype=null;
+          }
       },
       dateclear:function(){
         alert("Select DOB properly, it cannot be future date");
 
       },
-      rteHandler:function(e){
+      rteHandler:function(e) {
         rtestudent = "RTE Student"
+      },
+      midyearfhandler:function(){
+          if(document.querySelector('#midyear').checked==true){
+              document.querySelector('#nextyear').checked=false;
+              enrolltype="midyear";
+              var dt=new Date();
+              if((dt.getMonth()+1)>=7){
+               yr1=(dt1.getFullYear()+1)-2000;
+               yr2=(dt1.getFullYear()+2)-2000;
+              this.academicyear='AY - '+yr1+' - '+yr2;
+            }
+            else{
+              yr1=(dt1.getFullYear())-2000;
+               yr2=(dt1.getFullYear()+1)-2000;
+             this.academicyear='AY - '+yr1+' - '+yr2;
+            }
+          }
+          else{
+            enrolltype=null;
+          }
       }
     });
   })();

@@ -196,7 +196,7 @@ app.post('/submitenquiry',  urlencodedParser,function (req, res)
   "first_name":req.query.firstname,"middle_name":req.query.middlename,"last_name":req.query.lastname,
   "dob":req.query.dobs,"father_name":req.query.father,"locality":req.query.location,"mother_name":req.query.mother,
   "father_email":req.query.email,"created_by":req.query.createdby,"created_on":req.query.createdate,
-  "enquiry_name":req.query.givenname,"gemail":req.query.gemail,"gmob":req.query.gmob,"parent_or_guardian":req.query.paga,"Guardianname":req.query.Guardianname,"status":"Enquired","rte_student":req.query.rtestudent};
+  "enquiry_name":req.query.givenname,"gemail":req.query.gemail,"gmob":req.query.gmob,"parent_or_guardian":req.query.paga,"Guardianname":req.query.Guardianname,"status":"Enquired","rte_student":req.query.rtestudent,"year_type":req.query.adtype};
        connection.query('insert into student_enquiry_details set ? ',[collection],
         function(err, rows)
         {
@@ -619,7 +619,7 @@ app.post('/insertadmission',  urlencodedParser,function (req, res){
 
 app.post('/studentphysical_service',  urlencodedParser,function (req, res){
    var event = {
-    
+
      "admission_no":req.query.enquiryno,"applicationno":req.query.applicationno,"school_id":req.query.schoolid,"schoolname":req.query.schoolname,"academic_year":req.query.admissionyear,
      "first_name":req.query.firstname,"middle_name":req.query.middlename,"last_name":req.query.lastname,"student_name":req.query.studentname,"class_for_admission":req.query.gradeselection
      ,"created_by":req.query.createdby,"physic_detail":req.query.physicdetail,"physic_status":req.query.physicstatus,"mental_detail":req.query.mentaldetail
@@ -1381,9 +1381,9 @@ app.post('/getfollowupcount',  urlencodedParser,function (req, res){
         var qur = "SELECT f.enquiry_id,f.followup_flag,s.enquiry_name,f.followup_status,f.followup_id,f.current_confidence_level FROM followupdetail f join student_enquiry_details s on f.enquiry_id=s.enquiry_no WHERE f.followup_status='"+req.query.status+"' and s.class='"+req.query.grade+"' and s.school_id = '"+req.query.schol+"' ORDER BY (next_followup_date) DESC";
    }
    else{
-        var qur = "SELECT f.enquiry_id,f.followup_flag,s.enquiry_name,f.followup_status,f.followup_id,f.current_confidence_level FROM followupdetail f join student_enquiry_details s on f.enquiry_id=s.enquiry_no WHERE f.followup_status='"+req.query.status+"' and s.class='"+req.query.grade+"' and s.school_id = '"+req.query.schol+"' ORDER BY (next_followup_date)"; 
+        var qur = "SELECT f.enquiry_id,f.followup_flag,s.enquiry_name,f.followup_status,f.followup_id,f.current_confidence_level FROM followupdetail f join student_enquiry_details s on f.enquiry_id=s.enquiry_no WHERE f.followup_status='"+req.query.status+"' and s.class='"+req.query.grade+"' and s.school_id = '"+req.query.schol+"' ORDER BY (next_followup_date)";
    }
-   
+
    connection.query(qur,
      function(err, rows)
      {
