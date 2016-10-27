@@ -342,11 +342,11 @@
         <div class="col-sm-4 enquiry-input">
           <label>Admission Test</label>
           <div class="gender">
-            <span class="col-sm-6"><paper-checkbox id="admissiontestyes" class="checkbox" on-change="admissiontestyesHandler">Yes</paper-checkbox></span>
+            <span class="col-sm-6"><paper-checkbox id="admissiontestyes" class="checkbox" on-change="admissiontestyesHandler" checked>Yes</paper-checkbox></span>
             <span class="col-sm-6"><paper-checkbox  id="admissiontestno" class="checkbox" on-change="admissiontestnoHandler">No</paper-checkbox></span>
           </div>
         </div>
-        <div class="col-sm-4 enquiry-input">
+        <div id="admissiondetail" class="col-sm-4 enquiry-input">
           <label>Test Subjects</label>
           <div class="gender">
             <span class="col-sm-4"><paper-checkbox id="english" class="checkbox" on-change="englishHandler">English</paper-checkbox></span>
@@ -436,6 +436,7 @@
     Polymer({
       is: 'detailed-enquiry-form',
       ready:function(){
+
           this.hideguardian=true;
           this.guardianinfo=true;
           this.$.sibname.hidden=true;
@@ -456,6 +457,8 @@
           this.$.newenquiry.hidden=false;
           this.$.thirdlanguage.hidden=true;
           this.$.itemlist.hidden=true;
+         // document.querySelector("#admissiontestyes").checked=true;
+        admissiontest="Yes";
       },
       Fnclear:function(){
         this.ready();
@@ -646,9 +649,11 @@
       {
         document.querySelector("#admissiontestno").checked=false;
         admissiontest="Yes";
+        this.$.admissiondetail.hidden=false;
       }
       else{
         admissiontest=null;
+        this.$.admissiondetail.hidden=true;
       }
     } ,
       admissiontestnoHandler:function(){
@@ -656,6 +661,7 @@
         {
           document.querySelector("#admissiontestyes").checked=false;
           admissiontest="No";
+          this.$.admissiondetail.hidden=false;
         }
         else{
           admissiontest=null;

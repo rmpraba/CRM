@@ -16,27 +16,21 @@
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
        
-        <div class="col-sm-6">
+        <div class="col-sm-3">
           <paper-input label="Date of Enquiry" readonly value="{{todaydate}}"></paper-input>
         </div>
-         <div class="col-sm-6 enquiry-input">
-          <paper-input label="Enquiry Number" hidden value="{{enqno}}"></paper-input>
-        </div>
+         <div class="col-sm-3">
+         <paper-checkbox id="nextyear" class="checkbox" on-change="nextyearfhandler"> Next Full Year</paper-checkbox>
+         </div>
+         <div class="col-sm-3">
+         <paper-checkbox id="midyear" class="checkbox" on-change="midyearfhandler"> Mid Year</paper-checkbox>
+         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
-        <div class="col-sm-6 enquiry-input">
-          <paper-dropdown-menu label="Academic Year">
-            <paper-listbox id="academics" class="dropdown-content" on-iron-select="Fnacademicyr">
-              <paper-item>AY-2015-2016</paper-item>
-              <paper-item>AY-2016-2017</paper-item>
-              <paper-item>AY-2017-2018</paper-item>
-              <paper-item>AY-2018-2019</paper-item>
-              <paper-item>AY-2019-2020</paper-item>
-              <paper-item>AY-2020-2021</paper-item>
-            </paper-listbox>
-          </paper-dropdown-menu>
+        <div class="col-sm-3 enquiry-input">
+         <paper-input label="Academics Year" id="acyr" required error-message="needs academics year!" allowed-pattern="[a-zA-Z ]" value="{{academicyear}}"></paper-input>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-3">
           <paper-dropdown-menu label="Grade" >
             <paper-menu id="class" class="dropdown-content" required on-iron-select="classes" valueattr="value" >
               <template  is="dom-repeat" items="{{itemarr}}" as="view">
@@ -44,6 +38,9 @@
               </template>
             </paper-menu>
           </paper-dropdown-menu>
+        </div>
+        <div class="col-sm-3 enquiry-input">
+          <paper-input label="Enquiry Number" hidden value="{{enqno}}"></paper-input>
         </div>
       </div>
       <div class="form-group-heading">
@@ -182,10 +179,13 @@
         var dobdate;
         var namearr=[];
         var habitatid;
-        var academicyear;
+        //var academicyear;
         var gender;
         var grade;
         var paga;
+        var enrolltype;
+        var yr1;
+        var yr2;
     Polymer({
       is: 'newenquiry-card',
 ready:function () {
@@ -227,16 +227,17 @@ ready:function () {
          grade=null;
          paga=null;
          dobdate=null;
-         
+         document.querySelector('#nextyear').checked=false;
+         document.querySelector('#midyear').checked=false;
          document.querySelector('dateofbirth-datepicker').FnClear();
       },
       classes:function(e){
           grade=(e.target.selectedItem.textContent).trim();
       },
 
-      Fnacademicyr:function(e){
+     /* Fnacademicyr:function(e){
         academicyear=(e.target.selectedItem.textContent).trim();
-      },
+      },*/
       maleHandler:function(){
         if(document.querySelector("#male").checked==true)
         {
@@ -440,7 +441,7 @@ ready:function () {
       },
       complete:function(){
          if(paga=="Gurdians"){
-        if(this.firstname==""||this.lastname==""||this.textvalue==""||this.Guardianname==""||this.gemail==""||this.gmob==""){
+        if(this.firstname==""||this.lastname==""||this.textvalue==""||this.Guardianname==""||this.gemail==""||this.gmob==""||this.academicyear==''){
            // alert('1');
            this.$.fname.validate();
             // this.$.mname.validate();
@@ -449,6 +450,7 @@ ready:function () {
            this.$.Guardianname.validate();
             this.$.gmobile.validate();
             this.$.gemail.validate();
+            this.$.acyr.validate();
       }
        else if(grade==null){
           // alert('4');
@@ -462,23 +464,23 @@ ready:function () {
           // alert('6');
           alert('Select date of birth properly')
         }
-        else if(academicyear==null){
-          // alert('7');
-          alert('Select the respective academic year');
-        }
+       
         else if(this.textvalue==null||this.textvalue==""){
           // alert('7');
           alert('Select the Location');
         }
+        else if(enrolltype==null){
+           alert('Select the Academics Year Type'); 
+        }
         else{
           // alert('coming........');
-        this.$.service.submitenqiry(this.enqno,academicyear,grade,this.firstname,this.middlename,this.lastname,gender,dobdate,this.fathername,this.mothername,this.mob,this.email,this.textvalue,this.todaydate,this.gemail,this.gmob,this.Guardianname,paga);
+        this.$.service.submitenqiry(this.enqno,this.academicyear,grade,this.firstname,this.middlename,this.lastname,gender,dobdate,this.fathername,this.mothername,this.mob,this.email,this.textvalue,this.todaydate,this.gemail,this.gmob,this.Guardianname,paga,enrolltype);
       }
               
       }
         else if(paga=="parents")
           {
-            if(this.firstname==""||this.lastname==""||this.textvalue==""||this.fathername==""||this.mothername==""||this.mob==""||this.email==""){
+            if(this.firstname==""||this.lastname==""||this.textvalue==""||this.fathername==""||this.mothername==""||this.mob==""||this.email==""||this.academicyear==""){
             // alert('2');
           this.$.fname.validate();
             // this.$.mname.validate();
@@ -488,6 +490,7 @@ ready:function () {
             this.$.momname.validate();
             this.$.mobile.validate();
             this.$.email.validate();
+            this.$.acyr.validate();
           }
            else if(grade==null){
           // alert('4');
@@ -501,26 +504,66 @@ ready:function () {
           // alert('6');
           alert('Select date of birth properly')
         }
-        else if(academicyear==null){
-          // alert('7');
-          alert('Select the respective academic year');
-        }
+        
         else if(this.textvalue==null||this.textvalue==""){
           // alert('7');
           alert('Select the Location');
         }
+        else if(enrolltype==null){
+           alert('Select the Academic Year Type'); 
+        }
         else{
           // alert('coming........');
-        this.$.service.submitenqiry(this.enqno,academicyear,grade,this.firstname,this.middlename,this.lastname,gender,dobdate,this.fathername,this.mothername,this.mob,this.email,this.textvalue,this.todaydate,this.gemail,this.gmob,this.Guardianname,paga);
+        this.$.service.submitenqiry(this.enqno,this.academicyear,grade,this.firstname,this.middlename,this.lastname,gender,dobdate,this.fathername,this.mothername,this.mob,this.email,this.textvalue,this.todaydate,this.gemail,this.gmob,this.Guardianname,paga,enrolltype);
       }
           }
 
       },
       showsuccess:function(){
-        alert('hi');
+        //alert('hi');
          var id = 'successbox';
         var dialog = document.getElementById(id);
         dialog.open();
+      },
+      nextyearfhandler:function(){
+          if(document.querySelector('#nextyear').checked==true){
+              document.querySelector('#midyear').checked=false;
+              enrolltype="fullyear";
+              var dt=new Date();
+              if((dt.getMonth()+1)>=7){
+               yr1=(dt1.getFullYear()+1)-2000;
+               yr2=(dt1.getFullYear()+2)-2000;
+              this.academicyear='AY - '+yr1+' - '+yr2;
+            }
+            else{
+              yr1=(dt1.getFullYear())-2000;
+               yr2=(dt1.getFullYear()+1)-2000;
+             this.academicyear='AY - '+yr1+' - '+yr2;
+            }
+          }
+          else{
+            enrolltype=null;
+          }
+      },
+      midyearfhandler:function(){
+          if(document.querySelector('#midyear').checked==true){
+              document.querySelector('#nextyear').checked=false;
+              enrolltype="midyear";
+              var dt=new Date();
+              if((dt.getMonth()+1)>=7){
+               yr1=(dt1.getFullYear()+1)-2000;
+               yr2=(dt1.getFullYear()+2)-2000;
+              this.academicyear='AY - '+yr1+' - '+yr2;
+            }
+            else{
+              yr1=(dt1.getFullYear())-2000;
+               yr2=(dt1.getFullYear()+1)-2000;
+             this.academicyear='AY - '+yr1+' - '+yr2;
+            }
+          }
+          else{
+            enrolltype=null;
+          }
       }
     });
   })();
