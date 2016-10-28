@@ -394,7 +394,8 @@ ready:function () {
        else {
             this.ageofyr=diff+" Years";
 
-        },
+        }
+      },
         submit:function () {
       // alert('submit!');
 
@@ -567,8 +568,6 @@ ready:function () {
         var dialog = document.getElementById(id);
         dialog.open();
         this.$.service.submitenqiry(this.enqno,this.academicyear,grade,this.firstname,this.middlename,this.lastname,gender,dobdate,this.fathername,this.mothername,this.mob,this.email,this.textvalue,this.todaydate,this.gemail,this.gmob,this.Guardianname,paga,enrolltype);
-      }
-          }
 
       },
       showsuccess:function(){
@@ -602,23 +601,23 @@ ready:function () {
 
       },
       rteHandler:function(e) {
-        rtestudent = "RTE Student"
+        rtestudent = "RTE Student";
       },
       midyearfhandler:function(){
           if(document.querySelector('#midyear').checked==true){
               document.querySelector('#nextyear').checked=false;
               enrolltype="midyear";
               var dt=new Date();
-              if((dt.getMonth()+1)>=7){
-               yr1=(dt1.getFullYear()+1)-2000;
-               yr2=(dt1.getFullYear()+2)-2000;
-              this.academicyear='AY - '+yr1+' - '+yr2;
-            }
-            else{
-              yr1=(dt1.getFullYear())-2000;
-               yr2=(dt1.getFullYear()+1)-2000;
-             this.academicyear='AY - '+yr1+' - '+yr2;
-            }
+                      if((dt.getMonth()+1)>=7){
+                       yr1=(dt1.getFullYear()+1)-2000;
+                       yr2=(dt1.getFullYear()+2)-2000;
+                      this.academicyear='AY - '+yr1+' - '+yr2;
+                      }
+                      else{
+                        yr1=(dt1.getFullYear())-2000;
+                         yr2=(dt1.getFullYear()+1)-2000;
+                       this.academicyear='AY - '+yr1+' - '+yr2;
+                      }
           }
           else{
             enrolltype=null;
