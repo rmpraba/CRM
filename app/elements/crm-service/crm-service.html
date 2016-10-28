@@ -572,6 +572,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       debounce-duration="300"
     >
     </iron-ajax>
+
+    <!-- this ajax is used to verify the age criteria for the specific grade according cbse rule and regulation that hasw been stored in md_age table in the database -->
+    <iron-ajax
+      method="post"
+      id="verifyageajax"
+      url="{{verifyageurl}}"
+      params="{{verifyageparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="verifyageResponse"
+      debounce-duration="300"
+    >
+    </iron-ajax>
+
+
   </template>
   <script>
   (function() {
@@ -594,6 +609,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
    var namelistarr=[];
    var reschedule;
    var xenquiryidd;
+   var verifyage;
+   var verifygrade;
 
    var fwupcmnt1;
    var fwupcmnt2;
@@ -639,7 +656,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     fourthfollowupdate.setDate(fourthfollowupdate.getDate()+fourthfollowup);
     fifthfollowupdate.setDate(fifthfollowupdate.getDate()+fifthfollowup);
      },
-     submitenqiry:function(enqno,academicyear,grade,Fnfirstname,Fnmiddlename,Fnlastname,gender,dob,fathername,mothername,mob,email,textvalue,todate,gemail,gmob,Guardianname,paga,rtestudent,admtype){
+     submitenqiry:function(enqno,academicyear,grade,Fnfirstname,Fnmiddlename,Fnlastname,gender,dob,fathername,mothername,mob,email,textvalue,todate,gemail,gmob,Guardianname,paga,admtype,rtestudent){
 
       //alert(enqno+academicyr+classes+studentname+gender+dob+mob+source+locality+category);
       successbox=enqno;
@@ -674,6 +691,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.submitenquiryparam=obj;
         alert(JSON.stringify(obj));
         this.$.submitenquiryajax.generateRequest();
+
+
         this.updatefollowurl="http://localhost:8086/updatefollow";
         var obj={"schol":"","id":"","enquiryno":"","schedule":"","createdby":"","createdon":""}
         obj.schol=localStorage.getItem("schoolid");
@@ -1647,6 +1666,35 @@ var dat=new Date();
           if(res=='success'){
             alert('Kindly Reschedule the current follow up date');
             document.querySelector('followup-student-detail').exit();
+          }
+      },
+      verifyage:function(grade,age){
+        alert('sdf');
+            verifyage=age;
+
+             this.verifyageurl="http://localhost:8086/verifyage";
+        var obj={"grades":""};
+        obj.grades=grade;
+        this.verifyageparam=obj;
+        this.$.verifyageajax.generateRequest();
+
+      },
+      verifyageResponse:function(e){
+          var min=e.detail.response.returnval[0].min_age;
+          var max=e.detail.response.returnval[0].max_age;
+
+          if((min<verifyage)&&(max>verifyage)){
+
+          }
+          else if(min>verifyage){
+              alert("Your age is lesser than the minimum age criteria\nThe age should be between "+min+" and "+max+" for "+verifygrade);
+              document.querySelector('detailed-enquiry-form').ageofyr="";
+               document.querySelector('newenquiry-card').ageofyr="";
+          }
+          else if(max<verifyage){
+              alert("Your age is greater than the maximum age criteria\nThe age should be between "+min+" and "+max+" for "+verifygrade);
+              document.querySelector('detailed-enquiry-form').ageofyr="";
+               document.querySelector('newenquiry-card').ageofyr="";
           }
       }
 

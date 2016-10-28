@@ -28,7 +28,7 @@
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-3 enquiry-input">
-         <paper-input label="Academics Year" id="acyr" required error-message="needs academics year!" allowed-pattern="[a-zA-Z ]" value="{{academicyear}}"></paper-input>
+         <paper-input label="Academics Year" id="acyr" readonly required error-message="needs academics year!" allowed-pattern="[a-zA-Z ]" value="{{academicyear}}"></paper-input>
         </div>
         <div class="col-sm-3">
           <paper-dropdown-menu label="Grade" >
@@ -191,6 +191,7 @@
         var enrolltype;
         var yr1;
         var yr2;
+        var yearsxz;
     Polymer({
       is: 'newenquiry-card',
 ready:function () {
@@ -376,25 +377,8 @@ ready:function () {
           var bt_year=dt1.getFullYear();
           var diff=parseInt(pr_year-bt_year);
           //alert(diff);
-         if(diff==0){
-             alert("this is the current date")
-          }
-          else if(diff==2){
-            this.ageofyr=diff+" Years";
+         this.$.service.verifyage(grade,diff);
 
-          }
-
-        else if(diff<=1||diff<3){
-            alert("min age for LKG")
-          }
-        else if(diff==2){
-            this.ageofyr=diff+" Years";
-
-          }
-       else {
-            this.ageofyr=diff+" Years";
-
-        }
       },
         submit:function () {
       // alert('submit!');
@@ -495,7 +479,7 @@ ready:function () {
         }
         else{
           // alert('coming........');
-        this.$.service.submitenqiry(this.enqno,this.academicyear,grade,this.firstname,this.middlename,this.lastname,gender,dobdate,this.fathername,this.mothername,this.mob,this.email,this.textvalue,this.todaydate,this.gemail,this.gmob,this.Guardianname,paga,enrolltype);
+        this.$.service.submitenqiry(this.enqno,this.academicyear,grade,this.firstname,this.middlename,this.lastname,gender,dobdate,this.fathername,this.mothername,this.mob,this.email,this.textvalue,this.todaydate,this.gemail,this.gmob,this.Guardianname,paga,enrolltype,rtestudent);
       }
 
       }
@@ -535,7 +519,7 @@ ready:function () {
         }
         else{
           // alert('coming........');
-        this.$.service.submitenqiry(this.enqno,academicyear,grade,this.firstname,this.middlename,this.lastname,gender,dobdate,this.fathername,this.mothername,this.mob,this.email,this.textvalue,this.todaydate,this.gemail,this.gmob,this.Guardianname,paga,rtestudent);
+        this.$.service.submitenqiry(this.enqno,academicyear,grade,this.firstname,this.middlename,this.lastname,gender,dobdate,this.fathername,this.mothername,this.mob,this.email,this.textvalue,this.todaydate,this.gemail,this.gmob,this.Guardianname,paga,enrolltype,rtestudent);
       }}
       },
       verifymob:function(){
@@ -580,20 +564,17 @@ ready:function () {
           if(document.querySelector('#nextyear').checked==true){
               document.querySelector('#midyear').checked=false;
               enrolltype="fullyear";
+              //alert(enrolltype);
               var dt=new Date();
-              if((dt.getMonth()+1)>=7){
-               yr1=(dt1.getFullYear()+1)-2000;
-               yr2=(dt1.getFullYear()+2)-2000;
-              this.academicyear='AY - '+yr1+' - '+yr2;
-            }
-            else{
-              yr1=(dt1.getFullYear())-2000;
-               yr2=(dt1.getFullYear()+1)-2000;
-             this.academicyear='AY - '+yr1+' - '+yr2;
-            }
+              //alert(month);
+                     yr1=(dt.getFullYear()+1)-2000;
+                     yr2=(dt.getFullYear()+2)-2000;
+yearsxz='AY-'+(dt.getFullYear()+1)+'-'+(dt.getFullYear()+2);
+                    this.academicyear=yearsxz;
           }
           else{
             enrolltype=null;
+            this.academicyear="";
           }
       },
       dateclear:function(){
@@ -601,26 +582,29 @@ ready:function () {
 
       },
       rteHandler:function(e) {
+        if(document.querySelector('#rtestudent').checked==true){
         rtestudent = "RTE Student";
+      }
+      else{
+        rtestudent=null;
+      }
       },
       midyearfhandler:function(){
           if(document.querySelector('#midyear').checked==true){
               document.querySelector('#nextyear').checked=false;
               enrolltype="midyear";
+              //alert(enrolltype);
               var dt=new Date();
-                      if((dt.getMonth()+1)>=7){
-                       yr1=(dt1.getFullYear()+1)-2000;
-                       yr2=(dt1.getFullYear()+2)-2000;
-                      this.academicyear='AY - '+yr1+' - '+yr2;
-                      }
-                      else{
-                        yr1=(dt1.getFullYear())-2000;
-                         yr2=(dt1.getFullYear()+1)-2000;
-                       this.academicyear='AY - '+yr1+' - '+yr2;
-                      }
+              var month=dt.getMonth()+1;
+              //alert(month);
+                       yr1=(dt.getFullYear())-2000;
+                       yr2=(dt.getFullYear()+1)-2000;
+                      yearsxz='AY-'+dt.getFullYear()+'-'+(dt.getFullYear()+1);
+                      this.academicyear=yearsxz;
           }
           else{
             enrolltype=null;
+            this.academicyear="";
           }
       }
     });

@@ -1684,6 +1684,32 @@ app.post('/getconfidencecount',  urlencodedParser,function (req, res){
 
 
 
+app.post('/verifyage',  urlencodedParser,function (req, res){
+
+    //console.log('qur');
+    var classes={"grade":req.query.grades};
+    connection.query("SELECT * from md_age where ?",[classes],
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      //console.log(rows);
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 0});
+    }
+  }
+  else{
+     console.log(err);
+  }
+});
+});
+
 
 
 

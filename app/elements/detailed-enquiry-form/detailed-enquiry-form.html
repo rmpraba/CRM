@@ -887,6 +887,55 @@
         else{
             this.$.thirdlanguage.hidden=false;
         }
+
+        switch(grade){
+            case "Nursery":
+                this.oldclass="Pre-Nursery";
+                break;
+            case "LKG":
+                this.oldclass="Nursery";
+                break;
+            case "UKG":
+                this.oldclass="LKG";
+                break;
+            case "Grade-1":
+                this.oldclass="UKG";
+                break;
+            case "Grade-2":
+                this.oldclass="Grade-1";
+                break;
+            case "Grade-3":
+                this.oldclass="Grade-2";
+                break;
+            case "Grade-4":
+                this.oldclass="Grade-3";
+                break;
+            case "Grade-5":
+                this.oldclass="Grade-4";
+                break;
+            case "Grade-6":
+                this.oldclass="Grade-5";
+                break;
+            case "Grade-7":
+                this.oldclass="Grade-6";
+                break;
+            case "Grade-8":
+                this.oldclass="Grade-7";
+                break;
+            case "Grade-9":
+                this.oldclass="Grade-8";
+                break;
+            case "Grade-10":
+                this.oldclass="Grade-9";
+                break;
+            case "Grade-11":
+                this.oldclass="Grade-10";
+                break;
+            case "Grade-12":
+                this.oldclass="Grade-11";
+                break;
+
+        }
       },
     submit:function(){
 
@@ -1144,6 +1193,7 @@ Fnlistbox:function(nameitem){
           var diff=parseInt(pr_year-bt_year);
           //alert(diff);
           this.ageofyr=diff+" Years";
+          this.$.service.verifyage(grade,diff);
        },
       Fngrade:function(grades){
         this.grades = grades;
@@ -1244,22 +1294,14 @@ Fnlistbox:function(nameitem){
         alert("Select DOB properly, it cannot be future date");
 
       },
-       getdate:function(dates){
-          var dt1=new Date(dates);
-          dobdate=dates;
-          var dt=new Date();
-          var pr_year=dt.getFullYear();
-          var bt_year=dt1.getFullYear();
-          var diff=parseInt(pr_year-bt_year);
-          //alert(diff);
-          this.ageofyr=diff+" Years";
-       },
+      
       Fngrade:function(grades){
         this.grades = grades;
       },
       Fnshowguardian:function(){
         this.hideguardian=false;
       }
+
     });
   })();
   </script>
