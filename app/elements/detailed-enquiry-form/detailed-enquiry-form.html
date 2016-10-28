@@ -159,8 +159,8 @@
           <paper-dropdown-menu label="Father's Occupation" >
             <paper-menu id="dadoccupation" class="dropdown-content" required on-iron-select="dadoccupation" valueattr="value" >
               <paper-item >Self Employed</paper-item>
-              <paper-item >Government Employee</paper-item>
-              <paper-item >Private Employee</paper-item>
+              <paper-item >Public Sector</paper-item>
+              <paper-item >Private Sector</paper-item>
               <paper-item >Home Maker</paper-item>
               <paper-item >Others</paper-item>
             </paper-menu>
@@ -170,8 +170,8 @@
           <paper-dropdown-menu label="Mother's Occupation" >
             <paper-menu id="motheroccupation" class="dropdown-content" required on-iron-select="motheroccupation" valueattr="value" >
               <paper-item >Self Employed</paper-item>
-              <paper-item >Government Employee</paper-item>
-              <paper-item >Private Employee</paper-item>
+              <paper-item >Public Sector</paper-item>
+              <paper-item >Private Sector</paper-item>
               <paper-item >Home Maker</paper-item>
               <paper-item >Others</paper-item>
             </paper-menu>
@@ -242,25 +242,24 @@
             <paper-dropdown-menu  label="Guardian's Occupation" >
               <paper-menu id="guardianoccupation" class="dropdown-content" required on-iron-select="guardianoccupation" valueattr="value" >
                 <paper-item >Self Employed</paper-item>
-                <paper-item >Government Employee</paper-item>
-                <paper-item >Private Employee</paper-item>
+                <paper-item >Public Sector</paper-item>
+                <paper-item >Private Sector</paper-item>
                 <paper-item >Home Maker</paper-item>
                 <paper-item >Others</paper-item>
               </paper-menu>
             </paper-dropdown-menu>
           </div>
-        <div class="col-sm-6">
+        <div class="col-sm-6" hidden$="{{guardianjobdetails}}">
           <paper-input id="guardianoff" required error-message="needs guardian's company name!" allowed-pattern="[a-zA-Z ]" label="Organization Name" value="{{guardiancompany}}"></paper-input>
-
         </div>
         </div>
-      <div class="list-group col-sm-12 panel-body form-category" hidden$="{{hideguardian}}">
+      <div class="list-group col-sm-12 panel-body form-category" hidden$="{{guardianjobdetails}}">
         <div class="col-sm-6">
           <paper-input id="guardianjob" required error-message="needs guardian's designation!" label="Designation" allowed-pattern="[a-zA-Z ]" value="{{guardianjob}}"></paper-input>
         </div>
         <div class="col-sm-6">
           <paper-dropdown-menu label="Guardian's Salary" >
-            <paper-menu id="guardiansalary" class="dropdown-content" required on-iron-select="guardiansalary" valueattr="value" >
+            <paper-menu id="guardiansalarys" class="dropdown-content" on-iron-select="guardiansalary" valueattr="value" >
               <paper-item >Nil</paper-item>
               <paper-item >< 1 Lakh</paper-item>
               <paper-item >1 Lakh to 2.5 Lakhs</paper-item>
@@ -289,7 +288,12 @@
           <paper-input label="Village/Town" id="add3" required error-message="needs village/town!" value="{{address3}}"></paper-input>
         </div>
         <div class="col-sm-4">
-          <paper-input id="location" required allowed-pattern="[a-zA-Z ]" error-message="needs location name!" label="Location" value="{{location}}"></paper-input>
+            <paper-input  id="locality" required error-message="needs locality!" label="Enter Location / Landmark" is="" value="{{textvalues}}" on-keydown="FnInputChanged1"></paper-input>
+            <paper-listbox class="dropdown-content" id="itemlists" on-iron-select="Fnselected1" valueattr="value">
+              <template is="dom-repeat" items="{{itemArray}}" as="item">
+                <paper-item value="{{item.itemid}}">{{item.itemdes}}</paper-item>
+              </template>
+            </paper-listbox>
         </div>
         <div class="col-sm-4">
           <paper-input id="city" required allowed-pattern="[a-zA-Z ]" error-message="needs city name!" label="City" value="{{city}}"></paper-input>
@@ -351,7 +355,7 @@
             <span class="col-sm-6"><paper-checkbox  id="admissiontestno" class="checkbox" on-change="admissiontestnoHandler">No</paper-checkbox></span>
           </div>
         </div>
-        <div id="admissiondetail" class="col-sm-4 enquiry-input">
+        <div class="col-sm-4 enquiry-input" hidden$="{{admissiondetail}}">
           <label>Test Subjects</label>
           <div class="gender">
             <span class="col-sm-4"><paper-checkbox id="english" class="checkbox" on-change="englishHandler">English</paper-checkbox></span>
@@ -359,32 +363,10 @@
             <span class="col-sm-4"><paper-checkbox  id="evs" class="checkbox" on-change="evsHandler">EVS</paper-checkbox></span>
           </div>
         </div>
-        <div class="col-sm-4 enquiry-input">
+        <div class="col-sm-4 enquiry-input" hidden$="{{admissiondetail}}">
           <div class="gender">
             <admission-datepicker></admission-datepicker>
           </div>
-        </div>
-      </div>
-      <div class="form-group-heading">
-        <h4>Facility Details</h4>
-      </div>
-      <div class="list-group col-sm-12 panel-body form-category">
-        <div class="col-sm-4">
-          Like to Avail Transport ?<span><paper-checkbox id="transportyes" class="checkbox" on-change="transportHandleryes">Yes</paper-checkbox></span>
-          <span><paper-checkbox id="transportno" class="checkbox" on-change="transportHandlerno">No</paper-checkbox></span>
-        </div>
-        <div class="col-sm-4">
-        Like to Avail Canteen Facility ?
-          <span><paper-checkbox id="canteenyes" class="checkbox" on-change="canteenHandleryes">Yes</paper-checkbox></span>
-          <span><paper-checkbox id="canteenno" class="checkbox" on-change="canteenHandlerno">No</paper-checkbox></span>
-        </div>
-        <div class="col-sm-4">
-        Prospectus sold or not ?
-          <span><paper-checkbox id="prosoldyes" class="checkbox" on-change="prosoldHandleryes">Yes</paper-checkbox></span>
-          <span><paper-checkbox id="prosoldno" class="checkbox" on-change="prosoldHandlerno">No</paper-checkbox></span>
-        </div>
-         <div class="col-sm-4">
-          <paper-input id="prospectno" label="Prospectus No" value="{{prospectusno}}"></paper-input>
         </div>
       </div>
       <div class="form-group-heading">
@@ -392,7 +374,7 @@
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
-            <span class="col-sm-12"><h5>2nd Language</h5></span>
+          <span class="col-sm-12"><h5>2nd Language</h5></span>
           <span><paper-checkbox class="col-sm-6" id="secondhindi" class="checkbox" on-change="secondhindiHandler">Hindi</paper-checkbox></span>
           <span><paper-checkbox class="col-sm-6" id="secondkannada" class="checkbox" on-change="secondkannadaHandler">Kannada</paper-checkbox></span>
         </div>
@@ -402,6 +384,33 @@
           <span><paper-checkbox class="col-sm-3" id="thirdsanskrit" class="checkbox" on-change="thirdsanskritHandler">Sanskrit</paper-checkbox></span>
           <span><paper-checkbox class="col-sm-3" id="thirdkannada" class="checkbox" on-change="thirdkannadaHandler">Kannada</paper-checkbox></span>
           <span><paper-checkbox class="col-sm-3" id="thirdhindi" class="checkbox" on-change="thirdhindiHandler">Hindi</paper-checkbox></span>
+        </div>
+      </div>
+      <div class="form-group-heading">
+        <h4>Facility Details</h4>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          Like to Avail Transport ?<span><paper-checkbox id="transportyes" class="checkbox" on-change="transportHandleryes">Yes</paper-checkbox></span>
+          <span><paper-checkbox id="transportno" class="checkbox" on-change="transportHandlerno">No</paper-checkbox></span>
+        </div>
+        <div class="col-sm-6">
+        Like to Avail Canteen Facility ?
+          <span><paper-checkbox id="canteenyes" class="checkbox" on-change="canteenHandleryes">Yes</paper-checkbox></span>
+          <span><paper-checkbox id="canteenno" class="checkbox" on-change="canteenHandlerno">No</paper-checkbox></span>
+        </div>
+      </div>
+      <div class="form-group-heading">
+        <h4>Prospectus</h4>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          Prospectus sold or not ?
+          <span><paper-checkbox id="prosoldyes" class="checkbox" on-change="prosoldHandleryes">Yes</paper-checkbox></span>
+          <span><paper-checkbox id="prosoldno" class="checkbox" on-change="prosoldHandlerno">No</paper-checkbox></span>
+        </div>
+        <div class="col-sm-6">
+          <paper-input id="prospectno" label="Prospectus / Admission Number" value="{{prospectusno}}"></paper-input>
         </div>
       </div>
       <div class="col-md-12 form-button">
@@ -431,6 +440,7 @@
         var momincome;
         var guardianincome;
         var namearr=[];
+        var namearrs=[];
         var academicyear;
         var dobdate;
         var admissiontestdate;
@@ -444,13 +454,13 @@
 
           this.hideguardian=true;
           this.guardianinfo=true;
+          this.$.service.getlocation();
           this.$.sibname.hidden=true;
           this.$.sibdetail.hidden=true;
           this.$.referrer.hidden=true;
           this.$.dadoff.hidden=true;
           this.$.guardianoff.hidden=true;
           this.$.guardianjob.hidden=true;
-          this.$.guardiansalary.hidden=true;
           this.$.dadjob.hidden=true;
           this.$.dadsal.hidden=true;
           this.$.momoff.hidden=true;
@@ -462,6 +472,7 @@
           this.$.newenquiry.hidden=false;
           this.$.thirdlanguage.hidden=true;
           this.$.itemlist.hidden=true;
+          this.$.itemlists.hidden=true;
          // document.querySelector("#admissiontestyes").checked=true;
         admissiontest="Yes";
       },
@@ -585,9 +596,9 @@
       },
       guardianinfoHandler:function(){
         if(document.querySelector("#guardianinfo").checked==true){
-          this.hideguardian=false;
+          this.guardianjobdetails=false;
         } else {
-          this.hideguardian=true;
+          this.guardianjobdetails=true;
         }
       },
       Fnresult:function(dob,gender){
@@ -658,11 +669,11 @@
       {
         document.querySelector("#admissiontestno").checked=false;
         admissiontest="Yes";
-        this.$.admissiondetail.hidden=false;
+        this.admissiondetail=false;
       }
       else{
         admissiontest=null;
-        this.$.admissiondetail.hidden=true;
+        this.admissiondetail=true;
       }
     } ,
       admissiontestnoHandler:function(){
@@ -670,7 +681,7 @@
         {
           document.querySelector("#admissiontestyes").checked=false;
           admissiontest="No";
-          this.$.admissiondetail.hidden=false;
+          this.admissiondetail=true;
         }
         else{
           admissiontest=null;
@@ -961,6 +972,7 @@
           this.$.city.validate();
           this.$.pin.validate();
           this.$.state.validate();
+          this.$.locality.validate();
         }
         else if(admissiontestenglish == null && admissiontestmaths == null && admissiontestevs == null){
           alert('Select at least any one subject ');
@@ -1027,7 +1039,7 @@
 },
 dadoccupation:function(e){
   dadoccup=(e.target.selectedItem.textContent).trim();
-if(dadoccup=="Self Employed"||dadoccup=="Government Employee"||dadoccup=="Private Employee"){
+if(dadoccup=="Self Employed"||dadoccup=="Public Sector"||dadoccup=="Private Sector"){
       this.$.dadoff.hidden=false;
       this.$.dadjob.hidden=false;
       this.$.dadsal.hidden=false;
@@ -1041,21 +1053,21 @@ if(dadoccup=="Self Employed"||dadoccup=="Government Employee"||dadoccup=="Privat
 },
   guardianoccupation:function(e){
         guardianoccup=(e.target.selectedItem.textContent).trim();
-        if(guardianoccup=="Self Employed"||guardianoccup=="Government Employee"||guardianoccup=="Private Employee"){
+        if(guardianoccup=="Self Employed"||guardianoccup=="Public Sector"||guardianoccup=="Private Sector"){
           this.$.guardianoff.hidden=false;
           this.$.guardianjob.hidden=false;
-          this.$.guardiansalary.hidden=false;
+          this.guardiansalary=false;
         } else{
           this.$.guardianoff.hidden=true;
           this.$.guardianjob.hidden=true;
-          this.$.guardiansalary.hidden=true;
+          this.guardiansalary=true;
 
         }
       },
 motheroccupation:function(e){
 momtheroccup=(e.target.selectedItem.textContent).trim();
 //alert(momtheroccup);
-if(momtheroccup=="Self Employed"||momtheroccup=="Government Employee"||momtheroccup=="Private Employee"){
+if(momtheroccup=="Self Employed"||momtheroccup=="Public Sector"||momtheroccup=="Private Sector"){
       this.$.momoff.hidden=false;
       this.$.momjob.hidden=false;
       this.$.momsal.hidden=false;
@@ -1225,6 +1237,7 @@ Fnlistbox:function(nameitem){
             this.$.city.validate();
             this.$.pin.validate();
             this.$.state.validate();
+            this.$.locality.validate();
           }
           else if (admissiontestenglish == null && admissiontestmaths == null && admissiontestevs == null) {
             alert('Select at least any one subject ');
@@ -1279,19 +1292,74 @@ Fnlistbox:function(nameitem){
             //alert(enqno+this.firstname+this.middlename+this.lastname+fngender+this.grade+this.dob+this.oldclass+this.oldschool+mothertongue+this.fathername+this.mothername+this.fatheredu+this.motheredu+this.fathermob+this.mothermob+this.fathermail+this.mothermail+this.fathercompany+this.mothercompany+dadoccup+momtheroccup+this.flat+this.address1+this.address2+this.address3+this.city+this.pincode+this.state+enquiysource+this.siblingname+this.siblingdetails+transportreq+canteenreq+secondlanguage+thirdlanguage+propsold+this.fatherjob+this.motherjob+dadincome+momincome);
             this.$.service.registerenquiryform(enqnumber, this.firstname, this.middlename, this.lastname, fngender, grade, dobdate, this.oldclass, this.oldschool, mothertongue, this.fathername, this.mothername, this.fatheredu, this.motheredu, this.fathermob, this.mothermob, this.fathermail, this.mothermail, this.fathercompany, this.mothercompany, dadoccup, momtheroccup, this.flat, this.address1, this.address2, this.address3, this.city, this.pincode, this.state, enquiysource, this.siblingname, this.siblingdetails, transportreq, canteenreq, secondlanguage, thirdlanguage, propsold, this.fatherjob, this.motherjob, dadincome, momincome, this.prospectusno, academicyear, admissiontest, admissiontestdate, admissiontestenglish, admissiontestmaths, admissiontestevs, this.guardianname, this.guardianmobile, this.guardianemail, this.guardiancompany, this.guardianjob, guardianoccup, guardianincome);
           }
-        
+
       },
-      FnSelectEnquiry:function(e){
-        var enquiry=(e.target.selectedItem.textContent).trim();
-        var inx=enquiry.indexOf('-');
-        var enquiry_no=enquiry.substring(0,inx);
-        var enquiry_name=enquiry.substring(inx+1);
-        localStorage.setItem("curr_sess_enquiryno",enquiry_no);
-        localStorage.setItem("curr_sess_enquiryname",enquiry_name);
-        this.$.service.callFetchenquiryinfoService();
-      },
-      dateclear:function(){
-        alert("Select DOB properly, it cannot be future date");
+      autocompletenames(nameitem){
+      namearrs=nameitem;
+    },
+      FnInputChanged1:function(e){
+        this.$.itemlists.hidden=false;
+        if(e.keyCode==13|| e.keyCode==40)
+          this.querySelector('paper-listbox').focus();
+        var arr=[];
+        arr.push({"itemdes":"-----Select-----"});
+        this.querySelector('paper-listbox').style.visibility='visible';
+        if(e.keyCode==8){
+          this.itemflag="true";
+          this.itemval="";
+          //alert('yes');
+          var len=(this.textvalues).length;
+          if(len<=1){
+            this.querySelector('paper-listbox').style.visibility='hidden';
+            this.itemArray="";
+            this.itemval="";
+          }
+          if(len>1){
+            this.querySelector('paper-listbox').style.visibility='visible';
+            var backsubval=(((this.textvalues).substring(0,(len-1))).trim()).toUpperCase();
+            for(var i=0;i<namearrs.length;i++)
+            {
+              var subval=((namearrs[i].habitat_name).trim()).substring(0,backsubval.length);
+              if((subval).toUpperCase()==(backsubval).toUpperCase())
+              {
+                var obj={"itemdes":"","itemid":""};
+                obj.itemdes=namearrs[i].habitat_name;
+                obj.itemid=namearrs[i].habitat_id;
+                arr.push(obj);
+              }
+            }
+            this.itemArray=arr;
+          }
+        }
+        if(e.keyCode!=8&& e.keyCode!=16&& e.keyCode!=13 && e.keyCode!=38&&e.keyCode!=40&&e.keyCode!=37&&e.keyCode!=39){
+          if(this.itemflag=="true") {
+            this.itemval = (this.textvalues).toUpperCase()+String.fromCharCode((e.keyCode)).toUpperCase();
+            this.itemflag="false";
+          }
+          else
+            this.itemval = this.textvalues +String.fromCharCode((e.keyCode));
+          if(this.itemval.length>0)
+          {
+            for(var i=0;i<namearrs.length;i++){
+              var subval=((namearrs[i].habitat_name).trim()).substring(0,this.itemval.length);
+              if((subval).toUpperCase()==(this.itemval).toUpperCase()){
+                var obj={"itemdes":"","itemid":""};
+                obj.itemdes=namearrs[i].habitat_name;
+                obj.itemid=namearrs[i].habitat_id;
+                arr.push(obj);
+              }
+            }
+            if(arr.length>0)
+              this.itemArray=arr;
+            else {
+              var obj={"itemdes":"","itemid":""};
+              obj.itemdes=namearrs[i].habitat_name;
+              obj.itemid=namearrs[i].habitat_id;
+              arr.push(obj);
+              this.itemArray=arr;
+            }
+          }
+        }
 
       },
       
@@ -1300,8 +1368,16 @@ Fnlistbox:function(nameitem){
       },
       Fnshowguardian:function(){
         this.hideguardian=false;
+      },
+      Fnselected1:function(e)
+      {
+        //alert('s');
+        this.querySelector('paper-listbox').style.visibility='hidden';
+        this.textvalues = e.target.selectedItem.textContent.trim();
+        this.itemArray=[];
+        document.querySelector('#itemlists').selected=-1;
+        this.$.itemlists.hidden=true;
       }
-
     });
   })();
   </script>
