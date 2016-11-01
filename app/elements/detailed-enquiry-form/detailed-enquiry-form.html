@@ -24,13 +24,19 @@
         <span class="col-sm-1">
           <paper-icon-button style="margin-top: 60%; background-color: #AEB6BF;" class="pull-left" icon="add" title="New Enquiry" on-click="newenquriy" id="newenquiry" ></paper-icon-button>
         </span>
-        <span class="col-sm-6">
-          <paper-dropdown-menu label="Academic Year" id="academicyear" style="margin-top: 3%;">
-            <paper-listbox id="academics" class="dropdown-content" on-iron-select="Fnacademicyr">
-              <paper-item>AY-2016-2017</paper-item>
-              <paper-item>AY-2017-2018</paper-item>
-            </paper-listbox>
-          </paper-dropdown-menu>
+        <span class="col-sm-4" hidden$="{{academicyearhide}}">
+          <paper-input label="Date of Enquiry" readonly value="{{todaydate}}"></paper-input>
+        </span>
+        <span class="col-sm-4" hidden$="{{academicyearhide}}">
+          <span class="col-sm-6">
+            <paper-checkbox id="nextyear1" class="checkbox" on-change="nextyearfhandler"> Next Full Year</paper-checkbox>
+          </span>
+          <span class="col-sm-6" hidden$="{{academicyearhide}}">
+            <paper-checkbox id="midyear1" class="checkbox" on-change="midyearfhandler"> Mid Year</paper-checkbox>
+          </span>
+        </span>
+        <span class="col-sm-4" hidden$="{{academicyearhide}}">
+         <paper-input label="Academics Year" id="acyr" readonly required error-message="needs academics year!" allowed-pattern="[a-zA-Z ]" value="{{academicyear}}"></paper-input>
         </span>
       </div>
       <div class="form-group-heading">
@@ -457,13 +463,16 @@
         var guardianincome;
         var namearr=[];
         var namearrs=[];
-        var academicyear;
         var dobdate;
         var admissiontestdate;
         var admissiontest;
         var admissiontestenglish;
         var admissiontestmaths;
         var admissiontestevs;
+        var enrolltype;
+        var yr1;
+        var yr2;
+        var yearsxz;
     Polymer({
       is: 'detailed-enquiry-form',
       ready:function(){
@@ -471,6 +480,7 @@
           this.hideguardian=true;
           this.guardiansalaryinfo=true;
           this.guardianinfo=true;
+          this.academicyearhide=true;
           this.$.service.getlocation();
           this.$.sibname.hidden=true;
           this.$.sibdetail.hidden=true;
@@ -483,11 +493,12 @@
           this.$.momsal.hidden=true;
           this.$.prospectno.hidden=true;
           this.$.newenq.hidden=true;
-          this.$.academicyear.hidden=true;
           this.$.newenquiry.hidden=false;
           this.$.thirdlanguage.hidden=true;
           this.$.itemlist.hidden=true;
           this.$.itemlists.hidden=true;
+          var dt=new Date();
+          this.todaydate=dt.getDate()+"/"+(dt.getMonth()+1)+"/"+dt.getFullYear();
           this.hidedadothers=true;
           this.hidemotherothers=true;
           this.hideguardianothers=true;
@@ -497,6 +508,8 @@
       Fnclear:function(){
         this.ready();
           document.getElementById('searchtext').value="";
+          document.querySelector('#nextyear').checked=false;
+          document.querySelector('#midyear').checked=false;
           this.$.dfmale.checked=false;
           this.$.dffemale.checked=false;
           this.$.searchenquiry.selected=-1;
@@ -1203,15 +1216,13 @@ Fnlistbox:function(nameitem){
 
         this.$.searchenq.hidden=true;
         this.$.newenq.hidden=false;
+        this.$.searchtext.hidden=true;
         this.$.searchenquiry.hidden=true;
-        this.$.academicyear.hidden=false;
         this.$.newenquiry.hidden=true;
         this.guardianinfo=false;
+        this.academicyearhide=false;
 
 
-      },
-      Fnacademicyr:function(e){
-        academicyear=(e.target.selectedItem.textContent).trim();
       },
       register:function() {
         this.$.service.getenqno();
@@ -1305,6 +1316,9 @@ Fnlistbox:function(nameitem){
           else if (dadoccup == null) {
             alert("Select Father's Occupation");
           }
+          else if(enrolltype==null){
+            alert('Select the Academics Year Type');
+          }
           /*
            else if (guardianoccup == null) {
            alert("Select Guardian's Occupation");
@@ -1314,13 +1328,13 @@ Fnlistbox:function(nameitem){
           }
           else if (thirdlanguage == null) {
             if (grade == "Pre KG" || "LKG" || "UKG" || "Grade 1" || "Grade 2" || "Grade 3") {
-              this.$.service.registerenquiryform(enqnumber, this.firstname, this.middlename, this.lastname, fngender, grade, dobdate, this.oldclass, this.oldschool, mothertongue, this.fathername, this.mothername, this.fatheredu, this.motheredu, this.fathermob, this.mothermob, this.fathermail, this.mothermail, this.fathercompany, this.mothercompany, dadoccup, momtheroccup, this.flat, this.address1, this.address2, this.address3, this.city, this.pincode, this.state, enquiysource, this.siblingname, this.siblingdetails, transportreq, canteenreq, secondlanguage, thirdlanguage, propsold, this.fatherjob, this.motherjob, dadincome, momincome, this.prospectusno, admissiontest, admissiontestdate, admissiontestenglish, admissiontestmaths, admissiontestevs, this.guardianname, this.guardianmobile, this.guardianemail, this.guardiancompany, this.guardianjob, guardianoccup, guardianincome,this.textvalues,this.fatherotheroccupation,this.motherotheroccupation);
+              this.$.service.registerenquiryform(enqnumber, this.firstname, this.middlename, this.lastname, fngender, grade, dobdate, this.oldclass, this.oldschool, mothertongue, this.fathername, this.mothername, this.fatheredu, this.motheredu, this.fathermob, this.mothermob, this.fathermail, this.mothermail, this.fathercompany, this.mothercompany, dadoccup, momtheroccup, this.flat, this.address1, this.address2, this.address3, this.city, this.pincode, this.state, enquiysource, this.siblingname, this.siblingdetails, transportreq, canteenreq, secondlanguage, thirdlanguage, propsold, this.fatherjob, this.motherjob, dadincome, momincome, this.prospectusno, admissiontest, admissiontestdate, admissiontestenglish, admissiontestmaths, admissiontestevs, this.guardianname, this.guardianmobile, this.guardianemail, this.guardiancompany, this.guardianjob, guardianoccup, guardianincome,this.textvalues,this.fatherotheroccupation,this.motherotheroccupation,enrolltype);
             } else {
               alert('Select the third language');
             }
           } else {
             //alert(enqno+this.firstname+this.middlename+this.lastname+fngender+this.grade+this.dob+this.oldclass+this.oldschool+mothertongue+this.fathername+this.mothername+this.fatheredu+this.motheredu+this.fathermob+this.mothermob+this.fathermail+this.mothermail+this.fathercompany+this.mothercompany+dadoccup+momtheroccup+this.flat+this.address1+this.address2+this.address3+this.city+this.pincode+this.state+enquiysource+this.siblingname+this.siblingdetails+transportreq+canteenreq+secondlanguage+thirdlanguage+propsold+this.fatherjob+this.motherjob+dadincome+momincome);
-            this.$.service.registerenquiryform(enqnumber, this.firstname, this.middlename, this.lastname, fngender, grade, dobdate, this.oldclass, this.oldschool, mothertongue, this.fathername, this.mothername, this.fatheredu, this.motheredu, this.fathermob, this.mothermob, this.fathermail, this.mothermail, this.fathercompany, this.mothercompany, dadoccup, momtheroccup, this.flat, this.address1, this.address2, this.address3, this.city, this.pincode, this.state, enquiysource, this.siblingname, this.siblingdetails, transportreq, canteenreq, secondlanguage, thirdlanguage, propsold, this.fatherjob, this.motherjob, dadincome, momincome, this.prospectusno, academicyear, admissiontest, admissiontestdate, admissiontestenglish, admissiontestmaths, admissiontestevs, this.guardianname, this.guardianmobile, this.guardianemail, this.guardiancompany, this.guardianjob, guardianoccup, guardianincome,this.textvalues,this.fatherotheroccupation,this.motherotheroccupation);
+            this.$.service.registerenquiryform(enqnumber, this.firstname, this.middlename, this.lastname, fngender, grade, dobdate, this.oldclass, this.oldschool, mothertongue, this.fathername, this.mothername, this.fatheredu, this.motheredu, this.fathermob, this.mothermob, this.fathermail, this.mothermail, this.fathercompany, this.mothercompany, dadoccup, momtheroccup, this.flat, this.address1, this.address2, this.address3, this.city, this.pincode, this.state, enquiysource, this.siblingname, this.siblingdetails, transportreq, canteenreq, secondlanguage, thirdlanguage, propsold, this.fatherjob, this.motherjob, dadincome, momincome, this.prospectusno, this.academicyear, admissiontest, admissiontestdate, admissiontestenglish, admissiontestmaths, admissiontestevs, this.guardianname, this.guardianmobile, this.guardianemail, this.guardiancompany, this.guardianjob, guardianoccup, guardianincome,this.textvalues,this.fatherotheroccupation,this.motherotheroccupation,enrolltype);
           }
 
       },
@@ -1407,7 +1421,44 @@ Fnlistbox:function(nameitem){
         this.itemArray=[];
         document.querySelector('#itemlists').selected=-1;
         this.$.itemlists.hidden=true;
+      },
+    nextyearfhandler:function(){
+      if(document.querySelector('#nextyear1').checked==true){
+        document.querySelector('#midyear1').checked=false;
+        enrolltype="fullyear";
+        //alert(enrolltype);
+        var dt=new Date();
+        //alert(month);
+        yr1=(dt.getFullYear()+1)-2000;
+        yr2=(dt.getFullYear()+2)-2000;
+        yearsxz='AY-'+(dt.getFullYear()+1)+'-'+(dt.getFullYear()+2);
+        //alert(yearsxz);
+        this.academicyear=yearsxz;
       }
+      else{
+        enrolltype=null;
+        this.academicyear="";
+      }
+    },
+    midyearfhandler:function(){
+      if(document.querySelector('#midyear1').checked==true){
+        document.querySelector('#nextyear1').checked=false;
+        enrolltype="midyear";
+        //alert(enrolltype);
+        var dt=new Date();
+        var month=dt.getMonth()+1;
+        //alert(month);
+        yr1=(dt.getFullYear())-2000;
+        yr2=(dt.getFullYear()+1)-2000;
+        yearsxz='AY-'+dt.getFullYear()+'-'+(dt.getFullYear()+1);
+        //alert(yearsxz);
+        this.academicyear=yearsxz;
+      }
+      else{
+        enrolltype=null;
+        this.academicyear="";
+      }
+    }
     });
   })();
   </script>
