@@ -689,7 +689,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         obj.rtestudent=rtestudent;
         obj.adtype=admtype;
         this.submitenquiryparam=obj;
-        alert(JSON.stringify(obj));
+        //alert(JSON.stringify(obj));
         this.$.submitenquiryajax.generateRequest();
 
 
@@ -1638,7 +1638,7 @@ var dat=new Date();
             document.querySelector('detailed-enquiry-form').fathername=result[0].father_name;
             document.querySelector('detailed-enquiry-form').mothername=result[0].mother_name;
             document.querySelector('detailed-enquiry-form').fathermail=result[0].father_email;
-            document.querySelector('detailed-enquiry-form').Fngrade(result[0].class);
+            document.querySelector('detailed-enquiry-form').Fngrade(result[0].class,result[0].rte_student);
             document.querySelector('detailed-enquiry-form').Fnresult(result[0].dob,result[0].gender);
           } else {
             document.querySelector('detailed-enquiry-form').enqno=result[0].enquiry_no;
@@ -1649,7 +1649,7 @@ var dat=new Date();
             document.querySelector('detailed-enquiry-form').guardianname=result[0].Guardianname;
             document.querySelector('detailed-enquiry-form').guardianmobile=result[0].gmob;
             document.querySelector('detailed-enquiry-form').guardianemail=result[0].gemail;
-            document.querySelector('detailed-enquiry-form').Fngrade(result[0].class);
+            document.querySelector('detailed-enquiry-form').Fngrade(result[0].class,result[0].rte_student);
             document.querySelector('detailed-enquiry-form').Fnresult(result[0].dob,result[0].gender);
             document.querySelector('detailed-enquiry-form').Fnshowguardian();
           }
@@ -1678,7 +1678,7 @@ var dat=new Date();
           }
       },
       verifyage:function(grade,age){
-        alert('sdf');
+        //alert('sdf');
             verifyage=age;
 
              this.verifyageurl="http://localhost:8086/verifyage";
@@ -1692,7 +1692,7 @@ var dat=new Date();
           var min=e.detail.response.returnval[0].min_age;
           var max=e.detail.response.returnval[0].max_age;
 
-          if((min<verifyage)&&(max>verifyage)){
+          if((min<=verifyage)&&(max>=verifyage)){
 
           }
           else if(min>verifyage){

@@ -59,8 +59,8 @@
           <label>Right To Education</label>
           <span><paper-checkbox id="rtestudent"  class="checkbox" on-change="rteHandler">Student From RTE</paper-checkbox></span>
         </div>
-        <div class="col-sm-3 enquiry-input">
-          <paper-input id="rtereference" required error-message="needs last name!" label="RTE Reference Number"></paper-input>
+        <div class="col-sm-3 enquiry-input" >
+          <paper-input id="rtereference" error-message="needs last name!" label="RTE Reference Number" value="{{rteno}}"></paper-input>
         </div>
         <div class="col-sm-3 enquiry-input">
           <!--<paper-input id="grade" required error-message="needs grade seeking for!" label="Class Admission Seeking for" value="{{grade}}"></paper-input>-->
@@ -464,10 +464,11 @@
         var admissiontestenglish;
         var admissiontestmaths;
         var admissiontestevs;
+        //var rtevalue;
     Polymer({
       is: 'detailed-enquiry-form',
       ready:function(){
-
+         // this.$.rtereference.hidden=true;
           this.hideguardian=true;
           this.guardiansalaryinfo=true;
           this.guardianinfo=true;
@@ -1241,7 +1242,20 @@ Fnlistbox:function(nameitem){
           this.$.service.verifyage(grade,diff);
        },
       Fngrade:function(grades){
+        alert(rte);
         this.grades = grades;
+       /* if(rte!=null){
+          alert(rte);
+            document.querySelector('#rtestudent').checked=true;
+            rtevalue=rte;
+            this.$.rtereference.hidden=false;
+        }
+        else{
+          alert(' v  j');
+            document.querySelector('#rtestudent').checked=false;
+            rtevalue=null;
+            this.$.rtereference.hidden=true;
+        }*/
       },
       complete:function(){
         var enqnumber = document.getElementById('searchtext').value;
@@ -1393,9 +1407,6 @@ Fnlistbox:function(nameitem){
 
       },
 
-      Fngrade:function(grades){
-        this.grades = grades;
-      },
       Fnshowguardian:function(){
         this.hideguardian=false;
       },
@@ -1408,6 +1419,19 @@ Fnlistbox:function(nameitem){
         document.querySelector('#itemlists').selected=-1;
         this.$.itemlists.hidden=true;
       }
+      /*rteHandler:function(e){
+        
+        if(document.querySelector("#rtestudent").checked==true){
+          alert('hoh');
+          rtevalue="RTE Student";
+          this.$.rtereference.hidden=false;
+        }
+        else{
+                this.$.rtereference.hidden=true;
+                this.rteno="";
+                rtevalue=null;
+        }
+      }*/
     });
   })();
   </script>
