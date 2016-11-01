@@ -488,6 +488,7 @@
         var yr1;
         var yr2;
         var yearsxz;
+        var country_name;
     Polymer({
       is: 'detailed-enquiry-form',
       ready:function(){
@@ -528,7 +529,7 @@
       },
       FnSelectCountry:function(e){
         var country_codes = (e.target.selectedItem.value);
-        var country_name = (e.target.selectedItem.textContent).trim();
+        country_name = (e.target.selectedItem.textContent).trim();
         this.fathercountrycode = country_codes;
         this.mothercountrycode = country_codes;
         this.guardiancountrycode= country_codes;
@@ -1015,8 +1016,6 @@
         }
       },
     submit:function(){
-
-
         if(this.firstname == "" || this.lastname == ""|| this.mothertongue == "" || this.fathername == "" || this.mothername == "" || this.fatheredu == "" || this.fathermob == "" || this.fathermail == "" || this.address1 == ""|| this.city == "" || this.pincode == "" || this.flat == "" || this.state == ""){
           this.$.fname.validate();
           //this.$.mname.validate();
@@ -1040,11 +1039,10 @@
           this.$.state.validate();
           this.$.locality.validate();
         }
-        else if(admissiontestenglish == null && admissiontestmaths == null && admissiontestevs == null){
-          alert('Select at least any one subject ');
-        }
-        else if(admissiontest == null){
-          alert('Please select admission test required or not');
+        else if (admissiontest == "Yes") {
+          if(admissiontestenglish == null && admissiontestmaths == null && admissiontestevs == null){
+            alert('Select at least any one subject ');
+          }
         }
         else if(fngender==null){
           alert('Select the gender of the student');
@@ -1284,7 +1282,6 @@ Fnlistbox:function(nameitem){
       },
       complete:function(){
         var enqnumber = document.getElementById('searchtext').value;
-
           if (this.firstname == "" || this.lastname == "" || this.mothertongue == "" || this.fathername == "" || this.mothername == "" || this.fatheredu == "" || this.motheredu == "" || this.fathermob == "" || this.mothermob == "" || this.fathermail == "" || this.address1 == "" || this.city == "" || this.pincode == "" || this.flat == "" || this.state == "") {
             this.$.fname.validate();
             //this.$.mname.validate();
@@ -1308,8 +1305,10 @@ Fnlistbox:function(nameitem){
             this.$.state.validate();
             this.$.locality.validate();
           }
-          else if (admissiontestenglish == null && admissiontestmaths == null && admissiontestevs == null) {
-            alert('Select at least any one subject ');
+          else if (admissiontest == "Yes") {
+            if(admissiontestenglish == null && admissiontestmaths == null && admissiontestevs == null){
+              alert('Select at least any one subject ');
+            }
           }
           else if (admissiontest == null) {
             alert('Please select admission test required or not');
