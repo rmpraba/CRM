@@ -1709,6 +1709,28 @@ app.post('/verifyage',  urlencodedParser,function (req, res){
 });
 });
 
+ app.post('/country',  urlencodedParser,function (req, res){
+   connection.query("SELECT * from country_code",
+     function(err, rows)
+     {
+       if(!err)
+       {
+         if(rows.length>0)
+         {
+           //console.log(rows);
+           res.status(200).json({'returnval': rows});
+         }
+         else
+         {
+           console.log(err);
+           res.status(200).json({'returnval':null});
+         }
+       }
+       else{
+         console.log(err);
+       }
+     });
+ });
 
 
 

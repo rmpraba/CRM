@@ -607,31 +607,31 @@
         }
 
       },
-      FnProspect:function(e){  
-      // alert(e.target.text);      
-        localStorage.setItem("curr_sess_feetype",e.target.text);  
-        this.FnRefresh();       
+      FnProspect:function(e){
+      // alert(e.target.text);
+        localStorage.setItem("curr_sess_feetype",e.target.text);
+        this.FnRefresh();
       },
       FnRegister:function(e){
         localStorage.setItem("curr_sess_feetype",e.target.text);
         this.FnRefresh();
       },
       FnAnnual:function(e){
-        localStorage.setItem("curr_sess_feetype",e.target.text); 
-        this.FnRefresh();  
+        localStorage.setItem("curr_sess_feetype",e.target.text);
+        this.FnRefresh();
       },
       FnKit:function(e){
-        localStorage.setItem("curr_sess_feetype",e.target.text);  
-        this.FnRefresh(); 
+        localStorage.setItem("curr_sess_feetype",e.target.text);
+        this.FnRefresh();
       },
       FnMiscellaneous:function(e){
-        localStorage.setItem("curr_sess_feetype",e.target.text);  
-        this.FnRefresh(); 
+        localStorage.setItem("curr_sess_feetype",e.target.text);
+        this.FnRefresh();
       },
       followupdashboard:function(){
         this.$.service.getfollowupcount();
         document.querySelector('app-list').setPage("follow-up");
-      }, 
+      },
       FnRefresh:function(){
         document.querySelector('fees-card').ready();
         document.querySelector('fees-card').FnRefresh();
@@ -639,7 +639,9 @@
       },
       enquiry:function(){
         this.$.service.getfollowupcount();
+        document.querySelector('detailed-enquiry-form').country();
         document.querySelector('app-list').setPage("enquiry");
+
       }
     });
   })();

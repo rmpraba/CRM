@@ -585,7 +585,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       debounce-duration="300"
     >
     </iron-ajax>
-
+    <iron-ajax
+      method="post"
+      id="countryajax"
+      url="{{countryurl}}"
+      params="{{countryparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="countryResponse"
+      debounce-duration="300"
+    >
+    </iron-ajax>
 
   </template>
   <script>
@@ -1706,7 +1716,19 @@ var dat=new Date();
               document.querySelector('detailed-enquiry-form').ageofyr="";
                document.querySelector('newenquiry-card').ageofyr="";
           }
-      }
+      },
+      country:function(){
+        this.countryurl="http://localhost:8086/country";
+        var obj={"schol":""};
+        obj.schol=localStorage.getItem("schoolid");
+        this.countryparam=obj;
+        this.$.countryajax.generateRequest();
+      },
+      countryResponse:function(e){
+        var res=e.detail.response.returnval;
+        //document.querySelector('detailed-enquiry-form').countryarr=res;
+        document.querySelector('detailed-enquiry-form').country(res);
+      },
 
     });
   })();
