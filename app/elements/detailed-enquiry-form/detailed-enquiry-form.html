@@ -451,7 +451,6 @@
         </div>
       </div>
       <div class="col-md-12 form-button">
-        <paper-button on-click="check">Country-code</paper-button>
         <paper-button id="searchenq" class="btn btn-primary" on-click="submit">SUBMIT</paper-button>
         <paper-button id="newenq" class="btn btn-primary" on-click="register">REGISTER</paper-button>
       </div>
@@ -1487,10 +1486,6 @@ Fnlistbox:function(nameitem){
         enrolltype=null;
         this.academicyear="";
       }
-    },
-    check:function(){
-      alert(this.fathercountrycode+"-"+this.fathermob);
-      alert(this.mothercountrycode+"-"+this.mothermob);
     }
     });
   })();
