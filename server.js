@@ -476,7 +476,7 @@ app.post('/getenqirydetails',  urlencodedParser,function (req, res){
 app.post('/verifymobileno',  urlencodedParser,function (req, res)
 {
 
-       connection.query("SELECT * from student_enquiry_details where school_id='"+req.query.schol+"' and (father_mob='"+req.query.mobileno+"' or mother_mob='"+req.query.mobileno+"') ",
+       connection.query("SELECT * from student_enquiry_details where school_id='"+req.query.schol+"' and (father_mob='"+req.query.mobileno+"' or mother_mob='"+req.query.mobileno+"' or gmob='"+req.query.mobileno+"') ",
   function(err, rows)
         {
     if(!err)
@@ -1694,7 +1694,7 @@ app.post('/verifyage',  urlencodedParser,function (req, res){
     {
     if(rows.length>0)
     {
-      //console.log(rows);
+      console.log(rows);
       res.status(200).json({'returnval': rows});
     }
     else

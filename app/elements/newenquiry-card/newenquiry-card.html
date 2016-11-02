@@ -104,7 +104,7 @@
           <paper-input id="mobile" required error-message="enter proper mobile no!" label="Mobile Number" allowed-pattern="[0-9]" maxlength="10" value="{{mob}}" on-change="verifymob"></paper-input>
          </div>
          <div class="col-sm-6">
-          <gold-email-input id="email" required error-message="needs email ID!" label="Email" value="{{email}}"></gold-email-input>
+          <gold-email-input id="email" auto-validate required error-message="needs email ID!" label="Email" value="{{email}}"></gold-email-input>
          </div>
       </div>
     </div>
@@ -117,12 +117,12 @@
           <paper-input id="gmobile" required error-message="enter proper mobile no!" label="Mobile Number" allowed-pattern="[0-9]" maxlength="10" value="{{gmob}}" on-change="gverifymob"></paper-input>
           </div>
           <div class="col-sm-6">
-                <gold-email-input id="gemail" required error-message="needs email ID!" label="Email" value="{{gemail}}"></gold-email-input>
+                <gold-email-input id="gemail" auto-validate required error-message="needs email ID!" label="Email" value="{{gemail}}"></gold-email-input>
           </div>
      </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
-          <paper-input  id="locality" required error-message="needs locality!" label="Enter location.." is="" value="{{textvalue}}" on-keydown="FnInputChanged"></paper-input>
+          <paper-input  id="locality" required error-message="needs locality!" label="Enter location/Landmark" is="" value="{{textvalue}}" on-keydown="FnInputChanged"></paper-input>
           <paper-listbox class="dropdown-content" id="itemlist" on-iron-select="Fnselected" valueattr="value">
             <template is="dom-repeat" items="{{itemArray}}" as="item">
               <paper-item value="{{item.itemid}}">{{item.itemdes}}</paper-item>
@@ -230,11 +230,13 @@ ready:function () {
          habitatid=null;
          //academicyear=null;
          gender=null;
+         rtestudent=null;
          grade=null;
          paga=null;
          dobdate=null;
          document.querySelector('#nextyear').checked=false;
          document.querySelector('#midyear').checked=false;
+         document.querySelector('#rtestudent').checked=false;
          document.querySelector('dateofbirth-datepicker').FnClear();
       },
       classes:function(e){
@@ -268,6 +270,18 @@ ready:function () {
          this.$.fathersdetails.hidden=true;
          this.$.Guardiandetails.hidden=false;
          //alert(gender);
+         this.fathername="";
+         this.mothername="";
+         this.mob="";
+         this.email="";
+       }
+       else{
+         this.$.fathersdetails.hidden=false;
+         this.$.Guardiandetails.hidden=true;
+         paga=null;
+         this.Guardianname="";
+         this.gmob="";
+         this.gemail="";
        }
       },
       parentsHandler:function(){
@@ -277,7 +291,19 @@ ready:function () {
          paga="parents";
           this.$.Guardiandetails.hidden=true;
           this.$.fathersdetails.hidden=false;
+          this.Guardianname="";
+         this.gmob="";
+         this.gemail="";
          //alert(gender);
+       }
+       else{
+        this.$.fathersdetails.hidden=true;
+         this.$.Guardiandetails.hidden=false;
+         paga=null;
+         this.fathername="";
+         this.mothername="";
+         this.mob="";
+         this.email="";
        }
       },
      /* source:function(e){
@@ -377,6 +403,8 @@ ready:function () {
           var bt_year=dt1.getFullYear();
           var diff=parseInt(pr_year-bt_year);
           //alert(diff);
+
+          this.ageofyr=diff+" Years";
          this.$.service.verifyage(grade,diff);
 
       },
@@ -387,28 +415,7 @@ ready:function () {
 
 
       },
-      verifymob:function(){
-        //alert('1');
-        if(this.mob.length==10){
-        this.$.service.checkmobileno(this.mob);
-        }
-        else{
-            alert('Mobile Number should be in 10 digits');
-            //this.mob='';
-             this.$.mobile.validate();
-        }
-      },
-       gverifymob:function(){
-        //alert('1');
-        if(this.gmob.length==10){
-            this.$.service.checkmobileno(this.gmob);
-        }
-        else{
-            alert('Mobile Number should be in 10 digits');
-            //this.gmob='';
-             this.$.gmobile.validate();
-        }
-      },
+     
 
       showdialog:function(enqno,fname,mname,lname){
           this.studentname=fname+' '+mname+' '+lname;
@@ -550,7 +557,7 @@ ready:function () {
           var id = 'confirmbox';
         var dialog = document.getElementById(id);
         dialog.open();
-        this.$.service.submitenqiry(this.enqno,this.academicyear,grade,this.firstname,this.middlename,this.lastname,gender,dobdate,this.fathername,this.mothername,this.mob,this.email,this.textvalue,this.todaydate,this.gemail,this.gmob,this.Guardianname,paga,enrolltype);
+        
 
       },
       showsuccess:function(){
@@ -583,6 +590,7 @@ yearsxz='AY-'+(dt.getFullYear()+1)+'-'+(dt.getFullYear()+2);
       rteHandler:function(e) {
         if(document.querySelector('#rtestudent').checked==true){
         rtestudent = "RTE Student";
+
       }
       else{
         rtestudent=null;
