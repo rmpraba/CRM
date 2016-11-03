@@ -24,13 +24,11 @@
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6 enquiry-input">
           <paper-dropdown-menu label="Academic Year">
-            <paper-listbox id="academics" class="dropdown-content" on-iron-select="Fnacademicyr">
-              <paper-item>AY-2015-2016</paper-item>
+            <paper-listbox id="academics" class="dropdown-content" on-iron-select="Fnacademicyr">              
               <paper-item>AY-2016-2017</paper-item>
               <paper-item>AY-2017-2018</paper-item>
               <paper-item>AY-2018-2019</paper-item>
               <paper-item>AY-2019-2020</paper-item>
-              <paper-item>AY-2020-2021</paper-item>
             </paper-listbox>
           </paper-dropdown-menu>
         </div>
@@ -83,7 +81,7 @@
          <div class="col-sm-6 enquiry-input">
            <div class="gender">
             <span class="col-sm-6"><paper-checkbox id="Gurdians"  class="checkbox" on-change="gardiansHandler"><h5>Gurdians</h5></paper-checkbox></span>
-            <span class="col-sm-6"><paper-checkbox  id="parents" class="checkbox" on-change="parentsHandler"><h5>parents</h5></paper-checkbox></span>
+            <span class="col-sm-6"><paper-checkbox  id="parents" class="checkbox" on-change="parentsHandler"><h5>Parents</h5></paper-checkbox></span>
 
            </div>  
         </div>    
@@ -173,7 +171,7 @@
         var paga;
     Polymer({
       is: 'newenquiry-card',
-ready:function () {
+      ready:function () {
         this.$.service.getenquiryno();
         this.$.service.getclasses();
         this.$.service.getlocation();

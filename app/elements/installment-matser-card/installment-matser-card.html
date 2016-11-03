@@ -1,0 +1,147 @@
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="installment-master-card">
+<style>
+  .inshead{
+    @apply(--layout-horizontal);
+  }
+</style>
+  <template>
+     
+    <div class="row enquiry-form">
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6 enquiry-input">
+            <paper-input label="School Name" value="{{schoolname}}"></paper-input>
+        </div>
+        <div class="col-sm-6 enquiry-input">
+          <paper-dropdown-menu label="Grade" >
+            <paper-menu id="insgrade" class="dropdown-content" required on-iron-select="FnSelectGrade" valueattr="value" >
+              <template  is="dom-repeat" items="{{gradearr}}" as="item">
+              <paper-item>{{item.grade_name}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
+        </div>
+      </div>
+
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-4 enquiry-input">
+          <paper-dropdown-menu label="Admission Year" attr-for-selected="value">
+            <paper-menu id="insadmissionyear" class="dropdown-content" required on-iron-select="FnSelectAdmissionYear" valueattr="value" >
+              <template  is="dom-repeat" items="{{admissionarr}}" as="item">
+              <paper-item>{{item.admission_year}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
+        </div>
+
+        <div class="col-sm-4">
+          <paper-dropdown-menu label="Academic Year" attr-for-selected="value">
+            <paper-menu id="insacademicyear" class="dropdown-content" required on-iron-select="FnSelectAcademicYear" valueattr="value" >
+              <template  is="dom-repeat" items="{{academicarr}}" as="item">
+              <paper-item>{{item.academic_year}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
+        </div>
+ 
+        <div class="list-group col-sm-12 panel-body form-category">
+          <div class="inshead">  
+                    <div style="width: 15%;">Installment</div>                      
+                    <div style="width: 12%;margin-left:6%;">Fee Type</div>                      
+                    <div style="width: 10%;margin-left:4%;">Amount</div>                      
+                    <div style="width: 10%;margin-left:4%;">Discount</div>                      
+                    <div style="width: 12%;margin-left:5%;">Actual Amount</div>                      
+                    <div style="width: 15%;margin-left:5%;">Installment Date</div>                      
+                    <!-- <div style="width: 18%;margin-left: 4%;">Installment</div>
+                    <div style="width: 12%;margin-left:8%;">Fee Type</div>                    
+                    <div style="margin-left:10%; width: 30%;">Amount</div>
+                    <div style="width: 30%;margin-left:0%;position: absolute; left: 80%;">Discount</div>                 
+                    <div style="width: 30%;margin-left:0%;position: absolute; left: 80%;">Actual Amount</div>
+                    <div style="width: 30%;margin-left:0%;position: absolute; left: 80%;">Installment Date</div> -->
+          </div>
+          <template  is="dom-repeat" items="{{installmentmasterarr}}" as="item">
+          <installment-master-itemcard schoolid="{{item.schoolid}}" academicyear="{{item.academicyear}}" admissionyear="{{item.admissionyear}}" grade="{{item.grade}}" installmentcode="{{item.installmentcode}}" feecode="{{item.feecode}}" discountcode="{{item.discountcode}}" installment="{{item.installment}}" installmenttype="{{item.installmenttype}}" feetype="{{item.feetype}}" totalamount="{{item.totalamount}}" discount="{{item.discount}}" payableamount="{{item.payableamount}}"></installment-master-itemcard>
+          </template>
+        </div>
+
+      <div class="col-md-12 form-button">
+          <paper-button class="btn btn-primary" on-click="FnGenerate">Generate</paper-button>  
+          <paper-button class="btn btn-primary" on-click="FnSubmit">Submit</paper-button>          
+          <paper-button hidden$="{{hidefeecomponent}}" class="btn btn-primary" on-click="FnCancel">Cancel</paper-button>
+        </div>
+      </div>
+
+      <schedule-service id="schedulefee"></schedule-service>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+    var grade,admissionyear,academicyear;  
+    var insarr=[];  
+    var flag=0;
+    Polymer({
+      is: 'installment-master-card',
+      ready:function(){
+        this.schoolname=localStorage.getItem("schoolname");        
+      },
+      FnSelectGrade:function(e){
+        grade=(e.target.selectedItem.textContent).trim();
+      },
+      FnSelectAdmissionYear:function(e){
+        admissionyear=(e.target.selectedItem.textContent).trim();
+      },
+      FnSelectAcademicYear:function(e){
+        academicyear=(e.target.selectedItem.textContent).trim();
+      },
+      FnGenerate:function(){
+        this.$.schedulefee.fetchinstallmentStructure(grade,academicyear,admissionyear);
+      },
+      FnSubmit:function(){
+
+      },
+      FnRefresh:function(){
+        grade="";
+        admissionyear="";
+        academicyear="";
+        document.querySelector('#insgrade').selected=-1;
+        document.querySelector('#insacademicyear').selected=-1;
+        document.querySelector('#insadmissionyear').selected=-1;        
+      },
+      FnCancel:function(){
+        grade="";
+        admissionyear="";
+        academicyear="";
+        document.querySelector('#insgrade').selected=-1;
+        document.querySelector('#insacademicyear').selected=-1;
+        document.querySelector('#insadmissionyear').selected=-1;
+      },
+      FnSetInstallmentschedule:function(insobj){
+        
+        // alert(insarr.length);
+        if(insarr.length==0)
+          insarr.push(insobj);
+        else{
+        for(var i=0;i<insarr.length;i++){
+          // flag=0;
+          // alert(insarr[i].installment+"  "+insobj.installment+"  "+insarr[i].installmenttype+"  "+insobj.installmenttype+"  "+insarr[i].feetype+"  "+insobj.feetype+"  "+insarr[i].totalamount+"  "+insobj.totalamount+"  "+insarr[i].discount+" "+insobj.discount+"  "+insarr[i].payableamount+"  "+insobj.payableamount+"  "+insarr[i].installmentdate+"  "+insobj.installmentdate);
+          if((insarr[i].installment).trim()==(insobj.installment).trim()&&(insarr[i].installmentttype).trim()==(insobj.installmenttype).trim()&&(insarr[i].feetype).trim()==(insobj.feetype).trim()&&(insarr[i].totalamount).trim()==(insobj.totalamount).trim()&&(insarr[i].discount).trim()==(insobj.discount).trim()&&(insarr[i].payableamount).trim()==(insobj.payableamount).trim()&&(insarr[i].installmentdate).trim()==(insobj.installmentdate).trim()){
+            // alert('yes');
+            flag=1;
+          }
+        }
+        // alert(flag);
+        if(flag==0)
+        insarr.push(insobj);
+        }
+        // flag=0;
+      },
+      FnSubmit:function(){
+        // alert(JSON.stringify(insarr));
+        this.$.schedulefee.setInstallmentScheduleInfo(insarr);
+      }
+    });
+  })();
+  </script>
+</dom-module>

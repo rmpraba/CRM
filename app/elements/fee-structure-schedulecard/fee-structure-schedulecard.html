@@ -1,0 +1,161 @@
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="fee-structure-schedulecard">
+  <template>
+     
+    <div class="row enquiry-form">
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6 enquiry-input">
+            <paper-input label="School Name" value="{{schoolname}}"></paper-input>
+        </div>
+        <div class="col-sm-6 enquiry-input">
+          <paper-dropdown-menu label="Grade" >
+            <paper-menu id="structuregrade" class="dropdown-content" required on-iron-select="FnSelectGrade" valueattr="value" >
+              <template  is="dom-repeat" items="{{gradearr}}" as="item">
+              <paper-item>{{item.grade_name}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
+        </div>
+      </div>
+
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-4 enquiry-input">
+          <paper-dropdown-menu label="Admission Year" attr-for-selected="value">
+            <paper-menu id="structureadmissionyear" class="dropdown-content" required on-iron-select="FnSelectAdmissionYear" valueattr="value" >
+              <template  is="dom-repeat" items="{{admissionarr}}" as="item">
+              <paper-item>{{item.admission_year}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
+        </div>
+
+        <div class="col-sm-4">
+          <paper-dropdown-menu label="Academic Year" attr-for-selected="value">
+            <paper-menu id="structureacademicyear" class="dropdown-content" required on-iron-select="FnSelectAcademicYear" valueattr="value" >
+              <template  is="dom-repeat" items="{{academicarr}}" as="item">
+              <paper-item>{{item.academic_year}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
+        </div>
+
+        <div class="col-sm-4">
+          <paper-dropdown-menu label="No Of Installment" attr-for-selected="value">
+            <paper-menu id="structureinstallment" class="dropdown-content" required on-iron-select="FnSelectInsatllmentNo" valueattr="value" >
+              <!-- <template  is="dom-repeat" items="{{academicarr}}" as="item"> -->
+              <paper-item>1</paper-item>
+              <paper-item>2</paper-item>
+              <paper-item>3</paper-item>
+              <paper-item>4</paper-item>
+              <paper-item>5</paper-item>
+              <!-- </template> -->
+            </paper-menu>
+          </paper-dropdown-menu>
+        </div>
+        </div>
+
+        <div class="list-group col-sm-12 panel-body form-category" hidden$="{{hidefeecomponentcard}}">
+          <template  is="dom-repeat" items="{{installmentarr}}" as="item">
+            <fee-component-card installment="{{item.val}}" no="{{item.no}}" actualamount="{{item.actualamount}}" discount="{{item.discount}}" payableamount="{{item.payableamount}}"></fee-component-card> 
+          </template>       
+        </div>
+
+        <div class="col-md-12 form-button">
+          <paper-button class="btn btn-primary" on-click="FnSubmit">Submit</paper-button>          
+          <paper-button hidden$="{{hidefeecomponent}}" class="btn btn-primary" on-click="FnCancel">Cancel</paper-button>
+        </div>
+      </div>
+
+      <schedule-service id="schedulefee"></schedule-service>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+    var grade,admissionyear,academicyear,noofinstallment,feetype,discounttype,installmenttype;   
+    var feecomponentarr=[];
+    var installmentarr=[];
+    var installmentsubarr=[];
+    Polymer({
+      is: 'fee-structure-schedulecard',
+      ready:function(){
+        this.schoolname=localStorage.getItem("schoolname");
+        this.hidefeecomponentcard=true;
+      },
+      FnSelectGrade:function(e){
+        grade=(e.target.selectedItem.textContent).trim();
+        localStorage.setItem("curr_sess_grade",grade);
+      },
+      FnSelectAdmissionYear:function(e){
+        admissionyear=(e.target.selectedItem.textContent).trim();
+        localStorage.setItem("curr_sess_admissionyear",admissionyear);
+      },
+      FnSelectAcademicYear:function(e){
+        academicyear=(e.target.selectedItem.textContent).trim();
+        localStorage.setItem("curr_sess_academicyear",academicyear);
+      },
+      FnSelectInsatllmentNo:function(e){
+        noofinstallment=(e.target.selectedItem.textContent).trim();        
+        var ins=[];
+        for(var i=0;i<noofinstallment;i++)
+        {
+          var obj={"val":"","no":""};
+          obj.no=i+1;
+          obj.val="Installment"+(i+1);
+          ins.push(obj);
+        }        
+        this.installmentarr=ins;
+        this.hidefeecomponentcard=false;
+      },
+      FnSubmit:function(){
+        this.$.schedulefee.setInstallmentFeecomponent(this.schoolname,grade,admissionyear,academicyear,noofinstallment,installmentarr,installmentsubarr);
+      },
+      FnViewFeeComponent:function(){
+        this.hidefeecomponent=false;
+      },
+      FnRefresh:function(){
+        grade="";
+        admissionyear="";
+        academicyear="";
+        feetype="";
+        this.amount="";
+        discounttype="";
+        installmenttype="";
+        document.querySelector('#structuregrade').selected=-1;
+        document.querySelector('#structureacademicyear').selected=-1;
+        document.querySelector('#structureadmissionyear').selected=-1;
+        document.querySelector('#structureinstallment').selected=-1;
+      },
+      FnCancel:function(){
+        grade="";
+        admissionyear="";
+        academicyear="";
+        feetype="";
+        this.amount="";
+        discounttype="";
+        installmenttype="";
+        document.querySelector('#structuregrade').selected=-1;
+        document.querySelector('#structureacademicyear').selected=-1;
+        document.querySelector('#structureadmissionyear').selected=-1;
+        document.querySelector('#structureinstallment').selected=-1;
+      },
+      FnSetFeeComponent:function(arr){
+        feecomponentarr=[];
+        for(var i=0;i<arr.length;i++){          
+          feecomponentarr.push(arr[i]);
+        }
+      },
+      FnSetInsatllment:function(insarr,inssubarr)
+      {
+        installmentarr=insarr;
+        installmentsubarr=inssubarr;
+        alert(JSON.stringify(installmentarr));
+        alert(JSON.stringify(installmentsubarr));
+      }
+       
+    });
+      
+  })();
+  </script>
+</dom-module>

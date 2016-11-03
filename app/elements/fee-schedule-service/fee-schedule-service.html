@@ -59,6 +59,40 @@
         on-response="createinstallmentResponse"
         debounce-duration="300"
         >
+
+      <!-- Fetch installment pattern-->
+     <iron-ajax
+        method="post"
+        id="fetchinstallmentpatternajax"
+        url="{{fetchinstallmentpatternurl}}"
+        params="{{fetchinstallmentpatternparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchinstallmentpatternResponse"
+        debounce-duration="300"
+        >  
+      <!-- Fetch installment pattern-->
+     <iron-ajax
+        method="post"
+        id="fetchinstallmentfeecodeajax"
+        url="{{fetchinstallmentfeecodeurl}}"
+        params="{{fetchinstallmentfeecodeparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchinstallmentfeecodeResponse"
+        debounce-duration="300"
+        >
+      <!-- Fetch installment pattern-->
+     <iron-ajax
+        method="post"
+        id="fetchinstallmentdiscountcodeajax"
+        url="{{fetchinstallmentdiscountcodeurl}}"
+        params="{{fetchinstallmentdiscountcodeparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchinstallmentdiscountcodeResponse"
+        debounce-duration="300"
+        >
   </template>
   <script>
   (function() {
@@ -149,6 +183,27 @@
       },
       createinstallmentResponse:function(e){
         alert(e.detail.response.returnval);
+      },
+      fetchinstallmentStructure:function(){
+
+      },
+      fetchinstallmentpattern:function(){
+
+      },
+      fetchinstallmentpatternResponse:function(e){
+
+      },
+      fetchinstallmentfeecode:function(){
+
+      },
+      fetchinstallmentfeecodeResponse:function(e){
+
+      },
+      fetchinstallmentdiscountcode:function(){
+
+      },
+      fetchinstallmentdiscountcodeResponse:function(e){
+
       }
     });
   })();

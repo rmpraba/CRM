@@ -9,6 +9,8 @@
 <link rel="import" href="../fee-card/fee-card.html">
 <link rel="import" href="../followup-details/followup-details.html">
 
+<link rel="import" href="../feetype-schedule-card/feetype-schedule-card.html">
+<link rel="import" href="../discount-schedule-card/discount-schedule-card.html">
 
 <dom-module id="navigation-bar">
   <template>
@@ -16,7 +18,8 @@
       /*:host{
         display: block;
       }
-    </style>    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+    </style>    
+    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
         <span class="sr-only">Toggle navigation</span>
@@ -25,7 +28,6 @@
         <span class="icon-bar"></span>
       </button>
       <a class="navbar-brand" href="index.html">{{schoolname}}</a>
-
     </div>
 
 
@@ -275,7 +277,7 @@
             <a href="" aria-hidden="true" on-click="followupdashboard"><i class="fa fa-calendar fa-fw"></i> Follow Up</a>
           </li>
           <li id="adtest">
-            <a href="" aria-hidden="true" data-toggle="modal" data-target="#admissiontest" data-backdrop="static" data-keyboard="false"><i class="fa fa-check fa-fw"></i>Admission Test</a>
+            <a href="" aria-hidden="true" data-toggle="modal" data-target="#admissiontest" data-backdrop="static" data-keyboard="false" on-click="FnAdmissionTest"><i class="fa fa-check fa-fw"></i>Admission Test</a>
           </li>
           <li id="admission">
             <a href="" aria-hidden="true" data-toggle="modal" data-target="#newadmission" data-backdrop="static" data-keyboard="false"><i class="fa fa-check fa-fw"></i>Admission</a>
@@ -286,11 +288,11 @@
 
            <li id="payment">
             <a href="#" aria-hidden="true" data-toggle="modal" data-target="#feepayment"><i class="fa fa-money fa-fw"></i> Fee Payment<span class="fa arrow"></span></a>
-            <ul class="nav nav-second-level">
+            <!--<ul class="nav nav-second-level">
               <li>
               <a href="" aria-hidden="true" data-toggle="modal" data-target="#prospectousfee" on-click="FnProspect">Application fee</a>
                 <!-- <a href="flot.html"></a> -->
-              </li>
+              <!--</li>
               <li>
                 <a href="" aria-hidden="true" data-toggle="modal" data-target="#registerationfee" on-click="FnRegister">Registration fee</a>
               </li>
@@ -308,7 +310,21 @@
           </li>
 
            <li id="admission">
-            <a href="" aria-hidden="true" data-toggle="modal" data-target="#schedulefee"><i class="fa fa-check fa-fw"></i>Schedule Fees</a>
+            <a href="" aria-hidden="true" on-click="schedule"><i class="fa fa-check fa-fw"></i>Schedule Fees</a>
+            <ul class="nav nav-second-level">
+              <li>
+                <a href="" aria-hidden="true" data-toggle="modal" data-target="#feetypeschedule" on-click="FnFeetypeschedule">Fee Type Schedule</a>
+              </li>
+              <li>
+                <a href="" aria-hidden="true" data-toggle="modal" data-target="#discountschedule" on-click="FnDiscountschedule">Discount Schedule</a>
+              </li>
+              <li>
+                <a href="" aria-hidden="true" data-toggle="modal" data-target="#feestructureschedule" on-click="FnFeestructureschedule">Installment Schedule</a>
+              </li>
+              <!-- <li>
+                <a href="" aria-hidden="true" data-toggle="modal" data-target="#installmentschedule" on-click="FnInstallmentschedule">Installment Schedule</a>
+              </li> -->
+            </ul>
           </li>
           <li id="admform">
             <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Admission Form<!-- <span class="fa arrow"></span> --></a>
@@ -462,7 +478,7 @@
       </div>
     </div>-->
 
-    <div class="modal fade bd-example-modal-lg" id="prospectousfee" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal fade bd-example-modal-lg" id="feepayment" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
@@ -470,18 +486,17 @@
               <span aria-hidden="true">&times;</span>
             </button>
             <h4 class="center-block event-title" id="">
-              Prospectus Fee
+              Fee Payment
             </h4>
           </div>
-          <div class="modal-body">
-            <!-- <prospectousfee-card></prospectousfee-card> -->
+          <div class="modal-body">            
             <fees-card></fees-card>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="modal fade bd-example-modal-lg" id="registerationfee" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+   <!--  <div class="modal fade bd-example-modal-lg" id="registerationfee" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
@@ -493,8 +508,6 @@
             </h4>
           </div>
           <div class="modal-body">
-            <!-- <registerationfee-card></registerationfee-card> -->
-            <!-- <prospectousfee-card></prospectousfee-card> -->
             <fees-card></fees-card>
           </div>
         </div>
@@ -553,10 +566,10 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
+ 
 
-
-    <div class="modal fade bd-example-modal-lg" id="schedulefee" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <!-- <div class="modal fade bd-example-modal-lg" id="schedulefee" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
@@ -572,8 +585,84 @@
           </div>
         </div>
       </div>
+    </div> -->
+
+     <div class="modal fade bd-example-modal-lg" id="feetypeschedule" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="center-block event-title" id="">
+              Schedule Fee Type
+            </h4>
+          </div>
+          <div class="modal-body">
+            <feetype-schedule-card></feetype-schedule-card>
+          </div>
+        </div>
+      </div>
     </div>
+
+     <div class="modal fade bd-example-modal-lg" id="feestructureschedule" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="center-block event-title" id="">
+              Schedule Installment 
+            </h4>
+          </div>
+          <div class="modal-body">
+            <fee-structure-schedulecard></fee-structure-schedulecard>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="modal fade bd-example-modal-lg" id="discountschedule" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="center-block event-title" id="">
+              Discount Schedule
+            </h4>
+          </div>
+          <div class="modal-body">
+            <discount-master-card></discount-master-card>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade bd-example-modal-lg" id="installmentschedule" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="center-block event-title" id="">
+              Installment Schedule
+            </h4>
+          </div>
+          <div class="modal-body">
+            <installment-master-card></installment-master-card>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
     <crm-service id="service"></crm-service>
+    <schedule-service id="scheduleservice"></schedule-service>
   </template>
   <script>
   (function() {
@@ -605,28 +694,32 @@
         if(localStorage.getItem("admapproval")=='true'){
           this.$.admapp.hidden=true;
         }
-
+      },      
+      FnFeetypeschedule:function(e){        
+        this.$.scheduleservice.fetchgradeService();
+        this.$.scheduleservice.fetchacademicyearService();
+        this.$.scheduleservice.fetchadmissionyearService();
+        this.$.scheduleservice.fetchfeetypeService();
       },
-      FnProspect:function(e){  
-      // alert(e.target.text);      
-        localStorage.setItem("curr_sess_feetype",e.target.text);  
-        this.FnRefresh();       
+      FnDiscountschedule:function(e){        
+        this.$.scheduleservice.fetchgradeService();
+        this.$.scheduleservice.fetchacademicyearService();
+        this.$.scheduleservice.fetchadmissionyearService();
+        this.$.scheduleservice.fetchdiscounttypeService();
+        this.$.scheduleservice.fetchfeetypeService();
       },
-      FnRegister:function(e){
-        localStorage.setItem("curr_sess_feetype",e.target.text);
-        this.FnRefresh();
+      FnFeestructureschedule:function(e){        
+        this.$.scheduleservice.fetchgradeService();
+        this.$.scheduleservice.fetchacademicyearService();
+        this.$.scheduleservice.fetchadmissionyearService();
+        this.$.scheduleservice.fetchfeecomponenttypeService();
+        // this.$.scheduleservice.fetchdiscounttypeService();
+        this.$.scheduleservice.fetchfeetypeService();
       },
-      FnAnnual:function(e){
-        localStorage.setItem("curr_sess_feetype",e.target.text); 
-        this.FnRefresh();  
-      },
-      FnKit:function(e){
-        localStorage.setItem("curr_sess_feetype",e.target.text);  
-        this.FnRefresh(); 
-      },
-      FnMiscellaneous:function(e){
-        localStorage.setItem("curr_sess_feetype",e.target.text);  
-        this.FnRefresh(); 
+      FnInstallmentschedule:function(e){
+        this.$.scheduleservice.fetchgradeService();
+        this.$.scheduleservice.fetchacademicyearService();
+        this.$.scheduleservice.fetchadmissionyearService();
       },
       followupdashboard:function(){
         this.$.service.getfollowupcount();
@@ -640,6 +733,9 @@
       enquiry:function(){
         this.$.service.getfollowupcount();
         document.querySelector('app-list').setPage("enquiry");
+      },
+      FnAdmissionTest:function(){
+        document.querySelector('admission-approval-card').FnRefresh();
       }
     });
   })();

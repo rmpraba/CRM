@@ -1,0 +1,169 @@
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="fee-type-card">
+  <template>
+  <style>
+  .feecard{
+    @apply(--layout-vertical);
+    border-color: darkslategrey;
+       background-color: white;
+       color: black;
+       width: 400px;
+  }
+  .btn{
+    @apply(--layout-horizontal);
+    margin-left: 25%;
+  }
+  paper-button{
+            width: 10%;
+            background: #252626;
+            color: white;
+            margin-top: 2%;
+            text-transform: none;
+  }
+  </style>
+
+  <div class="feecard">  
+    
+    <paper-dropdown-menu label="Select Fee Type" attr-for-selected="value">
+      <paper-menu id="feefeetype" class="dropdown-content" required on-iron-select="FnSelectFeetype" valueattr="value" >
+        <template  is="dom-repeat" items="{{feetypearr}}" as="item">
+          <paper-item value="{{item.fee_type}}">{{item.fee_type}}</paper-item>
+        </template>
+      </paper-menu>
+    </paper-dropdown-menu>
+
+    <paper-input label="Actual amount" value="{{actualamount}}"></paper-input>
+    <paper-input label="Discount" value="{{discount}}"></paper-input>
+    <paper-input label="Payable amount" value="{{payableamount}}"></paper-input>
+    <div class="btn">    
+    <paper-button on-click="FnAdd">Add</paper-button>
+    <paper-button on-click="FnCancel">Cancel</paper-button>
+    </div>
+  </div>
+ 
+  <!-- It would fetch fee type -->
+  <iron-ajax
+        method="post"
+        id="fetchfeetypeajax"
+        url="{{fetchfeetypeurl}}"
+        params="{{fetchfeetypeparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchfeetypeResponse"
+        debounce-duration="300"
+  >
+
+    <!-- Fetch installment pattern-->
+     <iron-ajax
+        method="post"
+        id="fetchinstallmentfeecodeajax"
+        url="{{fetchinstallmentfeecodeurl}}"
+        params="{{fetchinstallmentfeecodeparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchinstallmentfeecodeResponse"
+        debounce-duration="300"
+        >
+      <!-- Fetch installment pattern-->
+     <iron-ajax
+        method="post"
+        id="fetchinstallmentdiscountcodeajax"
+        url="{{fetchinstallmentdiscountcodeurl}}"
+        params="{{fetchinstallmentdiscountcodeparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchinstallmentdiscountcodeResponse"
+        debounce-duration="300"
+        >
+  <schedule-service id="scheduleservice"></schedule-service>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+    var feetype;
+    var arr=[];
+    Polymer({
+      is: 'fee-type-card',
+      ready:function(){
+        this.fetchfeetypeService();
+      },
+      FnSelectFeetype:function(e){
+        feetype=(e.target.selectedItem.textContent).trim();
+        // alert(feetype);
+        this.fetchinstallmentfeecode(feetype);
+      },
+       fetchfeetypeService:function(){        
+        this.fetchfeetypeurl=sessionStorage.getItem("addrinfo")+"/fetchfeetype-service"
+        this.$.fetchfeetypeajax.generateRequest();
+      },
+      fetchfeetypeResponse:function(e){
+        this.feetypearr=e.detail.response.returnval;
+      },      
+      FnAdd:function(){
+        document.querySelector('fee-component-card').FnCloseDialog(feetype,this.actualamount,this.discount,this.payableamount);  
+        document.querySelector('#feefeetype').selected=-1;
+        feetype="";
+        this.actualamount="";
+        this.discount="";
+        this.payableamount="";
+      },
+      FnCancel:function(){
+        document.querySelector('fee-component-card').FnCloseDialog();
+        document.querySelector('#feefeetype').selected=-1;
+        feetype="";
+        this.actualamount="";
+        this.discount="";
+        this.payableamount="";
+      },
+       fetchinstallmentfeecode:function(feetype){
+        this.feetype=feetype;
+        this.schoolid=localStorage.getItem("schoolid");
+        this.grade=localStorage.getItem("curr_sess_grade");
+        this.admissionyear=localStorage.getItem("curr_sess_admissionyear");
+        this.academicyear=localStorage.getItem("curr_sess_academicyear");
+        this.fetchinstallmentfeecodeurl=sessionStorage.getItem("addrinfo")+"/fetchinstallmentfeecode-service";
+        var obj={"schoolid":"","schoolname":"","grade":"","admissionyear":"","academicyear":"","feetype":""};
+        obj.schoolid=localStorage.getItem("schoolid");
+        obj.schoolname=this.schoolname;
+        obj.grade=this.grade;
+        obj.admissionyear=this.admissionyear;
+        obj.academicyear=this.academicyear; 
+        obj.feetype=feetype;       
+        this.fetchinstallmentfeecodeparam=obj;
+        this.$.fetchinstallmentfeecodeajax.generateRequest();
+      },
+      fetchinstallmentfeecodeResponse:function(e){
+        this.insfeecode=e.detail.response.returnval;
+        this.fetchinstallmentdiscountcode();
+      },
+      fetchinstallmentdiscountcode:function(){
+        this.fetchinstallmentdiscountcodeurl=sessionStorage.getItem("addrinfo")+"/fetchinstallmentdiscountcode-service";
+        var obj={"schoolid":"","schoolname":"","grade":"","admissionyear":"","academicyear":""};
+        obj.schoolid=localStorage.getItem("schoolid");
+        obj.schoolname=this.schoolname;
+        obj.grade=this.grade;
+        obj.admissionyear=this.admissionyear;
+        obj.academicyear=this.academicyear; 
+        obj.feetype=this.feetype;       
+        this.fetchinstallmentdiscountcodeparam=obj;
+        this.$.fetchinstallmentdiscountcodeajax.generateRequest();
+      },
+      fetchinstallmentdiscountcodeResponse:function(e){        
+        this.insdiscountcode=e.detail.response.returnval;
+        // alert(JSON.stringify(this.insdiscountcode));
+        this.actualamount=this.insfeecode[0].total_fee;
+        if((this.insdiscountcode).length==0)
+          this.discount=0;
+        else
+        this.discount=this.insdiscountcode[0].amount;
+        if((this.insdiscountcode).length==0)
+          this.payableamount=parseInt(this.insfeecode[0].total_fee)-parseInt(0);
+        else
+        this.payableamount=parseInt(this.insfeecode[0].total_fee)-parseInt(this.insdiscountcode[0].amount);
+      }     
+    });
+  })();
+  </script>
+</dom-module>

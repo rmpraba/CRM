@@ -1,0 +1,154 @@
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="../schedule-service/schedule-service.html">
+
+
+<dom-module id="discount-master-card">
+  <template>
+    <div class="row enquiry-form">
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6 enquiry-input">
+            <paper-input label="School Name" value="{{schoolname}}"></paper-input>
+        </div>
+        <div class="col-sm-6 enquiry-input">
+          <paper-dropdown-menu label="Grade" >
+            <paper-menu id="discountgrade" class="dropdown-content" required on-iron-select="FnSelectGrade" valueattr="value" >
+              <template  is="dom-repeat" items="{{gradearr}}" as="item">
+              <paper-item>{{item.grade_name}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
+        </div>
+      </div>
+
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6 enquiry-input">
+          <paper-dropdown-menu label="Admission Year" attr-for-selected="value">
+            <paper-menu id="discountadmissionyear" class="dropdown-content" required on-iron-select="FnSelectAdmissionYear" valueattr="value" >
+              <template  is="dom-repeat" items="{{admissionarr}}" as="item">
+              <paper-item>{{item.admission_year}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
+        </div>
+
+        <div class="col-sm-6">
+          <paper-dropdown-menu label="Academic Year" attr-for-selected="value">
+            <paper-menu id="discountacademicyear" class="dropdown-content" required on-iron-select="FnSelectAcademicYear" valueattr="value" >
+              <template  is="dom-repeat" items="{{academicarr}}" as="item">
+              <paper-item>{{item.academic_year}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
+        </div>
+        </div>
+
+        <div class="list-group col-sm-12 panel-body form-category" hidden$="{{hidefeecard}}">
+          <div class="col-sm-6 enquiry-input">
+            <fromdate-pickercard></fromdate-pickercard>
+          </div> 
+          <div class="col-sm-6 enquiry-input">
+            <todate-pickercard></todate-pickercard>
+          </div> 
+        </div>
+       
+        <div class="list-group col-sm-12 panel-body form-category" hidden$="{{hidefeecard}}">
+          <div class="col-sm-4 enquiry-input">
+            <paper-dropdown-menu label="Select Discount Type" attr-for-selected="value">
+            <paper-menu id="distype" class="dropdown-content" required on-iron-select="FnSelectDiscountType" valueattr="value" >
+              <template  is="dom-repeat" items="{{discountarr}}" as="item">
+              <paper-item>{{item.discount_type}}</paper-item>
+              </template>
+            </paper-menu>
+            </paper-dropdown-menu>
+          </div>
+          <div class="col-sm-4 enquiry-input">
+            <paper-dropdown-menu label="Select Fee Type" attr-for-selected="value">
+            <paper-menu id="discountfeetype" class="dropdown-content" required on-iron-select="FnSelectFeeType" valueattr="value" >
+              <template  is="dom-repeat" items="{{feetypearr}}" as="item">
+              <paper-item>{{item.fee_type}}</paper-item>
+              </template>
+            </paper-menu>
+            </paper-dropdown-menu>
+          </div>
+          <div class="col-sm-4 enquiry-input">
+            <paper-input label="Discount Amount" value="{{amount}}"></paper-input>
+          </div>          
+        </div>
+
+        <div class="col-md-12 form-button">
+          <paper-button class="btn btn-primary" on-click="FnSubmit">Submit</paper-button>
+          <paper-button class="btn btn-primary" on-click="FnCancel">Cancel</paper-button>
+        </div>
+      </div>
+
+      <schedule-service id="schedulefee"></schedule-service>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+    var grade,admissionyear,academicyear,feetype,discounttype;    
+    Polymer({
+      is: 'discount-master-card',
+      ready:function(){
+        this.schoolname=localStorage.getItem("schoolname");
+        // this.$.schedulefee.fetchgradeService();
+        // this.$.schedulefee.fetchacademicyearService();
+        // this.$.schedulefee.fetchadmissionyearService();
+        // this.$.schedulefee.fetchdiscounttypeService();
+        // this.$.schedulefee.fetchfeetypeService();
+      },
+      FnSelectGrade:function(e){
+        grade=(e.target.selectedItem.textContent).trim();
+      },
+      FnSelectAdmissionYear:function(e){
+        admissionyear=(e.target.selectedItem.textContent).trim();
+      },
+      FnSelectAcademicYear:function(e){
+        academicyear=(e.target.selectedItem.textContent).trim();
+      },
+      FnSelectDiscountType:function(e){
+        discounttype=(e.target.selectedItem.textContent).trim();
+      },
+      FnSelectFeeType:function(e){
+        feetype=(e.target.selectedItem.textContent).trim();
+      },
+      FnRefresh:function(){
+        grade="";
+        admissionyear="";
+        academicyear="";
+        feetype="";
+        this.amount="";
+        discounttype="";
+        document.querySelector('#discountgrade').selected=-1;
+        document.querySelector('#discountacademicyear').selected=-1;
+        document.querySelector('#discountadmissionyear').selected=-1;
+        document.querySelector('#distype').selected=-1;
+        document.querySelector('#discountfeetype').selected=-1;
+      },
+      FnSubmit:function(){
+        // alert(this.schoolname+" "+grade+" "+academicyear+" "+admissionyear+" "+feetype+" "+this.totalfees);
+        this.$.schedulefee.setDiscountInfo(this.schoolname,grade,admissionyear,academicyear,discounttype,feetype,this.fromdate,this.todate,this.amount);
+      },
+      FnCancel:function(){
+        grade="";
+        admissionyear="";
+        academicyear="";
+        feetype="";
+        this.amount="";
+        discounttype="";
+        document.querySelector('#discountgrade').selected=-1;
+        document.querySelector('#discountacademicyear').selected=-1;
+        document.querySelector('#discountadmissionyear').selected=-1;
+        document.querySelector('#distype').selected=-1;
+        document.querySelector('#discountfeetype').selected=-1;
+      },
+      FnSetFromDate:function(date){
+        this.fromdate=date;
+      },
+      FnSetToDate:function(date){
+        this.todate=date;
+      }
+    });
+  })();
+  </script>
+</dom-module>
