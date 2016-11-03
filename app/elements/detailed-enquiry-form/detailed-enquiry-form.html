@@ -201,25 +201,25 @@
           </div>
         </div>
       </div>
-      <div class="list-group col-sm-12 panel-body form-category">
-        <div class="col-sm-6">
+      <div class="list-group col-sm-12 panel-body form-category" hidden$="{{salaryinfo}}">
+        <div class="col-sm-6" hidden$="{{fathersalaryinfo}}">
           <paper-input id="dadoff" required error-message="needs father's company name!" allowed-pattern="[a-zA-Z ]" label="Organization Name" value="{{fathercompany}}"></paper-input>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-6 pull-right" hidden$="{{mothersalaryinfo}}">
           <paper-input id="momoff" required error-message="needs mother's company name!" allowed-pattern="[a-zA-Z ]" label="Organization Name" value="{{mothercompany}}"></paper-input>
         </div>
       </div>
-      <div class="list-group col-sm-12 panel-body form-category">
-        <div class="col-sm-6">
+      <div class="list-group col-sm-12 panel-body form-category" hidden$="{{salaryinfo}}">
+        <div class="col-sm-6 pull-right" hidden$="{{fathersalaryinfo}}">
           <paper-input id="dadjob" required error-message="needs father's designation!" label="Designation" allowed-pattern="[a-zA-Z ]" value="{{fatherjob}}"></paper-input>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-6 pull-right" hidden$="{{mothersalaryinfo}}">
           <paper-input id="momjob" required error-message="needs mother's designation!" label="Designation" allowed-pattern="[a-zA-Z ]" value="{{motherjob}}"></paper-input>
         </div>
       </div>
-      <div class="list-group col-sm-12 panel-body form-category">
+      <div class="list-group col-sm-12 panel-body form-category" hidden$="{{salaryinfo}}">
         <div id="dadsal" class="col-sm-6">
-          <paper-dropdown-menu label="Father's Salary" >
+          <paper-dropdown-menu label="Father's Salary"  hidden$="{{fathersalaryinfo}}">
             <paper-menu id="dadsalary" class="dropdown-content" required on-iron-select="dadsalary" valueattr="value" >
               <paper-item >Nil</paper-item>
               <paper-item >< 1 Lakh</paper-item>
@@ -229,7 +229,7 @@
             </paper-menu>
           </paper-dropdown-menu>
         </div>
-        <div id="momsal" class="col-sm-6">
+        <div id="momsal" class="col-sm-6"  hidden$="{{mothersalaryinfo}}">
           <paper-dropdown-menu label="Mother's Salary" >
             <paper-menu id="mothersalary" class="dropdown-content" required on-iron-select="mothersalary" valueattr="value" >
               <paper-item >Nil</paper-item>
@@ -503,12 +503,15 @@
           this.$.sibname.hidden=true;
           this.$.sibdetail.hidden=true;
           this.$.referrer.hidden=true;
+          this.salaryinfo=true;
+          this.fathersalaryinfo=true;
+          this.mothersalaryinfo=true;/*
           this.$.dadoff.hidden=true;
           this.$.dadjob.hidden=true;
           this.$.dadsal.hidden=true;
           this.$.momoff.hidden=true;
           this.$.momjob.hidden=true;
-          this.$.momsal.hidden=true;
+          this.$.momsal.hidden=true;*/
           this.$.prospectno.hidden=true;
           this.$.newenq.hidden=true;
           this.$.newenquiry.hidden=false;
@@ -1114,19 +1117,30 @@
 dadoccupation:function(e){
   dadoccup=(e.target.selectedItem.textContent).trim();
 if(dadoccup=="Self Employed"||dadoccup=="Public Sector"||dadoccup=="Private Sector"){
-      this.$.dadoff.hidden=false;
+      /*this.$.dadoff.hidden=false;
       this.$.dadjob.hidden=false;
-      this.$.dadsal.hidden=false;
-
+      this.$.dadsal.hidden=false;*/
+      this.salaryinfo=false;
+      this.fathersalaryinfo=false;
   } else if(dadoccup=="Others"){
-    this.hidedadothers=false;
+    this.hidedadothers=false;/*
     this.$.dadoff.hidden=false;
     this.$.dadjob.hidden=false;
-    this.$.dadsal.hidden=false;
+    this.$.dadsal.hidden=false;*/
+    this.salaryinfo=false;
+    this.fathersalaryinfo=false;
   }else {
-      this.$.dadoff.hidden=true;
+      /*this.$.dadoff.hidden=true;
       this.$.dadjob.hidden=true;
-      this.$.dadsal.hidden=true;
+      this.$.dadsal.hidden=true;*/
+  if(momtheroccup=="Self Employed"||momtheroccup=="Public Sector"||momtheroccup=="Private Sector"||momtheroccup=="Others"){
+    this.salaryinfo=false;
+  } else {
+    this.salaryinfo=true;
+    this.fathersalaryinfo=true;
+  }
+      this.fathersalaryinfo=true;
+      this.hidedadothers=true;
 
   }
 },
@@ -1146,18 +1160,30 @@ motheroccupation:function(e){
 momtheroccup=(e.target.selectedItem.textContent).trim();
 alert(momtheroccup);
 if(momtheroccup=="Self Employed"||momtheroccup=="Public Sector"||momtheroccup=="Private Sector"){
-      this.$.momoff.hidden=false;
+      /*this.$.momoff.hidden=false;
       this.$.momjob.hidden=false;
-      this.$.momsal.hidden=false;
+      this.$.momsal.hidden=false;*/
+      this.salaryinfo=false;
+      this.mothersalaryinfo=false;
 } else if(momtheroccup=="Others"){
+  this.salaryinfo=false;
   this.hidemotherothers=false;
-  this.$.momoff.hidden=false;
+  this.mothersalaryinfo=false;
+  /*this.$.momoff.hidden=false;
   this.$.momjob.hidden=false;
-  this.$.momsal.hidden=false;
-}else{
+  this.$.momsal.hidden=false;*/
+}else{/*
       this.$.momoff.hidden=true;
       this.$.momjob.hidden=true;
-      this.$.momsal.hidden=true;
+      this.$.momsal.hidden=true;*/
+      if(dadoccup=="Self Employed"||dadoccup=="Public Sector"||dadoccup=="Private Sector"||dadoccup=="Others"){
+        this.salaryinfo=false;
+      } else {
+        this.salaryinfo=true;
+        this.mothersalaryinfo=true;
+      }
+      this.mothersalaryinfo=true;
+      this.hidemotherothers=true;
 }
 },
 dadsalary:function(e){
