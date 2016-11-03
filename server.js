@@ -810,7 +810,7 @@ app.post('/submitenquiry',  urlencodedParser,function (req, res)
   "first_name":req.query.firstname,"middle_name":req.query.middlename,"last_name":req.query.lastname,
   "dob":req.query.dobs,"father_name":req.query.father,"locality":req.query.location,"mother_name":req.query.mother,
   "father_email":req.query.email,"created_by":req.query.createdby,"created_on":req.query.createdate,
-  "enquiry_name":req.query.givenname,"gemail":req.query.gemail,"gmob":req.query.gmob,"parent_or_guardian":req.query.paga,"Guardianname":req.query.Guardianname,"status":"Enquired"};
+  "enquiry_name":req.query.givenname,"gemail":req.query.gemail,"gmob":req.query.gmob,"parent_or_guardian":req.query.paga,"Guardianname":req.query.Guardianname,"status":"Enquired","rte_student":req.query.rtestudent,"year_type":req.query.adtype};
        connection.query('insert into student_enquiry_details set ? ',[collection],
         function(err, rows)
         {
@@ -831,7 +831,7 @@ app.post('/submitenquiry',  urlencodedParser,function (req, res)
 */
 app.post('/updateenquiry',  urlencodedParser,function (req, res)
 {
-   var collection={"first_name":req.query.firstname,"middle_name":req.query.middlename,"last_name":req.query.lastname,"gender":req.query.gender,"class":req.query.grade,"dob":req.query.dob,"old_class":req.query.oldclass,"old_school":req.query.oldschool,"mother_tongue":req.query.mothertongue,"father_name":req.query.fathername,"mother_name":req.query.mothername,"father_qualification":req.query.fatheredu,"mother_qualification":req.query.motheredu,"father_mob":req.query.fathermob,"mother_mob":req.query.mothermob,"father_email":req.query.fathermail,"mother_email":req.query.mothermail,"father_company":req.query.fathercompany,"mother_company":req.query.mothercompany,"father_occupation":req.query.fatherjob,"mother_occupation":req.query.motherjob,"flat_no":req.query.flatno,"address1":req.query.address1,"address2":req.query.address2,"address3":req.query.address3,"city":req.query.city,"pincode":req.query.pincode,"state":req.query.statename,"enquiry_source":req.query.enquiysource,"sibiling_name":req.query.siblingname,"sibling_detail":req.query.siblingdetails,"transport_requirment":req.query.transportreq,"canteen_requirment":req.query.canteenreq,"second_language":req.query.secondlanguage,"third_language":req.query.thirdlanguage,"updated_by":req.query.modified,"prospectus_sold":req.query.prospectstatus,"father_designation":req.query.daddesignation,"mother_designation":req.query.momdesignation,"father_income":req.query.dadincome,"mother_income":req.query.momincome,"prospectus_no":req.query.prospectusno,"admission_test":req.query.admissiontest,"admission_date":req.query.admissiondate,'admission_test_english':req.query.admissiontestenglish,"admission_test_maths":req.query.admissiontestmaths,"admission_test_evs":req.query.admissiontestevs,"Guardianname":req.query.guardianname,"gmob":req.query.guardianmobile,"gemail":req.query.guardianemail,"guardian_company":req.query.guardiancompany,"guardian_job":req.query.guardianjob,"guardian_occup":req.query.guardianoccup,"guardian_income":req.query.guardianincome};
+   var collection={"first_name":req.query.firstname,"middle_name":req.query.middlename,"last_name":req.query.lastname,"gender":req.query.gender,"class":req.query.grade,"dob":req.query.dob,"old_class":req.query.oldclass,"old_school":req.query.oldschool,"mother_tongue":req.query.mothertongue,"father_name":req.query.fathername,"mother_name":req.query.mothername,"father_qualification":req.query.fatheredu,"mother_qualification":req.query.motheredu,"father_mob":req.query.fathermob,"mother_mob":req.query.mothermob,"father_email":req.query.fathermail,"mother_email":req.query.mothermail,"father_company":req.query.fathercompany,"mother_company":req.query.mothercompany,"father_occupation":req.query.fatherjob,"mother_occupation":req.query.motherjob,"flat_no":req.query.flatno,"address1":req.query.address1,"address2":req.query.address2,"address3":req.query.address3,"city":req.query.city,"pincode":req.query.pincode,"state":req.query.statename,"enquiry_source":req.query.enquiysource,"sibiling_name":req.query.siblingname,"sibling_detail":req.query.siblingdetails,"transport_requirment":req.query.transportreq,"canteen_requirment":req.query.canteenreq,"second_language":req.query.secondlanguage,"third_language":req.query.thirdlanguage,"updated_by":req.query.modified,"prospectus_sold":req.query.prospectstatus,"father_designation":req.query.daddesignation,"mother_designation":req.query.momdesignation,"father_income":req.query.dadincome,"mother_income":req.query.momincome,"prospectus_no":req.query.prospectusno,"admission_test":req.query.admissiontest,"admission_date":req.query.admissiondate,'admission_test_english':req.query.admissiontestenglish,"admission_test_maths":req.query.admissiontestmaths,"admission_test_evs":req.query.admissiontestevs,"Guardianname":req.query.guardianname,"gmob":req.query.guardianmobile,"gemail":req.query.guardianemail,"guardian_company":req.query.guardiancompany,"guardian_job":req.query.guardianjob,"guardian_occup":req.query.guardianoccup,"guardian_income":req.query.guardianincome,"locality":req.query.location,"mother_occupation_other":req.query.motherother,"father_occupation_other":req.query.fatherother,"guardian_occupation_other":req.query.guardianother,"country_name":req.query.country_name};
 
     var school={"school_id":req.query.schol};
     var enquiry={"enquiry_no":req.query.enq};
@@ -857,8 +857,7 @@ app.post('/updateenquiry',  urlencodedParser,function (req, res)
 
  app.post('/registerenquiryform',  urlencodedParser,function (req, res)
  {
-   console.log('hello2');
-   var collection={"school_id":req.query.schol,"enquiry_no":req.query.enq,"first_name":req.query.firstname,"middle_name":req.query.middlename,"last_name":req.query.lastname,"gender":req.query.gender,"class":req.query.grade,"dob":req.query.dob,"old_class":req.query.oldclass,"old_school":req.query.oldschool,"mother_tongue":req.query.mothertongue,"father_name":req.query.fathername,"mother_name":req.query.mothername,"father_qualification":req.query.fatheredu,"mother_qualification":req.query.motheredu,"father_mob":req.query.fathermob,"mother_mob":req.query.mothermob,"father_email":req.query.fathermail,"mother_email":req.query.mothermail,"father_company":req.query.fathercompany,"mother_company":req.query.mothercompany,"father_occupation":req.query.fatherjob,"mother_occupation":req.query.motherjob,"flat_no":req.query.flatno,"address1":req.query.address1,"address2":req.query.address2,"address3":req.query.address3,"city":req.query.city,"pincode":req.query.pincode,"state":req.query.statename,"enquiry_source":req.query.enquiysource,"sibiling_name":req.query.siblingname,"sibling_detail":req.query.siblingdetails,"transport_requirment":req.query.transportreq,"canteen_requirment":req.query.canteenreq,"second_language":req.query.secondlanguage,"third_language":req.query.thirdlanguage,"updated_by":req.query.modified,"prospectus_sold":req.query.prospectstatus,"father_designation":req.query.daddesignation,"mother_designation":req.query.momdesignation,"father_income":req.query.dadincome,"mother_income":req.query.momincome,"prospectus_no":req.query.prospectusno,"academic_year":req.query.academicyear,"enquiry_name":req.query.givenname,"status":req.query.status,"admission_test":req.query.admissiontest,"admission_date":req.query.admissiondate,'admission_test_english':req.query.admissiontestenglish,"admission_test_maths":req.query.admissiontestmaths,"admission_test_evs":req.query.admissiontestevs,"Guardianname":req.query.guardianname,"gmob":req.query.guardianmobile,"gemail":req.query.guardianemail,"guardian_company":req.query.guardiancompany,"guardian_job":req.query.guardianjob,"guardian_occup":req.query.guardianoccup,"guardian_income":req.query.guardianincome};
+   var collection={"school_id":req.query.schol,"enquiry_no":req.query.enq,"first_name":req.query.firstname,"middle_name":req.query.middlename,"last_name":req.query.lastname,"gender":req.query.gender,"class":req.query.grade,"dob":req.query.dob,"old_class":req.query.oldclass,"old_school":req.query.oldschool,"mother_tongue":req.query.mothertongue,"father_name":req.query.fathername,"mother_name":req.query.mothername,"father_qualification":req.query.fatheredu,"mother_qualification":req.query.motheredu,"father_mob":req.query.fathermob,"mother_mob":req.query.mothermob,"father_email":req.query.fathermail,"mother_email":req.query.mothermail,"father_company":req.query.fathercompany,"mother_company":req.query.mothercompany,"father_occupation":req.query.fatherjob,"mother_occupation":req.query.motherjob,"flat_no":req.query.flatno,"address1":req.query.address1,"address2":req.query.address2,"address3":req.query.address3,"city":req.query.city,"pincode":req.query.pincode,"state":req.query.statename,"enquiry_source":req.query.enquiysource,"sibiling_name":req.query.siblingname,"sibling_detail":req.query.siblingdetails,"transport_requirment":req.query.transportreq,"canteen_requirment":req.query.canteenreq,"second_language":req.query.secondlanguage,"third_language":req.query.thirdlanguage,"updated_by":req.query.modified,"prospectus_sold":req.query.prospectstatus,"father_designation":req.query.daddesignation,"mother_designation":req.query.momdesignation,"father_income":req.query.dadincome,"mother_income":req.query.momincome,"prospectus_no":req.query.prospectusno,"academic_year":req.query.academicyear,"enquiry_name":req.query.givenname,"status":req.query.status,"admission_test":req.query.admissiontest,"admission_date":req.query.admissiondate,'admission_test_english':req.query.admissiontestenglish,"admission_test_maths":req.query.admissiontestmaths,"admission_test_evs":req.query.admissiontestevs,"Guardianname":req.query.guardianname,"gmob":req.query.guardianmobile,"gemail":req.query.guardianemail,"guardian_company":req.query.guardiancompany,"guardian_job":req.query.guardianjob,"guardian_occup":req.query.guardianoccup,"guardian_income":req.query.guardianincome,"locality":req.query.location,"mother_occupation_other":req.query.motherother,"father_occupation_other":req.query.fatherother,"year_type":req.query.enrolltype,"country_name":req.query.country_name};
    console.log(collection);
    var school={"school_id":req.query.schol};
    var enquiry={"enquiry_no":req.query.enq};
@@ -1091,7 +1090,7 @@ app.post('/getenqirydetails',  urlencodedParser,function (req, res){
 app.post('/verifymobileno',  urlencodedParser,function (req, res)
 {
 
-       connection.query("SELECT * from student_enquiry_details where school_id='"+req.query.schol+"' and (father_mob='"+req.query.mobileno+"' or mother_mob='"+req.query.mobileno+"') ",
+       connection.query("SELECT * from student_enquiry_details where school_id='"+req.query.schol+"' and (father_mob='"+req.query.mobileno+"' or mother_mob='"+req.query.mobileno+"' or gmob='"+req.query.mobileno+"') ",
   function(err, rows)
         {
     if(!err)
@@ -1230,6 +1229,92 @@ app.post('/insertadmission',  urlencodedParser,function (req, res){
   }
   });
 });
+
+app.post('/studentphysical_service',  urlencodedParser,function (req, res){
+   var event = {
+
+     "admission_no":req.query.enquiryno,"applicationno":req.query.applicationno,"school_id":req.query.schoolid,"schoolname":req.query.schoolname,"academic_year":req.query.admissionyear,
+     "first_name":req.query.firstname,"middle_name":req.query.middlename,"last_name":req.query.lastname,"student_name":req.query.studentname,"class_for_admission":req.query.gradeselection
+     ,"created_by":req.query.createdby,"physic_detail":req.query.physicdetail,"physic_status":req.query.physicstatus,"mental_detail":req.query.mentaldetail
+     ,"mental_status":req.query.mentalstatus,"illness_detail":req.query.illnessdetail,"illness_status":req.query.illnessstatus,"allergy_detail":req.query.allergydetail,
+     "allergy_status":req.query.allergystatus,"chronic_detail":req.query.chronicdetail,"chronic_status":req.query.chronicstatus
+   };
+   connection.query('insert into md_disability_student set ?',[event],
+     function(err, rows){
+
+       if(!err)
+       {
+         res.status(200).json({'returnval': 'success'});
+       }
+       else
+       {
+         console.log(err);
+         res.status(200).json({'returnval': 'invalid'});
+       }
+     });
+ });
+
+
+app.post('/studentfulldetails_service',  urlencodedParser,function (req, res){
+   var event = {
+   "admission_no":req.query.enquiryno,"":req.query.applicationno,"":req.query.schoolid,"school_id":req.query.schoolname,"academic_year":req.query.admissionyear,"first_name":req.query.firstname,"middle_name":req.query.middlename,"last_name":req.query.lastname,"student_name":req.query.studentname,"class_for_admission":req.query.gradeselection,"dob":req.query.admissiondob,"gender":req.query.admissiongender,"created_by":req.query.createdby,"":req.query.fathername,"":req.query.mothername,"flat_no":req.query.flatno,"building_name":req.query.bulidingname,"street":req.query.street,"town":req.query.town,"city":req.query.city,"state":req.query.state,"pincode":req.query.pincode,"height":req.query.height,"weight":req.query.weight,"nationality":req.query.nationality,"mother_toungue":req.query.mothertongue,"sibling_name":req.query.siblingname,"sibling_class":req.query.siblingclass,"father_dob":req.query.fatherdob,"mother_dob":req.query.motherdob,"father_profession":req.query.fatherqualification,"mother_profession":req.query.motherqualification,"father_occupation":req.query.fatheroccupation,"mother_occupation":req.query.motheroccupation,"father_income":req.query.fatherincome,"mother_income":req.query.motherincome,"father_tel":req.query.fathertelno,"mother_tel":req.query.mothertelno,"father_mobile":req.query.fathermobile,"mother_mobile":req.query.mothermobile,"father_email":req.query.fatheremail,"mother_email":req.query.motheremail,"permanent_town":req.query.ptown,"permanent_district":req.query.pdistrict,"permanent_state":req.query.pstate,"permanent_pincode":req.query.ppincode,"":req.query.relationship1,"guardian_name":req.query.guardianname1,"guardian_relationship":req.query.relationship2,"guard_building":req.query.gbuildingname,"guard_street":req.query.gstreet,"guard_town":req.query.gtown,"guard_city":req.query.gcity,"guard_state":req.query.gstate,"guard_pincode":req.query.gpincode,"guard_res_contact":req.query.gresidentialcontact,"guard_office_contact":req.query.gofficecontact,"guard_mobile_no":req.query.gmobileno,"guard_fax":req.query.gfax,"blood_group":req.query.FnBlood};
+   connection.query('insert into md_student set ?',[event],
+     function(err, rows){
+
+       if(!err)
+       {
+         res.status(200).json({'returnval': 'success'});
+       }
+       else
+       {
+         console.log(err);
+         res.status(200).json({'returnval': 'invalid'});
+       }
+     });
+ });
+
+
+
+app.post('/studentcocurricular_service',  urlencodedParser,function (req, res){
+   var event = {
+"admission_no":req.query.enquiryno,"":req.query.applicationno,"school_id":req.query.schoolid,"first_name":req.query.firstname,"middle_name":req.query.middlename,"last_name":req.query.lastname,"student_name":req.query.studentname,"class_for_admission":req.query.gradeselection,"created_by":req.query.createdby,"field1":req.query.field1,"year1":req.query.year1,"event1":req.query.event1,"prize1":req.query.prizedetail1,"field2":req.query.field2,"year2":req.query.year2,"event2":req.query.event2,"prize2":req.query.prizedetail2,"field3":req.query.field3,"year3":req.query.year3,"event3":req.query.event3,"prize3":req.query.prizedetail3
+   };
+   connection.query('insert into md_student_cocurricular_details set ?',[event],
+     function(err, rows){
+
+       if(!err)
+       {
+         res.status(200).json({'returnval': 'success'});
+       }
+       else
+       {
+         console.log(err);
+         res.status(200).json({'returnval': 'invalid'});
+       }
+     });
+ });
+
+
+app.post('/studenthistory_service', urlencodedParser,function (req, res){
+   var event = {
+    "admission_no":req.query.enquiryno,"school_id":req.query.schoolid,"school_name":req.query.schoolname,"academic_year":req.query.admissionyear,"first_name":req.query.firstname,"middle_name":req.query.middlename,"last_name":req.query.lastname,"student_name":req.query.studentname,"class_for_admission":req.query.gradeselection,"created_by":req.query.createdby,"prevschoolname":"","from_grade":classfrom,"to_grade":classto,"from_year":yearfrom,"to_year":yearto,"medium_of_ins":medium,"percentage":lastclassmark,"reason":reasonforleaving,"board":FnBo
+
+  };
+   connection.query('insert into md_student_school_history set ?',[event],
+     function(err, rows){
+
+       if(!err)
+       {
+         res.status(200).json({'returnval': 'success'});
+       }
+       else
+       {
+         console.log(err);
+         res.status(200).json({'returnval': 'invalid'});
+       }
+     });
+ });
+
 
 
 // Fetching enquiry no for admission
@@ -1633,11 +1718,11 @@ app.post('/getenquirycount',  urlencodedParser,function (req, res){
 
 /*this function takes the detail of student who have been enquired and from gradewise list */
 app.post('/getlistdetails',  urlencodedParser,function (req, res){
-    var qur={"school_id":req.query.schol};
+    var qur={"s.school_id":req.query.schol};
     var state={"status":req.query.status};
     var classes={"class":req.query.grade};
     //console.log('qur');
-    connection.query('SELECT * FROM `student_enquiry_details` WHERE ? and ? and ?',[qur,state,classes],
+    connection.query('SELECT f.current_confidence_level,f.enquiry_id,f.followup_flag,s.enquiry_name, s.enquiry_no,s.created_on FROM followupdetail f join student_enquiry_details s on f.enquiry_id=s.enquiry_no WHERE ? and ? and ?',[qur,state,classes],
     function(err, rows)
     {
     if(!err)
@@ -1661,8 +1746,7 @@ app.post('/getlistdetails',  urlencodedParser,function (req, res){
 
 
 /*this function insert the followup information in followup table*/
-app.post('/updatefollow',  urlencodedParser,function (req, res)
-{
+app.post('/updatefollow',  urlencodedParser,function (req, res) {
   var collection={"school_id":req.query.schol,"id":req.query.id,"enquiry_id":req.query.enquiryno,"schedule_no":req.query.schedule,"created_by":req.query.createdby,"created_on":req.query.createdon};
        connection.query('insert into followup set ? ',[collection],
         function(err, rows)
@@ -1905,7 +1989,14 @@ app.post('/getfollowupcount',  urlencodedParser,function (req, res){
    var school={"school_id":req.query.schol};
    var grade={"class":req.query.grade};
    var status={"status":req.query.status};
-   var qur = "SELECT f.enquiry_id,f.followup_flag,s.enquiry_name,f.followup_status,f.followup_id,f.current_confidence_level FROM followupdetail f join student_enquiry_details s on f.enquiry_id=s.enquiry_no WHERE f.followup_status='"+req.query.status+"' and s.class='"+req.query.grade+"' and s.school_id = '"+req.query.schol+"'";
+   var checkstatus=req.query.status;
+   if((checkstatus=='Closed')||(checkstatus=='Exhausted')){
+        var qur = "SELECT f.enquiry_id,f.followup_flag,s.enquiry_name,f.followup_status,f.followup_id,f.current_confidence_level FROM followupdetail f join student_enquiry_details s on f.enquiry_id=s.enquiry_no WHERE f.followup_status='"+req.query.status+"' and s.class='"+req.query.grade+"' and s.school_id = '"+req.query.schol+"' ORDER BY (next_followup_date) DESC";
+   }
+   else{
+        var qur = "SELECT f.enquiry_id,f.followup_flag,s.enquiry_name,f.followup_status,f.followup_id,f.current_confidence_level FROM followupdetail f join student_enquiry_details s on f.enquiry_id=s.enquiry_no WHERE f.followup_status='"+req.query.status+"' and s.class='"+req.query.grade+"' and s.school_id = '"+req.query.schol+"' ORDER BY (next_followup_date)";
+   }
+
    connection.query(qur,
      function(err, rows)
      {
@@ -2001,7 +2092,7 @@ app.post('/changestatus',  urlencodedParser,function (req, res)
   var school={"school_id":req.query.schol};
   var enquiry={"enquiry_id":req.query.id};
   var followupid={"followup_id":req.query.fid};
-  var status={"followup_status":"Rescheduled"};
+  var status={"followup_status":"Exhausted"};
        connection.query('update followupdetail set ? where ? and ? and ?',[status,followupid,enquiry,school],
         function(err, rows)
         {
@@ -2176,6 +2267,88 @@ app.post('/updateschedule',  urlencodedParser,function (req, res)
 
      });
  });
+
+
+
+app.post('/getconfidencecount',  urlencodedParser,function (req, res){
+
+    //console.log('qur');
+    connection.query("SELECT d.followup_status, f.class, COUNT( * ) AS total FROM  `followupdetail` AS d, student_enquiry_details AS f WHERE d.`school_id` =  '"+req.query.schol+"' AND d.current_confidence_level =  '"+req.query.status+"' AND f.enquiry_no = d.enquiry_id and f.status='Enquired' GROUP BY class ORDER BY (`class`)",
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      //console.log(rows);
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 0});
+    }
+  }
+  else{
+     console.log(err);
+  }
+});
+});
+
+
+
+app.post('/verifyage',  urlencodedParser,function (req, res){
+
+    //console.log('qur');
+    var classes={"grade":req.query.grades};
+    connection.query("SELECT * from md_age where ?",[classes],
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      console.log(rows);
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 0});
+    }
+  }
+  else{
+     console.log(err);
+  }
+});
+});
+
+ app.post('/country',  urlencodedParser,function (req, res){
+   connection.query("SELECT * from country_code",
+     function(err, rows)
+     {
+       if(!err)
+       {
+         if(rows.length>0)
+         {
+           //console.log(rows);
+           res.status(200).json({'returnval': rows});
+         }
+         else
+         {
+           console.log(err);
+           res.status(200).json({'returnval':null});
+         }
+       }
+       else{
+         console.log(err);
+       }
+     });
+ });
+
+
+
+
 
 
 

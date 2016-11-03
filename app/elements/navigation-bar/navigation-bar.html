@@ -694,12 +694,21 @@
         if(localStorage.getItem("admapproval")=='true'){
           this.$.admapp.hidden=true;
         }
+
       },      
       FnFeetypeschedule:function(e){        
         this.$.scheduleservice.fetchgradeService();
         this.$.scheduleservice.fetchacademicyearService();
         this.$.scheduleservice.fetchadmissionyearService();
         this.$.scheduleservice.fetchfeetypeService();
+
+
+      },
+      FnProspect:function(e){
+      // alert(e.target.text);
+        localStorage.setItem("curr_sess_feetype",e.target.text);
+        this.FnRefresh();
+
       },
       FnDiscountschedule:function(e){        
         this.$.scheduleservice.fetchgradeService();
@@ -708,6 +717,7 @@
         this.$.scheduleservice.fetchdiscounttypeService();
         this.$.scheduleservice.fetchfeetypeService();
       },
+
       FnFeestructureschedule:function(e){        
         this.$.scheduleservice.fetchgradeService();
         this.$.scheduleservice.fetchacademicyearService();
@@ -721,10 +731,24 @@
         this.$.scheduleservice.fetchacademicyearService();
         this.$.scheduleservice.fetchadmissionyearService();
       },
+
+      FnAnnual:function(e){
+        localStorage.setItem("curr_sess_feetype",e.target.text);
+        this.FnRefresh();
+      },
+      FnKit:function(e){
+        localStorage.setItem("curr_sess_feetype",e.target.text);
+        this.FnRefresh();
+      },
+      FnMiscellaneous:function(e){
+        localStorage.setItem("curr_sess_feetype",e.target.text);
+        this.FnRefresh();
+
+      },
       followupdashboard:function(){
         this.$.service.getfollowupcount();
         document.querySelector('app-list').setPage("follow-up");
-      }, 
+      },
       FnRefresh:function(){
         document.querySelector('fees-card').ready();
         document.querySelector('fees-card').FnRefresh();
@@ -732,10 +756,13 @@
       },
       enquiry:function(){
         this.$.service.getfollowupcount();
+        document.querySelector('detailed-enquiry-form').country();
         document.querySelector('app-list').setPage("enquiry");
+
       },
       FnAdmissionTest:function(){
         document.querySelector('admission-approval-card').FnRefresh();
+
       }
     });
   })();

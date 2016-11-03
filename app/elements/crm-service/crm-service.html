@@ -474,6 +474,129 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       debounce-duration="300"
     >
     </iron-ajax>
+
+    <!-- this ajax is to get the count of enquiry and followup done with the respective percentage of greater than 95 confidence level -->
+
+    <iron-ajax
+      method="post"
+      id="greater95ajax"
+      url="{{greater95url}}"
+      params="{{greater95param}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="greater95Response"
+      debounce-duration="300"
+    >
+    </iron-ajax>
+
+    <!-- this ajax is to get the count of enquiry and followup done with the respective percentage of greater than 75 confidence level -->
+
+    <iron-ajax
+      method="post"
+      id="greater75ajax"
+      url="{{greater75url}}"
+      params="{{greater75param}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="greater75Response"
+      debounce-duration="300"
+    >
+    </iron-ajax>
+
+    <!-- this ajax is to get the count of enquiry and followup done with the respective percentage of greater than 50 confidence level -->
+
+    <iron-ajax
+      method="post"
+      id="greater50ajax"
+      url="{{greater50url}}"
+      params="{{greater50param}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="greater50Response"
+      debounce-duration="300"
+    >
+    </iron-ajax>
+
+    <!-- this ajax is to get the count of enquiry and followup done with the respective percentage of less than 50 confidence level -->
+
+    <iron-ajax
+      method="post"
+      id="less50ajax"
+      url="{{less50url}}"
+      params="{{less50param}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="less50Response"
+      debounce-duration="300"
+    >
+    </iron-ajax>
+
+    <!-- this ajax is to get the count of enquiry and followup done with the respective percentage of less than 35 confidence level -->
+
+    <iron-ajax
+      method="post"
+      id="less35ajax"
+      url="{{less35url}}"
+      params="{{less35param}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="less35Response"
+      debounce-duration="300"
+    >
+    </iron-ajax>
+
+    <!-- this ajax is to get the count of enquiry and followup done with the respective percentage of less than 10 confidence level -->
+
+    <iron-ajax
+      method="post"
+      id="less10ajax"
+      url="{{less10url}}"
+      params="{{less10param}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="less10Response"
+      debounce-duration="300"
+    >
+    </iron-ajax>
+
+    <!-- this ajax is to get the count of enquiry and followup done with the respective percentage of TBD confidence level -->
+
+    <iron-ajax
+      method="post"
+      id="TBDajax"
+      url="{{TBDurl}}"
+      params="{{TBDparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="TBDResponse"
+      debounce-duration="300"
+    >
+    </iron-ajax>
+
+    <!-- this ajax is used to verify the age criteria for the specific grade according cbse rule and regulation that hasw been stored in md_age table in the database -->
+    <iron-ajax
+      method="post"
+      id="verifyageajax"
+      url="{{verifyageurl}}"
+      params="{{verifyageparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="verifyageResponse"
+      debounce-duration="300"
+    >
+    </iron-ajax>
+    <iron-ajax
+      method="post"
+      id="countryajax"
+      url="{{countryurl}}"
+      params="{{countryparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="countryResponse"
+      debounce-duration="300"
+    >
+    </iron-ajax>
+
   </template>
   <script>
   (function() {
@@ -496,6 +619,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
    var namelistarr=[];
    var reschedule;
    var xenquiryidd;
+   var verifyage;
+   var verifygrade;
 
    var fwupcmnt1;
    var fwupcmnt2;
@@ -517,7 +642,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
    var fwupenqno2;
    var fwupenqno3;
    var fwupenqno4;
-
+    var enquirynjski;
+   var scheduleno;
+   var successbox;
     Polymer({
       is: 'crm-service',
       followupResponse:function(e){
@@ -539,11 +666,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     fourthfollowupdate.setDate(fourthfollowupdate.getDate()+fourthfollowup);
     fifthfollowupdate.setDate(fifthfollowupdate.getDate()+fifthfollowup);
      },
-     submitenqiry:function(enqno,academicyear,grade,Fnfirstname,Fnmiddlename,Fnlastname,gender,dob,fathername,mothername,mob,email,textvalue,todate,gemail,gmob,Guardianname,paga){
+     submitenqiry:function(enqno,academicyear,grade,Fnfirstname,Fnmiddlename,Fnlastname,gender,dob,fathername,mothername,mob,email,textvalue,todate,gemail,gmob,Guardianname,paga,admtype,rtestudent){
+
       //alert(enqno+academicyr+classes+studentname+gender+dob+mob+source+locality+category);
+      successbox=enqno;
       var generateid=Math.floor(100000 + Math.random() * 900000);
         this.submitenquiryurl="http://localhost:8086/submitenquiry";
-        var obj={"id":"","schol":"","acadeyr":"","contact":"","grade":"","gender":"","firstname":"","middlename":"","lastname":"","dobs":"","father":"","mother":"","email":"","location":"","createdby":"","createdate":"","givenname":"","status":"","gemail":"","gmob":"","Guardianname":"","paga":""}
+        var obj={"id":"","schol":"","acadeyr":"","contact":"","grade":"","gender":"","firstname":"","middlename":"","lastname":"","dobs":"","father":"","mother":"","email":"","location":"","createdby":"","createdate":"","givenname":"","status":"","gemail":"","gmob":"","Guardianname":"","paga":"","rtestudent":"","adtype":""}
+
         obj.id=enqno;
         obj.schol=localStorage.getItem("schoolid");
         obj.acadeyr=academicyear;
@@ -566,10 +696,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         obj.gmob=gmob;
         obj.Guardianname=Guardianname;
         obj.paga=paga;
+        obj.rtestudent=rtestudent;
+        obj.adtype=admtype;
         this.submitenquiryparam=obj;
         //alert(JSON.stringify(obj));
         this.$.submitenquiryajax.generateRequest();
-      this.updatefollowurl="http://localhost:8086/updatefollow";
+
+
+        this.updatefollowurl="http://localhost:8086/updatefollow";
         var obj={"schol":"","id":"","enquiryno":"","schedule":"","createdby":"","createdon":""}
         obj.schol=localStorage.getItem("schoolid");
         obj.id=generateid;
@@ -578,7 +712,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         obj.createdby=localStorage.getItem("employeeid");
         obj.createdon=todate;
         this.updatefollowparam=obj;
-       //alert(JSON.stringify(obj));
+        //alert(JSON.stringify(obj));
         this.$.updatefollowajax.generateRequest();
 
       this.updatefollowdetailurl="http://localhost:8086/updatefollowdetail";
@@ -603,8 +737,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       var result=e.detail.response.returnval;
       // alert(JSON.stringify(result));
       if(result=="success"){
-        alert("Submited Successfully");
-
+        alert("Submited Successfully for Enquiry ID :"+successbox);
+//document.querySelector('newenquiry-card').showsuccess();
         this.updatesequrl="http://localhost:8086/updateseq";
         var obj={"id":"","schol":""};
         obj.id=seqno;
@@ -613,11 +747,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        //alert(JSON.stringify(obj));
         this.$.updateseqajax.generateRequest();
 
+        //this.getenquirycount();
+          document.querySelector('enquiry-card').ready();
 
         document.querySelector('newenquiry-card').Fnclear();
-        document.querySelector('enquiry-card').ready();
 
-        this.getenquirycount();
+
       }
       else{
         alert('Form submit interrupted');
@@ -625,11 +760,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
      },
-     updateenquiryform:function(enqno,firstname,middlename,lastname,gender,grade,dob,oldclass,oldschool,mothertongue,fathername,mothername,fatheredu,motheredu,fathermob,mothermob,fathermail,mothermail,fathercompany,mothercompany,fatherjob,motherjob,flat,address1,address2,address3,city,pincode,state,enquiysource,siblingname,siblingdetail,transportreq,canteenreq,secondlanguage,thirdlanguage,propspectus,dadpost,mompost,dadsalary,momsalary,prospect,admissiontest,admissiondate, admissiontestenglish, admissiontestmaths,admissiontestevs,guardianname,guardianmobile,guardianemail,guardiancompany,guardianjob,guardianoccup,guardianincome){
+     updateenquiryform:function(enqno,firstname,middlename,lastname,gender,grade,dob,oldclass,oldschool,mothertongue,fathername,mothername,fatheredu,motheredu,fathermob,mothermob,fathermail,mothermail,fathercompany,mothercompany,fatherjob,motherjob,flat,address1,address2,address3,city,pincode,state,enquiysource,siblingname,siblingdetail,transportreq,canteenreq,secondlanguage,thirdlanguage,propspectus,dadpost,mompost,dadsalary,momsalary,prospect,admissiontest,admissiondate, admissiontestenglish, admissiontestmaths,admissiontestevs,guardianname,guardianmobile,guardianemail,guardiancompany,guardianjob,guardianoccup,guardianincome,location,fatherother,motherother,guardianother,country_name){
 
       //alert(enqno+firstname+middlename+lastname+gender+grade+dob+oldclass+oldschool+mothertongue+fathername+mothername+fatheredu+motheredu+fathermob+mothermob+fathermail+mothermail+fathercompany+mothercompany+fatherjob+motherjob+flat+address1+address2+address3+city+pincode+state+enquiysource+siblingname+siblingdetail+transportreq+canteenreq+secondlanguage+thirdlanguage+propspectus+dadpost+mompost+dadsalary+momsalary);
       this.updateenquiryurl="http://localhost:8086/updateenquiry";
-        var obj={"schol":"","enq":"","firstname":"","middlename":"","lastname":"","gender":"","grade":"","dob":"","oldclass":"","oldschool":"","mothertongue":"","fathername":"","mothername":"","fatheredu":"","motheredu":"","fathermob":"","mothermob":"","fathermail":"","mothermail":"","fathercompany":"","mothercompany":"","fatherjob":"","motherjobfn":"","flatno":"","address1":"","address2":"","address3":"","city":"","pincode":"","statename":"","enquiysource":"","siblingname":"","siblingdetails":"","transportreq":"","canteenreq":"","secondlanguage":"","thirdlanguage":"","modified":"","prospectstatus":"","daddesignation":"","momdesignation":"","dadincome":"","momincome":"","prospectusno":"","admissiontest":"","admissiondate":"",'admissiontestenglish':"","admissiontestmaths":"","admissiontestevs":"","guardianname":"","guardianmobile":"","guardianemail":"","guardiancompany":"","guardianjob":"","guardianoccup":"","guardianincome":""}
+        var obj={"schol":"","enq":"","firstname":"","middlename":"","lastname":"","gender":"","grade":"","dob":"","oldclass":"","oldschool":"","mothertongue":"","fathername":"","mothername":"","fatheredu":"","motheredu":"","fathermob":"","mothermob":"","fathermail":"","mothermail":"","fathercompany":"","mothercompany":"","fatherjob":"","motherjobfn":"","flatno":"","address1":"","address2":"","address3":"","city":"","pincode":"","statename":"","enquiysource":"","siblingname":"","siblingdetails":"","transportreq":"","canteenreq":"","secondlanguage":"","thirdlanguage":"","modified":"","prospectstatus":"","daddesignation":"","momdesignation":"","dadincome":"","momincome":"","prospectusno":"","admissiontest":"","admissiondate":"",'admissiontestenglish':"","admissiontestmaths":"","admissiontestevs":"","guardianname":"","guardianmobile":"","guardianemail":"","guardiancompany":"","guardianjob":"","guardianoccup":"","guardianincome":"","location":"","fatherother":"","motherother":"","guardianother":"","country_name":""}
         obj.schol=localStorage.getItem("schoolid");
         obj.enq=enqno;
         obj.firstname=firstname;
@@ -686,8 +821,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        obj.guardianjob=guardianjob;
        obj.guardianoccup=guardianoccup;
        obj.guardianincome=guardianincome;
+       obj.location=location;
+       obj.fatherother=fatherother;
+       obj.motherother=motherother;
+       obj.guardianother=guardianother;
+       obj.country_name=country_name;
         this.updateenquiryparam=obj;
-        alert(JSON.stringify(obj));
+        //alert(JSON.stringify(obj));
         this.$.updateenquiryajax.generateRequest();
 
 
@@ -706,18 +846,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       // alert(result);
       if(result="success"){
         alert("Submited Successfully");
-        document.querySelector('detailed-enquiry-form').Fnclear();
         document.querySelector('enquiry-card').ready();
+       // this.getenquirycount();
+        document.querySelector('detailed-enquiry-form').Fnclear();
+
       }
 
      },
 
-      registerenquiryform:function(enqno,firstname,middlename,lastname,gender,grade,dob,oldclass,oldschool,mothertongue,fathername,mothername,fatheredu,motheredu,fathermob,mothermob,fathermail,mothermail,fathercompany,mothercompany,fatherjob,motherjob,flat,address1,address2,address3,city,pincode,state,enquiysource,siblingname,siblingdetail,transportreq,canteenreq,secondlanguage,thirdlanguage,propspectus,dadpost,mompost,dadsalary,momsalary,prospect, academicyear,admissiontest,admissiondate, admissiontestenglish, admissiontestmaths,admissiontestevs,guardianname,guardianmobile,guardianemail,guardiancompany,guardianjob,guardianoccup,guardianincome){
+      registerenquiryform:function(enqno,firstname,middlename,lastname,gender,grade,dob,oldclass,oldschool,mothertongue,fathername,mothername,fatheredu,motheredu,fathermob,mothermob,fathermail,mothermail,fathercompany,mothercompany,fatherjob,motherjob,flat,address1,address2,address3,city,pincode,state,enquiysource,siblingname,siblingdetail,transportreq,canteenreq,secondlanguage,thirdlanguage,propspectus,dadpost,mompost,dadsalary,momsalary,prospect, academicyear,admissiontest,admissiondate, admissiontestenglish, admissiontestmaths,admissiontestevs,guardianname,guardianmobile,guardianemail,guardiancompany,guardianjob,guardianoccup,guardianincome,location,fatherother,motherother,guardianother,enrolltype,country_name){
+
+        enquirynjski=enqno;
          var generateid=Math.floor(100000 + Math.random() * 900000);
          var dat=new Date();
         //alert(enqno+firstname+middlename+lastname+gender+grade+dob+oldclass+oldschool+mothertongue+fathername+mothername+fatheredu+motheredu+fathermob+mothermob+fathermail+mothermail+fathercompany+mothercompany+fatherjob+motherjob+flat+address1+address2+address3+city+pincode+state+enquiysource+siblingname+siblingdetail+transportreq+canteenreq+secondlanguage+thirdlanguage+propspectus+dadpost+mompost+dadsalary+momsalary);
         this.registerenquiryformurl="http://localhost:8086/registerenquiryform";
-        var obj={"schol":"","enq":"","firstname":"","middlename":"","lastname":"","gender":"","grade":"","dob":"","oldclass":"","oldschool":"","mothertongue":"","fathername":"","mothername":"","fatheredu":"","motheredu":"","fathermob":"","mothermob":"","fathermail":"","mothermail":"","fathercompany":"","mothercompany":"","fatherjob":"","motherjobfn":"","flatno":"","address1":"","address2":"","address3":"","city":"","pincode":"","statename":"","enquiysource":"","siblingname":"","siblingdetails":"","transportreq":"","canteenreq":"","secondlanguage":"","thirdlanguage":"","modified":"","prospectstatus":"","daddesignation":"","momdesignation":"","dadincome":"","momincome":"","prospectusno":"", "academicyear":"","givenname":"", "status":"","admissiontest":"","admissiondate":"",'admissiontestenglish':"","admissiontestmaths":"","admissiontestevs":"","guardianname":"","guardianmobile":"","guardianemail":"","guardiancompany":"","guardianjob":"","guardianoccup":"","guardianincome":""}
+        var obj={"schol":"","enq":"","firstname":"","middlename":"","lastname":"","gender":"","grade":"","dob":"","oldclass":"","oldschool":"","mothertongue":"","fathername":"","mothername":"","fatheredu":"","motheredu":"","fathermob":"","mothermob":"","fathermail":"","mothermail":"","fathercompany":"","mothercompany":"","fatherjob":"","motherjobfn":"","flatno":"","address1":"","address2":"","address3":"","city":"","pincode":"","statename":"","enquiysource":"","siblingname":"","siblingdetails":"","transportreq":"","canteenreq":"","secondlanguage":"","thirdlanguage":"","modified":"","prospectstatus":"","daddesignation":"","momdesignation":"","dadincome":"","momincome":"","prospectusno":"", "academicyear":"","givenname":"", "status":"","admissiontest":"","admissiondate":"",'admissiontestenglish':"","admissiontestmaths":"","admissiontestevs":"","guardianname":"","guardianmobile":"","guardianemail":"","guardiancompany":"","guardianjob":"","guardianoccup":"","guardianincome":"","location":"","fatherother":"","motherother":"","guardianother":"","enrolltype":"","country_name":""};
         obj.schol=localStorage.getItem("schoolid");
         obj.enq=enqno;
         obj.firstname=firstname;
@@ -777,8 +921,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         obj.guardianjob=guardianjob;
         obj.guardianoccup=guardianoccup;
         obj.guardianincome=guardianincome;
+        obj.location=location;
+        obj.fatherother=fatherother;
+        obj.motherother=motherother;
+        obj.guardianother=guardianother;
+        obj.enrolltype=enrolltype;
+        obj.country_name=country_name;
         this.registerenquiryformparam=obj;
-        alert(JSON.stringify(obj));
+        //alert(JSON.stringify(obj));
         this.$.registerenquiryformajax.generateRequest();
 
 
@@ -826,14 +976,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       registerenquiryformResponse:function(e){
         var result=e.detail.response.returnval;
         if(result="success"){
-          alert("Submited Successfully");
+          alert("Submited Successfully for Enquiry ID:"+enquirynjski);
           document.querySelector('detailed-enquiry-form').Fnclear();
           document.querySelector('enquiry-card').ready();
         }
       },
      getenquiryno:function(){
       this.getenquirynourl="http://localhost:8086/getenquiryno";
-        var obj={"schol":""}
+        var obj={"schol":""};
         obj.schol=localStorage.getItem("schoolid");
         this.getenquirynoparam=obj;
        //alert(JSON.stringify(obj));
@@ -848,7 +998,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       var today = new Date(); var yyyy = today.getFullYear();
       var academicyr=yyyy+'-'+(yyyy+1);
       document.querySelector('newenquiry-card').academicyr=academicyr;
-
+      document.querySelector('newenquiry-card').complete();
      },
       getenqno:function(){
         this.getenquiryno1url="http://localhost:8086/getenquiryno";
@@ -864,6 +1014,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         seqno1=seqno1+1;
         var enquiryif="ENQ1718"+seqno;
         document.querySelector('detailed-enquiry-form').setenqno(enquiryif);
+        document.querySelector('detailed-enquiry-form').complete();
       },
       getclasses:function(){
       this.getclassesurl="http://localhost:8086/getclasses";
@@ -897,7 +1048,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      getlocationResponse:function(e){
         var result=e.detail.response.returnval;
         //alert(JSON.stringify(result));
-      document.querySelector('newenquiry-card').autocompletename(result);
+       document.querySelector('newenquiry-card').autocompletename(result);
+       document.querySelector('detailed-enquiry-form').autocompletenames(result);
      },
 /*     getstudentname:function(){
         this.getstudentnameurl="http://localhost:8086/getstudentname";
@@ -1084,6 +1236,65 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.getexhaustfollowupcountparam=obj;
        //alert(JSON.stringify(obj));
         this.$.getexhaustfollowupcountajax.generateRequest();
+
+
+        this.greater95url="http://localhost:8086/getconfidencecount";
+        var obj={"schol":"","status":""}
+        obj.status=">90%";
+        obj.schol=localStorage.getItem("schoolid");
+        this.greater95param=obj;
+       //alert(JSON.stringify(obj));
+        this.$.greater95ajax.generateRequest();
+
+         this.greater75url="http://localhost:8086/getconfidencecount";
+        var obj={"schol":"","status":""}
+        obj.status=">75%";
+        obj.schol=localStorage.getItem("schoolid");
+        this.greater75param=obj;
+       //alert(JSON.stringify(obj));
+        this.$.greater75ajax.generateRequest();
+
+         this.greater50url="http://localhost:8086/getconfidencecount";
+        var obj={"schol":"","status":""}
+        obj.status=">50%";
+        obj.schol=localStorage.getItem("schoolid");
+        this.greater50param=obj;
+       //alert(JSON.stringify(obj));
+        this.$.greater50ajax.generateRequest();
+
+         this.less50url="http://localhost:8086/getconfidencecount";
+        var obj={"schol":"","status":""}
+        obj.status="<50%";
+        obj.schol=localStorage.getItem("schoolid");
+        this.less50param=obj;
+       //alert(JSON.stringify(obj));
+        this.$.less50ajax.generateRequest();
+
+         this.less35url="http://localhost:8086/getconfidencecount";
+        var obj={"schol":"","status":""}
+        obj.status="<35%";
+        obj.schol=localStorage.getItem("schoolid");
+        this.less35param=obj;
+       //alert(JSON.stringify(obj));
+        this.$.less35ajax.generateRequest();
+
+        this.less10url="http://localhost:8086/getconfidencecount";
+        var obj={"schol":"","status":""}
+        obj.status="<15%";
+        obj.schol=localStorage.getItem("schoolid");
+        this.less10param=obj;
+       //alert(JSON.stringify(obj));
+        this.$.less10ajax.generateRequest();
+
+        this.TBDurl="http://localhost:8086/getconfidencecount";
+        var obj={"schol":"","status":""}
+        obj.status="TBD";
+        obj.schol=localStorage.getItem("schoolid");
+        this.TBDparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.TBDajax.generateRequest();
+
+
      },
      getopenfollowupcountResponse:function(e){
       var res=e.detail.response.returnval;
@@ -1100,6 +1311,34 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      getexhaustfollowupcountResponse:function(e){
       var res=e.detail.response.returnval;
       document.querySelector('followup-dashboard').exhaustedarr=res;
+     },
+     greater95Response:function(e){
+       var res=e.detail.response.returnval;
+      document.querySelector('followup-dashboard').arr90greater=res;
+     },
+     greater75Response:function(e){
+       var res=e.detail.response.returnval;
+      document.querySelector('followup-dashboard').arr75greater=res;
+     },
+     greater50Response:function(e){
+       var res=e.detail.response.returnval;
+      document.querySelector('followup-dashboard').arr50greater=res;
+     },
+     less50Response:function(e){
+       var res=e.detail.response.returnval;
+      document.querySelector('followup-dashboard').arr50lesser=res;
+     },
+     less35Response:function(e){
+       var res=e.detail.response.returnval;
+      document.querySelector('followup-dashboard').arr35lesser=res;
+     },
+     less10Response:function(e){
+       var res=e.detail.response.returnval;
+      document.querySelector('followup-dashboard').arr10lesser=res;
+     },
+     TBDResponse:function(e){
+       var res=e.detail.response.returnval;
+      document.querySelector('followup-dashboard').arrtbd=res;
      },
       FollowUp1:function(enqno,followupid,followupdate1,confidencelevel,comments,fdate2){
         fwupdate2=fdate2;
@@ -1218,7 +1457,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       FollowUp4Response:function(e){
         var res=e.detail.response.returnval;
         if((res == "success")&&(fwupcmnt4!='null'||fwupcmnt4!='')){
-       
+
            this.updatedateurl="http://localhost:8086/updatedate";
         var obj={"schol":"","enqno":"","fwupid":"","nextdate":"","nextflag":""}
         obj.schol=localStorage.getItem("schoolid");
@@ -1326,10 +1565,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
            document.querySelector('followup-student-detail').check();
            alert('Comments and Other details are updated Successfully ');
         }
-        
+
       },
-      changestatus:function(folowupid,enquiryidd){
+      changestatus:function(folowupid,enquiryidd,schedule){
         xenquiryidd=enquiryidd;
+        scheduleno=schedule;
         this.changestatusurl="http://localhost:8086/changestatus";
         var obj={"schol":"","id":"","fid":""};
         obj.schol=localStorage.getItem("schoolid");
@@ -1348,7 +1588,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         obj.schol=localStorage.getItem("schoolid");
         obj.id=xenquiryidd;
         obj.followid=reschedule;
-        obj.schedule=2;
+        obj.schedule=scheduleno+1;
         obj.rescheduledon=dat.getDate()+"/"+(dat.getMonth()+1)+"/"+dat.getFullYear();
         this.updatescheduleparam=obj;
         this.$.updatescheduleajax.generateRequest();
@@ -1377,7 +1617,7 @@ var dat=new Date();
         obj.folowup5=fifthfollowupdate.getDate()+"/"+(fifthfollowupdate.getMonth()+1)+"/"+fifthfollowupdate.getFullYear();
         obj.nextfolowup=firstfollowupdate.getDate()+"/"+(firstfollowupdate.getMonth()+1)+"/"+firstfollowupdate.getFullYear();
         obj.flag=1;
-        obj.schedule=2;
+        obj.schedule=scheduleno+1;
         obj.status="Open";
         this.updatefollowdetailparam=obj;
        //alert(JSON.stringify(obj));
@@ -1401,7 +1641,7 @@ var dat=new Date();
       fetchenquiryinfoResponse:function(e){
         var result =e.detail.response.returnval;
         if(result.length>=0){
-          if(result[0].parent_or_guardian == "Parent"){
+            if(result[0].parent_or_guardian == "parents"){
             document.querySelector('detailed-enquiry-form').enqno=result[0].enquiry_no;
             document.querySelector('detailed-enquiry-form').firstname=result[0].first_name;
             document.querySelector('detailed-enquiry-form').middlename=result[0].middle_name;
@@ -1411,7 +1651,7 @@ var dat=new Date();
             document.querySelector('detailed-enquiry-form').fathername=result[0].father_name;
             document.querySelector('detailed-enquiry-form').mothername=result[0].mother_name;
             document.querySelector('detailed-enquiry-form').fathermail=result[0].father_email;
-            document.querySelector('detailed-enquiry-form').Fngrade(result[0].class);
+            document.querySelector('detailed-enquiry-form').Fngrade(result[0].class,result[0].rte_student);
             document.querySelector('detailed-enquiry-form').Fnresult(result[0].dob,result[0].gender);
           } else {
             document.querySelector('detailed-enquiry-form').enqno=result[0].enquiry_no;
@@ -1422,7 +1662,7 @@ var dat=new Date();
             document.querySelector('detailed-enquiry-form').guardianname=result[0].Guardianname;
             document.querySelector('detailed-enquiry-form').guardianmobile=result[0].gmob;
             document.querySelector('detailed-enquiry-form').guardianemail=result[0].gemail;
-            document.querySelector('detailed-enquiry-form').Fngrade(result[0].class);
+            document.querySelector('detailed-enquiry-form').Fngrade(result[0].class,result[0].rte_student);
             document.querySelector('detailed-enquiry-form').Fnresult(result[0].dob,result[0].gender);
             document.querySelector('detailed-enquiry-form').Fnshowguardian();
           }
@@ -1449,7 +1689,48 @@ var dat=new Date();
             alert('Kindly Reschedule the current follow up date');
             document.querySelector('followup-student-detail').exit();
           }
-      }
+      },
+      verifyage:function(grade,age){
+        //alert('sdf');
+            verifyage=age;
+
+             this.verifyageurl="http://localhost:8086/verifyage";
+        var obj={"grades":""};
+        obj.grades=grade;
+        this.verifyageparam=obj;
+        this.$.verifyageajax.generateRequest();
+
+      },
+      verifyageResponse:function(e){
+          var min=e.detail.response.returnval[0].min_age;
+          var max=e.detail.response.returnval[0].max_age;
+
+          if((min<=verifyage)&&(max>=verifyage)){
+
+          }
+          else if(min>verifyage){
+              alert("Your age is lesser than the minimum age criteria\nThe age should be between "+min+" and "+max+" for "+verifygrade);
+              document.querySelector('detailed-enquiry-form').ageofyr="";
+               document.querySelector('newenquiry-card').ageofyr="";
+          }
+          else if(max<verifyage){
+              alert("Your age is greater than the maximum age criteria\nThe age should be between "+min+" and "+max+" for "+verifygrade);
+              document.querySelector('detailed-enquiry-form').ageofyr="";
+               document.querySelector('newenquiry-card').ageofyr="";
+          }
+      },
+      country:function(){
+        this.countryurl="http://localhost:8086/country";
+        var obj={"schol":""};
+        obj.schol=localStorage.getItem("schoolid");
+        this.countryparam=obj;
+        this.$.countryajax.generateRequest();
+      },
+      countryResponse:function(e){
+        var res=e.detail.response.returnval;
+        //document.querySelector('detailed-enquiry-form').countryarr=res;
+        document.querySelector('detailed-enquiry-form').country(res);
+      },
 
     });
   })();
