@@ -764,7 +764,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       //alert(enqno+firstname+middlename+lastname+gender+grade+dob+oldclass+oldschool+mothertongue+fathername+mothername+fatheredu+motheredu+fathermob+mothermob+fathermail+mothermail+fathercompany+mothercompany+fatherjob+motherjob+flat+address1+address2+address3+city+pincode+state+enquiysource+siblingname+siblingdetail+transportreq+canteenreq+secondlanguage+thirdlanguage+propspectus+dadpost+mompost+dadsalary+momsalary);
       this.updateenquiryurl="http://localhost:8086/updateenquiry";
-        var obj={"schol":"","enq":"","firstname":"","middlename":"","lastname":"","gender":"","grade":"","dob":"","oldclass":"","oldschool":"","mothertongue":"","fathername":"","mothername":"","fatheredu":"","motheredu":"","fathermob":"","mothermob":"","fathermail":"","mothermail":"","fathercompany":"","mothercompany":"","fatherjob":"","motherjobfn":"","flatno":"","address1":"","address2":"","address3":"","city":"","pincode":"","statename":"","enquiysource":"","siblingname":"","siblingdetails":"","transportreq":"","canteenreq":"","secondlanguage":"","thirdlanguage":"","modified":"","prospectstatus":"","daddesignation":"","momdesignation":"","dadincome":"","momincome":"","prospectusno":"","admissiontest":"","admissiondate":"",'admissiontestenglish':"","admissiontestmaths":"","admissiontestevs":"","guardianname":"","guardianmobile":"","guardianemail":"","guardiancompany":"","guardianjob":"","guardianoccup":"","guardianincome":"","location":"","fatherother":"","motherother":"","guardianother":"","country_name":""}
+        var obj={"schol":"","enq":"","firstname":"","middlename":"","lastname":"","gender":"","grade":"","dob":"","oldclass":"","oldschool":"","mothertongue":"","fathername":"","mothername":"","fatheredu":"","motheredu":"","fathermob":"","mothermob":"","fathermail":"","mothermail":"","fathercompany":"","mothercompany":"","fatherjob":"","motherjobfn":"","flatno":"","address1":"","address2":"","address3":"","city":"","pincode":"","statename":"","enquiysource":"","siblingname":"","siblingdetails":"","transportreq":"","canteenreq":"","secondlanguage":"","thirdlanguage":"","modified":"","prospectstatus":"","daddesignation":"","momdesignation":"","dadincome":"","momincome":"","prospectusno":"","admissiontest1":"","admissiondate1":"",'admissiontestenglish1':"","admissiontestmaths1":"","admissiontestevs1":"","guardianname1":"","guardianmobile1":"","guardianemail1":"","guardiancompany1":"","guardianjob1":"","guardianoccup1":"","guardianincome1":"","location1":"","fatherother1":"","motherother1":"","guardianother1":"","country_name1":""}
         obj.schol=localStorage.getItem("schoolid");
         obj.enq=enqno;
         obj.firstname=firstname;
@@ -809,23 +809,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         obj.dadincome=dadsalary;
         obj.momincome=momsalary;
         obj.prospectusno=prospect;
-        obj.admissiontest=admissiontest;
-        obj.admissiondate=admissiondate;
-        obj.admissiontestenglish=admissiontestenglish;
-        obj.admissiontestmaths=admissiontestmaths;
-        obj.admissiontestevs=admissiontestevs;
-       obj.guardianname=guardianname;
-       obj.guardianmobile=guardianmobile;
-       obj.guardianemail=guardianemail;
-       obj.guardiancompany=guardiancompany;
-       obj.guardianjob=guardianjob;
-       obj.guardianoccup=guardianoccup;
-       obj.guardianincome=guardianincome;
-       obj.location=location;
-       obj.fatherother=fatherother;
-       obj.motherother=motherother;
-       obj.guardianother=guardianother;
-       obj.country_name=country_name;
+        obj.admissiontest1=admissiontest;
+        obj.admissiondate1=admissiondate;
+        obj.admissiontestenglish1=admissiontestenglish;
+        obj.admissiontestmaths1=admissiontestmaths;
+        obj.admissiontestevs1=admissiontestevs;
+       obj.guardianname1=guardianname;
+       obj.guardianmobile1=guardianmobile;
+       obj.guardianemail1=guardianemail;
+       obj.guardiancompany1=guardiancompany;
+       obj.guardianjob1=guardianjob;
+       obj.guardianoccup1=guardianoccup;
+       obj.guardianincome1=guardianincome;
+       obj.location1=location;
+       obj.fatherother1=fatherother;
+       obj.motherother1=motherother;
+       obj.guardianother1=guardianother;
+       obj.country_name1=country_name;
         this.updateenquiryparam=obj;
         //alert(JSON.stringify(obj));
         this.$.updateenquiryajax.generateRequest();
