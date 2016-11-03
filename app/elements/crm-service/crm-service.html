@@ -849,13 +849,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         document.querySelector('enquiry-card').ready();
        // this.getenquirycount();
         document.querySelector('detailed-enquiry-form').Fnclear();
-
       }
-
      },
 
       registerenquiryform:function(enqno,firstname,middlename,lastname,gender,grade,dob,oldclass,oldschool,mothertongue,fathername,mothername,fatheredu,motheredu,fathermob,mothermob,fathermail,mothermail,fathercompany,mothercompany,fatherjob,motherjob,flat,address1,address2,address3,city,pincode,state,enquiysource,siblingname,siblingdetail,transportreq,canteenreq,secondlanguage,thirdlanguage,propspectus,dadpost,mompost,dadsalary,momsalary,prospect, academicyear,admissiontest,admissiondate, admissiontestenglish, admissiontestmaths,admissiontestevs,guardianname,guardianmobile,guardianemail,guardiancompany,guardianjob,guardianoccup,guardianincome,location,fatherother,motherother,guardianother,enrolltype,country_name){
-
         enquirynjski=enqno;
          var generateid=Math.floor(100000 + Math.random() * 900000);
          var dat=new Date();
@@ -965,7 +962,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         if((prospect!="")||(prospect!=null)){
           this.updateprospectnourl="http://localhost:8086/updateprospectno";
-          var obj={"schol":"","id":""}
+          var obj={"schol":"","id":""};
           obj.schol=localStorage.getItem("schoolid");
           obj.id=proseq;
           this.updateprospectnoparam=obj;
@@ -999,6 +996,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       var academicyr=yyyy+'-'+(yyyy+1);
       document.querySelector('newenquiry-card').academicyr=academicyr;
       document.querySelector('newenquiry-card').complete();
+       document.querySelector('detailed-enquiry-form').enqno=enquiryif;
+       document.querySelector('detailed-enquiry-form').complete();
      },
       getenqno:function(){
         this.getenquiryno1url="http://localhost:8086/getenquiryno";

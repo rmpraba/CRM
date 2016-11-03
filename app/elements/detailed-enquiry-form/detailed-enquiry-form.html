@@ -210,7 +210,7 @@
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category" hidden$="{{salaryinfo}}">
-        <div class="col-sm-6 pull-right" hidden$="{{fathersalaryinfo}}">
+        <div class="col-sm-6" hidden$="{{fathersalaryinfo}}">
           <paper-input id="dadjob" required error-message="needs father's designation!" label="Designation" allowed-pattern="[a-zA-Z ]" value="{{fatherjob}}"></paper-input>
         </div>
         <div class="col-sm-6 pull-right" hidden$="{{mothersalaryinfo}}">
@@ -1158,7 +1158,6 @@ if(dadoccup=="Self Employed"||dadoccup=="Public Sector"||dadoccup=="Private Sect
       },
 motheroccupation:function(e){
 momtheroccup=(e.target.selectedItem.textContent).trim();
-alert(momtheroccup);
 if(momtheroccup=="Self Employed"||momtheroccup=="Public Sector"||momtheroccup=="Private Sector"){
       /*this.$.momoff.hidden=false;
       this.$.momjob.hidden=false;
@@ -1287,7 +1286,7 @@ Fnlistbox:function(nameitem){
 
       },
       register:function() {
-        this.$.service.getenqno();
+        this.$.service.getenquiryno();
       },
       FnSelectEnquiry:function(e){
         var enquiry=(e.target.selectedItem.textContent).trim();
@@ -1402,7 +1401,7 @@ Fnlistbox:function(nameitem){
               if(admissiontestenglish == null && admissiontestmaths == null && admissiontestevs == null){
                 alert('Select at least any one subject ');
               } else {
-                this.$.service.registerenquiryform(enqnumber, this.firstname, this.middlename, this.lastname, fngender, grade, dobdate, this.oldclass, this.oldschool, mothertongue, this.fathername, this.mothername, this.fatheredu, this.motheredu, this.fathercountrycode + "-" + this.fathermob, this.mothercountrycode + "-" + this.mothermob, this.fathermail, this.mothermail, this.fathercompany, this.mothercompany, dadoccup, momtheroccup, this.flat, this.address1, this.address2, this.address3, this.city, this.pincode, this.state, enquiysource, this.siblingname, this.siblingdetails, transportreq, canteenreq, secondlanguage, thirdlanguage, propsold, this.fatherjob, this.motherjob, dadincome, momincome, this.prospectusno, admissiontest, admissiontestdate, admissiontestenglish, admissiontestmaths, admissiontestevs, this.guardianname, this.guardiancountrycode + "-" + this.guardianmobile, this.guardianemail, this.guardiancompany, this.guardianjob, guardianoccup, guardianincome, this.textvalues, this.fatherotheroccupation, this.motherotheroccupation, this.guardianotheroccupation, enrolltype, country_name);
+                this.$.service.registerenquiryform(this.enqno, this.firstname, this.middlename, this.lastname, fngender, grade, dobdate, this.oldclass, this.oldschool, mothertongue, this.fathername, this.mothername, this.fatheredu, this.motheredu, this.fathercountrycode + "-" + this.fathermob, this.mothercountrycode + "-" + this.mothermob, this.fathermail, this.mothermail, this.fathercompany, this.mothercompany, dadoccup, momtheroccup, this.flat, this.address1, this.address2, this.address3, this.city, this.pincode, this.state, enquiysource, this.siblingname, this.siblingdetails, transportreq, canteenreq, secondlanguage, thirdlanguage, propsold, this.fatherjob, this.motherjob, dadincome, momincome, this.prospectusno, admissiontest, admissiontestdate, admissiontestenglish, admissiontestmaths, admissiontestevs, this.guardianname, this.guardiancountrycode + "-" + this.guardianmobile, this.guardianemail, this.guardiancompany, this.guardianjob, guardianoccup, guardianincome, this.textvalues, this.fatherotheroccupation, this.motherotheroccupation, this.guardianotheroccupation, enrolltype, country_name);
               }
             } else {
               alert('Select the third language');
@@ -1412,7 +1411,7 @@ Fnlistbox:function(nameitem){
             if(admissiontestenglish == null && admissiontestmaths == null && admissiontestevs == null){
               alert('Select at least any one subject ');
             } else {
-              this.$.service.registerenquiryform(enqnumber, this.firstname, this.middlename, this.lastname, fngender, grade, dobdate, this.oldclass, this.oldschool, mothertongue, this.fathername, this.mothername, this.fatheredu, this.motheredu, this.fathercountrycode + "-" + this.fathermob, this.mothercountrycode + "-" + this.mothermob, this.fathermail, this.mothermail, this.fathercompany, this.mothercompany, dadoccup, momtheroccup, this.flat, this.address1, this.address2, this.address3, this.city, this.pincode, this.state, enquiysource, this.siblingname, this.siblingdetails, transportreq, canteenreq, secondlanguage, thirdlanguage, propsold, this.fatherjob, this.motherjob, dadincome, momincome, this.prospectusno, this.academicyear, admissiontest, admissiontestdate, admissiontestenglish, admissiontestmaths, admissiontestevs, this.guardianname, this.guardiancountrycode + "-" + this.guardianmobile, this.guardianemail, this.guardiancompany, this.guardianjob, guardianoccup, guardianincome, this.textvalues, this.fatherotheroccupation, this.motherotheroccupation, this.guardianotheroccupation, enrolltype, country_name);
+              this.$.service.registerenquiryform(this.enqno, this.firstname, this.middlename, this.lastname, fngender, grade, dobdate, this.oldclass, this.oldschool, mothertongue, this.fathername, this.mothername, this.fatheredu, this.motheredu, this.fathercountrycode + "-" + this.fathermob, this.mothercountrycode + "-" + this.mothermob, this.fathermail, this.mothermail, this.fathercompany, this.mothercompany, dadoccup, momtheroccup, this.flat, this.address1, this.address2, this.address3, this.city, this.pincode, this.state, enquiysource, this.siblingname, this.siblingdetails, transportreq, canteenreq, secondlanguage, thirdlanguage, propsold, this.fatherjob, this.motherjob, dadincome, momincome, this.prospectusno, this.academicyear, admissiontest, admissiontestdate, admissiontestenglish, admissiontestmaths, admissiontestevs, this.guardianname, this.guardiancountrycode + "-" + this.guardianmobile, this.guardianemail, this.guardiancompany, this.guardianjob, guardianoccup, guardianincome, this.textvalues, this.fatherotheroccupation, this.motherotheroccupation, this.guardianotheroccupation, enrolltype, country_name);
             }
           }
 
