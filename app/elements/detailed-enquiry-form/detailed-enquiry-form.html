@@ -63,7 +63,7 @@
         </div>
         <div class="col-sm-3 enquiry-input">
           <label>Right To Education</label>
-          <span><paper-checkbox id="rtestudent"  class="checkbox" on-change="rteHandler">Student From RTE</paper-checkbox></span>
+          <span><paper-checkbox id="rtestudent"  class="checkbox" >Student From RTE</paper-checkbox></span>
         </div>
         <div class="col-sm-3 enquiry-input" >
           <paper-input id="rtereference" error-message="needs last name!" label="RTE Reference Number" value="{{rteno}}"></paper-input>
@@ -494,6 +494,8 @@
       is: 'detailed-enquiry-form',
       ready:function(){
          // this.$.rtereference.hidden=true;
+        this.guardiancountrycode= '91';
+       // this.$.service.country();
           this.hideguardian=true;
           this.guardiansalaryinfo=true;
           this.guardianinfo=true;
@@ -534,7 +536,6 @@
         country_name = (e.target.selectedItem.textContent).trim();
         this.fathercountrycode = country_codes;
         this.mothercountrycode = country_codes;
-        this.guardiancountrycode= country_codes;
       },
       Fnclear:function(){
         this.ready();
