@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cf87a71e-5582-4c0c-9b35-1815db928b04" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/elements/newenquiry-card/newenquiry-card.html" afterPath="$PROJECT_DIR$/app/elements/newenquiry-card/newenquiry-card.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/elements/crm-service/crm-service.html" afterPath="$PROJECT_DIR$/app/elements/crm-service/crm-service.html" />
     </list>
     <ignored path="CRM.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -26,10 +26,10 @@
       <file leaf-file-name="crm-service.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/elements/crm-service/crm-service.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5245009">
-              <caret line="997" column="59" selection-start-line="997" selection-start-column="59" selection-end-line="999" selection-end-column="66" />
+            <state vertical-scroll-proportion="0.845735">
+              <caret line="1009" column="47" selection-start-line="1009" selection-start-column="47" selection-end-line="1009" selection-end-column="47" />
               <folding>
-                <marker date="1478166654085" expanded="true" signature="70249:70262" placeholder="{...}" />
+                <marker date="1478167338134" expanded="true" signature="70618:70631" placeholder="{...}" />
               </folding>
             </state>
           </provider>
@@ -1656,10 +1656,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/elements/crm-service/crm-service.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5245009">
-          <caret line="997" column="59" selection-start-line="997" selection-start-column="59" selection-end-line="999" selection-end-column="66" />
+        <state vertical-scroll-proportion="0.845735">
+          <caret line="1009" column="47" selection-start-line="1009" selection-start-column="47" selection-end-line="1009" selection-end-column="47" />
           <folding>
-            <marker date="1478166654085" expanded="true" signature="70249:70262" placeholder="{...}" />
+            <marker date="1478167338134" expanded="true" signature="70618:70631" placeholder="{...}" />
           </folding>
         </state>
       </provider>
