@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cf87a71e-5582-4c0c-9b35-1815db928b04" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/elements/detailed-enquiry-form/detailed-enquiry-form.html" afterPath="$PROJECT_DIR$/app/elements/detailed-enquiry-form/detailed-enquiry-form.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/elements/newenquiry-card/newenquiry-card.html" afterPath="$PROJECT_DIR$/app/elements/newenquiry-card/newenquiry-card.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/elements/crm-service/crm-service.html" afterPath="$PROJECT_DIR$/app/elements/crm-service/crm-service.html" />
     </list>
     <ignored path="CRM.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -24,13 +23,25 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="crm-service.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="crm-service.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/elements/crm-service/crm-service.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-406.69232">
-              <caret line="622" column="3" selection-start-line="622" selection-start-column="3" selection-end-line="622" selection-end-column="3" />
+            <state vertical-scroll-proportion="0.845735">
+              <caret line="1009" column="47" selection-start-line="1009" selection-start-column="47" selection-end-line="1009" selection-end-column="47" />
               <folding>
-                <marker date="1478094194642" expanded="true" signature="70112:70125" placeholder="{...}" />
+                <marker date="1478167338134" expanded="true" signature="70618:70631" placeholder="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="newenquiry-card.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/elements/newenquiry-card/newenquiry-card.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="1.0">
+              <caret line="528" column="52" selection-start-line="528" selection-start-column="52" selection-end-line="528" selection-end-column="52" />
+              <folding>
+                <marker date="1478166513640" expanded="true" signature="23121:23134" placeholder="{...}" />
               </folding>
             </state>
           </provider>
@@ -40,17 +51,29 @@
         <entry file="file://$PROJECT_DIR$/server.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="219" column="2234" selection-start-line="219" selection-start-column="2234" selection-end-line="219" selection-end-column="2234" />
-              <folding />
+              <caret line="833" column="2234" selection-start-line="833" selection-start-column="2234" selection-end-line="833" selection-end-column="2234" />
+              <folding>
+                <marker date="1478158290314" expanded="true" signature="156:256" placeholder="{&quot;host&quot;: 'localhost'...}" />
+                <marker date="1478158290314" expanded="true" signature="559:1444" placeholder="{...}" />
+                <marker date="1478158290314" expanded="true" signature="1184:1440" placeholder="{...}" />
+                <marker date="1478158290314" expanded="true" signature="1203:1404" placeholder="{...}" />
+                <marker date="1478158290314" expanded="true" signature="1231:1308" placeholder="{...}" />
+                <marker date="1478158290314" expanded="true" signature="1322:1400" placeholder="{...}" />
+                <marker date="1478158290314" expanded="true" signature="1518:1867" placeholder="{...}" />
+                <marker date="1478158290314" expanded="true" signature="1642:1867" placeholder="{...}" />
+                <marker date="1478158290314" expanded="true" signature="1661:1867" placeholder="{...}" />
+                <marker date="1478158290314" expanded="true" signature="1689:1772" placeholder="{...}" />
+                <marker date="1478158290314" expanded="true" signature="1786:1864" placeholder="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="detailed-enquiry-form.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="detailed-enquiry-form.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/elements/detailed-enquiry-form/detailed-enquiry-form.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6787659">
-              <caret line="215" column="39" selection-start-line="215" selection-start-column="39" selection-end-line="215" selection-end-column="39" />
+            <state vertical-scroll-proportion="15.527273">
+              <caret line="1412" column="20" selection-start-line="1412" selection-start-column="20" selection-end-line="1412" selection-end-column="20" />
               <folding>
                 <element signature="n#style#0;n#paper-dropdown-menu#0;n#span#1;n#div#0;n#div#0;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#paper-icon-button#0;n#span#2;n#div#0;n#div#0;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
@@ -117,10 +140,10 @@
         <option value="$PROJECT_DIR$/app/elements/dateofbirth-datepicker/dateofbirth-datepicker.html" />
         <option value="$PROJECT_DIR$/app/elements/enquiry-details-card/enquiry-details-card.html" />
         <option value="$PROJECT_DIR$/app/elements/navigation-bar/navigation-bar.html" />
-        <option value="$PROJECT_DIR$/app/elements/crm-service/crm-service.html" />
         <option value="$PROJECT_DIR$/server.js" />
-        <option value="$PROJECT_DIR$/app/elements/newenquiry-card/newenquiry-card.html" />
         <option value="$PROJECT_DIR$/app/elements/detailed-enquiry-form/detailed-enquiry-form.html" />
+        <option value="$PROJECT_DIR$/app/elements/newenquiry-card/newenquiry-card.html" />
+        <option value="$PROJECT_DIR$/app/elements/crm-service/crm-service.html" />
       </list>
     </option>
   </component>
@@ -1150,7 +1173,7 @@
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Node.js.CRM">
     <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
       <method />
     </configuration>
@@ -1199,6 +1222,13 @@
       <recursive>false</recursive>
       <method />
     </configuration>
+    <configuration default="false" name="CRM" type="NodeJSConfigurationType" factoryName="Node.js" path-to-node="C:/Program Files/nodejs/node" path-to-js-file="$PROJECT_DIR$/server.js" working-dir="$PROJECT_DIR$">
+      <browser url="http://localhost:8086" />
+      <method />
+    </configuration>
+    <list size="1">
+      <item index="0" class="java.lang.String" itemvalue="Node.js.CRM" />
+    </list>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
   <component name="SvnConfiguration">
@@ -1223,7 +1253,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329653" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3289689" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
@@ -1577,46 +1607,59 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="641" column="63" selection-start-line="641" selection-start-column="56" selection-end-line="641" selection-end-column="63" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/server.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="219" column="2234" selection-start-line="219" selection-start-column="2234" selection-end-line="219" selection-end-column="2234" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/elements/crm-service/crm-service.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-406.69232">
-          <caret line="622" column="3" selection-start-line="622" selection-start-column="3" selection-end-line="622" selection-end-column="3" />
+          <caret line="833" column="2234" selection-start-line="833" selection-start-column="2234" selection-end-line="833" selection-end-column="2234" />
           <folding>
-            <marker date="1478094194642" expanded="true" signature="70112:70125" placeholder="{...}" />
+            <marker date="1478158290314" expanded="true" signature="156:256" placeholder="{&quot;host&quot;: 'localhost'...}" />
+            <marker date="1478158290314" expanded="true" signature="559:1444" placeholder="{...}" />
+            <marker date="1478158290314" expanded="true" signature="1184:1440" placeholder="{...}" />
+            <marker date="1478158290314" expanded="true" signature="1203:1404" placeholder="{...}" />
+            <marker date="1478158290314" expanded="true" signature="1231:1308" placeholder="{...}" />
+            <marker date="1478158290314" expanded="true" signature="1322:1400" placeholder="{...}" />
+            <marker date="1478158290314" expanded="true" signature="1518:1867" placeholder="{...}" />
+            <marker date="1478158290314" expanded="true" signature="1642:1867" placeholder="{...}" />
+            <marker date="1478158290314" expanded="true" signature="1661:1867" placeholder="{...}" />
+            <marker date="1478158290314" expanded="true" signature="1689:1772" placeholder="{...}" />
+            <marker date="1478158290314" expanded="true" signature="1786:1864" placeholder="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/elements/newenquiry-card/newenquiry-card.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.3517241">
-          <caret line="194" column="13" selection-start-line="194" selection-start-column="13" selection-end-line="194" selection-end-column="13" />
+        <state vertical-scroll-proportion="1.0">
+          <caret line="528" column="52" selection-start-line="528" selection-start-column="52" selection-end-line="528" selection-end-column="52" />
           <folding>
-            <marker date="1478154856616" expanded="true" signature="23116:23129" placeholder="{...}" />
+            <marker date="1478166513640" expanded="true" signature="23121:23134" placeholder="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/elements/detailed-enquiry-form/detailed-enquiry-form.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6787659">
-          <caret line="215" column="39" selection-start-line="215" selection-start-column="39" selection-end-line="215" selection-end-column="39" />
+        <state vertical-scroll-proportion="15.527273">
+          <caret line="1412" column="20" selection-start-line="1412" selection-start-column="20" selection-end-line="1412" selection-end-column="20" />
           <folding>
             <element signature="n#style#0;n#paper-dropdown-menu#0;n#span#1;n#div#0;n#div#0;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#paper-icon-button#0;n#span#2;n#div#0;n#div#0;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#16;n#div#0;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#paper-dropdown-menu#0;n#div#1;n#div#25;n#div#0;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/elements/crm-service/crm-service.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.845735">
+          <caret line="1009" column="47" selection-start-line="1009" selection-start-column="47" selection-end-line="1009" selection-end-column="47" />
+          <folding>
+            <marker date="1478167338134" expanded="true" signature="70618:70631" placeholder="{...}" />
           </folding>
         </state>
       </provider>

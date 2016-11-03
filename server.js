@@ -750,56 +750,6 @@ app.post('/createinstallmentschedule-service',  urlencodedParser,function (req, 
 
 });
 
-// app.post('/feecodesplitup-service',  urlencodedParser,function (req, res){
-//     var response={
-//       school_id:req.query.schoolid,
-//       fee_code:req.query.feecode,
-//       fee_type:req.query.feetype,
-//       fee_type_code:req.query.feetypecode,
-//       total_fee:req.query.totalfees,
-//       no_of_installment:req.query.installment
-//     };
-//     connection.query('INSERT INTO fee_splitup SET ?',[response],
-//     function(err, rows)
-//     {
-//     if(!err)
-//     {
-//       res.status(200).json({'returnval': 'succ'});
-//     }
-//     else
-//     {
-//       console.log(err);
-//       res.status(200).json({'returnval': 'fail'});
-//     }
-//     });
-// });
-
-
-// app.post('/createinstallment-service',  urlencodedParser,function (req, res){
-//     var response={
-//       school_id:req.query.schoolid,
-//       fee_code:req.query.feecode,
-//       fee_type:req.query.feetype,
-//       fee_type_code:req.query.feetypecode,
-//       no_of_installment:req.query.installment,
-//       installment_name:req.query.installmentname,
-//       installment_amount:req.query.installmentamount,
-//       installment_date:req.query.installmentdate
-//     };
-//     connection.query('INSERT INTO installment_master SET ?',[response],
-//     function(err, rows)
-//     {
-//     if(!err)
-//     {
-//       res.status(200).json({'returnval': 'succ'});
-//     }
-//     else
-//     {
-//       console.log(err);
-//       res.status(200).json({'returnval': 'fail'});
-//     }
-//     });
-// });
 
 
 /*This function is used to submit the simple enquiry details of the student for the first time*/
@@ -811,6 +761,7 @@ app.post('/submitenquiry',  urlencodedParser,function (req, res)
   "dob":req.query.dobs,"father_name":req.query.father,"locality":req.query.location,"mother_name":req.query.mother,
   "father_email":req.query.email,"created_by":req.query.createdby,"created_on":req.query.createdate,
   "enquiry_name":req.query.givenname,"gemail":req.query.gemail,"gmob":req.query.gmob,"parent_or_guardian":req.query.paga,"Guardianname":req.query.Guardianname,"status":"Enquired","rte_student":req.query.rtestudent,"year_type":req.query.adtype};
+       console.log(collection);
        connection.query('insert into student_enquiry_details set ? ',[collection],
         function(err, rows)
         {
