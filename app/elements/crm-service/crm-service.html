@@ -974,9 +974,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var result=e.detail.response.returnval;
         if(result="success"){
           alert("Submited Successfully for Enquiry ID:"+enquirynjski);
-          document.querySelector('detailed-enquiry-form').Fnclear();
+          
           document.querySelector('enquiry-card').ready();
           this.updateenquiryno();
+          document.querySelector('detailed-enquiry-form').Fnclear();
         }
       },
      getenquiryno:function(){
@@ -1640,7 +1641,7 @@ var dat=new Date();
         }
       },
       callFetchenquiryinfoService:function(){
-        this.fetchenquiryinfourl=sessionStorage.getItem("addrinfo")+"/fetchdetailedenquiryinfo";
+        this.fetchenquiryinfourl="http://localhost:8086/fetchdetailedenquiryinfo";
         var obj={"enquiryno":"","schoolid":""};
         obj.enquiryno=localStorage.getItem("curr_sess_enquiryno");
         obj.schoolid=localStorage.getItem("schoolid");
@@ -1651,28 +1652,30 @@ var dat=new Date();
         var result =e.detail.response.returnval;
         if(result.length>=0){
             if(result[0].parent_or_guardian == "parents"){
+             // alert('service  '+result[0].dob);
             document.querySelector('detailed-enquiry-form').enqno=result[0].enquiry_no;
             document.querySelector('detailed-enquiry-form').firstname=result[0].first_name;
             document.querySelector('detailed-enquiry-form').middlename=result[0].middle_name;
             document.querySelector('detailed-enquiry-form').lastname=result[0].last_name;
-            document.querySelector('detailed-enquiry-form').dob=result[0].dob;
             document.querySelector('detailed-enquiry-form').fathermob=result[0].father_mob;
             document.querySelector('detailed-enquiry-form').fathername=result[0].father_name;
             document.querySelector('detailed-enquiry-form').mothername=result[0].mother_name;
             document.querySelector('detailed-enquiry-form').fathermail=result[0].father_email;
             document.querySelector('detailed-enquiry-form').Fngrade(result[0].class,result[0].rte_student);
             document.querySelector('detailed-enquiry-form').Fnresult(result[0].dob,result[0].gender);
+            document.querySelector('detailed-enquiry-form').dob=result[0].dob;
           } else {
+            //alert('service  '+result[0].dob);
             document.querySelector('detailed-enquiry-form').enqno=result[0].enquiry_no;
             document.querySelector('detailed-enquiry-form').firstname=result[0].first_name;
             document.querySelector('detailed-enquiry-form').middlename=result[0].middle_name;
             document.querySelector('detailed-enquiry-form').lastname=result[0].last_name;
-            document.querySelector('detailed-enquiry-form').dob=result[0].dob;
             document.querySelector('detailed-enquiry-form').guardianname=result[0].Guardianname;
             document.querySelector('detailed-enquiry-form').guardianmobile=result[0].gmob;
             document.querySelector('detailed-enquiry-form').guardianemail=result[0].gemail;
             document.querySelector('detailed-enquiry-form').Fngrade(result[0].class,result[0].rte_student);
             document.querySelector('detailed-enquiry-form').Fnresult(result[0].dob,result[0].gender);
+            document.querySelector('detailed-enquiry-form').dob=result[0].dob;
             document.querySelector('detailed-enquiry-form').Fnshowguardian();
           }
         } else {

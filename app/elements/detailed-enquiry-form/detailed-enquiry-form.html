@@ -13,8 +13,8 @@
           </paper-input>
         </span>
         <span class="col-sm-5">
-          <paper-dropdown-menu id="searchenquiry" label="Select Enquiry No" on-iron-select="FnSelectEnquiry"  style="margin-top: 3%;">
-            <paper-menu class="dropdown-content"  class="dropdown-content">
+          <paper-dropdown-menu label="Select Enquiry No" on-iron-select="FnSelectEnquiry"  style="margin-top: 3%;">
+            <paper-menu class="dropdown-content"  class="dropdown-content" id="searchenquiryzxc" >
               <template  is="dom-repeat" items="{{enquiryarr}}" as="item">
                 <paper-item>{{item.enquiry_no}}-{{item.enquiry_name}}</paper-item>
               </template>
@@ -81,7 +81,7 @@
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-4">
-           <dateofbirth-datepicker></dateofbirth-datepicker>
+           <dateofbirth-datepicker showdate="{{dob}}"></dateofbirth-datepicker>
         </div>
         <div class="col-sm-4">
           <paper-input label="Age as on 31st March 2016" value="{{ageofyr}}"></paper-input>
@@ -538,13 +538,13 @@
         this.mothercountrycode = country_codes;
       },
       Fnclear:function(){
+         this.$.searchenquiryzxc.selected=-1;
         this.ready();
           document.getElementById('searchtext').value="";
           document.querySelector('#nextyear').checked=false;
           document.querySelector('#midyear').checked=false;
           this.$.dfmale.checked=false;
           this.$.dffemale.checked=false;
-          this.$.searchenquiry.selected=-1;
           this.ageofyr="";
           this.guardianotheroccupation="";
           this.motherotheroccupation="";
@@ -567,6 +567,7 @@
           this.$.maths.checked=false;
           this.$.evs.checked=false;
           //this.$.class.checked=false;
+          this.enqno="";
           this.prospectusno="";
           this.firstname="";
           this.middlename="";
@@ -625,6 +626,7 @@
           admissiontest = null;
           this.$.language.selected=-1;
          //this.$.grade.selected=-1;
+         //this.$.searchenquiry.selected=-1;
           this.$.dadoccupation.selected=-1;
           this.$.guardianoccupation.selected=-1;
           this.$.motheroccupation.selected=-1;
@@ -671,6 +673,7 @@
         enqno=document.getElementById('searchtext').value;
         //alert(this.enqno+'    '+enqno);
         this.$.service.getenqirydetails(enqno);
+        this.$.searchenquiryzxc.selected=-1;
       },
       guardianinfoHandler:function(){
         if(document.querySelector("#guardianinfo").checked==true){
@@ -689,6 +692,11 @@
           var bt_year=dt1.getFullYear();
           var diff=parseInt(pr_year - bt_year);
           this.ageofyr=diff+" Years";
+
+           dobdate=dob;
+
+
+
 
           if(gender=='Male'){
             fngender="Male";
@@ -1289,7 +1297,7 @@ Fnlistbox:function(nameitem){
         this.$.searchenq.hidden=true;
         this.$.newenq.hidden=false;
         this.$.searchtext.hidden=true;
-        this.$.searchenquiry.hidden=true;
+        this.$.searchenquiryzxc.hidden=true;
         this.$.newenquiry.hidden=true;
         this.guardianinfo=false;
         this.academicyearhide=false;
@@ -1307,6 +1315,7 @@ Fnlistbox:function(nameitem){
         localStorage.setItem("curr_sess_enquiryno",enquiry_no);
         localStorage.setItem("curr_sess_enquiryname",enquiry_name);
         this.$.service.callFetchenquiryinfoService();
+        this.$.searchenquiryzxc.selected=-1;
       },
       dateclear:function(){
         alert("Select DOB properly, it cannot be future date");

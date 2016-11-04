@@ -264,11 +264,11 @@
             <a href="" aria-hidden="true" on-click="enquiry"><i class="fa fa-phone-square fa-fw"></i> Enquiry<span class="fa arrow"></span></a>
             <ul class="nav nav-second-level">
               <li>
-              <a href="" aria-hidden="true" data-toggle="modal" data-target="#addEnquiry">Pre Apps</a>
+              <a href="" on-click="Fnpreapp" aria-hidden="true" data-toggle="modal" data-target="#addEnquiry">Pre Apps</a>
                 <!-- <a href="flot.html"></a> -->
               </li>
               <li>
-                <a href="" aria-hidden="true" data-toggle="modal" data-target="#addDetailedEnquiry">Enquiry Form</a>
+                <a href="" on-click="Fnenqform" aria-hidden="true" data-toggle="modal" data-target="#addDetailedEnquiry">Enquiry Form</a>
               </li>
             </ul>
 
@@ -763,6 +763,12 @@
       FnAdmissionTest:function(){
         document.querySelector('admission-approval-card').FnRefresh();
 
+      },
+      Fnpreapp:function(){
+          document.querySelector('newenquiry-card').Fnclear();
+      },
+      Fnenqform:function(){
+          document.querySelector('detailed-enquiry-form').Fnclear();
       }
     });
   })();
