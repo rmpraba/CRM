@@ -6,20 +6,23 @@
 <dom-module id="admission-form">
   <template>
 
-
-
    <div class="row enquiry-form">
       <div class="list-group col-sm-12 panel-body form-category">
-          <div class="input-group col-sm-5 ">
+          <span class="col-sm-6">
+          <paper-input id="searchtext" label="Enter Enquiry Number/Name" value="{{enquiryno}}">
+            <paper-icon-button suffix icon="search" on-click="FnSearchEnquiry" title="Search"></paper-icon-button>
+          </paper-input>
+          </span>
+          <!-- <div class="input-group col-sm-5 ">
             <input type="text" class="form-control" id="searchenquiry" placeholder="Enter Enquiry Number/Name" >
             <span class="input-group-btn">
               <button class="btn btn-default" on-click="FnSearchEnquiry" type="button">
                 <i class="fa fa-search"></i>
               </button>        
             </span>
-          </div>
-          <div class="col-sm-7">
-            <span class="input-group-btn">
+          </div> -->
+          <!-- <div class="col-sm-7"> -->
+            <span class="col-sm-7">
               <paper-dropdown-menu label="Select Enquiry No" on-iron-select="FnSelectEnquiry">
                 <paper-listbox class="dropdown-content">
                   <template  is="dom-repeat" items="{{enquiryarr}}" as="item">
@@ -28,7 +31,7 @@
                 </paper-listbox>
               </paper-dropdown-menu>
             </span>
-          </div>
+          <!-- </div> -->
     </div>
     <!-- </div>
    <div class="row enquiry-form"> -->
@@ -566,15 +569,14 @@
     var paddress;
     Polymer({
       is: 'admission-form',
-        
         ready:function(){
         this.$.physicdetailhandler.hidden=true;
         },
       FnSearchEnquiry:function(){
         this.$.crmservice.getclasses();
-        var enquiryno=document.getElementById('searchenquiry').value;
-        // alert(enquiryno);
-        this.$.admissionservice.callSearchenquiryService(enquiryno);
+        // var enquiryno=document.getElementById('searchenquiry').value;
+        alert(this.enquiryno);
+        this.$.admissionservice.callSearchenquiryService(this.enquiryno);
       },
       FnSelectEnquiry:function(e){
         var enquiry=(e.target.selectedItem.textContent).trim();
@@ -753,7 +755,7 @@
 
 
       FnSubmitAdmission:function(){
-        alert( this.applicationno+this.schoolname+admissionyear+this.firstname+this.middlename+this.lastname+this.gradeselection+admissiondob+admissiongender+admissiondisabled+admissioncanteen+admissiontransport+this.fathername+this.mothername+this.flatno+this.bulidingname+this.street+this.town+this.city+this.state+this.pincode+this.height+this.weight+this.relegion+this.nationality+this.mothertongue+this.siblingname+this.siblingclass+this.prevschoolname+this.classfrom+this.classto+this.yearfrom+this.yearto+this.medium+this.lastclassmark+this.reasonforleaving+this.physicdetail+this.physicstatus+this.mentaldetail+this.mentalstatus+this.illnessdetail+this.illnessstatus+this.allergydetail+this.allergystatus+this.chronicdetail+this.chronicstatus+this.sno1+this.field1+this.year1+this.event1+this.prizedetail1+this.sno2+this.field2+this.year2+this.event2+this.prizedetail2+this.sno3+this.field3+this.year3+this.event3+this.prizedetail3+this.fatherdob+this.motherdob+this.fatherqualification+this.motherqualification+this.fatheroccupation+this.motheroccupation+this.fatherincome+this.motherincome+this.fathertelno+this.mothertelno+this.fathermobile+this.mothermobile+this.fatheremail+this.motheremail+this.ptown+this.pdistrict+this.pstate+this.ppincode+this.relationship1+this.guardianname1+this.relationship2+this.guardianname2+this.guardianname+this.gbuildingname+this.gstreet+this.gtown+this.gcity+this.gstate+this.gpincode+this.gresidentialcontact+this.gofficecontact+this.gmobileno+this.gmobileno+this.gfax+this.date+this.fsign+this.place+this.admissionclass+this.gradeadmin+this.authorizsign+FnBo+relegions+FnBlood);
+        // alert( this.applicationno+this.schoolname+admissionyear+this.firstname+this.middlename+this.lastname+this.gradeselection+admissiondob+admissiongender+admissiondisabled+admissioncanteen+admissiontransport+this.fathername+this.mothername+this.flatno+this.bulidingname+this.street+this.town+this.city+this.state+this.pincode+this.height+this.weight+this.relegion+this.nationality+this.mothertongue+this.siblingname+this.siblingclass+this.prevschoolname+this.classfrom+this.classto+this.yearfrom+this.yearto+this.medium+this.lastclassmark+this.reasonforleaving+this.physicdetail+this.physicstatus+this.mentaldetail+this.mentalstatus+this.illnessdetail+this.illnessstatus+this.allergydetail+this.allergystatus+this.chronicdetail+this.chronicstatus+this.sno1+this.field1+this.year1+this.event1+this.prizedetail1+this.sno2+this.field2+this.year2+this.event2+this.prizedetail2+this.sno3+this.field3+this.year3+this.event3+this.prizedetail3+this.fatherdob+this.motherdob+this.fatherqualification+this.motherqualification+this.fatheroccupation+this.motheroccupation+this.fatherincome+this.motherincome+this.fathertelno+this.mothertelno+this.fathermobile+this.mothermobile+this.fatheremail+this.motheremail+this.ptown+this.pdistrict+this.pstate+this.ppincode+this.relationship1+this.guardianname1+this.relationship2+this.guardianname2+this.guardianname+this.gbuildingname+this.gstreet+this.gtown+this.gcity+this.gstate+this.gpincode+this.gresidentialcontact+this.gofficecontact+this.gmobileno+this.gmobileno+this.gfax+this.date+this.fsign+this.place+this.admissionclass+this.gradeadmin+this.authorizsign+FnBo+relegions+FnBlood);
 
         // alert(this.applicationno+"  "+this.schoolname+"  "+admissionyear+"  "+this.firstname+"  "+this.middlename+" "+this.lastname+" "++"  "+admissiondob+" "+admissiongender+" "+admissiondisabled+" "+admissioncanteen+" "+admissiontransporadmissiongradet);
 
