@@ -5,34 +5,29 @@
 
 <dom-module id="admission-form">
   <template>
+  <style>
+  #inputlabel{
+  --paper-input-container-label: { color: red };
+  }
+  </style>
 
    <div class="row enquiry-form">
       <div class="list-group col-sm-12 panel-body form-category">
-          <span class="col-sm-6">
+          <div class="col-sm-6">
           <paper-input id="searchtext" label="Enter Enquiry Number/Name" value="{{enquiryno}}">
             <paper-icon-button suffix icon="search" on-click="FnSearchEnquiry" title="Search"></paper-icon-button>
           </paper-input>
-          </span>
-          <!-- <div class="input-group col-sm-5 ">
-            <input type="text" class="form-control" id="searchenquiry" placeholder="Enter Enquiry Number/Name" >
-            <span class="input-group-btn">
-              <button class="btn btn-default" on-click="FnSearchEnquiry" type="button">
-                <i class="fa fa-search"></i>
-              </button>        
-            </span>
-          </div> -->
-          <!-- <div class="col-sm-7"> -->
-            <span class="col-sm-7">
-              <paper-dropdown-menu label="Select Enquiry No" on-iron-select="FnSelectEnquiry">
-                <paper-listbox class="dropdown-content">
-                  <template  is="dom-repeat" items="{{enquiryarr}}" as="item">
-                  <paper-item>{{item.enquiry_no}}-{{item.enquiry_name}}</paper-item>
-                  </template>
-                </paper-listbox>
-              </paper-dropdown-menu>
-            </span>
-          <!-- </div> -->
-    </div>
+          </div>
+          <div class="col-sm-5" style="margin-top: 2%;">
+          <paper-dropdown-menu label="Select Enquiry No" on-iron-select="FnSelectEnquiry">
+            <paper-listbox class="dropdown-content">
+            <template  is="dom-repeat" items="{{enquiryarr}}" as="item">
+              <paper-item>{{item.enquiry_no}}-{{item.enquiry_name}}</paper-item>
+            </template>
+            </paper-listbox>
+          </paper-dropdown-menu>
+          </div>          
+      </div>
     <!-- </div>
    <div class="row enquiry-form"> -->
       <div class="list-group col-sm-12 panel-body form-category">
@@ -49,7 +44,7 @@
           <paper-input label="Enquired Year" value="{{enquiredyear}}"></paper-input>
         </div>
         <div class="col-sm-6 enquiry-input">
-          <paper-dropdown-menu label="Admission Year" on-iron-select="FnSelectAdmissionYear" attr-for-selected="value">
+          <paper-dropdown-menu id="inputlabel" label="Admission Year" on-iron-select="FnSelectAdmissionYear" attr-for-selected="value">
               <paper-listbox class="dropdown-content">
                   <paper-item value="AY-2016-2017">AY-2016-2017</paper-item>
                   <paper-item value="AY-2017-2018">AY-2017-2018</paper-item>
@@ -89,7 +84,7 @@
           <span><paper-checkbox class="col-sm-6" id="Hindi" readonly class="checkbox" on-change="lang2Handler">Hindi</paper-checkbox></span>
           <span><paper-checkbox class="col-sm-6" id="Kannada" readonly class="checkbox" on-change="lang2Handler">Kannada</paper-checkbox></span>
         </div>
-        <div class="col-sm-6" id="lang3Handler">
+        <div class="col-sm-6" id="lang3Handler" hidden$="{{hidethirdlanguage}}">
           <span class="col-sm-12"><h5>3rd Language</h5></span>
           <span><paper-checkbox class="col-sm-3" id="French" readonly class="checkbox" on-change="lang3Handler">French</paper-checkbox></span>
            <span><paper-checkbox class="col-sm-3" id="Sanskrit" readonly class="checkbox" on-change="lang3Handler">Sanskrit</paper-checkbox></span>
@@ -570,12 +565,13 @@
     Polymer({
       is: 'admission-form',
         ready:function(){
+        this.hidethirdlanguage=true;
         this.$.physicdetailhandler.hidden=true;
         },
       FnSearchEnquiry:function(){
         this.$.crmservice.getclasses();
         // var enquiryno=document.getElementById('searchenquiry').value;
-        alert(this.enquiryno);
+        // alert(this.enquiryno);
         this.$.admissionservice.callSearchenquiryService(this.enquiryno);
       },
       FnSelectEnquiry:function(e){
@@ -782,9 +778,10 @@
        this.$.admissionservice.callInsertAdmissionService(this.applicationno,this.schoolname,admissionyear,this.firstname,this.middlename,this.lastname,this.gradeselection,admissiondob,admissiongender,admissiondisabled,admissioncanteen,admissiontransport,this.fathername,this.mothername,this.flatno,this.bulidingname,this.street,this.town,this.city,this.state,this.pincode,this.height,this.weight,this.relegion,this.nationality,this.mothertongue,this.siblingname,this.siblingclass,this.prevschoolname,this.classfrom,this.classto,this.yearfrom,this.yearto,this.medium,this.lastclassmark,this.reasonforleaving,this.physicdetail,this.physicstatus,this.mentaldetail,this.mentalstatus,this.illnessdetail,this.illnessstatus,this.allergydetail,this.allergystatus,this.chronicdetail,this.chronicstatus,this.sno1,this.field1,this.year1,this.event1,this.prizedetail1,this.sno2,this.field2,this.year2,this.event2,this.prizedetail2,this.sno3,this.field3,this.year3,this.event3,this.prizedetail3,this.fatherdob,this.motherdob,this.fatherqualification,this.motherqualification,this.fatheroccupation,this.motheroccupation,this.fatherincome,this.motherincome,this.fathertelno,this.mothertelno,this.fathermobile,this.mothermobile,this.fatheremail,this.motheremail,this.ptown,this.pdistrict,this.pstate,this.ppincode,this.relationship1,this.guardianname1,this.relationship2,this.guardianname2,this.guardianname,this.gbuildingname,this.gstreet,this.gtown,this.gcity,this.gstate,this.gpincode,this.gresidentialcontact,this.gofficecontact,this.gmobileno,this.gmobileno,this.gfax,this.date,this.fsign,this.place,this.admissionclass,this.gradeadmin,this.authorizsign,FnBo,relegions,FnBlood); 
       
        }
-}
-
-
+      },
+      FnHideThirdLanguage:function(){
+        this.hidethirdlanguage=false;
+      }
     });
   })();
   </script>

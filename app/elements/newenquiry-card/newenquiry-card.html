@@ -9,6 +9,16 @@
         display: flex;
         @apply(--layout-horizontal);
       }
+      #fname,#lname,#gradeclass
+      {
+        --paper-input-container-label: { color: red };
+      }
+      #mangender{
+        color: red;
+      }
+      .lbl{
+        @apply(--layout-horizontal);
+      }
   </style>
     <div class="row enquiry-form">
       <div class="form-group-heading">
@@ -31,7 +41,7 @@
          <paper-input label="Academics Year" id="acyr" readonly required error-message="needs academics year!" allowed-pattern="[a-zA-Z ]" value="{{academicyear}}"></paper-input>
         </div>
         <div class="col-sm-3">
-          <paper-dropdown-menu label="Grade" >
+          <paper-dropdown-menu label="Grade" id="gradeclass">
             <paper-menu id="class" class="dropdown-content" required on-iron-select="classes" valueattr="value" >
               <template  is="dom-repeat" items="{{itemarr}}" as="view">
                 <paper-item >{{view.class}}</paper-item>
@@ -59,7 +69,7 @@
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6 enquiry-input">
-          <label>Gender</label>
+          <div class="lbl"><label>Gender </label><p id="mangender">&nbsp;*</p> </div>
           <div class="gender">
             <span class="col-sm-4"><paper-checkbox id="male"  class="checkbox" on-change="maleHandler">Boy</paper-checkbox></span>
             <span class="col-sm-4"><paper-checkbox  id="female" class="checkbox" on-change="femaleHandler">Girl</paper-checkbox></span>
