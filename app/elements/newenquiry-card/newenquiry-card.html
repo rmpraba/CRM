@@ -9,7 +9,8 @@
         display: flex;
         @apply(--layout-horizontal);
       }
-      #fname,#lname,#gradeclass
+      #fname,#lname,#gradeclass,#dadname,#momname,#mobile,#email,#gemail,#Guardianname,#MobileNumber,#locality,#nextyear,#midyear,
+      #gmobile
       {
         --paper-input-container-label: { color: red };
       }
@@ -17,6 +18,12 @@
         color: red;
       }
       .lbl{
+        @apply(--layout-horizontal);
+      }
+      #pgdetail{
+        color: red;
+      }
+      .lb2,#lb2{
         @apply(--layout-horizontal);
       }
   </style>
@@ -69,7 +76,7 @@
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6 enquiry-input">
-          <div class="lbl"><label>Gender </label><p id="mangender">&nbsp;*</p> </div>
+          <div class="lbl"><label>Gender </label><p id="mangender">&nbsp; *</p> </div>
           <div class="gender">
             <span class="col-sm-4"><paper-checkbox id="male"  class="checkbox" on-change="maleHandler">Boy</paper-checkbox></span>
             <span class="col-sm-4"><paper-checkbox  id="female" class="checkbox" on-change="femaleHandler">Girl</paper-checkbox></span>
@@ -88,9 +95,13 @@
           <paper-input readonly label="Age(In Years)" value="{{ageofyr}}"></paper-input>
         </div>
       </div>
-      <div class="form-group-heading">
-        <h4>Parent/Guardian Detail</h4>
-      </div>
+
+    <div class="form-group-heading">
+       <span class="col-sm-3"><h4>Parent/Guardian Detail</h4></span><span class="col-sm-2" style="margin-left:-3%;"><p id="pgdetail">&nbsp;*</p></span> 
+    </div>
+     <!--  <div class="form-group-heading">
+        <div class="lb2"><label></label><p id="pgdetail">&nbsp;*</p> </div>
+       -->
 
       <div class="list-group col-sm-12 panel-body form-category">
          <div class="col-sm-6 enquiry-input">
