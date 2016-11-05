@@ -597,6 +597,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     >
     </iron-ajax>
 
+    <iron-ajax
+      method="post"
+      id="discountajax"
+      url="{{discounturl}}"
+      params="{{discountparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="getdiscountsResponse"
+      debounce-duration="300"
+    >
+    </iron-ajax>
+    <iron-ajax
+      method="post"
+      id="discountenqajax"
+      url="{{discountenqurl}}"
+      params="{{discountenqparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="discountenqResponse"
+      debounce-duration="300"
+    >
+    </iron-ajax>
+
   </template>
   <script>
   (function() {
@@ -645,6 +668,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var enquirynjski;
    var scheduleno;
    var successbox;
+  var discountArr;
+    var currentEnqno;
     Polymer({
       is: 'crm-service',
       followupResponse:function(e){
@@ -666,13 +691,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     fourthfollowupdate.setDate(fourthfollowupdate.getDate()+fourthfollowup);
     fifthfollowupdate.setDate(fifthfollowupdate.getDate()+fifthfollowup);
      },
-     submitenqiry:function(enqno,academicyear,grade,Fnfirstname,Fnmiddlename,Fnlastname,gender,dob,fathername,mothername,mob,email,textvalue,todate,gemail,gmob,Guardianname,paga,admtype,rtestudent){
+     submitenqiry:function(enqno,academicyear,grade,Fnfirstname,Fnmiddlename,Fnlastname,gender,dob,fathername,mothername,mob,email,textvalue,todate,gemail,gmob,Guardianname,paga,admtype,checkList){
 
       //alert(enqno+academicyr+classes+studentname+gender+dob+mob+source+locality+category);
       successbox=enqno;
+      discountArr =  checkList;
+       currentEnqno = enqno;
       var generateid=Math.floor(100000 + Math.random() * 900000);
         this.submitenquiryurl="http://localhost:8086/submitenquiry";
-        var obj={"id":"","schol":"","acadeyr":"","contact":"","grade":"","gender":"","firstname":"","middlename":"","lastname":"","dobs":"","father":"","mother":"","email":"","location":"","createdby":"","createdate":"","givenname":"","status":"","gemail":"","gmob":"","Guardianname":"","paga":"","rtestudent":"","adtype":""}
+        var obj={"id":"","schol":"","acadeyr":"","contact":"","grade":"","gender":"","firstname":"","middlename":"","lastname":"","dobs":"","father":"","mother":"","email":"","location":"","createdby":"","createdate":"","givenname":"","status":"","gemail":"","gmob":"","Guardianname":"","paga":"","adtype":""}
 
         obj.id=enqno;
         obj.schol=localStorage.getItem("schoolid");
@@ -696,7 +723,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         obj.gmob=gmob;
         obj.Guardianname=Guardianname;
         obj.paga=paga;
-        obj.rtestudent=rtestudent;
         obj.adtype=admtype;
         this.submitenquiryparam=obj;
         //alert(JSON.stringify(obj));
@@ -751,15 +777,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           document.querySelector('enquiry-card').ready();
 
         document.querySelector('newenquiry-card').Fnclear();
-
-
+        alert(discountArr);
+        alert(currentEnqno);
+        if(discountArr.length > 0){
+          for(var i=0;i <= discountArr.length;i++){
+            this.discountenqurl="http://localhost:8086/discountenq";
+            var obj={"enq":"","discountid":"","schol":""};
+            obj.enq=currentEnqno;
+            obj.discountid = discountArr[i];
+            obj.schol=localStorage.getItem("schoolid");
+            this.discountenqparam=obj;
+            alert(JSON.stringify(obj));
+            this.$.discountenqajax.generateRequest();
+          }
+        }
       }
       else{
         alert('Form submit interrupted');
       }
-
-
      },
+      discountenqResponse:function(e){
+        var result=e.detail.response.returnval;
+        alert(JSON.stringify(result));
+      },
      updateenquiryform:function(enqno,firstname,middlename,lastname,gender,grade,dob,oldclass,oldschool,mothertongue,fathername,mothername,fatheredu,motheredu,fathermob,mothermob,fathermail,mothermail,fathercompany,mothercompany,fatherjob,motherjob,flat,address1,address2,address3,city,pincode,state,enquiysource,siblingname,siblingdetail,transportreq,canteenreq,secondlanguage,thirdlanguage,propspectus,dadpost,mompost,dadsalary,momsalary,prospect,admissiontest,admissiondate, admissiontestenglish, admissiontestmaths,admissiontestevs,guardianname,guardianmobile,guardianemail,guardiancompany,guardianjob,guardianoccup,guardianincome,location,fatherother,motherother,guardianother,country_name,rteno,rtevalue){
 
       //alert(enqno+firstname+middlename+lastname+gender+grade+dob+oldclass+oldschool+mothertongue+fathername+mothername+fatheredu+motheredu+fathermob+mothermob+fathermail+mothermail+fathercompany+mothercompany+fatherjob+motherjob+flat+address1+address2+address3+city+pincode+state+enquiysource+siblingname+siblingdetail+transportreq+canteenreq+secondlanguage+thirdlanguage+propspectus+dadpost+mompost+dadsalary+momsalary);
@@ -1745,7 +1785,18 @@ var dat=new Date();
         //document.querySelector('detailed-enquiry-form').countryarr=res;
         document.querySelector('detailed-enquiry-form').country(res);
       },
-
+      getdiscounts:function(){
+        this.discounturl="http://localhost:8086/discount";
+        var obj={"schol":""};
+        obj.schol=localStorage.getItem("schoolid");
+        this.discountparam=obj;
+        this.$.discountajax.generateRequest();
+      },
+      getdiscountsResponse:function(e){
+        var res=e.detail.response.returnval;
+        //alert(JSON.stringify(res));
+        document.querySelector('newenquiry-card').discountarr=res;
+      }
     });
   })();
   </script>

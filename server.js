@@ -2194,6 +2194,27 @@ app.post('/updateschedule',  urlencodedParser,function (req, res)
 });
 
 
+ app.post('/discountenq',  urlencodedParser,function (req, res){
+   var response={
+     "school_id":req.query.schol,
+     "enquiry_no":req.query.enq,
+     "discount_code":req.query.discountid,
+   };
+   connection.query('INSERT INTO special_discounts SET ?',[response],
+     function(err, rows)
+     {
+       if(!err)
+       {
+         res.status(200).json({'returnval': 'success'});
+       }
+       else
+       {
+         console.log(err);
+         res.status(200).json({'returnval': 'no'});
+       }
+     });
+ });
+
 
  app.post('/updatedate',  urlencodedParser,function (req, res)
  {
@@ -2297,6 +2318,28 @@ app.post('/verifyage',  urlencodedParser,function (req, res){
      });
  });
 
+ app.post('/discount',  urlencodedParser,function (req, res){
+   connection.query("SELECT * from md_discounts",
+     function(err, rows)
+     {
+       if(!err)
+       {
+         if(rows.length>0)
+         {
+           //console.log(rows);
+           res.status(200).json({'returnval': rows});
+         }
+         else
+         {
+           console.log(err);
+           res.status(200).json({'returnval':null});
+         }
+       }
+       else{
+         console.log(err);
+       }
+     });
+ });
 
 
 

@@ -1,6 +1,7 @@
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 <link rel="import" href="..\..\bower_components/gold-email-input/gold-email-input.html">
 <link rel="import" href="../dateofbirth-datepicker/dateofbirth-datepicker.html">
+<link rel="import" href="../special-discount-card/special-discount-card.html">
 <link rel="import" href="..\..\bower_components/paper-dialog/paper-dialog.html">
 <dom-module id="newenquiry-card">
   <template>
@@ -75,16 +76,18 @@
           </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
-        <div class="col-sm-6 enquiry-input">
+        <div class="col-sm-3 enquiry-input">
           <div class="lbl"><label>Gender </label><p id="mangender">&nbsp; *</p> </div>
           <div class="gender">
             <span class="col-sm-4"><paper-checkbox id="male"  class="checkbox" on-change="maleHandler">Boy</paper-checkbox></span>
             <span class="col-sm-4"><paper-checkbox  id="female" class="checkbox" on-change="femaleHandler">Girl</paper-checkbox></span>
           </div>
         </div>
-        <div class="col-sm-6 enquiry-input">
-          <label>Right To Education</label>
-          <span><paper-checkbox id="rtestudent"  class="checkbox" on-change="rteHandler">Student From RTE</paper-checkbox></span>
+        <label>Special Discounts</label>
+        <div class="col-sm-9 enquiry-input">
+          <template  is="dom-repeat" items="{{discountarr}}" as="view">
+            <special-discount-card code="{{view.id}}" discountname="{{view.discount_type_name}}"></special-discount-card>
+          </template>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
@@ -97,7 +100,7 @@
       </div>
 
     <div class="form-group-heading">
-       <span class="col-sm-3"><h4>Parent/Guardian Detail</h4></span><span class="col-sm-2" style="margin-left:-3%;"><p id="pgdetail">&nbsp;*</p></span> 
+       <span class="col-sm-3"><h4>Parent/Guardian Detail</h4></span><span class="col-sm-2" style="margin-left:-3%;"><p id="pgdetail">&nbsp;*</p></span>
     </div>
      <!--  <div class="form-group-heading">
         <div class="lb2"><label></label><p id="pgdetail">&nbsp;*</p> </div>
@@ -213,11 +216,13 @@
         var yr1;
         var yr2;
         var yearsxz;
+        var checkList=[];
     Polymer({
       is: 'newenquiry-card',
 ready:function () {
         this.$.service.getclasses();
         this.$.service.getlocation();
+        this.$.service.getdiscounts();
         this.$.fathersdetails.hidden=true;
         this.$.Guardiandetails.hidden=true;
         var dt=new Date();
@@ -257,7 +262,7 @@ ready:function () {
          dobdate=null;
          document.querySelector('#nextyear').checked=false;
          document.querySelector('#midyear').checked=false;
-         document.querySelector('#rtestudent').checked=false;
+         //document.querySelector('#rtestudent').checked=false;
          document.querySelector('dateofbirth-datepicker').FnClear();
       },
       classes:function(e){
@@ -547,7 +552,7 @@ ready:function () {
         }
         else{
           // alert('coming........');
-        this.$.service.submitenqiry(this.enqno,this.academicyear,grade,this.firstname,this.middlename,this.lastname,gender,dobdate,this.fathername,this.mothername,this.mob,this.email,this.textvalue,this.todaydate,this.gemail,this.gmob,this.Guardianname,paga,enrolltype,rtestudent);
+        this.$.service.submitenqiry(this.enqno,this.academicyear,grade,this.firstname,this.middlename,this.lastname,gender,dobdate,this.fathername,this.mothername,this.mob,this.email,this.textvalue,this.todaydate,this.gemail,this.gmob,this.Guardianname,paga,enrolltype,checkList);
       }}
       },
       verifymob:function(){
@@ -616,6 +621,20 @@ yearsxz='AY-'+(dt.getFullYear()+1)+'-'+(dt.getFullYear()+2);
       else{
         rtestudent=null;
       }
+      },
+      discountHandler:function(e){
+        document.querySelector('#midyear').checked==true
+      },
+      getItems:function(codes){
+        checkList.push(codes);
+      },
+      removeItems:function(code){
+        for(var i=0;i<checkList.length;i++){
+          if(code==checkList[i].codes)
+          {
+            checkList.splice(i,1);
+          }
+        }
       },
       midyearfhandler:function(){
           if(document.querySelector('#midyear').checked==true){
