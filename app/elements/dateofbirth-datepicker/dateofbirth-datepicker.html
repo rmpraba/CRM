@@ -32,8 +32,8 @@
 
       ready:function()
       {
-        this.showdate=moment(new Date()).format('L');
-        localStorage.setItem("localsess_curr_date",this.showdate);
+       /* this.showdate=moment(new Date()).format('L');
+        localStorage.setItem("localsess_curr_date",this.showdate);*/
         //this.$.service.feereport(this.showdate);
       },
       FnShowDialog:function(){
@@ -52,7 +52,7 @@
           document.querySelector('newenquiry-card').dateclear();
           // document.querySelector('admission-form').dateclear();
           document.querySelector('detailed-enquiry-form').dateclear();
-          this.showdate="";
+          //this.showdate="";
           }
           else{
             this.showdate = moment(this.$.picker.date).format('L');
@@ -71,11 +71,14 @@
         }
       },
       FnClear:function(){
-        this.showdate = moment(new Date()).format('L');
-
+        this.showdate = "";
       },
       FnSetDate:function(value){
         this.showdate=moment(new Date(value)).format('L');
+      },
+      setdate:function(zxdate){
+       // alert('DAtae  '+zxdate);
+        this.showdate=zxdate;
       }
     });
   </script>

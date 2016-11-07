@@ -18,7 +18,7 @@
       /*:host{
         display: block;
       }
-    </style>    
+    </style>
     <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -264,11 +264,11 @@
             <a href="" aria-hidden="true" on-click="enquiry"><i class="fa fa-phone-square fa-fw"></i> Enquiry<span class="fa arrow"></span></a>
             <ul class="nav nav-second-level">
               <li>
-              <a href="" aria-hidden="true" data-toggle="modal" data-target="#addEnquiry">Pre Apps</a>
+              <a href="" on-click="Fnpreapp" aria-hidden="true" data-toggle="modal" data-target="#addEnquiry">Pre Apps</a>
                 <!-- <a href="flot.html"></a> -->
               </li>
               <li>
-                <a href="" aria-hidden="true" data-toggle="modal" data-target="#addDetailedEnquiry">Enquiry Form</a>
+                <a href="" on-click="Fnenqform" aria-hidden="true" data-toggle="modal" data-target="#addDetailedEnquiry">Enquiry Form</a>
               </li>
             </ul>
 
@@ -489,7 +489,7 @@
               Fee Payment
             </h4>
           </div>
-          <div class="modal-body">            
+          <div class="modal-body">
             <fees-card></fees-card>
           </div>
         </div>
@@ -567,7 +567,7 @@
         </div>
       </div>
     </div> -->
- 
+
 
     <!-- <div class="modal fade bd-example-modal-lg" id="schedulefee" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg">
@@ -613,7 +613,7 @@
               <span aria-hidden="true">&times;</span>
             </button>
             <h4 class="center-block event-title" id="">
-              Schedule Installment 
+              Schedule Installment
             </h4>
           </div>
           <div class="modal-body">
@@ -623,7 +623,7 @@
       </div>
     </div>
 
-    
+
     <div class="modal fade bd-example-modal-lg" id="discountschedule" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -660,7 +660,7 @@
       </div>
     </div>
 
-    
+
     <crm-service id="service"></crm-service>
     <schedule-service id="scheduleservice"></schedule-service>
   </template>
@@ -695,8 +695,8 @@
           this.$.admapp.hidden=true;
         }
 
-      },      
-      FnFeetypeschedule:function(e){        
+      },
+      FnFeetypeschedule:function(e){
         this.$.scheduleservice.fetchgradeService();
         this.$.scheduleservice.fetchacademicyearService();
         this.$.scheduleservice.fetchadmissionyearService();
@@ -710,7 +710,7 @@
         this.FnRefresh();
 
       },
-      FnDiscountschedule:function(e){        
+      FnDiscountschedule:function(e){
         this.$.scheduleservice.fetchgradeService();
         this.$.scheduleservice.fetchacademicyearService();
         this.$.scheduleservice.fetchadmissionyearService();
@@ -718,7 +718,7 @@
         this.$.scheduleservice.fetchfeetypeService();
       },
 
-      FnFeestructureschedule:function(e){        
+      FnFeestructureschedule:function(e){
         this.$.scheduleservice.fetchgradeService();
         this.$.scheduleservice.fetchacademicyearService();
         this.$.scheduleservice.fetchadmissionyearService();
@@ -764,8 +764,17 @@
         document.querySelector('admission-approval-card').FnRefresh();
 
       },
+
       FnAdmission:function(){
         document.querySelector('admission-form').FnRefresh();
+      },
+
+      Fnpreapp:function(){
+          document.querySelector('newenquiry-card').Fnclear();
+      },
+      Fnenqform:function(){
+          document.querySelector('detailed-enquiry-form').Fnclear();
+          document.querySelector('detailed-enquiry-form').ready();
       }
     });
   })();
