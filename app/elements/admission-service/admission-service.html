@@ -343,6 +343,7 @@
         else{
             document.querySelector('admission-form').enquiryarr=e.detail.response.returnval;
             document.querySelector('admission-approval-card').enquiryarr=e.detail.response.returnval;
+            document.querySelector('fees-card').enquiryarr=e.detail.response.returnval;
         }
       },
       callSearchexistingadmissionService:function(){  
@@ -364,6 +365,7 @@
         obj.enquiry_name=admnarr[0].student_name;  
         arr.push(obj); 
         document.querySelector('admission-form').enquiryarr=arr;
+        document.querySelector('fees-card').enquiryarr=arr;
       },
       callFetchenquiryinfoService:function(){
         this.fetchenquiryinfourl=sessionStorage.getItem("addrinfo")+"/fetchenquiryinfo";
