@@ -33,23 +33,80 @@
       </div>
       <div class="list-group col-sm-12 panel-body form-category" hidden$="{{hidetable}}">
           <div class="input-group col-sm-12 ">
-          <table width="900px">
-            <tr style="background-color: grey;"><th>Enquiry No</th><th>Student Name</th><th>Grade</th><th>Test Status</th><th></th></tr>
-            <tr><td>{{enquiryno}}</td><td>{{studentname}}</td><td>{{grade}}</td>
-            <td>
-              <paper-dropdown-menu label="Status" on-iron-select="FnSelectStatus">
-                <paper-listbox id="teststatus" class="dropdown-content">
-                  
-                  <paper-item>Pass</paper-item>
-                  <paper-item>Fail</paper-item>
-                  
-                </paper-listbox>
-              </paper-dropdown-menu>
-            </td>
-            <td><paper-button on-click="FnUpdate">update</paper-button></td></tr>
-            <!-- <template  is="dom-repeat" items="{{enquiryarr}}" as="item">
-            </template> -->
-          </table>
+          <p><strong>STUDENT DETAILS:-</strong></p>
+                <div class="list-group col-sm-12 panel-body form-category">
+                    <div class="col-sm-4">
+                        <paper-input label="Enquiry No" readonly value="{{enquiryno}}"></paper-input>
+                    </div>
+                    <div class="col-sm-8">
+                        <paper-input label="Student Name" readonly value="{{studentname}}"></paper-input>
+                    </div>
+                </div>
+
+                <div class="list-group col-sm-12 panel-body form-category">
+                    <div class="col-sm-4">
+                        <paper-input label="Grade" readonly value="{{grade}}"></paper-input>
+                    </div>
+                    <div class="col-sm-4">
+                        <paper-input label="Enquired Date" readonly value="{{enqdate}}"></paper-input>
+                    </div>
+                    <div class="col-sm-4">
+                        <paper-input label="Test Date" readonly value="{{testdate}}"></paper-input>
+                    </div>
+                </div>
+            <p><strong>TEST SUBJECT DETAILS:-</strong></p>
+                  <div class="list-group col-sm-12 panel-body form-category" hidden$="{{englishcol}}">
+                    <div class="col-sm-4">
+                        <paper-item>English</paper-item>
+                    </div>
+                    <div class="col-sm-4">
+                        <paper-input value="{{englishmark}}"></paper-input>
+                    </div>
+                    <div class="col-sm-4">
+                        <paper-item></paper-item>
+                    </div>
+                </div>
+
+                 <div class="list-group col-sm-12 panel-body form-category" hidden$="{{mathscol}}">
+                    <div class="col-sm-4">
+                        <paper-item>Maths</paper-item>
+                    </div>
+                    <div class="col-sm-4">
+                        <paper-input value="{{mathsmark}}"></paper-input>
+                    </div>
+                    <div class="col-sm-4">
+                        <paper-item></paper-item>
+                    </div>
+                </div>
+
+                 <div class="list-group col-sm-12 panel-body form-category" hidden$="{{evscol}}">
+                    <div class="col-sm-4">
+                        <paper-item>EVS</paper-item>
+                    </div>
+                    <div class="col-sm-4">
+                        <paper-input value="{{evsmark}}"></paper-input>
+                    </div>
+                    <div class="col-sm-4">
+                        <paper-item></paper-item>
+                    </div>
+                </div>
+
+                 
+                <div class="list-group col-sm-12 panel-body form-category">
+                    <div class="col-sm-4">
+                        <paper-item>Result Status:</paper-item>
+                    </div>
+                    <div class="col-sm-4">
+                        <paper-checkbox  id="passcheck" class="checkbox" on-change="passHandler">Pass</paper-checkbox>
+                    </div>
+                    <div class="col-sm-4">
+                        <paper-checkbox  id="failcheck" class="checkbox" on-change="failHandler">Fail</paper-checkbox>
+                    </div>
+                </div>
+
+                <div class="button">
+                  <paper-button class="button" on-click="update">Update</paper-button>
+                </div>
           </div>
       </div>
 
@@ -62,10 +119,14 @@
   (function() {
     'use strict';
     var status="";
+    var testresult;
     Polymer({
       is: 'admission-approval-card',
       ready:function(){
         this.hidetable=true;
+        this.englishmark=0;
+        this.mathsmark=0;
+        this.evsmark=0;
       },
 
       FnSearchEnquiry:function(){        
@@ -82,20 +143,61 @@
         localStorage.setItem("curr_sess_enquiryname",enquiry_name);
         this.$.admissionservice.callFetchadmissiontestinfo(enquiry_no);
       },
-      FnSelectStatus:function(e){
-        status=(e.target.selectedItem.textContent).trim();
-      },
-      FnUpdate:function(){
-        this.$.admissionservice.callUpdateteststatus(this.enquiryno,status);
-      },
+      
       FnRefresh:function(){
         this.hidetable=true;
         this.enquiryno="";
         this.enquiryarr="";
         this.studentname="";
         this.grade="";
-        document.querySelector('#teststatus').selected=-1;
+        this.enqdate="";
+        this.testdate="";
+        this.englishcol=true;
+        this.englishmark="";
+        this.mathscol=true;
+        this.mathsmark="";
+        this.evscol=true;
+        this.evsmark="";
+        testresult=null;
+        
+      },
+      check:function(english,maths,evs,result){
+          this.englishcol=english;
+          this.mathscol=maths;
+          this.evscol=evs;
+          if(result=="Pass"){
+              document.querySelector('#passcheck').checked=true;
+              testresult="Pass";
+          }
+          else if(result=="Fail"){
+              document.querySelector('#failcheck').checked=true;
+              testresult="Fail";
+          }
+      },
+      passHandler:function(){
+        if(document.querySelector('#passcheck').checked==true){
+            testresult="Pass";
+            document.querySelector('#failcheck').checked=false;
+        }
+        else{
+            testresult=null;
+        }
+      },
+      failHandler:function(){
+          if(document.querySelector('#failcheck').checked==true){
+            testresult="Fail";
+            document.querySelector('#passcheck').checked=false;
+        }
+        else{
+            testresult=null;
+        }
+      },
+      update:function(){
+        //alert(this.enquiryno+'  '+this.englishmark+'  '+this.mathsmark+'  '+this.evsmark+'  '+testresult);
+        //this.$.admissionservice.callUpdateteststatus(this.enquiryno,testresult);
+        this.$.admissionservice.Updateteststatus(this.enquiryno,testresult,this.englishmark,this.mathsmark,this.evsmark);
       }
+
     });
   })();
   </script>
