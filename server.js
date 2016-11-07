@@ -2765,25 +2765,16 @@ app.post('/verifyage',  urlencodedParser,function (req, res){
  app.post('/rtenumber',  urlencodedParser,function (req, res){
 
    var collection = {"school_id":req.query.schol,"enquiry_no":req.query.enq,"rte_no":req.query.rte_num};
-   console.log(collection);
    connection.query("INSERT into rte_students set ? ",[collection],
-     function(err, rows)
-     {
+     function(err, rows){
        if(!err)
        {
-         if(rows.length>0)
-         {
-           //console.log(rows);
-           res.status(200).json({'returnval': "success"});
-         }
-         else
-         {
-           console.log(err);
-           res.status(200).json({'returnval':null});
-         }
+         res.status(200).json({'returnval': 'Inserted!'});
        }
-       else{
+       else
+       {
          console.log(err);
+         res.status(200).json({'returnval': 'Not Inserted!'});
        }
      });
  });
