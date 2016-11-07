@@ -87,7 +87,7 @@
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-4">
-           <dateofbirth-datepicker></dateofbirth-datepicker>
+           <dateofbirth-datepicker fieldshowdate={{dob}}></dateofbirth-datepicker>
         </div>
         <div class="col-sm-4">
           <paper-input label="Age as on 31st March 2016" value="{{ageofyr}}"></paper-input>
@@ -711,7 +711,7 @@
            document.querySelector("#dffemale").checked=true;
            }
 
-      document.querySelector('dateofbirth-datepicker').setdate(dob);
+      //document.querySelector('dateofbirth-datepicker').setdate(dob);
     },
     maleHandler:function(){
       if(document.querySelector("#dfmale").checked==true)
