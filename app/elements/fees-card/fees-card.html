@@ -21,34 +21,34 @@
   <template>
     <div class="row enquiry-form">
       
-      <div class="list-group col-sm-12 panel-body form-category">
-        <div class="custom-search-form col-sm-5">
-          <div id="search" show$="{{show}}" on-click="toggleSearch">
-            <span><paper-input label="Enter Enquiry No / Admission No / Firstname " value="{{enquiryno}}"></paper-input></span>
+     <div class="list-group col-sm-12 panel-body form-category">
+          <div class="col-sm-5">
+          <paper-input id="searchtext" label="Enter Admission Number/Name" value="{{enquiryno}}">
+            <paper-icon-button suffix icon="search" on-click="FnSearchEnquiry" title="Search"></paper-icon-button>
+          </paper-input>
           </div>
-        </div>
-        <div class="custom-search-form col-sm-2 paper-search">
-          <span><paper-icon-button icon="search" on-click="FnSearchEnquiry"></paper-icon-button></span>
-        </div>
-        <div class="col-sm-5 ">            
-            <span class="input-group-btn">
-              <paper-dropdown-menu label="Select Fee Type" on-iron-select="FnSelectFeeType">
-                <paper-listbox class="dropdown-content">
-                  <!-- <template  is="dom-repeat" items="{{enquiryarr}}" as="item"> -->
-                  <paper-item>Application fee</paper-item> 
-                  <paper-item>Registration fee</paper-item> 
-                  <paper-item>Kit fee</paper-item> 
-                  <paper-item>Annual fee</paper-item> 
-                  <paper-item>Miscellaneous fee</paper-item> 
-                  <!-- </template>                  -->
-                </paper-listbox>
-              </paper-dropdown-menu>
-            </span>
-        </div>
-         
+          <div class="col-sm-5" style="margin-top: 2%;">
+          <paper-dropdown-menu label="Select Enquiry/Admission No" on-iron-select="FnSelectEnquiry">
+            <paper-listbox class="dropdown-content" id="enradmnsearch">
+            <template  is="dom-repeat" items="{{enquiryarr}}" as="item">
+              <paper-item value="{{item.enquiry_no}}">{{item.enquiry_no}}-{{item.enquiry_name}}</paper-item>
+            </template>
+            </paper-listbox>
+          </paper-dropdown-menu>
+          </div> 
+          <!-- <div style="margin-top: 2%;margin-left: -5%;" class="col-sm-2 enquiry-input" hidden$="{{hideenqenrno}}">
+          <paper-input label="{{enqenrlabel}}" id="enqenrno" readonly value="{{enqenrno}}"></paper-input>
+          </div>    -->      
      </div>
      <div class="list-group col-sm-12 panel-body form-category">
-      <div class="col-sm-4 ">            
+        <div class="col-sm-3"> 
+        Pay All or Specifc Fee
+        </div>
+        <div class="col-sm-4 "> 
+        <span><paper-checkbox class="col-sm-3" id="payallfee" class="checkbox" on-change="FnPayAll">All</paper-checkbox></span>
+        <span><paper-checkbox class="col-sm-3" id="payspecificfee" class="checkbox" on-change="FnPaySpecific">Specific</paper-checkbox></span>
+        </div>
+        <div class="col-sm-5" hidden$="{{hidespecifictype}}">            
             <span class="input-group-btn">
               <paper-dropdown-menu label="Select Fee Type" on-iron-select="FnSelectFeeType">
                 <paper-listbox id="feetype" class="dropdown-content">
@@ -62,11 +62,14 @@
                 </paper-listbox>
               </paper-dropdown-menu>
             </span>
-      </div>
-       <div class="col-sm-4 enquiry-input">
+        </div>
+     </div>
+     <div class="list-group col-sm-12 panel-body form-category">
+      
+       <div class="col-sm-5 enquiry-input">
           <paper-input label="Academic Year" value="{{academicyear}}"></paper-input>
         </div>
-        <div class="col-sm-4 enquiry-input">
+        <div class="col-sm-5 enquiry-input">
           <paper-input label="Class" value="{{enquiredclass}}"></paper-input>
         </div>
      </div>
@@ -130,26 +133,55 @@
     'use strict';
       var installment="";
       var paymentmode="";
+      var feepaytype="";
     Polymer({
       is: 'fees-card',
       ready:function(){
+        this.hidespecifictype=true;
         this.hiddenpayment=true;
         this.receiptdate=true;
         this.hiddeninstallment=false;
         this.hiddenaddbtn=false;
         localStorage.setItem("curr_sess_waiveoff",0);
-        localStorage.setItem("curr_sess_fees",0);  
+        localStorage.setItem("curr_sess_fees",0); 
       },  
+      FnPayAll:function(e){
+        if(document.querySelector("#payallfee").checked==true)
+        {
+         this.hidespecifictype=true;
+         document.querySelector("#payspecificfee").checked=false;
+         feepaytype="All";
+        }
+      },
+      FnPaySpecific:function(e){
+        if(document.querySelector("#payspecificfee").checked==true)
+        {
+         this.hidespecifictype=false;
+         document.querySelector("#payallfee").checked=false;
+         feepaytype="Specific";
+        }
+      },
       FnSelectFeeType:function(e){
         var feetype=(e.target.selectedItem.textContent).trim();
         localStorage.setItem("curr_sess_feetype",feetype);
         this.FnSearchEnquiry();
       },   
       FnSearchEnquiry:function(){
-        this.$.admissionservice.callSearchfeeenquiryService(this.enquiryno);
+        document.querySelector('#enradmnsearch').selected="-1";
+        // this.FnRefresh();
+        // this.$.crmservice.getclasses();        
+        // this.$.admissionservice.callSearchenquiryService(this.enquiryno);
+        this.$.admissionservice.callSearchexistingadmissionService();
       },
-      FnSearchAdmission:function(){
-
+      FnSelectEnquiry:function(e){
+        // this.FnRefresh1();
+        var enquiry=(e.target.selectedItem.textContent).trim();
+        var inx=enquiry.indexOf('-');
+        var enquiry_no=enquiry.substring(0,inx);
+        var enquiry_name=enquiry.substring(inx+1);
+        localStorage.setItem("curr_sess_enquiryno",enquiry_no);
+        localStorage.setItem("curr_sess_enquiryname",enquiry_name);
+        this.$.admissionservice.callFetchenquiryinfoService();
       },
       FnHiddenPayment:function(){
         this.hiddenpayment=false;

@@ -14,7 +14,7 @@
   <template>
   <!--component which invokes the predefined date picker control-->
   <div class="datepicker">
-    <paper-input label="Date of Birth" class="btn" on-click="FnShowDialog" raised value="{{showdate}}"></paper-input>
+    <paper-input label="Date Of Birth" class="btn" on-click="FnShowDialog" raised value="{{fieldshowdate}}"></paper-input>
     <paper-dialog id="dialog" class="paper-date-picker-dialog" modal on-iron-overlay-closed="FnDismissDialog" style="left: 0 !important;">
       <paper-date-picker id="picker" date="{{date}}"></paper-date-picker>
       <div class="buttons">
@@ -32,9 +32,9 @@
 
       ready:function()
       {
-       /* this.showdate=moment(new Date()).format('L');
-        localStorage.setItem("localsess_curr_date",this.showdate);*/
-        //this.$.service.feereport(this.showdate);
+       /* this.fieldshowdate=moment(new Date()).format('L');
+        localStorage.setItem("localsess_curr_date",this.fieldshowdate);*/
+        //this.$.service.feereport(this.fieldshowdate);
       },
       FnShowDialog:function(){
         this.date=new Date();
@@ -49,40 +49,37 @@
           var dd2=new Date(pickdate);
           var days=parseInt((dd1 - dd2) / (1000 * 60 * 60 * 24));
           if(days<=0){
-            document.querySelector('newenquiry-card').dateclear();
+          document.querySelector('newenquiry-card').dateclear();
           // document.querySelector('admission-form').dateclear();
           document.querySelector('detailed-enquiry-form').dateclear();
-          //this.showdate="";
+          //this.fieldshowdate="";
           }
           else{
-            this.showdate = moment(this.$.picker.date).format('L');
-          localStorage.setItem("localsess_start_date",this.showdate);
-          //this.$.service.datepickinsta1(this.date);
-          //this.$.service.datepickinsta2(this.date);
-          //this.$.service.datepickinsta1cheque(this.date);
-          //this.$.service.datepickinsta2cheque(this.date);
-          //this.$.service.feereport(this.showdate);
-          document.querySelector('newenquiry-card').getdate(this.showdate);
-          document.querySelector('detailed-enquiry-form').getdate(this.showdate);
-          // document.querySelector('admission-form').getdate(this.showdate);
+            this.fieldshowdate = moment(this.$.picker.date).format('L');
+          localStorage.setItem("localsess_start_date",this.fieldshowdate);
+          // //this.$.service.datepickinsta1(this.date);
+          // //this.$.service.datepickinsta2(this.date);
+          // //this.$.service.datepickinsta1cheque(this.date);
+          // //this.$.service.datepickinsta2cheque(this.date);
+          // //this.$.service.feereport(this.fieldshowdate);
+          document.querySelector('newenquiry-card').getdate(this.fieldshowdate);
+          document.querySelector('detailed-enquiry-form').getdate(this.fieldshowdate);
+          // // document.querySelector('admission-form').getdate(this.fieldshowdate);
 
           }
 
         }
       },
       FnClear:function(){
-        this.showdate = "";
-
+        this.fieldshowdate = "";
       },
       FnSetDate:function(value){
-        // alert(value);
-        this.showdate=moment(new Date(value)).format('L');
-
-      },
-      setdate:function(zxdate){
-       // alert('DAtae  '+zxdate);
-        this.showdate=zxdate;
+        this.fieldshowdate=moment(new Date(value)).format('L');
       }
+   /*   setdate:function(zxdate){
+        //alert('DAtae  '+zxdate);
+        this.fieldshowdate=zxdate;
+      }*/
     });
   </script>
 </dom-module>

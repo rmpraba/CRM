@@ -249,6 +249,8 @@
         document.querySelector('discount-master-card').gradearr=e.detail.response.returnval;
         document.querySelector('fee-structure-schedulecard').gradearr=e.detail.response.returnval;
         document.querySelector('installment-master-card').gradearr=e.detail.response.returnval;
+        document.querySelector('admission-form').fromgradearr=e.detail.response.returnval;
+        document.querySelector('admission-form').togradearr=e.detail.response.returnval;
       },
       fetchacademicyearService:function(){        
         this.fetchacademicyearurl=sessionStorage.getItem("addrinfo")+"/fetchacademicyear-service"
@@ -259,6 +261,7 @@
         document.querySelector('discount-master-card').academicarr=e.detail.response.returnval;
         document.querySelector('fee-structure-schedulecard').academicarr=e.detail.response.returnval;
         document.querySelector('installment-master-card').academicarr=e.detail.response.returnval;
+        document.querySelector('admission-form').academicarr=e.detail.response.returnval;
       },
       fetchadmissionyearService:function(){        
         this.fetchadmissionyearurl=sessionStorage.getItem("addrinfo")+"/fetchadmissionyear-service"
@@ -269,6 +272,7 @@
         document.querySelector('discount-master-card').admissionarr=e.detail.response.returnval;
         document.querySelector('fee-structure-schedulecard').admissionarr=e.detail.response.returnval;
         document.querySelector('installment-master-card').admissionarr=e.detail.response.returnval;
+
       },
       fetchfeetypeService:function(){        
         this.fetchfeetypeurl=sessionStorage.getItem("addrinfo")+"/fetchfeetype-service"

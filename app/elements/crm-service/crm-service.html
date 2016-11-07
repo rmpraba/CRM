@@ -156,6 +156,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         debounce-duration="300"
         >
   </iron-ajax>
+  <!-- this below ajax gives the total number of admission appeared categorized based on the grade -->
+  <iron-ajax
+        method="post"
+        id="getadmittedcountajax"
+        url="{{getadmittedcounturl}}"
+        params="{{getadmittedcountparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getadmittedcountResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
   <!-- this ajax gets the student list who all are enquired for admission and not yet been admitted -->
   <iron-ajax
         method="post"
@@ -789,8 +801,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           document.querySelector('enquiry-card').ready();
 
         document.querySelector('newenquiry-card').Fnclear();
-        alert(discountArr);
-        alert(currentEnqno);
+        //alert(discountArr);
+       // alert(currentEnqno);
         if(discountArr.length > 0){
           for(var i=0;i < discountArr.length;i++){
             this.discountenqurl="http://localhost:8086/discountenq";
@@ -799,7 +811,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             obj.discountid = discountArr[i];
             obj.schol=localStorage.getItem("schoolid");
             this.discountenqparam=obj;
-            alert(JSON.stringify(obj));
+           // alert(JSON.stringify(obj));
             this.$.discountenqajax.generateRequest();
           }
         }
@@ -810,7 +822,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      },
       discountenqResponse:function(e){
         var result=e.detail.response.returnval;
-        alert(JSON.stringify(result));
+       // alert(JSON.stringify(result));
       },
      updateenquiryform:function(enqno,firstname,middlename,lastname,gender,grade,dob,oldclass,oldschool,mothertongue,fathername,mothername,fatheredu,motheredu,fathermob,mothermob,fathermail,mothermail,fathercompany,mothercompany,fatherjob,motherjob,flat,address1,address2,address3,city,pincode,state,enquiysource,siblingname,siblingdetail,transportreq,canteenreq,secondlanguage,thirdlanguage,propspectus,dadpost,mompost,dadsalary,momsalary,prospect,admissiontest,admissiondate, admissiontestenglish, admissiontestmaths,admissiontestevs,guardianname,guardianmobile,guardianemail,guardiancompany,guardianjob,guardianoccup,guardianincome,location,fatherother,motherother,guardianother,country_name,rteno,checkList){
        discountArr =  checkList;
@@ -881,6 +893,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        obj.country_name1=country_name;
        obj.rteno=rteno;
         this.updateenquiryparam=obj;
+        alert(JSON.stringify(obj));
         this.$.updateenquiryajax.generateRequest();
 
 
@@ -1229,6 +1242,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      getenquirycountResponse:function(e){
       var result=e.detail.response.returnval;
       document.querySelector('enquiry-card').gradewisearr=result;
+     },
+      getadmittedcount:function(){
+        this.getadmittedcounturl="http://localhost:8086/getadmittedcount";
+        var obj={"schol":"","status":""}
+        obj.schol=localStorage.getItem("schoolid");
+        obj.status="Admitted";
+        this.getadmittedcountparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.getadmittedcountajax.generateRequest();
+     },
+     getadmittedcountResponse:function(e){
+      var result=e.detail.response.returnval;
+      document.querySelector('enquiry-card').gradewiseadmissionarr=result;
      },
      getlistdetails:function(classes){
            this.getlistdetailsurl="http://localhost:8086/getlistdetails";
