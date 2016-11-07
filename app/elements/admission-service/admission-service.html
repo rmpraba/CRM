@@ -318,11 +318,26 @@
 
         debounce-duration="300"
         >
+
+        <!-- this below ajax is used to update the admission test details in admission_test_detail table -->
+         <iron-ajax
+        method="post"
+        id="updatetestdetailsajax"
+        url="{{updatetestdetailsurl}}"
+        params="{{updatetestdetailsparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="updatetestdetailsResponse"
+
+        debounce-duration="300"
+        >
+
   </template>
   <script>
   (function() {
     'use strict';
-
+    var enqno;
+    var result;
     Polymer({
       is: 'admission-service',
       callSearchenquiryService:function(enquiryno){        
@@ -1209,24 +1224,72 @@ alert("history"+e.detail.response.returnval);
         this.$.fetchadmissiontestinfoajax.generateRequest(); 
      },
      fetchadmissiontestinfoResponse:function(e){
+        var engstatus, mathsstatus, evsstatus;
         // alert(e.detail.response.returnval);
         var arr=e.detail.response.returnval;
         document.querySelector('admission-approval-card').enquiryno=arr[0].enquiry_no;
         document.querySelector('admission-approval-card').studentname=arr[0].enquiry_name;
         document.querySelector('admission-approval-card').grade=arr[0].class;
+        document.querySelector('admission-approval-card').enqdate=arr[0].created_on;
+        document.querySelector('admission-approval-card').testdate=arr[0].test_date;
+        document.querySelector('admission-approval-card').englishmark=arr[0].english_mark;
+        document.querySelector('admission-approval-card').mathsmark=arr[0].maths_mark;
+        document.querySelector('admission-approval-card').evsmark=arr[0].evs_mark;
+
+        if(arr[0].english_status=="Yes"){
+            engstatus=false;
+        }
+        else{
+            engstatus=true;   
+        }
+        if(arr[0].maths_status=="Yes"){
+            mathsstatus=false;
+        }
+        else{
+            mathsstatus=true;
+        }
+        if(arr[0].evs_status=="Yes"){
+            evsstatus=false;
+        }
+        else{
+            evsstatus=true;   
+        }
+        document.querySelector('admission-approval-card').check(engstatus,mathsstatus,evsstatus,arr[0].result_status);
      },
-     callUpdateteststatus:function(enquiryno,status){
-        this.updateteststatusurl=sessionStorage.getItem("addrinfo")+"/updateteststatus";
+     Updateteststatus:function(enqid,teststatus,englishmark,mathsmark,evsmark){
+        enqno=enqid;
+        result=teststatus;
+        this.updatetestdetailsurl=sessionStorage.getItem("addrinfo")+"/updatetestdetails";
+        var obj={"schoolid":"","enquiryno":"","status":"","english":"","maths":"","evs":""}
+        obj.schoolid=localStorage.getItem("schoolid");
+        obj.enquiryno=enqid;
+        obj.status=teststatus;
+        obj.english=englishmark;
+        obj.maths=mathsmark;
+        obj.evs=evsmark;
+        obj.evaluatedby=localStorage.getItem("employeeid");
+        obj.evaluatedon=sessionStorage.getItem("todaydate");
+        this.updatetestdetailsparam=obj;
+        this.$.updatetestdetailsajax.generateRequest(); 
+     },
+     updatetestdetailsResponse:function(e){
+        if(e.detail.response.returnval=='success'){
+            this.updateteststatusurl=sessionStorage.getItem("addrinfo")+"/updateteststatus";
         var obj={"schoolid":"","enquiryno":"","status":""}
         obj.schoolid=localStorage.getItem("schoolid");
-        obj.enquiryno=enquiryno;
-        obj.status=status;
+        obj.enquiryno=enqno;
+        obj.status=result;
         this.updateteststatusparam=obj;
         this.$.updateteststatusajax.generateRequest(); 
+        }
+        else{
+            alert('Interrupted..!');
+        }
      },
      updateteststatusResponse:function(e){
         alert(e.detail.response.returnval);
      }
+
     });
   })();
   </script>

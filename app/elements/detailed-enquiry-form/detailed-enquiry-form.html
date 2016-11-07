@@ -487,9 +487,9 @@
         var dobdate;
         var admissiontestdate;
         var admissiontest;
-        var admissiontestenglish;
-        var admissiontestmaths;
-        var admissiontestevs;
+        var admissiontestenglish="No";
+        var admissiontestmaths="No";
+        var admissiontestevs="No";
         var rtevalue;
         var enrolltype;
         var yr1;
@@ -933,7 +933,7 @@
     },
     englishHandler:function(){
       if(document.querySelector("#english").checked==true){
-        admissiontestenglish="English";
+        admissiontestenglish="Yes";
       }
       else{
         admissiontestenglish=null;
@@ -941,14 +941,14 @@
     },
       mathsHandler:function(){
         if(document.querySelector("#maths").checked==true){
-          admissiontestmaths="Maths";
+          admissiontestmaths="Yes";
         } else {
           admissiontestmaths=null;
         }
       },
       evsHandler:function(){
         if(document.querySelector("#evs").checked==true){
-          admissiontestevs="EVS";
+          admissiontestevs="Yes";
         } else {
           admissiontestevs=null;
         }

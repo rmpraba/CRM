@@ -632,6 +632,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     >
     </iron-ajax>
 
+    <!-- this below ajax is used to insert the admission test details in a separate table named as, admission_test_details -->
+    <iron-ajax
+      method="post"
+      id="admissiondetailsajax"
+      url="{{admissiondetailsurl}}"
+      params="{{admissiondetailsparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="admissiondetailsResponse"
+      debounce-duration="300"
+    >
+    </iron-ajax>
+
   </template>
   <script>
   (function() {
@@ -682,6 +695,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
    var successbox;
   var discountArr;
     var currentEnqno;
+
+    var testenqid;
+    var testdate;
     Polymer({
       is: 'crm-service',
       followupResponse:function(e){
@@ -814,6 +830,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
      updateenquiryform:function(enqno,firstname,middlename,lastname,gender,grade,dob,oldclass,oldschool,mothertongue,fathername,mothername,fatheredu,motheredu,fathermob,mothermob,fathermail,mothermail,fathercompany,mothercompany,fatherjob,motherjob,flat,address1,address2,address3,city,pincode,state,enquiysource,siblingname,siblingdetail,transportreq,canteenreq,secondlanguage,thirdlanguage,propspectus,dadpost,mompost,dadsalary,momsalary,prospect,admissiontest,admissiondate, admissiontestenglish,admissiontestmaths,admissiontestevs,guardianname,guardianmobile,guardianemail,guardiancompany,guardianjob,guardianoccup,guardianincome,location,fatherother,motherother,guardianother,country_name,rteno,rtevalue){
 
+      testenqid=enqno;
+      testdate=admissiondate;
       //alert(enqno+firstname+middlename+lastname+gender+grade+dob+oldclass+oldschool+mothertongue+fathername+mothername+fatheredu+motheredu+fathermob+mothermob+fathermail+mothermail+fathercompany+mothercompany+fatherjob+motherjob+flat+address1+address2+address3+city+pincode+state+enquiysource+siblingname+siblingdetail+transportreq+canteenreq+secondlanguage+thirdlanguage+propspectus+dadpost+mompost+dadsalary+momsalary);
       this.updateenquiryurl="http://localhost:8086/updateenquiry";
         var obj={"schol":"","enq":"","firstname":"","middlename":"","lastname":"","gender":"","grade":"","dob":"","oldclass":"","oldschool":"","mothertongue":"","fathername":"","mothername":"","fatheredu":"","motheredu":"","fathermob":"","mothermob":"","fathermail":"","mothermail":"","fathercompany":"","mothercompany":"","fatherjob":"","motherjobfn":"","flatno":"","address1":"","address2":"","address3":"","city":"","pincode":"","statename":"","enquiysource":"","siblingname":"","siblingdetails":"","transportreq":"","canteenreq":"","secondlanguage":"","thirdlanguage":"","modified":"","prospectstatus":"","daddesignation":"","momdesignation":"","dadincome":"","momincome":"","prospectusno":"","admissiontest1":"","admissiondate1":"",'admissiontestenglish1':"","admissiontestmaths1":"","admissiontestevs1":"","guardianname1":"","guardianmobile1":"","guardianemail1":"","guardiancompany1":"","guardianjob1":"","guardianoccup1":"","guardianincome1":"","location1":"","fatherother1":"","motherother1":"","guardianother1":"","country_name1":"","rteno":"","rtevalue":""}
@@ -881,7 +899,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        obj.rteno=rteno;
        obj.rtevalue=rtevalue;
         this.updateenquiryparam=obj;
-        alert(JSON.stringify(obj));
+        //alert(JSON.stringify(obj));
         this.$.updateenquiryajax.generateRequest();
 
 
@@ -893,6 +911,30 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.updateprospectnoparam=obj;
        //alert(JSON.stringify(obj));
         this.$.updateprospectnoajax.generateRequest();
+        }
+
+
+        if(admissiontest=="Yes"){
+          this.admissiondetailsurl="http://localhost:8086/admissiondetails";
+        var obj={"schol":"","enqid":"","english":"","maths":"","eve":"","testdate":"","engliskmark":"","mathsmark":"","evsmark":"","updateby":"","updateon":""}
+        obj.schol=localStorage.getItem("schoolid");
+        obj.enqid=enqno;
+        obj.english=admissiontestenglish;
+        obj.maths=admissiontestmaths;
+        obj.eve=admissiontestevs;
+        obj.testdate=admissiondate;
+        obj.updateby=localStorage.getItem("employeeid");
+        obj.updateon=sessionStorage.getItem("todaydate");
+        this.admissiondetailsparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.admissiondetailsajax.generateRequest();
+
+        }
+     },
+     admissiondetailsResponse:function(e){
+        var result=e.detail.response.returnval;
+        if(result=='success'){
+          alert('Admission test details are inserted for'+testenqid+'Test Dated on:'+testdate);
         }
      },
      updateenquiryResponse:function(e){
@@ -908,6 +950,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       registerenquiryform:function(enqno,firstname,middlename,lastname,gender,grade,dob,oldclass,oldschool,mothertongue,fathername,mothername,fatheredu,motheredu,fathermob,mothermob,fathermail,mothermail,fathercompany,mothercompany,fatherjob,motherjob,flat,address1,address2,address3,city,pincode,state,enquiysource,siblingname,siblingdetail,transportreq,canteenreq,secondlanguage,thirdlanguage,propspectus,dadpost,mompost,dadsalary,momsalary,prospect, academicyear,admissiontest,admissiondate, admissiontestenglish, admissiontestmaths,admissiontestevs,guardianname,guardianmobile,guardianemail,guardiancompany,guardianjob,guardianoccup,guardianincome,location,fatherother,motherother,guardianother,enrolltype,country_name,rteno,rtevalue){
         enquirynjski=enqno;
+        testenqid=enqno;
+        testdate=admissiondate;
          var generateid=Math.floor(100000 + Math.random() * 900000);
          var dat=new Date();
         //alert(enqno+firstname+middlename+lastname+gender+grade+dob+oldclass+oldschool+mothertongue+fathername+mothername+fatheredu+motheredu+fathermob+mothermob+fathermail+mothermail+fathercompany+mothercompany+fatherjob+motherjob+flat+address1+address2+address3+city+pincode+state+enquiysource+siblingname+siblingdetail+transportreq+canteenreq+secondlanguage+thirdlanguage+propspectus+dadpost+mompost+dadsalary+momsalary);
@@ -1023,6 +1067,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           this.updateprospectnoparam=obj;
           //alert(JSON.stringify(obj));
           this.$.updateprospectnoajax.generateRequest();
+
+          if(admissiontest=="Yes"){
+          this.admissiondetailsurl="http://localhost:8086/admissiondetails";
+        var obj={"schol":"","enqid":"","english":"","maths":"","eve":"","testdate":"","engliskmark":"","mathsmark":"","evsmark":"","updateby":"","updateon":""}
+        obj.schol=localStorage.getItem("schoolid");
+        obj.enqid=enqno;
+        obj.english=admissiontestenglish;
+        obj.maths=admissiontestmaths;
+        obj.eve=admissiontestevs;
+        obj.testdate=admissiondate;
+        obj.updateby=localStorage.getItem("employeeid");
+        obj.updateon=sessionStorage.getItem("todaydate");
+        this.admissiondetailsparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.admissiondetailsajax.generateRequest();
+
+        }
         }
       },
       registerenquiryformResponse:function(e){
