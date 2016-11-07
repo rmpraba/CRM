@@ -789,8 +789,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           document.querySelector('enquiry-card').ready();
 
         document.querySelector('newenquiry-card').Fnclear();
-        alert(discountArr);
-        alert(currentEnqno);
+        //alert(discountArr);
+       // alert(currentEnqno);
         if(discountArr.length > 0){
           for(var i=0;i < discountArr.length;i++){
             this.discountenqurl="http://localhost:8086/discountenq";
@@ -799,7 +799,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             obj.discountid = discountArr[i];
             obj.schol=localStorage.getItem("schoolid");
             this.discountenqparam=obj;
-            alert(JSON.stringify(obj));
+           // alert(JSON.stringify(obj));
             this.$.discountenqajax.generateRequest();
           }
         }
@@ -810,9 +810,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      },
       discountenqResponse:function(e){
         var result=e.detail.response.returnval;
-        alert(JSON.stringify(result));
+       // alert(JSON.stringify(result));
       },
-     updateenquiryform:function(enqno,firstname,middlename,lastname,gender,grade,dob,oldclass,oldschool,mothertongue,fathername,mothername,fatheredu,motheredu,fathermob,mothermob,fathermail,mothermail,fathercompany,mothercompany,fatherjob,motherjob,flat,address1,address2,address3,city,pincode,state,enquiysource,siblingname,siblingdetail,transportreq,canteenreq,secondlanguage,thirdlanguage,propspectus,dadpost,mompost,dadsalary,momsalary,prospect,admissiontest,admissiondate, admissiontestenglish, admissiontestmaths,admissiontestevs,guardianname,guardianmobile,guardianemail,guardiancompany,guardianjob,guardianoccup,guardianincome,location,fatherother,motherother,guardianother,country_name,rteno,rtevalue){
+     updateenquiryform:function(enqno,firstname,middlename,lastname,gender,grade,dob,oldclass,oldschool,mothertongue,fathername,mothername,fatheredu,motheredu,fathermob,mothermob,fathermail,mothermail,fathercompany,mothercompany,fatherjob,motherjob,flat,address1,address2,address3,city,pincode,state,enquiysource,siblingname,siblingdetail,transportreq,canteenreq,secondlanguage,thirdlanguage,propspectus,dadpost,mompost,dadsalary,momsalary,prospect,admissiontest,admissiondate, admissiontestenglish,admissiontestmaths,admissiontestevs,guardianname,guardianmobile,guardianemail,guardiancompany,guardianjob,guardianoccup,guardianincome,location,fatherother,motherother,guardianother,country_name,rteno,rtevalue){
 
       //alert(enqno+firstname+middlename+lastname+gender+grade+dob+oldclass+oldschool+mothertongue+fathername+mothername+fatheredu+motheredu+fathermob+mothermob+fathermail+mothermail+fathercompany+mothercompany+fatherjob+motherjob+flat+address1+address2+address3+city+pincode+state+enquiysource+siblingname+siblingdetail+transportreq+canteenreq+secondlanguage+thirdlanguage+propspectus+dadpost+mompost+dadsalary+momsalary);
       this.updateenquiryurl="http://localhost:8086/updateenquiry";
@@ -881,6 +881,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        obj.rteno=rteno;
        obj.rtevalue=rtevalue;
         this.updateenquiryparam=obj;
+        alert(JSON.stringify(obj));
         this.$.updateenquiryajax.generateRequest();
 
 

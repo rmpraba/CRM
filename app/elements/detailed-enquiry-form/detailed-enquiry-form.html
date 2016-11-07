@@ -587,7 +587,6 @@
           fngender=null;
           admissiontest = null;
           this.grade="";
-          this.dob="";
           this.oldclass="";
           this.oldschool="";
           mothertongue=null;
@@ -711,6 +710,8 @@
             document.querySelector("#dfmale").checked=false;
            document.querySelector("#dffemale").checked=true;
            }
+
+      document.querySelector('dateofbirth-datepicker').setdate(dob);
     },
     maleHandler:function(){
       if(document.querySelector("#dfmale").checked==true)
