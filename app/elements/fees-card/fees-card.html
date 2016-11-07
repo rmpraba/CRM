@@ -65,7 +65,9 @@
         </div>
      </div>
      <div class="list-group col-sm-12 panel-body form-category">
-      
+      <div class="col-sm-5 enquiry-input" hidden>
+          <paper-input label="Ac Year" value="{{acyear}}"></paper-input>
+        </div>
        <div class="col-sm-5 enquiry-input">
           <paper-input label="Academic Year" value="{{academicyear}}"></paper-input>
         </div>
@@ -87,10 +89,12 @@
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6 enquiry-input">
-          <paper-input label="Date of Birth" value="{{dob}}"></paper-input>
+          <!-- <paper-input label="Date of Birth" value="{{dob}}"></paper-input> -->
+          <paper-input label="Total Fees" value="{{totalfees}}"></paper-input><!-- <paper-input label="Total Discount" value="{{totaldiscount}}"></paper-input> -->
         </div>
         <div class="col-sm-6 enquiry-input">
-          <paper-input label="Fees" value="{{fees}}"></paper-input>
+          <!-- <paper-input label="Total Fees" value="{{totalfees}}"></paper-input> -->
+          <paper-input label="Total Discount" value="{{totaldiscount}}"></paper-input>
         </div>
       </div>
     
@@ -99,16 +103,16 @@
       </div>
       <div class="list-group col-sm-12 panel-body form-category" hidden$="{{hiddenpayment}}">
        
-            <div><paper-checkbox id="waiveoff" class="checkbox" on-change="waiveoffHandler">Waiveoff</paper-checkbox></div>
+            <!-- <div><paper-checkbox id="waiveoff" class="checkbox" on-change="waiveoffHandler">Waiveoff</paper-checkbox></div> -->
             <div class="inshead" hidden$="{{hiddeninstallment}}">                        
-                    <div style="width: 18%;margin-left: 4%;">Installment</div>
-                    <div style="width: 12%;margin-left:8%;">Amount</div>                    
+                    <div style="width: 20%;margin-left: 4%;">Installment</div>
+                    <div style="width: 12%;margin-left:14%;">Amount</div>                    
                     <div style="margin-left:10%; width: 30%;">Mode of Payment</div>
                     <div style="width: 30%;margin-left:0%;position: absolute; left: 80%;" hidden$="{{receiptdate}}">Receipt Date</div>                 
             </div>
             <div style="margin-left:12%;" hidden$="{{hiddeninstallment}}"> 
               <template  is="dom-repeat" items="{{feearr}}" as="view">
-                <installment-card installment="{{view.installment}}" amount="{{view.amount}}" installmentdate="{{view.date}}"></installment-card>
+                <installment-card installment="{{view.installment_type}}" amount="{{view.payable_amount}}" installmentdate="{{view.installment_date}}"></installment-card>
               </template>
             </div>
             <div >
@@ -171,7 +175,7 @@
         // this.FnRefresh();
         // this.$.crmservice.getclasses();        
         // this.$.admissionservice.callSearchenquiryService(this.enquiryno);
-        this.$.admissionservice.callSearchexistingadmissionService();
+        this.$.admissionservice.searchfeeadmissionService(this.enquiryno);
       },
       FnSelectEnquiry:function(e){
         // this.FnRefresh1();
@@ -181,7 +185,7 @@
         var enquiry_name=enquiry.substring(inx+1);
         localStorage.setItem("curr_sess_enquiryno",enquiry_no);
         localStorage.setItem("curr_sess_enquiryname",enquiry_name);
-        this.$.admissionservice.callFetchenquiryinfoService();
+        this.$.admissionservice.searchfeeadmissioninfoService(enquiry_no);
       },
       FnHiddenPayment:function(){
         this.hiddenpayment=false;

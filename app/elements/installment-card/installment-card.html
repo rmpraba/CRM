@@ -18,12 +18,15 @@
     margin-left: 10%;
     margin-top: -1%;
   }
+  #ins{
+    width: 25%;
+  }
 </style>
   <template>
 
   <div class="layout">
    <paper-checkbox style="margin-top: 2.5%;margin-left: -10%;" id="{{installment}}"  value="{{studname}}" class="checkbox" disabled$="{{paidstatus}}" checked on-change="payinstall"></paper-checkbox>
-   <paper-item>{{installment}}</paper-item>
+   <paper-item id="ins">{{installment}}</paper-item>
    <paper-item id="amt">{{amount}}</paper-item>
    <paper-dropdown-menu disabled$="{{enable}}" hidden$="{{hidden2}}" id="{{installmentdate}}"   label="---Select Payment Mode---">
           <paper-menu class="dropdown-content" id="paymodemenu" on-iron-select="FnPaymentMode" valueattr="value" >
@@ -39,7 +42,7 @@
        <div  class="layout"><paper-input required error-message="needs Cheque number!" allowed-pattern="[1-9a-zA-Z]" id="chequeno" label="Enter the Cheque No:" value="{{chequeno}}"> </paper-input></div>
        <div  class="layout"> <paper-input required allowed-pattern="[a-zA-Z ]"  error-message="Requires bankName!"  id="bankname" label="Enter the Bank Name" value="{{bankname}}"> </paper-input></div>
        <div>
-       <receiptdatepicker-card></receiptdatepicker-card></div>
+       <receiptdatepicker-card showdate="{{installmentdate}}"></receiptdatepicker-card></div>
       <div class="buttons">
         <paper-button id="{{installment}}" on-click="FnAddcheque">Add</paper-button>
         <paper-button id="{{installment}}" on-click="FnCancelcheque">Cancel</paper-button>
@@ -52,7 +55,7 @@
      <div  class="layout"><paper-input required allowed-pattern="[1-9a-zA-Z]" error-message="Requiress Reference number!"  id="chequeno" label="Enter Reference No:" value="{{referenceno}}"> </paper-input></div>
      <div  class="layout"> <paper-input required allowed-pattern="[a-zA-Z ]"  error-message="Requires BankName!"  id="bankname" label="Enter the Bank Name" value="{{refbankname}}"> </paper-input></div>
      <div>
-     <receiptdatepicker-card></receiptdatepicker-card></div>
+     <receiptdatepicker-card showdate="{{installmentdate}}"></receiptdatepicker-card></div>
     <div class="buttons">
       <paper-button id="{{installment}}" on-click="FnAddcredit">Add</paper-button>
       <paper-button id="{{installment}}" on-click="FnCancelcredit">Cancel</paper-button>
@@ -183,7 +186,7 @@
             // alert(JSON.stringify(installmentarr));
             document.querySelector('fees-card').FnSetfee(installmentarr);  
       },
-      FnCancelcheque:function(){
+      FnCancelcredit:function(){
         this.$.chequeinfo.toggle();
         document.querySelector('#paymentmodemenu').selected=-1;
       },
