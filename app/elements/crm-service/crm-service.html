@@ -156,6 +156,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         debounce-duration="300"
         >
   </iron-ajax>
+  <!-- this below ajax gives the total number of admission appeared categorized based on the grade -->
+  <iron-ajax
+        method="post"
+        id="getadmittedcountajax"
+        url="{{getadmittedcounturl}}"
+        params="{{getadmittedcountparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getadmittedcountResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
   <!-- this ajax gets the student list who all are enquired for admission and not yet been admitted -->
   <iron-ajax
         method="post"
@@ -1130,6 +1142,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      getenquirycountResponse:function(e){
       var result=e.detail.response.returnval;
       document.querySelector('enquiry-card').gradewisearr=result;
+     },
+      getadmittedcount:function(){
+        this.getadmittedcounturl="http://localhost:8086/getadmittedcount";
+        var obj={"schol":"","status":""}
+        obj.schol=localStorage.getItem("schoolid");
+        obj.status="Admitted";
+        this.getadmittedcountparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.getadmittedcountajax.generateRequest();
+     },
+     getadmittedcountResponse:function(e){
+      var result=e.detail.response.returnval;
+      document.querySelector('enquiry-card').gradewiseadmissionarr=result;
      },
      getlistdetails:function(classes){
            this.getlistdetailsurl="http://localhost:8086/getlistdetails";

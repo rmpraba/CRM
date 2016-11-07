@@ -1066,7 +1066,68 @@ app.post('/verifymobileno',  urlencodedParser,function (req, res)
 
 // Searching enquiry no for admission
 app.post('/searchenquiry',  urlencodedParser,function (req, res){
+
     var qur="SELECT * FROM student_enquiry_details WHERE school_id='"+req.query.schoolid+"' and enquiry_no like '%"+req.query.enquiryno+"%' or enquiry_name like '%"+req.query.enquiryno+"%' and status='Enquired'";
+
+    var checkqur="SELECT * FROM student_enquiry_details WHERE school_id='"+req.query.schoolid+"' and (enquiry_no like '%"+req.query.enquiryno+"%' or enquiry_name like '%"+req.query.enquiryno+"%') and status='Admitted'";
+    console.log(qur);
+    console.log(checkqur);
+    connection.query(qur,function(err, rows){
+      if(rows.length==0){
+    connection.query(checkqur,function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'no enquiry'});
+    }
+     console.log(err);
+    }
+    });
+      }
+    else
+    {
+      res.status(200).json({'returnval': rows});
+    }
+    });
+    // connection.query(checkqur,function(err, rows){
+    //   if(rows.length==0){
+    // connection.query(qur,function(err, rows)
+    // {
+    // if(!err)
+    // {
+    // if(rows.length>0)
+    // {
+    //   res.status(200).json({'returnval': rows});
+    // }
+    // else
+    // {
+    //   console.log(err);
+    //   res.status(200).json({'returnval': 'no enquiry'});
+    // }
+    // }
+    // else{
+    //  console.log(err);
+    // }
+    // });
+    //   }
+    // else
+    // {
+    //   res.status(200).json({'returnval': 'exist'});
+    // }
+    // });
+});
+
+
+// Searching admission no of existing admission
+app.post('/searchexistingadmission',  urlencodedParser,function (req, res){
+    var qur="SELECT * FROM md_admission WHERE school_id='"+req.query.schoolid+"' and admission_no like '%"+req.query.admissionno+"%' or student_name like '%"+req.query.admissionno+"%' or enquiry_no like '%"+req.query.admissionno+"%'";
     console.log(qur);
     connection.query(qur,
     function(err, rows)
@@ -1080,14 +1141,14 @@ app.post('/searchenquiry',  urlencodedParser,function (req, res){
     else
     {
       console.log(err);
-      res.status(200).json({'returnval': ''});
+      res.status(200).json({'returnval': 'no enquiry'});
     }
   }
   else{
      console.log(err);
   }
 });
-  });
+});
 
 
 // Fetching enquiry no for admission
@@ -1106,7 +1167,133 @@ app.post('/fetchenquiryinfo',  urlencodedParser,function (req, res){
     else
     {
       console.log(err);
-      res.status(200).json({'returnval': ''});
+      res.status(200).json({'returnval': 'no rows'});
+    }
+  }
+  else{
+     console.log(err);
+  }
+});
+});
+
+
+// Fetching admission info
+app.post('/fetchexistingadmissioninfo',  urlencodedParser,function (req, res){
+    var qur="SELECT * FROM md_admission WHERE school_id='"+req.query.schoolid+"' and (admission_no = '"+req.query.admissionno+"' or enquiry_no='"+req.query.admissionno+"')";
+    console.log(qur);
+    connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'no rows'});
+    }
+  }
+  else{
+     console.log(err);
+  }
+});
+});
+
+// Fetching admission stud info
+app.post('/fetchexistingadmissionstudinfo',  urlencodedParser,function (req, res){
+    var qur="SELECT * FROM md_student WHERE school_id='"+req.query.schoolid+"' and enquiry_no = '"+req.query.admissionno+"'";
+    console.log(qur);
+    connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'no rows'});
+    }
+  }
+  else{
+     console.log(err);
+  }
+});
+});
+
+// Fetching admission acheivement info
+app.post('/fetchexistingadmissioncoinfo',  urlencodedParser,function (req, res){
+    var qur="SELECT * FROM md_student_cocurricular_details WHERE school_id='"+req.query.schoolid+"' and enquiry_no = '"+req.query.admissionno+"'";
+    console.log(qur);
+    connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'no rows'});
+    }
+  }
+  else{
+     console.log(err);
+  }
+});
+});
+
+// Fetching admission stud info
+app.post('/fetchexistingadmissionphysicinfo',  urlencodedParser,function (req, res){
+    var qur="SELECT * FROM md_disability_student_details WHERE school_id='"+req.query.schoolid+"' and enquiry_no = '"+req.query.admissionno+"'";
+    console.log(qur);
+    connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'no rows'});
+    }
+  }
+  else{
+     console.log(err);
+  }
+});
+});
+
+// Fetching admission stud school history info
+app.post('/fetchexistingadmissionhistoryinfo',  urlencodedParser,function (req, res){
+    var qur="SELECT * FROM md_student_school_history WHERE school_id='"+req.query.schoolid+"' and enquiry_no = '"+req.query.admissionno+"'";
+    console.log(qur);
+    connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'no rows'});
     }
   }
   else{
@@ -1124,15 +1311,16 @@ app.post('/insertadmission',  urlencodedParser,function (req, res){
         prospect_application_no:req.query.applicationno,
         school_id:req.query.schoolid,
         school_name:req.query.schoolname,
-        academic_year:req.query.admissionyear,
+        academic_year:req.query.academicyear,
         first_name:req.query.firstname,
         middle_name:req.query.middlename,
         last_name:req.query.lastname,
         student_name:req.query.studentname,
-        class_for_admission:req.query.admissiongrade,
+        class_for_admission:req.query.gradeselection,
         dob:req.query.admissiondob,
         gender:req.query.admissiongender,
         disabled_student:req.query.admissiondisabled,
+        academic_acheivement:req.query.acheivehandler,
         canteen_availed:req.query.admissioncanteen,
         transport_availed:req.query.admissiontransport,
         created_By:req.query.createdby,
@@ -1151,6 +1339,8 @@ app.post('/insertadmission',  urlencodedParser,function (req, res){
     {
       response.admission_no="ENR"+rows[0].Admission_No;
       new_admission_no=parseInt(rows[0].Admission_No)+1;
+      connection.query("SELECT * FROM md_admission WHERE enquiry_no='"+req.query.enquiryno+"'",function(err, rows){
+        if(rows.length==0){
       connection.query("INSERT INTO md_admission SET ?",[response],function(err, rows){
        if(!err){
         connection.query("UPDATE auto_admission_no SET Admission_No='"+new_admission_no+"'",function(err, result){
@@ -1174,7 +1364,17 @@ app.post('/insertadmission',  urlencodedParser,function (req, res){
       res.status(200).json({'returnval': 'insertfail'});
     }
 
-});
+   });
+    }
+    else{
+      connection.query("UPDATE md_admission SET ? WHERE enquiry_no='"+req.query.enquiryno+"'",[response],function(err, result){
+        if(result.affectedRows>0)
+        res.status(200).json({'returnval': 'Updated!'});
+        else
+        res.status(200).json({'returnval': 'Not Updated!'});
+      });
+    }
+    });
     }
     else
       res.status(200).json({'returnval': 'noadmissionno'});
@@ -1185,86 +1385,279 @@ app.post('/insertadmission',  urlencodedParser,function (req, res){
 app.post('/studentphysical_service',  urlencodedParser,function (req, res){
    var event = {
 
-     "admission_no":req.query.enquiryno,"applicationno":req.query.applicationno,"school_id":req.query.schoolid,"schoolname":req.query.schoolname,"academic_year":req.query.admissionyear,
-     "first_name":req.query.firstname,"middle_name":req.query.middlename,"last_name":req.query.lastname,"student_name":req.query.studentname,"class_for_admission":req.query.gradeselection
-     ,"created_by":req.query.createdby,"physic_detail":req.query.physicdetail,"physic_status":req.query.physicstatus,"mental_detail":req.query.mentaldetail
-     ,"mental_status":req.query.mentalstatus,"illness_detail":req.query.illnessdetail,"illness_status":req.query.illnessstatus,"allergy_detail":req.query.allergydetail,
-     "allergy_status":req.query.allergystatus,"chronic_detail":req.query.chronicdetail,"chronic_status":req.query.chronicstatus
+     "enquiry_no":req.query.enquiryno,
+     "prospect_application_no":req.query.applicationno,
+     "school_id":req.query.schoolid,
+     "academic_year":req.query.academicyear,
+     "first_name":req.query.firstname,
+     "middle_name":req.query.middlename,
+     "last_name":req.query.lastname,
+     "student_name":req.query.studentname,
+     "class_for_admission":req.query.gradeselection,
+     "created_by":req.query.createdby,
+     "physic_detail":req.query.physicdetail,
+     "physic_status":req.query.physicstatus,
+     "mental_detail":req.query.mentaldetail,
+     "mental_status":req.query.mentalstatus,
+     "illness_detail":req.query.illnessdetail,
+     "illness_status":req.query.illnessstatus,
+     "allergy_detail":req.query.allergydetail,
+     "allergy_status":req.query.allergystatus,
+     "chronic_detail":req.query.chronicdetail,
+     "chronic_status":req.query.chronicstatus
    };
-   connection.query('insert into md_disability_student set ?',[event],
+   connection.query("SELECT * FROM md_disability_student_details WHERE enquiry_no='"+req.query.enquiryno+"'",function(err, rows){
+    if(rows.length==0){
+   connection.query('insert into md_disability_student_details set ?',[event],
      function(err, rows){
 
        if(!err)
        {
-         res.status(200).json({'returnval': 'success'});
+         res.status(200).json({'returnval': 'Inserted!'});
        }
        else
        {
          console.log(err);
-         res.status(200).json({'returnval': 'invalid'});
+         res.status(200).json({'returnval': 'Not Inserted!'});
        }
      });
+   }
+   else{
+    connection.query("UPDATE md_disability_student_details set ? WHERE enquiry_no='"+req.query.enquiryno+"'",[event],
+     function(err, rows){
+
+       if(!err)
+       {
+         res.status(200).json({'returnval': 'Updated!'});
+       }
+       else
+       {
+         console.log(err);
+         res.status(200).json({'returnval': 'Not Updated!'});
+       }
+     });
+   }
+  });
  });
 
 
 app.post('/studentfulldetails_service',  urlencodedParser,function (req, res){
    var event = {
-   "admission_no":req.query.enquiryno,"":req.query.applicationno,"":req.query.schoolid,"school_id":req.query.schoolname,"academic_year":req.query.admissionyear,"first_name":req.query.firstname,"middle_name":req.query.middlename,"last_name":req.query.lastname,"student_name":req.query.studentname,"class_for_admission":req.query.gradeselection,"dob":req.query.admissiondob,"gender":req.query.admissiongender,"created_by":req.query.createdby,"":req.query.fathername,"":req.query.mothername,"flat_no":req.query.flatno,"building_name":req.query.bulidingname,"street":req.query.street,"town":req.query.town,"city":req.query.city,"state":req.query.state,"pincode":req.query.pincode,"height":req.query.height,"weight":req.query.weight,"nationality":req.query.nationality,"mother_toungue":req.query.mothertongue,"sibling_name":req.query.siblingname,"sibling_class":req.query.siblingclass,"father_dob":req.query.fatherdob,"mother_dob":req.query.motherdob,"father_profession":req.query.fatherqualification,"mother_profession":req.query.motherqualification,"father_occupation":req.query.fatheroccupation,"mother_occupation":req.query.motheroccupation,"father_income":req.query.fatherincome,"mother_income":req.query.motherincome,"father_tel":req.query.fathertelno,"mother_tel":req.query.mothertelno,"father_mobile":req.query.fathermobile,"mother_mobile":req.query.mothermobile,"father_email":req.query.fatheremail,"mother_email":req.query.motheremail,"permanent_town":req.query.ptown,"permanent_district":req.query.pdistrict,"permanent_state":req.query.pstate,"permanent_pincode":req.query.ppincode,"":req.query.relationship1,"guardian_name":req.query.guardianname1,"guardian_relationship":req.query.relationship2,"guard_building":req.query.gbuildingname,"guard_street":req.query.gstreet,"guard_town":req.query.gtown,"guard_city":req.query.gcity,"guard_state":req.query.gstate,"guard_pincode":req.query.gpincode,"guard_res_contact":req.query.gresidentialcontact,"guard_office_contact":req.query.gofficecontact,"guard_mobile_no":req.query.gmobileno,"guard_fax":req.query.gfax,"blood_group":req.query.FnBlood};
-   connection.query('insert into md_student set ?',[event],
-     function(err, rows){
-
+   "enquiry_no":req.query.enquiryno,
+   "prospect_application_no":req.query.applicationno,
+   "school_id":req.query.schoolid,
+   "academic_year":req.query.academicyear,
+   "first_name":req.query.firstname,
+   "middle_name":req.query.middlename,
+   "last_name":req.query.lastname,
+   "student_name":req.query.studentname,
+   "class_for_admission":req.query.gradeselection,
+   "dob":req.query.admissiondob,
+   "gender":req.query.admissiongender,
+   "age":req.query.age,
+   "second_language":req.query.secondlanguage,
+   "third_language":req.query.thirdlanguage,
+   "created_by":req.query.createdby,
+   "flat_no":req.query.flatno,
+   "building_name":req.query.bulidingname,
+   "street":req.query.street,
+   "town":req.query.town,
+   "city":req.query.city,
+   "state":req.query.state,
+   "pincode":req.query.pincode,
+   "height":req.query.height,
+   "weight":req.query.weight,
+   "nationality":req.query.nationality,
+   "mother_toungue":req.query.mothertongue,
+   "sibling_name":req.query.siblingname,
+   "sibling_class":req.query.siblingclass,
+   "father_name":req.query.fathername,
+   "mother_name":req.query.mothername,
+   "father_dob":req.query.fatherdob,
+   "mother_dob":req.query.motherdob,
+   "father_profession":req.query.fatherqualification,
+   "mother_profession":req.query.motherqualification,
+   "father_occupation":req.query.fatheroccupation,
+   "mother_occupation":req.query.motheroccupation,
+   "father_income":req.query.fatherincome,
+   "mother_income":req.query.motherincome,
+   "father_tel":req.query.fathertelno,
+   "mother_tel":req.query.mothertelno,
+   "father_mobile":req.query.fathermobile,
+   "mother_mobile":req.query.mothermobile,
+   "father_email":req.query.fatheremail,
+   "mother_email":req.query.motheremail,
+   "permanent_pflatno":req.query.pflatno,
+   "permanent_pbuildingname":req.query.pbuildingname,
+   "permanent_pstreet":req.query.pstreet,
+   "permanent_town":req.query.ptown,
+   "permanent_district":req.query.pdistrict,
+   "permanent_state":req.query.pstate,
+   "permanent_pincode":req.query.ppincode,
+   "guardian_relationship":req.query.relationship1,
+   "guardian_name":req.query.guardianname1,
+   "guard_flatno":req.query.gflatno,
+   "guard_building":req.query.gbuildingname,
+   "guard_street":req.query.gstreet,
+   "guard_town":req.query.gtown,
+   "guard_city":req.query.gcity,
+   "guard_state":req.query.gstate,
+   "guard_pincode":req.query.gpincode,
+   "guard_res_contact":req.query.gresidentialcontact,
+   "guard_office_contact":req.query.gofficecontact,
+   "guard_mobile_no":req.query.gmobileno,
+   "guard_fax":req.query.gfax,
+   "caste":req.query.caste,
+   "religion":req.query.religion   
+ };
+   connection.query("SELECT * FROM md_student WHERE enquiry_no='"+req.query.enquiryno+"'",function(err, rows){
+   if(rows.length==0){
+   connection.query('insert into md_student set ?',[event],function(err, rows){
        if(!err)
        {
-         res.status(200).json({'returnval': 'success'});
+         res.status(200).json({'returnval': 'Inserted!'});
        }
        else
        {
          console.log(err);
-         res.status(200).json({'returnval': 'invalid'});
+         res.status(200).json({'returnval': 'Not Inserted!'});
        }
-     });
+    });
+    }
+    else{
+      connection.query("UPDATE md_student set ? WHERE enquiry_no='"+req.query.enquiryno+"'",[event],function(err, rows){
+       if(!err)
+       {
+         res.status(200).json({'returnval': 'Updated!'});
+       }
+       else
+       {
+         console.log(err);
+         res.status(200).json({'returnval': 'Not Updated!'});
+       }
+       });
+    }
+ });
  });
 
 
 
 app.post('/studentcocurricular_service',  urlencodedParser,function (req, res){
    var event = {
-"admission_no":req.query.enquiryno,"":req.query.applicationno,"school_id":req.query.schoolid,"first_name":req.query.firstname,"middle_name":req.query.middlename,"last_name":req.query.lastname,"student_name":req.query.studentname,"class_for_admission":req.query.gradeselection,"created_by":req.query.createdby,"field1":req.query.field1,"year1":req.query.year1,"event1":req.query.event1,"prize1":req.query.prizedetail1,"field2":req.query.field2,"year2":req.query.year2,"event2":req.query.event2,"prize2":req.query.prizedetail2,"field3":req.query.field3,"year3":req.query.year3,"event3":req.query.event3,"prize3":req.query.prizedetail3
+"enquiry_no":req.query.enquiryno,
+"prospect_application_no":req.query.applicationno,
+"school_id":req.query.schoolid,
+"academic_year":req.query.admissionyear,
+"first_name":req.query.firstname,
+"middle_name":req.query.middlename,
+"last_name":req.query.lastname,
+"student_name":req.query.studentname,
+"class_for_admission":req.query.gradeselection,
+"created_by":req.query.createdby,
+"field1":req.query.field1,
+"year1":req.query.year1,
+"event1":req.query.event1,
+"prize1":req.query.prizedetail1,
+"field2":req.query.field2,
+"year2":req.query.year2,
+"event2":req.query.event2,
+"prize2":req.query.prizedetail2,
+"field3":req.query.field3,
+"year3":req.query.year3,
+"event3":req.query.event3,
+"prize3":req.query.prizedetail3
    };
+   connection.query("SELECT * FROM md_student_cocurricular_details WHERE enquiry_no='"+req.query.enquiryno+"'",function(err, rows){
+    if(rows.length==0){
    connection.query('insert into md_student_cocurricular_details set ?',[event],
      function(err, rows){
 
        if(!err)
        {
-         res.status(200).json({'returnval': 'success'});
+         res.status(200).json({'returnval': 'Inserted!'});
        }
        else
        {
          console.log(err);
-         res.status(200).json({'returnval': 'invalid'});
+         res.status(200).json({'returnval': 'Not Inserted!'});
        }
      });
+      }
+      else
+      {
+        connection.query("UPDATE md_student_cocurricular_details set ? WHERE enquiry_no='"+req.query.enquiryno+"'",[event],
+     function(err, rows){
+
+       if(!err)
+       {
+         res.status(200).json({'returnval': 'Updated!'});
+       }
+       else
+       {
+         console.log(err);
+         res.status(200).json({'returnval': 'Not Updated!'});
+       }
+     });
+      }
+   });
  });
 
 
 app.post('/studenthistory_service', urlencodedParser,function (req, res){
    var event = {
-    "admission_no":req.query.enquiryno,"school_id":req.query.schoolid,"school_name":req.query.schoolname,"academic_year":req.query.admissionyear,"first_name":req.query.firstname,"middle_name":req.query.middlename,"last_name":req.query.lastname,"student_name":req.query.studentname,"class_for_admission":req.query.gradeselection,"created_by":req.query.createdby,"prevschoolname":"","from_grade":classfrom,"to_grade":classto,"from_year":yearfrom,"to_year":yearto,"medium_of_ins":medium,"percentage":lastclassmark,"reason":reasonforleaving,"board":FnBo
+    "enquiry_no":req.query.enquiryno,
+    "school_id":req.query.schoolid,
+    "prospect_application_no":req.query.applicationno,    
+    "academic_year":req.query.admissionyear,
+    "first_name":req.query.firstname,
+    "middle_name":req.query.middlename,
+    "last_name":req.query.lastname,
+    "student_name":req.query.studentname,
+    "class_for_admission":req.query.gradeselection,
+    "created_by":req.query.createdby,
+    "school_name":req.query.prevschoolname,
+    // "prevschoolname":req.query.prevschoolname,
+    "from_grade":req.query.classfrom,
+    "to_grade":req.query.classto,
+    "from_year":req.query.yearfrom,
+    "to_year":req.query.yearto,
+    "medium_of_ins":req.query.medium,
+    "percentage":req.query.lastclassmark,
+    "reason":req.query.reasonforleaving,
+    "board":req.query.board
 
   };
-   connection.query('insert into md_student_school_history set ?',[event],
-     function(err, rows){
+  connection.query("SELECT * FROM md_student_school_history WHERE enquiry_no='"+req.query.enquiryno+"'",function(err, rows){
+   if(rows.length==0){
+   connection.query('insert into md_student_school_history set ?',[event],function(err, rows){
 
        if(!err)
        {
-         res.status(200).json({'returnval': 'success'});
+         res.status(200).json({'returnval': 'Inserted!'});
        }
        else
        {
          console.log(err);
-         res.status(200).json({'returnval': 'invalid'});
+         res.status(200).json({'returnval': 'Not Inserted!'});
        }
      });
+   }
+   else
+   {
+    connection.query("UPDATE md_student_school_history set ? WHERE enquiry_no='"+req.query.enquiryno+"'",[event],function(err, rows){
+
+       if(!err)
+       {
+         res.status(200).json({'returnval': 'Updated!'});
+       }
+       else
+       {
+         console.log(err);
+         res.status(200).json({'returnval': 'Not Updated!'});
+       }
+    });
+   }
+ });
  });
 
 
@@ -1643,6 +2036,33 @@ app.post('/updateprospectno',  urlencodedParser,function (req, res)
 
 /*this function is to get the count of enquiry takes placed by grade wise*/
 app.post('/getenquirycount',  urlencodedParser,function (req, res){
+    var qur={"school_id":req.query.schol};
+    var state={"status":req.query.status};
+    //console.log('qur');
+    connection.query('SELECT *,class,count(*) as total FROM `student_enquiry_details` WHERE ? and ? group by (class)',[qur,state],
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      //console.log(rows);
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': ''});
+    }
+  }
+  else{
+     console.log(err);
+  }
+});
+  });
+
+/*this function is to get the count of enquiry takes placed by grade wise*/
+app.post('/getadmittedcount',  urlencodedParser,function (req, res){
     var qur={"school_id":req.query.schol};
     var state={"status":req.query.status};
     //console.log('qur');

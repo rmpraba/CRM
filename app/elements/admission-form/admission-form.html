@@ -6,27 +6,30 @@
 <dom-module id="admission-form">
   <template>
   <style>
-  #inputlabel{
+  #inputlabel,#Religion,#Nationality{
   --paper-input-container-label: { color: red };
   }
   </style>
 
    <div class="row enquiry-form">
       <div class="list-group col-sm-12 panel-body form-category">
-          <div class="col-sm-6">
-          <paper-input id="searchtext" label="Enter Enquiry Number/Name" value="{{enquiryno}}">
+          <div class="col-sm-5">
+          <paper-input id="searchtext" label="Enter Enquiry/Admission Number/Name" value="{{enquiryno}}">
             <paper-icon-button suffix icon="search" on-click="FnSearchEnquiry" title="Search"></paper-icon-button>
           </paper-input>
           </div>
           <div class="col-sm-5" style="margin-top: 2%;">
-          <paper-dropdown-menu label="Select Enquiry No" on-iron-select="FnSelectEnquiry">
-            <paper-listbox class="dropdown-content">
+          <paper-dropdown-menu label="Select Enquiry/Admission No" on-iron-select="FnSelectEnquiry">
+            <paper-listbox class="dropdown-content" id="enradmnsearch">
             <template  is="dom-repeat" items="{{enquiryarr}}" as="item">
-              <paper-item>{{item.enquiry_no}}-{{item.enquiry_name}}</paper-item>
+              <paper-item value="{{item.enquiry_no}}">{{item.enquiry_no}}-{{item.enquiry_name}}</paper-item>
             </template>
             </paper-listbox>
           </paper-dropdown-menu>
-          </div>          
+          </div> 
+          <div style="margin-top: 2%;margin-left: -5%;" class="col-sm-2 enquiry-input" hidden$="{{hideenqenrno}}">
+          <paper-input label="{{enqenrlabel}}" id="enqenrno" readonly value="{{enqenrno}}"></paper-input>
+          </div>         
       </div>
     <!-- </div>
    <div class="row enquiry-form"> -->
@@ -40,19 +43,16 @@
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6 enquiry-input">
-
           <paper-input label="Enquired Year" value="{{enquiredyear}}"></paper-input>
         </div>
         <div class="col-sm-6 enquiry-input">
-          <paper-dropdown-menu id="inputlabel" label="Admission Year" on-iron-select="FnSelectAdmissionYear" attr-for-selected="value">
-              <paper-listbox class="dropdown-content">
-                  <paper-item value="AY-2016-2017">AY-2016-2017</paper-item>
-                  <paper-item value="AY-2017-2018">AY-2017-2018</paper-item>
+          <paper-dropdown-menu id="inputlabel" label="Admission Year" on-iron-select="FnSelectAdmissionYear">
+              <paper-listbox class="dropdown-content" selected="{{selectedadmnyear}}" id="admnformadmnyear" attr-for-selected="value">
+              <template  is="dom-repeat" items="{{academicarr}}" as="item">
+              <paper-item value="{{item.academic_year}}">{{item.academic_year}}</paper-item>
+              </template>
               </paper-listbox>
           </paper-dropdown-menu>
-
-          <!-- <paper-textarea label="Contact Number" readonly value=""></paper-textarea> -->
-
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
@@ -69,32 +69,25 @@
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
           <paper-input label="Seeking Admission for Class" value="{{gradeselection}}"></paper-input>
-          <!-- <paper-dropdown-menu label="Seeking Admission for Class" style="width: 100%;">
-            <paper-menu id="admissiongrade" class="dropdown-content" required on-iron-select="FnSelectGrade" attr-for-selected="value" selected="{{gradeselection}}" >
-              <template  is="dom-repeat" items="{{itemarr}}" as="view">
-                <paper-item value="{{view.class}}">{{view.class}}</paper-item>
-              </template>
-            </paper-menu>
-          </paper-dropdown-menu> -->
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
           <span class="col-sm-12"><h5>2nd Language</h5></span>
-          <span><paper-checkbox class="col-sm-6" id="Hindi" readonly class="checkbox" on-change="lang2Handler">Hindi</paper-checkbox></span>
-          <span><paper-checkbox class="col-sm-6" id="Kannada" readonly class="checkbox" on-change="lang2Handler">Kannada</paper-checkbox></span>
+          <span><paper-checkbox class="col-sm-6" id="SecHindi" readonly class="checkbox" on-change="secondhindiHandler">Hindi</paper-checkbox></span>
+          <span><paper-checkbox class="col-sm-6" id="SecKannada" readonly class="checkbox" on-change="secondkannadaHandler">Kannada</paper-checkbox></span>
         </div>
         <div class="col-sm-6" id="lang3Handler" hidden$="{{hidethirdlanguage}}">
           <span class="col-sm-12"><h5>3rd Language</h5></span>
-          <span><paper-checkbox class="col-sm-3" id="French" readonly class="checkbox" on-change="lang3Handler">French</paper-checkbox></span>
-           <span><paper-checkbox class="col-sm-3" id="Sanskrit" readonly class="checkbox" on-change="lang3Handler">Sanskrit</paper-checkbox></span>
-           <span><paper-checkbox class="col-sm-3" id="Kannada" readonly class="checkbox" on-change="lang3Handler">Kannada</paper-checkbox></span>
-           <span><paper-checkbox class="col-sm-3" id="Hindi" readonly class="checkbox" on-change="lang3Handler">Hindi</paper-checkbox></span>
+          <span><paper-checkbox class="col-sm-3" id="ThirdFrench" readonly class="checkbox" on-change="thirdfrenchHandler">French</paper-checkbox></span>
+           <span><paper-checkbox class="col-sm-3" id="ThirdSanskrit" readonly class="checkbox" on-change="thirdsanskritHandler">Sanskrit</paper-checkbox></span>
+           <span><paper-checkbox class="col-sm-3" id="ThirdKannada" readonly class="checkbox" on-change="thirdkannadaHandler">Kannada</paper-checkbox></span>
+           <span><paper-checkbox class="col-sm-3" id="ThirdHindi" readonly class="checkbox" on-change="thirdhindiHandler">Hindi</paper-checkbox></span>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
-          <dateofbirth-datepicker></dateofbirth-datepicker>
+          <dateofbirth-datepicker doblabel="Date Of Birth" showdate="{{dob}}"></dateofbirth-datepicker>
         </div>
         <div class="col-sm-6">
           <paper-input label="Age as on 31st March 2016" value="{{age}}"></paper-input>
@@ -102,20 +95,13 @@
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-8 enquiry-input">
-          <span class="col-sm-4"><h5>Gender</h5></span>
-          <span class="col-sm-4"><paper-checkbox id="Male" readonly class="checkbox" on-change="genderHandler">Male</paper-checkbox></span>
-           <span class="col-sm-4"><paper-checkbox  id="Female" readonly class="checkbox" on-change="genderHandler">Female</paper-checkbox></span>
+          <span class="col-sm-2"><h5>Gender</h5></span>
+          <span class="col-sm-2"><paper-checkbox id="Male" readonly class="checkbox" on-change="maleHandler">Boy</paper-checkbox></span>
+           <span class="col-sm-2"><paper-checkbox  id="Female" readonly class="checkbox" on-change="femaleHandler">Girl</paper-checkbox></span>
         </div>
       </div>
       <div class="form-group-heading">
         <h4>Present Address</h4>
-      </div>
-      <div class="list-group col-sm-12 panel-body form-category">
-       <div class="col-sm-4">
-         present address are same the parmanent address?
-          <span><paper-checkbox id="pyes" class="checkbox" on-change="addresshander">Yes</paper-checkbox></span>
-          <span><paper-checkbox id="pno" class="checkbox" on-change="addresshander">No</paper-checkbox></span>
-        </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-4">
@@ -154,15 +140,15 @@
         </div>
         <div class="col-sm-4">
           <paper-dropdown-menu label="Blood Group" style="width: 100%;">
-            <paper-listbox class="dropdown-content" on-iron-select="FnBloodGroup">
-              <paper-item>A +ve</paper-item>
-              <paper-item>A -ve</paper-item>
-              <paper-item>B +ve</paper-item>
-              <paper-item>B -ve</paper-item>
-              <paper-item>O +ve</paper-item>
-              <paper-item>O -ve</paper-item>
-              <paper-item>AB +ve</paper-item>
-              <paper-item>AB -ve</paper-item>
+            <paper-listbox class="dropdown-content" on-iron-select="FnBloodGroup" id="admnformbg" selected="{{selectedbg}}" attr-for-selected="value">
+              <paper-item value="A +ve">A +ve</paper-item>
+              <paper-item value="A -ve">A -ve</paper-item>
+              <paper-item value="B +ve">B +ve</paper-item>
+              <paper-item value="B -ve">B -ve</paper-item>
+              <paper-item value="O +ve">O +ve</paper-item>
+              <paper-item value="O -ve">O -ve</paper-item>
+              <paper-item value="AB +ve">AB +ve</paper-item>
+              <paper-item value="AB -ve">AB -ve</paper-item>
             </paper-listbox>
           </paper-dropdown-menu>
         </div>
@@ -177,12 +163,12 @@
            <span><paper-checkbox class="col-sm-2" id="Others" readonly class="checkbox" on-change="casteHandlerother">Others</paper-checkbox></span>
         </div>
         <div class="col-sm-4">
-            <paper-input label="Relegion" value="{{relegion}}"></paper-input>
+            <paper-input id="Religion" label="Religion" value="{{relegion}}"></paper-input>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
-          <paper-input label="Nationality" value="{{nationality}}"></paper-input>
+          <paper-input id="Nationality" label="Nationality" value="{{nationality}}"></paper-input>
         </div>
         <div class="col-sm-6">
           <paper-input label="Mother Tongue" value="{{mothertongue}}"></paper-input>
@@ -207,19 +193,35 @@
           <paper-input label="Name of School" value="{{prevschoolname}}"></paper-input>
         </div>
         <div class="col-sm-3">
-          <paper-input label="Class From" value="{{classfrom}}"></paper-input>
+          <!-- <paper-input label="Class From" value="{{classfrom}}"></paper-input> -->
+          <paper-dropdown-menu label="From Grade" >
+            <paper-menu id="fromgrade" class="dropdown-content" required on-iron-select="FnSelectFromGrade" 
+            attr-for-selected="value" selected="{{selectedfromgrade}}">
+              <template  is="dom-repeat" items="{{fromgradearr}}" as="item">
+              <paper-item value="{{item.grade_name}}">{{item.grade_name}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
         </div>
         <div class="col-sm-3">
-          <paper-input label="Class To" value="{{classto}}"></paper-input>
+          <!-- <paper-input label="Class To" value="{{classto}}"></paper-input> -->
+          <paper-dropdown-menu label="To Grade" >
+            <paper-menu id="tograde" class="dropdown-content" required on-iron-select="FnSelectToGrade" 
+            attr-for-selected="value" selected="{{selectedtograde}}" >
+              <template  is="dom-repeat" items="{{togradearr}}" as="item">
+              <paper-item value="{{item.grade_name}}">{{item.grade_name}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
           <paper-dropdown-menu label="Board" style="width: 100%;">
-            <paper-menu class="dropdown-content" on-iron-select="FnBoard">
-              <paper-item>CBSE</paper-item>
-              <paper-item>ICSE</paper-item>
-              <paper-item>State</paper-item>
+            <paper-menu class="dropdown-content" on-iron-select="FnBoard" id="admnformboard" attr-for-selected="value" selected="{{selectedboard}}">
+              <paper-item value="CBSC">CBSE</paper-item>
+              <paper-item value="ICSC">ICSE</paper-item>
+              <paper-item value="State">State</paper-item>
             </paper-menu>
           </paper-dropdown-menu>
         </div>
@@ -245,13 +247,15 @@
         <h4>Physical/Mental Disability and Mental History(if any)</h4>
       </div>
         <div class="list-group col-sm-12 panel-body form-category" >
-       <div class="col-sm-4">
-        Disabled student ?
-          <span><paper-checkbox id="Dyes" class="checkbox" on-change="disabledHandler">Yes</paper-checkbox></span>
-          <span><paper-checkbox id="Dno" class="checkbox" on-change="disabledHandler1">No</paper-checkbox></span>
-        </div>
+       <div class="col-sm-3">Disabled student ?</div>
+       <div class="col-sm-2">
+          <span><paper-checkbox id="Dyes" class="checkbox" on-change="disabledyesHandler">Yes</paper-checkbox></span>
+       </div>
+       <div class="col-sm-2">
+          <span><paper-checkbox id="Dno" class="checkbox" on-change="disablednoHandler">No</paper-checkbox></span>
+       </div>
       </div>
-<div  id="physicdetailhandler">
+      <div  id="physicdetailhandler">
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
           <paper-textarea label="Physical Disability Detail" value="{{physicdetail}}"></paper-textarea>
@@ -296,10 +300,20 @@
       <div class="form-group-heading">
         <h4>Achievements in Academic/Sports/Co-Curricular Field</h4>
       </div>
-              <div class="list-group col-sm-12 panel-body form-category">
-        <div class="col-sm-1">
+      <div class="list-group col-sm-12 panel-body form-category" >
+       <div class="col-sm-4">Any academic achievements ?</div>
+       <div class="col-sm-2">
+          <span><paper-checkbox id="Acyes" class="checkbox" on-change="acheiveyesHandler">Yes</paper-checkbox></span>
+       </div>
+       <div class="col-sm-2">
+          <span><paper-checkbox id="Acno" class="checkbox" on-change="acheivenoHandler">No</paper-checkbox></span>
+       </div>
+      </div>
+      <div id="acheivehandlerdiv">
+        <div class="list-group col-sm-12 panel-body form-category">
+        <!-- <div class="col-sm-1">
           <paper-textarea label="S.No" value="{{sno1}}"></paper-textarea>
-        </div>
+        </div> -->
         <div class="col-sm-3">
           <paper-textarea label="Field" value="{{field1}}"></paper-textarea>
         </div>
@@ -315,9 +329,9 @@
       </div>
 
       <div class="list-group col-sm-12 panel-body form-category">
-        <div class="col-sm-1">
+        <!-- <div class="col-sm-1">
           <paper-textarea label="S.No" value="{{sno2}}"></paper-textarea>
-        </div>
+        </div> -->
         <div class="col-sm-3">
           <paper-textarea label="Field" value="{{field2}}"></paper-textarea>
         </div>
@@ -332,9 +346,9 @@
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
-        <div class="col-sm-1">
+        <!-- <div class="col-sm-1">
           <paper-textarea label="S.No" value="{{sno3}}"></paper-textarea>
-        </div>
+        </div> -->
         <div class="col-sm-3">
           <paper-textarea label="Field" value="{{field3}}"></paper-textarea>
         </div>
@@ -347,6 +361,7 @@
         <div class="col-sm-3">
           <paper-textarea label="Details of Prize/Awards/POsition" value="{{prizedetail3}}"></paper-textarea>
         </div>
+      </div>
       </div>
       <div class="form-group-heading">
         <h4>Particulars of Family</h4>
@@ -361,10 +376,12 @@
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
-          <paper-input label="Father's Date of Birth" value="{{fatherdob}}"></paper-input>
+          <!-- <paper-input label="Father's Date of Birth" value="{{fatherdob}}"></paper-input> -->
+          <dateofbirth-datepicker doblabel="Father's Date Of Birth"></dateofbirth-datepicker>
         </div>
         <div class="col-sm-6">
-          <paper-input label="Mother's Date of Birth" value="{{motherdob}}"></paper-input>
+          <!-- <paper-input label="Mother's Date of Birth" value="{{motherdob}}"></paper-input> -->
+          <dateofbirth-datepicker doblabel="Mother's Date Of Birth"></dateofbirth-datepicker>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
@@ -416,24 +433,41 @@
         </div>
       </div>
       <div class="form-group-heading">
-        <h4>Permanent Residential Address</h4>
+        <h4>Permanent Residential Address</h4>        
+      </div>
+       <div class="list-group col-sm-12 panel-body form-category">
+       <div class="col-sm-4">
+       Is permanent address same with present address?
+       </div>
+       <div class="col-sm-2"><paper-checkbox id="paddryes" class="checkbox" on-change="addressyesHandler">Yes</paper-checkbox></div>
+       <div class="col-sm-2"><paper-checkbox id="paddrno" class="checkbox" on-change="addressnoHandler">No</paper-checkbox></div>   
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
-        <div class="col-sm-6">
-          <paper-input label="Village/Town" id="ptown" required error-message="needs Village/Town!" value="{{ptown}}"></paper-input>
+        <div class="col-sm-4">
+          <paper-input label="Flat/House No" readonly="{{permanentread}}" value="{{pflatno}}"></paper-input>
         </div>
-        <div class="col-sm-6">
-          <paper-input label="District" id="pdistrict" value="{{pdistrict}}"  required error-message="needs District!"></paper-input>
+        <div class="col-sm-4">
+          <paper-input label="Building Name" readonly="{{permanentread}}" value="{{pbuildingname}}"></paper-input>
+        </div>
+        <div class="col-sm-4">
+          <paper-input label="Street/Road" readonly="{{permanentread}}" value="{{pstreet}}"></paper-input>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
-        <div class="col-sm-6">
-          <paper-input label="State" id="pstate" value="{{pstate}}"  required error-message="needs state!"></paper-input>
+        <div class="col-sm-3">
+          <paper-input label="Village/Town" id="ptown" readonly="{{permanentread}}" required error-message="needs Village/Town!" value="{{ptown}}"></paper-input>
         </div>
-        <div class="col-sm-6">
-          <paper-input label="Pincode" id="ppincode" value="{{ppincode}}"  required error-message="needs Pincode!"></paper-input>
+        <div class="col-sm-3">
+          <paper-input label="District" id="pdistrict" readonly="{{permanentread}}"value="{{pdistrict}}"  required error-message="needs District!"></paper-input>
+        </div>
+        <div class="col-sm-3">
+          <paper-input label="State" id="pstate" readonly="{{permanentread}}" value="{{pstate}}"  required error-message="needs state!"></paper-input>
+        </div>
+        <div class="col-sm-3">
+          <paper-input label="Pincode" id="ppincode" readonly="{{permanentread}}"value="{{ppincode}}"  required error-message="needs Pincode!"></paper-input>
         </div>
       </div>
+     
       <div class="form-group-heading">
         <h4>Local Guardian</h4>
       </div>
@@ -445,17 +479,17 @@
           <paper-input label="Guardian's Name" value="{{guardianname1}}"></paper-input>
         </div>
       </div>
-      <div class="list-group col-sm-12 panel-body form-category">
+      <!-- <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
           <paper-input label="Relationship" value="{{relationship2}}"></paper-input>
         </div>
         <div class="col-sm-6">
           <paper-input label="Guardian's Name" value="{{guardianname2}}"></paper-input>
         </div>
-      </div>
+      </div> -->
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-4">
-          <paper-input label="Flat/House No" value="{{guardianname}}"></paper-input>
+          <paper-input label="Flat/House No" value="{{gflatno}}"></paper-input>
         </div>
         <div class="col-sm-4">
           <paper-input label="Building Name" value="{{gbuildingname}}"></paper-input>
@@ -494,6 +528,17 @@
           <paper-input label="Fax" value="{{gfax}}"></paper-input>
         </div>
       </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-4">
+          Like to Avail Transport ?<span><paper-checkbox id="TYes" class="checkbox" on-change="transportyesHandler">Yes</paper-checkbox></span>
+          <span><paper-checkbox id="TNo" class="checkbox" on-change="transportnoHandler">No</paper-checkbox></span>
+        </div>
+        <div class="col-sm-4">
+        Like to Avail Canteen Facility ?
+          <span><paper-checkbox id="CYes" class="checkbox" on-change="canteenyesHandler">Yes</paper-checkbox></span>
+          <span><paper-checkbox id="CNo" class="checkbox" on-change="canteennoHandler">No</paper-checkbox></span>
+        </div>
+       </div>
       <div class="form-group-heading">
         <h4>Acknowledgement</h4>
       </div>
@@ -509,6 +554,7 @@
           <paper-input label="Place" value="{{place}}"></paper-input>
         </div>
       </div>
+
       <div class="form-group-heading">
         <h4>For Office Use Only</h4>
       </div>
@@ -524,27 +570,15 @@
         <div class="col-sm-6">
           <paper-input label="Authorised Signatory" value="{{authorizsign}}"></paper-input>
         </div>
-      </div>
+      </div>       
 
-
-       <div class="list-group col-sm-12 panel-body form-category">
-        <div class="col-sm-4">
-          Like to Avail Transport ?<span><paper-checkbox id="Tyes" class="checkbox" on-change="transportHandler">Yes</paper-checkbox></span>
-          <span><paper-checkbox id="Tno" class="checkbox" on-change="transportHandler">No</paper-checkbox></span>
-        </div>
-        <div class="col-sm-4">
-        Like to Avail Canteen Facility ?
-          <span><paper-checkbox id="Cyes" class="checkbox" on-change="canteenHandler">Yes</paper-checkbox></span>
-          <span><paper-checkbox id="Cno" class="checkbox" on-change="canteenHandler">No</paper-checkbox></span>
-        </div>
-       
-
-    <div class="col-md-12 form-button">
+      <div class="col-md-12 form-button">
         <paper-button class="btn btn-primary" on-click="FnSubmitAdmission">Submit</paper-button>
       </div>
-    </div>
+    
     <!--Calling services-->
     <admission-service id="admissionservice"></admission-service>
+    <schedule-service id="scheduleservice"></schedule-service>
     <crm-service id="crmservice"></crm-service>
   </template>
   <script>
@@ -562,19 +596,33 @@
     var relegions;
     var handler;
     var paddress;
+    var gender;
+    var secondlanguage;
+    var thirdlanguage;
+    var acheivehandler;
+    var acheivements;
+    var fromgrade;
+    var tograde;
+    var fatherdob;
+    var motherdob;
     Polymer({
       is: 'admission-form',
         ready:function(){
         this.hidethirdlanguage=true;
         this.$.physicdetailhandler.hidden=true;
+        this.$.acheivehandlerdiv.hidden=true;
+        this.$.scheduleservice.fetchgradeService();
+        this.$.scheduleservice.fetchacademicyearService();
+        this.$.scheduleservice.fetchadmissionyearService();
         },
       FnSearchEnquiry:function(){
-        this.$.crmservice.getclasses();
-        // var enquiryno=document.getElementById('searchenquiry').value;
-        // alert(this.enquiryno);
+        document.querySelector('#enradmnsearch').selected="-1";
+        this.FnRefresh();
+        this.$.crmservice.getclasses();        
         this.$.admissionservice.callSearchenquiryService(this.enquiryno);
       },
       FnSelectEnquiry:function(e){
+        this.FnRefresh1();
         var enquiry=(e.target.selectedItem.textContent).trim();
         var inx=enquiry.indexOf('-');
         var enquiry_no=enquiry.substring(0,inx);
@@ -582,11 +630,208 @@
         localStorage.setItem("curr_sess_enquiryno",enquiry_no);
         localStorage.setItem("curr_sess_enquiryname",enquiry_name);
         this.$.admissionservice.callFetchenquiryinfoService();
-        this.prime();
       },
+      maleHandler:function(){
+        if(document.querySelector("#Male").checked==true)
+        {
+         document.querySelector("#Female").checked=false;
+         gender="Male";
+       }
+      },
+      femaleHandler:function(){
+        if(document.querySelector("#Female").checked==true)
+        {
+         document.querySelector("#Male").checked=false;
+         gender="Female";
+        }
+      },
+      FnHideThirdLanguage:function(flag){
+         this.hidethirdlanguage=flag;
+      },
+      secondhindiHandler:function(){
+      if(document.querySelector("#SecHindi").checked==true){
+        secondlanguage="Hindi";
+        document.querySelector("#SecKannada").checked=false;
+        if(thirdlanguage=='Hindi'){
+          alert("Kindly select different Second language");
+          document.querySelector("#SecHindi").checked=false;
+        }
+      }
+      else{
+        secondlanguage=null;
+      }
+    },
+    secondkannadaHandler:function(){
+      if(document.querySelector("#SecKannada").checked==true){
+        secondlanguage="Kannada";
+        document.querySelector("#SecHindi").checked=false;
+        if(thirdlanguage=='Kannada'){
+          alert("Kindly select different Second language");
+          document.querySelector("#SecKannada").checked=false;
+        }
+      }
+      else{
+        secondlanguage=null;
+      }
+    },
+    thirdfrenchHandler:function(){
+      if(document.querySelector("#ThirdFrench").checked==true){
+        thirdlanguage="French";
+        document.querySelector("#ThirdHindi").checked=false;
+        document.querySelector("#ThirdKannada").checked=false;
+        document.querySelector("#ThirdSanskrit").checked=false;
+      }
+      else{
+        thirdlanguage=null;
+      }
+    },
+    thirdhindiHandler:function(){
+      if(document.querySelector("#ThirdHindi").checked==true){
+        if(secondlanguage=='Hindi'){
+            alert("Kindly select different third language");
+            document.querySelector("#ThirdHindi").checked=false;
+        }
+        else{
+            thirdlanguage="Hindi";
+        }
+
+        document.querySelector("#ThirdFrench").checked=false;
+        document.querySelector("#ThirdKannada").checked=false;
+        document.querySelector("#ThirdSanskrit").checked=false;
+      }
+      else{
+        thirdlanguage=null;
+      }
+    },
+    thirdkannadaHandler:function(){
+      if(document.querySelector("#ThirdKannada").checked==true){
+        if(secondlanguage=='Kannada'){
+            alert("Kindly select different third language");
+            document.querySelector("#ThirdHindi").checked=false;
+        }
+        else{
+            thirdlanguage="Kannada";
+        }
+        document.querySelector("#ThirdFrench").checked=false;
+        document.querySelector("#ThirdHindi").checked=false;
+        document.querySelector("#ThirdSanskrit").checked=false;
+      }
+      else{
+        thirdlanguage=null;
+      }
+    },
+    thirdsanskritHandler:function(){
+      if(document.querySelector("#ThirdSanskrit").checked==true){
+        thirdlanguage="Sanskrit";
+        document.querySelector("#ThirdFrench").checked=false;
+        document.querySelector("#ThirdHindi").checked=false;
+        document.querySelector("#ThirdKannada").checked=false;
+      }
+      else{
+        thirdlanguage=null;
+      }
+    },
+    addressyesHandler:function(){
+        if(document.querySelector("#paddryes").checked==true)
+        {
+         this.permanentread=true;
+         this.pflatno=this.flatno;
+         this.pbulidingname=this.bulidingname;
+         this.pdistrict=this.city;
+         this.ptown=this.town;
+         this.pstreet=this.street;
+         this.pstate=this.state;
+         this.ppincode=this.pincode; 
+         document.querySelector("#paddrno").checked=false;
+         paddress="Yes";
+       }
+    },
+    addressnoHandler:function(){
+        if(document.querySelector("#paddrno").checked==true)
+        {
+         this.permanentread=false;
+         this.pflatno="";
+         this.pbulidingname="";
+         this.pdistrict="";
+         this.ptown="";
+         this.pstreet="";
+         this.pstate="";
+         this.ppincode="";
+         document.querySelector("#paddryes").checked=false;
+         paddress="No";
+        }
+    },
+    disabledyesHandler:function(e){
+        admissiondisabled=e.target.id;
+        admissiondisabled=admissiondisabled.substring(1);
+        if(document.querySelector("#Dyes").checked==true){
+           handler="yes";
+           this.$.physicdetailhandler.hidden=false;
+            document.querySelector("#Dno").checked=false;
+          }
+          else{handler=null;}
+    },
+    disablednoHandler:function(e){
+        if(document.querySelector("#Dno").checked==true){
+              handler="No";
+             document.querySelector("#Dyes").checked=false;
+             this.$.physicdetailhandler.hidden=true;
+          }
+             else{handler=null;}
+    },
+    acheiveyesHandler:function(e){
+        acheivements=e.target.id;
+        acheivements=acheivements.substring(2);
+        if(document.querySelector("#Acyes").checked==true){
+           acheivehandler="yes";
+           this.$.acheivehandlerdiv.hidden=false;
+            document.querySelector("#Acno").checked=false;
+          }
+          else{acheivehandler=null;}
+    },
+    acheivenoHandler:function(e){
+        if(document.querySelector("#Acno").checked==true){
+             acheivehandler="No";
+             document.querySelector("#Acyes").checked=false;
+             this.$.acheivehandlerdiv.hidden=true;
+          }
+             else{acheivehandler=null;}
+    },
+    transportyesHandler:function(e){
+        if(document.querySelector("#TYes").checked==true){
+           admissiontransport="Yes";           
+           document.querySelector("#TNo").checked=false;
+          }
+          else{admissiontransport=null;}
+    },
+    transportnoHandler:function(e){
+        if(document.querySelector("#TNo").checked==true){
+             admissiontransport="No";
+             document.querySelector("#TYes").checked=false;
+          }
+             else{admissiontransport=null;}
+    },
+    canteenyesHandler:function(e){
+        if(document.querySelector("#CYes").checked==true){
+           admissioncanteen="Yes";           
+           document.querySelector("#CNo").checked=false;
+          }
+          else{admissioncanteen=null;}
+    },
+    canteennoHandler:function(e){
+        if(document.querySelector("#CNo").checked==true){
+             admissioncanteen="No";
+             document.querySelector("#CYes").checked=false;
+          }
+          else{admissioncanteen=null;}
+    },
+    FnSelectFromGrade:function(e){
+      fromgrade=(e.target.selectedItem.textContent).trim();
+    },
+    FnSelectToGrade:function(e){
+      tograde=(e.target.selectedItem.textContent).trim();
+    },
       prime:function(){
-       // alert(this.gradeselection);
-        // alert("hi2");
         if(this.gradeselection=="Nursery"||this.gradeselection=="LKG"||this.gradeselection=="UKG"||this.gradeselection=="Grade-1"||this.gradeselection=="Grade-2"||this.gradeselection=="Grade-3"|| this.gradeselection=="Grade-4"){
           this.$.lang3Handler.hidden=true;
           }
@@ -594,26 +839,68 @@
         this.$.lang3Handler.hidden=false;
           }
       },
+      FnSetAdmnYear:function(value){
+        admissionyear=value;
+      },
+      FnSetBg:function(value){
+        FnBlood=value;
+      },
+      FnSetFromGrade:function(value){
+        fromgrade=value;
+      },
+      FnSetToGrade:function(value){
+        tograde=value;
+      },
+      FnSetBoard:function(value){
+        FnBo=value;
+      },
       FnSetSecLanguage:function(value){
-        // alert(value);
-        // alert(document.querySelector("#"+value));
-        document.querySelector("#"+value).checked=true;
+        secondlanguage=value;
+        document.querySelector("#Sec"+value).checked=true;
       },
       FnSetThirdLanguage:function(value){
-        document.querySelector("#"+value).checked=true;
-        alert("hi2");
+        thirdlanguage=value;
+        document.querySelector("#Third"+value).checked=true;
       },
 
-       FnSetTransport:function(value){
+      FnSetTransport:function(value){
         admissiontransport=value;
+        if(value=="Yes")
         document.querySelector("#T"+value).checked=true;
+        if(value=="No")
+        document.querySelector("#T"+value).checked=false;
       },
       FnSetCanteen:function(value){
         admissioncanteen=value;
+        if(value=="Yes")
         document.querySelector("#C"+value).checked=true;
+        if(value=="No")
+        document.querySelector("#C"+value).checked=false;
       },
       FnSetGender:function(value){
-        admissiongender=value;
+        gender=value;
+        document.querySelector("#"+value).checked=true;
+      },
+      FnSetDisabled:function(value){
+        handler=value;
+        if(value=="yes"){
+          this.$.physicdetailhandler.hidden=false;
+        document.querySelector("#D"+value).checked=true;
+        }
+        if(value=="no")
+        document.querySelector("#D"+value).checked=false;
+      },
+      FnSetAcheivement:function(value){
+        acheivehandler=value;
+        if(value=="yes"){
+          this.$.acheivehandlerdiv.hidden=false;
+        document.querySelector("#Ac"+value).checked=true;
+        }
+        if(value=="no")
+        document.querySelector("#Ac"+value).checked=false;
+      },
+      FnSetCaste:function(value){
+        relegions=value;
         document.querySelector("#"+value).checked=true;
       },
       FnFindAge:function(value){
@@ -628,7 +915,6 @@
       },
       FnSelectAdmissionYear:function(e){
         admissionyear=(e.target.selectedItem.textContent).trim();
-
       },
       FnSelectGrade:function(e){
         admissiongrade=(e.target.selectedItem.textContent).trim();
@@ -643,51 +929,14 @@
       canteenHandler:function(e){
         admissioncanteen=e.target.id;
         admissioncanteen=admissioncanteen.substring(1);
-      },
-     disabledHandler:function(e){
-        admissiondisabled=e.target.id;
-        admissiondisabled=admissiondisabled.substring(1);
-        if(document.querySelector("#Dyes").checked==true){
-           handler="yes";
-           this.$.physicdetailhandler.hidden=false;
-            document.querySelector("#Dno").checked=false;
-          }
-          else{handler=null;}
-
-      },
-      disabledHandler1:function(e){
-        if(document.querySelector("#Dno").checked==true){
-              handler="No";
-             document.querySelector("#Dyes").checked=false;
-             this.$.physicdetailhandler.hidden=true;
-          }
-             else{handler=null;}
-        },
-
-       addresshander:function(e){
-             if(document.querySelector("#pyes").checked==true){
-              paddress="yes";
-             document.querySelector("#pno").checked=false;
-
-          }
-             else{paddress=null;}
-         },
-        addresshander1:function(e){
-              if(document.querySelector("#pno").checked==true){
-              paddress="No";
-             document.querySelector("#pyes").checked=false;
-          }
-             else{paddress=null;}   
-        },  
+      },     
       FnBoard:function(e){
         FnBo=(e.target.selectedItem.textContent).trim();
-
       },
       FnBloodGroup:function(e){
-           FnBlood=(e.target.selectedItem.textContent).trim();
+        FnBlood=(e.target.selectedItem.textContent).trim();
       },
-   casteHandlersc:function(){
-
+      casteHandlersc:function(){
        if(document.querySelector("#SC").checked==true){
         relegions="SC";
         document.querySelector("#ST").checked=false;
@@ -748,39 +997,355 @@
         relegions=null;
       }
       },
-
-
-      FnSubmitAdmission:function(){
-        // alert( this.applicationno+this.schoolname+admissionyear+this.firstname+this.middlename+this.lastname+this.gradeselection+admissiondob+admissiongender+admissiondisabled+admissioncanteen+admissiontransport+this.fathername+this.mothername+this.flatno+this.bulidingname+this.street+this.town+this.city+this.state+this.pincode+this.height+this.weight+this.relegion+this.nationality+this.mothertongue+this.siblingname+this.siblingclass+this.prevschoolname+this.classfrom+this.classto+this.yearfrom+this.yearto+this.medium+this.lastclassmark+this.reasonforleaving+this.physicdetail+this.physicstatus+this.mentaldetail+this.mentalstatus+this.illnessdetail+this.illnessstatus+this.allergydetail+this.allergystatus+this.chronicdetail+this.chronicstatus+this.sno1+this.field1+this.year1+this.event1+this.prizedetail1+this.sno2+this.field2+this.year2+this.event2+this.prizedetail2+this.sno3+this.field3+this.year3+this.event3+this.prizedetail3+this.fatherdob+this.motherdob+this.fatherqualification+this.motherqualification+this.fatheroccupation+this.motheroccupation+this.fatherincome+this.motherincome+this.fathertelno+this.mothertelno+this.fathermobile+this.mothermobile+this.fatheremail+this.motheremail+this.ptown+this.pdistrict+this.pstate+this.ppincode+this.relationship1+this.guardianname1+this.relationship2+this.guardianname2+this.guardianname+this.gbuildingname+this.gstreet+this.gtown+this.gcity+this.gstate+this.gpincode+this.gresidentialcontact+this.gofficecontact+this.gmobileno+this.gmobileno+this.gfax+this.date+this.fsign+this.place+this.admissionclass+this.gradeadmin+this.authorizsign+FnBo+relegions+FnBlood);
-
-        // alert(this.applicationno+"  "+this.schoolname+"  "+admissionyear+"  "+this.firstname+"  "+this.middlename+" "+this.lastname+" "++"  "+admissiondob+" "+admissiongender+" "+admissiondisabled+" "+admissioncanteen+" "+admissiontransporadmissiongradet);
-
-
-          if(this.ptown==""||this.ppincode==""||this.pdistrict==""||this.pstate=="")
-          {
-           this.$.ptown.validate();
-           this.$.ppincode.validate();
-           this.$.pdistrict.validate();
-           this.$.pstate.validate();
-          }
-        else if (admissionyear==null) {
-          alert("selected the Academic year");
-         }
-        else if(FnBo==null){
-          alert("selected the Board");
-        }
-        else if(FnBlood==null){
-          alert("selected the Bloodgroup");
-        }
-
-          else{
-              alert("GGG");
-       this.$.admissionservice.callInsertAdmissionService(this.applicationno,this.schoolname,admissionyear,this.firstname,this.middlename,this.lastname,this.gradeselection,admissiondob,admissiongender,admissiondisabled,admissioncanteen,admissiontransport,this.fathername,this.mothername,this.flatno,this.bulidingname,this.street,this.town,this.city,this.state,this.pincode,this.height,this.weight,this.relegion,this.nationality,this.mothertongue,this.siblingname,this.siblingclass,this.prevschoolname,this.classfrom,this.classto,this.yearfrom,this.yearto,this.medium,this.lastclassmark,this.reasonforleaving,this.physicdetail,this.physicstatus,this.mentaldetail,this.mentalstatus,this.illnessdetail,this.illnessstatus,this.allergydetail,this.allergystatus,this.chronicdetail,this.chronicstatus,this.sno1,this.field1,this.year1,this.event1,this.prizedetail1,this.sno2,this.field2,this.year2,this.event2,this.prizedetail2,this.sno3,this.field3,this.year3,this.event3,this.prizedetail3,this.fatherdob,this.motherdob,this.fatherqualification,this.motherqualification,this.fatheroccupation,this.motheroccupation,this.fatherincome,this.motherincome,this.fathertelno,this.mothertelno,this.fathermobile,this.mothermobile,this.fatheremail,this.motheremail,this.ptown,this.pdistrict,this.pstate,this.ppincode,this.relationship1,this.guardianname1,this.relationship2,this.guardianname2,this.guardianname,this.gbuildingname,this.gstreet,this.gtown,this.gcity,this.gstate,this.gpincode,this.gresidentialcontact,this.gofficecontact,this.gmobileno,this.gmobileno,this.gfax,this.date,this.fsign,this.place,this.admissionclass,this.gradeadmin,this.authorizsign,FnBo,relegions,FnBlood); 
-      
-       }
+      FnShowDisable:function(value){
+        if(value=="yes")
+        this.physicdetailhandler=false;
       },
-      FnHideThirdLanguage:function(){
-        this.hidethirdlanguage=false;
+      FnShowacheivement:function(value){
+        if(value=="yes")
+        this.acheivehandlerdiv=false;
+      },
+      FnSubmitAdmission:function(){     
+
+        if (admissionyear==null) {
+          alert("selected the Academic year");
+        }          
+        else{
+          // alert(localStorage.getItem("curr_sess_enquiryno")+" "+localStorage.getItem("curr_sess_enquiryname")+" "+this.applicationno+" "+this.schoolname+" "+this.enquiredyear+" "+admissionyear);
+          // alert(this.firstname+" "+this.middlename+" "+this.lastname+" "+this.gradeselection+" "+secondlanguage+" "+thirdlanguage);
+          // alert(this.dob+" "+this.age+" "+gender);
+          // alert(this.flatno+" "+this.bulidingname+" "+this.street+" "+this.city+" "+this.town+" "+this.state+" "+this.pincode);
+          // alert(this.height+" "+this.weight+FnBlood);
+          // alert(relegions+" "+this.relegion+" "+this.nationality+" "+this.mothertongue+" "+this.siblingname+" "+this.siblingclass);
+          // alert(this.prevschoolname+" "+fromgrade+" "+tograde+" "+FnBo+" "+this.yearfrom+" "+this.yearto);
+          // alert(this.medium+" "+this.lastclassmark+" "+this.reasonforleaving);
+          // alert(handler);
+          // alert(this.physicdetail+" "+this.physicstatus+" "+this.mentaldetail+" "+this.mentalstatus+" "+this.illnessdetail+" "+this.illnessstatus+" "+this.allergydetail+" "+this.allergystatus+" "+this.chronicdetail+" "+this.chronicstatus);
+          // alert(acheivehandler);
+          // alert(this.fathername+" "+this.mothername+" "+this.fatherqualification+" "+this.motherqualification+" "+this.fatheroccupation+" "+this.motheroccupation);
+          // alert(this.fatherincome+" "+this.motherincome+" "+this.fathertelno+" "+this.mothertelno);
+          // alert(this.fathermobile+" "+this.mothermobile+" "+this.fatheremail+" "+this.motheremail);
+          // alert(this.pflatno+" "+this.pbulidingname+" "+this.pstreet+" "+this.pdistrict+" "+this.ptown+" "+this.pstate+" "+this.ppincode);
+
+          // alert(this.guardianname1+" "+this.guardianname2+" "+this.relationship1+" "+this.relationship2);
+          // alert(this.gflatno+" "+this.gbulidingname+" "+this.gstreet+" "+this.gcity+" "+this.gtown+" "+this.gstate+" "+this.gpincode+" "+this.gresidentialcontact+" "+this.gofficecontact+" "+this.gmobileno+" "+this.gfax);
+          // alert(admissiontransport+" "+admissioncanteen);
+
+          if(localStorage.getItem("curr_sess_insertflag")=="1")
+
+          this.$.admissionservice.callInsertAdmissionService(localStorage.getItem("curr_sess_enquiryno"),localStorage.getItem("curr_sess_enquiryname"),this.applicationno,this.schoolname,this.enquiredyear,admissionyear,this.firstname,this.middlename,this.lastname,this.gradeselection,secondlanguage,thirdlanguage,this.dob,this.age,gender,this.flatno,
+            this.bulidingname,this.street,this.city,this.town,this.state,this.pincode,this.height,this.weight,FnBlood,relegions,this.relegion,this.nationality,this.mothertongue,this.siblingname,this.siblingclass,this.prevschoolname,fromgrade,tograde,FnBo,this.yearfrom,this.yearto,this.medium,this.lastclassmark,this.reasonforleaving,handler,this.physicdetail,this.physicstatus,this.mentaldetail,this.mentalstatus,this.illnessdetail,this.illnessstatus,this.allergydetail,this.allergystatus,this.chronicdetail,this.chronicstatus,acheivehandler,this.fathername,this.mothername,this.fatherqualification,this.motherqualification,this.fatheroccupation,this.motheroccupation,this.fatherincome,this.motherincome,this.fathertelno,this.mothertelno,this.fathermobile,this.mothermobile,this.fatheremail,this.motheremail,this.fatherdob,this.motherdob,this.pflatno,this.pbuildingname,this.pstreet,this.pdistrict,this.ptown,this.pstate,this.ppincode,this.guardianname1,this.guardianname2,this.relationship1,this.relationship2,this.gflatno,this.gbulidingname,this.gstreet,this.gcity,this.gtown,this.gstate,this.gpincode,this.gresidentialcontact,this.gofficecontact,this.gmobileno,this.gfax,admissiontransport,admissioncanteen,this.field1,this.year1,this.event1,this.prizedetail1,this.field2,this.year2,this.event2,this.prizedetail2,this.field3,this.year3,this.event3,this.prizedetail3);
+          if(localStorage.getItem("curr_sess_insertflag")=="2")
+
+          this.$.admissionservice.callInsertAdmissionService(localStorage.getItem("curr_sess_admnenquiryno"),localStorage.getItem("curr_sess_enquiryname"),this.applicationno,this.schoolname,this.enquiredyear,admissionyear,this.firstname,this.middlename,this.lastname,this.gradeselection,secondlanguage,thirdlanguage,this.dob,this.age,gender,this.flatno,
+            this.bulidingname,this.street,this.city,this.town,this.state,this.pincode,this.height,this.weight,FnBlood,relegions,this.relegion,this.nationality,this.mothertongue,this.siblingname,this.siblingclass,this.prevschoolname,fromgrade,tograde,FnBo,this.yearfrom,this.yearto,this.medium,this.lastclassmark,this.reasonforleaving,handler,this.physicdetail,this.physicstatus,this.mentaldetail,this.mentalstatus,this.illnessdetail,this.illnessstatus,this.allergydetail,this.allergystatus,this.chronicdetail,this.chronicstatus,acheivehandler,this.fathername,this.mothername,this.fatherqualification,this.motherqualification,this.fatheroccupation,this.motheroccupation,this.fatherincome,this.motherincome,this.fathertelno,this.mothertelno,this.fathermobile,this.mothermobile,this.fatheremail,this.motheremail,this.fatherdob,this.motherdob,this.pflatno,this.pbuildingname,this.pstreet,this.pdistrict,this.ptown,this.pstate,this.ppincode,this.guardianname1,this.guardianname2,this.relationship1,this.relationship2,this.gflatno,this.gbulidingname,this.gstreet,this.gcity,this.gtown,this.gstate,this.gpincode,this.gresidentialcontact,this.gofficecontact,this.gmobileno,this.gfax,admissiontransport,admissioncanteen,this.field1,this.year1,this.event1,this.prizedetail1,this.field2,this.year2,this.event2,this.prizedetail2,this.field3,this.year3,this.event3,this.prizedetail3);
+        }
+        },
+       FnRefresh:function(){
+        admissionyear="";
+        admissiongrade="";
+        admissiondob="";
+        admissiongender="";
+        admissiontransport="";
+        admissioncanteen="";
+        admissiondisabled="";
+        FnBlood="";
+        FnBo="";
+        relegions="";
+        handler="";
+        paddress="";
+        gender="";
+        secondlanguage="";
+        thirdlanguage="";
+        acheivehandler="";
+        acheivements="";
+        fromgrade="";
+        tograde="";
+        fatherdob="";
+        motherdob="";
+        // this.enquiryno="";
+        document.querySelector('#enradmnsearch').selected=-1;
+        this.enquiryarr="";
+        this.enqenrlabel="";
+        this.enqenrno="";
+        this.applicationno="";
+        this.schoolname="";
+        this.enquiredyear="";
+        document.querySelector('#admnformadmnyear').selected=-1;
+        // this.academicarr="";
+        this.firstname="";
+        this.middlename="";
+        this.lastname="";
+        this.gradeselection="";
+        this.$.SecHindi.checked=false;
+        this.$.SecKannada.checked=false;
+        this.$.ThirdFrench.checked=false;
+        this.$.ThirdSanskrit.checked=false;
+        this.$.ThirdKannada.checked=false;
+        this.$.ThirdHindi.checked=false;
+        this.dob=new Date();
+        this.age="";
+        this.$.Male.checked=false;
+        this.$.Female.checked=false;
+        this.flatno="";
+        this.bulidingname="";
+        this.street="";
+        this.town="";
+        this.city="";
+        this.state="";
+        this.pincode="";
+        this.height="";
+        this.weight="";
+        document.querySelector('#admnformbg').selected=-1;
+        this.$.SC.checked=false;
+        this.$.ST.checked=false;
+        this.$.MBC.checked=false;
+        this.$.OBC.checked=false;
+        this.$.Others.checked=false;
+        this.relegion="";
+        this.nationality="";
+        this.mothertongue="";
+        this.siblingname="";
+        this.siblingclass="";
+        this.prevschoolname="";
+        // this.fromgradearr="";
+        // this.togradearr="";
+        document.querySelector('#admnformboard').selected=-1;
+        this.yearfrom="";
+        this.yearto="";
+        this.medium="";
+        this.lastclassmark="";
+        this.reasonforleaving="";
+        document.querySelector('#Dyes').checked=false;
+        document.querySelector('#Dno').checked=false;
+        this.$.physicdetailhandler.hidden=true;
+        this.physicdetail="";
+        this.physicstatus="";
+        this.mentalstatus="";
+        this.mentaldetail="";
+        this.illnessstatus="";
+        this.illnessdetail="";
+        this.allergystatus="";
+        this.allergydetail="";
+        this.chronicstatus="";
+        this.chronicdetail="";
+        this.$.Acyes.checked=false;
+        this.$.Acno.checked=false;
+        this.$.acheivehandlerdiv.hidden=true;
+        this.sno1="";
+        this.field1
+        ="";
+        this.year1="";
+        this.event1="";
+        this.prizedetail1="";
+        this.sno2="";
+        this.field2
+        ="";
+        this.year2="";
+        this.event2="";
+        this.prizedetail2="";
+        this.sno3="";
+        this.field3
+        ="";
+        this.year3="";
+        this.event3="";
+        this.prizedetail3="";
+        this.fathername="";
+        this.mothername="";
+        this.fatherqualification="";
+        this.motherqualification="";
+        this.fatheroccupation="";
+        this.motheroccupation="";
+        this.fatherincome="";
+        this.motherincome="";
+        this.fathertelno="";
+        this.mothertelno="";
+        this.fathermobile="";
+        this.mothermobile="";
+        this.fatheremail="";
+        this.motheremail="";
+        this.$.paddryes.checked=false;
+        this.$.paddrno.checked=false;
+        this.permanentread=false;
+        this.pflatno="";
+        this.pbulidingname="";
+        this.pstreet="";
+        this.ptown="";
+        this.pdistrict="";
+        this.pstate="";
+        this.ppincode="";
+        this.relationship1="";
+        this.guardianname1="";
+        this.relationship2="";
+        this.guardianname2="";
+        this.gflatno="";
+        this.gbuildingname="";
+        this.gstreet="";
+        this.gtown="";
+        this.gcity="";
+        this.gstate="";
+        this.gpincode="";
+        this.gresidentialcontact="";
+        this.gofficecontact="";
+        this.gmobileno="";
+        this.gfax="";
+        this.$.TYes.checked=false;
+        this.$.TNo.checked=false;
+        this.$.CYes.checked=false;
+        this.$.CNo.checked=false;     
+      },
+      FnRefresh1:function(){
+        admissionyear="";
+        admissiongrade="";
+        admissiondob="";
+        admissiongender="";
+        admissiontransport="";
+        admissioncanteen="";
+        admissiondisabled="";
+        FnBlood="";
+        FnBo="";
+        relegions="";
+        handler="";
+        paddress="";
+        gender="";
+        secondlanguage="";
+        thirdlanguage="";
+        acheivehandler="";
+        acheivements="";
+        fromgrade="";
+        tograde="";
+        fatherdob="";
+        motherdob="";
+        // this.enquiryno="";
+        // document.querySelector('#enradmnsearch').selected=-1;
+        // this.enquiryarr="";
+        this.enqenrlabel="";
+        this.enqenrno="";
+        this.applicationno="";
+        this.schoolname="";
+        this.enquiredyear="";
+        document.querySelector('#admnformadmnyear').selected=-1;
+        // this.academicarr="";
+        this.firstname="";
+        this.middlename="";
+        this.lastname="";
+        this.gradeselection="";
+        this.$.SecHindi.checked=false;
+        this.$.SecKannada.checked=false;
+        this.$.ThirdFrench.checked=false;
+        this.$.ThirdSanskrit.checked=false;
+        this.$.ThirdKannada.checked=false;
+        this.$.ThirdHindi.checked=false;
+        this.dob=new Date();
+        this.age="";
+        this.$.Male.checked=false;
+        this.$.Female.checked=false;
+        this.flatno="";
+        this.bulidingname="";
+        this.street="";
+        this.town="";
+        this.city="";
+        this.state="";
+        this.pincode="";
+        this.height="";
+        this.weight="";
+        document.querySelector('#admnformbg').selected=-1;
+        this.$.SC.checked=false;
+        this.$.ST.checked=false;
+        this.$.MBC.checked=false;
+        this.$.OBC.checked=false;
+        this.$.Others.checked=false;
+        this.relegion="";
+        this.nationality="";
+        this.mothertongue="";
+        this.siblingname="";
+        this.siblingclass="";
+        this.prevschoolname="";
+        // this.fromgradearr="";
+        // this.togradearr="";
+        document.querySelector('#admnformboard').selected=-1;
+        this.yearfrom="";
+        this.yearto="";
+        this.medium="";
+        this.lastclassmark="";
+        this.reasonforleaving="";
+        document.querySelector('#Dyes').checked=false;
+        document.querySelector('#Dno').checked=false;
+        this.$.physicdetailhandler.hidden=true;
+        this.physicdetail="";
+        this.physicstatus="";
+        this.mentalstatus="";
+        this.mentaldetail="";
+        this.illnessstatus="";
+        this.illnessdetail="";
+        this.allergystatus="";
+        this.allergydetail="";
+        this.chronicstatus="";
+        this.chronicdetail="";
+        this.$.Acyes.checked=false;
+        this.$.Acno.checked=false;
+        this.$.acheivehandlerdiv.hidden=true;
+        this.sno1="";
+        this.field1
+        ="";
+        this.year1="";
+        this.event1="";
+        this.prizedetail1="";
+        this.sno2="";
+        this.field2
+        ="";
+        this.year2="";
+        this.event2="";
+        this.prizedetail2="";
+        this.sno3="";
+        this.field3
+        ="";
+        this.year3="";
+        this.event3="";
+        this.prizedetail3="";
+        this.fathername="";
+        this.mothername="";
+        this.fatherqualification="";
+        this.motherqualification="";
+        this.fatheroccupation="";
+        this.motheroccupation="";
+        this.fatherincome="";
+        this.motherincome="";
+        this.fathertelno="";
+        this.mothertelno="";
+        this.fathermobile="";
+        this.mothermobile="";
+        this.fatheremail="";
+        this.motheremail="";
+        this.$.paddryes.checked=false;
+        this.$.paddrno.checked=false;
+        this.permanentread=false;
+        this.pflatno="";
+        this.pbulidingname="";
+        this.pstreet="";
+        this.ptown="";
+        this.pdistrict="";
+        this.pstate="";
+        this.ppincode="";
+        this.relationship1="";
+        this.guardianname1="";
+        this.relationship2="";
+        this.guardianname2="";
+        this.gflatno="";
+        this.gbuildingname="";
+        this.gstreet="";
+        this.gtown="";
+        this.gcity="";
+        this.gstate="";
+        this.gpincode="";
+        this.gresidentialcontact="";
+        this.gofficecontact="";
+        this.gmobileno="";
+        this.gfax="";
+        this.$.TYes.checked=false;
+        this.$.TNo.checked=false;
+        this.$.CYes.checked=false;
+        this.$.CNo.checked=false;     
       }
     });
   })();
