@@ -32,8 +32,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         if(e.target.checked==true) {
           var codes = e.target.id;
           document.querySelector('newenquiry-card').getItems(codes);
+          document.querySelector('detailed-enquiry-form').getItems(codes);
         } else {
           document.querySelector('newenquiry-card').removeItems(codes);
+          document.querySelector('detailed-enquiry-form').removeItems(codes);
         }
       },
     });
