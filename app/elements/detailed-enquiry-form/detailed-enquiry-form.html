@@ -1419,12 +1419,14 @@ Fnlistbox:function(nameitem){
             alert("Select Mother's Occupation");
           }
           else if (thirdlanguage == null) {
-            if (grade == "Pre KG" || "LKG" || "UKG" || "Grade 1" || "Grade 2" || "Grade 3") {
-              if(admissiontestenglish == null && admissiontestmaths == null && admissiontestevs == null){
-                alert('Select at least any one subject ');
+            if (grade == "Pre KG" || "LKG" || "UKG" || "Grade 1" || "Grade 2" || "Grade 3" ||"Grade-4") {
+              if (admissiontest == "Yes") {
+                if(admissiontestenglish == null && admissiontestmaths == null && admissiontestevs == null){
+                  alert('Select at least any one subject ');
+                } else {
+                  this.$.service.registerenquiryform(this.enqno, this.firstname, this.middlename, this.lastname, fngender, grade, dobdate, this.oldclass, this.oldschool, mothertongue, this.fathername, this.mothername, this.fatheredu, this.motheredu, this.fathercountrycode + "-" + this.fathermob, this.mothercountrycode + "-" + this.mothermob, this.fathermail, this.mothermail, this.fathercompany, this.mothercompany, dadoccup, momtheroccup, this.flat, this.address1, this.address2, this.address3, this.city, this.pincode, this.state, enquiysource, this.siblingname, this.siblingdetails, transportreq, canteenreq, secondlanguage, thirdlanguage, propsold, this.fatherjob, this.motherjob, dadincome, momincome, this.prospectusno, this.academicyear,admissiontest, admissiontestdate, admissiontestenglish, admissiontestmaths, admissiontestevs, this.guardianname, this.guardiancountrycode + "-" + this.guardianmobile, this.guardianemail, this.guardiancompany, this.guardianjob, guardianoccup, guardianincome, this.textvalues, this.fatherotheroccupation, this.motherotheroccupation, this.guardianotheroccupation, enrolltype, country_name,this.rteno,checkList);
+                }
               } else {
-                alert(momtheroccup);
-                alert(this.rteno);
                 this.$.service.registerenquiryform(this.enqno, this.firstname, this.middlename, this.lastname, fngender, grade, dobdate, this.oldclass, this.oldschool, mothertongue, this.fathername, this.mothername, this.fatheredu, this.motheredu, this.fathercountrycode + "-" + this.fathermob, this.mothercountrycode + "-" + this.mothermob, this.fathermail, this.mothermail, this.fathercompany, this.mothercompany, dadoccup, momtheroccup, this.flat, this.address1, this.address2, this.address3, this.city, this.pincode, this.state, enquiysource, this.siblingname, this.siblingdetails, transportreq, canteenreq, secondlanguage, thirdlanguage, propsold, this.fatherjob, this.motherjob, dadincome, momincome, this.prospectusno, this.academicyear,admissiontest, admissiontestdate, admissiontestenglish, admissiontestmaths, admissiontestevs, this.guardianname, this.guardiancountrycode + "-" + this.guardianmobile, this.guardianemail, this.guardiancompany, this.guardianjob, guardianoccup, guardianincome, this.textvalues, this.fatherotheroccupation, this.motherotheroccupation, this.guardianotheroccupation, enrolltype, country_name,this.rteno,checkList);
               }
             } else {
@@ -1432,15 +1434,16 @@ Fnlistbox:function(nameitem){
             }
           } else {
             //alert(enqno+this.firstname+this.middlename+this.lastname+fngender+this.grade+this.dob+this.oldclass+this.oldschool+mothertongue+this.fathername+this.mothername+this.fatheredu+this.motheredu+this.fathermob+this.mothermob+this.fathermail+this.mothermail+this.fathercompany+this.mothercompany+dadoccup+momtheroccup+this.flat+this.address1+this.address2+this.address3+this.city+this.pincode+this.state+enquiysource+this.siblingname+this.siblingdetails+transportreq+canteenreq+secondlanguage+thirdlanguage+propsold+this.fatherjob+this.motherjob+dadincome+momincome);
-            if(admissiontestenglish == null && admissiontestmaths == null && admissiontestevs == null){
-              alert('Select at least any one subject ');
+            if (admissiontest == "Yes") {
+              if (admissiontestenglish == null && admissiontestmaths == null && admissiontestevs == null) {
+                alert('Select at least any one subject ');
+              } else {
+                this.$.service.registerenquiryform(this.enqno, this.firstname, this.middlename, this.lastname, fngender, grade, dobdate, this.oldclass, this.oldschool, mothertongue, this.fathername, this.mothername, this.fatheredu, this.motheredu, this.fathercountrycode + "-" + this.fathermob, this.mothercountrycode + "-" + this.mothermob, this.fathermail, this.mothermail, this.fathercompany, this.mothercompany, dadoccup, momtheroccup, this.flat, this.address1, this.address2, this.address3, this.city, this.pincode, this.state, enquiysource, this.siblingname, this.siblingdetails, transportreq, canteenreq, secondlanguage, thirdlanguage, propsold, this.fatherjob, this.motherjob, dadincome, momincome, this.prospectusno, this.academicyear, admissiontest, admissiontestdate, admissiontestenglish, admissiontestmaths, admissiontestevs, this.guardianname, this.guardiancountrycode + "-" + this.guardianmobile, this.guardianemail, this.guardiancompany, this.guardianjob, guardianoccup, guardianincome, this.textvalues, this.fatherotheroccupation, this.motherotheroccupation, this.guardianotheroccupation, enrolltype, country_name, this.rteno, checkList);
+              }
             } else {
-              alert(momtheroccup);
-              alert(this.rteno);
-              this.$.service.registerenquiryform(this.enqno, this.firstname, this.middlename, this.lastname, fngender, grade, dobdate, this.oldclass, this.oldschool, mothertongue, this.fathername, this.mothername, this.fatheredu, this.motheredu, this.fathercountrycode + "-" + this.fathermob, this.mothercountrycode + "-" + this.mothermob, this.fathermail, this.mothermail, this.fathercompany, this.mothercompany, dadoccup, momtheroccup, this.flat, this.address1, this.address2, this.address3, this.city, this.pincode, this.state, enquiysource, this.siblingname, this.siblingdetails, transportreq, canteenreq, secondlanguage, thirdlanguage, propsold, this.fatherjob, this.motherjob, dadincome, momincome, this.prospectusno, this.academicyear,admissiontest, admissiontestdate, admissiontestenglish, admissiontestmaths, admissiontestevs, this.guardianname, this.guardiancountrycode + "-" + this.guardianmobile, this.guardianemail, this.guardiancompany, this.guardianjob, guardianoccup, guardianincome, this.textvalues, this.fatherotheroccupation, this.motherotheroccupation, this.guardianotheroccupation, enrolltype, country_name,this.rteno,checkList);
+              this.$.service.registerenquiryform(this.enqno, this.firstname, this.middlename, this.lastname, fngender, grade, dobdate, this.oldclass, this.oldschool, mothertongue, this.fathername, this.mothername, this.fatheredu, this.motheredu, this.fathercountrycode + "-" + this.fathermob, this.mothercountrycode + "-" + this.mothermob, this.fathermail, this.mothermail, this.fathercompany, this.mothercompany, dadoccup, momtheroccup, this.flat, this.address1, this.address2, this.address3, this.city, this.pincode, this.state, enquiysource, this.siblingname, this.siblingdetails, transportreq, canteenreq, secondlanguage, thirdlanguage, propsold, this.fatherjob, this.motherjob, dadincome, momincome, this.prospectusno, this.academicyear, admissiontest, admissiontestdate, admissiontestenglish, admissiontestmaths, admissiontestevs, this.guardianname, this.guardiancountrycode + "-" + this.guardianmobile, this.guardianemail, this.guardiancompany, this.guardianjob, guardianoccup, guardianincome, this.textvalues, this.fatherotheroccupation, this.motherotheroccupation, this.guardianotheroccupation, enrolltype, country_name, this.rteno, checkList);
             }
           }
-
       },
       autocompletenames(nameitem){
       namearrs=nameitem;

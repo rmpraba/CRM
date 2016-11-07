@@ -610,12 +610,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </iron-ajax>
     <iron-ajax
       method="post"
-      id="discountenqajax"
-      url="{{discountenqurl}}"
-      params="{{discountenqparam}}"
+      id="discountdetenqajax"
+      url="{{discountdetenqurl}}"
+      params="{{discountdetenqparam}}"
       handle-as="json"
       content-type="application/json"
-      on-response="discountenqResponse"
+      on-response="discountdetenqResponse"
+      debounce-duration="300"
+    >
+    </iron-ajax>
+
+    <iron-ajax
+      method="post"
+      id="discountdetregenqajax"
+      url="{{discountdetregenqurl}}"
+      params="{{discountdetregenqparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="discountdetregenqResponse"
       debounce-duration="300"
     >
     </iron-ajax>
@@ -800,11 +812,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var result=e.detail.response.returnval;
         alert(JSON.stringify(result));
       },
-     updateenquiryform:function(enqno,firstname,middlename,lastname,gender,grade,dob,oldclass,oldschool,mothertongue,fathername,mothername,fatheredu,motheredu,fathermob,mothermob,fathermail,mothermail,fathercompany,mothercompany,fatherjob,motherjob,flat,address1,address2,address3,city,pincode,state,enquiysource,siblingname,siblingdetail,transportreq,canteenreq,secondlanguage,thirdlanguage,propspectus,dadpost,mompost,dadsalary,momsalary,prospect,admissiontest,admissiondate, admissiontestenglish, admissiontestmaths,admissiontestevs,guardianname,guardianmobile,guardianemail,guardiancompany,guardianjob,guardianoccup,guardianincome,location,fatherother,motherother,guardianother,country_name,rteno,rtevalue){
-
+     updateenquiryform:function(enqno,firstname,middlename,lastname,gender,grade,dob,oldclass,oldschool,mothertongue,fathername,mothername,fatheredu,motheredu,fathermob,mothermob,fathermail,mothermail,fathercompany,mothercompany,fatherjob,motherjob,flat,address1,address2,address3,city,pincode,state,enquiysource,siblingname,siblingdetail,transportreq,canteenreq,secondlanguage,thirdlanguage,propspectus,dadpost,mompost,dadsalary,momsalary,prospect,admissiontest,admissiondate, admissiontestenglish, admissiontestmaths,admissiontestevs,guardianname,guardianmobile,guardianemail,guardiancompany,guardianjob,guardianoccup,guardianincome,location,fatherother,motherother,guardianother,country_name,rteno,checkList){
+       discountArr =  checkList;
+       currentEnqno = enqno;
       //alert(enqno+firstname+middlename+lastname+gender+grade+dob+oldclass+oldschool+mothertongue+fathername+mothername+fatheredu+motheredu+fathermob+mothermob+fathermail+mothermail+fathercompany+mothercompany+fatherjob+motherjob+flat+address1+address2+address3+city+pincode+state+enquiysource+siblingname+siblingdetail+transportreq+canteenreq+secondlanguage+thirdlanguage+propspectus+dadpost+mompost+dadsalary+momsalary);
       this.updateenquiryurl="http://localhost:8086/updateenquiry";
-        var obj={"schol":"","enq":"","firstname":"","middlename":"","lastname":"","gender":"","grade":"","dob":"","oldclass":"","oldschool":"","mothertongue":"","fathername":"","mothername":"","fatheredu":"","motheredu":"","fathermob":"","mothermob":"","fathermail":"","mothermail":"","fathercompany":"","mothercompany":"","fatherjob":"","motherjobfn":"","flatno":"","address1":"","address2":"","address3":"","city":"","pincode":"","statename":"","enquiysource":"","siblingname":"","siblingdetails":"","transportreq":"","canteenreq":"","secondlanguage":"","thirdlanguage":"","modified":"","prospectstatus":"","daddesignation":"","momdesignation":"","dadincome":"","momincome":"","prospectusno":"","admissiontest1":"","admissiondate1":"",'admissiontestenglish1':"","admissiontestmaths1":"","admissiontestevs1":"","guardianname1":"","guardianmobile1":"","guardianemail1":"","guardiancompany1":"","guardianjob1":"","guardianoccup1":"","guardianincome1":"","location1":"","fatherother1":"","motherother1":"","guardianother1":"","country_name1":"","rteno":"","rtevalue":""}
+        var obj={"schol":"","enq":"","firstname":"","middlename":"","lastname":"","gender":"","grade":"","dob":"","oldclass":"","oldschool":"","mothertongue":"","fathername":"","mothername":"","fatheredu":"","motheredu":"","fathermob":"","mothermob":"","fathermail":"","mothermail":"","fathercompany":"","mothercompany":"","fatherjob":"","motherjobfn":"","flatno":"","address1":"","address2":"","address3":"","city":"","pincode":"","statename":"","enquiysource":"","siblingname":"","siblingdetails":"","transportreq":"","canteenreq":"","secondlanguage":"","thirdlanguage":"","modified":"","prospectstatus":"","daddesignation":"","momdesignation":"","dadincome":"","momincome":"","prospectusno":"","admissiontest1":"","admissiondate1":"",'admissiontestenglish1':"","admissiontestmaths1":"","admissiontestevs1":"","guardianname1":"","guardianmobile1":"","guardianemail1":"","guardiancompany1":"","guardianjob1":"","guardianoccup1":"","guardianincome1":"","location1":"","fatherother1":"","motherother1":"","guardianother1":"","country_name1":"","rteno":""}
         obj.schol=localStorage.getItem("schoolid");
         obj.enq=enqno;
         obj.firstname=firstname;
@@ -867,7 +880,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        obj.guardianother1=guardianother;
        obj.country_name1=country_name;
        obj.rteno=rteno;
-       obj.rtevalue=rtevalue;
         this.updateenquiryparam=obj;
         this.$.updateenquiryajax.generateRequest();
 
@@ -886,20 +898,43 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       var result=e.detail.response.returnval;
       // alert(result);
       if(result="success"){
-        alert("Submited Successfully");
-        document.querySelector('enquiry-card').ready();
-       // this.getenquirycount();
-        document.querySelector('detailed-enquiry-form').Fnclear();
+        alert(discountArr);
+        alert(currentEnqno);
+        if(discountArr.length > 0){
+          for(var i=0;i < discountArr.length;i++){
+            this.discountdetenqurl="http://localhost:8086/discountenq";
+            var obj={"enq":"","discountid":"","schol":""};
+            obj.enq=currentEnqno;
+            obj.discountid = discountArr[i];
+            obj.schol=localStorage.getItem("schoolid");
+            this.discountdetenqparam=obj;
+            alert(JSON.stringify(obj));
+            this.$.discountdetenqajax.generateRequest();
+          }
+        }
       }
      },
-
-      registerenquiryform:function(enqno,firstname,middlename,lastname,gender,grade,dob,oldclass,oldschool,mothertongue,fathername,mothername,fatheredu,motheredu,fathermob,mothermob,fathermail,mothermail,fathercompany,mothercompany,fatherjob,motherjob,flat,address1,address2,address3,city,pincode,state,enquiysource,siblingname,siblingdetail,transportreq,canteenreq,secondlanguage,thirdlanguage,propspectus,dadpost,mompost,dadsalary,momsalary,prospect, academicyear,admissiontest,admissiondate, admissiontestenglish, admissiontestmaths,admissiontestevs,guardianname,guardianmobile,guardianemail,guardiancompany,guardianjob,guardianoccup,guardianincome,location,fatherother,motherother,guardianother,enrolltype,country_name,rteno,rtevalue){
+      discountdetenqResponse:function(e){
+        var result=e.detail.response.returnval;
+        // alert(result);
+        if(result="success") {
+          alert("Submited Successfully");
+          document.querySelector('enquiry-card').ready();
+          // this.getenquirycount();
+          document.querySelector('detailed-enquiry-form').Fnclear();
+        } else {
+          alert("Form Submit Interrupted")
+        }
+      },
+      registerenquiryform:function(enqno,firstname,middlename,lastname,gender,grade,dob,oldclass,oldschool,mothertongue,fathername,mothername,fatheredu,motheredu,fathermob,mothermob,fathermail,mothermail,fathercompany,mothercompany,fatherjob,motherjob,flat,address1,address2,address3,city,pincode,state,enquiysource,siblingname,siblingdetail,transportreq,canteenreq,secondlanguage,thirdlanguage,propspectus,dadpost,mompost,dadsalary,momsalary,prospect, academicyear,admissiontest,admissiondate, admissiontestenglish, admissiontestmaths,admissiontestevs,guardianname,guardianmobile,guardianemail,guardiancompany,guardianjob,guardianoccup,guardianincome,location,fatherother,motherother,guardianother,enrolltype,country_name,rteno,checkList){
         enquirynjski=enqno;
          var generateid=Math.floor(100000 + Math.random() * 900000);
          var dat=new Date();
+        discountArr =  checkList;
+        currentEnqno = enqno;
         //alert(enqno+firstname+middlename+lastname+gender+grade+dob+oldclass+oldschool+mothertongue+fathername+mothername+fatheredu+motheredu+fathermob+mothermob+fathermail+mothermail+fathercompany+mothercompany+fatherjob+motherjob+flat+address1+address2+address3+city+pincode+state+enquiysource+siblingname+siblingdetail+transportreq+canteenreq+secondlanguage+thirdlanguage+propspectus+dadpost+mompost+dadsalary+momsalary);
         this.registerenquiryformurl="http://localhost:8086/registerenquiryform";
-        var obj={"schol":"","enq":"","firstname":"","middlename":"","lastname":"","gender":"","grade":"","dob":"","oldclass":"","oldschool":"","mothertongue":"","fathername":"","mothername":"","fatheredu":"","motheredu":"","fathermob":"","mothermob":"","fathermail":"","mothermail":"","fathercompany":"","mothercompany":"","fatherjob":"","motherjobfn":"","flatno":"","address1":"","address2":"","address3":"","city":"","pincode":"","statename":"","enquiysource":"","siblingname":"","siblingdetails":"","transportreq":"","canteenreq":"","secondlanguage":"","thirdlanguage":"","modified":"","prospectstatus":"","daddesignation":"","momdesignation":"","dadincome":"","momincome":"","prospectusno":"", "academicyear":"","givenname":"", "status":"","admissiontest":"","admissiondate":"",'admissiontestenglish':"","admissiontestmaths":"","admissiontestevs":"","guardianname":"","guardianmobile":"","guardianemail":"","guardiancompany":"","guardianjob":"","guardianoccup":"","guardianincome":"","location":"","fatherother":"","motherother":"","guardianother":"","enrolltype":"","country_name":"","rteno":"","rtevalue":""};
+        var obj={"schol":"","enq":"","firstname":"","middlename":"","lastname":"","gender":"","grade":"","dob":"","oldclass":"","oldschool":"","mothertongue":"","fathername":"","mothername":"","fatheredu":"","motheredu":"","fathermob":"","mothermob":"","fathermail":"","mothermail":"","fathercompany":"","mothercompany":"","fatherjob":"","motherjobfn":"","flatno":"","address1":"","address2":"","address3":"","city":"","pincode":"","statename":"","enquiysource":"","siblingname":"","siblingdetails":"","transportreq":"","canteenreq":"","secondlanguage":"","thirdlanguage":"","modified":"","prospectstatus":"","daddesignation":"","momdesignation":"","dadincome":"","momincome":"","prospectusno":"", "academicyear":"","givenname":"", "status":"","admissiontest":"","admissiondate":"",'admissiontestenglish':"","admissiontestmaths":"","admissiontestevs":"","guardianname":"","guardianmobile":"","guardianemail":"","guardiancompany":"","guardianjob":"","guardianoccup":"","guardianincome":"","location":"","fatherother":"","motherother":"","guardianother":"","enrolltype":"","country_name":""};
         obj.schol=localStorage.getItem("schoolid");
         obj.enq=enqno;
         obj.firstname=firstname;
@@ -965,8 +1000,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         obj.guardianother=guardianother;
         obj.enrolltype=enrolltype;
         obj.country_name=country_name;
-        obj.rteno=rteno;
-        obj.rtevalue=rtevalue;
         this.registerenquiryformparam=obj;
         this.$.registerenquiryformajax.generateRequest();
 
@@ -1012,14 +1045,37 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           this.$.updateprospectnoajax.generateRequest();
         }
       },
-      registerenquiryformResponse:function(e){
+      registerenquiryformResponse:function(e) {
+        var result = e.detail.response.returnval;
+        if (result = "success") {
+          alert(discountArr);
+          alert(currentEnqno);
+          if (discountArr.length > 0) {
+            for (var i = 0; i < discountArr.length; i++) {
+              this.discountdetregenqurl = "http://localhost:8086/discountenq";
+              var obj = {"enq": "", "discountid": "", "schol": ""};
+              obj.enq = currentEnqno;
+              obj.discountid = discountArr[i];
+              obj.schol = localStorage.getItem("schoolid");
+              this.discountdetregenqparam = obj;
+              alert(JSON.stringify(obj));
+              this.$.discountdetregenqajax.generateRequest();
+            }
+          }
+        }
+      },
+
+      discountdetregenqResponse:function(e){
         var result=e.detail.response.returnval;
-        if(result="success"){
+        // alert(result);
+        if(result="success") {
           alert("Submited Successfully for Enquiry ID:"+enquirynjski);
 
           document.querySelector('enquiry-card').ready();
           this.updateenquiryno();
           document.querySelector('detailed-enquiry-form').Fnclear();
+        } else {
+          alert("Form Submit Interrupted")
         }
       },
      getenquiryno:function(){
@@ -1796,6 +1852,7 @@ var dat=new Date();
         var res=e.detail.response.returnval;
         //alert(JSON.stringify(res));
         document.querySelector('newenquiry-card').discountarr=res;
+        document.querySelector('detailed-enquiry-form').discountarr=res;
       }
     });
   })();
