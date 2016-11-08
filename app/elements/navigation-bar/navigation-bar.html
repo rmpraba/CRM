@@ -260,6 +260,18 @@
           <li id="dashboard">
             <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
           </li>
+          <li id="reports">
+            <a href="" aria-hidden="true"><i class="fa fa-table fa-fw"></i>Report<span class="fa arrow"></span></a>
+            <ul class="nav nav-second-level">
+              <li>
+                <a href="" on-click="enquiry_analysis" aria-hidden="true">Enquiry Analysis</a>
+                <!-- <a href="flot.html"></a> -->
+              </li>
+              <li>
+                <a href="" on-click="enquiry_analysis" aria-hidden="true">Enquiry Analysis</a>
+              </li>
+            </ul>
+          </li>
           <li id="enquiry">
             <a href="" aria-hidden="true" on-click="enquiry"><i class="fa fa-phone-square fa-fw"></i> Enquiry<span class="fa arrow"></span></a>
             <ul class="nav nav-second-level">
@@ -759,6 +771,11 @@
         document.querySelector('detailed-enquiry-form').country();
         document.querySelector('app-list').setPage("enquiry");
 
+      },
+      enquiry_analysis:function(){
+        //this.$.service.getfollowupcount();
+        //document.querySelector('detailed-enquiry-form').country();
+        document.querySelector('app-list').setPage("enquiry-analysis","Enquiry Analysis");
       },
       FnAdmissionTest:function(){
         document.querySelector('admission-approval-card').FnRefresh();
