@@ -184,7 +184,7 @@
         on-response="fetchfeeResponse"
         debounce-duration="300"
         >
-        
+
 
             <!-- Component will insert student co curricular info-->
    <iron-ajax
@@ -360,7 +360,7 @@
     var result;
     Polymer({
       is: 'admission-service',
-      callSearchenquiryService:function(enquiryno){        
+      callSearchenquiryService:function(enquiryno){
         this.searchenquiryurl=sessionStorage.getItem("addrinfo")+"/searchenquiry";
         localStorage.setItem("curr_sess_insertflag",1);
         var obj={"enquiryno":"","schoolid":""};
@@ -373,7 +373,7 @@
       searchenquiryResponse:function(e){
         // alert(JSON.stringify(e.detail.response.returnval));
         if(e.detail.response.returnval=='no enquiry'||e.detail.response.returnval=='exist'){
-            this.callSearchexistingadmissionService();        
+            this.callSearchexistingadmissionService();
         }
         else{
             document.querySelector('admission-form').enquiryarr=e.detail.response.returnval;
@@ -381,7 +381,7 @@
             document.querySelector('fees-card').enquiryarr=e.detail.response.returnval;
         }
       },
-      callSearchexistingadmissionService:function(){  
+      callSearchexistingadmissionService:function(){
         this.searchexistingadmissionurl=sessionStorage.getItem("addrinfo")+"/searchexistingadmission";
         localStorage.setItem("curr_sess_insertflag",2);
         var obj={"admissionno":"","schoolid":""};
@@ -396,9 +396,9 @@
         var obj={"enquiry_no":"","enquiry_name":""};
         // alert(admnarr[0].enquiry_no);
         localStorage.setItem("curr_sess_admnenquiryno",admnarr[0].enquiry_no);
-        obj.enquiry_no=admnarr[0].admission_no; 
-        obj.enquiry_name=admnarr[0].student_name;  
-        arr.push(obj); 
+        obj.enquiry_no=admnarr[0].admission_no;
+        obj.enquiry_name=admnarr[0].student_name;
+        arr.push(obj);
         document.querySelector('admission-form').enquiryarr=arr;
         // document.querySelector('fees-card').enquiryarr=arr;
       },
@@ -493,7 +493,7 @@
         {
         document.querySelector('admission-form').enqenrlabel="Enquiry Number";
         document.querySelector('admission-form').enqenrno=arr[0].enquiry_no;
-        // localStorage.setItem("curr_sess_enquiryno",arr[0].enquiry_no);    
+        // localStorage.setItem("curr_sess_enquiryno",arr[0].enquiry_no);
         document.querySelector('admission-form').schoolname=localStorage.getItem("schoolname");
         document.querySelector('admission-form').applicationno=arr[0].prospect_application_no;
         document.querySelector('admission-form').enquiredyear=arr[0].academic_year;
@@ -503,11 +503,11 @@
         document.querySelector('admission-form').middlename=arr[0].middle_name;
         document.querySelector('admission-form').lastname=arr[0].last_name;
         document.querySelector('admission-form').gradeselection=arr[0].class_for_admission;
-       
+
         document.querySelector('admission-form').dob=arr[0].dob;
         document.querySelector('admission-form').FnFindAge(arr[0].dob);
         document.querySelector('admission-form').FnSetGender(arr[0].gender);
-        
+
         document.querySelector('admission-form').fathername=arr[0].father_name;
         document.querySelector('admission-form').mothername=arr[0].mother_name;
         document.querySelector('admission-form').FnSetTransport(arr[0].transport_availed);
@@ -515,7 +515,7 @@
         document.querySelector('admission-form').FnSetDisabled(arr[0].disabled_student);
         document.querySelector('admission-form').FnSetAcheivement(arr[0].academic_acheivement);
         // document.querySelector('admission-form').FnShowDisable(arr[0].disabled_student);
-        // document.querySelector('admission-form').FnShowAcheivement(arr[0].academic_acheivement);        
+        // document.querySelector('admission-form').FnShowAcheivement(arr[0].academic_acheivement);
 
         // document.querySelector('admission-form').mothername=arr[0].mother_name;
 
@@ -608,7 +608,7 @@
 
         document.querySelector('admission-form').FnSetCaste(arr[0].caste);
         document.querySelector('admission-form').relegion=arr[0].religion;
-               
+
         }
       },
        fetchexistingadmissioncoinfoService:function(){
@@ -628,17 +628,17 @@
         else
         {
         document.querySelector('admission-form').field1=arr[0].field1;
-        document.querySelector('admission-form').year1=arr[0].year1;    
+        document.querySelector('admission-form').year1=arr[0].year1;
         document.querySelector('admission-form').event1=arr[0].event1;
         document.querySelector('admission-form').prizedetail1=arr[0].prize1;
         document.querySelector('admission-form').field2=arr[0].field2;
-        document.querySelector('admission-form').year2=arr[0].year2;    
+        document.querySelector('admission-form').year2=arr[0].year2;
         document.querySelector('admission-form').event2=arr[0].event2;
         document.querySelector('admission-form').prizedetail2=arr[0].prize2;
         document.querySelector('admission-form').field3=arr[0].field3;
-        document.querySelector('admission-form').year3=arr[0].year3;    
+        document.querySelector('admission-form').year3=arr[0].year3;
         document.querySelector('admission-form').event3=arr[0].event3;
-        document.querySelector('admission-form').prizedetail3=arr[0].prize3;      
+        document.querySelector('admission-form').prizedetail3=arr[0].prize3;
         }
       },
        fetchexistingadmissionphysicinfoService:function(){
@@ -658,7 +658,7 @@
         else
         {
         document.querySelector('admission-form').physicdetail=arr[0].physic_detail;
-        document.querySelector('admission-form').physicstatus=arr[0].physic_status;    
+        document.querySelector('admission-form').physicstatus=arr[0].physic_status;
         document.querySelector('admission-form').mentaldetail=arr[0].mental_detail;
         document.querySelector('admission-form').mentalstatus=arr[0].mental_status;
         document.querySelector('admission-form').illnessdetail=arr[0].illness_detail;
@@ -667,7 +667,7 @@
         document.querySelector('admission-form').allergystatus=arr[0].allergy_status;
         document.querySelector('admission-form').chronicdetail=arr[0].chronic_detail;
         document.querySelector('admission-form').chronicstatus=arr[0].chronic_status;
-      
+
         }
       },
        fetchexistingadmissionhistoryinfoService:function(){
@@ -687,8 +687,8 @@
         else
         {
         document.querySelector('admission-form').prevschoolname=arr[0].school_name;
-        document.querySelector('admission-form').selectedfromgrade=arr[0].from_grade; 
-        document.querySelector('admission-form').FnSetFromGrade(arr[0].from_grade);  
+        document.querySelector('admission-form').selectedfromgrade=arr[0].from_grade;
+        document.querySelector('admission-form').FnSetFromGrade(arr[0].from_grade);
         document.querySelector('admission-form').selectedtograde=arr[0].to_grade;
         document.querySelector('admission-form').FnSetToGrade(arr[0].to_grade);
         document.querySelector('admission-form').selectedboard=arr[0].board;
@@ -703,7 +703,7 @@
       callInsertAdmissionService:function(enquiryno,enquiryname,applicationno,schoolname,enquiredyear,admissionyear,firstname,middlename,lastname,gradeselection,secondlanguage,thirdlanguage,dob,age,gender,flatno,bulidingname,street,city,town,state,pincode,height,weight,FnBlood,relegions,relegion,nationality,mothertongue,siblingname,siblingclass,prevschoolname,fromgrade,tograde,FnBo,yearfrom,yearto,medium,lastclassmark,reasonforleaving,handler,physicdetail,physicstatus,mentaldetail,mentalstatus,illnessdetail,illnessstatus,allergydetail,allergystatus,chronicdetail,chronicstatus,acheivehandler,fathername,mothername,fatherqualification,motherqualification,fatheroccupation,motheroccupation,fatherincome,motherincome,fathertelno,mothertelno,fathermobile,mothermobile,fatheremail,motheremail,fatherdob,motherdob,pflatno,pbuildingname,pstreet,pdistrict,ptown,pstate,ppincode,guardianname1,guardianname2,relationship1,relationship2,gflatno,gbuildingname,gstreet,gcity,gtown,gstate,gpincode,gresidentialcontact,gofficecontact,gmobileno,gfax,admissiontransport,admissioncanteen,field1,year1,event1,prizedetail1,field2,year2,event2,prizedetail2,field3,year3,event3,prizedetail3){
 
         this.studentphysicalurl=sessionStorage.getItem("addrinfo")+"/studentphysical_service";
-        
+
         var obj={"enquiryno":"","applicationno":"","schoolid":"","schoolname":"","admissionyear":"","firstname":"","middlename":"","lastname":"","studentname":"","gradeselection":"","admissiondob":"","admissiongender":"","admissiondisabled":"","createdby":"","physicdetail":"","physicstatus":"","mentaldetail":"","mentalstatus":"","illnessdetail":"","illnessstatus":"","allergydetail":"","allergystatus":"","chronicdetail":"","chronicstatus":""}
         obj.enquiryno=enquiryno;
         obj.applicationno=applicationno;
@@ -724,14 +724,14 @@
         obj.allergystatus=allergystatus;
         obj.chronicdetail=chronicdetail;
         obj.chronicstatus=chronicstatus;
-        obj.createdby=localStorage.getItem("employeeid");  
-        this.studentphysicalparam=obj; 
+        obj.createdby=localStorage.getItem("employeeid");
+        this.studentphysicalparam=obj;
         // alert(handler);
         if(handler=="yes")
         this.$.studentphysicalajax.generateRequest();
-        
+
         this.studentfulldetailsurl=sessionStorage.getItem("addrinfo")+"/studentfulldetails_service";
-          
+
            var obj={"enquiryno":"","applicationno":"","schoolid":"","schoolname":"","admissionyear":"","firstname":"","middlename":"","lastname":"","studentname":"","gradeselection":"","admissiondob":"","admissiongender":"","admissioncanteen":"","admissiontransport":"","createdby":"","fathername":"","mothername":"","flatno":"","bulidingname":"","street":"","town":"","city":"","state":"","pincode":"","height":"","weight":"","nationality":"","mothertongue":"","siblingname":"","siblingclass":"","fatherdob":"","motherdob":"","fatherqualification":"","motherqualification":"","fatheroccupation":"","motheroccupation":"","fatherincome":"","motherincome":"","fathertelno":"","mothertelno":"","fathermobile":"","mothermobile":"","fatheremail":"","motheremail":"","ptown":"","pdistrict":"","pstate":"","ppincode":"","relationship1":"","guardianname1":"","relationship2":"","guardianname2":"","guardianname":"","gbuildingname":"","gstreet":"","gtown":"","gcity":"","gstate":"","gpincode":"","gresidentialcontact":"","gofficecontact":"","gmobileno":"","gfax":"","FnBlood":""}
         obj.enquiryno=enquiryno;
         obj.applicationno=applicationno;
@@ -800,7 +800,7 @@
         obj.gmobileno=gmobileno;
         obj.religion=relegion;
         obj.caste=relegions;
-        obj.createdby=localStorage.getItem("employeeid"); 
+        obj.createdby=localStorage.getItem("employeeid");
         this.studentfulldetailsparam=obj;
         this.$.studentfulldetailsajax.generateRequest();
 
@@ -832,7 +832,7 @@
         obj.year3=year3;
         obj.event3=event3;
         obj.prizedetail3=prizedetail3;
-        obj.createdby=localStorage.getItem("employeeid"); 
+        obj.createdby=localStorage.getItem("employeeid");
         this.studentcocurricularparam=obj;
         // alert(acheivehandler);
         if(acheivehandler=="yes")
@@ -862,13 +862,13 @@
         obj.lastclassmark=lastclassmark;
         obj.reasonforleaving=reasonforleaving;
         obj.board=FnBo;
-        obj.createdby=localStorage.getItem("employeeid"); 
+        obj.createdby=localStorage.getItem("employeeid");
         this.insertstudenthistoryparam=obj;
         this.$.insertstudenthistoryajax.generateRequest();
      }
 
       this.insertadmissionurl=sessionStorage.getItem("addrinfo")+"/insertadmission";
-        
+
         var obj={"enquiryno":"","applicationno":"","schoolid":"","schoolname":"","admissionyear":"","academicyear":"","firstname":"","middlename":"","lastname":"","studentname":"","gradeselection":"","admissiondob":"","admissiongender":"","fathername":"","mothername":"","admissiondisabled":"","admissioncanteen":"","admissiontransport":"","createdby":""}
         obj.enquiryno=enquiryno;
         obj.applicationno=applicationno;
@@ -889,7 +889,7 @@
         obj.acheivehandler=acheivehandler;
         obj.admissioncanteen=admissioncanteen;
         obj.admissiontransport=admissiontransport;
-        obj.createdby=localStorage.getItem("employeeid");    
+        obj.createdby=localStorage.getItem("employeeid");
         this.insertadmissionparam=obj;
         this.$.insertadmissionajax.generateRequest();
 
@@ -913,51 +913,51 @@ alert("history"+e.detail.response.returnval);
         if(e.detail.response.returnval!='admissionfail')
         // this.callfetchadmissioncountService();
         document.querySelector('enquiry-card').ready();
-      },     
+      },
       callfetchfeesService:function(academicyear,admissionyear,grade){
         this.fetchfeesurl=sessionStorage.getItem("addrinfo")+"/fetchfees";
-        var obj={"schoolid":"","academicyear":"","admissionyear":"","grade":""}        
-        obj.admissionyear=admissionyear; 
-        obj.academicyear=academicyear; 
-        obj.grade=grade; 
-        obj.schoolid=localStorage.getItem("schoolid");     
-        this.fetchfeesparam=obj;       
+        var obj={"schoolid":"","academicyear":"","admissionyear":"","grade":""}
+        obj.admissionyear=admissionyear;
+        obj.academicyear=academicyear;
+        obj.grade=grade;
+        obj.schoolid=localStorage.getItem("schoolid");
+        this.fetchfeesparam=obj;
         this.$.fetchfeesajax.generateRequest();
       },
-      fetchfeesResponse:function(e){        
-        var arr=e.detail.response.returnval;        
+      fetchfeesResponse:function(e){
+        var arr=e.detail.response.returnval;
         if(arr.length>0){
-            localStorage.setItem("curr_sess_feecode",arr[0].fee_code); 
+            localStorage.setItem("curr_sess_feecode",arr[0].fee_code);
             document.querySelector('fees-card').totalfees=arr[0].fees;
             // this.fetchfeesplitup();
-        }           
+        }
       },
       fetchfeesplitup:function(academic_year,admission_year,grade){
         this.fetchfeesplitupurl=sessionStorage.getItem("addrinfo")+"/fetchfeesplitup";
-        var obj={"schoolid":"","academicyear":"","admissionyear":"","grade":""}        
-        obj.admissionyear=admission_year; 
-        obj.academicyear=academic_year; 
-        obj.grade=grade; 
-        obj.schoolid=localStorage.getItem("schoolid");    
-        this.fetchfeesplitupparam=obj;       
+        var obj={"schoolid":"","academicyear":"","admissionyear":"","grade":""}
+        obj.admissionyear=admission_year;
+        obj.academicyear=academic_year;
+        obj.grade=grade;
+        obj.schoolid=localStorage.getItem("schoolid");
+        this.fetchfeesplitupparam=obj;
         this.$.fetchfeesplitupajax.generateRequest();
       },
       fetchfeesplitupResponse:function(e){
-        var arr=e.detail.response.returnval;   
-        document.querySelector('fees-card').feearr=arr; 
-        document.querySelector('fees-card').FnHiddenPayment(); 
-        // alert(JSON.stringify(arr));             
+        var arr=e.detail.response.returnval;
+        document.querySelector('fees-card').feearr=arr;
+        document.querySelector('fees-card').FnHiddenPayment();
+        // alert(JSON.stringify(arr));
         // document.querySelector('fees-card').fees=arr[0].total_fee;
         // localStorage.setItem("curr_sess_fee",arr[0].total_fee);
-        // this.callfetchnoofinstallmentService();    
+        // this.callfetchnoofinstallmentService();
       },
       callfetchnoofinstallmentService:function(){
         this.fetchnoofinstallmenturl=sessionStorage.getItem("addrinfo")+"/fetchnoofinstallment";
-        var obj={"schoolid":"","feecode":"","feetype":""}         
+        var obj={"schoolid":"","feecode":"","feetype":""}
         obj.feecode=localStorage.getItem("curr_sess_feecode");
-        obj.schoolid=localStorage.getItem("schoolid");  
-        obj.feetype=localStorage.getItem("curr_sess_feetype");       
-        this.fetchnoofinstallmentparam=obj;       
+        obj.schoolid=localStorage.getItem("schoolid");
+        obj.feetype=localStorage.getItem("curr_sess_feetype");
+        this.fetchnoofinstallmentparam=obj;
 
         var arr=e.detail.response.returnval;
         if(localStorage.getItem("curr_sess_feetype")=="pros_fee"){
@@ -1031,9 +1031,9 @@ alert("history"+e.detail.response.returnval);
         var admnarr=e.detail.response.returnval;
         var arr=[];
         var obj={"enquiry_no":"","enquiry_name":""};
-        obj.enquiry_no=admnarr[0].admission_no; 
-        obj.enquiry_name=admnarr[0].student_name;  
-        arr.push(obj); 
+        obj.enquiry_no=admnarr[0].admission_no;
+        obj.enquiry_name=admnarr[0].student_name;
+        arr.push(obj);
         document.querySelector('fees-card').enquiryarr=arr;
       },
       searchfeeadmissioninfoService:function(admissionno){
@@ -1055,111 +1055,9 @@ alert("history"+e.detail.response.returnval);
         document.querySelector('fees-card').dob=arr[0].dob;
         this.callfetchfeesService(arr[0].academic_year,arr[0].admission_year,arr[0].class_for_admission);
         this.fetchfeesplitup(arr[0].academic_year,arr[0].admission_year,arr[0].class_for_admission);
-        
-        }
-
-<<<<<<< HEAD
 
         }
-        document.querySelector('fees-card').feearr=feeinstallmentarr;
-        document.querySelector('fees-card').FnHiddenPayment();
-      },
-      FnRefresh:function(){
-        localStorage.setItem("curr_sess_enquiryno","");
-        localStorage.setItem("curr_sess_admissionno","");
-        localStorage.setItem("curr_sess_academicyear","");
-        localStorage.setItem("curr_sess_grade","");
-        localStorage.setItem("curr_sess_studentname","");
-      },
-      callfetchadmissioncountService:function(){
-        this.getadmissioncounturl=sessionStorage.getItem("addrinfo")+"/getadmissioncount";
-        var obj={"schol":"","status":""}
-        obj.schol=localStorage.getItem("schoolid");
-        obj.status="Admitted";
-        this.getadmissioncountparam=obj;
-        this.$.getadmissioncountajax.generateRequest();
-     },
-     getadmissioncountResponse:function(e){
-        var result=e.detail.response.returnval;
-        document.querySelector('enquiry-card').gradewiseadmissionarr=result;
-     },
-     callFetchadmissiontestinfo:function(enquiryno){
-       this.fetchadmissiontestinfourl=sessionStorage.getItem("addrinfo")+"/fetchadmissiontestinfo";
-        var obj={"schoolid":"","enquiryno":""}
-        obj.schoolid=localStorage.getItem("schoolid");
-        obj.enquiryno=enquiryno;
-        this.fetchadmissiontestinfoparam=obj;
-        this.$.fetchadmissiontestinfoajax.generateRequest(); 
-     },
-     fetchadmissiontestinfoResponse:function(e){
-        var engstatus, mathsstatus, evsstatus;
-        // alert(e.detail.response.returnval);
-        var arr=e.detail.response.returnval;
-        document.querySelector('admission-approval-card').enquiryno=arr[0].enquiry_no;
-        document.querySelector('admission-approval-card').studentname=arr[0].enquiry_name;
-        document.querySelector('admission-approval-card').grade=arr[0].class;
-        document.querySelector('admission-approval-card').enqdate=arr[0].created_on;
-        document.querySelector('admission-approval-card').testdate=arr[0].test_date;
-        document.querySelector('admission-approval-card').englishmark=arr[0].english_mark;
-        document.querySelector('admission-approval-card').mathsmark=arr[0].maths_mark;
-        document.querySelector('admission-approval-card').evsmark=arr[0].evs_mark;
-
-        if(arr[0].english_status=="Yes"){
-            engstatus=false;
-        }
-        else{
-            engstatus=true;   
-        }
-        if(arr[0].maths_status=="Yes"){
-            mathsstatus=false;
-        }
-        else{
-            mathsstatus=true;
-        }
-        if(arr[0].evs_status=="Yes"){
-            evsstatus=false;
-        }
-        else{
-            evsstatus=true;   
-        }
-        document.querySelector('admission-approval-card').check(engstatus,mathsstatus,evsstatus,arr[0].result_status);
-     },
-     Updateteststatus:function(enqid,teststatus,englishmark,mathsmark,evsmark){
-        enqno=enqid;
-        result=teststatus;
-        this.updatetestdetailsurl=sessionStorage.getItem("addrinfo")+"/updatetestdetails";
-        var obj={"schoolid":"","enquiryno":"","status":"","english":"","maths":"","evs":""}
-        obj.schoolid=localStorage.getItem("schoolid");
-        obj.enquiryno=enqid;
-        obj.status=teststatus;
-        obj.english=englishmark;
-        obj.maths=mathsmark;
-        obj.evs=evsmark;
-        obj.evaluatedby=localStorage.getItem("employeeid");
-        obj.evaluatedon=sessionStorage.getItem("todaydate");
-        this.updatetestdetailsparam=obj;
-        this.$.updatetestdetailsajax.generateRequest(); 
-     },
-     updatetestdetailsResponse:function(e){
-        if(e.detail.response.returnval=='success'){
-            this.updateteststatusurl=sessionStorage.getItem("addrinfo")+"/updateteststatus";
-        var obj={"schoolid":"","enquiryno":"","status":""}
-        obj.schoolid=localStorage.getItem("schoolid");
-        obj.enquiryno=enqno;
-        obj.status=result;
-        this.updateteststatusparam=obj;
-        this.$.updateteststatusajax.generateRequest(); 
-        }
-        else{
-            alert('Interrupted..!');
-        }
-     },
-     updateteststatusResponse:function(e){
-        alert(e.detail.response.returnval);
-=======
->>>>>>> ff459cd07f3ae8d91f88ef390cd3b43503a66457
      }
-
     });
   })();
   </script>
