@@ -355,13 +355,15 @@
         alert(e.detail.response.returnval);
         // alert(JSON.stringify(e.detail.response.returnval));
       },
-      setDiscountInfo:function(schoolname,grade,admissionyear,academicyear,discounttype,feetype,fromdate,todate,amount){
+      setDiscountInfo:function(schoolname,grade,admissionyear,academicyear,discounttypecode,discounttype,feetype,fromdate,todate,amount,admissiontype){
         this.schoolname=schoolname;
         this.grade=grade;
         this.admissionyear=admissionyear;
         this.academicyear=academicyear;
         this.feetype=feetype;
+        this.discounttypecode=discounttypecode;
         this.discounttype=discounttype;
+        this.admissiontype=admissiontype;
         this.fromdate=fromdate;
         this.todate=todate;
         this.amount=amount;
@@ -376,7 +378,9 @@
         obj.academicyear=this.academicyear;
         obj.feecode=this.feecode;        
         obj.feetype=this.feetype;
+        obj.discounttypecode=this.discounttypecode;
         obj.discounttype=this.discounttype;
+        obj.admissiontype=this.admissiontype;
         obj.amount=this.amount;
         obj.prefixid=2;
         obj.fromdate=this.fromdate;
@@ -408,7 +412,9 @@
         obj.academicyear=this.academicyear;        
         obj.discountcode=this.discountcode;
         obj.feetype=this.feetype;
+        obj.discounttypecode=this.discounttypecode;
         obj.discounttype=this.discounttype;
+        obj.admissiontype=this.admissiontype;
         obj.amount=this.amount;
         obj.fromdate=this.fromdate;
         obj.todate=this.todate;
@@ -420,12 +426,15 @@
         alert(e.detail.response.returnval);
         // alert(JSON.stringify(e.detail.response.returnval));
       },
-      setInstallmentFeecomponent:function(schoolname,grade,admissionyear,academicyear,noofinstallment,installmentarr,installmentsubarr){
+      setInstallmentFeecomponent:function(schoolname,grade,admissionyear,academicyear,noofinstallment,discountcode,discounttype,installmentarr,installmentsubarr,admissiontype){
         this.schoolname=schoolname;
         this.grade=grade;
         this.admissionyear=admissionyear;
         this.academicyear=academicyear;
         this.noofinstallment=noofinstallment;
+        this.discountcode=discountcode;
+        this.discounttype=discounttype;
+        this.admissiontype=admissiontype;
         this.installmentarr=installmentarr;
         this.installmentsubarr=installmentsubarr;
         this.generateinstallmentcodeService();
@@ -437,7 +446,10 @@
         obj.schoolname=this.schoolname;
         obj.grade=this.grade;
         obj.admissionyear=this.admissionyear;
-        obj.academicyear=this.academicyear;   
+        obj.academicyear=this.academicyear;
+        obj.discountcode=this.discountcode;
+        obj.discounttype=this.discounttype;
+        obj.admisssiontype=this.admissiontype;   
         obj.prefixid=3;
         obj.createdby=localStorage.getItem("employeeid");
         this.generateinstallmentcodeparam=obj;
@@ -457,12 +469,15 @@
         obj.schoolname=this.schoolname;
         obj.grade=this.grade;
         obj.admissionyear=this.admissionyear;
-        obj.academicyear=this.academicyear;        
+        obj.academicyear=this.academicyear; 
+        obj.discountcode=this.discountcode;
+        obj.discounttype=this.discounttype; 
+        obj.admisssiontype=this.admissiontype;        
         obj.installmentcode=this.installmentcode;
         obj.noofinstallment=this.noofinstallment;
         obj.createdby=localStorage.getItem("employeeid");
         count1=(this.installmentarr).length;      
-        alert((this.installmentarr).length); 
+        // alert((this.installmentarr).length); 
         alert(JSON.stringify(this.installmentarr)); 
         for(var i=0;i<(this.installmentarr).length;i++){
           obj.installment=this.installmentarr[i].installment;
@@ -499,6 +514,8 @@
         obj.academicyear=this.academicyear;        
         obj.installmentcode=this.installmentcode;
         obj.noofinstallment=this.noofinstallment;
+        obj.discountcode=this.discountcode;
+        obj.discounttype=this.discounttype;
         obj.createdby=localStorage.getItem("employeeid");
         count1=(this.installmentsubarr).length;
         for(var i=0;i<(this.installmentsubarr).length;i++){

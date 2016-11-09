@@ -377,7 +377,7 @@ app.post('/generatediscountcode-service',  urlencodedParser,function (req, res){
     var prefixid=req.query.prefixid;
     var response={"prefixname":""};
     var qur="SELECT * FROM md_discount_master WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' "+
-    " and admission_year='"+req.query.admissionyear+"' and grade='"+req.query.grade+"' ";
+    " and admission_year='"+req.query.admissionyear+"' and grade='"+req.query.grade+"' and discount_type_code='"+req.query.discounttypecode+"' and admission_type='"+req.query.admissiontype+"'";
     console.log(qur);
     connection.query(qur,function(err, rows){
     if(rows.length==0){
@@ -436,7 +436,9 @@ app.post('/creatediscountcode-service',  urlencodedParser,function (req, res){
       grade:req.query.grade,
       discount_code:req.query.discountcode,
       fee_type:req.query.feetype,
+      discount_type_code:req.query.discounttypecode,
       discount_type:req.query.discounttype,
+      admission_type:req.query.admissiontype,
       from_date:req.query.fromdate,
       to_date:req.query.todate,
       created_by:req.query.createdby,
@@ -446,12 +448,12 @@ app.post('/creatediscountcode-service',  urlencodedParser,function (req, res){
     console.log(response);
 
     var qur="SELECT * FROM md_discount_master WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' "+
-    " and admission_year='"+req.query.admissionyear+"' and grade='"+req.query.grade+"' and discount_type='"+req.query.discounttype+"' "+
-    " and fee_type='"+req.query.feetype+"' and from_date='"+req.query.fromdate+"' and to_date='"+req.query.todate+"'";
+    " and admission_year='"+req.query.admissionyear+"' and grade='"+req.query.grade+"' and discount_type_code='"+req.query.discounttypecode+"' and discount_type='"+req.query.discounttype+"' "+
+    " and admission_type='"+req.query.admissiontype+"' and fee_type='"+req.query.feetype+"' and from_date='"+req.query.fromdate+"' and to_date='"+req.query.todate+"'";
 
     var updatequr="UPDATE md_discount_master SET amount='"+req.query.amount+"' WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' "+
-    " and admission_year='"+req.query.admissionyear+"' and grade='"+req.query.grade+"' and discount_type='"+req.query.discounttype+"' "+
-    " and fee_type='"+req.query.feetype+"' and from_date='"+req.query.fromdate+"' and to_date='"+req.query.todate+"'";
+    " and admission_year='"+req.query.admissionyear+"' and grade='"+req.query.grade+"' and discount_type_code='"+req.query.discounttypecode+"' and discount_type='"+req.query.discounttype+"' "+
+    " and admission_type='"+req.query.admissiontype+"' and fee_type='"+req.query.feetype+"' and from_date='"+req.query.fromdate+"' and to_date='"+req.query.todate+"'";
 
     connection.query(qur,function(err, rows){
       if(!err){
@@ -489,7 +491,7 @@ app.post('/generateinstallmentcode-service',  urlencodedParser,function (req, re
     var prefixid=req.query.prefixid;
     var response={"prefixname":""};
     var qur="SELECT * FROM installment_schedule_master WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' "+
-    " and admission_year='"+req.query.admissionyear+"' and grade='"+req.query.grade+"' ";
+    " and admission_year='"+req.query.admissionyear+"' and grade='"+req.query.grade+"' and discount_type_code='"+req.query.discountcode+"' and admission_type='"+req.query.admissiontype+"'";
     connection.query(qur,function(err, rows){
     if(rows.length==0){
     connection.query("SELECT * FROM prefix_master WHERE prefix_id='"+prefixid+"'",function(err, rows)
@@ -551,8 +553,11 @@ app.post('/createinstallment-service',  urlencodedParser,function (req, res){
       installment_type:req.query.installmenttype,
       total_amount:req.query.actualamount,
       discount:req.query.discount,
+      discount_type_code:req.query.discountcode,
+      discount_type_name:req.query.discounttype,
       payable_amount:req.query.payableamount,
       installment_date:req.query.installmentdate,
+      admission_type:req.query.admissiontype,
       created_by:req.query.createdby
     };
 
@@ -583,7 +588,10 @@ app.post('/createinstallmentsplitup-service',  urlencodedParser,function (req, r
       fee_type:req.query.feetype,
       total_amount:req.query.actualamount,
       discount:req.query.discount,
+      discount_type_code:req.query.discountcode,
+      discount_type_name:req.query.discountname,
       payable_amount:req.query.payableamount,
+      admission_type:req.query.admissiontype,
       // installment_date:req.query.installmentdate,
       created_by:req.query.createdby
     };
@@ -652,7 +660,9 @@ app.post('/fetchinstallmentdiscountcode-service',  urlencodedParser,function (re
       grade:req.query.grade,
       fee_type:req.query.feetype
     };
-    var qur="SELECT * FROM md_discount_master WHERE school_id='"+req.query.schoolid+"' AND academic_year='"+req.query.academicyear+"' AND admission_year='"+req.query.admissionyear+"' AND fee_type='"+req.query.feetype+"'";
+    var qur="SELECT * FROM md_discount_master WHERE school_id='"+req.query.schoolid+"' AND academic_year='"+req.query.academicyear+"' AND admission_year='"+req.query.admissionyear+"' AND fee_type='"+req.query.feetype+"' AND discount_type_code='"+req.query.discountcode+"' AND admission_type='"+req.query.admissiontype+"'";
+    console.log(qur);
+
     connection.query(qur,function(err, rows){
       if(!err)
       res.status(200).json({'returnval': rows});
@@ -1844,6 +1854,31 @@ app.post('/fetchnoofinstallment',  urlencodedParser,function (req, res){
 });
 
 
+// Fetching fees installment names
+app.post('/fetchinstallmentseperation',  urlencodedParser,function (req, res){
+    var qur="SELECT * FROM installment_splitup WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and admission_year='"+req.query.admissionyear+"' and grade='"+req.query.grade+"'";
+    console.log(qur);
+    connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': ''});
+    }
+  }
+  else{
+     console.log(err);
+  }
+});
+});
+
 
 // Fetching fees splitup
 app.post('/insertcashfees',  urlencodedParser,function (req, res){
@@ -1856,7 +1891,7 @@ app.post('/insertcashfees',  urlencodedParser,function (req, res){
         enquiry_no:req.query.enquiryno,
         admission_no:req.query.admissionno,
         student_name:req.query.studentname,
-        grade:req.query.garde,
+        grade:req.query.grade,
         fee_type:req.query.feetype,
         fee_code:req.query.feecode,
         installment_type:req.query.installmenttype,
@@ -1871,12 +1906,37 @@ app.post('/insertcashfees',  urlencodedParser,function (req, res){
         created_by:req.query.createdby,
         receipt_no:""
     };
+
+    var response1={
+        school_id:req.query.schoolid,
+        academic_year:req.query.academicyear,
+        enquiry_no:req.query.enquiryno,
+        admission_no:req.query.admissionno,
+        student_name:req.query.studentname,
+        grade:req.query.grade,
+        // fee_type:req.query.feetype,
+        fee_code:req.query.feecode,
+        discount_code:req.query.discountcode,
+        installment:req.query.installment,
+        mode_of_payment:req.query.modeofpayment,        
+        installment_amount:req.query.installmentamount,
+        received_date:req.query.paiddate,
+        paid_date:req.query.paiddate,
+        paid_status:req.query.paidstatus,
+        created_by:req.query.createdby,
+        receipt_no:""
+    };
+
+
+    var masterinsert="INSERT INTO md_student_paidfee SET ?";
+
     connection.query("SELECT * FROM receipt_sequence",function(err, rows){
     response.receipt_no="REC-"+response.academic_year+"-"+rows[0].receipt_seq;
     var new_receipt_no=parseInt(rows[0].receipt_seq)+1;
+    connection.query(masterinsert,[response1],function(err, rows){
+    if(!err){
     connection.query(qur,[response],
-    function(err, rows)
-    {
+    function(err, rows){
     if(!err)
     {
       connection.query("UPDATE receipt_sequence SET receipt_seq='"+new_receipt_no+"'",function(err, result){
@@ -1892,6 +1952,10 @@ app.post('/insertcashfees',  urlencodedParser,function (req, res){
       console.log(err);
       res.status(200).json({'returnval': 'Fee not paid'});
     }
+    });
+    }
+    else
+    console.log(err);
     });
     });
 });
@@ -1929,12 +1993,35 @@ app.post('/insertchequefees',  urlencodedParser,function (req, res){
         cheque_date:req.query.chequedate,
         ack_no:""
     };
+
+    var response1={
+        school_id:req.query.schoolid,
+        academic_year:req.query.academicyear,
+        enquiry_no:req.query.enquiryno,
+        admission_no:req.query.admissionno,
+        student_name:req.query.studentname,
+        grade:req.query.grade,
+        // fee_type:req.query.feetype,
+        fee_code:req.query.feecode,
+        discount_code:req.query.discountcode,
+        installment:req.query.installment,
+        mode_of_payment:req.query.modeofpayment,        
+        installment_amount:req.query.installmentamount,
+        received_date:req.query.receiveddate,
+        paid_date:req.query.receiveddate,
+        paid_status:req.query.paidstatus,
+        created_by:req.query.createdby,
+        receipt_no:""
+    };
+
+    var masterinsert="INSERT INTO md_student_paidfee SET ?";
+
     connection.query("SELECT * FROM receipt_sequence",function(err, rows){
     response.ack_no="ACK-"+response.academic_year+"-"+rows[0].acknowledge_seq;
     var new_ack_no=parseInt(rows[0].acknowledge_seq)+1;
-    connection.query(qur,[response],
-    function(err, rows)
-    {
+    connection.query(masterinsert,[response1],function(err, rows){
+      if(!err){
+    connection.query(qur,[response],function(err, rows){
     if(!err)
     {
       connection.query("UPDATE receipt_sequence SET acknowledge_seq='"+new_ack_no+"'",function(err, result){
@@ -1950,6 +2037,10 @@ app.post('/insertchequefees',  urlencodedParser,function (req, res){
       res.status(200).json({'returnval': 'Fee not paid'});
     }
     });
+    }
+    else
+    console.log(err);
+    });
   });
 });
 
@@ -1964,7 +2055,7 @@ app.post('/inserttransferfees',  urlencodedParser,function (req, res){
         enquiry_no:req.query.enquiryno,
         admission_no:req.query.admissionno,
         student_name:req.query.studentname,
-        grade:req.query.garde,
+        grade:req.query.grade,
         fee_type:req.query.feetype,
         fee_code:req.query.feecode,
         installment_type:req.query.installmenttype,
@@ -1983,12 +2074,38 @@ app.post('/inserttransferfees',  urlencodedParser,function (req, res){
         "receipt_no":""
 
     };
+
+
+
+    var response1={
+        school_id:req.query.schoolid,
+        academic_year:req.query.academicyear,
+        enquiry_no:req.query.enquiryno,
+        admission_no:req.query.admissionno,
+        student_name:req.query.studentname,
+        grade:req.query.grade,
+        // fee_type:req.query.feetype,
+        fee_code:req.query.feecode,
+        discount_code:req.query.discountcode,
+        installment:req.query.installment,
+        mode_of_payment:req.query.modeofpayment,        
+        installment_amount:req.query.installmentamount,
+        received_date:req.query.receiveddate,
+        paid_date:req.query.receiveddate,
+        paid_status:req.query.paidstatus,
+        created_by:req.query.createdby,
+        receipt_no:""
+    };
+
+    var masterinsert="INSERT INTO md_student_paidfee SET ?";
+
+
     connection.query("SELECT * FROM receipt_sequence",function(err, rows){
     response.receipt_no="REC-"+response.academic_year+"-"+rows[0].receipt_seq;
     var new_receipt_no=parseInt(rows[0].receipt_seq)+1;
-    connection.query(qur,[response],
-    function(err, rows)
-    {
+    connection.query(masterinsert,[response1],function(err, rows){
+    if(!err){
+    connection.query(qur,[response],function(err, rows){
     if(!err)
     {
       connection.query("UPDATE receipt_sequence SET receipt_seq='"+new_receipt_no+"'",function(err, result){
@@ -2003,6 +2120,10 @@ app.post('/inserttransferfees',  urlencodedParser,function (req, res){
       console.log(err);
       res.status(200).json({'returnval': 'Fee not paid'});
     }
+  });
+  }
+  else
+    console.log(err);
   });
   });
 });

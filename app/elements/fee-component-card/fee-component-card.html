@@ -133,6 +133,10 @@
         document.getElementById('dialog'+idd).opened=false;
         this.FnSetInstallment(feetype,actualamount,discount,payableamount);
       },
+      FnCancelCloseDialog:function(){
+        document.getElementById('dialog'+idd).opened=false;
+        // this.FnSetInstallment(feetype,actualamount,discount,payableamount);
+      },
       FnSelectFeetype:function(e){
         feetype=(e.target.selectedItem.textContent).trim();
         this.$.scheduleservice.fetchinstallmentfeecode(feetype);
@@ -173,6 +177,8 @@
               payableamount=parseInt(subinstallment[i].payableamount)+parseInt(payableamount);
             }
           }
+          alert(idd);
+          alert(document.getElementById('ins'+idd));
           document.getElementById('ins'+idd).value=payableamount;           
           // alert(JSON.stringify(subinstallment));
       },
@@ -283,33 +289,7 @@
         installment.push(obj);
         // alert(JSON.stringify(installment));
         document.querySelector('fee-structure-schedulecard').FnSetInsatllment(installment,subinstallment);
-        // alert(JSON.stringify(obj));
-        // var insname=[];
-        // for(var i=0;i<subinstallment.length;i++){
-        //   if(insname.length==0)
-        //   insname.push(subinstallment[i].installment);
-        //   else{
-        //     for(var j=0;j<insname.length;j++){
-        //       if(insname[j]==subinstallment[i].installment){
-        //         insname.splice(j,1);
-        //       }
-        //     }
-        //     insname.push(subinstallment[i].installment);
-        //   }
-        // }
-        // alert(JSON.stringify(insname));
-        // var arr=this.eliminateDuplicates(subinstallment);
-        // alert(JSON.stringify(arr));
-        // for(var i=0;i<subinstallment.length;i++){
-        //   for(var j=0;j<subinstallment.length;j++){
-        //   if(subinstallment[i].installment==subinstallment[j].installment)
-        //     var obj={"installment":"","installmenttype":"","feetype":"","actualamount":"","discount":"","payableamount":""}  obj.installment=subinstallment[i].installment; 
-        //       obj.installmenttype=subinstallment[i].installmenttype;
-        //       obj.feetype=subinstallment[i].feetype;
-        //       obj.installment=subinstallment[i].installment;
-        //       obj.installment=subinstallment[i].installment; 
-        //   }
-        // }
+
       },
       eliminateDuplicates:function(arr) {
       var i;

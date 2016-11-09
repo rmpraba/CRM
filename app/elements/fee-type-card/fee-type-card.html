@@ -110,7 +110,7 @@
         this.payableamount="";
       },
       FnCancel:function(){
-        document.querySelector('fee-component-card').FnCloseDialog();
+        document.querySelector('fee-component-card').FnCancelCloseDialog();
         document.querySelector('#feefeetype').selected=-1;
         feetype="";
         this.actualamount="";
@@ -123,6 +123,8 @@
         this.grade=localStorage.getItem("curr_sess_grade");
         this.admissionyear=localStorage.getItem("curr_sess_admissionyear");
         this.academicyear=localStorage.getItem("curr_sess_academicyear");
+        this.discountcode=localStorage.getItem("curr_sess_discountcode");
+        this.admissiontype=localStorage.getItem("curr_sess_admissiontype");
         this.fetchinstallmentfeecodeurl=sessionStorage.getItem("addrinfo")+"/fetchinstallmentfeecode-service";
         var obj={"schoolid":"","schoolname":"","grade":"","admissionyear":"","academicyear":"","feetype":""};
         obj.schoolid=localStorage.getItem("schoolid");
@@ -146,6 +148,8 @@
         obj.grade=this.grade;
         obj.admissionyear=this.admissionyear;
         obj.academicyear=this.academicyear; 
+        obj.admissiontype=this.admissiontype; 
+        obj.discountcode=this.discountcode; 
         obj.feetype=this.feetype;       
         this.fetchinstallmentdiscountcodeparam=obj;
         this.$.fetchinstallmentdiscountcodeajax.generateRequest();
@@ -156,12 +160,16 @@
         this.actualamount=this.insfeecode[0].total_fee;
         if((this.insdiscountcode).length==0)
           this.discount=0;
-        else
-        this.discount=this.insdiscountcode[0].amount;
+        else{
+          this.discount=0;
+          for(var i=0;i<(this.insdiscountcode).length;i++){
+              this.discount=parseInt(this.insdiscountcode[i].amount)+parseInt(this.discount);
+          }
+        }
         if((this.insdiscountcode).length==0)
-          this.payableamount=parseInt(this.insfeecode[0].total_fee)-parseInt(0);
+          this.payableamount=parseInt(this.insfeecode[0].total_fee)-parseInt(this.discount);
         else
-        this.payableamount=parseInt(this.insfeecode[0].total_fee)-parseInt(this.insdiscountcode[0].amount);
+          this.payableamount=parseInt(this.insfeecode[0].total_fee)-parseInt(this.discount);
       }     
     });
   })();

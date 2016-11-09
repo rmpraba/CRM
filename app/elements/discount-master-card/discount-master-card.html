@@ -50,18 +50,27 @@
             <todate-pickercard></todate-pickercard>
           </div> 
         </div>
-       
+
         <div class="list-group col-sm-12 panel-body form-category" hidden$="{{hidefeecard}}">
-          <div class="col-sm-4 enquiry-input">
-            <paper-dropdown-menu label="Select Discount Type" attr-for-selected="value">
+          <div class="col-sm-6 enquiry-input">
+            <paper-dropdown-menu label="Select Category" attr-for-selected="value">
             <paper-menu id="distype" class="dropdown-content" required on-iron-select="FnSelectDiscountType" valueattr="value" >
               <template  is="dom-repeat" items="{{discountarr}}" as="item">
-              <paper-item>{{item.discount_type}}</paper-item>
+              <paper-item value="{{item.discount_type_id}}">{{item.discount_type}}</paper-item>
               </template>
             </paper-menu>
             </paper-dropdown-menu>
           </div>
-          <div class="col-sm-4 enquiry-input">
+          <div class="col-sm-6 enquiry-input">
+            <span class="col-sm-12"><h5>Spot Admission?</h5></span>
+            <span><paper-checkbox class="col-sm-6" id="spotyes" readonly class="checkbox" on-change="spotyesHandler">Yes</paper-checkbox></span>
+            <span><paper-checkbox class="col-sm-6" id="spotno" readonly class="checkbox" on-change="spotnoHandler">No</paper-checkbox></span>
+          </div>
+        </div>
+       
+        <div class="list-group col-sm-12 panel-body form-category" hidden$="{{hidefeecard}}">
+          
+          <div class="col-sm-6 enquiry-input">
             <paper-dropdown-menu label="Select Fee Type" attr-for-selected="value">
             <paper-menu id="discountfeetype" class="dropdown-content" required on-iron-select="FnSelectFeeType" valueattr="value" >
               <template  is="dom-repeat" items="{{feetypearr}}" as="item">
@@ -86,7 +95,7 @@
   <script>
   (function() {
     'use strict';
-    var grade,admissionyear,academicyear,feetype,discounttype;    
+    var grade,admissionyear,academicyear,feetype,discounttype,discounttypecode,admissiontype;    
     Polymer({
       is: 'discount-master-card',
       ready:function(){
@@ -107,6 +116,7 @@
         academicyear=(e.target.selectedItem.textContent).trim();
       },
       FnSelectDiscountType:function(e){
+        discounttypecode=(e.target.selectedItem.value).trim();
         discounttype=(e.target.selectedItem.textContent).trim();
       },
       FnSelectFeeType:function(e){
@@ -119,6 +129,7 @@
         feetype="";
         this.amount="";
         discounttype="";
+        discounttypecode="";
         document.querySelector('#discountgrade').selected=-1;
         document.querySelector('#discountacademicyear').selected=-1;
         document.querySelector('#discountadmissionyear').selected=-1;
@@ -127,7 +138,7 @@
       },
       FnSubmit:function(){
         // alert(this.schoolname+" "+grade+" "+academicyear+" "+admissionyear+" "+feetype+" "+this.totalfees);
-        this.$.schedulefee.setDiscountInfo(this.schoolname,grade,admissionyear,academicyear,discounttype,feetype,this.fromdate,this.todate,this.amount);
+        this.$.schedulefee.setDiscountInfo(this.schoolname,grade,admissionyear,academicyear,discounttypecode,discounttype,feetype,this.fromdate,this.todate,this.amount,admissiontype);
       },
       FnCancel:function(){
         grade="";
@@ -136,6 +147,7 @@
         feetype="";
         this.amount="";
         discounttype="";
+        admissiontype="";
         document.querySelector('#discountgrade').selected=-1;
         document.querySelector('#discountacademicyear').selected=-1;
         document.querySelector('#discountadmissionyear').selected=-1;
@@ -147,6 +159,20 @@
       },
       FnSetToDate:function(date){
         this.todate=date;
+      },
+      spotyesHandler:function(e){
+        if(document.querySelector("#spotyes").checked==true)
+        {
+         document.querySelector("#spotno").checked=false;
+         admissiontype="1";
+       }
+      },
+      spotnoHandler:function(e){
+        document.querySelector("#spotno").checked=true;
+        {
+         document.querySelector("#spotyes").checked=false;
+         admissiontype="0";
+       }
       }
     });
   })();

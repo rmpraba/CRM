@@ -928,7 +928,10 @@ alert("history"+e.detail.response.returnval);
         this.$.fetchfeesplitupajax.generateRequest();
       },
       fetchfeesplitupResponse:function(e){
-        var arr=e.detail.response.returnval;   
+        var arr=e.detail.response.returnval; 
+        for(var i=0;i<arr.length;i++){
+
+        }  
         document.querySelector('fees-card').feearr=arr; 
         document.querySelector('fees-card').FnHiddenPayment(); 
         // alert(JSON.stringify(arr));             
@@ -1038,11 +1041,13 @@ alert("history"+e.detail.response.returnval);
         document.querySelector('fees-card').studentname=arr[0].student_name;
         document.querySelector('fees-card').parentname=arr[0].father_name;
         document.querySelector('fees-card').dob=arr[0].dob;
+        localStorage.setItem("curr_sess_academicyear",arr[0].academic_year);
+        localStorage.setItem("curr_sess_admissionyear",arr[0].admission_year);
+        localStorage.setItem("curr_sess_grade",arr[0].class_for_admission);
+        localStorage.setItem("curr_sess_studentname",arr[0].student_name);
         this.callfetchfeesService(arr[0].academic_year,arr[0].admission_year,arr[0].class_for_admission);
         this.fetchfeesplitup(arr[0].academic_year,arr[0].admission_year,arr[0].class_for_admission);
-        
         }
-
      }
     });
   })();

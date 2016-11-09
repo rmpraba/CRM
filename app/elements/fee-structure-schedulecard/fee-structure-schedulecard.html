@@ -9,7 +9,7 @@
         <div class="col-sm-6 enquiry-input">
             <paper-input label="School Name" value="{{schoolname}}"></paper-input>
         </div>
-        <div class="col-sm-6 enquiry-input">
+        <div class="col-sm-4 enquiry-input">
           <paper-dropdown-menu label="Grade" >
             <paper-menu id="structuregrade" class="dropdown-content" required on-iron-select="FnSelectGrade" valueattr="value" >
               <template  is="dom-repeat" items="{{gradearr}}" as="item">
@@ -18,18 +18,27 @@
             </paper-menu>
           </paper-dropdown-menu>
         </div>
+        
       </div>
 
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-4 enquiry-input">
-          <paper-dropdown-menu label="Admission Year" attr-for-selected="value">
-            <paper-menu id="structureadmissionyear" class="dropdown-content" required on-iron-select="FnSelectAdmissionYear" valueattr="value" >
-              <template  is="dom-repeat" items="{{admissionarr}}" as="item">
-              <paper-item>{{item.admission_year}}</paper-item>
+          <paper-dropdown-menu label="Select Discount Category" >
+            <paper-menu id="schdiscount" class="dropdown-content" required on-iron-select="FnSelectDiscountType" valueattr="value" >
+              <template  is="dom-repeat" items="{{discountarr}}" as="item">
+              <paper-item value="{{item.discount_type_id}}">{{item.discount_type}}</paper-item>
               </template>
             </paper-menu>
           </paper-dropdown-menu>
         </div>
+        <div class="col-sm-6 enquiry-input">
+            <span class="col-sm-12"><h5>Spot Admission?</h5></span>
+            <span><paper-checkbox class="col-sm-6" id="schspotyes" readonly class="checkbox" on-change="spotyesHandler">Yes</paper-checkbox></span>
+            <span><paper-checkbox class="col-sm-6" id="schspotno" readonly class="checkbox" on-change="spotnoHandler">No</paper-checkbox></span>
+        </div>
+      </div>
+
+      <div class="list-group col-sm-12 panel-body form-category">
 
         <div class="col-sm-4">
           <paper-dropdown-menu label="Academic Year" attr-for-selected="value">
@@ -40,6 +49,18 @@
             </paper-menu>
           </paper-dropdown-menu>
         </div>
+
+        <div class="col-sm-4 enquiry-input">
+          <paper-dropdown-menu label="Admission Year" attr-for-selected="value">
+            <paper-menu id="structureadmissionyear" class="dropdown-content" required on-iron-select="FnSelectAdmissionYear" valueattr="value" >
+              <template  is="dom-repeat" items="{{admissionarr}}" as="item">
+              <paper-item>{{item.admission_year}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
+        </div>
+
+        
 
         <div class="col-sm-4">
           <paper-dropdown-menu label="No Of Installment" attr-for-selected="value">
@@ -73,7 +94,7 @@
   <script>
   (function() {
     'use strict';
-    var grade,admissionyear,academicyear,noofinstallment,feetype,discounttype,installmenttype;   
+    var grade,admissionyear,academicyear,noofinstallment,feetype,discountcode,discounttype,installmenttype,admissiontype;   
     var feecomponentarr=[];
     var installmentarr=[];
     var installmentsubarr=[];
@@ -109,7 +130,7 @@
         this.hidefeecomponentcard=false;
       },
       FnSubmit:function(){
-        this.$.schedulefee.setInstallmentFeecomponent(this.schoolname,grade,admissionyear,academicyear,noofinstallment,installmentarr,installmentsubarr);
+        this.$.schedulefee.setInstallmentFeecomponent(this.schoolname,grade,admissionyear,academicyear,noofinstallment,discountcode,discounttype,installmentarr,installmentsubarr,admissiontype);
       },
       FnViewFeeComponent:function(){
         this.hidefeecomponent=false;
@@ -135,6 +156,7 @@
         this.amount="";
         discounttype="";
         installmenttype="";
+        discounttype="";
         document.querySelector('#structuregrade').selected=-1;
         document.querySelector('#structureacademicyear').selected=-1;
         document.querySelector('#structureadmissionyear').selected=-1;
@@ -152,10 +174,30 @@
         installmentsubarr=inssubarr;
         alert(JSON.stringify(installmentarr));
         alert(JSON.stringify(installmentsubarr));
-      }
-       
-    });
-      
+      },
+      FnSelectDiscountType:function(e){
+        discountcode=(e.target.selectedItem.value).trim();
+        discounttype=(e.target.selectedItem.textContent).trim();
+        localStorage.setItem("curr_sess_discountcode",discountcode);
+      },
+      spotyesHandler:function(e){
+        if(document.querySelector("#schspotyes").checked==true)
+        {
+         document.querySelector("#schspotno").checked=false;
+         admissiontype="1";
+         localStorage.setItem("curr_sess_admissiontype",admissiontype);
+       }
+      },
+      spotnoHandler:function(e){
+        document.querySelector("#schspotno").checked=true;
+        {
+         document.querySelector("#schspotyes").checked=false;
+         admissiontype="0";
+         localStorage.setItem("curr_sess_admissiontype",admissiontype);
+       }
+      }  
+      });
+         
   })();
   </script>
 </dom-module>
