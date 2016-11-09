@@ -327,6 +327,39 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       debounce-duration="300"
     >
     </iron-ajax>
+    <iron-ajax
+      method="post"
+      id="walkinanalysisyearajax"
+      url="{{walkinanalysisyearurl}}"
+      params="{{walkinanalysisyearparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="walkinanalysisyearResponse"
+      debounce-duration="300"
+    >
+    </iron-ajax>
+    <iron-ajax
+      method="post"
+      id="walkinanalysisdayajax"
+      url="{{walkinanalysisdayurl}}"
+      params="{{walkinanalysisdayparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="walkinanalysisdayResponse"
+      debounce-duration="300"
+    >
+    </iron-ajax>
+    <iron-ajax
+      method="post"
+      id="walkinanalysismonthajax"
+      url="{{walkinanalysismonthurl}}"
+      params="{{walkinanalysismonthparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="walkinanalysismonthResponse"
+      debounce-duration="300"
+    >
+    </iron-ajax>
   </template>
   <script>
   (function() {
@@ -372,6 +405,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var testenqid;
     var testdate;
     var rte_number;
+    var walkinanalysisyear={};
+    var walkinanalysismonth={};
+    var walkinanalysisday={};
+    var walkinanasysisyaerandmontharr={};
     Polymer({
       is: 'crm-service',
    
@@ -1109,7 +1146,70 @@ document.querySelector('followup-service').GenerateFollowups(successbox);
         if(res == "Inserted!"){
           alert("RTE Student Saved");
         }
-    }
+    },
+      walkinanalysisyear:function(){
+        this.walkinanalysisyearurl="http://localhost:8086/walkinanalysisyear";
+        var obj={"schol":"", "current_year":""};
+        obj.schol=localStorage.getItem("schoolid");
+        var today = new Date();
+        var mm = today.getMonth()+1; //January is 0!
+        var yyyy = today.getFullYear();
+        var current_month = '%/'+mm+'/'+yyyy;
+        obj.current_year='%/%/'+yyyy;
+        obj.current_month=current_month;
+        this.walkinanalysisyearparam=obj;
+        this.$.walkinanalysisyearajax.generateRequest();
+    },
+      walkinanalysisyearResponse:function(e){
+        walkinanalysisyear = e.detail.response.returnval;
+
+      },
+      walkinanalysismonth:function(){
+        this.walkinanalysismonthurl="http://localhost:8086/walkinanalysismonth";
+        var obj={"schol":"", "current_year":""};
+        obj.schol=localStorage.getItem("schoolid");
+        var today = new Date();
+        var mm = today.getMonth()+1; //January is 0!
+        var yyyy = today.getFullYear();
+        var current_month = '%/'+mm+'/'+yyyy;
+        obj.current_year='%/%/'+yyyy;
+        obj.current_month=current_month;
+        this.walkinanalysismonthparam=obj;
+        this.$.walkinanalysismonthajax.generateRequest();
+      },
+      walkinanalysismonthResponse:function(e){
+        walkinanalysismonth =e.detail.response.returnval;
+      },
+      walkinanalysisday:function(){
+        this.walkinanalysisdayurl="http://localhost:8086/walkinanalysisday";
+        var obj={"schol":"", "current_year":""};
+        obj.schol=localStorage.getItem("schoolid");
+        var today = new Date();
+        var mm = today.getMonth()+1; //January is 0!
+        var yyyy = today.getFullYear();
+        var current_month = '%/'+mm+'/'+yyyy;
+        var current_date =today.getDate();
+        obj.current_year= current_date+'/'+current_month+'/'+yyyy;
+        this.walkinanalysisdayparam=obj;
+        this.$.walkinanalysisdayajax.generateRequest();
+      },
+      walkinanalysisdayResponse:function(e){
+        walkinanalysisday=e.detail.response.returnval;
+        this.walkinanasysisyaerandmonth();
+      },
+      walkinanasysisyaerandmonth:function(){
+        var obj={"source":"", "year":"","month":""};
+        for(var i = 0; i < walkinanalysisyear.length; i++){
+          for(var j = 0;j<=i;j++){
+            if(walkinanalysisyear[i].enquiry_source == walkinanalysismonth[j].enquiry_source){
+              obj.source=walkinanalysisyear[i].enquiry_source;
+              obj.year=walkinanalysisyear[i].totalenq;
+              obj.month=walkinanalysismonth[j].totalenq;
+            }
+          }
+        }
+        walkinanasysisyaerandmontharr.push(obj);
+      },
     });
   })();
   </script>
