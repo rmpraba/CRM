@@ -408,7 +408,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var walkinanalysisyear={};
     var walkinanalysismonth={};
     var walkinanalysisday={};
-    var walkinanasysisyaerandmontharr={};
+    var walkinanasysisyaerandmontharr=[];
     Polymer({
       is: 'crm-service',
    
@@ -1203,13 +1203,25 @@ document.querySelector('followup-service').GenerateFollowups(successbox);
           for(var j = 0;j<=i;j++){
             if(walkinanalysisyear[i].enquiry_source == walkinanalysismonth[j].enquiry_source){
               obj.source=walkinanalysisyear[i].enquiry_source;
-              obj.year=walkinanalysisyear[i].totalenq;
-              obj.month=walkinanalysismonth[j].totalenq;
+              if(walkinanalysisyear[i].totalenq==null||walkinanalysisyear[i].totalenq==""){
+                obj.year=0;
+              }else{
+                obj.year=walkinanalysisyear[i].totalenq;
+              }
+              if(walkinanalysismonth[i].totalenq==null||walkinanalysismonth[i].totalenq==""){
+                obj.month=0;
+              }else{
+                obj.month=walkinanalysismonth[j].totalenq;
+              }
             }
           }
+          walkinanasysisyaerandmontharr.push(obj);
         }
-        walkinanasysisyaerandmontharr.push(obj);
+        document.querySelector('walkin-analysis-card').walkinanasysisyaerandmontharr=walkinanasysisyaerandmontharr;
       },
+      walkinanalysis:function(){
+
+      }
     });
   })();
   </script>
