@@ -2858,6 +2858,7 @@ app.post('/updatetestdetails', urlencodedParser,function (req, res){
      });
  });
 
+ app.post('/walkinanalysis',  urlencodedParser,function (req, res){
    connection.query("SELECT count(*), enquiry_source FROM `student_enquiry_details` WHERE academic_year='AY-2017-2018' GROUP BY enquiry_source",
      function(err, rows)
      {
