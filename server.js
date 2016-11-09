@@ -2828,7 +2828,7 @@ app.post('/updatetestdetails', urlencodedParser,function (req, res){
      {
        if(!err)
        {
-         
+
            res.status(200).json({'returnval': 'success'});
         }
         else
@@ -2836,10 +2836,10 @@ app.post('/updatetestdetails', urlencodedParser,function (req, res){
            console.log(err);
            res.status(200).json({'returnval': 'not updated!'});
         }
-      
+
      });
  });
- 
+
 
  app.post('/rtenumber',  urlencodedParser,function (req, res){
 
@@ -2858,6 +2858,27 @@ app.post('/updatetestdetails', urlencodedParser,function (req, res){
      });
  });
 
+   connection.query("SELECT count(*), enquiry_source FROM `student_enquiry_details` WHERE academic_year='AY-2017-2018' GROUP BY enquiry_source",
+     function(err, rows)
+     {
+       if(!err)
+       {
+         if(rows.length>0)
+         {
+           //console.log(rows);
+           res.status(200).json({'returnval': rows});
+         }
+         else
+         {
+           console.log(err);
+           res.status(200).json({'returnval':null});
+         }
+       }
+       else{
+         console.log(err);
+       }
+     });
+ });
 
 
 

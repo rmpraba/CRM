@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cf87a71e-5582-4c0c-9b35-1815db928b04" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/elements/app-list/app-list.html" afterPath="$PROJECT_DIR$/app/elements/app-list/app-list.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/elements/elements.html" afterPath="$PROJECT_DIR$/app/elements/elements.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/elements/navigation-bar/navigation-bar.html" afterPath="$PROJECT_DIR$/app/elements/navigation-bar/navigation-bar.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server.js" afterPath="$PROJECT_DIR$/server.js" />
     </list>
     <ignored path="CRM.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -28,8 +27,8 @@
       <file leaf-file-name="crm-service.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/elements/crm-service/crm-service.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.65384614">
-              <caret line="816" column="58" selection-start-line="816" selection-start-column="58" selection-end-line="816" selection-end-column="58" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="971" column="39" selection-start-line="971" selection-start-column="39" selection-end-line="971" selection-end-column="39" />
               <folding />
             </state>
           </provider>
@@ -52,19 +51,19 @@
         <entry file="file://$PROJECT_DIR$/app/elements/special-discount-card/special-discount-card.html">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="34" column="74" selection-start-line="34" selection-start-column="74" selection-end-line="34" selection-end-column="74" />
+              <caret line="19" column="50" selection-start-line="19" selection-start-column="50" selection-end-line="19" selection-end-column="50" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="server.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="server.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/server.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="2826" column="26" selection-start-line="2826" selection-start-column="26" selection-end-line="2826" selection-end-column="26" />
+            <state vertical-scroll-proportion="0.39273927">
+              <caret line="2860" column="18" selection-start-line="2860" selection-start-column="18" selection-end-line="2860" selection-end-column="18" />
               <folding>
-                <marker date="1478521360670" expanded="true" signature="81082:81129" placeholder="{...}" />
+                <marker date="1478675811682" expanded="true" signature="81082:81129" placeholder="{...}" />
               </folding>
             </state>
           </provider>
@@ -73,8 +72,8 @@
       <file leaf-file-name="detailed-enquiry-form.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/elements/detailed-enquiry-form/detailed-enquiry-form.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="751" column="27" selection-start-line="751" selection-start-column="27" selection-end-line="751" selection-end-column="27" />
+            <state vertical-scroll-proportion="5.6153846">
+              <caret line="176" column="28" selection-start-line="176" selection-start-column="28" selection-end-line="176" selection-end-column="28" />
               <folding>
                 <element signature="n#style#0;n#paper-dropdown-menu#0;n#span#1;n#div#0;n#div#0;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#paper-icon-button#0;n#span#2;n#div#0;n#div#0;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
@@ -95,14 +94,12 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="navigation-bar.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="navigation-bar.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/elements/navigation-bar/navigation-bar.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5480944">
-              <caret line="270" column="94" selection-start-line="270" selection-start-column="94" selection-end-line="270" selection-end-column="94" />
-              <folding>
-                <marker date="1478601551413" expanded="true" signature="30705:30982" placeholder="{&quot;is&quot;: 'navigation-bar'...}" />
-              </folding>
+            <state vertical-scroll-proportion="0.0">
+              <caret line="353" column="62" selection-start-line="353" selection-start-column="62" selection-end-line="353" selection-end-column="62" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -110,7 +107,7 @@
       <file leaf-file-name="enquiry-analysis-card.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/elements/enquiry-analysis-card/enquiry-analysis-card.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-19.038462">
+            <state vertical-scroll-proportion="0.0">
               <caret line="39" column="25" selection-start-line="39" selection-start-column="25" selection-end-line="39" selection-end-column="25" />
               <folding />
             </state>
@@ -120,7 +117,7 @@
       <file leaf-file-name="app-list.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/elements/app-list/app-list.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.181818">
+            <state vertical-scroll-proportion="0.0">
               <caret line="85" column="17" selection-start-line="85" selection-start-column="17" selection-end-line="85" selection-end-column="17" />
               <folding />
             </state>
@@ -182,13 +179,13 @@
         <option value="$PROJECT_DIR$/app/elements/enquiry-details-card/enquiry-details-card.html" />
         <option value="$PROJECT_DIR$/app/elements/newenquiry-card/newenquiry-card.html" />
         <option value="$PROJECT_DIR$/app/elements/special-discount-card/special-discount-card.html" />
-        <option value="$PROJECT_DIR$/server.js" />
-        <option value="$PROJECT_DIR$/app/elements/detailed-enquiry-form/detailed-enquiry-form.html" />
         <option value="$PROJECT_DIR$/app/elements/admission-service/admission-service.html" />
         <option value="$PROJECT_DIR$/app/elements/crm-service/crm-service.html" />
         <option value="$PROJECT_DIR$/app/elements/app-list/app-list.html" />
         <option value="$PROJECT_DIR$/app/elements/enquiry-analysis-card/enquiry-analysis-card.html" />
         <option value="$PROJECT_DIR$/app/elements/navigation-bar/navigation-bar.html" />
+        <option value="$PROJECT_DIR$/app/elements/detailed-enquiry-form/detailed-enquiry-form.html" />
+        <option value="$PROJECT_DIR$/server.js" />
       </list>
     </option>
   </component>
@@ -254,6 +251,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -1248,7 +1246,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
       <pane id="Scope" />
     </panes>
   </component>
@@ -1338,7 +1335,7 @@
     <editor active="true" />
     <layout>
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15731166" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15657312" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -1679,25 +1676,23 @@
     <entry file="file://$PROJECT_DIR$/app/elements/special-discount-card/special-discount-card.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="34" column="74" selection-start-line="34" selection-start-column="74" selection-end-line="34" selection-end-column="74" />
+          <caret line="19" column="50" selection-start-line="19" selection-start-column="50" selection-end-line="19" selection-end-column="50" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server.js">
+    <entry file="file://$PROJECT_DIR$/app/elements/crm-service/crm-service.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="2826" column="26" selection-start-line="2826" selection-start-column="26" selection-end-line="2826" selection-end-column="26" />
-          <folding>
-            <marker date="1478521360670" expanded="true" signature="81082:81129" placeholder="{...}" />
-          </folding>
+          <caret line="971" column="39" selection-start-line="971" selection-start-column="39" selection-end-line="971" selection-end-column="39" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/elements/detailed-enquiry-form/detailed-enquiry-form.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="751" column="27" selection-start-line="751" selection-start-column="27" selection-end-line="751" selection-end-column="27" />
+        <state vertical-scroll-proportion="5.6153846">
+          <caret line="176" column="28" selection-start-line="176" selection-start-column="28" selection-end-line="176" selection-end-column="28" />
           <folding>
             <element signature="n#style#0;n#paper-dropdown-menu#0;n#span#1;n#div#0;n#div#0;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#paper-icon-button#0;n#span#2;n#div#0;n#div#0;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
@@ -1715,36 +1710,36 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/elements/crm-service/crm-service.html">
+    <entry file="file://$PROJECT_DIR$/app/elements/navigation-bar/navigation-bar.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.65384614">
-          <caret line="816" column="58" selection-start-line="816" selection-start-column="58" selection-end-line="816" selection-end-column="58" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/elements/app-list/app-list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.181818">
-          <caret line="85" column="17" selection-start-line="85" selection-start-column="17" selection-end-line="85" selection-end-column="17" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="353" column="62" selection-start-line="353" selection-start-column="62" selection-end-line="353" selection-end-column="62" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/elements/enquiry-analysis-card/enquiry-analysis-card.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-19.038462">
+        <state vertical-scroll-proportion="0.0">
           <caret line="39" column="25" selection-start-line="39" selection-start-column="25" selection-end-line="39" selection-end-column="25" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/elements/navigation-bar/navigation-bar.html">
+    <entry file="file://$PROJECT_DIR$/app/elements/app-list/app-list.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5480944">
-          <caret line="270" column="94" selection-start-line="270" selection-start-column="94" selection-end-line="270" selection-end-column="94" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="85" column="17" selection-start-line="85" selection-start-column="17" selection-end-line="85" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.39273927">
+          <caret line="2860" column="18" selection-start-line="2860" selection-start-column="18" selection-end-line="2860" selection-end-column="18" />
           <folding>
-            <marker date="1478601551413" expanded="true" signature="30705:30982" placeholder="{&quot;is&quot;: 'navigation-bar'...}" />
+            <marker date="1478675811682" expanded="true" signature="81082:81129" placeholder="{...}" />
           </folding>
         </state>
       </provider>
