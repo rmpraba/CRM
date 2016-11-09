@@ -2266,7 +2266,7 @@ app.post('/getlistdetails',  urlencodedParser,function (req, res){
 
 /*this function insert the followup information in followup table*/
 app.post('/updatefollow',  urlencodedParser,function (req, res) {
-  var collection={"school_id":req.query.schol,"id":req.query.id,"enquiry_id":req.query.enquiryno,"schedule_no":req.query.schedule,"created_by":req.query.createdby,"created_on":req.query.createdon,"current_confidence_level":req.query.currconfidence,"schedule_status":req.query.schedulestatus,"schedule_flag":req.query.scheduleflag,"no_of_days":req.query.noofdays,"no_of_schedules":req.query.noofschedule,"last_schedule_date":req.query.lastscheduleon};
+  var collection={"school_id":req.query.schol,"id":req.query.id,"enquiry_id":req.query.enquiryno,"schedule_no":req.query.schedule,"created_by":req.query.createdby,"created_on":req.query.createdon,"current_confidence_level":req.query.currconfidence,"schedule_status":req.query.schedulestatus,"schedule_flag":req.query.scheduleflag,"no_of_days":req.query.noofdays,"no_of_schedules":req.query.noofschedule,"last_schedule_date":req.query.lastscheduleon,"upcoming_date":req.query.upcomingdate};
        connection.query('insert into followup set ? ',[collection],
         function(err, rows)
         {
@@ -2367,7 +2367,7 @@ app.post('/getstudentnamelist',  urlencodedParser,function (req, res){
 app.post('/getfollowupcount',  urlencodedParser,function (req, res){
 
     //console.log('qur');
-    connection.query("SELECT d.followup_status, f.class, COUNT( * ) AS total FROM  `followupdetail` AS d, student_enquiry_details AS f WHERE d.`school_id` =  '"+req.query.schol+"' AND d.followup_status =  '"+req.query.status+"' AND f.enquiry_no = d.enquiry_id and f.status='Enquired' GROUP BY class ORDER BY (`class`)",
+    connection.query("SELECT p.schedule_status, f.class, COUNT( * ) AS total FROM   student_enquiry_details AS f join followup as p WHERE p.`school_id` =  '"+req.query.schol+"' AND p.schedule_status=  '"+req.query.status+"' AND f.enquiry_no = p.enquiry_id and f.status='Enquired' GROUP BY class ORDER BY (`class`)",
     function(err, rows)
     {
     if(!err)
@@ -2390,120 +2390,7 @@ app.post('/getfollowupcount',  urlencodedParser,function (req, res){
 });
 
 
- app.post('/followup1',  urlencodedParser,function (req, res)
- {
-   var school={"school_id":req.query.schol};
-   var enquiry={"enquiry_id":req.query.enqno};
-   var followupid={"followup_id":req.query.followupid};
-   var collection = {"followup1_remarks":req.query.comments,"confidence_level_1":req.query.confidencelevel,"followup_1":req.query.followupdate1,"current_confidence_level":req.query.confidencelevel,"followup_status":req.query.folowupstatus};
-   console.log(collection);
-   connection.query('update followupdetail set ? where ? and ? and ?',[collection,enquiry,school,followupid],
-     function(err, rows){
-       if(!err){
-         console.log('inserted');
-         res.status(200).json({'returnval': 'success'});
-       } else {
-         console.log(err);
-         res.status(200).json({'returnval': 'invalid'});
-       }
-     });
- });
- app.post('/followup2',  urlencodedParser,function (req, res)
- {
-   var school={"school_id":req.query.schol};
-   var enquiry={"enquiry_id":req.query.enqno};
-   var followupid={"followup_id":req.query.followupid};
-   var collection = {"followup2_remarks":req.query.comments,"confidence_level_2":req.query.confidencelevel,"followup_2":req.query.followupdate2,"current_confidence_level":req.query.confidencelevel,"followup_status":req.query.folowupstatus};
-   console.log(collection);
-   connection.query('update followupdetail set ? where ? and ? and ?',[collection,enquiry,school,followupid],
-     function(err, rows)
-     {
-       if(!err)
-       {
-         console.log('inserted');
-         res.status(200).json({'returnval': 'success'});
-       }
-       else
-       {
-         console.log(err);
-         res.status(200).json({'returnval': 'invalid'});
-       }
-
-     });
- });
-
- app.post('/followup3',  urlencodedParser,function (req, res)
- {
-   var school={"school_id":req.query.schol};
-   var enquiry={"enquiry_id":req.query.enqno};
-   var followupid={"followup_id":req.query.followupid};
-   var collection = {"followup3_remarks":req.query.comments,"confidence_level_3":req.query.confidencelevel,"followup_3":req.query.followupdate3,"current_confidence_level":req.query.confidencelevel,"followup_status":req.query.folowupstatus};
-   console.log(collection);
-   connection.query('update followupdetail set ? where ? and ? and ?',[collection,enquiry,school,followupid],
-     function(err, rows)
-     {
-       if(!err)
-       {
-         console.log('inserted');
-         res.status(200).json({'returnval': 'success'});
-       }
-       else
-       {
-         console.log(err);
-         res.status(200).json({'returnval': 'invalid'});
-       }
-
-     });
- });
-
- app.post('/followup4',  urlencodedParser,function (req, res)
- {
-   var school={"school_id":req.query.schol};
-   var enquiry={"enquiry_id":req.query.enqno};
-   var followupid={"followup_id":req.query.followupid};
-   var collection = {"followup4_remarks":req.query.comments,"confidence_level_4":req.query.confidencelevel,"followup_4":req.query.followupdate4,"current_confidence_level":req.query.confidencelevel,"followup_status":req.query.folowupstatus};
-   console.log(collection);
-   connection.query('update followupdetail set ? where ? and ? and ?',[collection,enquiry,school,followupid],
-     function(err, rows)
-     {
-       if(!err)
-       {
-         console.log('inserted');
-         res.status(200).json({'returnval': 'success'});
-       }
-       else
-       {
-         console.log(err);
-         res.status(200).json({'returnval': 'invalid'});
-       }
-
-     });
- });
-
- app.post('/followup5',  urlencodedParser,function (req, res)
- {
-   var school={"school_id":req.query.schol};
-   var enquiry={"enquiry_id":req.query.enqno};
-   var followupid={"followup_id":req.query.followupid};
-   var collection = {"followup5_remarks":req.query.comments,"confidence_level_5":req.query.confidencelevel,"followup_5":req.query.followupdate5,"current_confidence_level":req.query.confidencelevel,"followup_status":req.query.folowupstatus};
-   console.log(collection);
-   connection.query('update followupdetail set ? where ? and ? and ?',[collection,enquiry,school,followupid],
-     function(err, rows)
-     {
-       if(!err)
-       {
-         console.log('inserted');
-         res.status(200).json({'returnval': 'success'});
-       }
-       else
-       {
-         console.log(err);
-         res.status(200).json({'returnval': 'invalid'});
-       }
-
-     });
- });
-
+ 
 
  app.post('/getfollowupstudents',  urlencodedParser,function (req, res)
  {
@@ -2512,18 +2399,18 @@ app.post('/getfollowupcount',  urlencodedParser,function (req, res){
    var status={"status":req.query.status};
    var checkstatus=req.query.status;
    if((checkstatus=='Closed')||(checkstatus=='Exhausted')){
-        var qur = "SELECT f.enquiry_id,f.followup_flag,s.enquiry_name,f.followup_status,f.followup_id,f.current_confidence_level FROM followupdetail f join student_enquiry_details s on f.enquiry_id=s.enquiry_no WHERE f.followup_status='"+req.query.status+"' and s.class='"+req.query.grade+"' and s.school_id = '"+req.query.schol+"' ORDER BY (next_followup_date) DESC";
+        var qur = "SELECT f.enquiry_id,f.schedule_flag,s.enquiry_name,f.schedule_status,f.id,f.current_confidence_level,f.upcoming_date FROM followup f join student_enquiry_details s on f.enquiry_id=s.enquiry_no WHERE f.schedule_status='"+req.query.fnstatus+"' and s.class='"+req.query.fngrade+"' and s.school_id = '"+req.query.schol+"' ORDER BY (upcoming_date) DESC";
    }
    else{
-        var qur = "SELECT f.enquiry_id,f.followup_flag,s.enquiry_name,f.followup_status,f.followup_id,f.current_confidence_level FROM followupdetail f join student_enquiry_details s on f.enquiry_id=s.enquiry_no WHERE f.followup_status='"+req.query.status+"' and s.class='"+req.query.grade+"' and s.school_id = '"+req.query.schol+"' ORDER BY (next_followup_date)";
+        var qur = "SELECT f.enquiry_id,f.schedule_flag,s.enquiry_name,f.schedule_status,f.id,f.current_confidence_level,f.upcoming_date FROM followup f join student_enquiry_details s on f.enquiry_id=s.enquiry_no WHERE f.schedule_status='"+req.query.fnstatus+"' and s.class='"+req.query.fngrade+"' and s.school_id = '"+req.query.schol+"' ORDER BY (upcoming_date)";
    }
-
-   connection.query(qur,
+console.log(qur);
+   //connection.query(qur,
      function(err, rows)
      {
        if(!err)
        {
-         console.log('inserted');
+         //console.log(rows);
          res.status(200).json({'returnval': rows});
        }
        else
@@ -2534,6 +2421,8 @@ app.post('/getfollowupcount',  urlencodedParser,function (req, res){
 
      });
  });
+
+
  app.post('/viewdetail',  urlencodedParser,function (req, res)
  {
    var school={"school_id":req.query.schol};

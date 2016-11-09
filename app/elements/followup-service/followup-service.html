@@ -209,6 +209,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         debounce-duration="300"
         >
   </iron-ajax>
+
+    <!-- this below ajax gets the list of student those who are in the specific status with respect to their grade -->
+    <iron-ajax
+      method="post"
+      id="getfollowupstudentsajax"
+      url="{{getfollowupstudentsurl}}"
+      params="{{getfollowupstudentsparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="getfollowupstudentsResponse"
+      debounce-duration="300"
+    >
+    </iron-ajax>
+
+
   </template>
   <script>
   (function() {
@@ -234,7 +249,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       masterfollowupinfoResponse:function(e){
         alert(JSON.stringify(e.detail.response.returnval));
-       
+       var newdate=new Date();
           resultarr=e.detail.response.returnval;
             var lastdate=new Date();
              var temp=resultarr[0].no_of_days;
@@ -247,11 +262,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               datesarr.push(obj);
               temp=temp+resultarr[0].no_of_days;
           }
-alert(JSON.stringify(datesarr));
+//alert(JSON.stringify(datesarr));
           generateid=Math.floor(100000 + Math.random() * 900000);
 
+newdate.setDate(newdate.getDate()+resultarr[0].no_of_days);
+
          this.updatefollowurl="http://localhost:8086/updatefollow";
-        var obj={"schol":"","id":"","enquiryno":"","schedule":"","currconfidence":"","schedulestatus":"","scheduleflag":"","noofdays":"","noofschedule":"","lastscheduleon":"","createdby":"","createdon":""}
+        var obj={"schol":"","id":"","enquiryno":"","schedule":"","currconfidence":"","schedulestatus":"","scheduleflag":"","noofdays":"","noofschedule":"","upcomingdate":"","lastscheduleon":"","createdby":"","createdon":""}
         obj.schol=localStorage.getItem("schoolid");
         obj.id=generateid;
         obj.enquiryno=enquiryidzz;
@@ -261,6 +278,7 @@ alert(JSON.stringify(datesarr));
         obj.scheduleflag=1;
         obj.noofdays=resultarr[0].no_of_days;
         obj.noofschedule=resultarr[0].no_of_calls;
+        obj.upcomingdate=newdate.getDate()+'/'+(newdate.getMonth()+1)+'/'+newdate.getFullYear();
         obj.lastscheduleon=lastdate.getDate()+'/'+(lastdate.getMonth()+1)+'/'+lastdate.getFullYear();
         obj.createdby=localStorage.getItem("employeeid");
         obj.createdon=sessionStorage.getItem("todaydate");
@@ -450,7 +468,25 @@ alert(JSON.stringify(datesarr));
      TBDResponse:function(e){
        var res=e.detail.response.returnval;
       document.querySelector('followup-dashboard').arrtbd=res;
-     }
+     },
+     getfollowupstudents:function(grade,status){
+        this.getfollowupstudentsurl="http://localhost:8086/getfollowupstudents";
+        var obj={"schol":"","fngrade":"","fnstatus":""};
+        obj.schol=localStorage.getItem("schoolid");
+        obj.fngrade=grade;
+        obj.fnstatus=status;
+        this.getfollowupstudentsparam=obj;
+        //alert(JSON.stringify(obj));
+        this.$.getfollowupstudentsajax.generateRequest();
+
+      },
+      getfollowupstudentsResponse:function(e){
+       var res=e.detail.response.returnval;
+       
+       document.querySelector('followup-details').followuparr=res;
+        document.querySelector('app-list').setPage("followup-details","Followup Student List");
+
+      }
     
     });
   })();
