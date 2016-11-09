@@ -1092,7 +1092,7 @@ alert("history"+e.detail.response.returnval);
       },
       fetchfeesResponse:function(e){
         var arr=e.detail.response.returnval;
-<<<<<<< HEAD
+
         if(arr.length>0){
         document.querySelector('fees-card').acyear=arr[0].academic_year;
         document.querySelector('fees-card').academicyear=arr[0].admission_year;
@@ -1107,150 +1107,12 @@ alert("history"+e.detail.response.returnval);
         this.callfetchfeesService(arr[0].academic_year,arr[0].admission_year,arr[0].class_for_admission);
         this.fetchfeesplitup(arr[0].academic_year,arr[0].admission_year,arr[0].class_for_admission);
         }
-=======
+
         alert(JSON.stringify(arr));
         localStorage.setItem("curr_sess_feecode",arr[0].fee_code);
 
-      },
-      fetchfeesplitup:function(){
-        this.fetchfeesplitupurl=sessionStorage.getItem("addrinfo")+"/fetchfeesplitup";
-        var obj={"schoolid":"","feecode":""}
-        obj.feecode=localStorage.getItem("curr_sess_feecode");
-        obj.schoolid=localStorage.getItem("schoolid");
-        this.fetchfeesplitupparam=obj;
-        this.$.fetchfeesplitupajax.generateRequest();
-      },
-      fetchfeesplitupResponse:function(e){
-        var arr=e.detail.response.returnval;
-        alert(JSON.stringify(arr));
-        if(localStorage.getItem("curr_sess_feetype")=="pros_fee"){
-          document.querySelector('prospectousfee-card').fees=arr[0].prospectous_fee;
-          localStorage.setItem("curr_sess_prospectousfee",arr[0].prospectous_fee);
-        }
-        if(localStorage.getItem("curr_sess_feetype")=="reg_fee"){
-          document.querySelector('registerationfee-card').fees=arr[0].registeration_fee;
-          localStorage.setItem("curr_sess_registerationfee",arr[0].registeration_fee);
-        }
-        if(localStorage.getItem("curr_sess_feetype")=="ann_fee"){
-          document.querySelector('annualfee-card').fees=arr[0].annual_fee;
-          localStorage.setItem("curr_sess_annualfee",arr[0].annual_fee);
-        }
-
-      },
-      callfetchnoofinstallmentService:function(){
-        this.fetchnoofinstallmenturl=sessionStorage.getItem("addrinfo")+"/fetchnoofinstallment";
-        var obj={"schoolid":""}
-        obj.schoolid=localStorage.getItem("schoolid");
-        this.fetchnoofinstallmentparam=obj;
-
-        this.$.fetchnoofinstallmentajax.generateRequest();
-      },
-      fetchnoofinstallmentResponse:function(e){
-        var arr=e.detail.response.returnval;        
-        var feeinstallmentarr=[];
-        for(var i=0;i<arr.length;i++){
-          var obj={"installment":"","amount":"","date":""};
-          obj.installment=arr[i].installment_name;
-          obj.date=arr[i].installment_date;
-
-          obj.amount=arr[i].installment_amount;
-          feeinstallmentarr.push(obj);
-
-        if(arr[i].feetype_code=="ann_fee"){
-          var percent=arr[i].installment_percentage;
-          var annualfee=localStorage.getItem("curr_sess_annualfee")+localStorage.getItem("curr_sess_tutionfee");
-          obj.amount=parseFloat(annualfee)*(parseFloat(percent)/100);
-          annual.push(obj);
-        }
-        if(arr[i].feetype_code=="pros_fee"){
-          var percent=arr[i].installment_percentage;
-          var prosfee=localStorage.getItem("curr_sess_prospectousfee");
-          obj.amount=parseFloat(prosfee)*(parseFloat(percent)/100);
-          pros.push(obj);
-        }
-        if(arr[i].feetype_code=="reg_fee"){
-          var percent=arr[i].installment_percentage;
-          var regfee=localStorage.getItem("curr_sess_registerationfee");
-          obj.amount=parseFloat(regfee)*(parseFloat(percent)/100);
-          reg.push(obj);
-        }
-        if(arr[i].feetype_code=="kit_fee"){
-          var percent=arr[i].installment_percentage;
-          var kitfee=localStorage.getItem("curr_sess_kitfee");
-          obj.amount=parseFloat(kitfee)*(parseFloat(percent)/100);
-          kit.push(obj);
-        }
-        if(arr[i].feetype_code=="cau_fee"){
-          var percent=arr[i].installment_percentage;
-          var cautionfee=localStorage.getItem("curr_sess_cautionfee");
-          obj.amount=parseFloat(cautionfee)*(parseFloat(percent)/100);
-          caution.push(obj);
-        }
-        }
-        if(localStorage.getItem("curr_sess_feetype")=="pros_fee"){
-        document.querySelector('prospectousfee-card').prosarr=pros;
-        document.querySelector('prospectousfee-card').FnHiddenPayment();
-        }
-        if(localStorage.getItem("curr_sess_feetype")=="reg_fee"){
-        document.querySelector('registerationfee-card').regarr=reg;
-        document.querySelector('registerationfee-card').FnHiddenPayment();
-        }
-        if(localStorage.getItem("curr_sess_feetype")=="ann_fee"){
-        document.querySelector('annualfee-card').annarr=annual;
-        document.querySelector('annualfee-card').FnHiddenPayment();
-
-
-        }
-        document.querySelector('fees-card').feearr=feeinstallmentarr;
-        document.querySelector('fees-card').FnHiddenPayment();
-      },
-      FnRefresh:function(){
-        localStorage.setItem("curr_sess_enquiryno","");
-        localStorage.setItem("curr_sess_admissionno","");
-        localStorage.setItem("curr_sess_academicyear","");
-        localStorage.setItem("curr_sess_grade","");
-        localStorage.setItem("curr_sess_studentname","");
-      },
-      callfetchadmissioncountService:function(){
-        this.getadmissioncounturl=sessionStorage.getItem("addrinfo")+"/getadmissioncount";
-        var obj={"schol":"","status":""}
-        obj.schol=localStorage.getItem("schoolid");
-        obj.status="Admitted";
-        this.getadmissioncountparam=obj;
-        this.$.getadmissioncountajax.generateRequest();
-     },
-     getadmissioncountResponse:function(e){
-        var result=e.detail.response.returnval;
-        document.querySelector('enquiry-card').gradewiseadmissionarr=result;
-     },
-     callFetchadmissiontestinfo:function(enquiryno){
-       this.fetchadmissiontestinfourl=sessionStorage.getItem("addrinfo")+"/fetchadmissiontestinfo";
-        var obj={"schoolid":"","enquiryno":""}
-        obj.schoolid=localStorage.getItem("schoolid");
-        obj.enquiryno=enquiryno;
-        this.fetchadmissiontestinfoparam=obj;
-        this.$.fetchadmissiontestinfoajax.generateRequest(); 
-     },
-     fetchadmissiontestinfoResponse:function(e){
-        // alert(e.detail.response.returnval);
-        var arr=e.detail.response.returnval;
-        document.querySelector('admission-approval-card').enquiryno=arr[0].enquiry_no;
-        document.querySelector('admission-approval-card').studentname=arr[0].enquiry_name;
-        document.querySelector('admission-approval-card').grade=arr[0].class;
-     },
-     callUpdateteststatus:function(enquiryno,status){
-        this.updateteststatusurl=sessionStorage.getItem("addrinfo")+"/updateteststatus";
-        var obj={"schoolid":"","enquiryno":"","status":""}
-        obj.schoolid=localStorage.getItem("schoolid");
-        obj.enquiryno=enquiryno;
-        obj.status=status;
-        this.updateteststatusparam=obj;
-        this.$.updateteststatusajax.generateRequest(); 
-     },
-     updateteststatusResponse:function(e){
-        alert(e.detail.response.returnval);
->>>>>>> origin/master
-     }
+      }
+      
     });
   })();
   </script>
