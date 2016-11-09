@@ -27,17 +27,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <th>Walk In for the day</th>
           <th>No. of Prospectus</th>
           <th>No.of Admissions (2017-2018)</th>
-          <th>Withdrawals</th>
-          <th>Capacity</th>
-          <th>New admissions required</th>
+         
         </thead>
         <tbody>
           <template  is="dom-repeat" items="{{summaryarr}}" as="view">
             <tr>
               <!-- <td>{{view.}}</td>
-              <td>{{view.}}</td>
-              <td>{{view.}}</td>
-              <td>{{view.}}</td>
               <td>{{view.}}</td>
               <td>{{view.}}</td>
               <td>{{view.}}</td>
@@ -57,8 +52,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     Polymer({
       is: 'master-report-card',
 
-      ready:function(){
-        alert('asdkhfj');
+      Fncall:function(){
+        //alert('asdkhfj');
           this.$.reportservice.masterReportService();
       }
     });

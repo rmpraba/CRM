@@ -268,7 +268,7 @@
                 <!-- <a href="flot.html"></a> -->
               </li>
               <li>
-                <a href="" on-click="enquiry_analysis" aria-hidden="true">Enquiry Analysis</a>
+                <a href="" on-click="Fnmasteranalysis" aria-hidden="true">Master Enquiry Analysis</a>
               </li>
             </ul>
           </li>
@@ -674,6 +674,7 @@
 
 
     <crm-service id="service"></crm-service>
+    <followup-service id="followupservice"></followup-service>
     <schedule-service id="scheduleservice"></schedule-service>
   </template>
   <script>
@@ -758,7 +759,7 @@
 
       },
       followupdashboard:function(){
-        this.$.service.getfollowupcount();
+        this.$.followupservice.getfollowupcount();
         document.querySelector('app-list').setPage("follow-up");
       },
       FnRefresh:function(){
@@ -767,7 +768,7 @@
         document.querySelector('admission-service').FnRefresh();
       },
       enquiry:function(){
-        this.$.service.getfollowupcount();
+        this.$.followupservice.getenquirycount();
         document.querySelector('detailed-enquiry-form').country();
         document.querySelector('app-list').setPage("enquiry");
 
@@ -792,6 +793,10 @@
       Fnenqform:function(){
           document.querySelector('detailed-enquiry-form').Fnclear();
           document.querySelector('detailed-enquiry-form').ready();
+      },
+      Fnmasteranalysis:function(){
+          document.querySelector('app-list').setPage("master-enquiry-analysis","Master Walk-in Analysis");
+          document.querySelector('master-report-card').Fncall();
       }
     });
   })();
