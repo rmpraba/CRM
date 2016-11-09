@@ -1,0 +1,56 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="reporting-service">
+  <template>
+
+  <!-- this below ajax is used to call the function that fetches the total number of enquiry done with repsect to academic year and group by grade wise -->
+      <iron-ajax
+        method="post"
+        id="getcountyearwiseajax"
+        url="{{getcountyearwiseurl}}"
+        params="{{getcountyearwiseparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getcountyearwiseResponse"
+        debounce-duration="300"
+        >
+  </template>
+  <script>
+  (function() {
+    'use strict';
+      var academic_year;
+    Polymer({
+      is: 'reporting-service',
+
+         masterReportService:function(){
+          var dat=new Date();
+          if((dat.getMonth()+1)>=7){
+
+            academic_year='AY-'+(dat.getFullyear()+1)+'-'(dat.getFullyear()+2);
+          }
+          else if((dat.getMonth()+1)<=6){
+                academic_year='AY-'+(dat.getFullyear())+'-'(dat.getFullyear()+1);
+          }
+          alert(academic_year);
+        /*this.getcountyearwiseurl=sessionStorage.getItem("addrinfo")+"/getcountyearwise";
+        var obj={"schoolid":"","academicyr":""};
+        obj.schoolid=localStorage.getItem("schoolid");
+        obj.academicyr=
+        this.getcountyearwiseparam=obj;
+        this.$.getcountyearwiseajax.generateRequest();*/
+      }
+      
+    });
+  })();
+  </script>
+</dom-module>

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cf87a71e-5582-4c0c-9b35-1815db928b04" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/elements/crm-service/crm-service.html" afterPath="$PROJECT_DIR$/app/elements/crm-service/crm-service.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server.js" afterPath="$PROJECT_DIR$/server.js" />
     </list>
     <ignored path="CRM.iws" />
@@ -24,11 +24,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="crm-service.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="crm-service.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/elements/crm-service/crm-service.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5680581">
-              <caret line="1911" column="28" selection-start-line="1911" selection-start-column="28" selection-end-line="1911" selection-end-column="28" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="971" column="39" selection-start-line="971" selection-start-column="39" selection-end-line="971" selection-end-column="39" />
               <folding />
             </state>
           </provider>
@@ -38,10 +38,10 @@
         <entry file="file://$PROJECT_DIR$/app/elements/newenquiry-card/newenquiry-card.html">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="555" column="278" selection-start-line="555" selection-start-column="269" selection-end-line="555" selection-end-column="278" />
+              <caret line="558" column="278" selection-start-line="558" selection-start-column="269" selection-end-line="558" selection-end-column="278" />
               <folding>
                 <element signature="n#style#0;n#span#1;n#div#7;n#div#0;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
-                <marker date="1478505819607" expanded="true" signature="24462:24475" placeholder="{...}" />
+                <marker date="1478521360666" expanded="true" signature="10386:10432" placeholder="{...}" />
               </folding>
             </state>
           </provider>
@@ -51,18 +51,20 @@
         <entry file="file://$PROJECT_DIR$/app/elements/special-discount-card/special-discount-card.html">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="34" column="74" selection-start-line="34" selection-start-column="74" selection-end-line="34" selection-end-column="74" />
+              <caret line="19" column="50" selection-start-line="19" selection-start-column="50" selection-end-line="19" selection-end-column="50" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="server.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="server.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/server.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="42.24138">
-              <caret line="2771" column="45" selection-start-line="2771" selection-start-column="45" selection-end-line="2771" selection-end-column="54" />
-              <folding />
+            <state vertical-scroll-proportion="0.39273927">
+              <caret line="2860" column="18" selection-start-line="2860" selection-start-column="18" selection-end-line="2860" selection-end-column="18" />
+              <folding>
+                <marker date="1478675811682" expanded="true" signature="81082:81129" placeholder="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -70,8 +72,8 @@
       <file leaf-file-name="detailed-enquiry-form.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/elements/detailed-enquiry-form/detailed-enquiry-form.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="5.018182">
-              <caret line="677" column="43" selection-start-line="677" selection-start-column="43" selection-end-line="677" selection-end-column="43" />
+            <state vertical-scroll-proportion="5.6153846">
+              <caret line="176" column="28" selection-start-line="176" selection-start-column="28" selection-end-line="176" selection-end-column="28" />
               <folding>
                 <element signature="n#style#0;n#paper-dropdown-menu#0;n#span#1;n#div#0;n#div#0;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#paper-icon-button#0;n#span#2;n#div#0;n#div#0;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
@@ -82,17 +84,42 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="admission-service.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/elements/admission-service/admission-service.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="1059" column="6" selection-start-line="1059" selection-start-column="6" selection-end-line="1059" selection-end-column="6" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="navigation-bar.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/elements/navigation-bar/navigation-bar.html">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="771" column="26" selection-start-line="771" selection-start-column="26" selection-end-line="771" selection-end-column="26" />
-              <folding>
-                <marker date="1478505819604" expanded="true" signature="29914:30191" placeholder="{&quot;is&quot;: 'navigation-bar'...}" />
-                <marker date="1478505819604" expanded="true" signature="29914:30197" placeholder="{...}" />
-                <marker date="1478505819604" expanded="true" signature="29940:30012" placeholder="{...}" />
-                <marker date="1478505819604" expanded="true" signature="30040:30185" placeholder="{...}" />
-              </folding>
+              <caret line="353" column="62" selection-start-line="353" selection-start-column="62" selection-end-line="353" selection-end-column="62" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="enquiry-analysis-card.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/elements/enquiry-analysis-card/enquiry-analysis-card.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="39" column="25" selection-start-line="39" selection-start-column="25" selection-end-line="39" selection-end-column="25" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="app-list.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/elements/app-list/app-list.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="85" column="17" selection-start-line="85" selection-start-column="17" selection-end-line="85" selection-end-column="17" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -140,24 +167,25 @@
         <option value="$PROJECT_DIR$/app/elements/elements.html" />
         <option value="$PROJECT_DIR$/app/styles/styles.css" />
         <option value="$PROJECT_DIR$/app/elements/followup-card/followup-card.html" />
-        <option value="$PROJECT_DIR$/app/elements/app-list/app-list.html" />
         <option value="$PROJECT_DIR$/app/elements/follow-up-dashboard-item-card/follow-up-dashboard-item-card.html" />
         <option value="$PROJECT_DIR$/app/elements/followup-dashboard/followup-dashboard.html" />
         <option value="$PROJECT_DIR$/app/elements/followup-details-items/followup-details-items.html" />
         <option value="$PROJECT_DIR$/app/elements/admission-form/admission-form.html" />
-        <option value="$PROJECT_DIR$/app/elements/admission-service/admission-service.html" />
         <option value="$PROJECT_DIR$/app/elements/followup-student-detail/followup-student-detail.html" />
         <option value="$PROJECT_DIR$/app/elements/followup-details/followup-details.html" />
         <option value="$PROJECT_DIR$/app/elements/dob-datepicker-card/dob-datepicker-card.html" />
         <option value="$PROJECT_DIR$/app/elements/admission-datepicker/admission-datepicker.html" />
         <option value="$PROJECT_DIR$/app/elements/dateofbirth-datepicker/dateofbirth-datepicker.html" />
         <option value="$PROJECT_DIR$/app/elements/enquiry-details-card/enquiry-details-card.html" />
-        <option value="$PROJECT_DIR$/app/elements/navigation-bar/navigation-bar.html" />
         <option value="$PROJECT_DIR$/app/elements/newenquiry-card/newenquiry-card.html" />
         <option value="$PROJECT_DIR$/app/elements/special-discount-card/special-discount-card.html" />
+        <option value="$PROJECT_DIR$/app/elements/admission-service/admission-service.html" />
+        <option value="$PROJECT_DIR$/app/elements/crm-service/crm-service.html" />
+        <option value="$PROJECT_DIR$/app/elements/app-list/app-list.html" />
+        <option value="$PROJECT_DIR$/app/elements/enquiry-analysis-card/enquiry-analysis-card.html" />
+        <option value="$PROJECT_DIR$/app/elements/navigation-bar/navigation-bar.html" />
         <option value="$PROJECT_DIR$/app/elements/detailed-enquiry-form/detailed-enquiry-form.html" />
         <option value="$PROJECT_DIR$/server.js" />
-        <option value="$PROJECT_DIR$/app/elements/crm-service/crm-service.html" />
       </list>
     </option>
   </component>
@@ -176,7 +204,7 @@
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
-    <option name="width" value="1382" />
+    <option name="width" value="1370" />
     <option name="height" value="744" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
@@ -223,7 +251,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -904,6 +932,28 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="enquiry-analysis-card" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CRM" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CRM" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="elements" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="end-datepicker-card" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -1196,7 +1246,7 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1281,27 +1331,27 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-8" y="-8" width="1370" height="744" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15885799" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15657312" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329653" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3289689" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329653" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3280757" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -1320,13 +1370,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.51166964">
-          <caret line="138" column="12" selection-start-line="138" selection-start-column="12" selection-end-line="138" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/elements/organization-page/organization-page.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.42728904">
@@ -1486,13 +1529,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/elements/app-list/app-list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.2692308">
-          <caret line="53" column="50" selection-start-line="53" selection-start-column="34" selection-end-line="53" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/elements/followup-dashboard/followup-dashboard.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.41034484">
@@ -1563,13 +1599,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/elements/admission-service/admission-service.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.49827588">
-          <caret line="45" column="24" selection-start-line="45" selection-start-column="24" selection-end-line="45" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/elements/dob-datepicker-card/dob-datepicker-card.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-9.884615">
@@ -1633,26 +1662,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/elements/navigation-bar/navigation-bar.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="771" column="26" selection-start-line="771" selection-start-column="26" selection-end-line="771" selection-end-column="26" />
-          <folding>
-            <marker date="1478505819604" expanded="true" signature="29914:30191" placeholder="{&quot;is&quot;: 'navigation-bar'...}" />
-            <marker date="1478505819604" expanded="true" signature="29914:30197" placeholder="{...}" />
-            <marker date="1478505819604" expanded="true" signature="29940:30012" placeholder="{...}" />
-            <marker date="1478505819604" expanded="true" signature="30040:30185" placeholder="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/elements/newenquiry-card/newenquiry-card.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="555" column="278" selection-start-line="555" selection-start-column="269" selection-end-line="555" selection-end-column="278" />
+          <caret line="558" column="278" selection-start-line="558" selection-start-column="269" selection-end-line="558" selection-end-column="278" />
           <folding>
             <element signature="n#style#0;n#span#1;n#div#7;n#div#0;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
-            <marker date="1478505819607" expanded="true" signature="24462:24475" placeholder="{...}" />
+            <marker date="1478521360666" expanded="true" signature="10386:10432" placeholder="{...}" />
           </folding>
         </state>
       </provider>
@@ -1660,15 +1676,23 @@
     <entry file="file://$PROJECT_DIR$/app/elements/special-discount-card/special-discount-card.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="34" column="74" selection-start-line="34" selection-start-column="74" selection-end-line="34" selection-end-column="74" />
+          <caret line="19" column="50" selection-start-line="19" selection-start-column="50" selection-end-line="19" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/elements/crm-service/crm-service.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="971" column="39" selection-start-line="971" selection-start-column="39" selection-end-line="971" selection-end-column="39" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/elements/detailed-enquiry-form/detailed-enquiry-form.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="5.018182">
-          <caret line="677" column="43" selection-start-line="677" selection-start-column="43" selection-end-line="677" selection-end-column="43" />
+        <state vertical-scroll-proportion="5.6153846">
+          <caret line="176" column="28" selection-start-line="176" selection-start-column="28" selection-end-line="176" selection-end-column="28" />
           <folding>
             <element signature="n#style#0;n#paper-dropdown-menu#0;n#span#1;n#div#0;n#div#0;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#paper-icon-button#0;n#span#2;n#div#0;n#div#0;n#template#0;n#dom-module#0;n#!!top" expanded="true" />
@@ -1678,19 +1702,45 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server.js">
+    <entry file="file://$PROJECT_DIR$/app/elements/admission-service/admission-service.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="42.24138">
-          <caret line="2771" column="45" selection-start-line="2771" selection-start-column="45" selection-end-line="2771" selection-end-column="54" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1059" column="6" selection-start-line="1059" selection-start-column="6" selection-end-line="1059" selection-end-column="6" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/elements/crm-service/crm-service.html">
+    <entry file="file://$PROJECT_DIR$/app/elements/navigation-bar/navigation-bar.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5680581">
-          <caret line="1911" column="28" selection-start-line="1911" selection-start-column="28" selection-end-line="1911" selection-end-column="28" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="353" column="62" selection-start-line="353" selection-start-column="62" selection-end-line="353" selection-end-column="62" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/elements/enquiry-analysis-card/enquiry-analysis-card.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="39" column="25" selection-start-line="39" selection-start-column="25" selection-end-line="39" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/elements/app-list/app-list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="85" column="17" selection-start-line="85" selection-start-column="17" selection-end-line="85" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.39273927">
+          <caret line="2860" column="18" selection-start-line="2860" selection-start-column="18" selection-end-line="2860" selection-end-column="18" />
+          <folding>
+            <marker date="1478675811682" expanded="true" signature="81082:81129" placeholder="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>

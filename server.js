@@ -2681,8 +2681,8 @@ app.post('/updateschedule',  urlencodedParser,function (req, res)
  app.post('/fetchadmissiontestinfo', urlencodedParser,function (req, res){
 
    //console.log('qur');
-   var qur="SELECT * FROM student_enquiry_details WHERE school_id='"+req.query.schoolid+"' and enquiry_no='"+req.query.enquiryno+"' and status='Enquired' and admission_test='Yes'";
-   console.log(qur);
+   var qur="SELECT d.enquiry_no, d.enquiry_name, d.class, d.created_on, a.english_status, a.maths_status, a.evs_status, a.test_date,a.english_mark,a.maths_mark,a.evs_mark,a.result_status  FROM student_enquiry_details as d join admission_test_details as a WHERE (a.school_id='"+req.query.schoolid+"' and a.enquiry_id='"+req.query.enquiryno+"') and d.status='Enquired' and d.admission_test='Yes' and (d.enquiry_no='"+req.query.enquiryno+"' and d.school_id='"+req.query.schoolid+"')";
+   //console.log(qur);
    connection.query(qur,
      function(err, rows)
      {
@@ -2907,6 +2907,60 @@ app.post('/verifyage',  urlencodedParser,function (req, res){
      });
  });
 
+/*this below function is used to store the admission test details in the table names, admission_test_details*/
+
+app.post('/admissiondetails',  urlencodedParser,function (req, res){
+
+    var response={
+      "school_id":req.query.schol,
+      "enquiry_id":req.query.enqid,
+      "english_status":req.query.english,
+      "maths_status":req.query.maths,
+      "evs_status":req.query.eve,
+      "test_date":req.query.testdate,
+      "updated_by":req.query.updateby,
+      "updated_on":req.query.updateon
+    };
+    connection.query('INSERT INTO admission_test_details SET ?',[response],
+    function(err, rows)
+    {
+    if(!err)
+    {
+      res.status(200).json({'returnval': 'success'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'no'});
+    }
+    });
+});
+
+
+/*this function used to update the admission test mark details in the admission_test_details*/
+
+app.post('/updatetestdetails', urlencodedParser,function (req, res){
+
+   //console.log('qur');
+   var qur="UPDATE admission_test_details SET english_mark='"+req.query.english+"', maths_mark='"+req.query.maths+"', evs_mark='"+req.query.evs+"', result_status='"+req.query.status+"', evaluated_by='"+req.query.evaluatedby+"', evaluated_on='"+req.query.evaluatedon+"' WHERE school_id='"+req.query.schoolid+"' and enquiry_id='"+req.query.enquiryno+"'";
+   console.log(qur);
+   connection.query(qur,
+     function(err, result)
+     {
+       if(!err)
+       {
+
+           res.status(200).json({'returnval': 'success'});
+        }
+        else
+        {
+           console.log(err);
+           res.status(200).json({'returnval': 'not updated!'});
+        }
+
+     });
+ });
+
 
  app.post('/rtenumber',  urlencodedParser,function (req, res){
 
@@ -2924,6 +2978,30 @@ app.post('/verifyage',  urlencodedParser,function (req, res){
        }
      });
  });
+
+ app.post('/walkinanalysis',  urlencodedParser,function (req, res){
+   connection.query("SELECT count(*), enquiry_source FROM `student_enquiry_details` WHERE academic_year='AY-2017-2018' GROUP BY enquiry_source",
+     function(err, rows)
+     {
+       if(!err)
+       {
+         if(rows.length>0)
+         {
+           //console.log(rows);
+           res.status(200).json({'returnval': rows});
+         }
+         else
+         {
+           console.log(err);
+           res.status(200).json({'returnval':null});
+         }
+       }
+       else{
+         console.log(err);
+       }
+     });
+ });
+
 
 
 

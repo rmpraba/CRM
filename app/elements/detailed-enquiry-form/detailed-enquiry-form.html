@@ -487,9 +487,9 @@
         var dobdate;
         var admissiontestdate;
         var admissiontest;
-        var admissiontestenglish;
-        var admissiontestmaths;
-        var admissiontestevs;
+        var admissiontestenglish="No";
+        var admissiontestmaths="No";
+        var admissiontestevs="No";
         var rtevalue;
         var enrolltype;
         var yr1;
@@ -718,6 +718,7 @@
         {
          document.querySelector("#dffemale").checked=false;
          fngender="Male";
+
          //alert(gender);
        }
        else{
@@ -746,13 +747,11 @@
       }
     },
     femaleHandler:function(){
-      if(document.querySelector("#female").checked==true)
-        {
-         document.querySelector("#male").checked=false;
+      if(document.querySelector("#dffemale").checked==true){
+         document.querySelector("#dfmale").checked=false;
          fngender="Female";
          //alert(gender);
-       }
-       else{
+       } else {
         fngender=null;
        }
     },
@@ -933,7 +932,7 @@
     },
     englishHandler:function(){
       if(document.querySelector("#english").checked==true){
-        admissiontestenglish="English";
+        admissiontestenglish="Yes";
       }
       else{
         admissiontestenglish=null;
@@ -941,14 +940,14 @@
     },
       mathsHandler:function(){
         if(document.querySelector("#maths").checked==true){
-          admissiontestmaths="Maths";
+          admissiontestmaths="Yes";
         } else {
           admissiontestmaths=null;
         }
       },
       evsHandler:function(){
         if(document.querySelector("#evs").checked==true){
-          admissiontestevs="EVS";
+          admissiontestevs="Yes";
         } else {
           admissiontestevs=null;
         }
@@ -1041,6 +1040,7 @@
         }
       },
     submit:function(){
+      alert(fngender);
         if(this.firstname == "" || this.lastname == ""|| this.mothertongue == "" || this.fathername == "" || this.mothername == "" || this.fatheredu == "" || this.fathermob == "" || this.fathermail == "" || this.address1 == ""|| this.city == "" || this.pincode == "" || this.flat == "" || this.state == ""){
           this.$.fname.validate();
           //this.$.mname.validate();
@@ -1559,6 +1559,7 @@ Fnlistbox:function(nameitem){
       for(var i=0; i<checkList.length; i++){
         if(checkList[i] == 1){
           this.$.rtereference.hidden=false;
+          this.$.rtereference.validate();
         }
       }
     },
