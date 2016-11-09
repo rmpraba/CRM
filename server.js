@@ -2979,15 +2979,42 @@ app.post('/updatetestdetails', urlencodedParser,function (req, res){
      });
  });
 
- app.post('/walkinanalysis',  urlencodedParser,function (req, res){
-   connection.query("SELECT count(*), enquiry_source FROM `student_enquiry_details` WHERE academic_year='AY-2017-2018' GROUP BY enquiry_source",
+ app.post('/walkinanalysisyear',  urlencodedParser,function (req, res){
+   var qur = "SELECT count(*) as totalenq, enquiry_source FROM `student_enquiry_details` WHERE created_on like'"+req.query.current_year+"' and school_id = '"+req.query.schol+"' GROUP BY enquiry_source";
+   connection.query(qur,
      function(err, rows)
      {
        if(!err)
        {
          if(rows.length>0)
          {
-           //console.log(rows);
+           console.log(rows);
+           res.status(200).json({'returnval': rows});
+         }
+         else
+         {
+           console.log(err);
+           res.status(200).json({'returnval':null});
+         }
+       }
+       else{
+         console.log(err);
+       }
+     });
+ });
+
+
+ app.post('/walkinanalysismonth',  urlencodedParser,function (req, res){
+   var qur = "SELECT count(*) as totalenq, enquiry_source FROM `student_enquiry_details` WHERE created_on like'"+req.query.current_year+"' and school_id = '"+req.query.schol+"' GROUP BY enquiry_source";
+   console.log(qur);
+   connection.query(qur,
+     function(err, rows)
+     {
+       if(!err)
+       {
+         if(rows.length>0)
+         {
+           console.log(rows);
            res.status(200).json({'returnval': rows});
          }
          else
@@ -3004,6 +3031,29 @@ app.post('/updatetestdetails', urlencodedParser,function (req, res){
 
 
 
+ app.post('/walkinanalysisday',  urlencodedParser,function (req, res){
+   var qur = "SELECT count(*) as totalenq, enquiry_source FROM `student_enquiry_details` WHERE created_on like'"+req.query.current_year+"' and school_id = '"+req.query.schol+"' GROUP BY enquiry_source";
+   connection.query(qur,
+     function(err, rows)
+     {
+       if(!err)
+       {
+         if(rows.length>0)
+         {
+           console.log(rows);
+           res.status(200).json({'returnval': rows});
+         }
+         else
+         {
+           console.log(err);
+           res.status(200).json({'returnval':null});
+         }
+       }
+       else{
+         console.log(err);
+       }
+     });
+ });
 
 
 
