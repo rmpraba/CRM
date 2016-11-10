@@ -38,10 +38,10 @@
           <paper-input label="Date of Enquiry" readonly value="{{todaydate}}"></paper-input>
         </div>
          <div class="col-sm-3">
-         <paper-checkbox id="nextyear" class="checkbox" on-change="nextyearfhandler"> Next Full Year</paper-checkbox>
+         <paper-checkbox id="nextyear" class="checkbox" on-change="nextyearfhandler"> Next Year</paper-checkbox>
          </div>
          <div class="col-sm-3">
-         <paper-checkbox id="midyear" class="checkbox" on-change="midyearfhandler"> Mid Year</paper-checkbox>
+         <paper-checkbox id="midyear" class="checkbox" on-change="midyearfhandler"> Mid Term</paper-checkbox>
          </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
@@ -556,7 +556,7 @@ ready:function () {
         }
         else{
           // alert('coming........');
-        this.$.service.submitenqiry(this.enqno,this.academicyear,grade,this.firstname,this.middlename,this.lastname,gender,dobdate,this.fathername,this.mothername,this.mob,this.email,this.textvalue,this.todaydate,this.gemail,this.gmob,this.Guardianname,paga,enrolltype,checkList);
+        this.$.service.submitenqiry(this.enqno,this.academicyear,grade,this.firstname,this.middlename,this.lastname,gender,dobdate,this.fathername,this.mothername,this.mob,this.email,this.textvalue,this.todaydate,this.gemail,this.gmob,this.Guardianname,paga,enrolltype,checkList,this.discounttype);
       }}
       },
       verifymob:function(){
@@ -605,7 +605,7 @@ ready:function () {
               //alert(month);
                      yr1=(dt.getFullYear()+1)-2000;
                      yr2=(dt.getFullYear()+2)-2000;
-yearsxz='AY-'+(dt.getFullYear()+1)+'-'+(dt.getFullYear()+2);
+                    yearsxz='AY-'+(dt.getFullYear()+1)+'-'+(dt.getFullYear()+2);
                     this.academicyear=yearsxz;
           }
           else{
@@ -629,17 +629,20 @@ yearsxz='AY-'+(dt.getFullYear()+1)+'-'+(dt.getFullYear()+2);
       discountHandler:function(e){
         document.querySelector('#midyear').checked==true
       },
-      getItems:function(codes){
-        checkList.push(codes);
+      setDiscountType:function(code){
+        this.discounttypecode=code;
       },
-      removeItems:function(code){
-        for(var i=0;i<checkList.length;i++){
-          if(code==checkList[i].codes)
-          {
-            checkList.splice(i,1);
-          }
-        }
-      },
+      // getItems:function(codes){
+      //   checkList.push(codes);
+      // },
+      // removeItems:function(code){
+      //   for(var i=0;i<checkList.length;i++){
+      //     if(code==checkList[i].codes)
+      //     {
+      //       checkList.splice(i,1);
+      //     }
+      //   }
+      // },
       midyearfhandler:function(){
           if(document.querySelector('#midyear').checked==true){
               document.querySelector('#nextyear').checked=false;

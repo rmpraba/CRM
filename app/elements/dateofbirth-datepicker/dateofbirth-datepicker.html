@@ -14,7 +14,7 @@
   <template>
   <!--component which invokes the predefined date picker control-->
   <div class="datepicker">
-    <paper-input label="Date Of Birth" class="btn" on-click="FnShowDialog" raised value="{{fieldshowdate}}"></paper-input>
+    <paper-input label="Date Of Birth" class="btn" on-click="FnShowDialog" raised value="{{showdate}}"></paper-input>
     <paper-dialog id="dialog" class="paper-date-picker-dialog" modal on-iron-overlay-closed="FnDismissDialog" style="left: 0 !important;">
       <paper-date-picker id="picker" date="{{date}}"></paper-date-picker>
       <div class="buttons">
@@ -55,15 +55,15 @@
           //this.fieldshowdate="";
           }
           else{
-            this.fieldshowdate = moment(this.$.picker.date).format('L');
-          localStorage.setItem("localsess_start_date",this.fieldshowdate);
+            this.showdate = moment(this.$.picker.date).format('L');
+          localStorage.setItem("localsess_start_date",this.showdate);
           // //this.$.service.datepickinsta1(this.date);
           // //this.$.service.datepickinsta2(this.date);
           // //this.$.service.datepickinsta1cheque(this.date);
           // //this.$.service.datepickinsta2cheque(this.date);
           // //this.$.service.feereport(this.fieldshowdate);
-          document.querySelector('newenquiry-card').getdate(this.fieldshowdate);
-          document.querySelector('detailed-enquiry-form').getdate(this.fieldshowdate);
+          document.querySelector('newenquiry-card').getdate(this.showdate);
+          document.querySelector('detailed-enquiry-form').getdate(this.showdate);
           // // document.querySelector('admission-form').getdate(this.fieldshowdate);
 
           }
@@ -71,10 +71,10 @@
         }
       },
       FnClear:function(){
-        this.fieldshowdate = "";
+        this.showdate = "";
       },
       FnSetDate:function(value){
-        this.fieldshowdate=moment(new Date(value)).format('L');
+        this.showdate=moment(new Date(value)).format('L');
       }
    /*   setdate:function(zxdate){
         //alert('DAtae  '+zxdate);
