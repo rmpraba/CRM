@@ -1291,7 +1291,6 @@ document.querySelector('followup-service').GenerateFollowups(successbox);
           var obj = {"source":"","year":"","month":"",day:""};
           for(var j = 0; j <walkinanalysisday.length; j++){
             if(walkinanasysisyaerandmontharr[i].source == walkinanalysisday[j].enquiry_source){
-              alert(walkinanalysisday[j].totalenq);
               if(walkinanalysisday[j].totalenq==null||walkinanalysisday[j].totalenq==""){
                 walkinanasysisyaerandmontharr[i].day=0;
               }else{

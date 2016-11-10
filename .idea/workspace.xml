@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cf87a71e-5582-4c0c-9b35-1815db928b04" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/elements/crm-service/crm-service.html" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/elements/app-list/app-list.html" afterPath="$PROJECT_DIR$/app/elements/app-list/app-list.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/elements/crm-service/crm-service.html" afterPath="$PROJECT_DIR$/app/elements/crm-service/crm-service.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/elements/elements.html" afterPath="$PROJECT_DIR$/app/elements/elements.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/elements/navigation-bar/navigation-bar.html" afterPath="$PROJECT_DIR$/app/elements/navigation-bar/navigation-bar.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server.js" afterPath="$PROJECT_DIR$/server.js" />
@@ -28,11 +28,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="crm-service.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="crm-service.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/elements/crm-service/crm-service.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="4.509091">
-              <caret line="1316" column="50" selection-start-line="1316" selection-start-column="50" selection-end-line="1316" selection-end-column="50" />
+            <state vertical-scroll-proportion="0.22867514">
+              <caret line="1292" column="95" selection-start-line="1292" selection-start-column="95" selection-end-line="1292" selection-end-column="95" />
               <folding />
             </state>
           </provider>
@@ -50,10 +50,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="server.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="server.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.77557755">
+            <state vertical-scroll-proportion="0.0">
               <caret line="3065" column="4" selection-start-line="3065" selection-start-column="3" selection-end-line="3065" selection-end-column="4" />
               <folding />
             </state>
@@ -186,8 +186,8 @@
         <option value="$PROJECT_DIR$/app/elements/app-list/app-list.html" />
         <option value="$PROJECT_DIR$/app/elements/detailed-enquiry-form/detailed-enquiry-form.html" />
         <option value="$PROJECT_DIR$/app/elements/walkin-analysis-filter-card/walkin-analysis-filter-card.html" />
-        <option value="$PROJECT_DIR$/app/elements/crm-service/crm-service.html" />
         <option value="$PROJECT_DIR$/server.js" />
+        <option value="$PROJECT_DIR$/app/elements/crm-service/crm-service.html" />
       </list>
     </option>
   </component>
@@ -1742,14 +1742,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/elements/crm-service/crm-service.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="4.509091">
-          <caret line="1316" column="50" selection-start-line="1316" selection-start-column="50" selection-end-line="1316" selection-end-column="50" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/elements/detailed-enquiry-form/detailed-enquiry-form.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="115.163635">
@@ -1762,8 +1754,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/server.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.77557755">
+        <state vertical-scroll-proportion="0.0">
           <caret line="3065" column="4" selection-start-line="3065" selection-start-column="3" selection-end-line="3065" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/elements/crm-service/crm-service.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.22867514">
+          <caret line="1292" column="95" selection-start-line="1292" selection-start-column="95" selection-end-line="1292" selection-end-column="95" />
           <folding />
         </state>
       </provider>
