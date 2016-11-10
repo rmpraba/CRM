@@ -15,14 +15,15 @@
           <tr>
             <th style="width:5%">ID</th>
             <th style="width:5%">Student Name</th>
-            <th style="width:6%">confidence Level</th>
-            <th style="width:7%">followup</th>
-            <th style="width:5%">view</th>
+            <th style="width:5%">Upcoming Date</th>
+            <th style="width:6%">Confidence Level</th>
+            <th style="width:7%">Upcoming Followup</th>
+            <th style="width:5%">View Details</th>
           </tr>
         </thead>
         </table>
       <template is="dom-repeat" items="{{followuparr}}" as="view">
-            <followup-details-items id="{{view.enquiry_id}}" student="{{view.enquiry_name}}" confidencelevel = "{{view.current_confidence_level}}" followupflag = "{{view.followup_flag}}" status="{{view.followup_status}}" followupid="{{view.followup_id}}"></followup-details-items>
+            <followup-details-items id="{{view.enquiry_id}}" student="{{view.enquiry_name}}" currdate="{{view.upcoming_date}}"  confidencelevel = "{{view.current_confidence_level}}" followupflag = "{{view.schedule_flag}}" status="{{view.schedule_status}}" followupid="{{view.id}}"></followup-details-items>
       </template>
      </br>
     </div>

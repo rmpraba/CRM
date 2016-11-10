@@ -1,0 +1,494 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="followup-service">
+  <template>
+        <!-- this ajax is to fetch the detail of student who have been enquired newly and yet done a single follow up-->
+    <iron-ajax
+        method="post"
+        id="getopenfollowupcountajax"
+        url="{{getopenfollowupcounturl}}"
+        params="{{getopenfollowupcountparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getopenfollowupcountResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <iron-ajax
+        method="post"
+        id="followupdetailsajax"
+        url="{{followupdetailsurl}}"
+        params="{{followupdetailsparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="followupdetailsResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <!-- this ajax used to fetch the detail of student who have been enquired and been in process for follow up -->
+  <iron-ajax
+        method="post"
+        id="getprocessfollowupcountajax"
+        url="{{getprocessfollowupcounturl}}"
+        params="{{getprocessfollowupcountparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getprocessfollowupcountResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <!-- this ajax used to fetch the detail of student who have been enquired and status have been in closed for follow up -->
+  <iron-ajax
+        method="post"
+        id="getclosedfollowupcountajax"
+        url="{{getclosedfollowupcounturl}}"
+        params="{{getclosedfollowupcountparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getclosedfollowupcountResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <!-- this ajax used to fetch the detail of student who have been enquired and status have been in exhausted for follow up -->
+  <iron-ajax
+        method="post"
+        id="getexhaustfollowupcountajax"
+        url="{{getexhaustfollowupcounturl}}"
+        params="{{getexhaustfollowupcountparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getexhaustfollowupcountResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+
+  <!-- this ajax is to get the count of enquiry and followup done with the respective percentage of greater than 95 confidence level -->
+
+    <iron-ajax
+      method="post"
+      id="greater95ajax"
+      url="{{greater95url}}"
+      params="{{greater95param}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="greater95Response"
+      debounce-duration="300"
+    >
+    </iron-ajax>
+
+    <!-- this ajax is to get the count of enquiry and followup done with the respective percentage of greater than 75 confidence level -->
+
+    <iron-ajax
+      method="post"
+      id="greater75ajax"
+      url="{{greater75url}}"
+      params="{{greater75param}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="greater75Response"
+      debounce-duration="300"
+    >
+    </iron-ajax>
+
+    <!-- this ajax is to get the count of enquiry and followup done with the respective percentage of greater than 50 confidence level -->
+
+    <iron-ajax
+      method="post"
+      id="greater50ajax"
+      url="{{greater50url}}"
+      params="{{greater50param}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="greater50Response"
+      debounce-duration="300"
+    >
+    </iron-ajax>
+
+    <!-- this ajax is to get the count of enquiry and followup done with the respective percentage of less than 50 confidence level -->
+
+    <iron-ajax
+      method="post"
+      id="less50ajax"
+      url="{{less50url}}"
+      params="{{less50param}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="less50Response"
+      debounce-duration="300"
+    >
+    </iron-ajax>
+
+    <!-- this ajax is to get the count of enquiry and followup done with the respective percentage of less than 35 confidence level -->
+
+    <iron-ajax
+      method="post"
+      id="less35ajax"
+      url="{{less35url}}"
+      params="{{less35param}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="less35Response"
+      debounce-duration="300"
+    >
+    </iron-ajax>
+
+    <!-- this ajax is to get the count of enquiry and followup done with the respective percentage of less than 10 confidence level -->
+
+    <iron-ajax
+      method="post"
+      id="less10ajax"
+      url="{{less10url}}"
+      params="{{less10param}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="less10Response"
+      debounce-duration="300"
+    >
+    </iron-ajax>
+
+    <!-- this ajax is to get the count of enquiry and followup done with the respective percentage of TBD confidence level -->
+
+    <iron-ajax
+      method="post"
+      id="TBDajax"
+      url="{{TBDurl}}"
+      params="{{TBDparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="TBDResponse"
+      debounce-duration="300"
+    >
+    </iron-ajax>
+
+    <!-- this ajax is to call the function that fetches the master followup details from the table md_followup -->
+     <iron-ajax
+      method="post"
+      id="masterfollowupinfoajax"
+      url="{{masterfollowupinfourl}}"
+      params="{{masterfollowupinfoparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="masterfollowupinfoResponse"
+      debounce-duration="300"
+    >
+    </iron-ajax>
+
+    <!-- this ajax is used to update the follow up info in followup table -->
+  <iron-ajax
+        method="post"
+        id="updatefollowajax"
+        url="{{updatefollowurl}}"
+        params="{{updatefollowparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="updatefollowResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+
+  <!-- this below ajax is used to insert data in the follow up detail table
+  -->
+  <iron-ajax
+        method="post"
+        id="updatefollowdetailajax"
+        url="{{updatefollowdetailurl}}"
+        params="{{updatefollowdetailparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="updatefollowdetailResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+
+    <!-- this below ajax gets the list of student those who are in the specific status with respect to their grade -->
+    <iron-ajax
+      method="post"
+      id="getfollowupstudentsajax"
+      url="{{getfollowupstudentsurl}}"
+      params="{{getfollowupstudentsparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="getfollowupstudentsResponse"
+      debounce-duration="300"
+    >
+    </iron-ajax>
+
+
+  </template>
+  <script>
+  (function() {
+    'use strict';
+    var enquiryidzz;
+    var datesarr=[];
+    var generateid;
+    var resultarr;
+    var countresult=0;
+
+    Polymer({
+      is: 'followup-service',
+      GenerateFollowups:function(enquiryidd){
+          enquiryidzz=enquiryidd;
+          alert(enquiryidzz);
+        this.masterfollowupinfourl="http://localhost:8086/masterfollowupinfo";
+        var obj={"schol":""}
+        obj.schol=localStorage.getItem("schoolid");
+        this.masterfollowupinfoparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.masterfollowupinfoajax.generateRequest();
+    
+      },
+      masterfollowupinfoResponse:function(e){
+        alert(JSON.stringify(e.detail.response.returnval));
+       var newdate=new Date();
+          resultarr=e.detail.response.returnval;
+            var lastdate=new Date();
+             var temp=resultarr[0].no_of_days;
+          for(var i=0;i<resultarr[0].no_of_calls;i++){
+            var followup=new Date();
+              lastdate.setDate(lastdate.getDate()+resultarr[0].no_of_days);
+              followup.setDate(followup.getDate()+temp);
+              var obj={"dates":""}
+              obj.dates=followup;
+              datesarr.push(obj);
+              temp=temp+resultarr[0].no_of_days;
+          }
+//alert(JSON.stringify(datesarr));
+          generateid=Math.floor(100000 + Math.random() * 900000);
+
+newdate.setDate(newdate.getDate()+resultarr[0].no_of_days);
+
+         this.updatefollowurl="http://localhost:8086/updatefollow";
+        var obj={"schol":"","id":"","enquiryno":"","schedule":"","currconfidence":"","schedulestatus":"","scheduleflag":"","noofdays":"","noofschedule":"","upcomingdate":"","lastscheduleon":"","createdby":"","createdon":""}
+        obj.schol=localStorage.getItem("schoolid");
+        obj.id=generateid;
+        obj.enquiryno=enquiryidzz;
+        obj.schedule=1;
+        obj.currconfidence="TBD";
+        obj.schedulestatus="Open";
+        obj.scheduleflag=1;
+        obj.noofdays=resultarr[0].no_of_days;
+        obj.noofschedule=resultarr[0].no_of_calls;
+        obj.upcomingdate=newdate.getDate()+'/'+(newdate.getMonth()+1)+'/'+newdate.getFullYear();
+        obj.lastscheduleon=lastdate.getDate()+'/'+(lastdate.getMonth()+1)+'/'+lastdate.getFullYear();
+        obj.createdby=localStorage.getItem("employeeid");
+        obj.createdon=sessionStorage.getItem("todaydate");
+        this.updatefollowparam=obj;
+        //alert(JSON.stringify(obj));
+        this.$.updatefollowajax.generateRequest();
+      },
+      updatefollowResponse:function(e){
+          if(e.detail.response.returnval=='success'){
+              this.updatefollowdetailurl="http://localhost:8086/updatefollowdetail";
+      for(var j=0;j<(resultarr[0].no_of_calls);j++){
+        var obj={"schol":"","id":"","enquiryid":"","followupno":"","followupdate":"","nextfolowup":"","schedule":"","flag":"","createdon":"","createdby":""}
+          obj.schol=localStorage.getItem("schoolid");
+          obj.id=generateid;
+          obj.enquiryid=enquiryidzz;
+          obj.followupno=j+1;
+          obj.followupdate=(datesarr[j].dates).getDate()+"/"+((datesarr[j].dates).getMonth()+1)+"/"+(datesarr[j].dates).getFullYear();
+          if(j<(resultarr[0].no_of_calls-1)){
+          obj.nextfolowup=(datesarr[j+1].dates).getDate()+"/"+((datesarr[j+1].dates).getMonth()+1)+"/"+(datesarr[j+1].dates).getFullYear();
+          }
+          else{
+           obj.nextfolowup="Re-Schedule"; 
+          }
+          obj.flag=1;
+          obj.schedule=1;
+          obj.followupno=j+1;
+         obj.createdby=localStorage.getItem("employeeid");
+        obj.createdon=sessionStorage.getItem("todaydate");
+          this.updatefollowdetailparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.updatefollowdetailajax.generateRequest();
+        }
+      
+          }
+          else{
+            alert('Interrupted');
+          }
+      
+      },
+      updatefollowdetailResponse:function(e){
+        if(e.detail.response.returnval=='success'){
+          countresult=countresult+1;
+          if(countresult==resultarr[0].no_of_calls){
+          alert('The follwup schedule is updated successfully');
+          }
+        }
+        else{
+          alert('Interrupted');
+        }
+      },
+      getfollowupcount:function(){
+          alert('call');
+      var dt=new Date();
+        this.getopenfollowupcounturl="http://localhost:8086/getfollowupcount";
+        var obj={"schol":"","status":""}
+        obj.status="Open";
+        obj.schol=localStorage.getItem("schoolid");
+        this.getopenfollowupcountparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.getopenfollowupcountajax.generateRequest();
+
+        this.getclosedfollowupcounturl="http://localhost:8086/getfollowupcount";
+        var obj={"schol":"","status":""}
+        obj.status="Closed";
+        obj.schol=localStorage.getItem("schoolid");
+        this.getclosedfollowupcountparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.getclosedfollowupcountajax.generateRequest();
+
+
+        this.getprocessfollowupcounturl="http://localhost:8086/getfollowupcount";
+        var obj={"schol":"","status":""}
+        obj.status="Inprogress";
+        obj.schol=localStorage.getItem("schoolid");
+        this.getprocessfollowupcountparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.getprocessfollowupcountajax.generateRequest();
+
+
+        this.getexhaustfollowupcounturl="http://localhost:8086/getfollowupcount";
+        var obj={"schol":"","status":""}
+        obj.status="Exhausted";
+        obj.schol=localStorage.getItem("schoolid");
+        this.getexhaustfollowupcountparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.getexhaustfollowupcountajax.generateRequest();
+
+
+      /*  this.greater95url="http://localhost:8086/getconfidencecount";
+        var obj={"schol":"","status":""}
+        obj.status=">90%";
+        obj.schol=localStorage.getItem("schoolid");
+        this.greater95param=obj;
+       //alert(JSON.stringify(obj));
+        this.$.greater95ajax.generateRequest();
+
+         this.greater75url="http://localhost:8086/getconfidencecount";
+        var obj={"schol":"","status":""}
+        obj.status=">75%";
+        obj.schol=localStorage.getItem("schoolid");
+        this.greater75param=obj;
+       //alert(JSON.stringify(obj));
+        this.$.greater75ajax.generateRequest();
+
+         this.greater50url="http://localhost:8086/getconfidencecount";
+        var obj={"schol":"","status":""}
+        obj.status=">50%";
+        obj.schol=localStorage.getItem("schoolid");
+        this.greater50param=obj;
+       //alert(JSON.stringify(obj));
+        this.$.greater50ajax.generateRequest();
+
+         this.less50url="http://localhost:8086/getconfidencecount";
+        var obj={"schol":"","status":""}
+        obj.status="<50%";
+        obj.schol=localStorage.getItem("schoolid");
+        this.less50param=obj;
+       //alert(JSON.stringify(obj));
+        this.$.less50ajax.generateRequest();
+
+         this.less35url="http://localhost:8086/getconfidencecount";
+        var obj={"schol":"","status":""}
+        obj.status="<35%";
+        obj.schol=localStorage.getItem("schoolid");
+        this.less35param=obj;
+       //alert(JSON.stringify(obj));
+        this.$.less35ajax.generateRequest();
+
+        this.less10url="http://localhost:8086/getconfidencecount";
+        var obj={"schol":"","status":""}
+        obj.status="<15%";
+        obj.schol=localStorage.getItem("schoolid");
+        this.less10param=obj;
+       //alert(JSON.stringify(obj));
+        this.$.less10ajax.generateRequest();
+
+        this.TBDurl="http://localhost:8086/getconfidencecount";
+        var obj={"schol":"","status":""}
+        obj.status="TBD";
+        obj.schol=localStorage.getItem("schoolid");
+        this.TBDparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.TBDajax.generateRequest();*/
+
+
+     },
+     getopenfollowupcountResponse:function(e){
+      var res=e.detail.response.returnval;
+      document.querySelector('followup-dashboard').openarr=res;
+     },
+     getclosedfollowupcountResponse:function(e){
+      var res=e.detail.response.returnval;
+      document.querySelector('followup-dashboard').closearr=res;
+     },
+     getprocessfollowupcountResponse:function(e){
+      var res=e.detail.response.returnval;
+      document.querySelector('followup-dashboard').processarr=res;
+     },
+     getexhaustfollowupcountResponse:function(e){
+      var res=e.detail.response.returnval;
+      document.querySelector('followup-dashboard').exhaustedarr=res;
+     },
+     greater95Response:function(e){
+       var res=e.detail.response.returnval;
+      document.querySelector('followup-dashboard').arr90greater=res;
+     },
+     greater75Response:function(e){
+       var res=e.detail.response.returnval;
+      document.querySelector('followup-dashboard').arr75greater=res;
+     },
+     greater50Response:function(e){
+       var res=e.detail.response.returnval;
+      document.querySelector('followup-dashboard').arr50greater=res;
+     },
+     less50Response:function(e){
+       var res=e.detail.response.returnval;
+      document.querySelector('followup-dashboard').arr50lesser=res;
+     },
+     less35Response:function(e){
+       var res=e.detail.response.returnval;
+      document.querySelector('followup-dashboard').arr35lesser=res;
+     },
+     less10Response:function(e){
+       var res=e.detail.response.returnval;
+      document.querySelector('followup-dashboard').arr10lesser=res;
+     },
+     TBDResponse:function(e){
+       var res=e.detail.response.returnval;
+      document.querySelector('followup-dashboard').arrtbd=res;
+     },
+     getfollowupstudents:function(grade,status){
+        this.getfollowupstudentsurl="http://localhost:8086/getfollowupstudents";
+        var obj={"schol":"","fngrade":"","fnstatus":""};
+        obj.schol=localStorage.getItem("schoolid");
+        obj.fngrade=grade;
+        obj.fnstatus=status;
+        this.getfollowupstudentsparam=obj;
+        //alert(JSON.stringify(obj));
+        this.$.getfollowupstudentsajax.generateRequest();
+
+      },
+      getfollowupstudentsResponse:function(e){
+       var res=e.detail.response.returnval;
+       
+       document.querySelector('followup-details').followuparr=res;
+        document.querySelector('app-list').setPage("followup-details","Followup Student List");
+
+      }
+    
+    });
+  })();
+  </script>
+</dom-module>

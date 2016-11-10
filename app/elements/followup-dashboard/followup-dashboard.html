@@ -28,23 +28,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <tr>
       <td>
           <template  is="dom-repeat" items="{{openarr}}" as="view">
-          <follow-up-dashboard-item-card grade="{{view.class}}" enquirygrade="{{view.total}}" status="{{view.followup_status}}"></follow-up-dashboard-item-card>
+          <follow-up-dashboard-item-card grade="{{view.class}}" enquirygrade="{{view.total}}" status="{{view.schedule_status}}"></follow-up-dashboard-item-card>
         </template>
       </td>
         <td>
           <template  is="dom-repeat" items="{{processarr}}" as="view">
-            <follow-up-dashboard-item-card grade="{{view.class}}" enquirygrade="{{view.total}}" status="{{view.followup_status}}"></follow-up-dashboard-item-card>
+            <follow-up-dashboard-item-card grade="{{view.class}}" enquirygrade="{{view.total}}" status="{{view.schedule_status}}"></follow-up-dashboard-item-card>
           </template>
         </td>
       <td>
         <template  is="dom-repeat" items="{{closearr}}" as="view">
-          <follow-up-dashboard-item-card grade="{{view.class}}" enquirygrade="{{view.total}}" status="{{view.followup_status}}"></follow-up-dashboard-item-card>
+          <follow-up-dashboard-item-card grade="{{view.class}}" enquirygrade="{{view.total}}" status="{{view.schedule_status}}"></follow-up-dashboard-item-card>
         </template>
       </td>
 
       <td>
         <template  is="dom-repeat" items="{{exhaustedarr}}" as="view">
-          <follow-up-dashboard-item-card grade="{{view.class}}" enquirygrade="{{view.total}}" status="{{view.followup_status}}"></follow-up-dashboard-item-card>
+          <follow-up-dashboard-item-card grade="{{view.class}}" enquirygrade="{{view.total}}" status="{{view.schedule_status}}"></follow-up-dashboard-item-card>
         </template>
       </td>
       </tr>

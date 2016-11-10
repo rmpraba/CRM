@@ -205,44 +205,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         >
   </iron-ajax>
 
-  <!-- this below ajax gets the day counts for follow up from the config file -->
-   <iron-ajax
-        auto
-        id="followupajax"
-        url="../../configfile/followups.json"
-        handle-as="json"
-        content-type="application/json"
-        on-response="followupResponse"
-        debounce-duration="300"
-        >
-  </iron-ajax>
-
-  <!-- this ajax is used to update the follow up info in followup table -->
-  <iron-ajax
-        method="post"
-        id="updatefollowajax"
-        url="{{updatefollowurl}}"
-        params="{{updatefollowparam}}"
-        handle-as="json"
-        content-type="application/json"
-        on-response="updatefollowResponse"
-        debounce-duration="300"
-        >
-  </iron-ajax>
-
-  <!-- this below ajax is used to insert data in the follow up detail table
-  -->
-  <iron-ajax
-        method="post"
-        id="updatefollowdetailajax"
-        url="{{updatefollowdetailurl}}"
-        params="{{updatefollowdetailparam}}"
-        handle-as="json"
-        content-type="application/json"
-        on-response="updatefollowdetailResponse"
-        debounce-duration="300"
-        >
-  </iron-ajax>
+  
 
   <!-- this ajax is to get the referrer name from parent table -->
   <iron-ajax
@@ -268,189 +231,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         debounce-duration="300"
         >
   </iron-ajax>
-  <!-- this ajax is to fetch the detail of student who have been enquired newly and yet done a single follow up-->
-    <iron-ajax
-        method="post"
-        id="getopenfollowupcountajax"
-        url="{{getopenfollowupcounturl}}"
-        params="{{getopenfollowupcountparam}}"
-        handle-as="json"
-        content-type="application/json"
-        on-response="getopenfollowupcountResponse"
-        debounce-duration="300"
-        >
-  </iron-ajax>
-  <iron-ajax
-        method="post"
-        id="followupdetailsajax"
-        url="{{followupdetailsurl}}"
-        params="{{followupdetailsparam}}"
-        handle-as="json"
-        content-type="application/json"
-        on-response="followupdetailsResponse"
-        debounce-duration="300"
-        >
-  </iron-ajax>
-  <!-- this ajax used to fetch the detail of student who have been enquired and been in process for follow up -->
-  <iron-ajax
-        method="post"
-        id="getprocessfollowupcountajax"
-        url="{{getprocessfollowupcounturl}}"
-        params="{{getprocessfollowupcountparam}}"
-        handle-as="json"
-        content-type="application/json"
-        on-response="getprocessfollowupcountResponse"
-        debounce-duration="300"
-        >
-  </iron-ajax>
-  <!-- this ajax used to fetch the detail of student who have been enquired and status have been in closed for follow up -->
-  <iron-ajax
-        method="post"
-        id="getclosedfollowupcountajax"
-        url="{{getclosedfollowupcounturl}}"
-        params="{{getclosedfollowupcountparam}}"
-        handle-as="json"
-        content-type="application/json"
-        on-response="getclosedfollowupcountResponse"
-        debounce-duration="300"
-        >
-  </iron-ajax>
-  <!-- this ajax used to fetch the detail of student who have been enquired and status have been in exhausted for follow up -->
-  <iron-ajax
-        method="post"
-        id="getexhaustfollowupcountajax"
-        url="{{getexhaustfollowupcounturl}}"
-        params="{{getexhaustfollowupcountparam}}"
-        handle-as="json"
-        content-type="application/json"
-        on-response="getexhaustfollowupcountResponse"
-        debounce-duration="300"
-        >
-  </iron-ajax>
-
-    <iron-ajax
-      method="post"
-      id="followup1ajax"
-      url="{{followup1url}}"
-      params="{{followup1param}}"
-      handle-as="json"
-      content-type="application/json"
-      on-response="FollowUp1Response"
-      debounce-duration="300"
-    >
-    </iron-ajax>
-    <iron-ajax
-      method="post"
-      id="followup2ajax"
-      url="{{followup2url}}"
-      params="{{followup2param}}"
-      handle-as="json"
-      content-type="application/json"
-      on-response="FollowUp2Response"
-      debounce-duration="300"
-    >
-    </iron-ajax>
-    <iron-ajax
-    method="post"
-    id="followup3ajax"
-    url="{{followup3url}}"
-    params="{{followup3param}}"
-    handle-as="json"
-    content-type="application/json"
-    on-response="FollowUp3Response"
-    debounce-duration="300"
-  >
-  </iron-ajax>
-    <iron-ajax
-    method="post"
-    id="followup4ajax"
-    url="{{followup4url}}"
-    params="{{followup4param}}"
-    handle-as="json"
-    content-type="application/json"
-    on-response="FollowUp4Response"
-    debounce-duration="300"
-  >
-  </iron-ajax>
-    <iron-ajax
-    method="post"
-    id="followup5ajax"
-    url="{{followup5url}}"
-    params="{{followup5param}}"
-    handle-as="json"
-    content-type="application/json"
-    on-response="FollowUp5Response"
-    debounce-duration="300"
-  >
-  </iron-ajax>
-    <iron-ajax
-      method="post"
-      id="getfollowupstudentsajax"
-      url="{{getfollowupstudentsurl}}"
-      params="{{getfollowupstudentsparam}}"
-      handle-as="json"
-      content-type="application/json"
-      on-response="getfollowupstudentsResponse"
-      debounce-duration="300"
-    >
-    </iron-ajax>
-    <iron-ajax
-      method="post"
-      id="viewdetailajax"
-      url="{{viewdetailurl}}"
-      params="{{viewdetailparam}}"
-      handle-as="json"
-      content-type="application/json"
-      on-response="viewdetailResponse"
-      debounce-duration="300"
-    >
-    </iron-ajax>
-    <iron-ajax
-      method="post"
-      id="submitstatusajax"
-      url="{{submitstatusurl}}"
-      params="{{submitstatusparam}}"
-      handle-as="json"
-      content-type="application/json"
-      on-response="SubmitStatusResponse"
-      debounce-duration="300"
-    >
-    </iron-ajax>
-    <!-- this below ajax is used to change the status in folloupdetail table as rescheduled -->
-    <iron-ajax
-      method="post"
-      id="changestatusajax"
-      url="{{changestatusurl}}"
-      params="{{changestatusparam}}"
-      handle-as="json"
-      content-type="application/json"
-      on-response="changeStatusResponse"
-      debounce-duration="300"
-    >
-    </iron-ajax>
-    <!-- this ajax is to generate the followup id then update id and reschedule no in the followup table -->
-    <iron-ajax
-      method="post"
-      id="updatescheduleajax"
-      url="{{updatescheduleurl}}"
-      params="{{updatescheduleparam}}"
-      handle-as="json"
-      content-type="application/json"
-      on-response="updatescheduleResponse"
-      debounce-duration="300"
-    >
-    </iron-ajax>
-    <!-- this is to insert new follow up detail in the followup detail table -->
-    <iron-ajax
-      method="post"
-      id="insertrescheduleajax"
-      url="{{insertrescheduleurl}}"
-      params="{{insertrescheduleparam}}"
-      handle-as="json"
-      content-type="application/json"
-      on-response="insertrescheduleResponse"
-      >
-      </iron-ajax>
+ 
     <iron-ajax
       method="post"
       id="fetchenquiryinfoajax"
@@ -462,128 +243,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       debounce-duration="300"
     >
     </iron-ajax>
-    <!-- this below ajax is used to insert the call history of the follow up for the which the call is not properly attend -->
-    <iron-ajax
-      method="post"
-      id="insertcallhistoryajax"
-      url="{{insertcallhistoryurl}}"
-      params="{{insertcallhistoryparam}}"
-      handle-as="json"
-      content-type="application/json"
-      on-response="insertcallhistoryResponse"
-      debounce-duration="300"
-    >
-    </iron-ajax>
-    <!-- this ajax is used to update the flag and next followup date in the database -->
-    <iron-ajax
-      method="post"
-      id="updatedateajax"
-      url="{{updatedateurl}}"
-      params="{{updatedateparam}}"
-      handle-as="json"
-      content-type="application/json"
-      on-response="updatedateResponse"
-      debounce-duration="300"
-    >
-    </iron-ajax>
-
-    <!-- this ajax is to get the count of enquiry and followup done with the respective percentage of greater than 95 confidence level -->
-
-    <iron-ajax
-      method="post"
-      id="greater95ajax"
-      url="{{greater95url}}"
-      params="{{greater95param}}"
-      handle-as="json"
-      content-type="application/json"
-      on-response="greater95Response"
-      debounce-duration="300"
-    >
-    </iron-ajax>
-
-    <!-- this ajax is to get the count of enquiry and followup done with the respective percentage of greater than 75 confidence level -->
-
-    <iron-ajax
-      method="post"
-      id="greater75ajax"
-      url="{{greater75url}}"
-      params="{{greater75param}}"
-      handle-as="json"
-      content-type="application/json"
-      on-response="greater75Response"
-      debounce-duration="300"
-    >
-    </iron-ajax>
-
-    <!-- this ajax is to get the count of enquiry and followup done with the respective percentage of greater than 50 confidence level -->
-
-    <iron-ajax
-      method="post"
-      id="greater50ajax"
-      url="{{greater50url}}"
-      params="{{greater50param}}"
-      handle-as="json"
-      content-type="application/json"
-      on-response="greater50Response"
-      debounce-duration="300"
-    >
-    </iron-ajax>
-
-    <!-- this ajax is to get the count of enquiry and followup done with the respective percentage of less than 50 confidence level -->
-
-    <iron-ajax
-      method="post"
-      id="less50ajax"
-      url="{{less50url}}"
-      params="{{less50param}}"
-      handle-as="json"
-      content-type="application/json"
-      on-response="less50Response"
-      debounce-duration="300"
-    >
-    </iron-ajax>
-
-    <!-- this ajax is to get the count of enquiry and followup done with the respective percentage of less than 35 confidence level -->
-
-    <iron-ajax
-      method="post"
-      id="less35ajax"
-      url="{{less35url}}"
-      params="{{less35param}}"
-      handle-as="json"
-      content-type="application/json"
-      on-response="less35Response"
-      debounce-duration="300"
-    >
-    </iron-ajax>
-
-    <!-- this ajax is to get the count of enquiry and followup done with the respective percentage of less than 10 confidence level -->
-
-    <iron-ajax
-      method="post"
-      id="less10ajax"
-      url="{{less10url}}"
-      params="{{less10param}}"
-      handle-as="json"
-      content-type="application/json"
-      on-response="less10Response"
-      debounce-duration="300"
-    >
-    </iron-ajax>
-
-    <!-- this ajax is to get the count of enquiry and followup done with the respective percentage of TBD confidence level -->
-
-    <iron-ajax
-      method="post"
-      id="TBDajax"
-      url="{{TBDurl}}"
-      params="{{TBDparam}}"
-      handle-as="json"
-      content-type="application/json"
-      on-response="TBDResponse"
-      debounce-duration="300"
-    >
-    </iron-ajax>
+   
 
     <!-- this ajax is used to verify the age criteria for the specific grade according cbse rule and regulation that hasw been stored in md_age table in the database -->
     <iron-ajax
@@ -667,6 +327,39 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       debounce-duration="300"
     >
     </iron-ajax>
+    <iron-ajax
+      method="post"
+      id="walkinanalysisyearajax"
+      url="{{walkinanalysisyearurl}}"
+      params="{{walkinanalysisyearparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="walkinanalysisyearResponse"
+      debounce-duration="300"
+    >
+    </iron-ajax>
+    <iron-ajax
+      method="post"
+      id="walkinanalysisdayajax"
+      url="{{walkinanalysisdayurl}}"
+      params="{{walkinanalysisdayparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="walkinanalysisdayResponse"
+      debounce-duration="300"
+    >
+    </iron-ajax>
+    <iron-ajax
+      method="post"
+      id="walkinanalysismonthajax"
+      url="{{walkinanalysismonthurl}}"
+      params="{{walkinanalysismonthparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="walkinanalysismonthResponse"
+      debounce-duration="300"
+    >
+    </iron-ajax>
   </template>
   <script>
   (function() {
@@ -674,16 +367,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
    var seqno;
    var seqno1;
    var proseq;
-   var firstfollowup;
-   var secondfollowup;
-   var thirdfollowup;
-   var fourthfollowup;
-   var fifthfollowup;
-   var firstfollowupdate;
-   var secondfollowupdate;
-   var thirdfollowupdate;
-   var fourthfollowupdate;
-   var fifthfollowupdate;
+ 
    var parentarr=[];
    var studentarr=[];
    var namelistarr=[];
@@ -691,6 +375,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
    var xenquiryidd;
    var verifyage;
    var verifygrade;
+   var resultcheck;
 
    var fwupcmnt1;
    var fwupcmnt2;
@@ -720,8 +405,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var testenqid;
     var testdate;
     var rte_number;
+    var walkinanalysisyear={};
+    var walkinanalysismonth={};
+    var walkinanalysisday={};
+    var walkinanasysisyaerandmontharr=[];
     Polymer({
       is: 'crm-service',
+<<<<<<< HEAD
       followupResponse:function(e){
          firstfollowup=e.detail.response.firstfollowup;
          secondfollowup=e.detail.response.secondfollowup;
@@ -742,12 +432,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     fifthfollowupdate.setDate(fifthfollowupdate.getDate()+fifthfollowup);
      },
      submitenqiry:function(enqno,academicyear,grade,Fnfirstname,Fnmiddlename,Fnlastname,gender,dob,fathername,mothername,mob,email,textvalue,todate,gemail,gmob,Guardianname,paga,admtype,checkList,discountype){
+=======
+   
+     submitenqiry:function(enqno,academicyear,grade,Fnfirstname,Fnmiddlename,Fnlastname,gender,dob,fathername,mothername,mob,email,textvalue,todate,gemail,gmob,Guardianname,paga,admtype,checkList){
+>>>>>>> 8584db65eb9ec68f1fd502237f49ef73340ebabf
 
       //alert(enqno+academicyr+classes+studentname+gender+dob+mob+source+locality+category);
       successbox=enqno;
       discountArr =  checkList;
        currentEnqno = enqno;
-      var generateid=Math.floor(100000 + Math.random() * 900000);
+      
         this.submitenquiryurl="http://localhost:8086/submitenquiry";
         var obj={"id":"","schol":"","acadeyr":"","contact":"","grade":"","gender":"","firstname":"","middlename":"","lastname":"","dobs":"","father":"","mother":"","email":"","location":"","createdby":"","createdate":"","givenname":"","status":"","gemail":"","gmob":"","Guardianname":"","paga":"","adtype":""}
 
@@ -780,6 +474,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         //alert(JSON.stringify(obj));
         this.$.submitenquiryajax.generateRequest();
 
+<<<<<<< HEAD
         this.updatefollowurl="http://localhost:8086/updatefollow";
         var obj={"schol":"","id":"","enquiryno":"","schedule":"","createdby":"","createdon":""}
         obj.schol=localStorage.getItem("schoolid");
@@ -809,13 +504,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.updatefollowdetailparam=obj;
        //alert(JSON.stringify(obj));
         this.$.updatefollowdetailajax.generateRequest();
+=======
+
+>>>>>>> 8584db65eb9ec68f1fd502237f49ef73340ebabf
      },
      submitenquiryResponse:function(e) {
        var result = e.detail.response.returnval;
        // alert(JSON.stringify(result));
        if (result == "success") {
          alert("Submited Successfully for Enquiry ID :" + successbox);
-//document.querySelector('newenquiry-card').showsuccess();
+document.querySelector('followup-service').GenerateFollowups(successbox);
+
          this.updatesequrl = "http://localhost:8086/updateseq";
          var obj = {"id": "", "schol": ""};
          obj.id = seqno;
@@ -970,7 +669,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             obj.discountid = discountArr[i];
             obj.schol=localStorage.getItem("schoolid");
             this.discountdetenqparam=obj;
-            alert(JSON.stringify(obj));
+            //alert(JSON.stringify(obj));
             this.$.discountdetenqajax.generateRequest();
           }
         }
@@ -981,16 +680,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           obj.rte_num =rte_number;
           obj.schol=localStorage.getItem("schoolid");
           this.rtenumberparam=obj;
-          alert(JSON.stringify(obj));
+          //alert(JSON.stringify(obj));
           this.$.rtenumberajax.generateRequest();
         }
+        resultcheck=0;
       }
      },
       discountdetenqResponse:function(e){
         var result=e.detail.response.returnval;
         // alert(result);
         if(result="success") {
-          alert("Submited Successfully");
+          resultcheck++;
+          if(discountArr.length==resultcheck){
+            alert("Special discount details saved successfully");  
+          }
+          
           document.querySelector('enquiry-card').ready();
           // this.getenquirycount();
           document.querySelector('detailed-enquiry-form').Fnclear();
@@ -1079,37 +783,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.$.registerenquiryformajax.generateRequest();
 
 
-          this.updatefollowurl="http://localhost:8086/updatefollow";
-        var obj={"schol":"","id":"","enquiryno":"","schedule":"","createdby":"","createdon":""}
-        obj.schol=localStorage.getItem("schoolid");
-        obj.id=generateid;
-        obj.enquiryno=enqno;
-        obj.schedule=1;
-        obj.createdby=localStorage.getItem("employeeid");
-        obj.createdon=dat.getDate()+"/"+(dat.getMonth()+1)+"/"+dat.getFullYear();
-        this.updatefollowparam=obj;
-       //alert(JSON.stringify(obj));
-        this.$.updatefollowajax.generateRequest();
-
-      this.updatefollowdetailurl="http://localhost:8086/updatefollowdetail";
-        var obj={"schol":"","id":"","enquiryid":"","folowup1":"","folowup2":"","folowup3":"","folowup4":"","folowup5":"","nextfolowup":"","schedule":"","flag":"","status":""}
-        obj.schol=localStorage.getItem("schoolid");
-        obj.id=generateid;
-        obj.enquiryid=enqno;
-        obj.folowup1=firstfollowupdate.getDate()+"/"+(firstfollowupdate.getMonth()+1)+"/"+firstfollowupdate.getFullYear();
-        obj.folowup2=secondfollowupdate.getDate()+"/"+(secondfollowupdate.getMonth()+1)+"/"+secondfollowupdate.getFullYear();
-        obj.folowup3=thirdfollowupdate.getDate()+"/"+(thirdfollowupdate.getMonth()+1)+"/"+thirdfollowupdate.getFullYear();
-        obj.folowup4=fourthfollowupdate.getDate()+"/"+(fourthfollowupdate.getMonth()+1)+"/"+fourthfollowupdate.getFullYear();
-        obj.folowup5=fifthfollowupdate.getDate()+"/"+(fifthfollowupdate.getMonth()+1)+"/"+fifthfollowupdate.getFullYear();
-        obj.nextfolowup=firstfollowupdate.getDate()+"/"+(firstfollowupdate.getMonth()+1)+"/"+firstfollowupdate.getFullYear();
-        obj.flag=1;
-        obj.schedule=1;
-        obj.status="Open";
-        this.updatefollowdetailparam=obj;
-       //alert(JSON.stringify(obj));
-        this.$.updatefollowdetailajax.generateRequest();
-
-
         if((prospect!="")||(prospect!=null)){
           this.updateprospectnourl="http://localhost:8086/updateprospectno";
           var obj={"schol":"","id":""};
@@ -1148,10 +821,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               obj.discountid = discountArr[i];
               obj.schol = localStorage.getItem("schoolid");
               this.discountdetregenqparam = obj;
-              alert(JSON.stringify(obj));
+              //alert(JSON.stringify(obj));
               this.$.discountdetregenqajax.generateRequest();
             }
-          }
+           
+          } else{
+               alert("Submited Successfully for Enquiry ID:"+enquirynjski);
+
+          document.querySelector('enquiry-card').ready();
+          this.updateenquiryno();
+          document.querySelector('detailed-enquiry-form').Fnclear();
+          document.querySelector('followup-service').GenerateFollowups(enquirynjski);
+            }
           if (rte_number) {
             this.rtenumberurl = "http://localhost:8086/rtenumber";
             var obj = {"enq": "", "rte_num": "", "schol": ""};
@@ -1159,7 +840,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             obj.rte_num = rte_number;
             obj.schol = localStorage.getItem("schoolid");
             this.rtenumberparam = obj;
-            alert(JSON.stringify(obj));
+            //alert(JSON.stringify(obj));
             this.$.rtenumberajax.generateRequest();
           }
         }
@@ -1174,6 +855,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           document.querySelector('enquiry-card').ready();
           this.updateenquiryno();
           document.querySelector('detailed-enquiry-form').Fnclear();
+          document.querySelector('followup-service').GenerateFollowups(enquirynjski);
         } else {
           alert("Form Submit Interrupted")
         }
@@ -1246,13 +928,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        //alert(JSON.stringify(obj));
         this.$.getlocationajax.generateRequest();
      },
-      folloudetails:function(){
-      this.followupdetailsurl="http://localhost:8086/followup-service";
-        var obj={"schol":""}
-        obj.schol=localStorage.getItem("schoolid");
-        this.followupdetailsparamll=obj;
-        this.$.followupdetailsajax.generateRequest();
-     },
+    
      getlocationResponse:function(e){
         var result=e.detail.response.returnval;
         //alert(JSON.stringify(result));
@@ -1422,435 +1098,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       //alert(document.querySelector('detailed-enquiry-form').Fnautocompletename(namelistarr));
      document.querySelector('detailed-enquiry-form').Fnlistbox(namelistarr);
      },
-     getfollowupcount:function(){
-      var dt=new Date();
-        this.getopenfollowupcounturl="http://localhost:8086/getfollowupcount";
-        var obj={"schol":"","status":""}
-        obj.status="Open";
-        obj.schol=localStorage.getItem("schoolid");
-        this.getopenfollowupcountparam=obj;
-       //alert(JSON.stringify(obj));
-        this.$.getopenfollowupcountajax.generateRequest();
-
-        this.getclosedfollowupcounturl="http://localhost:8086/getfollowupcount";
-        var obj={"schol":"","status":""}
-        obj.status="Closed";
-        obj.schol=localStorage.getItem("schoolid");
-        this.getclosedfollowupcountparam=obj;
-       //alert(JSON.stringify(obj));
-        this.$.getclosedfollowupcountajax.generateRequest();
-
-
-        this.getprocessfollowupcounturl="http://localhost:8086/getfollowupcount";
-        var obj={"schol":"","status":""}
-        obj.status="Inprogress";
-        obj.schol=localStorage.getItem("schoolid");
-        this.getprocessfollowupcountparam=obj;
-       //alert(JSON.stringify(obj));
-        this.$.getprocessfollowupcountajax.generateRequest();
-
-
-        this.getexhaustfollowupcounturl="http://localhost:8086/getfollowupcount";
-        var obj={"schol":"","status":""}
-        obj.status="Exhausted";
-        obj.schol=localStorage.getItem("schoolid");
-        this.getexhaustfollowupcountparam=obj;
-       //alert(JSON.stringify(obj));
-        this.$.getexhaustfollowupcountajax.generateRequest();
-
-
-        this.greater95url="http://localhost:8086/getconfidencecount";
-        var obj={"schol":"","status":""}
-        obj.status=">90%";
-        obj.schol=localStorage.getItem("schoolid");
-        this.greater95param=obj;
-       //alert(JSON.stringify(obj));
-        this.$.greater95ajax.generateRequest();
-
-         this.greater75url="http://localhost:8086/getconfidencecount";
-        var obj={"schol":"","status":""}
-        obj.status=">75%";
-        obj.schol=localStorage.getItem("schoolid");
-        this.greater75param=obj;
-       //alert(JSON.stringify(obj));
-        this.$.greater75ajax.generateRequest();
-
-         this.greater50url="http://localhost:8086/getconfidencecount";
-        var obj={"schol":"","status":""}
-        obj.status=">50%";
-        obj.schol=localStorage.getItem("schoolid");
-        this.greater50param=obj;
-       //alert(JSON.stringify(obj));
-        this.$.greater50ajax.generateRequest();
-
-         this.less50url="http://localhost:8086/getconfidencecount";
-        var obj={"schol":"","status":""}
-        obj.status="<50%";
-        obj.schol=localStorage.getItem("schoolid");
-        this.less50param=obj;
-       //alert(JSON.stringify(obj));
-        this.$.less50ajax.generateRequest();
-
-         this.less35url="http://localhost:8086/getconfidencecount";
-        var obj={"schol":"","status":""}
-        obj.status="<35%";
-        obj.schol=localStorage.getItem("schoolid");
-        this.less35param=obj;
-       //alert(JSON.stringify(obj));
-        this.$.less35ajax.generateRequest();
-
-        this.less10url="http://localhost:8086/getconfidencecount";
-        var obj={"schol":"","status":""}
-        obj.status="<15%";
-        obj.schol=localStorage.getItem("schoolid");
-        this.less10param=obj;
-       //alert(JSON.stringify(obj));
-        this.$.less10ajax.generateRequest();
-
-        this.TBDurl="http://localhost:8086/getconfidencecount";
-        var obj={"schol":"","status":""}
-        obj.status="TBD";
-        obj.schol=localStorage.getItem("schoolid");
-        this.TBDparam=obj;
-       //alert(JSON.stringify(obj));
-        this.$.TBDajax.generateRequest();
-
-
-     },
-     getopenfollowupcountResponse:function(e){
-      var res=e.detail.response.returnval;
-      document.querySelector('followup-dashboard').openarr=res;
-     },
-     getclosedfollowupcountResponse:function(e){
-      var res=e.detail.response.returnval;
-      document.querySelector('followup-dashboard').closearr=res;
-     },
-     getprocessfollowupcountResponse:function(e){
-      var res=e.detail.response.returnval;
-      document.querySelector('followup-dashboard').processarr=res;
-     },
-     getexhaustfollowupcountResponse:function(e){
-      var res=e.detail.response.returnval;
-      document.querySelector('followup-dashboard').exhaustedarr=res;
-     },
-     greater95Response:function(e){
-       var res=e.detail.response.returnval;
-      document.querySelector('followup-dashboard').arr90greater=res;
-     },
-     greater75Response:function(e){
-       var res=e.detail.response.returnval;
-      document.querySelector('followup-dashboard').arr75greater=res;
-     },
-     greater50Response:function(e){
-       var res=e.detail.response.returnval;
-      document.querySelector('followup-dashboard').arr50greater=res;
-     },
-     less50Response:function(e){
-       var res=e.detail.response.returnval;
-      document.querySelector('followup-dashboard').arr50lesser=res;
-     },
-     less35Response:function(e){
-       var res=e.detail.response.returnval;
-      document.querySelector('followup-dashboard').arr35lesser=res;
-     },
-     less10Response:function(e){
-       var res=e.detail.response.returnval;
-      document.querySelector('followup-dashboard').arr10lesser=res;
-     },
-     TBDResponse:function(e){
-       var res=e.detail.response.returnval;
-      document.querySelector('followup-dashboard').arrtbd=res;
-     },
-      FollowUp1:function(enqno,followupid,followupdate1,confidencelevel,comments,fdate2){
-        fwupdate2=fdate2;
-        fwupid1=followupid;
-        fwupenqno1=enqno;
-        fwupcmnt1=comments;
-        this.followup1url="http://localhost:8086/followup1";
-        var obj={"schol":"","enqno":"","followupdate1":"","confidencelevel":"","comments":"","followupid":""};
-        obj.schol=localStorage.getItem("schoolid");
-        obj.enqno=enqno;
-        obj.followupdate1 = followupdate1;
-        obj.confidencelevel = confidencelevel;
-        obj.comments = comments;
-        obj.followupid=followupid;
-        this.followup1param=obj;
-        this.$.followup1ajax.generateRequest();
-      },
-      FollowUp1Response:function(e){
-        var res=e.detail.response.returnval;
-        if((res == "success")&&(fwupcmnt1!='null'||fwupcmnt1!='')){
-
-        this.updatedateurl="http://localhost:8086/updatedate";
-        var obj={"schol":"","enqno":"","fwupid":"","nextdate":"","nextflag":""}
-        obj.schol=localStorage.getItem("schoolid");
-        obj.enqno=fwupenqno1;
-        obj.fwupid=fwupid1;
-        obj.nextflag=2;
-        obj.nextdate=fwupdate2;
-        this.updatedateparam=obj;
-       //alert(JSON.stringify(obj));
-        this.$.updatedateajax.generateRequest();
-        }
-      },
-      FollowUp2:function(enqno,followupid,followupdate2,confidencelevel,comments,fdate3){
-        fwupdate3=fdate3;
-         fwupid2=followupid;
-        fwupenqno2=enqno;
-        fwupcmnt2=comments;
-        this.followup2url="http://localhost:8086/followup2";
-        var obj={"schol":"","enqno":"","followupdate2":"","confidencelevel":"","comments":"","followupid":""};
-        obj.schol=localStorage.getItem("schoolid");
-        obj.enqno=enqno;
-        obj.followupdate2 = followupdate2;
-        obj.confidencelevel = confidencelevel;
-        obj.comments = comments;
-        obj.followupid=followupid;
-        this.followup2param=obj;
-        //alert(JSON.stringify(obj));
-        this.$.followup2ajax.generateRequest();
-      },
-      FollowUp2Response:function(e){
-        var res=e.detail.response.returnval;
-        if((res == "success")&&(fwupcmnt2!='null'||fwupcmnt2!='')){
-
-           this.updatedateurl="http://localhost:8086/updatedate";
-        var obj={"schol":"","enqno":"","fwupid":"","nextdate":"","nextflag":""}
-        obj.schol=localStorage.getItem("schoolid");
-        obj.enqno=fwupenqno2;
-        obj.fwupid=fwupid2;
-        obj.nextflag=3;
-        obj.nextdate=fwupdate3;
-        this.updatedateparam=obj;
-       //alert(JSON.stringify(obj));
-        this.$.updatedateajax.generateRequest();
-        }
-      },
-      FollowUp3:function(enqno,followupid,followupdate3,confidencelevel,comments,fdate4){
-        fwupdate4=fdate4;
-         fwupid3=followupid;
-        fwupenqno3=enqno;
-        fwupcmnt3=comments;
-        this.followup3url="http://localhost:8086/followup3";
-        var obj={"schol":"","enqno":"","followupdate3":"","confidencelevel":"","comments":"","followupid":""};
-        obj.schol=localStorage.getItem("schoolid");
-        obj.enqno=enqno;
-        obj.followupdate3 = followupdate3;
-        obj.confidencelevel = confidencelevel;
-        obj.comments = comments;
-        obj.followupid=followupid;
-        this.followup3param=obj;
-        //alert(JSON.stringify(obj));
-        this.$.followup3ajax.generateRequest();
-      },
-      FollowUp3Response:function(e){
-        var res=e.detail.response.returnval;
-        if((res == "success")&&(fwupcmnt3!='null'||fwupcmnt3!='')){
-           this.updatedateurl="http://localhost:8086/updatedate";
-        var obj={"schol":"","enqno":"","fwupid":"","nextdate":"","nextflag":""}
-        obj.schol=localStorage.getItem("schoolid");
-        obj.enqno=fwupenqno3;
-        obj.fwupid=fwupid3;
-        obj.nextflag=4;
-        obj.nextdate=fwupdate4;
-        this.updatedateparam=obj;
-       //alert(JSON.stringify(obj));
-        this.$.updatedateajax.generateRequest();
-        }
-      },
-      FollowUp4:function(enqno,followupid,followupdate4,confidencelevel,comments,fdate5){
-        fwupdate5=fdate5;
-         fwupid4=followupid;
-        fwupenqno4=enqno;
-        fwupcmnt4=comments;
-        this.followup4url="http://localhost:8086/followup4";
-        var obj={"schol":"","enqno":"","followupdate4":"","confidencelevel":"","comments":"","followupid":""};
-        obj.schol=localStorage.getItem("schoolid");
-        obj.enqno=enqno;
-        obj.followupdate4 = followupdate4;
-        obj.confidencelevel = confidencelevel;
-        obj.comments = comments;
-        obj.followupid=followupid;
-        this.followup4param=obj;
-        //alert(JSON.stringify(obj));
-        this.$.followup4ajax.generateRequest();
-      },
-      FollowUp4Response:function(e){
-        var res=e.detail.response.returnval;
-        if((res == "success")&&(fwupcmnt4!='null'||fwupcmnt4!='')){
-
-           this.updatedateurl="http://localhost:8086/updatedate";
-        var obj={"schol":"","enqno":"","fwupid":"","nextdate":"","nextflag":""}
-        obj.schol=localStorage.getItem("schoolid");
-        obj.enqno=fwupenqno4;
-        obj.fwupid=fwupid4;
-        obj.nextflag=5;
-        obj.nextdate=fwupdate5;
-        this.updatedateparam=obj;
-       //alert(JSON.stringify(obj));
-        this.$.updatedateajax.generateRequest();
-        }
-      },
-      FollowUp5:function(enqno,followupid,followupdate5,confidencelevel,comments){
-        fwupcmnt5=comments;
-        this.followup5url="http://localhost:8086/followup5";
-        var obj={"schol":"","enqno":"","followupdate5":"","confidencelevel":"","comments":"","followupid":""};
-        obj.schol=localStorage.getItem("schoolid");
-        obj.enqno=enqno;
-        obj.followupdate5 = followupdate5;
-        obj.confidencelevel = confidencelevel;
-        obj.comments = comments;
-        obj.followupid=followupid;
-        this.followup5param=obj;
-        //alert(JSON.stringify(obj));
-        this.$.followup5ajax.generateRequest();
-      },
-      FollowUp5Response:function(e){
-        var res=e.detail.response.returnval;
-        if((res == "success")&&(fwupcmnt5!='null'||fwupcmnt5!='')){
-          document.querySelector('followup-student-detail').mydialog();
-
-        }
-      },
-      updatedateResponse:function(e){
-          var res=e.detail.response.returnval;
-          if(res=='success'){
-                 document.querySelector('followup-student-detail').mydialog();
-
-          }
-      },
-      getfollowupstudents:function(grade, status){
-        this.getfollowupstudentsurl="http://localhost:8086/getfollowupstudents";
-        var obj={"schol":"","grade":"","status":""};
-        obj.schol=localStorage.getItem("schoolid");
-        obj.grade=grade;
-        obj.status = status;
-        this.getfollowupstudentsparam=obj;
-        this.$.getfollowupstudentsajax.generateRequest();
-
-      },
-      getfollowupstudentsResponse:function(e){
-        var res=e.detail.response.returnval;
-        document.querySelector('followup-details').followuparr=res;
-      },
-      viewdetail:function(id,status,followid){
-        this.viewdetailurl="http://localhost:8086/viewdetail";
-        var obj={"schol":"","id":"","fid":"","fstatus":""};
-        obj.schol=localStorage.getItem("schoolid");
-        obj.id=id;
-        obj.fid=followid;
-        obj.fstatus=status;
-        this.viewdetailparam=obj;
-        this.$.viewdetailajax.generateRequest();
-      },
-      viewdetailResponse:function(e){
-        var res=e.detail.response.returnval;
-        document.querySelector('followup-student-detail').enqno=res[0].enquiry_no;
-        document.querySelector('followup-student-detail').followupid=res[0].followup_id;
-        document.querySelector('followup-student-detail').name=res[0].enquiry_name;
-        document.querySelector('followup-student-detail').grade=res[0].class;
-        document.querySelector('followup-student-detail').enquiredon=res[0].created_on;
-        document.querySelector('followup-student-detail').parentname=res[0].father_name;
-        document.querySelector('followup-student-detail').mobileno=res[0].father_mob;
-        document.querySelector('followup-student-detail').confidencelvl1(res[0].confidence_level_1);
-        document.querySelector('followup-student-detail').confidencelvl2(res[0].confidence_level_2);
-        document.querySelector('followup-student-detail').confidencelvl3(res[0].confidence_level_3);
-        document.querySelector('followup-student-detail').confidencelvl4(res[0].confidence_level_4);
-        document.querySelector('followup-student-detail').confidencelvl5(res[0].confidence_level_5);
-        document.querySelector('followup-student-detail').followupdate1=res[0].followup_1;
-        document.querySelector('followup-student-detail').followupdate2=res[0].followup_2;
-        document.querySelector('followup-student-detail').followupdate3=res[0].followup_3;
-        document.querySelector('followup-student-detail').followupdate4=res[0].followup_4;
-        document.querySelector('followup-student-detail').followupdate5=res[0].followup_5;
-        document.querySelector('followup-student-detail').comments1=res[0].followup1_remarks;
-        document.querySelector('followup-student-detail').comments2=res[0].followup2_remarks;
-        document.querySelector('followup-student-detail').comments3=res[0].followup3_remarks;
-        document.querySelector('followup-student-detail').comments4=res[0].followup4_remarks;
-        document.querySelector('followup-student-detail').comments5=res[0].followup5_remarks;
-        document.querySelector('followup-student-detail').schedule=res[0].schedule;
-        document.querySelector('followup-student-detail').check();
-      },
-      SubmitStatus:function(id,status){
-        this.submitstatusurl="http://localhost:8086/submitstatus";
-        var obj={"schol":"","id":"","status":""};
-        obj.schol=localStorage.getItem("schoolid");
-        obj.id=id;
-        obj.status=status;
-        this.submitstatusparam=obj;
-        this.$.submitstatusajax.generateRequest();
-      },
-      SubmitStatusResponse:function(e){
-        var res=e.detail.response.returnval;
-        if(res == "success"){
-          document.querySelector('followup-student-detail').closedialog();
-           document.querySelector('followup-student-detail').check();
-           alert('Comments and Other details are updated Successfully ');
-        }
-
-      },
-      changestatus:function(folowupid,enquiryidd,schedule){
-        xenquiryidd=enquiryidd;
-        scheduleno=schedule;
-        this.changestatusurl="http://localhost:8086/changestatus";
-        var obj={"schol":"","id":"","fid":""};
-        obj.schol=localStorage.getItem("schoolid");
-        obj.id=enquiryidd;
-        obj.fid=folowupid;
-        this.changestatusparam=obj;
-        this.$.changestatusajax.generateRequest();
-      },
-      changeStatusResponse:function(e){
-        var res=e.detail.response.returnval;
-        if(res=='success'){
-        var dat=new Date();
-        reschedule=Math.floor(100000 + Math.random() * 900000);
-        this.updatescheduleurl="http://localhost:8086/updateschedule";
-        var obj={"schol":"","id":"","fid":""};
-        obj.schol=localStorage.getItem("schoolid");
-        obj.id=xenquiryidd;
-        obj.followid=reschedule;
-        obj.schedule=scheduleno+1;
-        obj.rescheduledon=dat.getDate()+"/"+(dat.getMonth()+1)+"/"+dat.getFullYear();
-        this.updatescheduleparam=obj;
-        this.$.updatescheduleajax.generateRequest();
-        document.querySelector('followup-student-detail').closedialog();
-        document.querySelector('followup-student-detail').check();
-      }
-      },
-      updatescheduleResponse:function(e){
-          var res=e.detail.response.returnval;
-          if(res=='success'){
-
-
-var dat=new Date();
-
-
-
-               this.updatefollowdetailurl="http://localhost:8086/updatefollowdetail";
-        var obj={"schol":"","id":"","enquiryid":"","folowup1":"","folowup2":"","folowup3":"","folowup4":"","folowup5":"","nextfolowup":"","schedule":"","flag":"","status":""}
-        obj.schol=localStorage.getItem("schoolid");
-        obj.id=reschedule;
-        obj.enquiryid=xenquiryidd;
-        obj.folowup1=firstfollowupdate.getDate()+"/"+(firstfollowupdate.getMonth()+1)+"/"+firstfollowupdate.getFullYear();
-        obj.folowup2=secondfollowupdate.getDate()+"/"+(secondfollowupdate.getMonth()+1)+"/"+secondfollowupdate.getFullYear();
-        obj.folowup3=thirdfollowupdate.getDate()+"/"+(thirdfollowupdate.getMonth()+1)+"/"+thirdfollowupdate.getFullYear();
-        obj.folowup4=fourthfollowupdate.getDate()+"/"+(fourthfollowupdate.getMonth()+1)+"/"+fourthfollowupdate.getFullYear();
-        obj.folowup5=fifthfollowupdate.getDate()+"/"+(fifthfollowupdate.getMonth()+1)+"/"+fifthfollowupdate.getFullYear();
-        obj.nextfolowup=firstfollowupdate.getDate()+"/"+(firstfollowupdate.getMonth()+1)+"/"+firstfollowupdate.getFullYear();
-        obj.flag=1;
-        obj.schedule=scheduleno+1;
-        obj.status="Open";
-        this.updatefollowdetailparam=obj;
-       //alert(JSON.stringify(obj));
-        this.$.updatefollowdetailajax.generateRequest();
-
-        alert('Re-Schedule is done Successfully');
-        document.querySelector('followup-student-detail').check();
-          }
-          else{
-          alert('Re-Schedule is not done');
-        }
-      },
+    
+    
       callFetchenquiryinfoService:function(){
         this.fetchenquiryinfourl="http://localhost:8086/fetchdetailedenquiryinfo";
         var obj={"enquiryno":"","schoolid":""};
@@ -1893,26 +1142,7 @@ var dat=new Date();
           alert('Invalid Enquiry number');
         }
       },
-      updatecallstatus:function(followno,followupcall,followdate,enqno,followupid,schedule){
-          this.insertcallhistoryurl="http://localhost:8086/insertcallhistory";
-        var obj={"schol":"","enid":"","fno":"","fid":"","fdate":"","callstatus":"","schedule":""};
-        obj.schol=localStorage.getItem("schoolid");
-        obj.enid=enqno;
-        obj.fno=followno;
-        obj.fid=followupid;
-        obj.fdate=followdate;
-        obj.callstatus=followupcall;
-        obj.schedule=schedule;
-        this.insertcallhistoryparam=obj;
-        this.$.insertcallhistoryajax.generateRequest();
-      },
-      insertcallhistoryResponse:function(e){
-          var res=e.detail.response.returnval;
-          if(res=='success'){
-            alert('Kindly Reschedule the current follow up date');
-            document.querySelector('followup-student-detail').exit();
-          }
-      },
+     
       verifyage:function(grade,age){
         //alert('sdf');
             verifyage=age;
@@ -1969,11 +1199,86 @@ var dat=new Date();
       },
       rtenumberResponse:function(e){
         var res=e.detail.response.returnval;
-        alert(res);
+        //alert(res);
         if(res == "Inserted!"){
           alert("RTE Student Saved");
         }
-    }
+    },
+      walkinanalysisyear:function(){
+        this.walkinanalysisyearurl="http://localhost:8086/walkinanalysisyear";
+        var obj={"schol":"", "current_year":""};
+        obj.schol=localStorage.getItem("schoolid");
+        var today = new Date();
+        var mm = today.getMonth()+1; //January is 0!
+        var yyyy = today.getFullYear();
+        var current_month = '%/'+mm+'/'+yyyy;
+        obj.current_year='%/%/'+yyyy;
+        obj.current_month=current_month;
+        this.walkinanalysisyearparam=obj;
+        this.$.walkinanalysisyearajax.generateRequest();
+    },
+      walkinanalysisyearResponse:function(e){
+        walkinanalysisyear = e.detail.response.returnval;
+
+      },
+      walkinanalysismonth:function(){
+        this.walkinanalysismonthurl="http://localhost:8086/walkinanalysismonth";
+        var obj={"schol":"", "current_year":""};
+        obj.schol=localStorage.getItem("schoolid");
+        var today = new Date();
+        var mm = today.getMonth()+1; //January is 0!
+        var yyyy = today.getFullYear();
+        var current_month = '%/'+mm+'/'+yyyy;
+        obj.current_year='%/%/'+yyyy;
+        obj.current_month=current_month;
+        this.walkinanalysismonthparam=obj;
+        this.$.walkinanalysismonthajax.generateRequest();
+      },
+      walkinanalysismonthResponse:function(e){
+        walkinanalysismonth =e.detail.response.returnval;
+      },
+      walkinanalysisday:function(){
+        this.walkinanalysisdayurl="http://localhost:8086/walkinanalysisday";
+        var obj={"schol":"", "current_year":""};
+        obj.schol=localStorage.getItem("schoolid");
+        var today = new Date();
+        var mm = today.getMonth()+1; //January is 0!
+        var yyyy = today.getFullYear();
+        var current_month = '%/'+mm+'/'+yyyy;
+        var current_date =today.getDate();
+        obj.current_year= current_date+'/'+current_month+'/'+yyyy;
+        this.walkinanalysisdayparam=obj;
+        this.$.walkinanalysisdayajax.generateRequest();
+      },
+      walkinanalysisdayResponse:function(e){
+        walkinanalysisday=e.detail.response.returnval;
+        this.walkinanasysisyaerandmonth();
+      },
+      walkinanasysisyaerandmonth:function(){
+        var obj={"source":"", "year":"","month":""};
+        for(var i = 0; i < walkinanalysisyear.length; i++){
+          for(var j = 0;j<=i;j++){
+            if(walkinanalysisyear[i].enquiry_source == walkinanalysismonth[j].enquiry_source){
+              obj.source=walkinanalysisyear[i].enquiry_source;
+              if(walkinanalysisyear[i].totalenq==null||walkinanalysisyear[i].totalenq==""){
+                obj.year=0;
+              }else{
+                obj.year=walkinanalysisyear[i].totalenq;
+              }
+              if(walkinanalysismonth[i].totalenq==null||walkinanalysismonth[i].totalenq==""){
+                obj.month=0;
+              }else{
+                obj.month=walkinanalysismonth[j].totalenq;
+              }
+            }
+          }
+          walkinanasysisyaerandmontharr.push(obj);
+        }
+        document.querySelector('walkin-analysis-card').walkinanasysisyaerandmontharr=walkinanasysisyaerandmontharr;
+      },
+      walkinanalysis:function(){
+
+      }
     });
   })();
   </script>
