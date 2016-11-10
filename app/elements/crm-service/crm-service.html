@@ -411,7 +411,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var walkinanasysisyaerandmontharr=[];
     Polymer({
       is: 'crm-service',
-<<<<<<< HEAD
+
       followupResponse:function(e){
          firstfollowup=e.detail.response.firstfollowup;
          secondfollowup=e.detail.response.secondfollowup;
@@ -432,10 +432,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     fifthfollowupdate.setDate(fifthfollowupdate.getDate()+fifthfollowup);
      },
      submitenqiry:function(enqno,academicyear,grade,Fnfirstname,Fnmiddlename,Fnlastname,gender,dob,fathername,mothername,mob,email,textvalue,todate,gemail,gmob,Guardianname,paga,admtype,checkList,discountype){
-=======
+
    
-     submitenqiry:function(enqno,academicyear,grade,Fnfirstname,Fnmiddlename,Fnlastname,gender,dob,fathername,mothername,mob,email,textvalue,todate,gemail,gmob,Guardianname,paga,admtype,checkList){
->>>>>>> 8584db65eb9ec68f1fd502237f49ef73340ebabf
+
 
       //alert(enqno+academicyr+classes+studentname+gender+dob+mob+source+locality+category);
       successbox=enqno;
@@ -474,18 +473,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         //alert(JSON.stringify(obj));
         this.$.submitenquiryajax.generateRequest();
 
-<<<<<<< HEAD
-        this.updatefollowurl="http://localhost:8086/updatefollow";
-        var obj={"schol":"","id":"","enquiryno":"","schedule":"","createdby":"","createdon":""}
-        obj.schol=localStorage.getItem("schoolid");
-        obj.id=generateid;
-        obj.enquiryno=enqno;
-        obj.schedule=1;
-        obj.createdby=localStorage.getItem("employeeid");
-        obj.createdon=todate;
-        this.updatefollowparam=obj;
-        //alert(JSON.stringify(obj));
-        this.$.updatefollowajax.generateRequest();
+
+        // this.updatefollowurl="http://localhost:8086/updatefollow";
+        // var obj={"schol":"","id":"","enquiryno":"","schedule":"","createdby":"","createdon":""}
+        // obj.schol=localStorage.getItem("schoolid");
+        // obj.id=generateid;
+        // obj.enquiryno=enqno;
+        // obj.schedule=1;
+        // obj.createdby=localStorage.getItem("employeeid");
+        // obj.createdon=todate;
+        // this.updatefollowparam=obj;
+        // //alert(JSON.stringify(obj));
+        // this.$.updatefollowajax.generateRequest();
 
       this.updatefollowdetailurl="http://localhost:8086/updatefollowdetail";
         var obj={"schol":"","id":"","enquiryid":"","folowup1":"","folowup2":"","folowup3":"","folowup4":"","folowup5":"","nextfolowup":"","schedule":"","flag":"","status":""}
@@ -504,9 +503,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.updatefollowdetailparam=obj;
        //alert(JSON.stringify(obj));
         this.$.updatefollowdetailajax.generateRequest();
-=======
 
->>>>>>> 8584db65eb9ec68f1fd502237f49ef73340ebabf
+
+
      },
      submitenquiryResponse:function(e) {
        var result = e.detail.response.returnval;

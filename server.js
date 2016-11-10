@@ -2405,7 +2405,7 @@ app.post('/getfollowupcount',  urlencodedParser,function (req, res){
         var qur = "SELECT f.enquiry_id,f.schedule_flag,s.enquiry_name,f.schedule_status,f.id,f.current_confidence_level,f.upcoming_date FROM followup f join student_enquiry_details s on f.enquiry_id=s.enquiry_no WHERE f.schedule_status='"+req.query.fnstatus+"' and s.class='"+req.query.fngrade+"' and s.school_id = '"+req.query.schol+"' ORDER BY (upcoming_date)";
    }
 console.log(qur);
-   //connection.query(qur,
+   connection.query(qur,
      function(err, rows)
      {
        if(!err)
