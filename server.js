@@ -3048,6 +3048,22 @@ app.post('/masterfollowupinfo',  urlencodedParser,function (req, res){
      });
  });
 
+ app.post('/getacademicyearreport',  urlencodedParser,function (req, res){
+   var qur = "SELECT count(*) as totalenq, enquiry_source FROM `student_enquiry_details` WHERE academic_year = '"+req.query.academic_year+"' and school_id = '"+req.query.schol+"' GROUP BY enquiry_source";
+   connection.query(qur,
+     function(err, rows){
+       if(!err){
+         if(rows.length>0){
+           res.status(200).json({'returnval': rows});
+         }else{
+           console.log(err);
+           res.status(200).json({'returnval':null});
+         }
+       }else{
+         console.log(err);
+       }
+     });
+ });
 
 
 function setvalue(){

@@ -360,6 +360,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       debounce-duration="300"
     >
     </iron-ajax>
+    <iron-ajax
+      method="post"
+      id="getacademicyearreportajax"
+      url="{{getacademicyearreporturl}}"
+      params="{{getacademicyearreportparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="getacademicyearreportResponse"
+      debounce-duration="300"
+    >
+    </iron-ajax>
   </template>
   <script>
   (function() {
@@ -1293,6 +1304,18 @@ document.querySelector('followup-service').GenerateFollowups(successbox);
           }
         }
         document.querySelector('walkin-analysis-card').walkinanasysisyaerandmontharr=walkinanasysisyaerandmontharr;
+      },
+      getacademicyearreport:function(year){
+        this.getacademicyearreporturl="http://localhost:8086/getacademicyearreport";
+        var obj={"schol":"", "academic_year":""};
+        obj.schol=localStorage.getItem("schoolid");
+        obj.academic_year=year;
+        this.getacademicyearreportparam=obj;
+        this.$.getacademicyearreportajax.generateRequest();
+      },
+      getacademicyearreportResponse:function(e){
+        var result  = e.detail.response.returnval;
+        document.querySelector('walkin-analysis-filter-card').reportarr=result;
       }
     });
   })();
