@@ -205,7 +205,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         >
   </iron-ajax>
 
-  
+
 
   <!-- this ajax is to get the referrer name from parent table -->
   <iron-ajax
@@ -231,7 +231,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         debounce-duration="300"
         >
   </iron-ajax>
- 
+
     <iron-ajax
       method="post"
       id="fetchenquiryinfoajax"
@@ -243,7 +243,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       debounce-duration="300"
     >
     </iron-ajax>
-   
+
 
     <!-- this ajax is used to verify the age criteria for the specific grade according cbse rule and regulation that hasw been stored in md_age table in the database -->
     <iron-ajax
@@ -367,7 +367,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
    var seqno;
    var seqno1;
    var proseq;
- 
+
    var parentarr=[];
    var studentarr=[];
    var namelistarr=[];
@@ -409,6 +409,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var walkinanalysismonth={};
     var walkinanalysisday={};
     var walkinanasysisyaerandmontharr=[];
+    var walkinanasysisarr=[];
     Polymer({
       is: 'crm-service',
 
@@ -433,14 +434,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      },
      submitenqiry:function(enqno,academicyear,grade,Fnfirstname,Fnmiddlename,Fnlastname,gender,dob,fathername,mothername,mob,email,textvalue,todate,gemail,gmob,Guardianname,paga,admtype,checkList,discountype){
 
-   
+
 
 
       //alert(enqno+academicyr+classes+studentname+gender+dob+mob+source+locality+category);
       successbox=enqno;
       discountArr =  checkList;
        currentEnqno = enqno;
-      
+
         this.submitenquiryurl="http://localhost:8086/submitenquiry";
         var obj={"id":"","schol":"","acadeyr":"","contact":"","grade":"","gender":"","firstname":"","middlename":"","lastname":"","dobs":"","father":"","mother":"","email":"","location":"","createdby":"","createdate":"","givenname":"","status":"","gemail":"","gmob":"","Guardianname":"","paga":"","adtype":""}
 
@@ -691,9 +692,9 @@ document.querySelector('followup-service').GenerateFollowups(successbox);
         if(result="success") {
           resultcheck++;
           if(discountArr.length==resultcheck){
-            alert("Special discount details saved successfully");  
+            alert("Special discount details saved successfully");
           }
-          
+
           document.querySelector('enquiry-card').ready();
           // this.getenquirycount();
           document.querySelector('detailed-enquiry-form').Fnclear();
@@ -823,7 +824,7 @@ document.querySelector('followup-service').GenerateFollowups(successbox);
               //alert(JSON.stringify(obj));
               this.$.discountdetregenqajax.generateRequest();
             }
-           
+
           } else{
                alert("Submited Successfully for Enquiry ID:"+enquirynjski);
 
@@ -927,7 +928,7 @@ document.querySelector('followup-service').GenerateFollowups(successbox);
        //alert(JSON.stringify(obj));
         this.$.getlocationajax.generateRequest();
      },
-    
+
      getlocationResponse:function(e){
         var result=e.detail.response.returnval;
         //alert(JSON.stringify(result));
@@ -1097,8 +1098,8 @@ document.querySelector('followup-service').GenerateFollowups(successbox);
       //alert(document.querySelector('detailed-enquiry-form').Fnautocompletename(namelistarr));
      document.querySelector('detailed-enquiry-form').Fnlistbox(namelistarr);
      },
-    
-    
+
+
       callFetchenquiryinfoService:function(){
         this.fetchenquiryinfourl="http://localhost:8086/fetchdetailedenquiryinfo";
         var obj={"enquiryno":"","schoolid":""};
@@ -1141,7 +1142,7 @@ document.querySelector('followup-service').GenerateFollowups(successbox);
           alert('Invalid Enquiry number');
         }
       },
-     
+
       verifyage:function(grade,age){
         //alert('sdf');
             verifyage=age;
@@ -1243,9 +1244,8 @@ document.querySelector('followup-service').GenerateFollowups(successbox);
         var today = new Date();
         var mm = today.getMonth()+1; //January is 0!
         var yyyy = today.getFullYear();
-        var current_month = '%/'+mm+'/'+yyyy;
         var current_date =today.getDate();
-        obj.current_year= current_date+'/'+current_month+'/'+yyyy;
+        obj.current_year= current_date+'/'+mm+'/'+yyyy;
         this.walkinanalysisdayparam=obj;
         this.$.walkinanalysisdayajax.generateRequest();
       },
@@ -1254,8 +1254,8 @@ document.querySelector('followup-service').GenerateFollowups(successbox);
         this.walkinanasysisyaerandmonth();
       },
       walkinanasysisyaerandmonth:function(){
-        var obj={"source":"", "year":"","month":""};
         for(var i = 0; i < walkinanalysisyear.length; i++){
+          var obj={"source":"", "year":"","month":"","day":""};
           for(var j = 0;j<=i;j++){
             if(walkinanalysisyear[i].enquiry_source == walkinanalysismonth[j].enquiry_source){
               obj.source=walkinanalysisyear[i].enquiry_source;
@@ -1269,14 +1269,30 @@ document.querySelector('followup-service').GenerateFollowups(successbox);
               }else{
                 obj.month=walkinanalysismonth[j].totalenq;
               }
+              walkinanasysisyaerandmontharr.push(obj);
             }
           }
-          walkinanasysisyaerandmontharr.push(obj);
         }
-        document.querySelector('walkin-analysis-card').walkinanasysisyaerandmontharr=walkinanasysisyaerandmontharr;
+        this.walkinanalysis();
       },
       walkinanalysis:function(){
-
+        for(var i = 0; i <walkinanasysisyaerandmontharr.length; i++){
+          var obj = {"source":"","year":"","month":"",day:""};
+          for(var j = 0; j <walkinanalysisday.length; j++){
+            if(walkinanasysisyaerandmontharr[i].source == walkinanalysisday[j].enquiry_source){
+              alert(walkinanalysisday[j].totalenq);
+              if(walkinanalysisday[j].totalenq==null||walkinanalysisday[j].totalenq==""){
+                walkinanasysisyaerandmontharr[i].day=0;
+              }else{
+                walkinanasysisyaerandmontharr[i].day=walkinanalysisday[j].totalenq;
+              }
+            }
+            else{
+              walkinanasysisyaerandmontharr[i].day=0;
+            }
+          }
+        }
+        document.querySelector('walkin-analysis-card').walkinanasysisyaerandmontharr=walkinanasysisyaerandmontharr;
       }
     });
   })();

@@ -37,7 +37,7 @@
           </span>
         </span>
         <span class="col-sm-4" hidden$="{{academicyearhide}}">
-         <paper-input label="Academics Year" id="acyr" readonly required error-message="needs academics year!" allowed-pattern="[a-zA-Z ]" value="{{academicyear}}"></paper-input>
+         <paper-input label="Academics Year" id="acyr" readonly  error-message="needs academics year!" allowed-pattern="[a-zA-Z ]" value="{{academicyear}}"></paper-input>
         </span>
       </div>
       <div class="form-group-heading">
@@ -45,13 +45,13 @@
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-4 enquiry-input">
-          <paper-input id="fname" required error-message="needs first name!" label="First Name" allowed-pattern="[a-zA-Z ]" value="{{firstname}}"></paper-input>
+          <paper-input id="fname"  error-message="needs first name!" label="First Name" allowed-pattern="[a-zA-Z ]" value="{{firstname}}"></paper-input>
         </div>
         <div class="col-sm-4 enquiry-input">
-          <paper-input id="mname" required error-message="needs middle name!" label="Middle Name" allowed-pattern="[a-zA-Z ]" value="{{middlename}}"></paper-input>
+          <paper-input id="mname"  error-message="needs middle name!" label="Middle Name" allowed-pattern="[a-zA-Z ]" value="{{middlename}}"></paper-input>
         </div>
         <div class="col-sm-4 enquiry-input">
-          <paper-input id="lname" required error-message="needs last name!" label="Last Name" allowed-pattern="[a-zA-Z ]" value="{{lastname}}"></paper-input>
+          <paper-input id="lname"  error-message="needs last name!" label="Last Name" allowed-pattern="[a-zA-Z ]" value="{{lastname}}"></paper-input>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
@@ -72,9 +72,9 @@
       <div class="list-group col-sm-12 panel-body form-category">
 
         <div class="col-sm-6 enquiry-input">
-          <!--<paper-input id="grade" required error-message="needs grade seeking for!" label="Class Admission Seeking for" value="{{grade}}"></paper-input>-->
+          <!--<paper-input id="grade"  error-message="needs grade seeking for!" label="Class Admission Seeking for" value="{{grade}}"></paper-input>-->
           <paper-dropdown-menu label="Select Grade" >
-            <paper-menu id="classes" class="dropdown-content" required on-iron-select="classseeking" attr-for-selected="value" selected="{{grades}}">
+            <paper-menu id="classes" class="dropdown-content"  on-iron-select="classseeking" attr-for-selected="value" selected="{{grades}}">
               <template  is="dom-repeat" items="{{itemarr}}" as="view">
                 <paper-item value="{{view.class}}">{{view.class}}</paper-item>
               </template>
@@ -94,7 +94,7 @@
         </div>
         <div class="col-sm-4">
           <paper-dropdown-menu label="Mother Tongue" >
-            <paper-menu id="language" class="dropdown-content" required on-iron-select="language" valueattr="value" >
+            <paper-menu id="language" class="dropdown-content"  on-iron-select="language" valueattr="value" >
               <paper-item >Assamese</paper-item>
               <paper-item >Bengali</paper-item>
               <paper-item >Bodo</paper-item>
@@ -123,10 +123,10 @@
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
-          <paper-input label="Presently Studing Grade" id="oldsclass" required error-message="needs currently studying grade!" value="{{oldclass}}"></paper-input>
+          <paper-input label="Presently Studing Grade" id="oldsclass"  error-message="needs currently studying grade!" value="{{oldclass}}"></paper-input>
         </div>
         <div class="col-sm-6">
-          <paper-input label="Presently Studing School" id="oldschool" required error-message="needs old school details!" value="{{oldschool}}"></paper-input>
+          <paper-input label="Presently Studing School" id="oldschool" error-message="needs old school details!" value="{{oldschool}}"></paper-input>
         </div>
       </div>
       <div class="form-group-heading">
@@ -134,40 +134,40 @@
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
-          <paper-input label="Father's Name" id="dadname" required error-message="needs father's name!" allowed-pattern="[a-zA-Z ]" value="{{fathername}}"></paper-input>
+          <paper-input label="Father's Name" id="dadname"  error-message="needs father's name!" allowed-pattern="[a-zA-Z ]" value="{{fathername}}"></paper-input>
         </div>
         <div class="col-sm-6">
-          <paper-input id="momname" required error-message="needs mother's name!" label="Mother's Name" allowed-pattern="[a-zA-Z ]" value="{{mothername}}"></paper-input>
+          <paper-input id="momname"  error-message="needs mother's name!" label="Mother's Name" allowed-pattern="[a-zA-Z ]" value="{{mothername}}"></paper-input>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
-          <paper-input id="dadedu" required error-message="needs father's qualification!" allowed-pattern="[a-zA-Z ]" label="Father's Qualification" value="{{fatheredu}}"></paper-input>
+          <paper-input id="dadedu"  error-message="needs father's qualification!" allowed-pattern="[a-zA-Z ]" label="Father's Qualification" value="{{fatheredu}}"></paper-input>
         </div>
         <div class="col-sm-6">
-          <paper-input id="momedu" required error-message="needs mother's qualification!" allowed-pattern="[a-zA-Z ]" label="Mother's Qualification" value="{{motheredu}}"></paper-input>
+          <paper-input id="momedu"  error-message="needs mother's qualification!" allowed-pattern="[a-zA-Z ]" label="Mother's Qualification" value="{{motheredu}}"></paper-input>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-2">
-          <paper-input id="dadcountrycode" required error-message="needs father's  country code!" label="Country Code" maxlength="5" allowed-pattern="[0-9]" value="{{fathercountrycode}}"></paper-input>
+          <paper-input id="dadcountrycode"  error-message="needs father's  country code!" label="Country Code" maxlength="5" allowed-pattern="[0-9]" value="{{fathercountrycode}}"></paper-input>
         </div>
         <div class="col-sm-4">
-          <paper-input id="dadmob" required error-message="needs father's mobile no!" label="Father's Contact Number" maxlength="10" allowed-pattern="[0-9]" value="{{fathermob}}" on-change="dadmobverify"></paper-input>
+          <paper-input id="dadmob"  error-message="needs father's mobile no!" label="Father's Contact Number" maxlength="10" allowed-pattern="[0-9]" value="{{fathermob}}" on-change="dadmobverify"></paper-input>
         </div>
         <div class="col-sm-2">
-          <paper-input id="mothercountrycode" required error-message="needs mother's  country code!" label="Country Code" maxlength="5" allowed-pattern="[0-9]" value="{{mothercountrycode}}"></paper-input>
+          <paper-input id="mothercountrycode"  error-message="needs mother's  country code!" label="Country Code" maxlength="5" allowed-pattern="[0-9]" value="{{mothercountrycode}}"></paper-input>
         </div>
         <div class="col-sm-4">
-          <paper-input id="mommob" required error-message="needs mother's mobile no!" label="Mother's Contact Number" maxlength="10" allowed-pattern="[0-9]" value="{{mothermob}}" on-change="mommobverify"></paper-input>
+          <paper-input id="mommob"  error-message="needs mother's mobile no!" label="Mother's Contact Number" maxlength="10" allowed-pattern="[0-9]" value="{{mothermob}}" on-change="mommobverify"></paper-input>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
-          <gold-email-input id="dadmail" auto-validate required error-message="needs father's email id!" label="Father's Email ID"  value="{{fathermail}}"></gold-email-input>
+          <gold-email-input id="dadmail"  error-message="needs father's email id!" label="Father's Email ID"  value="{{fathermail}}"></gold-email-input>
         </div>
         <div class="col-sm-6">
-          <gold-email-input id="mommail" auto-validate required error-message="needs mother's email id!" label="Mother's Email ID"  value="{{mothermail}}"></gold-email-input>
+          <gold-email-input id="mommail" error-message="needs mother's email id!" label="Mother's Email ID"  value="{{mothermail}}"></gold-email-input>
         </div>
       </div>
       <div class="form-group-heading">
@@ -177,7 +177,7 @@
         <div class="col-sm-6">
           <div class="col-sm-6">
             <paper-dropdown-menu label="Father's Occupation" >
-              <paper-menu id="dadoccupation" class="dropdown-content" required on-iron-select="dadoccupation" valueattr="value" >
+              <paper-menu id="dadoccupation" class="dropdown-content" on-iron-select="dadoccupation" valueattr="value" >
                 <paper-item >Self Employed</paper-item>
                 <paper-item >Public Sector</paper-item>
                 <paper-item >Private Sector</paper-item>
@@ -187,13 +187,13 @@
             </paper-dropdown-menu>
           </div>
           <div class="col-md-6" hidden$="{{hidedadothers}}">
-            <paper-input id="dadothers" required error-message="needs father's job!" allowed-pattern="[a-zA-Z ]" label="Father's Occupation" value="{{fatherotheroccupation}}"></paper-input>
+            <paper-input id="dadothers" error-message="needs father's job!" allowed-pattern="[a-zA-Z ]" label="Father's Occupation" value="{{fatherotheroccupation}}"></paper-input>
           </div>
         </div>
         <div class="col-sm-6">
           <div class="col-sm-6">
             <paper-dropdown-menu label="Mother's Occupation" >
-              <paper-menu id="motheroccupation" class="dropdown-content" required on-iron-select="motheroccupation" valueattr="value" >
+              <paper-menu id="motheroccupation" class="dropdown-content" on-iron-select="motheroccupation" valueattr="value" >
                 <paper-item >Self Employed</paper-item>
                 <paper-item >Public Sector</paper-item>
                 <paper-item >Private Sector</paper-item>
@@ -203,30 +203,30 @@
             </paper-dropdown-menu>
           </div>
           <div class="col-md-6" hidden$="{{hidemotherothers}}">
-            <paper-input id="motherothers" required error-message="needs mothers's job!" allowed-pattern="[a-zA-Z ]" label="Mother's Occupation" value="{{motherotheroccupation}}"></paper-input>
+            <paper-input id="motherothers" error-message="needs mothers's job!" allowed-pattern="[a-zA-Z ]" label="Mother's Occupation" value="{{motherotheroccupation}}"></paper-input>
           </div>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category" hidden$="{{salaryinfo}}">
         <div class="col-sm-6" hidden$="{{fathersalaryinfo}}">
-          <paper-input id="dadoff" required error-message="needs father's company name!" allowed-pattern="[a-zA-Z ]" label="Organization Name" value="{{fathercompany}}"></paper-input>
+          <paper-input id="dadoff" error-message="needs father's company name!" allowed-pattern="[a-zA-Z ]" label="Organization Name" value="{{fathercompany}}"></paper-input>
         </div>
         <div class="col-sm-6 pull-right" hidden$="{{mothersalaryinfo}}">
-          <paper-input id="momoff" required error-message="needs mother's company name!" allowed-pattern="[a-zA-Z ]" label="Organization Name" value="{{mothercompany}}"></paper-input>
+          <paper-input id="momoff" error-message="needs mother's company name!" allowed-pattern="[a-zA-Z ]" label="Organization Name" value="{{mothercompany}}"></paper-input>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category" hidden$="{{salaryinfo}}">
         <div class="col-sm-6" hidden$="{{fathersalaryinfo}}">
-          <paper-input id="dadjob" required error-message="needs father's designation!" label="Designation" allowed-pattern="[a-zA-Z ]" value="{{fatherjob}}"></paper-input>
+          <paper-input id="dadjob" error-message="needs father's designation!" label="Designation" allowed-pattern="[a-zA-Z ]" value="{{fatherjob}}"></paper-input>
         </div>
         <div class="col-sm-6 pull-right" hidden$="{{mothersalaryinfo}}">
-          <paper-input id="momjob" required error-message="needs mother's designation!" label="Designation" allowed-pattern="[a-zA-Z ]" value="{{motherjob}}"></paper-input>
+          <paper-input id="momjob" error-message="needs mother's designation!" label="Designation" allowed-pattern="[a-zA-Z ]" value="{{motherjob}}"></paper-input>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category" hidden$="{{salaryinfo}}">
         <div id="dadsal" class="col-sm-6">
           <paper-dropdown-menu label="Father's Salary"  hidden$="{{fathersalaryinfo}}">
-            <paper-menu id="dadsalary" class="dropdown-content" required on-iron-select="dadsalary" valueattr="value" >
+            <paper-menu id="dadsalary" class="dropdown-content" on-iron-select="dadsalary" valueattr="value" >
               <paper-item >Nil</paper-item>
               <paper-item >< 1 Lakh</paper-item>
               <paper-item >1 Lakh to 2.5 Lakhs</paper-item>
@@ -237,7 +237,7 @@
         </div>
         <div id="momsal" class="col-sm-6"  hidden$="{{mothersalaryinfo}}">
           <paper-dropdown-menu label="Mother's Salary" >
-            <paper-menu id="mothersalary" class="dropdown-content" required on-iron-select="mothersalary" valueattr="value" >
+            <paper-menu id="mothersalary" class="dropdown-content" on-iron-select="mothersalary" valueattr="value" >
               <paper-item >Nil</paper-item>
               <paper-item >< 1 Lakh</paper-item>
               <paper-item >1 Lakh to 2.5 Lakhs</paper-item>
@@ -255,25 +255,25 @@
       </div>
       <div class="list-group col-sm-12 panel-body form-category"  hidden$="{{hideguardian}}">
         <div class="col-sm-6">
-          <paper-input id="guardianname" required error-message="needs guardian's name!" label="Guardian Name" allowed-pattern="[a-zA-Z ]" value="{{guardianname}}"></paper-input>
+          <paper-input id="guardianname" error-message="needs guardian's name!" label="Guardian Name" allowed-pattern="[a-zA-Z ]" value="{{guardianname}}"></paper-input>
         </div>
         <div class="col-sm-2">
-          <paper-input id="guardiancountrycode" required error-message="needs guardian's  country code!" label="Country Code" maxlength="5" allowed-pattern="[0-9]" value="{{guardiancountrycode}}"></paper-input>
+          <paper-input id="guardiancountrycode" error-message="needs guardian's  country code!" label="Country Code" maxlength="5" allowed-pattern="[0-9]" value="{{guardiancountrycode}}"></paper-input>
         </div>
         <div class="col-sm-4">
-          <paper-input id="guardianmobile" required error-message="needs gauardian's mobile no!" label="Guardian's Contact Number" maxlength="10" allowed-pattern="[0-9]" value="{{guardianmobile}}" on-change="guardmobverify"></paper-input>
+          <paper-input id="guardianmobile" error-message="needs gauardian's mobile no!" label="Guardian's Contact Number" maxlength="10" allowed-pattern="[0-9]" value="{{guardianmobile}}" on-change="guardmobverify"></paper-input>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category"  hidden$="{{hideguardian}}">
         <div class="col-sm-6">
-          <paper-input id="guardianemail" required error-message="needs guardian's email!" label="Guardian Email" value="{{guardianemail}}"></paper-input>
+          <paper-input id="guardianemail" error-message="needs guardian's email!" label="Guardian Email" value="{{guardianemail}}"></paper-input>
         </div>
       </div>
         <div class="list-group col-sm-12 panel-body form-category" hidden$="{{hideguardian}}">
           <div class="col-sm-6">
             <div class="col-sm-6">
               <paper-dropdown-menu  label="Guardian's Occupation" >
-                <paper-menu id="guardianoccupation" class="dropdown-content" required on-iron-select="guardianoccupation" valueattr="value" >
+                <paper-menu id="guardianoccupation" class="dropdown-content" on-iron-select="guardianoccupation" valueattr="value" >
                   <paper-item >Self Employed</paper-item>
                   <paper-item >Public Sector</paper-item>
                   <paper-item >Private Sector</paper-item>
@@ -287,12 +287,12 @@
             </div>
           </div>
         <div class="col-sm-6" hidden$="{{guardiansalaryinfo}}">
-          <paper-input id="guardianoff" required error-message="needs guardian's company name!" allowed-pattern="[a-zA-Z ]" label="Organization Name" value="{{guardiancompany}}"></paper-input>
+          <paper-input id="guardianoff" error-message="needs guardian's company name!" allowed-pattern="[a-zA-Z ]" label="Organization Name" value="{{guardiancompany}}"></paper-input>
         </div>
         </div>
       <div class="list-group col-sm-12 panel-body form-category" hidden$="{{guardiansalaryinfo}}">
         <div class="col-sm-6">
-          <paper-input id="guardianjob" required error-message="needs guardian's designation!" label="Designation" allowed-pattern="[a-zA-Z ]" value="{{guardianjob}}"></paper-input>
+          <paper-input id="guardianjob" error-message="needs guardian's designation!" label="Designation" allowed-pattern="[a-zA-Z ]" value="{{guardianjob}}"></paper-input>
         </div>
         <div class="col-sm-6" hidden$="{{guardiansalaryinfo}}">
           <paper-dropdown-menu label="Guardian's Salary" >
@@ -311,21 +311,21 @@
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-4">
-          <paper-input label="Flat/House No" id="flat" required error-message="needs flat/House No!" value="{{flat}}"></paper-input>
+          <paper-input label="Flat/House No" id="flat" error-message="needs flat/House No!" value="{{flat}}"></paper-input>
         </div>
         <div class="col-sm-4">
-          <paper-input label="Building Name" id="add1" required error-message="needs building name!" value="{{address1}}"></paper-input>
+          <paper-input label="Building Name" id="add1" error-message="needs building name!" value="{{address1}}"></paper-input>
         </div>
         <div class="col-sm-4">
-          <paper-input label="Street/Road" id="add2" required error-message="needs street/road name!" value="{{address2}}"></paper-input>
+          <paper-input label="Street/Road" id="add2" error-message="needs street/road name!" value="{{address2}}"></paper-input>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-4">
-          <paper-input label="Village/Town" id="add3" required error-message="needs village/town!" value="{{address3}}"></paper-input>
+          <paper-input label="Village/Town" id="add3" error-message="needs village/town!" value="{{address3}}"></paper-input>
         </div>
         <div class="col-sm-4">
-            <paper-input  id="locality" required error-message="needs locality!" label="Enter Location / Landmark" is="" value="{{textvalues}}" on-keydown="FnInputChanged1"></paper-input>
+            <paper-input  id="locality" error-message="needs locality!" label="Enter Location / Landmark" is="" value="{{textvalues}}" on-keydown="FnInputChanged1"></paper-input>
             <paper-listbox class="dropdown-content" id="itemlists" on-iron-select="Fnselected1" valueattr="value">
               <template is="dom-repeat" items="{{itemArray}}" as="item">
                 <paper-item value="{{item.itemid}}">{{item.itemdes}}</paper-item>
@@ -333,12 +333,12 @@
             </paper-listbox>
         </div>
         <div class="col-sm-4">
-          <paper-input id="city" required allowed-pattern="[a-zA-Z ]" error-message="needs city name!" label="City" value="{{city}}"></paper-input>
+          <paper-input id="city" allowed-pattern="[a-zA-Z ]" error-message="needs city name!" label="City" value="{{city}}"></paper-input>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-4">
-          <paper-input id="state" required allowed-pattern="[a-zA-Z ]" error-message="needs state name!" label="State" value="{{state}}"></paper-input>
+          <paper-input id="state" allowed-pattern="[a-zA-Z ]" error-message="needs state name!" label="State" value="{{state}}"></paper-input>
         </div>
         <div class="col-sm-4">
           <paper-dropdown-menu id="country" label="Select Country" on-iron-select="FnSelectCountry" attr-for-selected="value"  style="margin-top: 3%;">
@@ -350,13 +350,13 @@
           </paper-dropdown-menu>
         </div>
         <div class="col-sm-4">
-          <paper-input id="pin" required error-message="needs pincode!" allowed-pattern="[0-9]" maxlength="6" label="Pincode" value="{{pincode}}"></paper-input>
+          <paper-input id="pin" error-message="needs pincode!" allowed-pattern="[0-9]" maxlength="6" label="Pincode" value="{{pincode}}"></paper-input>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-4">
           <paper-dropdown-menu label="Enquiry Source" >
-            <paper-menu id="source" class="dropdown-content" required on-iron-select="source" valueattr="value" >
+            <paper-menu id="source" class="dropdown-content" on-iron-select="source" valueattr="value" >
               <paper-item >Zee Television Ads</paper-item>
               <paper-item >Newspaper</paper-item>
               <paper-item >Print Media</paper-item>
@@ -379,7 +379,7 @@
           <paper-input  label="Grade of sibling" value="{{siblingdetails}}"></paper-input>
         </div>
         <div class="col-sm-4" id="referrer">
-          <paper-input  required error-message="needs referrer!" label="Enter referrer name.." is="" value="{{referrername}}" on-keydown="FnInputChanged"></paper-input>
+          <paper-input  error-message="needs referrer!" label="Enter referrer name.." is="" value="{{referrername}}" on-keydown="FnInputChanged"></paper-input>
           <paper-listbox class="dropdown-content" id="itemlist" on-iron-select="Fnselected" valueattr="value">
             <template is="dom-repeat" items="{{itemArray}}" as="item">
               <paper-item >{{item.itemdes}}</paper-item>

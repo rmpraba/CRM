@@ -1918,7 +1918,7 @@ app.post('/insertcashfees',  urlencodedParser,function (req, res){
         fee_code:req.query.feecode,
         discount_code:req.query.discountcode,
         installment:req.query.installment,
-        mode_of_payment:req.query.modeofpayment,        
+        mode_of_payment:req.query.modeofpayment,
         installment_amount:req.query.installmentamount,
         received_date:req.query.paiddate,
         paid_date:req.query.paiddate,
@@ -2005,7 +2005,7 @@ app.post('/insertchequefees',  urlencodedParser,function (req, res){
         fee_code:req.query.feecode,
         discount_code:req.query.discountcode,
         installment:req.query.installment,
-        mode_of_payment:req.query.modeofpayment,        
+        mode_of_payment:req.query.modeofpayment,
         installment_amount:req.query.installmentamount,
         received_date:req.query.receiveddate,
         paid_date:req.query.receiveddate,
@@ -2088,7 +2088,7 @@ app.post('/inserttransferfees',  urlencodedParser,function (req, res){
         fee_code:req.query.feecode,
         discount_code:req.query.discountcode,
         installment:req.query.installment,
-        mode_of_payment:req.query.modeofpayment,        
+        mode_of_payment:req.query.modeofpayment,
         installment_amount:req.query.installmentamount,
         received_date:req.query.receiveddate,
         paid_date:req.query.receiveddate,
@@ -2390,7 +2390,7 @@ app.post('/getfollowupcount',  urlencodedParser,function (req, res){
 });
 
 
- 
+
 
  app.post('/getfollowupstudents',  urlencodedParser,function (req, res)
  {
@@ -3034,7 +3034,6 @@ app.post('/masterfollowupinfo',  urlencodedParser,function (req, res){
        {
          if(rows.length>0)
          {
-           console.log(rows);
            res.status(200).json({'returnval': rows});
          }
          else
