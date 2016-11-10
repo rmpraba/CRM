@@ -965,7 +965,7 @@ alert("history"+e.detail.response.returnval);
      },
      searchfeeadmissioninfoResponse:function(e){
         var arr=e.detail.response.returnval;
-        alert(JSON.stringify(arr));
+        // alert(JSON.stringify(arr));
         if(arr.length>0){
         document.querySelector('fees-card').acyear=arr[0].academic_year;
         document.querySelector('fees-card').academicyear=arr[0].admission_year;
