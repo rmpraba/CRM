@@ -7,8 +7,8 @@
       :host {
         display: block;
       }
-    </style>
-    <span class="col-sm-3"><paper-checkbox id="{{code}}" value="code" on-change="discountHandler">{{discountname}}</paper-checkbox></span>
+    </style>    
+    <span class="col-sm-3"><paper-checkbox id="check{{code}}" value="code" on-change="discountHandler">{{discountname}}</paper-checkbox></span>
   </template>
   <script>
   (function() {
@@ -19,7 +19,8 @@
 
       },
       discountHandler:function(e){
-        // if(document.querySelector('#'+this.code).checked==true)
+        // alert(document.querySelector('#check'+this.code));
+        if(document.querySelector('#check'+this.code).checked==true)
         document.querySelector('newenquiry-card').setDiscountType(this.code);
         // var box = document.querySelector("#selectbox");
         // if(e.target.checked==true) {
