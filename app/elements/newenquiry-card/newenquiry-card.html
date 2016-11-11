@@ -228,7 +228,7 @@ ready:function () {
         this.$.fathersdetails.hidden=true;
         this.$.Guardiandetails.hidden=true;
         var dt=new Date();
-        todaydat=dt.getDate()+"/"+(dt.getMonth()+1)+"/"+dt.getFullYear();
+        todaydat=(dt.getMonth()+1)+"/"+dt.getDate()+"/"+dt.getFullYear();
         sessionStorage.setItem("todaydate",todaydat);
         this.todaydate=todaydat;
         this.$.itemlist.hidden=true;

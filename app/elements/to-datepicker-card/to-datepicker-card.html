@@ -10,19 +10,12 @@
 
 
 
-<dom-module id="fromdate-pickercard">
-<style>
-  paper-input{
-    width: 63%;
-    margin-top: -3%;
-    margin-left: -5%;
-  }
-</style>
+<dom-module id="to-datepicker-card">
   <template>
     <!--component which invokes the predefined date picker control-->
     <div class="datepicker">
-      <paper-input label="From Date" class="btn" on-click="FnShowDialog" raised value="{{showdate}}"></paper-input>
-      <paper-dialog id="dialog" class="paper-date-picker-dialog" modal on-iron-overlay-closed="FnDismissDialog" style="left: 0 !important;">
+      <paper-input label="To Date" class="btn" on-click="FnShowDialog" raised value="{{showdate}}"></paper-input>
+      <paper-dialog id="dialog" class="paper-date-picker-dialog" modal on-iron-overlay-closed="FnDismissDialog">
         <paper-date-picker id="picker" date="{{date}}"></paper-date-picker>
         <div class="buttons">
           <paper-button dialog-dismiss>Cancel</paper-button>
@@ -35,12 +28,13 @@
   </template>
   <script>
     Polymer({
-      is: 'fromdate-pickercard',
+      is: 'to-datepicker-card',
 
       ready:function()
       {
-        this.showdate=moment(new Date()).format('L');
-        localStorage.setItem("localsess_from_date",this.showdate);
+        /* this.fieldshowdate=moment(new Date()).format('L');
+         localStorage.setItem("localsess_curr_date",this.fieldshowdate);*/
+        //this.$.service.feereport(this.fieldshowdate);
       },
       FnShowDialog:function(){
         this.date=new Date();
@@ -49,23 +43,34 @@
       FnDismissDialog:function(e)
       {
         if (e.detail.confirmed)
-        {
+        {/*
           var pickdate=moment(this.$.picker.date).format('L');
           var dd1=new Date();
           var dd2=new Date(pickdate);
           var days=parseInt((dd1 - dd2) / (1000 * 60 * 60 * 24));
-          this.showdate = moment(this.$.picker.date).format('L');
-          localStorage.setItem("localsess_from_date",this.showdate);
-          document.querySelector('discount-master-card').FnSetFromDate(this.showdate);
-          document.querySelector('walkin-analysis-filter-card').FnSetFromDate(this.showdate);
+          if(days<=0){
+            document.querySelector('newenquiry-card').dateclear();
+            // document.querySelector('admission-form').dateclear();
+            document.querySelector('detailed-enquiry-form').dateclear();
+            //this.fieldshowdate="";
+          }
+          else{*/
+            this.showdate = moment(this.$.picker.date).format('L');
+            localStorage.setItem("localsess_start_date",this.showdate);
+            document.querySelector('walkin-analysis-filter-card').FnSetToDate(this.showdate);
+          //}
         }
       },
       FnClear:function(){
-        this.showdate = moment(new Date()).format('L');
+        this.showdate = "";
       },
       FnSetDate:function(value){
         this.showdate=moment(new Date(value)).format('L');
       }
+      /*   setdate:function(zxdate){
+       //alert('DAtae  '+zxdate);
+       this.fieldshowdate=zxdate;
+       }*/
     });
   </script>
 </dom-module>

@@ -1277,7 +1277,11 @@ document.querySelector('followup-service').GenerateFollowups(successbox);
       },
       walkinanasysisyaerandmonth:function(){
         for(var i = 0; i < walkinanalysisyear.length; i++){
-          var obj={"source":"", "year":"","month":"","day":""};
+          if(walkinanalysisday){
+            var obj={"source":"", "year":"","month":"","day":""};
+          }else {
+            var obj={"source":"", "year":"","month":"","day":0};
+          }
           for(var j = 0;j<=i;j++){
             if(walkinanalysisyear[i].enquiry_source == walkinanalysismonth[j].enquiry_source){
               obj.source=walkinanalysisyear[i].enquiry_source;
@@ -1298,22 +1302,29 @@ document.querySelector('followup-service').GenerateFollowups(successbox);
         this.walkinanalysis();
       },
       walkinanalysis:function(){
-        for(var i = 0; i <walkinanasysisyaerandmontharr.length; i++){
-          var obj = {"source":"","year":"","month":"",day:""};
-          for(var j = 0; j <walkinanalysisday.length; j++){
-            if(walkinanasysisyaerandmontharr[i].source == walkinanalysisday[j].enquiry_source){
-              if(walkinanalysisday[j].totalenq==null||walkinanalysisday[j].totalenq==""){
+        if(walkinanalysisday){
+          for(var i = 0; i <walkinanasysisyaerandmontharr.length; i++){
+            var obj = {"source":"","year":"","month":"",day:""};
+            for(var j = 0; j <walkinanalysisday.length; j++){
+              if(walkinanasysisyaerandmontharr[i].source == walkinanalysisday[j].enquiry_source){
+                if(walkinanalysisday[j].totalenq==null||walkinanalysisday[j].totalenq==""){
+                  walkinanasysisyaerandmontharr[i].day=0;
+                }else{
+                  walkinanasysisyaerandmontharr[i].day=walkinanalysisday[j].totalenq;
+                }
+              }
+              else{
                 walkinanasysisyaerandmontharr[i].day=0;
-              }else{
-                walkinanasysisyaerandmontharr[i].day=walkinanalysisday[j].totalenq;
               }
             }
-            else{
-              walkinanasysisyaerandmontharr[i].day=0;
-            }
           }
+          alert('hi')
+          document.querySelector('walkin-analysis-card').walkinanasysisyaerandmontharr=walkinanasysisyaerandmontharr;
+        } else {
+          alert('hii');
+          document.querySelector('walkin-analysis-card').walkinanasysisyaerandmontharr=walkinanasysisyaerandmontharr;
         }
-        document.querySelector('walkin-analysis-card').walkinanasysisyaerandmontharr=walkinanasysisyaerandmontharr;
+
       },
       getacademicyearreport:function(year){
         this.getacademicyearreporturl="http://localhost:8086/getacademicyearreport";
@@ -1326,6 +1337,7 @@ document.querySelector('followup-service').GenerateFollowups(successbox);
       getacademicyearreportResponse:function(e){
         var result  = e.detail.response.returnval;
         document.querySelector('walkin-analysis-filter-card').reportarr=result;
+        document.querySelector('walkin-analysis-filter-card').showReport();
       },
       getbetweendatereport:function(from_date,to_date){
         this.getbetweendatereporturl="http://localhost:8086/getbetweendatereport";
@@ -1338,7 +1350,9 @@ document.querySelector('followup-service').GenerateFollowups(successbox);
       },
       getbetweendatereportResponse:function(e){
         var result  = e.detail.response.returnval;
+        alert(JSON.stringify(result));
         document.querySelector('walkin-analysis-filter-card').reportarr=result;
+        document.querySelector('walkin-analysis-filter-card').showReport();
       }
     });
   })();
