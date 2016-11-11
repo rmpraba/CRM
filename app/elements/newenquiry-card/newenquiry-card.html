@@ -92,7 +92,7 @@
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
-          <dateofbirth-datepicker></dateofbirth-datepicker>
+          <dateofbirth-datepicker ></dateofbirth-datepicker>
         </div>
         <div class="col-sm-6">
           <paper-input readonly label="Age(In Years)" value="{{ageofyr}}"></paper-input>
@@ -228,7 +228,7 @@ ready:function () {
         this.$.fathersdetails.hidden=true;
         this.$.Guardiandetails.hidden=true;
         var dt=new Date();
-        todaydat=dt.getDate()+"/"+(dt.getMonth()+1)+"/"+dt.getFullYear();
+        todaydat=(dt.getMonth()+1)+"/"+dt.getDate()+"/"+dt.getFullYear();
         sessionStorage.setItem("todaydate",todaydat);
         this.todaydate=todaydat;
         this.$.itemlist.hidden=true;
@@ -556,7 +556,7 @@ ready:function () {
         }
         else{
           // alert('coming........');
-        this.$.service.submitenqiry(this.enqno,this.academicyear,grade,this.firstname,this.middlename,this.lastname,gender,dobdate,this.fathername,this.mothername,this.mob,this.email,this.textvalue,this.todaydate,this.gemail,this.gmob,this.Guardianname,paga,enrolltype,checkList,this.discounttype);
+        this.$.service.submitenqiry(this.enqno,this.academicyear,grade,this.firstname,this.middlename,this.lastname,gender,dobdate,this.fathername,this.mothername,this.mob,this.email,this.textvalue,this.todaydate,this.gemail,this.gmob,this.Guardianname,paga,enrolltype,checkList,this.discounttypecode);
       }}
       },
       verifymob:function(){
@@ -631,6 +631,7 @@ ready:function () {
       },
       setDiscountType:function(code){
         this.discounttypecode=code;
+        // alert(this.discounttypecode);
       },
       // getItems:function(codes){
       //   checkList.push(codes);

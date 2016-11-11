@@ -443,8 +443,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     fourthfollowupdate.setDate(fourthfollowupdate.getDate()+fourthfollowup);
     fifthfollowupdate.setDate(fifthfollowupdate.getDate()+fifthfollowup);
      },
-     submitenqiry:function(enqno,academicyear,grade,Fnfirstname,Fnmiddlename,Fnlastname,gender,dob,fathername,mothername,mob,email,textvalue,todate,gemail,gmob,Guardianname,paga,admtype,checkList,discountype){
-
+     submitenqiry:function(enqno,academicyear,grade,Fnfirstname,Fnmiddlename,Fnlastname,gender,dob,fathername,mothername,mob,email,textvalue,todate,gemail,gmob,Guardianname,paga,admtype,checkList,discounttype){
+      // alert(discountype);
 
 
 
@@ -479,7 +479,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         obj.Guardianname=Guardianname;
         obj.paga=paga;
         obj.adtype=admtype;
-        obj.discountype=discountype;
+        obj.discounttype=discounttype;
         this.submitenquiryparam=obj;
 
         //alert(JSON.stringify(obj));
@@ -1251,7 +1251,11 @@ document.querySelector('followup-service').GenerateFollowups(successbox);
       },
       walkinanasysisyaerandmonth:function(){
         for(var i = 0; i < walkinanalysisyear.length; i++){
-          var obj={"source":"", "year":"","month":"","day":""};
+          if(walkinanalysisday){
+            var obj={"source":"", "year":"","month":"","day":""};
+          }else {
+            var obj={"source":"", "year":"","month":"","day":0};
+          }
           for(var j = 0;j<=i;j++){
             if(walkinanalysisyear[i].enquiry_source == walkinanalysismonth[j].enquiry_source){
               obj.source=walkinanalysisyear[i].enquiry_source;
@@ -1272,22 +1276,27 @@ document.querySelector('followup-service').GenerateFollowups(successbox);
         this.walkinanalysis();
       },
       walkinanalysis:function(){
-        for(var i = 0; i <walkinanasysisyaerandmontharr.length; i++){
-          var obj = {"source":"","year":"","month":"",day:""};
-          for(var j = 0; j <walkinanalysisday.length; j++){
-            if(walkinanasysisyaerandmontharr[i].source == walkinanalysisday[j].enquiry_source){
-              if(walkinanalysisday[j].totalenq==null||walkinanalysisday[j].totalenq==""){
+        if(walkinanalysisday){
+          for(var i = 0; i <walkinanasysisyaerandmontharr.length; i++){
+            var obj = {"source":"","year":"","month":"",day:""};
+            for(var j = 0; j <walkinanalysisday.length; j++){
+              if(walkinanasysisyaerandmontharr[i].source == walkinanalysisday[j].enquiry_source){
+                if(walkinanalysisday[j].totalenq==null||walkinanalysisday[j].totalenq==""){
+                  walkinanasysisyaerandmontharr[i].day=0;
+                }else{
+                  walkinanasysisyaerandmontharr[i].day=walkinanalysisday[j].totalenq;
+                }
+              }
+              else{
                 walkinanasysisyaerandmontharr[i].day=0;
-              }else{
-                walkinanasysisyaerandmontharr[i].day=walkinanalysisday[j].totalenq;
               }
             }
-            else{
-              walkinanasysisyaerandmontharr[i].day=0;
-            }
           }
+          document.querySelector('walkin-analysis-card').walkinanasysisyaerandmontharr=walkinanasysisyaerandmontharr;
+        } else {
+          document.querySelector('walkin-analysis-card').walkinanasysisyaerandmontharr=walkinanasysisyaerandmontharr;
         }
-        document.querySelector('walkin-analysis-card').walkinanasysisyaerandmontharr=walkinanasysisyaerandmontharr;
+
       },
       getacademicyearreport:function(year){
         this.getacademicyearreporturl="http://localhost:8086/getacademicyearreport";
@@ -1300,19 +1309,25 @@ document.querySelector('followup-service').GenerateFollowups(successbox);
       getacademicyearreportResponse:function(e){
         var result  = e.detail.response.returnval;
         document.querySelector('walkin-analysis-filter-card').reportarr=result;
+        document.querySelector('walkin-analysis-filter-card').showReport();
       },
       getbetweendatereport:function(from_date,to_date){
         this.getbetweendatereporturl="http://localhost:8086/getbetweendatereport";
         var obj={"schol":"", "from_date":"","to_date":""};
         obj.schol=localStorage.getItem("schoolid");
-        obj.from_date=from_date;
-        obj.to_date=to_date;
+        var fromdate = new Date(from_date);
+        var month1 = fromdate.getMonth() + 1;
+        obj.from_date =  fromdate.getDate()+'/'+month1+'/' + fromdate.getFullYear();
+        var todate = new Date(to_date);
+        var month2 = todate.getMonth() + 1;
+        obj.to_date = todate.getDate() + '/' +month2+ '/' + todate.getFullYear();
         this.getbetweendatereportparam=obj;
         this.$.getbetweendatereportajax.generateRequest();
       },
       getbetweendatereportResponse:function(e){
         var result  = e.detail.response.returnval;
         document.querySelector('walkin-analysis-filter-card').reportarr=result;
+        document.querySelector('walkin-analysis-filter-card').showReport();
       }
     });
   })();
