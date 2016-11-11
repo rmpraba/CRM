@@ -1318,10 +1318,8 @@ document.querySelector('followup-service').GenerateFollowups(successbox);
               }
             }
           }
-          alert('hi')
           document.querySelector('walkin-analysis-card').walkinanasysisyaerandmontharr=walkinanasysisyaerandmontharr;
         } else {
-          alert('hii');
           document.querySelector('walkin-analysis-card').walkinanasysisyaerandmontharr=walkinanasysisyaerandmontharr;
         }
 
@@ -1343,14 +1341,17 @@ document.querySelector('followup-service').GenerateFollowups(successbox);
         this.getbetweendatereporturl="http://localhost:8086/getbetweendatereport";
         var obj={"schol":"", "from_date":"","to_date":""};
         obj.schol=localStorage.getItem("schoolid");
-        obj.from_date=from_date;
-        obj.to_date=to_date;
+        var fromdate = new Date(from_date);
+        var month1 = fromdate.getMonth() + 1;
+        obj.from_date =  fromdate.getDate()+'/'+month1+'/' + fromdate.getFullYear();
+        var todate = new Date(to_date);
+        var month2 = todate.getMonth() + 1;
+        obj.to_date = todate.getDate() + '/' +month2+ '/' + todate.getFullYear();
         this.getbetweendatereportparam=obj;
         this.$.getbetweendatereportajax.generateRequest();
       },
       getbetweendatereportResponse:function(e){
         var result  = e.detail.response.returnval;
-        alert(JSON.stringify(result));
         document.querySelector('walkin-analysis-filter-card').reportarr=result;
         document.querySelector('walkin-analysis-filter-card').showReport();
       }

@@ -2881,7 +2881,6 @@ app.post('/updatetestdetails', urlencodedParser,function (req, res){
        {
          if(rows.length>0)
          {
-           console.log(rows);
            res.status(200).json({'returnval': rows});
          }
          else
@@ -2930,7 +2929,6 @@ app.post('/updatetestdetails', urlencodedParser,function (req, res){
        {
          if(rows.length>0)
          {
-           console.log(rows);
            res.status(200).json({'returnval': rows});
          }
          else
@@ -3010,7 +3008,6 @@ app.post('/masterfollowupinfo',  urlencodedParser,function (req, res){
     {
     if(rows.length>0)
     {
-      console.log(rows);
       res.status(200).json({'returnval': rows});
     }
     else
@@ -3067,8 +3064,8 @@ app.post('/masterfollowupinfo',  urlencodedParser,function (req, res){
 
 
  app.post('/getbetweendatereport',  urlencodedParser,function (req, res){
-   var qur = "SELECT count(*) as totalenq, enquiry_source FROM `student_enquiry_details` WHERE (created_on BETWEEN '"+req.query.from_date+"' AND '"+req.query.to_date+"') and school_id = '"+req.query.schol+"' GROUP BY enquiry_source";
-   console.log(qur);
+   var qur = "SELECT STR_TO_DATE(created_on,'%m/%d/%Y') as date, enquiry_source, count(*) as totalenq FROM student_enquiry_details where created_on BETWEEN '"+req.query.from_date+"' and '"+req.query.to_date+"' and school_id = '"+req.query.schol+"' GROUP BY enquiry_source";
+
    connection.query(qur,
      function(err, rows){
        if(!err){
