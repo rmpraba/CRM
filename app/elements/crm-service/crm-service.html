@@ -168,18 +168,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         debounce-duration="300"
         >
   </iron-ajax>
-  <!-- this ajax gets the student list who all are enquired for admission and not yet been admitted -->
-  <iron-ajax
-        method="post"
-        id="getlistdetailsajax"
-        url="{{getlistdetailsurl}}"
-        params="{{getlistdetailsparam}}"
-        handle-as="json"
-        content-type="application/json"
-        on-response="getlistdetailsResponse"
-        debounce-duration="300"
-        >
-  </iron-ajax>
+  
   <!-- this below ajax is used to get the sequence value of prospectus from the table -->
   <iron-ajax
         method="post"
@@ -1040,21 +1029,6 @@ document.querySelector('followup-service').GenerateFollowups(successbox);
      getadmittedcountResponse:function(e){
       var result=e.detail.response.returnval;
       document.querySelector('enquiry-card').gradewiseadmissionarr=result;
-     },
-     getlistdetails:function(classes){
-           this.getlistdetailsurl="http://localhost:8086/getlistdetails";
-        var obj={"schol":"","grade":"","status":""}
-        obj.schol=localStorage.getItem("schoolid");
-        obj.grade=classes;
-        obj.status="Enquired";
-        this.getlistdetailsparam=obj;
-       //alert(JSON.stringify(obj));
-        this.$.getlistdetailsajax.generateRequest();
-     },
-     getlistdetailsResponse:function(e){
-          var result=e.detail.response.returnval;
-          //alert(JSON.stringify(result));
-          document.querySelector('enquiry-details-card').listdetails=result;
      },
      getprospectno:function(){
         this.getprospectnourl="http://localhost:8086/getprospectno";

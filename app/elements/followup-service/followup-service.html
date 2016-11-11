@@ -223,6 +223,44 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     >
     </iron-ajax>
 
+<!-- this below ajax is used to cal the function that fetch the data of student whose detail does we want to view -->
+<iron-ajax
+      method="post"
+      id="viewdetailajax"
+      url="{{viewdetailurl}}"
+      params="{{viewdetailparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="viewdetailResponse"
+      debounce-duration="300"
+    >
+    </iron-ajax>
+
+<!-- this below ajax fetches the detail of admission test details and test subject details -->
+<iron-ajax
+      method="post"
+      id="subjectdetailajax"
+      url="{{subjectdetailurl}}"
+      params="{{subjectdetailparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="subjectdetailResponse"
+      debounce-duration="300"
+    >
+    </iron-ajax>
+<!-- this ajax gets the followup list details for students who all are enquired for admission and not yet been admitted -->
+  <iron-ajax
+        method="post"
+        id="getlistdetailsajax"
+        url="{{getlistdetailsurl}}"
+        params="{{getlistdetailsparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getlistdetailsResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+
 
   </template>
   <script>
@@ -302,7 +340,7 @@ newdate.setDate(newdate.getDate()+resultarr[0].no_of_days);
           else{
            obj.nextfolowup="Re-Schedule"; 
           }
-          obj.flag=1;
+          obj.flag='F';
           obj.schedule=1;
           obj.followupno=j+1;
          obj.createdby=localStorage.getItem("employeeid");
@@ -330,7 +368,7 @@ newdate.setDate(newdate.getDate()+resultarr[0].no_of_days);
         }
       },
       getfollowupcount:function(){
-          alert('call');
+          //alert('call');
       var dt=new Date();
         this.getopenfollowupcounturl="http://localhost:8086/getfollowupcount";
         var obj={"schol":"","status":""}
@@ -486,6 +524,105 @@ newdate.setDate(newdate.getDate()+resultarr[0].no_of_days);
        document.querySelector('followup-details').followuparr=res;
         document.querySelector('app-list').setPage("followup-details","Followup Student List");
 
+      },
+      viewdetail:function(id,status,followid){
+        this.viewdetailurl="http://localhost:8086/viewdetail";
+        var obj={"schol":"","id":"","fid":"","fstatus":""};
+        obj.schol=localStorage.getItem("schoolid");
+        obj.id=id;
+        obj.fid=followid;
+        obj.fstatus=status;
+        this.viewdetailparam=obj;
+        this.$.viewdetailajax.generateRequest();
+      },
+      viewdetailResponse:function(e){
+        var res=e.detail.response.returnval;
+        var parentid,guardianid;
+        document.querySelector('followup-student-detail').enqno=res[0].enquiry_no;
+        document.querySelector('followup-student-detail').followupid=res[0].id;
+        document.querySelector('followup-student-detail').name=res[0].enquiry_name;
+        document.querySelector('followup-student-detail').grade=res[0].class;
+        document.querySelector('followup-student-detail').enquiredon=res[0].created_on;
+        document.querySelector('followup-student-detail').parentname=res[0].father_name;
+        document.querySelector('followup-student-detail').mobno=res[0].father_mob;
+        document.querySelector('followup-student-detail').guardianname=res[0].guardianname;
+        document.querySelector('followup-student-detail').gmobno=res[0].gmob;
+        document.querySelector('followup-student-detail').lastdate=res[0].last_schedule_date;
+        document.querySelector('followup-student-detail').schedule=res[0].schedule_flag;
+        document.querySelector('followup-student-detail').status=res[0].schedule_status;
+        if((res[0].father_name=="")||(res[0].father_name==null)){
+          parentid=true;
+        }else{
+          parentid=false;
+        }
+        if((res[0].guardianname=="")||(res[0].guardianname==null)){
+          guardianid=true;
+        }else{
+          guardianid=false;
+        }
+
+
+         document.querySelector('followup-student-detail').testdetails(res[0].enquiry_no,res[0].admission_test,parentid,guardianid);
+        //document.querySelector('followup-student-detail').Fncheck();
+      },
+      getsubjectinfo:function(enqno,enquiredon){
+        //alert(enqno+'  '+enquiredon);
+          this.subjectdetailurl="http://localhost:8086/subjectdetail";
+        var obj={"schol":"","id":"","enqdate":"","schedule":""};
+        obj.schol=localStorage.getItem("schoolid");
+        obj.id=enqno;
+        obj.enqdate=enquiredon;
+        this.subjectdetailparam=obj;
+        //alert(JSON.stringify(obj));
+        this.$.subjectdetailajax.generateRequest();
+      },
+      subjectdetailResponse:function(e){
+        var english,maths,evs;
+        var res=e.detail.response.returnval;
+        //alert(JSON.stringify(res));
+        if((res[0].result_status=="")||(res[0].result_status==null)){
+          document.querySelector('followup-student-detail').result='Still Not Attended';
+
+        }else{
+          document.querySelector('followup-student-detail').result=res[0].result_status;
+
+        }  
+            document.querySelector('followup-student-detail').testdate=res[0].test_date;
+        
+          if(res[0].english_status=='Yes'){
+            english=true;
+          }
+          else{
+            english=false;
+          }
+          if(res[0].maths_status=='Yes'){
+            maths=true;
+          }
+          else{
+            maths=false;
+          }
+          if(res[0].evs_status=='Yes'){
+            evs=true;
+          }else{
+            evs=false;
+          }
+          document.querySelector('followup-student-detail').Fnsetsubject(english,maths,evs);
+      },
+      getlistdetails:function(enquiryid,followypid,schedule){
+        this.getlistdetailsurl="http://localhost:8086/getlistdetails";
+        var obj={"schol":"","id":"","fid":"","flag":""}
+        obj.schol=localStorage.getItem("schoolid");
+        obj.id=enquiryid;
+        obj.fid=followypid;
+        obj.flag=schedule;
+        this.getlistdetailsparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.getlistdetailsajax.generateRequest();
+
+      },
+      getlistdetailsResponse:function(e){
+        alert(JSON.stringify(e.detail.response.returnval));
+        document.querySelector('followup-student-detail').followupdetailarr=e.detail.response.returnval;
       }
     
     });

@@ -2233,33 +2233,6 @@ app.post('/getadmittedcount',  urlencodedParser,function (req, res){
 });
   });
 
-/*this function takes the detail of student who have been enquired and from gradewise list */
-app.post('/getlistdetails',  urlencodedParser,function (req, res){
-    var qur={"s.school_id":req.query.schol};
-    var state={"status":req.query.status};
-    var classes={"class":req.query.grade};
-    //console.log('qur');
-    connection.query('SELECT f.current_confidence_level,f.enquiry_id,f.followup_flag,s.enquiry_name, s.enquiry_no,s.created_on FROM followupdetail f join student_enquiry_details s on f.enquiry_id=s.enquiry_no WHERE ? and ? and ?',[qur,state,classes],
-    function(err, rows)
-    {
-    if(!err)
-    {
-    if(rows.length>0)
-    {
-      //console.log(rows);
-      res.status(200).json({'returnval': rows});
-    }
-    else
-    {
-      console.log(err);
-      res.status(200).json({'returnval': ''});
-    }
-  }
-  else{
-     console.log(err);
-  }
-});
-  });
 
 
 
@@ -2404,7 +2377,6 @@ app.post('/getfollowupcount',  urlencodedParser,function (req, res){
    else{
         var qur = "SELECT f.enquiry_id,f.schedule_flag,s.enquiry_name,f.schedule_status,f.id,f.current_confidence_level,f.upcoming_date FROM followup f join student_enquiry_details s on f.enquiry_id=s.enquiry_no WHERE f.schedule_status='"+req.query.fnstatus+"' and s.class='"+req.query.fngrade+"' and s.school_id = '"+req.query.schol+"' ORDER BY (upcoming_date)";
    }
-console.log(qur);
    connection.query(qur,
      function(err, rows)
      {
@@ -2427,13 +2399,15 @@ console.log(qur);
  {
    var school={"school_id":req.query.schol};
    var id={"enquiry_no":req.query.id};
-   var qur = "SELECT s.enquiry_no, s.enquiry_name,f.followup_status, s.class, s.created_on, s.father_name, s.father_mob,f.followup_id, f.followup_1, f.followup1_remarks, f.confidence_level_1, f.followup_2, f.followup2_remarks, f.confidence_level_2, f.followup_3, f.followup3_remarks, f.confidence_level_3, f.followup_4, f.followup4_remarks, f.confidence_level_4, f.followup_5, f.followup5_remarks, f.confidence_level_5,f.schedule FROM student_enquiry_details s JOIN followupdetail f on s.enquiry_no=f.enquiry_id WHERE f.enquiry_id='"+req.query.id+"' and f.school_id='"+req.query.schol+"' and f.followup_status='"+req.query.fstatus+"' and f.followup_id='"+req.query.fid+"'";
+   var qur = "select f.enquiry_id,f.id,f.schedule_flag,f.last_schedule_date,f.schedule_Status,d.enquiry_no,d.enquiry_name,d.class,d.created_on,d.father_name,d.father_mob,d.gmob,d.guardianname,d.admission_test from followup as f Join student_enquiry_details d on d.enquiry_no=f.enquiry_id where f.id='"+req.query.fid+"' and f.enquiry_id='"+req.query.id+"' and f.school_id='"+req.query.schol+"' and f.schedule_status='"+req.query.fstatus+"'";
+//console.log(qur);
+
    connection.query(qur,
      function(err, rows)
      {
        if(!err)
        {
-         console.log('inserted');
+         //console.log(rows);
          res.status(200).json({'returnval': rows});
        }
        else
@@ -3065,6 +3039,63 @@ app.post('/masterfollowupinfo',  urlencodedParser,function (req, res){
      });
  });
 
+/*this below function fetch the test subject detail of student those who enrolled for the enquiry*/
+ app.post('/subjectdetail', urlencodedParser,function (req, res){
+
+var qur="SELECT * from admission_test_details where school_id = '"+req.query.schol+"' and enquiry_id= '"+req.query.id+"' and updated_on='"+req.query.enqdate+"'";
+
+   console.log(qur);
+   connection.query(qur,
+     function(err, rows)
+     {
+       if(!err)
+       {
+         if(rows.length>0)
+         {
+           //console.log(rows);
+           res.status(200).json({'returnval': rows});
+         }
+         else
+         {
+           console.log(err);
+           res.status(200).json({'returnval': 0});
+         }
+       }
+       else{
+         console.log(err);
+       }
+     });
+ });
+
+/*this function takes the followup list details for students who all are enquired for admission and not yet been admitted */
+app.post('/getlistdetails',  urlencodedParser,function (req, res){
+    var school={"school_id":req.query.schol};
+    var enqid={"enquiry_id":req.query.id};
+    var flwpid={"schedule_id":req.query.fid};
+    var scheduleno={"schedule":req.query.flag};
+    //console.log('qur');schol
+
+    connection.query('SELECT * FROM followupdetail WHERE ? and ? and ? and ?',[school,enqid,flwpid,scheduleno],
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      //console.log(rows);
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': ''});
+    }
+  }
+  else{
+     console.log(err);
+  }
+});
+  });
 
 function setvalue(){
   console.log("calling setvalue.....");
