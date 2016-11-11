@@ -371,6 +371,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       debounce-duration="300"
     >
     </iron-ajax>
+    <iron-ajax
+      method="post"
+      id="getbetweendatereportajax"
+      url="{{getbetweendatereporturl}}"
+      params="{{getbetweendatereportparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="getbetweendatereportResponse"
+      debounce-duration="300"
+    >
+    </iron-ajax>
   </template>
   <script>
   (function() {
@@ -1313,6 +1324,19 @@ document.querySelector('followup-service').GenerateFollowups(successbox);
         this.$.getacademicyearreportajax.generateRequest();
       },
       getacademicyearreportResponse:function(e){
+        var result  = e.detail.response.returnval;
+        document.querySelector('walkin-analysis-filter-card').reportarr=result;
+      },
+      getbetweendatereport:function(from_date,to_date){
+        this.getbetweendatereporturl="http://localhost:8086/getbetweendatereport";
+        var obj={"schol":"", "from_date":"","to_date":""};
+        obj.schol=localStorage.getItem("schoolid");
+        obj.from_date=from_date;
+        obj.to_date=to_date;
+        this.getbetweendatereportparam=obj;
+        this.$.getbetweendatereportajax.generateRequest();
+      },
+      getbetweendatereportResponse:function(e){
         var result  = e.detail.response.returnval;
         document.querySelector('walkin-analysis-filter-card').reportarr=result;
       }
