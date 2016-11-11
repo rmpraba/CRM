@@ -714,11 +714,12 @@
 
       },
       FnFeetypeschedule:function(e){
+        document.querySelector('feetype-schedule-card').FnRefresh();
         this.$.scheduleservice.fetchgradeService();
         this.$.scheduleservice.fetchacademicyearService();
         this.$.scheduleservice.fetchadmissionyearService();
         this.$.scheduleservice.fetchfeetypeService();
-
+        
 
       },
       FnProspect:function(e){
@@ -728,14 +729,17 @@
 
       },
       FnDiscountschedule:function(e){
+        document.querySelector('discount-master-card').FnRefresh();
         this.$.scheduleservice.fetchgradeService();
         this.$.scheduleservice.fetchacademicyearService();
         this.$.scheduleservice.fetchadmissionyearService();
         this.$.scheduleservice.fetchdiscounttypeService();
         this.$.scheduleservice.fetchfeetypeService();
+        
       },
 
       FnFeestructureschedule:function(e){
+        document.querySelector('fee-structure-schedulecard').FnRefresh();
         this.$.scheduleservice.fetchgradeService();
         this.$.scheduleservice.fetchacademicyearService();
         this.$.scheduleservice.fetchadmissionyearService();

@@ -13,7 +13,8 @@
   }
   .btn{
     @apply(--layout-horizontal);
-    margin-left: 25%;
+    /*margin-left: 15%;*/
+    margin-left: 50px;
   }
   paper-button{
             width: 10%;
@@ -22,10 +23,14 @@
             margin-top: 2%;
             text-transform: none;
   }
+  .innerfeecard{
+    width: 200px;
+    margin-left: 100px;
+  }
   </style>
 
   <div class="feecard">  
-    
+    <div class="innerfeecard">
     <paper-dropdown-menu label="Select Fee Type" attr-for-selected="value">
       <paper-menu id="feefeetype" class="dropdown-content" required on-iron-select="FnSelectFeetype" valueattr="value" >
         <template  is="dom-repeat" items="{{feetypearr}}" as="item">
@@ -34,12 +39,15 @@
       </paper-menu>
     </paper-dropdown-menu>
 
-    <paper-input label="Actual amount" value="{{actualamount}}"></paper-input>
-    <paper-input label="Discount" value="{{discount}}"></paper-input>
-    <paper-input label="Payable amount" value="{{payableamount}}"></paper-input>
+    <paper-input readonly label="Actual amount" value="{{actualamount}}"></paper-input>
+    <paper-input readonly label="Discount" value="{{discount}}"></paper-input>
+    <paper-input label="Installment amount" value="{{payableamount}}" on-change="FnPayableAmount"></paper-input>
+    <paper-input readonly label="Remaining amount" value="{{remainingamount}}"></paper-input>
+
     <div class="btn">    
     <paper-button on-click="FnAdd">Add</paper-button>
     <paper-button on-click="FnCancel">Cancel</paper-button>
+    </div>
     </div>
   </div>
  
@@ -84,6 +92,7 @@
     'use strict';
     var feetype;
     var arr=[];
+    var subinstallmentarr=[];
     Polymer({
       is: 'fee-type-card',
       ready:function(){
@@ -92,6 +101,10 @@
       FnSelectFeetype:function(e){
         feetype=(e.target.selectedItem.textContent).trim();
         // alert(feetype);
+        // feetype="";
+        this.actualamount="";
+        this.discount="";
+        this.payableamount="";
         this.fetchinstallmentfeecode(feetype);
       },
        fetchfeetypeService:function(){        
@@ -102,12 +115,17 @@
         this.feetypearr=e.detail.response.returnval;
       },      
       FnAdd:function(){
-        document.querySelector('fee-component-card').FnCloseDialog(feetype,this.actualamount,this.discount,this.payableamount);  
+        // if(this.payflag==0&&this.discountflag==0){
+        document.querySelector('fee-component-card').FnCloseDialog(feetype,this.actualamount,this.discount,this.payableamount,this.remainingamount); 
         document.querySelector('#feefeetype').selected=-1;
         feetype="";
         this.actualamount="";
         this.discount="";
         this.payableamount="";
+        // } 
+        // else{
+        //   alert('Please re-enter the values!!');
+        // }     
       },
       FnCancel:function(){
         document.querySelector('fee-component-card').FnCancelCloseDialog();
@@ -157,7 +175,19 @@
       fetchinstallmentdiscountcodeResponse:function(e){        
         this.insdiscountcode=e.detail.response.returnval;
         // alert(JSON.stringify(this.insdiscountcode));
+        this.discountflag=0;
+        if(subinstallmentarr.length==0){
         this.actualamount=this.insfeecode[0].total_fee;
+        }
+        else
+        {
+          for(var i=0;i<subinstallmentarr.length;i++){
+            if(this.feetype==subinstallmentarr[i].feetype)
+              this.actualamount=subinstallmentarr[i].remainingamount;
+            else
+              this.actualamount=this.insfeecode[0].total_fee;
+          }
+        }
         if((this.insdiscountcode).length==0)
           this.discount=0;
         else{
@@ -166,11 +196,47 @@
               this.discount=parseInt(this.insdiscountcode[i].amount)+parseInt(this.discount);
           }
         }
-        if((this.insdiscountcode).length==0)
-          this.payableamount=parseInt(this.insfeecode[0].total_fee)-parseInt(this.discount);
-        else
-          this.payableamount=parseInt(this.insfeecode[0].total_fee)-parseInt(this.discount);
-      }     
+        if((this.insdiscountcode).length==0){
+          var temp1=parseInt(this.actualamount)-parseInt(this.discount);
+          if(temp1>=0){
+          this.payableamount=parseInt(this.actualamount)-parseInt(this.discount);
+          this.remainingamount=parseInt(this.actualamount)-(parseInt(this.payableamount)+parseInt(this.discount));
+          localStorage.setItem("curr_sess_payableamount",this.payableamount);
+          }
+          else{
+          // this.discountflag=1;
+          alert("Discount Shouldn't greater than insatllment amount!!!");
+          }
+        }
+        else{
+          var temp1=parseInt(this.actualamount)-parseInt(this.discount);
+          if(temp1>=0){
+          this.payableamount=parseInt(this.actualamount)-parseInt(this.discount);
+          this.remainingamount=parseInt(this.actualamount)-(parseInt(this.payableamount)+parseInt(this.discount));
+          localStorage.setItem("curr_sess_payableamount",this.payableamount);
+          }
+          else{
+          // this.discountflag=1;
+          alert("Discount Shouldn't greater than insatllment amount!!!");
+          }
+        }        
+        
+      },
+      FnSetSubinstallment:function(subarr){
+        subinstallmentarr=subarr;
+        // alert(JSON.stringify(subinstallmentarr));
+      },
+      FnPayableAmount:function(){
+        this.payflag=0;
+        var temp=parseInt(this.actualamount)-(parseInt(this.payableamount)+parseInt(this.discount));
+        if(temp>=0)
+        this.remainingamount=parseInt(this.actualamount)-(parseInt(this.payableamount)+parseInt(this.discount));
+        else{
+        this.payableamount=localStorage.getItem("curr_sess_payableamount");
+        // this.payflag=1;
+        alert("Please enter proper amount!!Installment amount exceeds the payable amount!!!");
+        }
+      }
     });
   })();
   </script>
