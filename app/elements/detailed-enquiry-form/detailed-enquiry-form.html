@@ -190,6 +190,31 @@
             <paper-input id="dadothers" error-message="needs father's job!" allowed-pattern="[a-zA-Z ]" label="Father's Occupation" value="{{fatherotheroccupation}}"></paper-input>
           </div>
         </div>
+        <div  hidden$="{{salaryinfo}}">
+          <div class="col-sm-6" hidden$="{{fathersalaryinfo}}">
+            <paper-input id="dadoff" error-message="needs father's company name!" allowed-pattern="[a-zA-Z ]" label="Organization Name" value="{{fathercompany}}"></paper-input>
+          </div>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category" hidden$="{{salaryinfo}}">
+        <div>
+          <div class="col-sm-6" hidden$="{{fathersalaryinfo}}">
+            <paper-input id="dadjob" error-message="needs father's designation!" label="Designation" allowed-pattern="[a-zA-Z ]" value="{{fatherjob}}"></paper-input>
+          </div>
+          <div id="dadsal" class="col-sm-6">
+            <paper-dropdown-menu label="Father's Salary"  hidden$="{{fathersalaryinfo}}">
+              <paper-menu id="dadsalary" class="dropdown-content" on-iron-select="dadsalary" valueattr="value" >
+                <paper-item >Nil</paper-item>
+                <paper-item >< 1 Lakh</paper-item>
+                <paper-item >1 Lakh to 2.5 Lakhs</paper-item>
+                <paper-item >2.5Lakhs to 5 Lakhs</paper-item>
+                <paper-item >> 5 Lakhs</paper-item>
+              </paper-menu>
+            </paper-dropdown-menu>
+          </div>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
           <div class="col-sm-6">
             <paper-dropdown-menu label="Mother's Occupation" >
@@ -206,34 +231,13 @@
             <paper-input id="motherothers" error-message="needs mothers's job!" allowed-pattern="[a-zA-Z ]" label="Mother's Occupation" value="{{motherotheroccupation}}"></paper-input>
           </div>
         </div>
-      </div>
-      <div class="list-group col-sm-12 panel-body form-category" hidden$="{{salaryinfo}}">
-        <div class="col-sm-6" hidden$="{{fathersalaryinfo}}">
-          <paper-input id="dadoff" error-message="needs father's company name!" allowed-pattern="[a-zA-Z ]" label="Organization Name" value="{{fathercompany}}"></paper-input>
-        </div>
         <div class="col-sm-6 pull-right" hidden$="{{mothersalaryinfo}}">
           <paper-input id="momoff" error-message="needs mother's company name!" allowed-pattern="[a-zA-Z ]" label="Organization Name" value="{{mothercompany}}"></paper-input>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category" hidden$="{{salaryinfo}}">
-        <div class="col-sm-6" hidden$="{{fathersalaryinfo}}">
-          <paper-input id="dadjob" error-message="needs father's designation!" label="Designation" allowed-pattern="[a-zA-Z ]" value="{{fatherjob}}"></paper-input>
-        </div>
-        <div class="col-sm-6 pull-right" hidden$="{{mothersalaryinfo}}">
+        <div class="col-sm-6" hidden$="{{mothersalaryinfo}}">
           <paper-input id="momjob" error-message="needs mother's designation!" label="Designation" allowed-pattern="[a-zA-Z ]" value="{{motherjob}}"></paper-input>
-        </div>
-      </div>
-      <div class="list-group col-sm-12 panel-body form-category" hidden$="{{salaryinfo}}">
-        <div id="dadsal" class="col-sm-6">
-          <paper-dropdown-menu label="Father's Salary"  hidden$="{{fathersalaryinfo}}">
-            <paper-menu id="dadsalary" class="dropdown-content" on-iron-select="dadsalary" valueattr="value" >
-              <paper-item >Nil</paper-item>
-              <paper-item >< 1 Lakh</paper-item>
-              <paper-item >1 Lakh to 2.5 Lakhs</paper-item>
-              <paper-item >2.5Lakhs to 5 Lakhs</paper-item>
-              <paper-item >> 5 Lakhs</paper-item>
-            </paper-menu>
-          </paper-dropdown-menu>
         </div>
         <div id="momsal" class="col-sm-6"  hidden$="{{mothersalaryinfo}}">
           <paper-dropdown-menu label="Mother's Salary" >
