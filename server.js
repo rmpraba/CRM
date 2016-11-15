@@ -2871,7 +2871,7 @@ app.post('/updatetestdetails', urlencodedParser,function (req, res){
 
 /*this function is used to get the data count of the enquiry came up by that specific academic year*/
  app.post('/getcountyearwise',  urlencodedParser,function (req, res){
-   connection.query("SELECT class, COUNT( * ) AS total FROM  student_enquiry_details WHERE `school_id` =  '"+req.query.schoolid+"' AND academic_year='"+req.query.academicyr+"' GROUP BY class ORDER BY (`class`)",
+   connection.query("SELECT class as classes, COUNT( * ) AS total,COUNT( prospectus_no ) AS prospectus FROM  student_enquiry_details WHERE `school_id` =  '"+req.query.schoolid+"' AND academic_year='"+req.query.academicyr+"' GROUP BY class ORDER BY (`class`)",
      function(err, rows)
      {
        if(!err)
@@ -2919,7 +2919,7 @@ app.post('/updatetestdetails', urlencodedParser,function (req, res){
 
 /*this function is used to get the data count of the enquiry came up by that current month*/
  app.post('/getcurrmonthcount',  urlencodedParser,function (req, res){
-  var querryyy="SELECT class, COUNT( * ) AS total FROM  student_enquiry_details WHERE `school_id` =  '"+req.query.schoolid+"' AND created_on like '"+req.query.currmonth+"' GROUP BY class ORDER BY (`class`)";
+  var querryyy="SELECT class as classes, COUNT( * ) AS total FROM  student_enquiry_details WHERE `school_id` =  '"+req.query.schoolid+"' AND created_on like '"+req.query.currmonth+"' GROUP BY class ORDER BY (`class`)";
   //console.log(querryyy);
    connection.query(querryyy,
      function(err, rows)
@@ -2945,7 +2945,7 @@ app.post('/updatetestdetails', urlencodedParser,function (req, res){
 
  /*this function is used to get the data count of the enquiry came up by that current day*/
  app.post('/getcurrdaycount',  urlencodedParser,function (req, res){
-  var querryyy="SELECT class, COUNT( * ) AS total FROM  student_enquiry_details WHERE `school_id` =  '"+req.query.schoolid+"' AND created_on='"+req.query.todate+"' GROUP BY class ORDER BY (`class`)";
+  var querryyy="SELECT class as classes, COUNT( * ) AS total FROM  student_enquiry_details WHERE `school_id` =  '"+req.query.schoolid+"' AND created_on='"+req.query.todate+"' GROUP BY class ORDER BY (`class`)";
   //console.log(querryyy);
    connection.query(querryyy,
      function(err, rows)
@@ -3111,7 +3111,30 @@ app.post('/getlistdetails',  urlencodedParser,function (req, res){
        }
      });
  });
-
+ app.post('/getadmissionprospectus',  urlencodedParser,function (req, res){
+   var querryyy="SELECT class as classes, COUNT( prospectus_no ) AS prospectus FROM  student_enquiry_details WHERE `school_id` =  '"+req.query.schoolid+"' AND academic_year like'"+req.query.academicyr+"' GROUP BY class ORDER BY (`class`)";
+   console.log(querryyy);
+   connection.query(querryyy,
+     function(err, rows)
+     {
+       if(!err)
+       {
+         if(rows.length>0)
+         {
+           console.log(rows);
+           res.status(200).json({'returnval': rows});
+         }
+         else
+         {
+           console.log(err);
+           res.status(200).json({'returnval':null});
+         }
+       }
+       else{
+         console.log(err);
+       }
+     });
+ });
 function setvalue(){
   console.log("calling setvalue.....");
 }

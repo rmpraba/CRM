@@ -98,24 +98,17 @@
           <paper-input readonly label="Age(In Years)" value="{{ageofyr}}"></paper-input>
         </div>
       </div>
-
     <div class="form-group-heading">
        <span class="col-sm-3"><h4>Parent/Guardian Detail</h4></span><span class="col-sm-2" style="margin-left:-3%;"><p id="pgdetail">&nbsp;*</p></span>
     </div>
-     <!--  <div class="form-group-heading">
-        <div class="lb2"><label></label><p id="pgdetail">&nbsp;*</p> </div>
-       -->
-
       <div class="list-group col-sm-12 panel-body form-category">
          <div class="col-sm-6 enquiry-input">
            <div class="gender">
-            <span class="col-sm-6"><paper-checkbox id="Gurdians"  class="checkbox" on-change="gardiansHandler"><h5>Gurdians</h5></paper-checkbox></span>
-            <span class="col-sm-6"><paper-checkbox  id="parents" class="checkbox" on-change="parentsHandler"><h5>parents</h5></paper-checkbox></span>
-
+             <span class="col-sm-6"><paper-checkbox  id="parents" class="checkbox" on-change="parentsHandler"><h5>Parent</h5></paper-checkbox></span>
+            <span class="col-sm-6"><paper-checkbox id="Gurdians"  class="checkbox" on-change="gardiansHandler"><h5>Guardian</h5></paper-checkbox></span>
            </div>
         </div>
       </div>
-
      <div  class="list-group col-sm-12 panel-body form-category" id="fathersdetails">
         <div class="col-sm-6">
           <paper-input label="Father's Name" id="dadname" required error-message="needs father's name!" allowed-pattern="[a-zA-Z ]" value="{{fathername}}"></paper-input>

@@ -1548,25 +1548,24 @@ Fnlistbox:function(nameitem){
         enrolltype=null;
         this.academicyear="";
       }
-    },
+    },/*
     rteHandler:function(){
- /*     if(document.querySelector("#rtestud").checked==true){
+      if(document.querySelector("#rtestud").checked==true){
+        alert('hi');
         rtevalue="RTE Student";
         this.$.rtereference.hidden=false;
-      }
-      else{
+      } else {
         this.$.rtereference.hidden=true;
         this.rteno="";
         rtevalue=null;
-      }*/
-
+      }
       for(var i=0; i<checkList.length; i++){
         if(checkList[i] == 1){
           this.$.rtereference.hidden=false;
           this.$.rtereference.validate();
         }
       }
-    },
+    },*/
     rteUnchecked:function(){
       this.$.rtereference.hidden=true;
     },
@@ -1615,20 +1614,10 @@ Fnlistbox:function(nameitem){
         enrolltype=null;
         this.academicyear="";
       }
-      /*rteHandler:function(e){
-
-        if(document.querySelector("#rtestudent").checked==true){
-          alert('hoh');
-          rtevalue="RTE Student";
-          this.$.rtereference.hidden=false;
-        }
-        else{
-                this.$.rtereference.hidden=true;
-                this.rteno="";
-                rtevalue=null;
-        }
-      }*/
-    }
+    },
+      rteHandler:function(){
+        this.$.rtereference.hidden = true;
+      }
     });
   })();
   </script>

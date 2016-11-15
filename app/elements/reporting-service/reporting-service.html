@@ -48,7 +48,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         on-response="getcurrdaycountResponse"
         debounce-duration="300"
         ></iron-ajax>
-
         <!-- this below ajax is used to the function that can fetch the count of the enquiries those who bought prospectus -->
          <iron-ajax
         method="post"
@@ -68,20 +67,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       var academicarr=[];
       var currmontharr=[];
       var currdayarr=[];
+      var reportyearmonth=[];
+      var reportfordays=[];
       var dat=new Date();
     Polymer({
       is: 'reporting-service',
-
-         masterReportService:function(){
-          
-          if((dat.getMonth()+1)>=7){
-
-            academic_year='AY-'+(dat.getFullYear()+1)+'-'+(dat.getFullYear()+2);
-          }
-          else if((dat.getMonth()+1)<=6){
-                academic_year='AY-'+(dat.getFullYear())+'-'+(dat.getFullYear()+1);
-          }
-          //alert(academic_year);
+      masterReportService:function(){
+        if((dat.getMonth()+1)>=7){
+          academic_year='AY-'+(dat.getFullYear()+1)+'-'+(dat.getFullYear()+2);
+        } else if((dat.getMonth()+1)<=6){
+          academic_year='AY-'+(dat.getFullYear())+'-'+(dat.getFullYear()+1);
+        }
         this.getcountyearwiseurl="http://localhost:8086/getcountyearwise";
         var obj={"schoolid":"","academicyr":""};
         obj.schoolid=localStorage.getItem("schoolid");
@@ -90,21 +86,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.$.getcountyearwiseajax.generateRequest();
       },
       getcountyearwiseResponse:function(e){
-          academicarr=e.detail.response.returval;
-
-          this.getcurrmonthcounturl="http://localhost:8086/getcurrmonthcount";
+        academicarr=e.detail.response.returnval;
+        this.getcurrmonthcounturl="http://localhost:8086/getcurrmonthcount";
         var obj={"schoolid":"","currmonth":""};
         obj.schoolid=localStorage.getItem("schoolid");
         obj.currmonth='%/'+(dat.getMonth()+1)+'/'+dat.getFullYear();
         this.getcurrmonthcountparam=obj;
         //alert(JSON.stringify(obj));
         this.$.getcurrmonthcountajax.generateRequest();
-
       },
       getcurrmonthcountResponse:function(e){
-          currmontharr=e.detail.response.returnval;
-
-           this.getcurrdaycounturl="http://localhost:8086/getcurrdaycount";
+        currmontharr=e.detail.response.returnval;
+        this.getcurrdaycounturl="http://localhost:8086/getcurrdaycount";
         var obj={"schoolid":"","todate":""};
         obj.schoolid=localStorage.getItem("schoolid");
         obj.todate=dat.getDate()+'/'+(dat.getMonth()+1)+'/'+dat.getFullYear();
@@ -113,13 +106,61 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.$.getcurrdaycountajax.generateRequest();
       },
       getcurrdaycountResponse:function(e){
-          //alert(JSON.stringify(e.detail.response.returnval));
-          currdayarr=e.detail.response.returnval;
-
-
-      }
-
-      
+        currdayarr=e.detail.response.returnval;
+        this.reportforyearandmonth();
+      },
+      reportforyearandmonth:function(){
+        for(var i = 0; i < academicarr.length; i++){
+          if(currdayarr){
+            var obj={"grade":"", "year":"","month":"","day":"","prospectus":""};
+          }else {
+            var obj={"grade":"", "year":"","month":"","day":0,"prospectus":""};
+          }
+          for(var j = 0;j<currmontharr.length;j++){
+            if(academicarr[i].classes != currmontharr[j].classes){
+              obj.grade = academicarr[i].classes;
+              obj.year = academicarr[i].total;
+              obj.month = 0;
+              obj.prospectus = academicarr[i].prospectus;
+            }
+            if(academicarr[i].classes == currmontharr[j].classes){
+              obj.grade = currmontharr[j].classes;
+              obj.year = academicarr[i].total;
+              obj.month = currmontharr[j].total;
+              obj.prospectus = academicarr[i].prospectus;
+            }
+            reportyearmonth.push(obj);
+          }
+        }
+        this.reportforday();
+      },
+      reportforday:function(){
+        if(currdayarr){
+          for(var i=0; i<reportyearmonth.length;i++){
+            var obj = {"grade":"","year":"","month":"","day":"","prospectus":""};
+            for(var j= 0; j<currdayarr.length;j++){
+              if(reportyearmonth[i].grade != currdayarr[j].classes){
+                obj.grade = reportyearmonth[i].grade;
+                obj.year = reportyearmonth[i].year;
+                obj.month = reportyearmonth[i].month;
+                obj.day = 0;
+                obj.prospectus = reportyearmonth[i].prospectus;
+              }
+              if(reportyearmonth[i].grade == currdayarr[j].classes){
+                obj.grade=currdayarr[j].classes;
+                obj.year=reportyearmonth[i].year;
+                obj.month=reportyearmonth[i].month;
+                obj.day= currdayarr[j].total;
+                obj.prospectus = reportyearmonth[i].prospectus;
+              }
+              reportfordays.push(obj);
+            }
+          }
+          document.querySelector('master-report-card').reportyearmonth=reportfordays;
+        } else {
+          document.querySelector('master-report-card').reportyearmonth=reportyearmonth;
+        }
+      },
     });
   })();
   </script>
