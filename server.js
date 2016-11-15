@@ -2446,78 +2446,7 @@ app.post('/getadmissioncount',  urlencodedParser,function (req, res){
 });
 });
 
- app.post('/submitstatus',  urlencodedParser,function (req, res)
- {
-   var school={"school_id":req.query.schol};
-   var enquiry={"enquiry_id":req.query.id};
-   var status = {"followup_status":req.query.status};
-   /*console.log(status);
-   console.log(school);
-   console.log(enquiry);*/
-   connection.query('update followupdetail set ? where ? and ?',[status,enquiry,school],
-     function(err, rows)
-     {
-       if(!err)
-       {
-         res.status(200).json({'returnval': 'success'});
-       }
-       else
-       {
-         console.log(err);
-         res.status(200).json({'returnval': 'invalid'});
-       }
-
-     });
- });
-
-/*this function is to change the current followup status in the followdetail table*/
-app.post('/changestatus',  urlencodedParser,function (req, res)
-{
-  var school={"school_id":req.query.schol};
-  var enquiry={"enquiry_id":req.query.id};
-  var followupid={"followup_id":req.query.fid};
-  var status={"followup_status":"Exhausted"};
-       connection.query('update followupdetail set ? where ? and ? and ?',[status,followupid,enquiry,school],
-        function(err, rows)
-        {
-    if(!err)
-    {
-      console.log('updated');
-          res.status(200).json({'returnval': 'success'});
-    }
-    else
-    {
-      console.log(err);
-      res.status(200).json({'returnval': 'invalid'});
-    }
-
-});
-  });
-
-/*this function is to update the new reschedule date and new folllowup id in the follow table*/
-app.post('/updateschedule',  urlencodedParser,function (req, res)
-{
-
-  var school={"school_id":req.query.schol};
-  var enquiry={"enquiry_id":req.query.id};
-  var collection={"id":req.query.followid,"schedule_no":req.query.schedule,"rescheduled_on":req.query.rescheduledon};
-
-       connection.query('update followup set ? where ? and ?',[collection,enquiry,school],
-        function(err, rows)
-        {
-    if(!err)
-    {
-      console.log('updatedsche');
-          res.status(200).json({'returnval': 'success'});
-    }
-    else
-    {
-      console.log(err);
-      res.status(200).json({'returnval': 'invalid'});
-    }
-
-});
-  });
+ 
 
  app.post('/fetchdetailedenquiryinfo', urlencodedParser,function (req, res){
 
@@ -2601,30 +2530,7 @@ app.post('/updateschedule',  urlencodedParser,function (req, res)
  });
 
 
-  app.post('/insertcallhistory',  urlencodedParser,function (req, res){
-    var response={
-      "school_id":req.query.schol,
-      "enquiry_id":req.query.enid,
-      "followup_id":req.query.fid,
-      "followup_no":req.query.fno,
-      "follwup_date":req.query.fdate,
-      "call_comments":req.query.callstatus,
-      "schedule":req.query.schedule
-    };
-    connection.query('INSERT INTO call_history SET ?',[response],
-    function(err, rows)
-    {
-    if(!err)
-    {
-      res.status(200).json({'returnval': 'success'});
-    }
-    else
-    {
-      console.log(err);
-      res.status(200).json({'returnval': 'no'});
-    }
-    });
-});
+  
 
 
  app.post('/discountenq',  urlencodedParser,function (req, res){
@@ -2656,7 +2562,7 @@ app.post('/updateschedule',  urlencodedParser,function (req, res)
    var followupid={"followup_id":req.query.fwupid};
    var collection = {"followup_flag":req.query.nextflag,"next_followup_date":req.query.nextdate};
    console.log(collection);
-   connection.query('update followupdetail set ? where ? and ? and ?',[collection,enquiry,school,followupid],
+   connection.query('update followupdetail set ? where ? and ?',[collection,school,followupid],
      function(err, rows)
      {
        if(!err)
@@ -3067,12 +2973,11 @@ var qur="SELECT * from admission_test_details where school_id = '"+req.query.sch
 /*this function takes the followup list details for students who all are enquired for admission and not yet been admitted */
 app.post('/getlistdetails',  urlencodedParser,function (req, res){
     var school={"school_id":req.query.schol};
-    var enqid={"enquiry_id":req.query.id};
     var flwpid={"schedule_id":req.query.fid};
     var scheduleno={"schedule":req.query.flag};
     //console.log('qur');schol
 
-    connection.query('SELECT * FROM followupdetail WHERE ? and ? and ? and ?',[school,enqid,flwpid,scheduleno],
+    connection.query('SELECT * FROM followupdetail WHERE ? and ? and ?',[school,flwpid,scheduleno],
     function(err, rows)
     {
     if(!err)
@@ -3158,6 +3063,88 @@ app.post('/getlistdetails',  urlencodedParser,function (req, res){
        }
      });
  });
+
+/*this function is used to update the followup details of the current followup*/
+ app.post('/updatefollowupdetails',  urlencodedParser,function (req, res)
+{
+  var school={"school_id":req.query.schol};
+  var scheduledon={"schedule_date":req.query.scheduledate};
+  var followupid={"schedule_id":req.query.fid};
+  var no={"followup_no":req.query.followupno};
+  var collection={"actual_date":req.query.currentdate,"next_followup_date":req.query.nextdate,"followup_comments":req.query.comments,"followup_status":req.query.callstatus,"confidence_level":req.query.confidencelvl};
+       connection.query('update followupdetail set ? where ? and ? and ? and ?',[collection,school,scheduledon,followupid,no],
+        function(err, rows)
+        {
+    if(!err)
+    {
+      console.log('updated');
+          res.status(200).json({'returnval': 'success'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+
+});
+  });
+
+
+ /*this function is used to update the followup of the current followup*/
+ app.post('/updatefollowupconfidencelvl',  urlencodedParser,function (req, res)
+{
+
+  var school={"school_id":req.query.schol};
+  var followupid={"id":req.query.fid};
+  var followupid2={"schedule_id":req.query.fid};
+  var enquiryno={"enquiry_id":req.query.enquiry};
+  var confidence={"current_confidence_level":req.query.confidencelvl,"schedule_status":req.query.status};
+  
+       connection.query('update followup set ? where ? and ? and ?',[confidence,school,followupid,enquiryno],
+        function(err, rows)
+        {
+    if(!err)
+    {
+      console.log('updated1');
+          res.status(200).json({'returnval': 'success'});
+
+          connection.query('SELECT max(followup_no) as max FROM followupdetail WHERE ? and ?',[school,followupid2],
+        function(err, rows)
+        {
+              if(!err)
+              {
+                console.log('updated2');
+                var temp=((rows[0].max)+1);
+                    connection.query('update followup set ? where ? and ? and ?',[temp,school,followupid,enquiryno],
+                    function(err, rows)
+                    {
+                          if(!err)
+                          {
+                            console.log('updated3');
+                                
+                          }
+                          else
+                          {
+                            console.log(err);
+                            res.status(200).json({'returnval': 'invalid'});
+                          }
+                    });
+              }
+              else
+              {
+                console.log(err);
+                res.status(200).json({'returnval': 'invalid'});
+              }
+        });
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+
+});
+  });
 
 function setvalue(){
   console.log("calling setvalue.....");

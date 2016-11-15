@@ -1,0 +1,85 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="checkbox-card">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <div hidden>{{status}}</div>
+    <div class="col-sm-12">
+              <div class="col-sm-6">
+                <paper-checkbox id="callyes" on-change="yescallstatusHandler" class="checkbox">Yes</paper-checkbox>
+              </div>
+              <div class="col-sm-6">
+                <paper-checkbox id="callno" on-change="nocallstatusHandler"  class="checkbox">No</paper-checkbox>
+              </div>
+            </div>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+        var callstatus;
+    Polymer({
+      is: 'checkbox-card',
+      ready:function(){
+          if(this.status=='Yes'){
+              this.$.callyes.checked=true;
+              this.$.callyes.disabled=true;
+              this.$.callno.disabled=true;
+          }
+          else if(this.status=='No'){
+            this.$.callno.checked=true;
+            this.$.callyes.disabled=true;
+            this.$.callno.disabled=true;
+          }
+      },
+      yescallstatusHandler:function(){
+        alert('1');
+        if(document.getElementById('callyes').checked==true){
+          callstatus="Yes";
+          document.getElementById('callno').checked=false;
+        }
+        else{
+          callstatus=null;
+        }
+      },
+      nocallstatusHandler:function(){
+        alert('2');
+          if(document.getElementById('callno').checked==true){
+          callstatus="No";
+          
+          document.getElementById('callyes').checked=false;
+        }
+        else{
+          callstatus=null;
+          
+        }
+      },
+      Fncheckbox:function(status){
+        alert('fgj  '+status);
+        var vstatus=status;
+        if(vstatus=='Yes')
+        {
+            document.getElementById('callyes').checked=true;
+        }
+        else if(vstatus=='No'){
+            document.getElementById('callno').checked=true;
+        }
+      }
+      
+    });
+  })();
+  </script>
+</dom-module>

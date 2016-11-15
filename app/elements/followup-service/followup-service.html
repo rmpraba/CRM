@@ -260,8 +260,30 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         debounce-duration="300"
         >
   </iron-ajax>
-
-
+ <!-- this ajax is used to update the details of the followup done -->
+<iron-ajax
+        method="post"
+        id="updatefollowupdetailsajax"
+        url="{{updatefollowupdetailsurl}}"
+        params="{{updatefollowupdetailsparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="updatefollowupdetailsResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <!-- this ajax is used to update the confidence level of the followup done -->
+<iron-ajax
+        method="post"
+        id="updatefollowupconfidencelvlajax"
+        url="{{updatefollowupconfidencelvlurl}}"
+        params="{{updatefollowupconfidencelvlparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="updatefollowupconfidencelvlResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
   </template>
   <script>
   (function() {
@@ -271,6 +293,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var generateid;
     var resultarr;
     var countresult=0;
+    var upfollowupid;
+    var upconfidencelvl;
+    var upenqno;
 
     Polymer({
       is: 'followup-service',
@@ -609,6 +634,10 @@ newdate.setDate(newdate.getDate()+resultarr[0].no_of_days);
           document.querySelector('followup-student-detail').Fnsetsubject(english,maths,evs);
       },
       getlistdetails:function(enquiryid,followypid,schedule){
+        localStorage.setItem("curr_enquiry_id",enquiryid);
+        localStorage.setItem("curr_followup_id",followypid);
+        localStorage.setItem("curr_schedule_no",schedule);
+
         this.getlistdetailsurl="http://localhost:8086/getlistdetails";
         var obj={"schol":"","id":"","fid":"","flag":""}
         obj.schol=localStorage.getItem("schoolid");
@@ -623,8 +652,52 @@ newdate.setDate(newdate.getDate()+resultarr[0].no_of_days);
       getlistdetailsResponse:function(e){
         alert(JSON.stringify(e.detail.response.returnval));
         document.querySelector('followup-student-detail').followupdetailarr=e.detail.response.returnval;
+        //document.querySelector('followup-listitem-card').Fncheck();
+      },
+      updatefolowup:function(fnfid,fnscheduledate,fnfollowupno,fncurrentdate,fnnextdate,fncomments,fncallstatus,fnconfidencelvl){
+        upconfidencelvl=fnconfidencelvl;
+        upfollowupid=fnfid;
+            this.updatefollowupdetailsurl="http://localhost:8086/updatefollowupdetails";
+        var obj={"schol":"","fid":"","scheduledate":"","followupno":"","currentdate":"","nextdate":"","comments":"","callstatus":"","confidencelvl":""}
+        obj.schol=localStorage.getItem("schoolid");
+        obj.fid=fnfid;
+        obj.scheduledate=fnscheduledate;
+        obj.followupno=fnfollowupno;
+        obj.currentdate=fncurrentdate;
+        obj.nextdate=fnnextdate;
+        obj.comments=fncomments;
+        obj.callstatus=fncallstatus;
+        obj.confidencelvl=fnconfidencelvl;
+        this.updatefollowupdetailsparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.updatefollowupdetailsajax.generateRequest();
+        
+      },
+      updatefollowupdetailsResponse:function(e){
+        if(e.detail.response.returnval=='success'){
+        this.updatefollowupconfidencelvlurl="http://localhost:8086/updatefollowupconfidencelvl";
+        var obj={"schol":"","fid":"","enquiry":"","confidencelvl":"","status":""}
+        obj.schol=localStorage.getItem("schoolid");
+        obj.fid=upfollowupid;
+        obj.confidencelvl=upconfidencelvl;
+        obj.status="Inprogress";
+        this.updatefollowupconfidencelvlparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.updatefollowupconfidencelvlajax.generateRequest();
+        }
+        else{
+          alert('Process Interupted');
+        }
+      },
+      updatefollowupconfidencelvlResponse:function(e){
+          if(e.detail.response.returnval=='success'){
+            alert('Current followup detail is submitted');
+            this.getlistdetails(localStorage.getItem("curr_enquiry_id"),localStorage.getItem("curr_followup_id"),localStorage.getItem("curr_schedule_no"));
       }
-    
+      else{
+          alert('Submission Failed');
+      }
+    }
     });
   })();
   </script>

@@ -54,7 +54,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             
       </table>
           <template is="dom-repeat" items="{{followupdetailarr}}" as="view" class="list-group col-sm-12 panel-body form-category">
-            <followup-listitem-card scheduledate="{{view.schedule_date}}" nextdate="{{view.next_followup_date}}" comments="{{view.followup_comments}}" callstatus="{{view.followup_status}}" confidencelvl="{{view.confidence_level}}"></followup-listitem-card>
+          <checkbox-card status={{view.followup_status}}></checkbox-card>
+            <followup-listitem-card scheduledate="{{view.schedule_date}}" nextdate="{{view.next_followup_date}}" comments="{{view.followup_comments}}" callstatus="{{view.followup_status}}" confidencelvl="{{view.confidence_level}}" followupno="{{view.followup_no}}" fid="{{view.schedule_id}}" enquiryid="{{view.enquiry_id}}"></followup-listitem-card>
       </template>
     </div>
 </div>
@@ -93,8 +94,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     <paper-item>Admission Test :</paper-item>
                   </div>
                   <div class="col-sm-3">
-                    <span><paper-checkbox id="testyes"  class="checkbox" Readonly>Yes</paper-checkbox></span>
-                    <span><paper-checkbox id="testno"  class="checkbox" Readonly>No</paper-checkbox></span>
+                    <span><paper-checkbox id="testyes"  class="checkbox" disabled>Yes</paper-checkbox></span>
+                    <span><paper-checkbox id="testno"  class="checkbox" disabled>No</paper-checkbox></span>
                   </div>
                    <div hidden="{{subject}}">
                       <div class="col-sm-3">
@@ -110,13 +111,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     <paper-item>Subjects :</paper-item>
                   </div>
                   <div class="col-sm-3">
-                    <span><paper-checkbox id="cbenglsh"  class="checkbox" Readonly>English</paper-checkbox></span>
+                    <span><paper-checkbox id="cbenglsh"  class="checkbox" disabled>English</paper-checkbox></span>
                   </div>
                   <div class="col-sm-3">
-                    <span><paper-checkbox id="cbmaths"  class="checkbox" Readonly>Maths</paper-checkbox></span>
+                    <span><paper-checkbox id="cbmaths"  class="checkbox" disabled>Maths</paper-checkbox></span>
                   </div>
                   <div class="col-sm-3">
-                    <span><paper-checkbox id="cbevs"  class="checkbox" Readonly>EVS</paper-checkbox></span>
+                    <span><paper-checkbox id="cbevs"  class="checkbox" disabled>EVS</paper-checkbox></span>
                   </div>
             </div>
             <div hidden="{{subject}}">
