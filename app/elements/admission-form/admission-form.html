@@ -897,6 +897,7 @@
       },
 
       FnSetTransport:function(value){
+        // alert('transport'+value);
         admissiontransport=value;
         if(value=="Yes")
         document.querySelector("#T"+value).checked=true;
@@ -904,6 +905,7 @@
         document.querySelector("#T"+value).checked=false;
       },
       FnSetCanteen:function(value){
+        // alert('canteen'+value);
         admissioncanteen=value;
         if(value=="Yes")
         document.querySelector("#C"+value).checked=true;
