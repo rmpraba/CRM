@@ -92,7 +92,7 @@
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
-          <dateofbirth-datepicker ></dateofbirth-datepicker>
+          <dateofbirth-datepicker></dateofbirth-datepicker>
         </div>
         <div class="col-sm-6">
           <paper-input readonly label="Age(In Years)" value="{{ageofyr}}"></paper-input>
@@ -259,6 +259,7 @@ ready:function () {
          grade=null;
          paga=null;
          dobdate=null;
+         this.academicyear="";
          document.querySelector('#nextyear').checked=false;
          document.querySelector('#midyear').checked=false;
          //document.querySelector('#rtestudent').checked=false;
@@ -628,17 +629,7 @@ ready:function () {
         this.discounttypecode=code;
         // alert(this.discounttypecode);
       },
-      // getItems:function(codes){
-      //   checkList.push(codes);
-      // },
-      // removeItems:function(code){
-      //   for(var i=0;i<checkList.length;i++){
-      //     if(code==checkList[i].codes)
-      //     {
-      //       checkList.splice(i,1);
-      //     }
-      //   }
-      // },
+
       midyearfhandler:function(){
           if(document.querySelector('#midyear').checked==true){
               document.querySelector('#nextyear').checked=false;

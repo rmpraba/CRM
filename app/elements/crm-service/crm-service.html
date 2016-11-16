@@ -524,7 +524,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        // alert(JSON.stringify(result));
        if (result == "success") {
          alert("Submited Successfully for Enquiry ID :" + successbox);
-document.querySelector('followup-service').GenerateFollowups(successbox);
+         document.querySelector('followup-service').GenerateFollowups(successbox);
 
          this.updatesequrl = "http://localhost:8086/updateseq";
          var obj = {"id": "", "schol": ""};
@@ -538,6 +538,7 @@ document.querySelector('followup-service').GenerateFollowups(successbox);
          document.querySelector('enquiry-card').ready();
 
          document.querySelector('newenquiry-card').Fnclear();
+         document.querySelector('special-discount-card').ready();
          //alert(discountArr);
          // alert(currentEnqno);
          if (discountArr.length > 0) {

@@ -24,7 +24,7 @@
     </paper-dialog>
   </div>
   <dialog-page id="ID_Show_Dialog"></dialog-page>
-  <transport-service id="service"></transport-service>
+  
 </template>
   <script>
     Polymer({
@@ -32,9 +32,8 @@
 
       ready:function()
       {
-       /* this.fieldshowdate=moment(new Date()).format('L');
-        localStorage.setItem("localsess_curr_date",this.fieldshowdate);*/
-        //this.$.service.feereport(this.fieldshowdate);
+        this.showdate=moment(new Date()).format('L');
+        localStorage.setItem("localsess_curr_date",this.showdate);
       },
       FnShowDialog:function(){
         this.date=new Date();
@@ -50,24 +49,14 @@
           var days=parseInt((dd1 - dd2) / (1000 * 60 * 60 * 24));
           if(days<=0){
           document.querySelector('newenquiry-card').dateclear();
-          // document.querySelector('admission-form').dateclear();
           document.querySelector('detailed-enquiry-form').dateclear();
-          //this.fieldshowdate="";
           }
           else{
-            this.showdate = moment(this.$.picker.date).format('L');
+          this.showdate = moment(this.$.picker.date).format('L');
           localStorage.setItem("localsess_start_date",this.showdate);
-          // //this.$.service.datepickinsta1(this.date);
-          // //this.$.service.datepickinsta2(this.date);
-          // //this.$.service.datepickinsta1cheque(this.date);
-          // //this.$.service.datepickinsta2cheque(this.date);
-          // //this.$.service.feereport(this.fieldshowdate);
           document.querySelector('newenquiry-card').getdate(this.showdate);
           document.querySelector('detailed-enquiry-form').getdate(this.showdate);
-          // // document.querySelector('admission-form').getdate(this.fieldshowdate);
-
           }
-
         }
       },
       FnClear:function(){
@@ -76,10 +65,6 @@
       FnSetDate:function(value){
         this.showdate=moment(new Date(value)).format('L');
       }
-   /*   setdate:function(zxdate){
-        //alert('DAtae  '+zxdate);
-        this.fieldshowdate=zxdate;
-      }*/
     });
   </script>
 </dom-module>
