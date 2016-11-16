@@ -1,7 +1,7 @@
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 
-<dom-module id="fee-component-card">
+<dom-module id="installment-fee-component-card">
   <template>
   <style>
     paper-dialog{
@@ -25,17 +25,19 @@
           <div class="col-sm-3 enquiry-input" style="margin-top: -2%;">
             <paper-dropdown-menu label="Select Installment Type" attr-for-selected="value">
             <paper-menu id="structureinstallmenttype" class="dropdown-content" required on-iron-select="FnSelectInstallmentType" valueattr="value" >
-              <template  is="dom-repeat" items="{{componentarr}}" as="item">
-              <paper-item>{{item.component_name}}</paper-item>
-              </template>
+              <!-- <template  is="dom-repeat" items="{{componentarr}}" as="item"> -->
+              <!-- <paper-item>{{item.component_name}}</paper-item> -->
+              <!-- </template> -->
+              <paper-item>Commitment fee</paper-item>
+              <paper-item>Term fee</paper-item>
             </paper-menu>
             </paper-dropdown-menu>
           </div>
           <div class="col-sm-2 enquiry-input" style="margin-top: -2%;">
-          <paper-input readonly id="ins{{installment}}" label="Payable amount" value="{{payableamount}}"></paper-input>
+          <paper-input readonly id="inss{{installment}}" label="Payable amount" value="{{payableamount}}"></paper-input>
           </div>
           <div class="col-sm-2 enquiry-input" style="margin-top: -3%;">
-          <installment-date-picker id="date{{installment}}" on-click="FnDateChange"></installment-date-picker>
+          <installment-date-picker id="datee{{installment}}" on-click="FnDateChange"></installment-date-picker>
           </div>
           <div class="col-sm-3 enquiry-input" style="margin-top: 2%;margin-left: -2%;">
             <!-- <span class="pull-right"> -->
@@ -47,13 +49,13 @@
           </div>
     </div>
     <div>
-      <paper-dialog id="dialog{{installment}}">
-        <fee-type-card id="{{installment}}" type="{{installmenttype}}"></fee-type-card>
+      <paper-dialog id="insdialog{{installment}}">
+        <installment-fee-type-card id="{{installment}}" type="{{installmenttype}}"></installment-fee-type-card>
       </paper-dialog>
     </div>
 
     <div>
-      <paper-dialog id="viewdialog{{installment}}">
+      <paper-dialog id="insviewdialog{{installment}}">
         <table style="width: 800px;margin-left: 5%;"><tr><th>Installment</th><th>Installment Type</th><th>Fee Type</th><th>Actual Amount</th><th>Discount</th><th>Payable Amount</th></tr>
         <template  is="dom-repeat" items="{{viewarr}}" as="item">
         <tr><td>{{item.installment}}</td><td>{{item.installmenttype}}</td><td>{{item.feetype}}</td><td>{{item.actualamount}}</td><td>{{item.discount}}</td><td>{{item.payableamount}}</td></tr>
@@ -64,7 +66,7 @@
     </div>
 
     <div>
-      <paper-dialog id="deletedialog{{installment}}">
+      <paper-dialog id="insdeletedialog{{installment}}">
         <table style="width: 800px;margin-left: 5%;"><tr><th>Installment</th><th>Installment Type</th><th>Fee Type</th><th>Actual Amount</th><th>Discount</th><th>Payable Amount</th></tr>
         <template  is="dom-repeat" items="{{deletearr}}" as="item">
         <tr>
@@ -75,31 +77,8 @@
         <paper-button style="margin-left: 70%;" on-click="FnDeleteClose">Close</paper-button>
       </paper-dialog>      
     </div>
-    
-
-      <!-- It would fetch fee component type -->
-     <iron-ajax
-        method="post"
-        id="fetchfeecomponenttypeajax"
-        url="{{fetchfeecomponenttypeurl}}"
-        params="{{fetchfeecomponenttypeparam}}"
-        handle-as="json"
-        content-type="application/json"
-        on-response="fetchfeecomponenttypeResponse"
-        debounce-duration="300"
-        >
-        <!-- It would fetch fee type -->
-      <iron-ajax
-        method="post"
-        id="fetchfeetypeajax"
-        url="{{fetchfeetypeurl}}"
-        params="{{fetchfeetypeparam}}"
-        handle-as="json"
-        content-type="application/json"
-        on-response="fetchfeetypeResponse"
-        debounce-duration="300"
-      >
-      <schedule-service id="scheduleservice"></schedule-service>
+  
+    <schedule-service id="scheduleservice"></schedule-service>
   </template>
   <script>
   (function() {
@@ -110,14 +89,9 @@
     var idd;
     var flag=0;
     Polymer({
-      is: 'fee-component-card',
+      is: 'installment-fee-component-card',
       ready:function(){
         this.hidefeetype=true;
-        this.fetchfeecomponenttypeurl=sessionStorage.getItem("addrinfo")+"/fetchfeecomponenttype-service";
-        this.$.fetchfeecomponenttypeajax.generateRequest();
-      },
-      fetchfeecomponenttypeResponse:function(e){        
-        this.componentarr=e.detail.response.returnval;
       },
       FnSelectInstallmentType:function(e){
         idd=this.installment;        
@@ -126,20 +100,19 @@
         localStorage.setItem("curr_sess_installment",this.installment);
       },
       FnAdd:function(){
-        document.getElementById('dialog'+idd).opened=true;
+        document.getElementById('insdialog'+idd).opened=true;
         // this.fetchfeetypeService();
       },     
       FnCloseDialog:function(feetype,actualamount,discount,payableamount,remainingamount){
-        document.getElementById('dialog'+idd).opened=false;
+        document.getElementById('insdialog'+idd).opened=false;
         this.FnSetInstallment(feetype,actualamount,discount,payableamount,remainingamount);
       },
       FnCancelCloseDialog:function(){
-        document.getElementById('dialog'+idd).opened=false;
+        document.getElementById('insdialog'+idd).opened=false;
         // this.FnSetInstallment(feetype,actualamount,discount,payableamount);
       },
      
-      FnSetInstallment:function(feetype,actualamount,discount,payableamount,remainingamount){
-        
+      FnSetInstallment:function(feetype,actualamount,discount,payableamount,remainingamount){    
         var obj={"installment":"","installmenttype":"","feetype":"","actualamount":"","discount":"","payableamount":""}
         obj.installment=idd;
         obj.installmenttype=installmenttype;
@@ -170,8 +143,8 @@
           }
           // alert(idd);
           // alert(document.getElementById('ins'+idd));
-          document.getElementById('ins'+idd).value=payableamount;
-          document.querySelector('fee-type-card').FnSetSubinstallment(subinstallment);           
+          document.getElementById('inss'+idd).value=payableamount;
+          document.querySelector('installment-fee-type-card').FnSetSubinstallment(subinstallment);           
           // alert(JSON.stringify(subinstallment));
       },
       FnView:function(){
@@ -190,7 +163,7 @@
           }
          this.viewarr=arr;
          // alert(JSON.stringify(this.viewarr))
-         document.getElementById('viewdialog'+idd).opened=true;
+         document.getElementById('insviewdialog'+idd).opened=true;
       },
       FnDelete:function(){
          var arr=[];
@@ -208,13 +181,13 @@
           }
          this.deletearr=arr;
          // alert(JSON.stringify(this.deletearr))
-         document.getElementById('deletedialog'+idd).opened=true;
+         document.getElementById('insdeletedialog'+idd).opened=true;
       },
       FnViewClose:function(){
-        document.getElementById('viewdialog'+idd).opened=false;
+        document.getElementById('insviewdialog'+idd).opened=false;
       },
       FnDeleteClose:function(){
-        document.getElementById('deletedialog'+idd).opened=false;
+        document.getElementById('insdeletedialog'+idd).opened=false;
       },
       FnSpliceFeetype:function(installment,installmenttype,feetype){
         // alert(installment+" "+installmenttype+" "+feetype);

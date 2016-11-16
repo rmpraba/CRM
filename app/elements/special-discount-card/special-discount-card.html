@@ -22,6 +22,7 @@
         // alert(document.querySelector('#check'+this.code));
         if(document.querySelector('#check'+this.code).checked==true)
         document.querySelector('newenquiry-card').setDiscountType(this.code);
+        document.querySelector('admission-form').setDiscountType(this.code);
         // var box = document.querySelector("#selectbox");
         // if(e.target.checked==true) {
         //   var codes = e.target.id;
@@ -31,6 +32,13 @@
         //   document.querySelector('newenquiry-card').removeItems(codes);
         //   document.querySelector('detailed-enquiry-form').removeItems(codes);
         // }
+      },
+      setCheckedHandler:function(dcode){
+        // alert(dcode);
+        this.code=(dcode).trim();
+        // alert(this.code);
+        document.querySelector('#check'+this.code).checked=true;
+        document.querySelector('admission-form').setDiscountType(this.code);
       }
     });
   })();

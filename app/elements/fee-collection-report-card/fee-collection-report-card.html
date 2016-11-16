@@ -1,0 +1,28 @@
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="fee-collection-report-card">
+  <template>
+    <style>
+      .datecard {
+        @apply(--layout-horizontal);
+      }
+    </style>
+    <div card="datecard">
+    <fromdate-pickercard></fromdate-pickercard>
+    <todate-pickercard></todate-pickercard>
+    </div>
+    <fee-report-service id="feereportservice"></fee-report-service>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+    Polymer({
+      is: 'fee-collection-report-card',
+      FnCallService:function(){
+        this.$.feereportservice.FnFetchFeeReportService();
+      }
+    });
+  })();
+  </script>
+</dom-module>

@@ -1217,6 +1217,7 @@ document.querySelector('followup-service').GenerateFollowups(successbox);
         var res=e.detail.response.returnval;
         //alert(JSON.stringify(res));
         document.querySelector('newenquiry-card').discountarr=res;
+        document.querySelector('admission-form').discountarr=res;
         document.querySelector('detailed-enquiry-form').discountarr=res;
       },
       rtenumberResponse:function(e){

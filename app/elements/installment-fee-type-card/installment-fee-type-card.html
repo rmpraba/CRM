@@ -1,7 +1,7 @@
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 
-<dom-module id="fee-type-card">
+<dom-module id="installment-fee-type-card">
   <template>
   <style>
   .feecard{
@@ -99,7 +99,7 @@
     var actualinstallmentfeetypes=[];
     var count=0;
     Polymer({
-      is: 'fee-type-card',
+      is: 'installment-fee-type-card',
       ready:function(){
         this.fetchfeetypeService();
       },
@@ -122,8 +122,8 @@
         this.feetypearr=e.detail.response.returnval;
       },      
       FnAdd:function(){        
-        document.querySelector('fee-component-card').FnCloseDialog(feetype,this.actualamount,this.discount,this.payableamount,this.remainingamount); 
-        document.querySelector('#feefeetype').selected=-1;
+        document.querySelector('installment-fee-component-card').FnCloseDialog(feetype,this.actualamount,this.discount,this.payableamount,this.remainingamount); 
+        document.querySelector('#'+this.feetype).selected=-1;
         feetype="";
         this.actualamount="";
         this.discount="";
@@ -131,101 +131,15 @@
         this.remainingamount="";
       },
       FnCancel:function(){
-        document.querySelector('fee-component-card').FnCancelCloseDialog();
-        document.querySelector('#feefeetype').selected=-1;
+        document.querySelector('installment-fee-component-card').FnCancelCloseDialog();
+        document.querySelector('#'+this.feetype).selected=-1;
         feetype="";
         this.actualamount="";
         this.discount="";
         this.payableamount="";
         this.remainingamount="";
       },
-      //  fetchinstallmentfeecode:function(feetype){
-      //   this.feetype=feetype;
-      //   this.schoolid=localStorage.getItem("schoolid");
-      //   this.grade=localStorage.getItem("curr_sess_grade");
-      //   this.admissionyear=localStorage.getItem("curr_sess_admissionyear");
-      //   this.academicyear=localStorage.getItem("curr_sess_academicyear");
-      //   this.discountcode=localStorage.getItem("curr_sess_discountcode");
-      //   this.admissiontype=localStorage.getItem("curr_sess_admissiontype");
-      //   this.fetchinstallmentfeecodeurl=sessionStorage.getItem("addrinfo")+"/fetchinstallmentfeecode-service";
-      //   var obj={"schoolid":"","schoolname":"","grade":"","admissionyear":"","academicyear":"","feetype":""};
-      //   obj.schoolid=localStorage.getItem("schoolid");
-      //   obj.schoolname=this.schoolname;
-      //   obj.grade=this.grade;
-      //   obj.admissionyear=this.admissionyear;
-      //   obj.academicyear=this.academicyear; 
-      //   obj.feetype=feetype;       
-      //   this.fetchinstallmentfeecodeparam=obj;
-      //   this.$.fetchinstallmentfeecodeajax.generateRequest();
-      // },
-      // fetchinstallmentfeecodeResponse:function(e){
-      //   this.insfeecode=e.detail.response.returnval;
-      //   this.fetchinstallmentdiscountcode();
-      // },
-      // fetchinstallmentdiscountcode:function(){
-      //   this.fetchinstallmentdiscountcodeurl=sessionStorage.getItem("addrinfo")+"/fetchinstallmentdiscountcode-service";
-      //   var obj={"schoolid":"","schoolname":"","grade":"","admissionyear":"","academicyear":""};
-      //   obj.schoolid=localStorage.getItem("schoolid");
-      //   obj.schoolname=this.schoolname;
-      //   obj.grade=this.grade;
-      //   obj.admissionyear=this.admissionyear;
-      //   obj.academicyear=this.academicyear; 
-      //   obj.admissiontype=this.admissiontype; 
-      //   obj.discountcode=this.discountcode; 
-      //   obj.feetype=this.feetype;       
-      //   this.fetchinstallmentdiscountcodeparam=obj;
-      //   this.$.fetchinstallmentdiscountcodeajax.generateRequest();
-      // },
-      // fetchinstallmentdiscountcodeResponse:function(e){        
-      //   this.insdiscountcode=e.detail.response.returnval;
-      //   // alert(JSON.stringify(this.insdiscountcode));
-      //   this.discountflag=0;
-      //   if(subinstallmentarr.length==0){
-      //   this.actualamount=this.insfeecode[0].total_fee;
-      //   }
-      //   else
-      //   {
-      //     for(var i=0;i<subinstallmentarr.length;i++){
-      //       if(this.feetype==subinstallmentarr[i].feetype)
-      //         this.actualamount=subinstallmentarr[i].remainingamount;
-      //       else
-      //         this.actualamount=this.insfeecode[0].total_fee;
-      //     }
-      //   }
-      //   if((this.insdiscountcode).length==0)
-      //     this.discount=0;
-      //   else{
-      //     this.discount=0;
-      //     for(var i=0;i<(this.insdiscountcode).length;i++){
-      //         this.discount=parseInt(this.insdiscountcode[i].amount)+parseInt(this.discount);
-      //     }
-      //   }
-      //   if((this.insdiscountcode).length==0){
-      //     var temp1=parseInt(this.actualamount)-parseInt(this.discount);
-      //     if(temp1>=0){
-      //     this.payableamount=parseInt(this.actualamount)-parseInt(this.discount);
-      //     this.remainingamount=parseInt(this.actualamount)-(parseInt(this.payableamount)+parseInt(this.discount));
-      //     localStorage.setItem("curr_sess_payableamount",this.payableamount);
-      //     }
-      //     else{
-      //     // this.discountflag=1;
-      //     alert("Discount Shouldn't greater than insatllment amount!!!");
-      //     }
-      //   }
-      //   else{
-      //     var temp1=parseInt(this.actualamount)-parseInt(this.discount);
-      //     if(temp1>=0){
-      //     this.payableamount=parseInt(this.actualamount)-parseInt(this.discount);
-      //     this.remainingamount=parseInt(this.actualamount)-(parseInt(this.payableamount)+parseInt(this.discount));
-      //     localStorage.setItem("curr_sess_payableamount",this.payableamount);
-      //     }
-      //     else{
-      //     // this.discountflag=1;
-      //     alert("Discount Shouldn't greater than insatllment amount!!!");
-      //     }
-      //   }        
-        
-      // },
+     
       FnSetSubinstallment:function(subarr){
         subinstallmentarr=subarr;
         // alert(JSON.stringify(subinstallmentarr));

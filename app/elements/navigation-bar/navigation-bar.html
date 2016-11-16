@@ -342,6 +342,17 @@
               </li> -->
             </ul>
           </li>
+
+          <li id="admission">
+            <a href="" aria-hidden="true" data-toggle="modal" data-target="#feecollectionreport" on-click="FnFeeCollectionReport"><i class="fa fa-check fa-fw"></i>Fee Collection Report</a>
+           <!--  <ul class="nav nav-second-level">
+              <li>
+                <a href="" aria-hidden="true" data-toggle="modal" data-target="#feetypeschedule" on-click="FnFeetypeschedule">Daily Report</a>
+              </li>
+              
+            </ul> -->
+          </li>
+
           <li id="admform">
             <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Admission Form<!-- <span class="fa arrow"></span> --></a>
           </li>
@@ -676,6 +687,7 @@
       </div>
     </div>
 
+     
 
     <crm-service id="service"></crm-service>
     <followup-service id="followupservice"></followup-service>
@@ -809,6 +821,10 @@
       Fnmasteranalysis:function(){
           document.querySelector('app-list').setPage("master-enquiry-analysis","Master Walk-in Analysis");
           document.querySelector('master-report-card').Fncall();
+      },
+      FnFeeCollectionReport:function(){
+          document.querySelector('app-list').setPage("fee-collection-report-card","Collection Report");
+          document.querySelector('fee-collection-report-card').FnCallService();
       }
     });
   })();

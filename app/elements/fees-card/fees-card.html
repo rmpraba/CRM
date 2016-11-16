@@ -40,7 +40,7 @@
           <paper-input label="{{enqenrlabel}}" id="enqenrno" readonly value="{{enqenrno}}"></paper-input>
           </div>    -->      
      </div>
-     <div class="list-group col-sm-12 panel-body form-category">
+     <!-- <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-3"> 
         Pay All or Specifc Fee
         </div>
@@ -52,18 +52,18 @@
             <span class="input-group-btn">
               <paper-dropdown-menu label="Select Fee Type" on-iron-select="FnSelectFeeType">
                 <paper-listbox id="feetype" class="dropdown-content">
-                  <!-- <template  is="dom-repeat" items="{{enquiryarr}}" as="item"> -->
+                  <template  is="dom-repeat" items="{{enquiryarr}}" as="item">
                   <paper-item>Application fee</paper-item> 
                   <paper-item>Registration fee</paper-item> 
                   <paper-item>Kit fee</paper-item> 
                   <paper-item>Annual fee</paper-item> 
                   <paper-item>Miscellaneous fee</paper-item> 
-                  <!-- </template>                  -->
+                  </template>                 
                 </paper-listbox>
               </paper-dropdown-menu>
             </span>
         </div>
-     </div>
+     </div> -->
      <div class="list-group col-sm-12 panel-body form-category">
       <div class="col-sm-5 enquiry-input" hidden>
           <paper-input label="Ac Year" value="{{acyear}}"></paper-input>
@@ -88,13 +88,17 @@
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
-        <div class="col-sm-6 enquiry-input">
+        <div class="col-sm-4 enquiry-input">
           <!-- <paper-input label="Date of Birth" value="{{dob}}"></paper-input> -->
-          <paper-input label="Total Fees" value="{{totalfees}}"></paper-input><!-- <paper-input label="Total Discount" value="{{totaldiscount}}"></paper-input> -->
+          <paper-input  readonly label="Actual Fees" value="{{totalfees}}"></paper-input><!-- <paper-input label="Total Discount" value="{{totaldiscount}}"></paper-input> -->
         </div>
-        <div class="col-sm-6 enquiry-input">
+        <div class="col-sm-4 enquiry-input">
           <!-- <paper-input label="Total Fees" value="{{totalfees}}"></paper-input> -->
-          <paper-input label="Total Discount" value="{{totaldiscount}}"></paper-input>
+          <paper-input readonly label="Payable Amount" value="{{payableamount}}"></paper-input>
+        </div>
+        <div class="col-sm-4 enquiry-input">
+          <!-- <paper-input label="Total Fees" value="{{totalfees}}"></paper-input> -->
+          <paper-input readonly label="Total Discount" value="{{totaldiscount}}"></paper-input>
         </div>
       </div>
     
@@ -149,22 +153,22 @@
         localStorage.setItem("curr_sess_waiveoff",0);
         localStorage.setItem("curr_sess_fees",0); 
       },  
-      FnPayAll:function(e){
-        if(document.querySelector("#payallfee").checked==true)
-        {
-         this.hidespecifictype=true;
-         document.querySelector("#payspecificfee").checked=false;
-         feepaytype="All";
-        }
-      },
-      FnPaySpecific:function(e){
-        if(document.querySelector("#payspecificfee").checked==true)
-        {
-         this.hidespecifictype=false;
-         document.querySelector("#payallfee").checked=false;
-         feepaytype="Specific";
-        }
-      },
+      // FnPayAll:function(e){
+      //   if(document.querySelector("#payallfee").checked==true)
+      //   {
+      //    this.hidespecifictype=true;
+      //    document.querySelector("#payspecificfee").checked=false;
+      //    feepaytype="All";
+      //   }
+      // },
+      // FnPaySpecific:function(e){
+      //   if(document.querySelector("#payspecificfee").checked==true)
+      //   {
+      //    this.hidespecifictype=false;
+      //    document.querySelector("#payallfee").checked=false;
+      //    feepaytype="Specific";
+      //   }
+      // },
       FnSelectFeeType:function(e){
         var feetype=(e.target.selectedItem.textContent).trim();
         localStorage.setItem("curr_sess_feetype",feetype);

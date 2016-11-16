@@ -55,6 +55,21 @@
           </paper-dropdown-menu>
         </div>
       </div>
+
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-4">
+          <span class="col-sm-12"><h5>Admission Type</h5></span>
+          <span><paper-checkbox  checked class="col-sm-6" id="general" class="checkbox" on-change="generalHandler">General</paper-checkbox></span>
+          <span><paper-checkbox class="col-sm-6" id="spot" class="checkbox" on-change="spotHandler">Spot</paper-checkbox></span>          
+        </div>
+        <label>Special Discounts</label>
+        <div class="col-sm-8 enquiry-input">
+          <template  is="dom-repeat" items="{{discountarr}}" as="view">
+            <special-discount-card code="{{view.id}}" discountname="{{view.discount_type_name}}"></special-discount-card>
+          </template>
+        </div>
+      </div>
+
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-4">
           <paper-input label="Student First Name" value="{{firstname}}"></paper-input>
@@ -605,9 +620,13 @@
     var tograde;
     var fatherdob;
     var motherdob;
+    var admissiontype="1";
+    var discounttype="";
+    var discountname="";
     Polymer({
       is: 'admission-form',
         ready:function(){
+        this.hideenqenrno=true;
         this.hidethirdlanguage=true;
         this.$.physicdetailhandler.hidden=true;
         this.$.acheivehandlerdiv.hidden=true;
@@ -831,6 +850,20 @@
     FnSelectToGrade:function(e){
       tograde=(e.target.selectedItem.textContent).trim();
     },
+    spotHandler:function(){
+        if(document.querySelector("#spot").checked==true)
+        {
+         document.querySelector("#general").checked=false;
+         admissiontype="1";
+       }
+      },
+      generalHandler:function(){
+        if(document.querySelector("#general").checked==true)
+        {
+         document.querySelector("#spot").checked=false;
+         admissiontype="0";
+       }
+      },
       prime:function(){
         if(this.gradeselection=="Nursery"||this.gradeselection=="LKG"||this.gradeselection=="UKG"||this.gradeselection=="Grade-1"||this.gradeselection=="Grade-2"||this.gradeselection=="Grade-3"|| this.gradeselection=="Grade-4"){
           this.$.lang3Handler.hidden=true;
@@ -1034,11 +1067,11 @@
           if(localStorage.getItem("curr_sess_insertflag")=="1")
 
           this.$.admissionservice.callInsertAdmissionService(localStorage.getItem("curr_sess_enquiryno"),localStorage.getItem("curr_sess_enquiryname"),this.applicationno,this.schoolname,this.enquiredyear,admissionyear,this.firstname,this.middlename,this.lastname,this.gradeselection,secondlanguage,thirdlanguage,this.dob,this.age,gender,this.flatno,
-            this.bulidingname,this.street,this.city,this.town,this.state,this.pincode,this.height,this.weight,FnBlood,relegions,this.relegion,this.nationality,this.mothertongue,this.siblingname,this.siblingclass,this.prevschoolname,fromgrade,tograde,FnBo,this.yearfrom,this.yearto,this.medium,this.lastclassmark,this.reasonforleaving,handler,this.physicdetail,this.physicstatus,this.mentaldetail,this.mentalstatus,this.illnessdetail,this.illnessstatus,this.allergydetail,this.allergystatus,this.chronicdetail,this.chronicstatus,acheivehandler,this.fathername,this.mothername,this.fatherqualification,this.motherqualification,this.fatheroccupation,this.motheroccupation,this.fatherincome,this.motherincome,this.fathertelno,this.mothertelno,this.fathermobile,this.mothermobile,this.fatheremail,this.motheremail,this.fatherdob,this.motherdob,this.pflatno,this.pbuildingname,this.pstreet,this.pdistrict,this.ptown,this.pstate,this.ppincode,this.guardianname1,this.guardianname2,this.relationship1,this.relationship2,this.gflatno,this.gbulidingname,this.gstreet,this.gcity,this.gtown,this.gstate,this.gpincode,this.gresidentialcontact,this.gofficecontact,this.gmobileno,this.gfax,admissiontransport,admissioncanteen,this.field1,this.year1,this.event1,this.prizedetail1,this.field2,this.year2,this.event2,this.prizedetail2,this.field3,this.year3,this.event3,this.prizedetail3);
+            this.bulidingname,this.street,this.city,this.town,this.state,this.pincode,this.height,this.weight,FnBlood,relegions,this.relegion,this.nationality,this.mothertongue,this.siblingname,this.siblingclass,this.prevschoolname,fromgrade,tograde,FnBo,this.yearfrom,this.yearto,this.medium,this.lastclassmark,this.reasonforleaving,handler,this.physicdetail,this.physicstatus,this.mentaldetail,this.mentalstatus,this.illnessdetail,this.illnessstatus,this.allergydetail,this.allergystatus,this.chronicdetail,this.chronicstatus,acheivehandler,this.fathername,this.mothername,this.fatherqualification,this.motherqualification,this.fatheroccupation,this.motheroccupation,this.fatherincome,this.motherincome,this.fathertelno,this.mothertelno,this.fathermobile,this.mothermobile,this.fatheremail,this.motheremail,this.fatherdob,this.motherdob,this.pflatno,this.pbuildingname,this.pstreet,this.pdistrict,this.ptown,this.pstate,this.ppincode,this.guardianname1,this.guardianname2,this.relationship1,this.relationship2,this.gflatno,this.gbulidingname,this.gstreet,this.gcity,this.gtown,this.gstate,this.gpincode,this.gresidentialcontact,this.gofficecontact,this.gmobileno,this.gfax,admissiontransport,admissioncanteen,this.field1,this.year1,this.event1,this.prizedetail1,this.field2,this.year2,this.event2,this.prizedetail2,this.field3,this.year3,this.event3,this.prizedetail3,admissiontype,discounttype);
           if(localStorage.getItem("curr_sess_insertflag")=="2")
 
           this.$.admissionservice.callInsertAdmissionService(localStorage.getItem("curr_sess_admnenquiryno"),localStorage.getItem("curr_sess_enquiryname"),this.applicationno,this.schoolname,this.enquiredyear,admissionyear,this.firstname,this.middlename,this.lastname,this.gradeselection,secondlanguage,thirdlanguage,this.dob,this.age,gender,this.flatno,
-            this.bulidingname,this.street,this.city,this.town,this.state,this.pincode,this.height,this.weight,FnBlood,relegions,this.relegion,this.nationality,this.mothertongue,this.siblingname,this.siblingclass,this.prevschoolname,fromgrade,tograde,FnBo,this.yearfrom,this.yearto,this.medium,this.lastclassmark,this.reasonforleaving,handler,this.physicdetail,this.physicstatus,this.mentaldetail,this.mentalstatus,this.illnessdetail,this.illnessstatus,this.allergydetail,this.allergystatus,this.chronicdetail,this.chronicstatus,acheivehandler,this.fathername,this.mothername,this.fatherqualification,this.motherqualification,this.fatheroccupation,this.motheroccupation,this.fatherincome,this.motherincome,this.fathertelno,this.mothertelno,this.fathermobile,this.mothermobile,this.fatheremail,this.motheremail,this.fatherdob,this.motherdob,this.pflatno,this.pbuildingname,this.pstreet,this.pdistrict,this.ptown,this.pstate,this.ppincode,this.guardianname1,this.guardianname2,this.relationship1,this.relationship2,this.gflatno,this.gbulidingname,this.gstreet,this.gcity,this.gtown,this.gstate,this.gpincode,this.gresidentialcontact,this.gofficecontact,this.gmobileno,this.gfax,admissiontransport,admissioncanteen,this.field1,this.year1,this.event1,this.prizedetail1,this.field2,this.year2,this.event2,this.prizedetail2,this.field3,this.year3,this.event3,this.prizedetail3);
+            this.bulidingname,this.street,this.city,this.town,this.state,this.pincode,this.height,this.weight,FnBlood,relegions,this.relegion,this.nationality,this.mothertongue,this.siblingname,this.siblingclass,this.prevschoolname,fromgrade,tograde,FnBo,this.yearfrom,this.yearto,this.medium,this.lastclassmark,this.reasonforleaving,handler,this.physicdetail,this.physicstatus,this.mentaldetail,this.mentalstatus,this.illnessdetail,this.illnessstatus,this.allergydetail,this.allergystatus,this.chronicdetail,this.chronicstatus,acheivehandler,this.fathername,this.mothername,this.fatherqualification,this.motherqualification,this.fatheroccupation,this.motheroccupation,this.fatherincome,this.motherincome,this.fathertelno,this.mothertelno,this.fathermobile,this.mothermobile,this.fatheremail,this.motheremail,this.fatherdob,this.motherdob,this.pflatno,this.pbuildingname,this.pstreet,this.pdistrict,this.ptown,this.pstate,this.ppincode,this.guardianname1,this.guardianname2,this.relationship1,this.relationship2,this.gflatno,this.gbulidingname,this.gstreet,this.gcity,this.gtown,this.gstate,this.gpincode,this.gresidentialcontact,this.gofficecontact,this.gmobileno,this.gfax,admissiontransport,admissioncanteen,this.field1,this.year1,this.event1,this.prizedetail1,this.field2,this.year2,this.event2,this.prizedetail2,this.field3,this.year3,this.event3,this.prizedetail3,admissiontype,discounttype);
         }
         },
        FnRefresh:function(){
@@ -1192,7 +1225,12 @@
         this.$.TYes.checked=false;
         this.$.TNo.checked=false;
         this.$.CYes.checked=false;
-        this.$.CNo.checked=false;     
+        this.$.CNo.checked=false;   
+        admissiontype="1";
+        discounttype="";
+        discountname="";
+        this.$.spot.checked=false;
+        this.$.general.checked=true;  
       },
       FnRefresh1:function(){
         admissionyear="";
@@ -1345,7 +1383,17 @@
         this.$.TYes.checked=false;
         this.$.TNo.checked=false;
         this.$.CYes.checked=false;
-        this.$.CNo.checked=false;     
+        this.$.CNo.checked=false;
+        admissiontype="1";
+        this.$.spot.checked=false;
+        this.$.general.checked=true;   
+        discounttype="";
+        discountname="";
+      },
+      setDiscountType:function(dtype){
+        alert(dtype);
+        discounttype=dtype;
+        // discountname=dname;
       }
     });
   })();

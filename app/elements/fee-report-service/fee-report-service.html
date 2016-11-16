@@ -1,0 +1,64 @@
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="fee-report-service">
+  <template>
+     <!-- It would fetch fees -->
+     <iron-ajax
+        method="post"
+        id="fetchfeecollectionreportajax"
+        url="{{fetchfeecollectionreporturl}}"
+        params="{{fetchfeecollectionreportparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchfeecollectionreportResponse"
+        debounce-duration="300"
+        >
+        <!-- It would fetch overall fee  -->
+     <iron-ajax
+        method="post"
+        id="fetchoverallcollectionreportajax"
+        url="{{fetchoverallcollectionreporturl}}"
+        params="{{fetchoverallcollectionreportparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchoverallcollectionreportResponse"
+        debounce-duration="300"
+        >
+  </template>
+  <script>
+  (function() {
+    'use strict';
+    var splitupamountarr=[];
+    var overallamountarr=[];
+    Polymer({
+      is: 'fee-report-service',
+      FnFetchFeeReportService:function(){
+        this.fetchfeecollectionreporturl=sessionStorage.getItem("addrinfo")+"/fetchfeecollectionreport-service";
+        var obj={"schoolid":"","fromdate":"","todate":""};
+        obj.schoolid=localStorage.getItem("schoolid");
+        obj.fromdate=localStorage.getItem("localsess_from_date");
+        obj.todate=localStorage.getItem("localsess_to_date");
+        this.fetchfeecollectionreportparam=obj;
+        this.$.fetchfeecollectionreportajax.generateRequest();
+      },
+      fetchfeereportResponse:function(e){
+
+      },
+      FnFetchOverallFeeReportService:function(){
+        this.fetchoverallcollectionreporturl=sessionStorage.getItem("addrinfo")+"/fetchoverallcollectionreport-service";
+        var obj={"schoolid":"","fromdate":"","todate":""};
+        obj.schoolid=localStorage.getItem("schoolid");
+        obj.fromdate=localStorage.getItem("localsess_from_date");
+        obj.todate=localStorage.getItem("localsess_to_date");
+        this.fetchoverallcollectionreportparam=obj;
+        this.$.fetchoverallcollectionreportajax.generateRequest();
+      },
+      fetchfeereportResponse:function(e){
+
+      },
+
+    });
+  })();
+  </script>
+</dom-module>

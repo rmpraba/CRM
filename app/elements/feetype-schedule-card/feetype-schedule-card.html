@@ -54,7 +54,21 @@
           </div>
           <div class="col-sm-3 enquiry-input">
             <paper-input label="Total Fee" value="{{totalfees}}"></paper-input>
-          </div>          
+          </div>   
+          <div class="col-sm-3 enquiry-input">
+            <paper-dropdown-menu label="No of installment" attr-for-selected="value">
+            <paper-menu id="feetypeinstallment" class="dropdown-content" required on-iron-select="FnSelectFeeTypeInstallment" valueattr="value" >
+              <!-- <template  is="dom-repeat" items="{{feetypeinstallmentarr}}" as="item"> -->
+              <paper-item>1</paper-item>
+              <paper-item>2</paper-item>
+              <paper-item>3</paper-item>
+              <paper-item>4</paper-item>
+              <paper-item>5</paper-item>
+              <paper-item>6</paper-item>
+              <!-- </template> -->
+            </paper-menu>
+            </paper-dropdown-menu>
+          </div>       
         </div>
 
         <div class="col-md-12 form-button">
@@ -67,7 +81,7 @@
   <script>
   (function() {
     'use strict';
-    var grade,admissionyear,academicyear,feetype;    
+    var grade,admissionyear,academicyear,feetype,feetypeinstallment;    
     Polymer({
       is: 'feetype-schedule-card',
       ready:function(){
@@ -89,20 +103,25 @@
       FnSelectFeeType:function(e){
         feetype=(e.target.selectedItem.textContent).trim();
       },
+      FnSelectFeeTypeInstallment:function(e){
+        feetypeinstallment=(e.target.selectedItem.textContent).trim();
+      },
       FnRefresh:function(){
         grade="";
         admissionyear="";
         academicyear="";
         feetype="";
         this.totalfees="";
+        feetypeinstallment="";
         document.querySelector('#schedulegrade').selected=-1;
         document.querySelector('#scheduleacademicyear').selected=-1;
         document.querySelector('#scheduleadmissionyear').selected=-1;
         document.querySelector('#schedulefeetype').selected=-1;
+        document.querySelector('#feetypeinstallment').selected=-1;
       },
       FnSubmit:function(){
         // alert(this.schoolname+" "+grade+" "+academicyear+" "+admissionyear+" "+feetype+" "+this.totalfees);
-        this.$.schedulefee.setFeeTypeInfo(this.schoolname,grade,admissionyear,academicyear,feetype,this.totalfees);
+        this.$.schedulefee.setFeeTypeInfo(this.schoolname,grade,admissionyear,academicyear,feetype,this.totalfees,feetypeinstallment);
       },
       FnCancel:function(){
         grade="";
@@ -110,10 +129,12 @@
         academicyear="";
         feetype="";
         this.totalfees="";
+        feetypeinstallment="";
         document.querySelector('#schedulegrade').selected=-1;
         document.querySelector('#scheduleacademicyear').selected=-1;
         document.querySelector('#scheduleadmissionyear').selected=-1;
         document.querySelector('#schedulefeetype').selected=-1;
+        document.querySelector('#feetypeinstallment').selected=-1;
       }
 
     });
