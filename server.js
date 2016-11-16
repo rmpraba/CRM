@@ -954,7 +954,27 @@ app.post('/submitenquiry',  urlencodedParser,function (req, res)
 */
 app.post('/updateenquiry',  urlencodedParser,function (req, res)
 {
-   var collection={"first_name":req.query.firstname,"middle_name":req.query.middlename,"last_name":req.query.lastname,"gender":req.query.gender,"class":req.query.grade,"dob":req.query.dob,"old_class":req.query.oldclass,"old_school":req.query.oldschool,"mother_tongue":req.query.mothertongue,"father_name":req.query.fathername,"mother_name":req.query.mothername,"father_qualification":req.query.fatheredu,"mother_qualification":req.query.motheredu,"father_mob":req.query.fathermob,"mother_mob":req.query.mothermob,"father_email":req.query.fathermail,"mother_email":req.query.mothermail,"father_company":req.query.fathercompany,"mother_company":req.query.mothercompany,"father_occupation":req.query.fatherjob,"mother_occupation":req.query.motherjobfn,"flat_no":req.query.flatno,"address1":req.query.address1,"address2":req.query.address2,"address3":req.query.address3,"city":req.query.city,"pincode":req.query.pincode,"state":req.query.statename,"enquiry_source":req.query.enquiysource,"sibiling_name":req.query.siblingname,"sibling_detail":req.query.siblingdetails,"transport_requirment":req.query.transportreq,"canteen_requirment":req.query.canteenreq,"second_language":req.query.secondlanguage,"third_language":req.query.thirdlanguage,"updated_by":req.query.modified,"prospectus_sold":req.query.prospectstatus,"father_designation":req.query.daddesignation,"mother_designation":req.query.momdesignation,"father_income":req.query.dadincome,"mother_income":req.query.momincome,"prospectus_no":req.query.prospectusno,"admission_test":req.query.admissiontest1,"admission_date":req.query.admissiondate1,'admission_test_english':req.query.admissiontestenglish1,"admission_test_maths":req.query.admissiontestmaths,"admission_test_evs":req.query.admissiontestevs1,"Guardianname":req.query.guardianname1,"gmob":req.query.guardianmobile1,"gemail":req.query.guardianemail1,"guardian_company":req.query.guardiancompany1,"guardian_job":req.query.guardianjob1,"guardian_occup":req.query.guardianoccup1,"guardian_income":req.query.guardianincome1,"locality":req.query.location1,"mother_occupation_other":req.query.motherother,"father_occupation_other":req.query.motherother1,"guardian_occupation_other":req.query.guardianother1,"country_name":req.query.country_name1};
+   var collection={"first_name":req.query.firstname,"middle_name":req.query.middlename,"last_name":req.query.lastname,
+   "gender":req.query.gender,"class":req.query.grade,"dob":req.query.dob,"old_class":req.query.oldclass,
+   "old_school":req.query.oldschool,"mother_tongue":req.query.mothertongue,"father_name":req.query.fathername,
+   "mother_name":req.query.mothername,"father_qualification":req.query.fatheredu,"mother_qualification":req.query.motheredu,
+   "father_mob":req.query.fathermob,"mother_mob":req.query.mothermob,"father_email":req.query.fathermail,
+   "mother_email":req.query.mothermail,"father_company":req.query.fathercompany,"mother_company":req.query.mothercompany,
+   "father_occupation":req.query.fatherjob,"mother_occupation":req.query.motherjobfn,"flat_no":req.query.flatno,
+   "address1":req.query.address1,"address2":req.query.address2,"address3":req.query.address3,"city":req.query.city,
+   "pincode":req.query.pincode,"state":req.query.statename,"enquiry_source":req.query.enquiysource,
+   "sibiling_name":req.query.siblingname,"sibling_detail":req.query.siblingdetails,
+   "transport_requirment":req.query.transportreq,"canteen_requirment":req.query.canteenreq,
+   "second_language":req.query.secondlanguage,"third_language":req.query.thirdlanguage,"updated_by":req.query.modified,
+   "prospectus_sold":req.query.prospectstatus,"father_designation":req.query.daddesignation,
+   "mother_designation":req.query.momdesignation,"father_income":req.query.dadincome,"mother_income":req.query.momincome,
+   "prospectus_no":req.query.prospectusno,"admission_test":req.query.admissiontest1,"admission_date":req.query.admissiondate1,
+   'admission_test_english':req.query.admissiontestenglish1,"admission_test_maths":req.query.admissiontestmaths1,
+   "admission_test_evs":req.query.admissiontestevs1,"Guardianname":req.query.guardianname1,"gmob":req.query.guardianmobile1,
+   "gemail":req.query.guardianemail1,"guardian_company":req.query.guardiancompany1,"guardian_job":req.query.guardianjob1,
+   "guardian_occup":req.query.guardianoccup1,"guardian_income":req.query.guardianincome1,"locality":req.query.location1,
+   "mother_occupation_other":req.query.motherother,"father_occupation_other":req.query.motherother1,
+   "guardian_occupation_other":req.query.guardianother1,"country_name":req.query.country_name1};
 
 
     var school={"school_id":req.query.schol};
@@ -981,7 +1001,32 @@ app.post('/updateenquiry',  urlencodedParser,function (req, res)
 
  app.post('/registerenquiryform',  urlencodedParser,function (req, res)
  {
-   var collection={"school_id":req.query.schol,"enquiry_no":req.query.enq,"first_name":req.query.firstname,"middle_name":req.query.middlename,"last_name":req.query.lastname,"gender":req.query.gender,"class":req.query.grade,"dob":req.query.dob,"old_class":req.query.oldclass,"old_school":req.query.oldschool,"mother_tongue":req.query.mothertongue,"father_name":req.query.fathername,"mother_name":req.query.mothername,"father_qualification":req.query.fatheredu,"mother_qualification":req.query.motheredu,"father_mob":req.query.fathermob,"mother_mob":req.query.mothermob,"father_email":req.query.fathermail,"mother_email":req.query.mothermail,"father_company":req.query.fathercompany,"mother_company":req.query.mothercompany,"father_occupation":req.query.fatherjob,"mother_occupation":req.query.motherjobfn,"flat_no":req.query.flatno,"address1":req.query.address1,"address2":req.query.address2,"address3":req.query.address3,"city":req.query.city,"pincode":req.query.pincode,"state":req.query.statename,"enquiry_source":req.query.enquiysource,"sibiling_name":req.query.siblingname,"sibling_detail":req.query.siblingdetails,"transport_requirment":req.query.transportreq,"canteen_requirment":req.query.canteenreq,"second_language":req.query.secondlanguage,"third_language":req.query.thirdlanguage,"updated_by":req.query.modified,"prospectus_sold":req.query.prospectstatus,"father_designation":req.query.daddesignation,"mother_designation":req.query.momdesignation,"father_income":req.query.dadincome,"mother_income":req.query.momincome,"prospectus_no":req.query.prospectusno,"academic_year":req.query.academicyear,"enquiry_name":req.query.givenname,"status":req.query.status,"admission_test":req.query.admissiontest,"admission_date":req.query.admissiondate,'admission_test_english':req.query.admissiontestenglish,"admission_test_maths":req.query.admissiontestmaths,"admission_test_evs":req.query.admissiontestevs,"Guardianname":req.query.guardianname,"gmob":req.query.guardianmobile,"gemail":req.query.guardianemail,"guardian_company":req.query.guardiancompany,"guardian_job":req.query.guardianjob,"guardian_occup":req.query.guardianoccup,"guardian_income":req.query.guardianincome,"locality":req.query.location,"mother_occupation_other":req.query.motherother,"father_occupation_other":req.query.fatherother,"year_type":req.query.enrolltype,"country_name":req.query.country_name};
+   var collection={"school_id":req.query.schol,"enquiry_no":req.query.enq,"first_name":req.query.firstname,
+   "middle_name":req.query.middlename,"last_name":req.query.lastname,"gender":req.query.gender,
+   "class":req.query.grade,"dob":req.query.dob,"old_class":req.query.oldclass,"old_school":req.query.oldschool,
+   "mother_tongue":req.query.mothertongue,"father_name":req.query.fathername,"mother_name":req.query.mothername,
+   "father_qualification":req.query.fatheredu,"mother_qualification":req.query.motheredu,"father_mob":req.query.fathermob,
+   "mother_mob":req.query.mothermob,"father_email":req.query.fathermail,"mother_email":req.query.mothermail,
+   "father_company":req.query.fathercompany,"mother_company":req.query.mothercompany,
+   "father_occupation":req.query.fatherjob,"mother_occupation":req.query.motherjobfn,
+   "flat_no":req.query.flatno,"address1":req.query.address1,"address2":req.query.address2,"address3":req.query.address3,
+   "city":req.query.city,"pincode":req.query.pincode,"state":req.query.statename,"enquiry_source":req.query.enquiysource,
+   "sibiling_name":req.query.siblingname,"sibling_detail":req.query.siblingdetails,
+   "transport_requirment":req.query.transportreq,"canteen_requirment":req.query.canteenreq,
+   "second_language":req.query.secondlanguage,"third_language":req.query.thirdlanguage,"updated_by":req.query.modified,
+   "prospectus_sold":req.query.prospectstatus,"father_designation":req.query.daddesignation,
+   "mother_designation":req.query.momdesignation,"father_income":req.query.dadincome,
+   "mother_income":req.query.momincome,"prospectus_no":req.query.prospectusno,"academic_year":req.query.academicyear,
+   "enquiry_name":req.query.givenname,"status":req.query.status,"admission_test":req.query.admissiontest,
+   "admission_date":req.query.admissiondate,'admission_test_english':req.query.admissiontestenglish,
+   "admission_test_maths":req.query.admissiontestmaths,"admission_test_evs":req.query.admissiontestevs,
+   "Guardianname":req.query.guardianname,"gmob":req.query.guardianmobile,"gemail":req.query.guardianemail,
+   "guardian_company":req.query.guardiancompany,"guardian_job":req.query.guardianjob,
+   "guardian_occup":req.query.guardianoccup,"guardian_income":req.query.guardianincome,"locality":req.query.location,
+   "mother_occupation_other":req.query.motherother,"father_occupation_other":req.query.fatherother,
+   "year_type":req.query.enrolltype,"country_name":req.query.country_name};
+
+   console.log('registerenquiry.............'+req.query.admissiontestevs+"  "+req.query.admissiontestenglish+"  "+req.query.admissiontestmaths);
    var school={"school_id":req.query.schol};
    var enquiry={"enquiry_no":req.query.enq};
    connection.query('insert into student_enquiry_details set ?',[collection],
@@ -2680,7 +2725,7 @@ app.post('/getadmissioncount',  urlencodedParser,function (req, res){
 
    //console.log('qur');
    var qur="SELECT d.enquiry_no, d.enquiry_name, d.class, d.created_on, a.english_status, a.maths_status, a.evs_status, a.test_date,a.english_mark,a.maths_mark,a.evs_mark,a.result_status  FROM student_enquiry_details as d join admission_test_details as a WHERE (a.school_id='"+req.query.schoolid+"' and a.enquiry_id='"+req.query.enquiryno+"') and d.status='Enquired' and d.admission_test='Yes' and (d.enquiry_no='"+req.query.enquiryno+"' and d.school_id='"+req.query.schoolid+"')";
-   //console.log(qur);
+   console.log('...........admission test............'+qur);
    connection.query(qur,
      function(err, rows)
      {
@@ -2708,7 +2753,11 @@ app.post('/getadmissioncount',  urlencodedParser,function (req, res){
 
    //console.log('qur');
    var qur="UPDATE student_enquiry_details SET admission_status='"+req.query.status+"' WHERE school_id='"+req.query.schoolid+"' and enquiry_no='"+req.query.enquiryno+"' and status='Enquired' and admission_test='Yes'";
+   var qur1="UPDATE admission_test_details SET english_mark='"+req.query.englishmark+"' , maths_mark='"+req.query.mathsmark+"' "+
+            " , evs_mark='"+req.query.evsmark+"' , result_status='"+req.query.status+"' ,evaluated_by='"+req.query.evaluatedby+"' ,evaluated_on='"+req.query.evaluatedon+"' "+
+            " WHERE school_id='"+req.query.schoolid+"' and enquiry_id='"+req.query.enquiryno+"' ";
    console.log(qur);
+   console.log(qur1);
    connection.query(qur,
      function(err, result)
      {
@@ -2716,8 +2765,12 @@ app.post('/getadmissioncount',  urlencodedParser,function (req, res){
        {
          if(result.affectedRows>0)
          {
-           //console.log(rows);
+           connection.query(qur1,function(err, result){
+           if(result.affectedRows>0)
            res.status(200).json({'returnval': 'updated!'});
+           else
+           res.status(200).json({'returnval': 'not updated!'});
+           });
          }
          else
          {

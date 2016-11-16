@@ -143,7 +143,6 @@
         localStorage.setItem("curr_sess_enquiryname",enquiry_name);
         this.$.admissionservice.callFetchadmissiontestinfo(enquiry_no);
       },
-      
       FnRefresh:function(){
         this.hidetable=true;
         this.enquiryno="";
@@ -159,7 +158,6 @@
         this.evscol=true;
         this.evsmark="";
         testresult=null;
-        
       },
       check:function(english,maths,evs,result){
           this.englishcol=english;
@@ -195,7 +193,7 @@
       update:function(){
         //alert(this.enquiryno+'  '+this.englishmark+'  '+this.mathsmark+'  '+this.evsmark+'  '+testresult);
         //this.$.admissionservice.callUpdateteststatus(this.enquiryno,testresult);
-        this.$.admissionservice.Updateteststatus(this.enquiryno,testresult,this.englishmark,this.mathsmark,this.evsmark);
+        this.$.admissionservice.callUpdateteststatus(this.enquiryno,testresult,this.englishmark,this.mathsmark,this.evsmark);
       }
 
     });
