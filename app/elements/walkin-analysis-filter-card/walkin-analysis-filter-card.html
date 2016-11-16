@@ -1,5 +1,6 @@
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
-
+<link rel="import" href="../from-datepicker-card/from-datepicker-card.html">
+<link rel="import" href="../to-datepicker-card/to-datepicker-card.html">
 <dom-module id="walkin-analysis-filter-card">
   <template>
       <div class="row">
@@ -21,12 +22,18 @@
                       <paper-item>{{nextyear}}</paper-item>
                   </paper-menu>
                 </paper-dropdown-menu>
+                <div class="col-md-6" hidden$="{{hidedate}}">
+                  <from-datepicker-card></from-datepicker-card>
+                </div>
+                <div class="col-md-6" hidden$="{{hidedate}}">
+                  <to-datepicker-card></to-datepicker-card>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    <table class="table table-hover">
+    <table class="table table-hover" id="hidereport">
       <thead>
       <tr>
         <th>Source</th>
@@ -44,13 +51,16 @@
   <script>
   (function() {
     'use strict';
+    var fromDate ='';
+    var toDate ='';
 
     Polymer({
       is: 'walkin-analysis-filter-card',
+
     ready:function(){
-      this.$.academicyr.hidden = true;/*
-      this.$.btwdates1.hidden = true;
-      this.$.btwdates2.hidden = true;*/
+      this.$.academicyr.hidden = true;
+      this.hidedate= true;
+      this.$.hidereport.hidden = true;
     } ,
     academic_year:function(){
       var dt = new Date();
@@ -65,19 +75,31 @@
       this.currentyear = current_academic_year;
       this.nextyear = next_academic_year;
       this.$.academicyr.hidden = false;
-      /*this.$.btwdates1.hidden = true;
-      this.$.btwdates2.hidden = true;*/
+      this.hidedate= true;
     },
     reportforyear:function(e){
       var academicyrs = (e.target.selectedItem.textContent).trim();
       this.$.service.getacademicyearreport(academicyrs);
     },
-      between_dates:function(){
-        /*this.$.btwdates2.hidden = false;
-        this.$.btwdates1.hidden = false;*/
-        this.$.academicyr.hidden = true;
-      },
-
+    between_dates:function(){
+      this.$.academicyr.hidden = true;
+      this.hidedate= false;
+    },
+    showReport:function(){
+      this.$.hidereport.hidden = false;
+    },
+    FnSetFromDate:function(date){
+      fromDate = date;
+      if(fromDate && toDate){
+        this.$.service.getbetweendatereport(fromDate,toDate);
+      }
+    },
+    FnSetToDate:function(date){
+      toDate = date;
+      if(fromDate && toDate){
+        this.$.service.getbetweendatereport(fromDate,toDate);
+      }
+    }
     });
   })();
   </script>

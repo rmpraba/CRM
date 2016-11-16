@@ -33,245 +33,107 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <paper-input label="Enquired On" readonly value="{{enquiredon}}"></paper-input>
           </div>
         </div>        
-        <div class="list-group col-sm-12 panel-body form-category">
-        <div class="col-sm-6">
-          <paper-input label="Parent Name" readonly value="{{parentname}}"></paper-input>
+        <div >
+          <a on-click="showmoredetails"><i class="fa fa-external-link"></i> View more details...</a>
         </div>
-        <div class="col-sm-6">
-          <paper-input label="Mobile No" readonly value="{{mobileno}}"></paper-input>
-        </div>
-      </div>
       </div>
       <div><p><center><strong style="font-size: larger;">FollowUp Schedule - {{schedule}}</strong></center></p></div>
-
-      <table class="table table-striped">
+<div class="list-group col-sm-12 panel-body form-category">
+      <table class="table table-striped" >
         <thead>
-        <tr>
-          <th>S.No</th>
-          <th>   Call picked</th>
-          <th>Date</th>
-          <th>Confidence Level</th>
-          <th>Comments</th>
+        <tr class="list-group col-sm-12 panel-body form-category">
+          <th class="col-sm-2">Call picked</th>
+          <th class="col-sm-2">Schedule Date</th>
+          <th class="col-sm-2">Actual Date</th>
+          <th class="col-sm-2">Next Followup</th>
+          <th class="col-sm-1">Confidence Level</th>
+          <th class="col-sm-2">Comments</th>
+          <th class="col-sm-1">Click Here</th>
         </tr>
         </thead>
-        <tbody>
-        <tr>
-          <th scope="row">1</th>
-          <td><span><div id='followcheck1'><paper-checkbox class="col-sm-6" id="yescall1" class="checkbox" on-change="followup1yes">Yes</paper-checkbox>
-          <paper-checkbox class="col-sm-6" id="nocall1" class="checkbox" on-change="follow1no">No</paper-checkbox></div></span></td>
-          <td>
-            <span class="col-sm-8"><paper-input id="date1" disabled label="Date" value="{{followupdate1}}"></paper-input></span>
-
-            <span class="col-sm-4 glyph-button"><button on-click="dialogfollowup1" id="followedit1" class="btn glyphicon glyphicon-pencil"></span>
-          </td>
-          <td>
-
-            <paper-dropdown-menu  id="followdrop1" label="Confidence Level">
-              <paper-listbox id="confidencelevel1" class="dropdown-content" on-iron-select="FnConfidenceLevel">
-                <paper-item value=1>>90%</paper-item>
-                <paper-item value=2>>75%</paper-item>
-                <paper-item value=3>>50%</paper-item>
-                <paper-item value=4><50%</paper-item>
-                <paper-item value=5><35%</paper-item>
-                <paper-item value=6><10%</paper-item>
-              </paper-listbox>
-            </paper-dropdown-menu>
-          </td>
-          <td>
-            <span class="col-sm-8"><paper-input id="followbox1" label="Comments" value="{{comments1}}"></paper-input></span>
-            <span class="col-sm-4 glyph-button"><button class="btn glyphicon glyphicon-floppy-disk" id="followdisk1" on-click="FollowUp1"></button></span>
-          </td>
-        </tr>
-        <tr>
-          <th scope="row">2</th>
-          <td><span><div id='followcheck2'><paper-checkbox class="col-sm-6" id="yescall2" class="checkbox" on-change="followup2yes">Yes</paper-checkbox>
-          <paper-checkbox class="col-sm-6" id="nocall2" class="checkbox" on-change="follow2no">No</paper-checkbox></div></span></td>
-          
-          <td>
-            <span class="col-sm-8"><paper-input id="date2" disabled label="Date" value="{{followupdate2}}"></paper-input></span>
-            <span class="col-sm-4 glyph-button"><button on-click="dialogfollowup2" id="followedit2" class="btn glyphicon glyphicon-pencil"></button></span>
-          </td>
-          <td>
-
-            <paper-dropdown-menu id="followdrop2" label="Confidence Level">
-              <paper-menu id="confidencelevel2" class="dropdown-content" required on-iron-select="FnConfidenceLevel" valueattr="value" >
-                <paper-item value=1>>90%</paper-item>
-                <paper-item value=2>>75%</paper-item>
-                <paper-item value=3>>50%</paper-item>
-                <paper-item value=4><50%</paper-item>
-                <paper-item value=5><35%</paper-item>
-                <paper-item value=6><10%</paper-item>
-              </paper-menu>>
-            </paper-dropdown-menu>
-          </td>
-          <td>
-            <span class="col-sm-8"><paper-input id="followbox2" label="Comments" value="{{comments2}}"></paper-input></span>
-            <span class="col-sm-4 glyph-button"><button id="followdisk2" class="btn glyphicon glyphicon-floppy-disk" on-click="FollowUp2"></button></span>
-          </td>
-        </tr>
-        <tr>
-          <th scope="row">3</th>
-          <td><span><div id='followcheck3'><paper-checkbox class="col-sm-6" id="yescall3" class="checkbox" on-change="followup3yes">Yes</paper-checkbox>
-          <paper-checkbox class="col-sm-6" id="nocall3" class="checkbox" on-change="follow3no">No</paper-checkbox></div></span></td>
-          <td>
-            <span class="col-sm-8"><paper-input id="date3" disabled label="Date" value="{{followupdate3}}"></paper-input></span>
-            <span class="col-sm-4 glyph-button"><button id="followedit3" on-click="dialogfollowup3" class="btn glyphicon glyphicon-pencil"></button></span>
-          </td>
-          <td>
-
-            <paper-dropdown-menu  id="followdrop3" label="Confidence Level">
-              <paper-listbox id="confidencelevel3" class="dropdown-content" on-iron-select="FnConfidenceLevel">
-                <paper-item value=1>>90%</paper-item>
-                <paper-item value=2>>75%</paper-item>
-                <paper-item value=3>>50%</paper-item>
-                <paper-item value=4><50%</paper-item>
-                <paper-item value=5><35%</paper-item>
-                <paper-item value=6><10%</paper-item>
-              </paper-listbox>
-            </paper-dropdown-menu>
-          </td>
-          <td>
-            <span class="col-sm-8"><paper-input label="Comments" id="followbox3" value="{{comments3}}"></paper-input></span>
-            <span class="col-sm-4 glyph-button"><button id="followdisk3" class="btn glyphicon glyphicon-floppy-disk" on-click="FollowUp3"></button></span>
-          </td>
-        </tr>
-        <tr>
-          <th scope="row">4</th>
-          <td><span><div id='followcheck4'><paper-checkbox class="col-sm-6" id="yescall4" class="checkbox" on-change="followup4yes">Yes</paper-checkbox>
-          <paper-checkbox class="col-sm-6" id="nocall4" class="checkbox" on-change="follow4no">No</paper-checkbox></div></span></td>
-          <td>
-            <span class="col-sm-8"><paper-input id="date4" disabled label="Date" value="{{followupdate4}}"></paper-input></span>
-            <span class="col-sm-4 glyph-button"><button id="followedit4" on-click="dialogfollowup4" class="btn glyphicon glyphicon-pencil"></button></span>
-          </td>
-          <td>
-
-            <paper-dropdown-menu id="followdrop4" label="Confidence Level">
-              <paper-listbox id="confidencelevel4" class="dropdown-content" on-iron-select="FnConfidenceLevel">
-                <paper-item value=1>>90%</paper-item>
-                <paper-item value=2>>75%</paper-item>
-                <paper-item value=3>>50%</paper-item>
-                <paper-item value=4><50%</paper-item>
-                <paper-item value=5><35%</paper-item>
-                <paper-item value=6><10%</paper-item>
-              </paper-listbox>
-            </paper-dropdown-menu>
-          </td>
-          <td>
-            <span class="col-sm-8"><paper-input label="Comments" id="followbox4" value="{{comments4}}"></paper-input></span>
-            <span class="col-sm-4 glyph-button"><button id="followdisk4" class="btn glyphicon glyphicon-floppy-disk" on-click="FollowUp4"></button></span>
-          </td>
-        </tr>
-        <tr>
-          <th scope="row">5</th>
-          <td><span><div id='followcheck5'><paper-checkbox class="col-sm-6" id="yescall5" class="checkbox" on-change="followup5yes">Yes</paper-checkbox>
-          <paper-checkbox class="col-sm-6" id="nocall5" class="checkbox" on-change="follow5no">No</paper-checkbox></div></span></td>
-          <td>
-            <span class="col-sm-8"><paper-input id="date5" disabled label="Date" value="{{followupdate5}}"></paper-input></span>
-            <span class="col-sm-4 glyph-button"><button id="followedit5" on-click="dialogfollowup5" class="btn glyphicon glyphicon-pencil"></button></span>
-          </td>
-          <td>
-
-            <paper-dropdown-menu id="followdrop5" label="Confidence Level">
-              <paper-listbox id="confidencelevel5" class="dropdown-content" on-iron-select="FnConfidenceLevel">
-                <paper-item value=1>>90%</paper-item>
-                <paper-item value=2>>75%</paper-item>
-                <paper-item value=3>>50%</paper-item>
-                <paper-item value=4><50%</paper-item>
-                <paper-item value=5><35%</paper-item>
-                <paper-item value=6><10%</paper-item>
-              </paper-listbox>
-            </paper-dropdown-menu>
-          </td>
-          <td>
-            <span class="col-sm-8"><paper-input id="followbox5" label="Comments" value="{{comments5}}"></paper-input></span>
-            <span class="col-sm-4 glyph-button"><button id="followdisk5" class="btn glyphicon glyphicon-floppy-disk" on-click="FollowUp5"></button></span>
-          </td>
-        </tr>
-        </tbody>
+            
       </table>
+          <template is="dom-repeat" items="{{followupdetailarr}}" as="view" class="list-group col-sm-12 panel-body form-category">
+          <checkbox-card status={{view.followup_status}}></checkbox-card>
+            <followup-listitem-card scheduledate="{{view.schedule_date}}" nextdate="{{view.next_followup_date}}" comments="{{view.followup_comments}}" callstatus="{{view.followup_status}}" confidencelvl="{{view.confidence_level}}" followupno="{{view.followup_no}}" fid="{{view.schedule_id}}" enquiryid="{{view.enquiry_id}}"></followup-listitem-card>
+      </template>
     </div>
+</div>
+     <paper-dialog id="detailsdialog" class="paper-date-picker-dialog">
+        <div class="content">
+            <div hidden="{{parentinfo}}" class="list-group col-sm-12 panel-body form-category">
+                  <div class="col-sm-3">
+                    <paper-item>Parent Name :</paper-item>
+                  </div>
+                  <div class="col-sm-3">
+                    <paper-item>{{parentname}}</paper-item>
+                  </div>
+                  <div class="col-sm-3">
+                    <paper-item>Mobile No :</paper-item>
+                  </div>
+                  <div class="col-sm-3">
+                    <paper-item>{{mobno}}</paper-item>
+                  </div>
+            </div>
+            <div hidden="{{guardianinfo}}" class="list-group col-sm-12 panel-body form-category">
+                  <div class="col-sm-3">
+                    <paper-item>Guardian Name :</paper-item>
+                  </div>
+                  <div class="col-sm-3">
+                    <paper-item>{{guardianname}}</paper-item>
+                  </div>
+                  <div class="col-sm-3">
+                    <paper-item>Mobile No :</paper-item>
+                  </div>
+                  <div class="col-sm-3">
+                    <paper-item>{{gmobno}}</paper-item>
+                  </div>
+            </div>
+             <div hidden="{{admissiontestinfo}}" class="list-group col-sm-12 panel-body form-category">
+                  <div class="col-sm-3">
+                    <paper-item>Admission Test :</paper-item>
+                  </div>
+                  <div class="col-sm-3">
+                    <span><paper-checkbox id="testyes"  class="checkbox" disabled>Yes</paper-checkbox></span>
+                    <span><paper-checkbox id="testno"  class="checkbox" disabled>No</paper-checkbox></span>
+                  </div>
+                   <div hidden="{{subject}}">
+                      <div class="col-sm-3">
+                        <paper-item>Test Date :</paper-item>
+                      </div>
+                      <div class="col-sm-3">
+                        <paper-item>{{testdate}}</paper-item>
+                      </div>
+                  </div>
+            </div>
+            <div hidden="{{subject}}" class="list-group col-sm-12 panel-body form-category">
+                  <div class="col-sm-3">
+                    <paper-item>Subjects :</paper-item>
+                  </div>
+                  <div class="col-sm-3">
+                    <span><paper-checkbox id="cbenglsh"  class="checkbox" disabled>English</paper-checkbox></span>
+                  </div>
+                  <div class="col-sm-3">
+                    <span><paper-checkbox id="cbmaths"  class="checkbox" disabled>Maths</paper-checkbox></span>
+                  </div>
+                  <div class="col-sm-3">
+                    <span><paper-checkbox id="cbevs"  class="checkbox" disabled>EVS</paper-checkbox></span>
+                  </div>
+            </div>
+            <div hidden="{{subject}}">
+              Admission Test Result : {{result}}
+            </div>
+        </div>
+        <div class="buttons">
+          <paper-button on-click="detailclose">Close</paper-button>
+        </div>
+      </paper-dialog>
 
+<paper-item >{{lastdate}}</paper-item>
     <paper-input readonly value="{{status}}"></paper-input>
     <!-- Modal -->
-    <paper-dialog modal id="myModal">
-            <h4 class="modal-title">Set status for Follow-up</h4>
-          <div class="modal-body col-sm-6 col-sm-offset-3" style="height: 100px;">
-            <paper-dropdown-menu label="Status">
-              <paper-listbox class="dropdown-content" on-iron-select="FnStatus">
-                <paper-item>Inprogress</paper-item>
-                <paper-item>Closed</paper-item>
-                <paper-item>Exhausted</paper-item>
-                <paper-item>Rejected</paper-item>
-                <paper-item>Not Interested</paper-item>
-              </paper-listbox>
-            </paper-dropdown-menu>
-            <button type="button" class="btn btn-primary col-sm-6 col-sm-offset-3" on-click="submitstatus">Submit</button>
-          </div>
 
-</paper-dialog>
-
-
-
-      <paper-dialog id="dialog1" class="paper-date-picker-dialog">
-        <paper-date-picker id="picker" date="{{date}}"></paper-date-picker>
-        <div class="buttons">
-          <paper-button on-click="close1">Cancel</paper-button>
-          <paper-button on-click="FnDismissDialog1">OK</paper-button>
-        </div>
-      </paper-dialog>
-
-      <paper-dialog id="dialog2" class="paper-date-picker-dialog">
-        <paper-date-picker id="picker" date="{{date}}"></paper-date-picker>
-        <div class="buttons">
-          <paper-button on-click="close2">Cancel</paper-button>
-          <paper-button on-click="FnDismissDialog2">OK</paper-button>
-        </div>
-      </paper-dialog>
-
-      <paper-dialog id="dialog3" class="paper-date-picker-dialog">
-        <paper-date-picker id="picker" date="{{date}}"></paper-date-picker>
-        <div class="buttons">
-          <paper-button on-click="close3">Cancel</paper-button>
-          <paper-button on-click="FnDismissDialog3">OK</paper-button>
-        </div>
-      </paper-dialog>
-
-      <paper-dialog id="dialog4" class="paper-date-picker-dialog">
-        <paper-date-picker id="picker" date="{{date}}"></paper-date-picker>
-        <div class="buttons">
-          <paper-button on-click="close4">Cancel</paper-button>
-          <paper-button on-click="FnDismissDialog4">OK</paper-button>
-        </div>
-      </paper-dialog>
-
-      <paper-dialog id="dialog5" class="paper-date-picker-dialog">
-        <paper-date-picker id="picker" date="{{date}}"></paper-date-picker>
-        <div class="buttons">
-          <paper-button on-click="close5">Cancel</paper-button>
-          <paper-button on-click="FnDismissDialog5">OK</paper-button>
-        </div>
-      </paper-dialog>
-
-
-       <paper-dialog id="listcall" modal>
-            <div class="content">
-              <paper-dropdown-menu label="Select the call status">
-                <paper-listbox class="dropdown-content" on-iron-select="callstatusdrop">
-                  <paper-item>Didn’t pick up</paper-item>
-                  <paper-item>Switch off</paper-item>
-                  <paper-item>Wrong number</paper-item>
-                  <paper-item>Busy</paper-item>
-                  <paper-item>Not reachable</paper-item>
-                  <paper-item>Not available</paper-item>
-                </paper-listbox>
-              </paper-dropdown-menu>
-            </div>
-            <div class="buttons">
-          <paper-button on-click="close">Close</paper-button>
-        </div>
-      </paper-dialog>
-
-        <crm-service id="service"></crm-service>
+        <followup-service id="followupservice"></followup-service>
   </template>
   <script>
   (function() {
@@ -290,9 +152,36 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     Polymer({
       is: 'followup-student-detail',
       ready:function(){
+        this.subject=true;
+
           var dt=new Date();
           today=dt.getDate()+'/'+(dt.getMonth()+1)+'/'+dt.getFullYear();
       },
+      showmoredetails:function(){ 
+        document.getElementById('detailsdialog').open();
+      },
+      detailclose:function(){
+        document.getElementById('detailsdialog').close();
+      },
+      testdetails:function(enqno,admtest,Fnparent,Fnguardian){
+        if(admtest=='Yes'){
+          this.subject=false;
+            document.getElementById('testyes').checked=true;
+            this.$.followupservice.getsubjectinfo(enqno,this.enquiredon);
+            
+        }else{
+          document.getElementById('testyes').checked=false;
+          this.subject=true;
+        }
+        this.parentinfo=Fnparent;
+        this.guardianinfo=Fnguardian;
+        this.$.followupservice.getlistdetails(this.enqno,this.followupid,this.schedule);
+      },
+      Fnsetsubject:function(englsh,maths,evs){
+          document.getElementById('cbenglsh').checked=englsh;
+          document.getElementById('cbmaths').checked=maths;
+          document.getElementById('cbevs').checked=evs;
+      }
     
     });
   })();

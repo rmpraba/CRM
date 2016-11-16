@@ -168,18 +168,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         debounce-duration="300"
         >
   </iron-ajax>
-  <!-- this ajax gets the student list who all are enquired for admission and not yet been admitted -->
-  <iron-ajax
-        method="post"
-        id="getlistdetailsajax"
-        url="{{getlistdetailsurl}}"
-        params="{{getlistdetailsparam}}"
-        handle-as="json"
-        content-type="application/json"
-        on-response="getlistdetailsResponse"
-        debounce-duration="300"
-        >
-  </iron-ajax>
+
   <!-- this below ajax is used to get the sequence value of prospectus from the table -->
   <iron-ajax
         method="post"
@@ -1041,21 +1030,6 @@ document.querySelector('followup-service').GenerateFollowups(successbox);
       var result=e.detail.response.returnval;
       document.querySelector('enquiry-card').gradewiseadmissionarr=result;
      },
-     getlistdetails:function(classes){
-           this.getlistdetailsurl="http://localhost:8086/getlistdetails";
-        var obj={"schol":"","grade":"","status":""}
-        obj.schol=localStorage.getItem("schoolid");
-        obj.grade=classes;
-        obj.status="Enquired";
-        this.getlistdetailsparam=obj;
-       //alert(JSON.stringify(obj));
-        this.$.getlistdetailsajax.generateRequest();
-     },
-     getlistdetailsResponse:function(e){
-          var result=e.detail.response.returnval;
-          //alert(JSON.stringify(result));
-          document.querySelector('enquiry-details-card').listdetails=result;
-     },
      getprospectno:function(){
         this.getprospectnourl="http://localhost:8086/getprospectno";
         var obj={"schol":""}
@@ -1278,7 +1252,11 @@ document.querySelector('followup-service').GenerateFollowups(successbox);
       },
       walkinanasysisyaerandmonth:function(){
         for(var i = 0; i < walkinanalysisyear.length; i++){
-          var obj={"source":"", "year":"","month":"","day":""};
+          if(walkinanalysisday){
+            var obj={"source":"", "year":"","month":"","day":""};
+          }else {
+            var obj={"source":"", "year":"","month":"","day":0};
+          }
           for(var j = 0;j<=i;j++){
             if(walkinanalysisyear[i].enquiry_source == walkinanalysismonth[j].enquiry_source){
               obj.source=walkinanalysisyear[i].enquiry_source;
@@ -1299,22 +1277,26 @@ document.querySelector('followup-service').GenerateFollowups(successbox);
         this.walkinanalysis();
       },
       walkinanalysis:function(){
-        for(var i = 0; i <walkinanasysisyaerandmontharr.length; i++){
-          var obj = {"source":"","year":"","month":"",day:""};
-          for(var j = 0; j <walkinanalysisday.length; j++){
-            if(walkinanasysisyaerandmontharr[i].source == walkinanalysisday[j].enquiry_source){
-              if(walkinanalysisday[j].totalenq==null||walkinanalysisday[j].totalenq==""){
+        if(walkinanalysisday){
+          for(var i = 0; i <walkinanasysisyaerandmontharr.length; i++){
+            var obj = {"source":"","year":"","month":"",day:""};
+            for(var j = 0; j <walkinanalysisday.length; j++){
+              if(walkinanasysisyaerandmontharr[i].source == walkinanalysisday[j].enquiry_source){
+                if(walkinanalysisday[j].totalenq==null||walkinanalysisday[j].totalenq==""){
+                  walkinanasysisyaerandmontharr[i].day=0;
+                }else{
+                  walkinanasysisyaerandmontharr[i].day=walkinanalysisday[j].totalenq;
+                }
+              }
+              else{
                 walkinanasysisyaerandmontharr[i].day=0;
-              }else{
-                walkinanasysisyaerandmontharr[i].day=walkinanalysisday[j].totalenq;
               }
             }
-            else{
-              walkinanasysisyaerandmontharr[i].day=0;
-            }
           }
+          document.querySelector('walkin-analysis-card').walkinanasysisyaerandmontharr=walkinanasysisyaerandmontharr;
+        } else {
+          document.querySelector('walkin-analysis-card').walkinanasysisyaerandmontharr=walkinanasysisyaerandmontharr;
         }
-        document.querySelector('walkin-analysis-card').walkinanasysisyaerandmontharr=walkinanasysisyaerandmontharr;
       },
       getacademicyearreport:function(year){
         this.getacademicyearreporturl="http://localhost:8086/getacademicyearreport";
@@ -1327,19 +1309,25 @@ document.querySelector('followup-service').GenerateFollowups(successbox);
       getacademicyearreportResponse:function(e){
         var result  = e.detail.response.returnval;
         document.querySelector('walkin-analysis-filter-card').reportarr=result;
+        document.querySelector('walkin-analysis-filter-card').showReport();
       },
       getbetweendatereport:function(from_date,to_date){
         this.getbetweendatereporturl="http://localhost:8086/getbetweendatereport";
         var obj={"schol":"", "from_date":"","to_date":""};
         obj.schol=localStorage.getItem("schoolid");
-        obj.from_date=from_date;
-        obj.to_date=to_date;
+        var fromdate = new Date(from_date);
+        var month1 = fromdate.getMonth() + 1;
+        obj.from_date =  fromdate.getDate()+'/'+month1+'/' + fromdate.getFullYear();
+        var todate = new Date(to_date);
+        var month2 = todate.getMonth() + 1;
+        obj.to_date = todate.getDate() + '/' +month2+ '/' + todate.getFullYear();
         this.getbetweendatereportparam=obj;
         this.$.getbetweendatereportajax.generateRequest();
       },
       getbetweendatereportResponse:function(e){
         var result  = e.detail.response.returnval;
         document.querySelector('walkin-analysis-filter-card').reportarr=result;
+        document.querySelector('walkin-analysis-filter-card').showReport();
       }
     });
   })();

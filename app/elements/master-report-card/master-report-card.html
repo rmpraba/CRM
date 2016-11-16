@@ -17,33 +17,34 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: block;
       }
     </style>
-    <div><span>
-      <table>
-      <title>WALK-IN ANALYSIS</title>
-        <thead>
+    <table class="table table-hover">
+      <thead>
+        <tr>
           <th>Grade</th>
           <th>Total Walk-ins (2017-2018)</th>
           <th>Total Walk-ins Current month</th>
           <th>Walk In for the day</th>
           <th>No. of Prospectus</th>
           <th>No.of Admissions (2017-2018)</th>
-         
-        </thead>
-        <tbody>
-          <template  is="dom-repeat" items="{{summaryarr}}" as="view">
-            <tr>
-              <!-- <td>{{view.}}</td>
-              <td>{{view.}}</td>
-              <td>{{view.}}</td>
-              <td>{{view.}}</td>
-              <td>{{view.}}</td>
-              <td>{{view.}}</td> -->
-            </tr>
-          </template>
-        </tbody>
-      </table>
-    </span></div>
-        <reporting-service id="reportservice"></reporting-service>
+          <th>Withdrawals</th>
+          <th>Capacity</th>
+          <th>New Admissions Required</th>
+        </tr>
+      </thead>
+      <tbody>
+        <template  is="dom-repeat" items="{{reportarr}}" as="view">
+          <tr>
+            <td style="width:10%;">{{view.grade}}</td>
+            <td>{{view.year}}</td>
+            <td>{{view.month}}</td>
+            <td>{{view.day}}</td>
+            <td>{{view.prospectus}}</td>
+            <td>{{view.admissions}}</td>
+          </tr>
+        </template>
+      </tbody>
+    </table>
+    <reporting-service id="reportservice"></reporting-service>
   </template>
   <script>
   (function() {
@@ -53,7 +54,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'master-report-card',
 
       Fncall:function(){
-        //alert('asdkhfj');
           this.$.reportservice.masterReportService();
       }
     });

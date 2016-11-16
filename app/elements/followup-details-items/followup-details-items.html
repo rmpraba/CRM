@@ -40,7 +40,7 @@
 
      </div>
   </div>
-    <crm-service id="service"></crm-service>
+    <followup-service id="followupservice"></followup-service>
     </template>
   <script>
   (function() {
@@ -51,7 +51,7 @@
 
       viewdetail:function(){
         //alert(this.status+   +this.followupid);
-        this.$.service.viewdetail(this.id,this.status,this.followupid);
+        this.$.followupservice.viewdetail(this.id,this.status,this.followupid);
       }
     });
   })();
