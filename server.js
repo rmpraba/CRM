@@ -1151,9 +1151,7 @@ app.post('/getstudentname',  urlencodedParser,function (req, res)
 });
   });
 
-
 /*this func is to update the sequence number only when the enquiry form is submitted*/
-
 app.post('/updateenquirynum',  urlencodedParser,function (req, res)
 {
 
@@ -3434,6 +3432,29 @@ app.post('/fetchoverallcollectionreport-service',  urlencodedParser,function (re
            res.status(200).json({'returnval':null});
          }
        }else{
+         console.log(err);
+       }
+     });
+ });
+
+ app.post('/getcapacity',  urlencodedParser,function (req, res){
+   connection.query("SELECT * FROM `tr_current_capacity` WHERE `school_id` =  '"+req.query.schoolid+"' AND academic_year='"+req.query.academicyr+"'",
+     function(err, rows)
+     {
+       if(!err)
+       {
+         if(rows.length>0)
+         {
+           //console.log(rows);
+           res.status(200).json({'returnval': rows});
+         }
+         else
+         {
+           console.log(err);
+           res.status(200).json({'returnval':null});
+         }
+       }
+       else{
          console.log(err);
        }
      });
