@@ -101,7 +101,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.getcurrmonthcounturl="http://localhost:8086/getcurrmonthcount";
         var obj={"schoolid":"","currmonth":""};
         obj.schoolid=localStorage.getItem("schoolid");
-        obj.currmonth='%/'+(dat.getMonth()+1)+'/'+dat.getFullYear();
+        obj.currmonth=(dat.getMonth()+1)+'/'+'%/'+dat.getFullYear();
         this.getcurrmonthcountparam=obj;
         //alert(JSON.stringify(obj));
         this.$.getcurrmonthcountajax.generateRequest();
@@ -111,7 +111,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.getcurrdaycounturl="http://localhost:8086/getcurrdaycount";
         var obj={"schoolid":"","todate":""};
         obj.schoolid=localStorage.getItem("schoolid");
-        obj.todate=dat.getDate()+'/'+(dat.getMonth()+1)+'/'+dat.getFullYear();
+        obj.todate=(dat.getMonth()+1)+'/'+dat.getDate()+'/'+dat.getFullYear();
         this.getcurrdaycountparam=obj;
         //alert(JSON.stringify(obj));
         this.$.getcurrdaycountajax.generateRequest();
@@ -122,26 +122,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       reportforyearandmonth:function(){
         for(var i = 0; i < academicarr.length; i++){
+          var f=0;
           if(currdayarr){
             var obj={"grade":"", "year":"","month":"","day":"","prospectus":""};
           }else {
             var obj={"grade":"", "year":"","month":"","day":0,"prospectus":""};
           }
           for(var j = 0;j<currmontharr.length;j++){
-            if(academicarr[i].classes != currmontharr[j].classes){
-              obj.grade = academicarr[i].classes;
-              obj.year = academicarr[i].total;
-              obj.month = 0;
-              obj.prospectus = academicarr[i].prospectus;
-            }
             if(academicarr[i].classes == currmontharr[j].classes){
+              f=1;
               obj.grade = currmontharr[j].classes;
               obj.year = academicarr[i].total;
               obj.month = currmontharr[j].total;
               obj.prospectus = academicarr[i].prospectus;
             }
-            reportyearmonth.push(obj);
           }
+          if(f==0){
+            obj.grade = academicarr[i].classes;
+            obj.year = academicarr[i].total;
+            obj.month = 0;
+            obj.prospectus = academicarr[i].prospectus;
+          }
+          reportyearmonth.push(obj);
+          alert(JSON.stringify(reportyearmonth));
         }
         this.reportforday();
       },
@@ -192,17 +195,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           for(var i=0; i<capacityarr.length;i++){
             var f=0;
             var obj = {"grade":"","year":"","month":"","day":"","prospectus":"","max_capacity":"","current_capacity":""};
-            for(var j=0; j<reportfordays; j++){
+            for(var j=0; j<reportfordays.length; j++){
               if(capacityarr[i].grade == reportfordays[j].grade){
                 f=1;
                 obj.grade=capacityarr[i].grade;
                 obj.year=reportfordays[j].year;
                 obj.month=reportfordays[j].month;
-                obj.day= reportfordays[j].days;
+                obj.day= reportfordays[j].day;
                 obj.prospectus = reportfordays[j].prospectus;
                 obj.max_capacity=capacityarr[i].max_capacity;
                 obj.current_capacity=capacityarr[i].current_capacity;
-                reportwithcapacity.push(obj);
               }
             }  
               if(f==0){
@@ -213,8 +215,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 obj.prospectus=0;
                 obj.max_capacity=capacityarr[i].max_capacity;
                 obj.current_capacity=capacityarr[i].current_capacity;
-                reportwithcapacity.push(obj);
               }
+              reportwithcapacity.push(obj);
           }
         } else {
           var arr=[];
@@ -231,7 +233,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 obj.prospectus = reportyearmonth[j].prospectus;
                 obj.max_capacity=capacityarr[i].max_capacity;
                 obj.current_capacity=capacityarr[i].current_capacity;
-                reportwithcapacity.push(obj);
               }
             }
             if(f==0){
@@ -242,8 +243,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               obj.prospectus=0;
               obj.max_capacity=capacityarr[i].max_capacity;
               obj.current_capacity=capacityarr[i].current_capacity;
-              reportwithcapacity.push(obj);
             }
+            reportwithcapacity.push(obj);
           }
         }
         document.querySelector('master-report-card').reportarr=reportwithcapacity;

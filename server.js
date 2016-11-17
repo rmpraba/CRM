@@ -3078,8 +3078,8 @@ app.post('/updatetestdetails', urlencodedParser,function (req, res){
 
 /*this function is used to get the data count of the enquiry came up by that current month*/
  app.post('/getcurrmonthcount',  urlencodedParser,function (req, res){
-  var querryyy="SELECT class as classes, COUNT( * ) AS total FROM  student_enquiry_details WHERE `school_id` =  '"+req.query.schoolid+"' AND created_on like '"+req.query.currmonth+"' GROUP BY class ORDER BY (`class`)";
-  //console.log(querryyy);
+  var querryyy="SELECT STR_TO_DATE(created_on,'%m/%d/%Y') as date, class as classes, COUNT( * ) AS total FROM  student_enquiry_details WHERE `school_id` =  '"+req.query.schoolid+"' AND created_on like '"+req.query.currmonth+"' GROUP BY class ORDER BY (`class`)";
+  console.log(querryyy);
    connection.query(querryyy,
      function(err, rows)
      {
@@ -3087,7 +3087,7 @@ app.post('/updatetestdetails', urlencodedParser,function (req, res){
        {
          if(rows.length>0)
          {
-           //console.log(rows);
+           console.log(rows);
            res.status(200).json({'returnval': rows});
          }
          else
