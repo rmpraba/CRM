@@ -68,6 +68,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         content-type="application/json"
         on-response="getcapacityResponse"
         debounce-duration="300"
+        ></iron-ajax>         
+        <iron-ajax
+        method="post"
+        id="getadmissioncountajax"
+        url="{{getadmissioncounturl}}"
+        params="{{getadmissioncountparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getadmissioncountResponse"
+        debounce-duration="300"
         ></iron-ajax>
   </template>
   <script>
@@ -80,6 +90,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       var reportyearmonth=[];
       var reportfordays=[];
       var reportwithcapacity=[];
+      var report=[];
       var dat=new Date();
     Polymer({
       is: 'reporting-service',
@@ -144,7 +155,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             obj.prospectus = academicarr[i].prospectus;
           }
           reportyearmonth.push(obj);
-          alert(JSON.stringify(reportyearmonth));
         }
         this.reportforday();
       },
@@ -247,8 +257,54 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             reportwithcapacity.push(obj);
           }
         }
-        document.querySelector('master-report-card').reportarr=reportwithcapacity;
-      }
+        this.getadmissioncount();
+      },
+      getadmissioncount:function(){
+        if((dat.getMonth()+1)>=7){
+          academic_year='AY-'+(dat.getFullYear()+1)+'-'+(dat.getFullYear()+2);
+        } else if((dat.getMonth()+1)<=6){
+          academic_year='AY-'+(dat.getFullYear())+'-'+(dat.getFullYear()+1);
+        }
+        this.getadmissioncounturl="http://localhost:8086/gettotaladmissioncount";
+        var obj={"schoolid":"","academic_year":""};
+        obj.schoolid=localStorage.getItem("schoolid");
+        obj.academicyr=academic_year;
+        this.getadmissioncountparam=obj;
+        //alert(JSON.stringify(obj));
+        this.$.getadmissioncountajax.generateRequest();
+      },
+      getadmissioncountResponse:function(e){
+        var admissioncountarr=e.detail.response.returnval;
+        for(var i=0; i<reportwithcapacity.length;i++){
+          var f=0;
+          var obj = {"grade":"","year":"","month":"","day":"","prospectus":"","max_capacity":"","current_capacity":"","admission":""};
+          for(var j=0; j<admissioncountarr.length; j++){
+            if(reportwithcapacity[i].grade == admissioncountarr[j].classes){
+              f=1;
+              obj.grade=reportwithcapacity[i].grade;
+              obj.year=reportwithcapacity[i].year;
+              obj.month=reportwithcapacity[i].month;
+              obj.day= reportwithcapacity[i].day;
+              obj.prospectus = reportwithcapacity[i].prospectus;
+              obj.max_capacity=reportwithcapacity[i].max_capacity;
+              obj.current_capacity=reportwithcapacity[i].current_capacity;
+              obj.admission=admissioncountarr[j].status;
+            }
+          }
+          if(f==0){
+            obj.grade=reportwithcapacity[i].grade;
+            obj.year=reportwithcapacity[i].year;
+            obj.month=reportwithcapacity[i].month;
+            obj.day=reportwithcapacity[i].day;
+            obj.prospectus=reportwithcapacity[i].prospectus;
+            obj.max_capacity=reportwithcapacity[i].max_capacity;
+            obj.current_capacity=reportwithcapacity[i].current_capacity;
+            obj.admission=0;
+          }
+          report.push(obj);
+        }
+        document.querySelector('master-report-card').reportarr=report;
+      }      
     });
   })();
   </script>
