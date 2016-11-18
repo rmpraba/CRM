@@ -939,7 +939,6 @@ insertstudenthistoryResponse:function(e){
             localStorage.setItem("curr_sess_feecode",arr[0].fee_code); 
             localStorage.setItem("curr_sess_totalfees",arr[0].fees); 
             document.querySelector('fees-card').totalfees=arr[0].fees;
-            
             // this.fetchfeesplitup();
         }           
       },
@@ -1124,7 +1123,7 @@ insertstudenthistoryResponse:function(e){
          obj.mathsmark=mathsmark;
          obj.evsmark=evsmark;
          var d=new Date();
-         obj.evaluatedon=(d.getMonth()+1)+"/"+d.getDate()+"/"+d.getFullYear();;
+         obj.evaluatedon=(d.getMonth()+1)+"/"+d.getDate()+"/"+d.getFullYear();
          obj.evaluatedby=localStorage.getItem("employeeid");          
          this.updateteststatusparam=obj;
          this.$.updateteststatusajax.generateRequest(); 

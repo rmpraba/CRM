@@ -303,26 +303,19 @@
           </li> -->
 
            <li id="payment">
-            <a href="#" aria-hidden="true" data-toggle="modal" data-target="#feepayment" on-click="FnFeePayment"><i class="fa fa-money fa-fw"></i> Fee Payment<span class="fa arrow"></span></a>
-            <!--<ul class="nav nav-second-level">
+            <a href="#" aria-hidden="true" data-toggle="modal" on-click="FnFeePayment"><i class="fa fa-money fa-fw"></i> Fee Payment<span class="fa arrow"></span></a>
+            <ul class="nav nav-second-level">
               <li>
               <a href="" aria-hidden="true" data-toggle="modal" data-target="#prospectousfee" on-click="FnProspect">Application fee</a>
-                <!-- <a href="flot.html"></a> -->
-              <!--</li>
+              </li>
               <li>
                 <a href="" aria-hidden="true" data-toggle="modal" data-target="#registerationfee" on-click="FnRegister">Registration fee</a>
               </li>
               <li>
-                <a href="" aria-hidden="true" data-toggle="modal" data-target="#kitfee" on-click="FnKit">Kit fee</a>
-              </li>
-              <li>
-                <a href="" aria-hidden="true" data-toggle="modal" data-target="#annualfee" on-click="FnAnnual">Annual fee</a>
-              </li>
-              <li>
-                <a href="" aria-hidden="true" data-toggle="modal" data-target="#miscellaneousfee" on-click="FnMiscellaneous">Miscellaneous fee</a>
-              </li>
+                <a href="" aria-hidden="true" data-toggle="modal" data-target="#feepayment"  on-click="FnKit">Term fee</a>
+              </li>             
             </ul>
-            <!-- /.nav-second-level -->
+            </nav-second-level>
           </li>
 
            <li id="admission">
@@ -339,7 +332,7 @@
               </li>
               <!-- <li>
                 <a href="" aria-hidden="true" data-toggle="modal" data-target="#installmentschedule" on-click="FnInstallmentschedule">Installment Schedule</a>
-              </li> -->
+              </li>
             </ul>
           </li>
 
@@ -513,7 +506,7 @@
               <span aria-hidden="true">&times;</span>
             </button>
             <h4 class="center-block event-title" id="">
-              Fee Payment
+              Term Fee 
             </h4>
           </div>
           <div class="modal-body">
@@ -523,6 +516,41 @@
       </div>
     </div>
 
+    <div class="modal fade bd-example-modal-lg" id="registerationfee" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="center-block event-title" id="">
+             Registeration Fee
+            </h4>
+          </div>
+          <div class="modal-body">
+            <registerationfee-card></registerationfee-card>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade bd-example-modal-lg" id="prospectousfee" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="center-block event-title" id="">
+             Application Fee
+            </h4>
+          </div>
+          <div class="modal-body">
+            <prospectousfee-card></prospectousfee-card>
+          </div>
+        </div>
+      </div>
+    </div>
 
    <!--  <div class="modal fade bd-example-modal-lg" id="registerationfee" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg">
@@ -735,8 +763,17 @@
       },
       FnProspect:function(e){
       // alert(e.target.text);
-        localStorage.setItem("curr_sess_feetype",e.target.text);
-        this.FnRefresh();
+        localStorage.setItem("curr_sess_feetypepayment","Application fee");
+        document.querySelector('prospectousfee-card').FnRefresh();
+        document.querySelector('prospectousfee-card').ready();
+        // this.FnRefresh();
+      },
+      FnRegister:function(e){
+      // alert(e.target.text);
+        localStorage.setItem("curr_sess_feetypepayment","Registration fee");
+        document.querySelector('registerationfee-card').FnRefresh();
+        document.querySelector('registerationfee-card').ready();
+        // this.FnRefresh();
       },
       FnDiscountschedule:function(e){
         document.querySelector('discount-master-card').FnRefresh();

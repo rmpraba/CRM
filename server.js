@@ -1431,7 +1431,7 @@ app.post('/fetchenquiryinfo',  urlencodedParser,function (req, res){
 
 // Fetching admission paid info
 app.post('/fetchexistingadmissionpaidinfo',  urlencodedParser,function (req, res){
-    var qur="SELECT * FROM md_student_paidfee WHERE school_id='"+req.query.schoolid+"' and (admission_no = '"+req.query.admissionno+"' or enquiry_no='"+req.query.admissionno+"')";
+    var qur="SELECT * FROM md_student_paidfee WHERE school_id='"+req.query.schoolid+"' and (admission_no = '"+req.query.admissionno+"' or enquiry_no='"+req.query.admissionno+"') and installment not in ('Registration fee','Application fee')";
     console.log(qur);
     connection.query(qur,
     function(err, rows)
@@ -1968,6 +1968,57 @@ app.post('/searchfeeenquiry',  urlencodedParser,function (req, res){
 });
 
 
+// Fetching enquiry no for admission
+app.post('/searchprospectenquiry',  urlencodedParser,function (req, res){
+    var qur="SELECT * FROM student_enquiry_details WHERE school_id='"+req.query.schoolid+"' and enquiry_no like '%"+req.query.enquiryno+"%' or first_name like '%"+req.query.firstname+"%' and prospectus_sold='yes' and status in('Enquired','Admitted')";
+    console.log(qur);
+    connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': ''});
+    }
+  }
+  else{
+     console.log(err);
+  }
+});
+});
+
+
+// Fetching enquiry no for admission
+app.post('/searchprospectenquiryinfo',  urlencodedParser,function (req, res){
+    var qur="SELECT * FROM student_enquiry_details WHERE school_id='"+req.query.schoolid+"' and enquiry_no = '"+req.query.enquiryno+"'";
+    console.log(qur);
+    connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': ''});
+    }
+  }
+  else{
+     console.log(err);
+  }
+});
+});
+
 
 // Fetching enquiry no for admission
 app.post('/searchadmnenquiry',  urlencodedParser,function (req, res){
@@ -2099,6 +2150,88 @@ app.post('/fetchfeesplitup',  urlencodedParser,function (req, res){
   }
 });
 });
+
+
+// Fetching registeration fees info for admission
+app.post('/fetchregfeesinfo-service',  urlencodedParser,function (req, res){
+
+    var qur="SELECT * FROM fee_splitup WHERE fee_code='"+req.query.feecode+"' and school_id='"+req.query.schoolid+"' and fee_type='Registration fee'";
+    console.log(qur);
+    connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': ''});
+    }
+  }
+  else{
+     console.log(err);
+  }
+});
+});
+
+
+// Fetching registeration fees info for admission
+app.post('/fetchregfeediscount-service',  urlencodedParser,function (req, res){
+
+    var qur="SELECT * FROM md_discount_master WHERE school_id='"+req.query.schoolid+"' and admission_year = '"+req.query.admissionyear+"' and academic_year='"+req.query.academicyear+"' and grade='"+req.query.grade+"' and discount_type_code='"+req.query.discounttype+"' and admission_type='"+req.query.admissiontype+"' and fee_type='Registration fee'";
+    console.log(qur);
+    connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': ''});
+    }
+  }
+  else{
+     console.log(err);
+  }
+});
+});
+
+
+// Fetching admission paid info
+app.post('/fetchexistingadmissionregpaidinfo',  urlencodedParser,function (req, res){
+    var qur="SELECT * FROM md_student_paidfee WHERE school_id='"+req.query.schoolid+"' and (admission_no = '"+req.query.admissionno+"' or enquiry_no='"+req.query.admissionno+"') and installment='"+req.query.feetype+"'";
+    console.log(qur);
+    connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'no rows'});
+    }
+  }
+  else{
+     console.log(err);
+  }
+});
+});
+
+
 
 
 // Fetching fees splitup
