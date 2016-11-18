@@ -2509,7 +2509,7 @@ app.post('/updatefollow',  urlencodedParser,function (req, res) {
 /*this below function is used to insert data in the follow up detail table */
 app.post('/updatefollowdetail',  urlencodedParser,function (req, res)
 {
-   var collection={"school_id":req.query.schol,"schedule_id":req.query.id,"enquiry_id":req.query.enquiryid,"followup_no":req.query.followupno,"schedule_date":req.query.followupdate,"next_followup_date":req.query.nextfolowup,"schedule":req.query.schedule,"followup_status":req.query.flag,"created_by":req.query.createdby,"created_on":req.query.createdon};
+   var collection={"school_id":req.query.schol,"schedule_id":req.query.id,"followup_no":req.query.followupno,"schedule_date":req.query.followupdate,"next_followup_date":req.query.nextfolowup,"schedule":req.query.schedule,"followup_status":req.query.flag,"created_by":req.query.createdby,"created_on":req.query.createdon};
        connection.query('insert into followupdetail set ? ',[collection],
         function(err, rows)
         {
@@ -2646,15 +2646,15 @@ app.post('/getfollowupcount',  urlencodedParser,function (req, res){
  {
    var school={"school_id":req.query.schol};
    var id={"enquiry_no":req.query.id};
-   var qur = "select f.enquiry_id,f.id,f.schedule_flag,f.last_schedule_date,f.schedule_Status,d.enquiry_no,d.enquiry_name,d.class,d.created_on,d.father_name,d.father_mob,d.gmob,d.guardianname,d.admission_test from followup as f Join student_enquiry_details d on d.enquiry_no=f.enquiry_id where f.id='"+req.query.fid+"' and f.enquiry_id='"+req.query.id+"' and f.school_id='"+req.query.schol+"' and f.schedule_status='"+req.query.fstatus+"'";
-//console.log(qur);
+   var qur = "select f.enquiry_id,f.id,f.schedule_no,f.last_schedule_date,f.schedule_Status,d.enquiry_no,d.enquiry_name,d.class,d.created_on,d.father_name,d.father_mob,d.gmob,d.guardianname,d.admission_test from followup as f Join student_enquiry_details d on d.enquiry_no=f.enquiry_id where f.id='"+req.query.fid+"' and f.enquiry_id='"+req.query.id+"' and f.school_id='"+req.query.schol+"' and f.schedule_status='"+req.query.fstatus+"'";
+console.log(qur);
 
    connection.query(qur,
      function(err, rows)
      {
        if(!err)
        {
-         //console.log(rows);
+         console.log(rows);
          res.status(200).json({'returnval': rows});
        }
        else
@@ -3203,7 +3203,7 @@ app.post('/masterfollowupinfo',  urlencodedParser,function (req, res){
 
 var qur="SELECT * from admission_test_details where school_id = '"+req.query.schol+"' and enquiry_id= '"+req.query.id+"' and updated_on='"+req.query.enqdate+"'";
 
-   console.log(qur);
+  // console.log(qur);
    connection.query(qur,
      function(err, rows)
      {
@@ -3231,7 +3231,7 @@ app.post('/getlistdetails',  urlencodedParser,function (req, res){
     var school={"school_id":req.query.schol};
     var flwpid={"schedule_id":req.query.fid};
     var scheduleno={"schedule":req.query.flag};
-    //console.log('qur');schol
+    console.log('qur');
 
     connection.query('SELECT * FROM followupdetail WHERE ? and ? and ?',[school,flwpid,scheduleno],
     function(err, rows)
@@ -3352,11 +3352,9 @@ app.post('/getlistdetails',  urlencodedParser,function (req, res){
 
   var school={"school_id":req.query.schol};
   var followupid={"id":req.query.fid};
-  var followupid2={"schedule_id":req.query.fid};
-  var enquiryno={"enquiry_id":req.query.enquiry};
-  var confidence={"current_confidence_level":req.query.confidencelvl,"schedule_status":req.query.status};
+  var confidence={"current_confidence_level":req.query.confidencelvl,"schedule_status":req.query.fnstatus,"schedule_flag":req.query.fnfollowupno,"upcoming_date":req.query.fnupcoming};
   
-       connection.query('update followup set ? where ? and ? and ?',[confidence,school,followupid,enquiryno],
+       connection.query('update followup set ? where ? and ?',[confidence,school,followupid],
         function(err, rows)
         {
     if(!err)
@@ -3364,34 +3362,7 @@ app.post('/getlistdetails',  urlencodedParser,function (req, res){
       console.log('updated1');
           res.status(200).json({'returnval': 'success'});
 
-          connection.query('SELECT max(followup_no) as max FROM followupdetail WHERE ? and ?',[school,followupid2],
-        function(err, rows)
-        {
-              if(!err)
-              {
-                console.log('updated2');
-                var temp=((rows[0].max)+1);
-                    connection.query('update followup set ? where ? and ? and ?',[temp,school,followupid,enquiryno],
-                    function(err, rows)
-                    {
-                          if(!err)
-                          {
-                            console.log('updated3');
-                                
-                          }
-                          else
-                          {
-                            console.log(err);
-                            res.status(200).json({'returnval': 'invalid'});
-                          }
-                    });
-              }
-              else
-              {
-                console.log(err);
-                res.status(200).json({'returnval': 'invalid'});
-              }
-        });
+
     }
     else
     {
@@ -3424,6 +3395,49 @@ app.post('/fetchfeecollectionreport-service',  urlencodedParser,function (req, r
 app.post('/fetchoverallcollectionreport-service',  urlencodedParser,function (req, res){
    var qur = "SELECT installment,sum(installment_amount) FROM mlzscrm.md_student_paidfee where paid_date>='"+req.query.fromdate+"' "+
              "and paid_date<='"+req.query.todate+"' and school_id='"+req.query.schoolid+"' group by installment,mode_of_payment";
+   connection.query(qur,
+     function(err, rows){
+       if(!err){
+         if(rows.length>0){
+           res.status(200).json({'returnval': rows});
+         }else{
+           console.log(err);
+           res.status(200).json({'returnval':null});
+         }
+       }else{
+         console.log(err);
+       }
+     });
+ });
+
+/*this below function is used to update the current schdule status of of the followup in followup table*/
+app.post('/updateschedulestatus',  urlencodedParser,function (req, res)
+{
+  var school={"school_id":req.query.schol};
+  var followupid={"id":req.query.fid};
+  var collection={"reschedule_by":req.query.user,"rescheduled_on":req.query.today,"schedule_status":"Exhausted"};
+  console.log(collection+'  '+followupid);
+       connection.query('update followup set ? where ? and ?',[collection,school,followupid],
+        function(err, rows)
+        {
+    if(!err)
+    {
+      console.log('updated1');
+          res.status(200).json({'returnval': 'success'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+
+});
+  });
+
+/*this fucntion fetches the all corresponding detail of the current followup*/
+app.post('/fetchfollowupmaster',  urlencodedParser,function (req, res){
+   var qur = "SELECT * FROM mlzscrm.followup where school_id='"+req.query.schol+"' and id='"+req.query.fid+"' and enquiry_id='"+req.query.enquiry+"'";
+   console.log(qur);
    connection.query(qur,
      function(err, rows){
        if(!err){

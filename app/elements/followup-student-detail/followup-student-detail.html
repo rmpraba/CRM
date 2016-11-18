@@ -54,8 +54,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             
       </table>
           <template is="dom-repeat" items="{{followupdetailarr}}" as="view" class="list-group col-sm-12 panel-body form-category">
-          <checkbox-card status={{view.followup_status}}></checkbox-card>
+        <!--   <div class="list-group col-sm-2">
+          <checkbox-card id={{view.followup_no}} status={{view.followup_status}}></checkbox-card>
+          </div>
+          <div class="list-group col-sm-10"> -->
             <followup-listitem-card scheduledate="{{view.schedule_date}}" nextdate="{{view.next_followup_date}}" comments="{{view.followup_comments}}" callstatus="{{view.followup_status}}" confidencelvl="{{view.confidence_level}}" followupno="{{view.followup_no}}" fid="{{view.schedule_id}}" enquiryid="{{view.enquiry_id}}"></followup-listitem-card>
+            <!-- </div> -->
       </template>
     </div>
 </div>
