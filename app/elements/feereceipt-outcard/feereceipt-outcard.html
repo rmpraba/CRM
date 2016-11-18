@@ -16,6 +16,10 @@
         background-color: black;
         color: white;
       }
+      #btn{
+        margin-top: 2%;
+        margin-left: 25%;
+      }
     </style>
     <!-- <div class="outcard"> -->
       <div class="home">
@@ -34,10 +38,10 @@
       <template  is="dom-repeat" items="{{paymentreceiptarr}}" as="pay">
         <feereceipt-card receipttype="{{pay.receipttype}}" enquiryno="{{pay.enquiryno}}" studentname="{{pay.studentname}}" grade="{{pay.grade}}" feetype="{{pay.feetype}}" installment="{{pay.installment}}" installmentdate="{{pay.installmentdate}}" installmentamount="{{pay.installmentamount}}" waiveoffamount="{{pay.waiveoffamount}}" modeofpayment="{{pay.modeofpayment}}" receiveddate="{{pay.receiveddate}}" chequeno="{{pay.chequeno}}" bankname="{{pay.bankname}}" chequedate="{{pay.chequedate}}" ackno="{{pay.ackno}}" receiptno="{{pay.receiptno}}" referenceno="{{pay.referenceno}}" hidereceipt="{{pay.hidereceipt}}" hideack="{{pay.hideack}}" chequeview="{{pay.chequeview}}" transferview="{{pay.transferview}}" paiddate="{{pay.paiddate}}" totalfees="{{pay.totalfees}}" paymentarr="{{pay.paymentarr}}" hidecashparticular="{{pay.hidecashparticular}}" hidechequeparticular="{{pay.hidechequeparticular}}" hidetransferparticular="{{pay.hidetransferparticular}}"></feereceipt-card>
       </template>
-      <div class="row-buttons">
-      <paper-button id="pdf"   style="height: 34px  !important;" on-click="downloadpdf">PDF</paper-button>
-      <paper-button id="email" style="height: 34px  !important;" on-click="email">Email</paper-button>
-      <paper-button id="print" style="height: 34px  !important;" on-click="print">Print</paper-button>
+      <div class="row-buttons" id="btn">
+      <paper-button id="pdf"   style="height: 34px  !important;" on-click="downloadpdf" class="btn btn-primary center">PDF</paper-button>
+      <paper-button id="email" style="height: 34px  !important;" on-click="email" class="btn btn-primary center">Email</paper-button>
+      <paper-button id="print" style="height: 34px  !important;" on-click="print" class="btn btn-primary center">Print</paper-button>
       </div>
       <!-- </div> -->
     <!-- </div> -->

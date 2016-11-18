@@ -52,23 +52,10 @@
             </paper-menu>
             </paper-dropdown-menu>
           </div>
-          <div class="col-sm-3 enquiry-input">
+          <div class="col-sm-4 enquiry-input">
             <paper-input label="Total Fee" value="{{totalfees}}"></paper-input>
           </div>   
-          <div class="col-sm-3 enquiry-input">
-            <paper-dropdown-menu label="No of installment" attr-for-selected="value">
-            <paper-menu id="feetypeinstallment" class="dropdown-content" required on-iron-select="FnSelectFeeTypeInstallment" valueattr="value" >
-              <!-- <template  is="dom-repeat" items="{{feetypeinstallmentarr}}" as="item"> -->
-              <paper-item>1</paper-item>
-              <paper-item>2</paper-item>
-              <paper-item>3</paper-item>
-              <paper-item>4</paper-item>
-              <paper-item>5</paper-item>
-              <paper-item>6</paper-item>
-              <!-- </template> -->
-            </paper-menu>
-            </paper-dropdown-menu>
-          </div>       
+               
         </div>
 
         <div class="col-md-12 form-button">
@@ -117,7 +104,7 @@
         document.querySelector('#scheduleacademicyear').selected=-1;
         document.querySelector('#scheduleadmissionyear').selected=-1;
         document.querySelector('#schedulefeetype').selected=-1;
-        document.querySelector('#feetypeinstallment').selected=-1;
+        // document.querySelector('#feetypeinstallment').selected=-1;
       },
       FnSubmit:function(){
         // alert(this.schoolname+" "+grade+" "+academicyear+" "+admissionyear+" "+feetype+" "+this.totalfees);
@@ -134,7 +121,7 @@
         document.querySelector('#scheduleacademicyear').selected=-1;
         document.querySelector('#scheduleadmissionyear').selected=-1;
         document.querySelector('#schedulefeetype').selected=-1;
-        document.querySelector('#feetypeinstallment').selected=-1;
+        // document.querySelector('#feetypeinstallment').selected=-1;
       }
 
     });

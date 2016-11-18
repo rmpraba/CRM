@@ -16,6 +16,9 @@
   .inshead{
     @apply(--layout-horizontal);
   }
+  #paybtn{
+    margin-top: 3%;
+  }
     
 </style>
   <template>
@@ -36,34 +39,9 @@
             </paper-listbox>
           </paper-dropdown-menu>
           </div> 
-          <!-- <div style="margin-top: 2%;margin-left: -5%;" class="col-sm-2 enquiry-input" hidden$="{{hideenqenrno}}">
-          <paper-input label="{{enqenrlabel}}" id="enqenrno" readonly value="{{enqenrno}}"></paper-input>
-          </div>    -->      
+  
      </div>
-     <!-- <div class="list-group col-sm-12 panel-body form-category">
-        <div class="col-sm-3"> 
-        Pay All or Specifc Fee
-        </div>
-        <div class="col-sm-4 "> 
-        <span><paper-checkbox class="col-sm-3" id="payallfee" class="checkbox" on-change="FnPayAll">All</paper-checkbox></span>
-        <span><paper-checkbox class="col-sm-3" id="payspecificfee" class="checkbox" on-change="FnPaySpecific">Specific</paper-checkbox></span>
-        </div>
-        <div class="col-sm-5" hidden$="{{hidespecifictype}}">            
-            <span class="input-group-btn">
-              <paper-dropdown-menu label="Select Fee Type" on-iron-select="FnSelectFeeType">
-                <paper-listbox id="feetype" class="dropdown-content">
-                  <template  is="dom-repeat" items="{{enquiryarr}}" as="item">
-                  <paper-item>Application fee</paper-item> 
-                  <paper-item>Registration fee</paper-item> 
-                  <paper-item>Kit fee</paper-item> 
-                  <paper-item>Annual fee</paper-item> 
-                  <paper-item>Miscellaneous fee</paper-item> 
-                  </template>                 
-                </paper-listbox>
-              </paper-dropdown-menu>
-            </span>
-        </div>
-     </div> -->
+
      <div class="list-group col-sm-12 panel-body form-category">
       <div class="col-sm-5 enquiry-input" hidden>
           <paper-input label="Ac Year" value="{{acyear}}"></paper-input>
@@ -109,18 +87,19 @@
        
             <!-- <div><paper-checkbox id="waiveoff" class="checkbox" on-change="waiveoffHandler">Waiveoff</paper-checkbox></div> -->
             <div class="inshead" hidden$="{{hiddeninstallment}}">                        
-                    <div style="width: 20%;margin-left: 4%;">Installment</div>
-                    <div style="width: 12%;margin-left:14%;">Amount</div>                    
-                    <div style="margin-left:10%; width: 30%;">Mode of Payment</div>
-                    <div style="width: 30%;margin-left:0%;position: absolute; left: 80%;" hidden$="{{receiptdate}}">Receipt Date</div>                 
+                    <div style="width: 18%;margin-left: 4%;">Installment</div>
+                    <div style="width: 10%;margin-left:10%;">Amount</div>                    
+                    <div style="margin-left:8%; width: 20%;">Mode of Payment</div>
+                    <div style="margin-left:5%; width: 10%;" hidden$="{{hiddentitleflag}}">Cheque No</div>
+                    <div style="width: 10%;margin-left:5%;" hidden$="{{hiddentitleflag}}">Paid Date</div>                 
             </div>
             <div style="margin-left:12%;" hidden$="{{hiddeninstallment}}"> 
               <template  is="dom-repeat" items="{{feearr}}" as="view">
-                <installment-card installment="{{view.installment_type}}" amount="{{view.payable_amount}}" installmentdate="{{view.installment_date}}"></installment-card>
+                <installment-card  hiddenpayflag="{{view.hiddenpayflag}}" modeofpayment="{{view.modeofpayment}}" paidflag="{{view.paidflag}}" readonlyflag="{{view.readonlyflag}}" hiddenflag="{{view.hiddenflag}}" installment="{{view.installment}}" installmenttype="{{view.installment_type}}" amount="{{view.payable_amount}}" installmentdate="{{view.installment_date}}" chequeno="{{view.chequeno}}" paiddate="{{view.paiddate}}"></installment-card>
               </template>
             </div>
             <div >
-              <paper-button  id="" on-click="FnPayfee"  style="width: 10%;margin-left:0%;position: absolute; left: 45%;margin-top: 1%;" hidden$="{{hiddenaddbtn}}" data-dismiss="modal">PAY</paper-button>
+              <paper-button  id="paybtn" on-click="FnPayfee"  style="width: 10%;margin-left:0%;position: absolute; left: 45%;margin-top: 1%;" hidden$="{{hiddenaddbtn}}" data-dismiss="modal" class="btn btn-primary center">PAY</paper-button>
             </div>
       </div>     
     
@@ -153,22 +132,7 @@
         localStorage.setItem("curr_sess_waiveoff",0);
         localStorage.setItem("curr_sess_fees",0); 
       },  
-      // FnPayAll:function(e){
-      //   if(document.querySelector("#payallfee").checked==true)
-      //   {
-      //    this.hidespecifictype=true;
-      //    document.querySelector("#payspecificfee").checked=false;
-      //    feepaytype="All";
-      //   }
-      // },
-      // FnPaySpecific:function(e){
-      //   if(document.querySelector("#payspecificfee").checked==true)
-      //   {
-      //    this.hidespecifictype=false;
-      //    document.querySelector("#payallfee").checked=false;
-      //    feepaytype="Specific";
-      //   }
-      // },
+
       FnSelectFeeType:function(e){
         var feetype=(e.target.selectedItem.textContent).trim();
         localStorage.setItem("curr_sess_feetype",feetype);
@@ -176,9 +140,6 @@
       },   
       FnSearchEnquiry:function(){
         document.querySelector('#enradmnsearch').selected="-1";
-        // this.FnRefresh();
-        // this.$.crmservice.getclasses();        
-        // this.$.admissionservice.callSearchenquiryService(this.enquiryno);
         this.$.admissionservice.searchfeeadmissionService(this.enquiryno);
       },
       FnSelectEnquiry:function(e){
@@ -189,6 +150,7 @@
         var enquiry_name=enquiry.substring(inx+1);
         localStorage.setItem("curr_sess_enquiryno",enquiry_no);
         localStorage.setItem("curr_sess_enquiryname",enquiry_name);
+        this.$.admissionservice.searchfeeadmissionpaidinfoService(enquiry_no);
         this.$.admissionservice.searchfeeadmissioninfoService(enquiry_no);
       },
       FnHiddenPayment:function(){
@@ -254,7 +216,14 @@
         this.dob="";
         this.fees="";
         this.prosarr=[];
-        document.querySelector('#feetype').selected=-1;
+        // installment=[];
+        this.totalfees="";
+        this.totaldiscount="";
+        this.payableamount="";
+        this.feearr=[];
+        this.enquiryarr=[];
+      // document.querySelector('installment-card').FnRefresh();
+        // document.querySelector('#feescardenquiry').selected=-1;
       }
 
     });

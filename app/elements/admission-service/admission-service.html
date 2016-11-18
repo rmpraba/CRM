@@ -348,11 +348,21 @@
         on-response="searchfeeadmissioninfoResponse"
         debounce-duration="300"
         >
+        <iron-ajax
+        method="post"
+        id="searchfeeadmissionpaidinfoajax"
+        url="{{searchfeeadmissionpaidinfourl}}"
+        params="{{searchfeeadmissionpaidinfoparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="searchfeeadmissionpaidinfoResponse"
+        debounce-duration="300"
+        >
   </template>
   <script>
   (function() {
     'use strict';
-
+    var paidfeearr=[];
     Polymer({
       is: 'admission-service',
       callSearchenquiryService:function(enquiryno){        
@@ -923,7 +933,8 @@ insertstudenthistoryResponse:function(e){
         this.$.fetchfeesajax.generateRequest();
       },
       fetchfeesResponse:function(e){        
-        var arr=e.detail.response.returnval;        
+        var arr=e.detail.response.returnval;  
+        // alert(JSON.stringify(arr));      
         if(arr.length>0){
             localStorage.setItem("curr_sess_feecode",arr[0].fee_code); 
             localStorage.setItem("curr_sess_totalfees",arr[0].fees); 
@@ -957,7 +968,8 @@ insertstudenthistoryResponse:function(e){
         } 
         document.querySelector('fees-card').totalfees=(parseFloat(payableamount)+parseFloat(discount)).toFixed(2);
         document.querySelector('fees-card').payableamount=payableamount;
-        document.querySelector('fees-card').totaldiscount=discount;         
+        document.querySelector('fees-card').totaldiscount=discount;  
+        // alert(totalfees+" "+payableamount+" "+totaldiscount);       
       },
       fetchfeesplitup:function(academic_year,admission_year,grade,admissiontype,discounttype){
         this.fetchfeesplitupurl=sessionStorage.getItem("addrinfo")+"/fetchfeesplitup";
@@ -972,9 +984,53 @@ insertstudenthistoryResponse:function(e){
         this.$.fetchfeesplitupajax.generateRequest();
       },
       fetchfeesplitupResponse:function(e){
-        var arr=e.detail.response.returnval; 
+        var arr=e.detail.response.returnval;
+        // alert(paidfeearr.length);
+        if(paidfeearr!='no rows'){
+            document.querySelector('fees-card').hiddentitleflag=false;
+            for(var i=0;i<arr.length;i++){
+                var f=0;
+                for(var j=0;j<paidfeearr.length;j++){
+                    if(arr[i].installment==paidfeearr[j].installment){
+                        f=1;
+                        arr[i].paidflag=true;
+                        arr[i].hiddenflag=false;
+                        arr[i].readonlyflag=true;
+                        arr[i].hiddenpayflag=true;
+                        arr[i].chequeno=paidfeearr[j].cheque_no;
+                        arr[i].paiddate=paidfeearr[j].paid_date;
+                        arr[i].modeofpayment=paidfeearr[j].mode_of_payment;
+                    }
+                }
+                if(f==0)
+                {
+                   arr[i].paidflag=false;
+                   arr[i].hiddenflag=true;
+                   arr[i].readonlyflag=false;
+                   arr[i].hiddenpayflag=false;
+                   arr[i].chequeno='       ';
+                   arr[i].paiddate=''; 
+                   arr[i].modeofpayment='';
+                }
+            }
+        }
+        else{
+        document.querySelector('fees-card').hiddentitleflag=true;
+        for(var i=0;i<arr.length;i++){
+                   arr[i].paidflag=false;
+                   arr[i].hiddenflag=true;
+                   arr[i].readonlyflag=false;
+                   arr[i].hiddenpayflag=false;
+                   arr[i].chequeno='       ';
+                   arr[i].paiddate=''; 
+                   arr[i].modeofpayment='';
+        }
+        } 
+        // alert(JSON.stringify(arr));
         document.querySelector('fees-card').feearr=arr; 
-        document.querySelector('fees-card').FnHiddenPayment();   
+        document.querySelector('fees-card').FnHiddenPayment();  
+        paidfeearr=[];
+        arr=[]; 
       },
       searchfeeadmissionService:function(admissionno){
         this.searchfeeadmissionurl=sessionStorage.getItem("addrinfo")+"/searchfeeadmission";
@@ -996,7 +1052,18 @@ insertstudenthistoryResponse:function(e){
         }
         document.querySelector('fees-card').enquiryarr=arr;
       },
-      searchfeeadmissioninfoService:function(admissionno){
+       searchfeeadmissionpaidinfoService:function(admissionno){
+        this.searchfeeadmissionpaidinfourl=sessionStorage.getItem("addrinfo")+"/fetchexistingadmissionpaidinfo";
+        var obj={"admissionno":"","schoolid":""};
+        obj.admissionno=admissionno;
+        obj.schoolid=localStorage.getItem("schoolid");
+        this.searchfeeadmissionpaidinfoparam=obj;
+        this.$.searchfeeadmissionpaidinfoajax.generateRequest();
+     },
+     searchfeeadmissionpaidinfoResponse:function(e){
+        paidfeearr=e.detail.response.returnval;
+     },
+       searchfeeadmissioninfoService:function(admissionno){
         this.searchfeeadmissioninfourl=sessionStorage.getItem("addrinfo")+"/fetchexistingadmissioninfo";
         var obj={"admissionno":"","schoolid":""};
         obj.admissionno=admissionno;
