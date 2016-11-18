@@ -38,7 +38,6 @@
         </template>
       </paper-menu>
     </paper-dropdown-menu>
-
     <paper-input readonly label="Due amount" value="{{actualamount}}"></paper-input>
     <paper-input readonly hidden label="Discount" value="{{discount}}"></paper-input>
     <paper-input readonly="{{payablereadonlyflag}}" label="Installment amount" value="{{payableamount}}" on-change="FnPayableAmount"></paper-input>
@@ -123,7 +122,7 @@
       },      
       FnAdd:function(){        
         document.querySelector('fee-component-card').FnCloseDialog(feetype,this.actualamount,this.discount,this.payableamount,this.remainingamount); 
-        document.querySelector('#feefeetype').selected=-1;
+        // document.querySelector('#type').selected=-1;
         feetype="";
         this.actualamount="";
         this.discount="";
@@ -132,103 +131,16 @@
       },
       FnCancel:function(){
         document.querySelector('fee-component-card').FnCancelCloseDialog();
-        document.querySelector('#feefeetype').selected=-1;
+        // document.querySelector('#type').selected=-1;
         feetype="";
         this.actualamount="";
         this.discount="";
         this.payableamount="";
         this.remainingamount="";
       },
-      //  fetchinstallmentfeecode:function(feetype){
-      //   this.feetype=feetype;
-      //   this.schoolid=localStorage.getItem("schoolid");
-      //   this.grade=localStorage.getItem("curr_sess_grade");
-      //   this.admissionyear=localStorage.getItem("curr_sess_admissionyear");
-      //   this.academicyear=localStorage.getItem("curr_sess_academicyear");
-      //   this.discountcode=localStorage.getItem("curr_sess_discountcode");
-      //   this.admissiontype=localStorage.getItem("curr_sess_admissiontype");
-      //   this.fetchinstallmentfeecodeurl=sessionStorage.getItem("addrinfo")+"/fetchinstallmentfeecode-service";
-      //   var obj={"schoolid":"","schoolname":"","grade":"","admissionyear":"","academicyear":"","feetype":""};
-      //   obj.schoolid=localStorage.getItem("schoolid");
-      //   obj.schoolname=this.schoolname;
-      //   obj.grade=this.grade;
-      //   obj.admissionyear=this.admissionyear;
-      //   obj.academicyear=this.academicyear; 
-      //   obj.feetype=feetype;       
-      //   this.fetchinstallmentfeecodeparam=obj;
-      //   this.$.fetchinstallmentfeecodeajax.generateRequest();
-      // },
-      // fetchinstallmentfeecodeResponse:function(e){
-      //   this.insfeecode=e.detail.response.returnval;
-      //   this.fetchinstallmentdiscountcode();
-      // },
-      // fetchinstallmentdiscountcode:function(){
-      //   this.fetchinstallmentdiscountcodeurl=sessionStorage.getItem("addrinfo")+"/fetchinstallmentdiscountcode-service";
-      //   var obj={"schoolid":"","schoolname":"","grade":"","admissionyear":"","academicyear":""};
-      //   obj.schoolid=localStorage.getItem("schoolid");
-      //   obj.schoolname=this.schoolname;
-      //   obj.grade=this.grade;
-      //   obj.admissionyear=this.admissionyear;
-      //   obj.academicyear=this.academicyear; 
-      //   obj.admissiontype=this.admissiontype; 
-      //   obj.discountcode=this.discountcode; 
-      //   obj.feetype=this.feetype;       
-      //   this.fetchinstallmentdiscountcodeparam=obj;
-      //   this.$.fetchinstallmentdiscountcodeajax.generateRequest();
-      // },
-      // fetchinstallmentdiscountcodeResponse:function(e){        
-      //   this.insdiscountcode=e.detail.response.returnval;
-      //   // alert(JSON.stringify(this.insdiscountcode));
-      //   this.discountflag=0;
-      //   if(subinstallmentarr.length==0){
-      //   this.actualamount=this.insfeecode[0].total_fee;
-      //   }
-      //   else
-      //   {
-      //     for(var i=0;i<subinstallmentarr.length;i++){
-      //       if(this.feetype==subinstallmentarr[i].feetype)
-      //         this.actualamount=subinstallmentarr[i].remainingamount;
-      //       else
-      //         this.actualamount=this.insfeecode[0].total_fee;
-      //     }
-      //   }
-      //   if((this.insdiscountcode).length==0)
-      //     this.discount=0;
-      //   else{
-      //     this.discount=0;
-      //     for(var i=0;i<(this.insdiscountcode).length;i++){
-      //         this.discount=parseInt(this.insdiscountcode[i].amount)+parseInt(this.discount);
-      //     }
-      //   }
-      //   if((this.insdiscountcode).length==0){
-      //     var temp1=parseInt(this.actualamount)-parseInt(this.discount);
-      //     if(temp1>=0){
-      //     this.payableamount=parseInt(this.actualamount)-parseInt(this.discount);
-      //     this.remainingamount=parseInt(this.actualamount)-(parseInt(this.payableamount)+parseInt(this.discount));
-      //     localStorage.setItem("curr_sess_payableamount",this.payableamount);
-      //     }
-      //     else{
-      //     // this.discountflag=1;
-      //     alert("Discount Shouldn't greater than insatllment amount!!!");
-      //     }
-      //   }
-      //   else{
-      //     var temp1=parseInt(this.actualamount)-parseInt(this.discount);
-      //     if(temp1>=0){
-      //     this.payableamount=parseInt(this.actualamount)-parseInt(this.discount);
-      //     this.remainingamount=parseInt(this.actualamount)-(parseInt(this.payableamount)+parseInt(this.discount));
-      //     localStorage.setItem("curr_sess_payableamount",this.payableamount);
-      //     }
-      //     else{
-      //     // this.discountflag=1;
-      //     alert("Discount Shouldn't greater than insatllment amount!!!");
-      //     }
-      //   }        
-        
-      // },
+      
       FnSetSubinstallment:function(subarr){
         subinstallmentarr=subarr;
-        // alert(JSON.stringify(subinstallmentarr));
       },
       FnPayableAmount:function(){
         this.payflag=0;
@@ -250,22 +162,15 @@
           this.payableamount=localStorage.getItem("curr_sess_payableamount");
           this.remainingamount=parseFloat(parseFloat(this.actualamount)-parseFloat(this.payableamount)).toFixed(2);
         }
-        // this.FnFormFeeStructure(feetype);
-        // var temp=parseInt(this.actualamount)-(parseInt(this.payableamount)+parseInt(this.discount));
-        // if(temp>=0)
-        // this.remainingamount=parseInt(this.actualamount)-(parseInt(this.payableamount)+parseInt(this.discount));
-        // else{
-        // this.payableamount=localStorage.getItem("curr_sess_payableamount");
-        // // this.payflag=1;
-        // alert("Please enter proper amount!!Installment amount exceeds the payable amount!!!");
-        // }
       },
       FnSetTotalFeeInstallment:function(totalfeearr,totaldiscountarr){
-        // alert(JSON.stringify(totalfeearr));
-        // alert(JSON.stringify(totaldiscountarr));
+        totalfeearray=[];
+        totaldiscountarray=[];
+        actualinstallmentfeetypes=[];
+        consolidatedarray=[];
+
         totalfeearray=totalfeearr;
         totaldiscountarray=totaldiscountarr;
-
         for(var i=0;i<totalfeearray.length;i++){
         var flag=0;
         var obj={"schoolid":"","academicyear":"","admissionyear":"","grade":"","admissiontype":"",
@@ -321,6 +226,8 @@
         this.flag=0;
         this.rflag=0;
         this.regflag=0;
+
+        // alert(JSON.stringify(actualinstallmentfeetypes));
         var actualnoofinstallment=actualinstallmentfeetypes[0].noofinstallment;
         
         for(var i=0;i<actualinstallmentfeetypes.length;i++){

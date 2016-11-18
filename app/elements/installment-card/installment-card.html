@@ -12,23 +12,36 @@
     margin-left: 5%;
   }
   #amt{
-    margin-left: 10%;
+    margin-left: 3%;
   }
   paper-dropdown-menu{
-    margin-left: 10%;
+    margin-left: 8%;
     margin-top: -1%;
   }
   #ins{
     width: 25%;
   }
+  #chequeno{
+    margin-left: 12%;
+  }
+ /* #paiddate{
+    margin-left: 20%;
+  }*/
+  #paymentmode{
+    margin-left: 15%;
+  }
 </style>
   <template>
 
   <div class="layout">
-   <paper-checkbox style="margin-top: 2.5%;margin-left: -10%;" id="{{installment}}"  value="{{studname}}" class="checkbox" disabled$="{{paidstatus}}" checked on-change="payinstall"></paper-checkbox>
-   <paper-item id="ins">{{installment}}</paper-item>
+   <paper-checkbox style="margin-top: 2.5%;margin-left: -10%;" id="{{installment}}"  value="{{studname}}" class="checkbox" disabled$="{{paidflag}}" checked on-change="payinstall"></paper-checkbox>
+   <paper-item hidden>{{installment}}</paper-item>
+   <paper-item id="ins">{{installmenttype}}</paper-item>
    <paper-item id="amt">{{amount}}</paper-item>
-   <paper-dropdown-menu disabled$="{{enable}}" hidden$="{{hidden2}}" id="{{installmentdate}}"   label="---Select Payment Mode---">
+   <paper-item id="paymentmode" hidden$="{{hiddenflag}}">{{modeofpayment}}</paper-item>
+   <paper-item id="chequeno" hidden$="{{hiddenflag}}">{{chequeno}}</paper-item>
+   <paper-item id="paiddate" hidden$="{{hiddenflag}}" style="margin: 0;position: absolute;right: 1%;">{{paiddate}}</paper-item>
+   <paper-dropdown-menu disabled$="{{enable}}" hidden$="{{hiddenpayflag}}" id="{{installmentdate}}"   label="---Select Payment Mode---">
           <paper-menu class="dropdown-content" id="paymodemenu" on-iron-select="FnPaymentMode" valueattr="value" >
             <paper-item value="Cheque" id="{{installment}}">Cheque</paper-item>
             <paper-item value="Cash" id="{{installment}}">Cash</paper-item>
@@ -104,6 +117,7 @@
             obj.paymenttype=paymenttype;
             // obj.installmenttype=localStorage.getItem("curr_sess_feetype");
             obj.installment=this.installment;
+            obj.installmenttype=this.installmenttype;
             obj.amount=this.amount;
             obj.waiveoff=localStorage.getItem("curr_sess_waiveoff");
             obj.paymentmode=paymenttype;
@@ -138,6 +152,7 @@
             obj.paymenttype=paymenttype;
             // obj.installmenttype=localStorage.getItem("curr_sess_feetype");
             obj.installment=this.installment;
+            obj.installmenttype=this.installmenttype;
             obj.amount=this.amount;
             obj.waiveoff=localStorage.getItem("curr_sess_waiveoff");
             obj.paymentmode=paymenttype;
@@ -173,6 +188,7 @@
             obj.paymenttype=paymenttype;       
             // obj.installmenttype=localStorage.getItem("curr_sess_feetype");
             obj.installment=this.installment;
+            obj.installmenttype=this.installmenttype;
             obj.amount=this.amount;
             obj.waiveoff=localStorage.getItem("curr_sess_waiveoff");
             obj.paymentmode=paymenttype;

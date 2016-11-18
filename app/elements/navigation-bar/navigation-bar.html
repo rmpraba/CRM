@@ -303,7 +303,7 @@
           </li> -->
 
            <li id="payment">
-            <a href="#" aria-hidden="true" data-toggle="modal" data-target="#feepayment"><i class="fa fa-money fa-fw"></i> Fee Payment<span class="fa arrow"></span></a>
+            <a href="#" aria-hidden="true" data-toggle="modal" data-target="#feepayment" on-click="FnFeePayment"><i class="fa fa-money fa-fw"></i> Fee Payment<span class="fa arrow"></span></a>
             <!--<ul class="nav nav-second-level">
               <li>
               <a href="" aria-hidden="true" data-toggle="modal" data-target="#prospectousfee" on-click="FnProspect">Application fee</a>
@@ -523,6 +523,7 @@
       </div>
     </div>
 
+
    <!--  <div class="modal fade bd-example-modal-lg" id="registerationfee" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -731,14 +732,11 @@
         this.$.scheduleservice.fetchacademicyearService();
         this.$.scheduleservice.fetchadmissionyearService();
         this.$.scheduleservice.fetchfeetypeService();
-        
-
       },
       FnProspect:function(e){
       // alert(e.target.text);
         localStorage.setItem("curr_sess_feetype",e.target.text);
         this.FnRefresh();
-
       },
       FnDiscountschedule:function(e){
         document.querySelector('discount-master-card').FnRefresh();
@@ -746,12 +744,12 @@
         this.$.scheduleservice.fetchacademicyearService();
         this.$.scheduleservice.fetchadmissionyearService();
         this.$.scheduleservice.fetchdiscounttypeService();
-        this.$.scheduleservice.fetchfeetypeService();
-        
+        this.$.scheduleservice.fetchfeetypeService();       
       },
 
       FnFeestructureschedule:function(e){
         document.querySelector('fee-structure-schedulecard').FnRefresh();
+        document.querySelector('fee-structure-schedulecard').ready();
         this.$.scheduleservice.fetchgradeService();
         this.$.scheduleservice.fetchacademicyearService();
         this.$.scheduleservice.fetchadmissionyearService();
@@ -827,6 +825,10 @@
       FnFeeCollectionReport:function(){
           document.querySelector('app-list').setPage("fee-collection-report-card","Collection Report");
           document.querySelector('fee-collection-report-card').FnCallService();
+      },
+      FnFeePayment:function(){
+          document.querySelector('fees-card').FnRefresh();
+          document.querySelector('fees-card').ready();
       }
     });
   })();

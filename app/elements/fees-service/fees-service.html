@@ -67,9 +67,10 @@
       is: 'fees-service',
 
       callInsertCashfeesService:function(arr,len){
+        // alert(feecashcount);
         paymentlength=len;
         cash.push(arr);
-        feecashcount++;
+        
         this.insertcashfeesurl=sessionStorage.getItem("addrinfo")+"/insertcashfees";
 
         var obj={"schoolid":"","academicyear":"","enquiryno":"","admissionno":"","studentname":"","garde":"","feetype":"","feecode":"","installmenttype":"","installment":"","installmentdate":"","installmentamount":"","waiveoffamount":"","modeofpayment":"","receiptdate":"","paiddate":"","paidstatus":"","cratedon":"","createdby":"","updatedon":"","updatedby":""}        
@@ -85,7 +86,7 @@
         obj.feecode=localStorage.getItem("curr_sess_feecode");
 
         for(var i=0;i<cash.length;i++){
-        // obj.installmenttype=cash[i].installmenttype; 
+        obj.installmenttype=cash[i].installmenttype; 
         obj.installment=cash[i].installment; 
         obj.installmentdate=cash[i].installmentdate; 
         obj.installmentamount=cash[i].amount; 
@@ -102,10 +103,10 @@
         cash=[];
         }
         
-        
+        feecashcount++;
       },
       insertcashfeesResponse:function(e){
-          alert(e.detail.response.returnval);
+          // alert(e.detail.response.returnval);
           if(e.detail.response.returnval=="Fee paid!"){
             e.detail.response.info.receipt_no=e.detail.response.receiptno;
             e.detail.response.info.receipttype="RECEIPT";
@@ -116,15 +117,17 @@
             paymentarr.push(e.detail.response.info);
             paymentcount++;            
             if(paymentlength==paymentcount)
-                this.callFeeReceipt();
+                this.fetchInstallmentseperationService();
+                // this.callFeeReceipt();
             // document.querySelector('feereceipt-card').setValue(paymentarr,e.detail.response.receiptno);
           }
 
       },
       callInsertChequefeesService:function(arr,len){
+        // alert(feechequecount);
         paymentlength=len;
         cheque.push(arr);
-        feechequecount++;
+        
         this.insertchequefeesurl=sessionStorage.getItem("addrinfo")+"/insertchequefees";
         var obj={"schoolid":"","academicyear":"","enquiryno":"","admissionno":"","studentname":"","garde":"","feetype":"","feecode":"","installmenttype":"","installment":"","installmentdate":"","installmentamount":"","waiveoffamount":"","modeofpayment":"","receiptdate":"","paiddate":"","paidstatus":"","cratedon":"","createdby":"","updatedon":"","updatedby":""}
 
@@ -138,7 +141,7 @@
         obj.feecode=localStorage.getItem("curr_sess_feecode");
  
         for(var i=0;i<cheque.length;i++){ 
-        // obj.installmenttype=cheque[i].installmenttype; 
+        obj.installmenttype=cheque[i].installmenttype; 
         obj.installment=cheque[i].installment; 
         obj.installmentdate=cheque[i].installmentdate; 
         obj.installmentamount=cheque[i].amount; 
@@ -158,10 +161,11 @@
         this.$.insertchequefeesajax.generateRequest();
         cheque=[];
         }
-        
+        feechequecount++;
+
       },
       insertchequefeesResponse:function(e){
-          alert(e.detail.response.returnval);
+          // alert(e.detail.response.returnval);
           if(e.detail.response.returnval=="Fee paid!"){
             e.detail.response.info.ack_no=e.detail.response.receiptno;
             e.detail.response.info.receipttype="ACKNOWLEDGEMENT";
@@ -179,9 +183,10 @@
           }
       },
       callInsertTransferfeesService:function(arr,len){
+        // alert(feetransfercount);
         paymentlength=len;
         transfer.push(arr);
-        feetransfercount++;
+        
         this.inserttransferfeesurl=sessionStorage.getItem("addrinfo")+"/inserttransferfees";
         var obj={"schoolid":"","academicyear":"","enquiryno":"","admissionno":"","studentname":"","garde":"","feetype":"","feecode":"","installmenttype":"","installment":"","installmentdate":"","installmentamount":"","waiveoffamount":"","modeofpayment":"","receiptdate":"","paiddate":"","paidstatus":"","cratedon":"","createdby":"","updatedon":"","updatedby":""}
 
@@ -194,7 +199,7 @@
         // obj.feetype=localStorage.getItem("curr_sess_feetype"); 
         obj.feecode=localStorage.getItem("curr_sess_feecode");
         for(var i=0;i<transfer.length;i++){ 
-        // obj.installmenttype=transfer[i].installmenttype; 
+        obj.installmenttype=transfer[i].installmenttype; 
         obj.installment=transfer[i].installment; 
         obj.installmentdate=transfer[i].installmentdate; 
         obj.installmentamount=transfer[i].amount; 
@@ -213,6 +218,7 @@
         this.$.inserttransferfeesajax.generateRequest();
         transfer=[];
         }
+        feetransfercount++;
         
       },
       inserttransferfeesResponse:function(e){
@@ -227,7 +233,8 @@
             paymentarr.push(e.detail.response.info);
             paymentcount++;
             if(paymentlength==paymentcount)
-                this.callFeeReceipt();
+                this.fetchInstallmentseperationService();
+                // this.callFeeReceipt();
             // document.querySelector('feereceipt-card').setValue(paymentarr,e.detail.response.receiptno);
           }
       },
@@ -267,7 +274,7 @@
 
         for(var i=0;i<paymentarr.length;i++){
             for(var j=0;j<splitarr.length;j++){
-                if(paymentarr[i].installment==splitarr[j].installtype)
+                if(paymentarr[i].installment_type==splitarr[j].installtype)
                 {
                     paymentarr[i].fee_type=splitarr[j].feetype;
                 }
@@ -289,21 +296,20 @@
         for(var i=0;i<paymentarr.length;i++){
             if(paymentarr[i].mode_of_payment=="Cash"){
                 cashtotal=parseFloat(parseFloat(paymentarr[i].installment_amount)+parseFloat(cashtotal)).toFixed(2);
-                cashparticular.push({"slno":cashno,"installment":paymentarr[i].installment,"feetype":paymentarr[i].fee_type,"installmentamount":paymentarr[i].installment_amount});
+                cashparticular.push({"slno":cashno,"installment":paymentarr[i].installment_type,"feetype":paymentarr[i].fee_type,"installmentamount":paymentarr[i].installment_amount});
                 cashno++;
             }
             else if(paymentarr[i].mode_of_payment=="Cheque"){
                 chequetotal=parseFloat(parseFloat(paymentarr[i].installment_amount)+parseFloat(chequetotal)).toFixed(2);
-                chequeparticular.push({"slno":chequeno,"installment":paymentarr[i].installment,"feetype":paymentarr[i].fee_type,"bankname":paymentarr[i].bank_name,"chequeno":paymentarr[i].cheque_no,"chequedate":paymentarr[i].cheque_date,"installmentamount":paymentarr[i].installment_amount});
+                chequeparticular.push({"slno":chequeno,"installment":paymentarr[i].installment_type,"feetype":paymentarr[i].fee_type,"bankname":paymentarr[i].bank_name,"chequeno":paymentarr[i].cheque_no,"chequedate":paymentarr[i].cheque_date,"installmentamount":paymentarr[i].installment_amount});
                 chequeno++;
             }
             else if(paymentarr[i].mode_of_payment=="Transfer"){
                 transfertotal=parseFloat(parseFloat(paymentarr[i].installment_amount)+parseFloat(transfertotal)).toFixed(2);
-                transferparticular.push({"slno":transferno,"installment":paymentarr[i].installment,"feetype":paymentarr[i].fee_type,"bankname":paymentarr[i].bank_name,"referenceno":paymentarr[i].reference_no,"receiveddate":paymentarr[i].received_date,"installmentamount":paymentarr[i].installment_amount});
+                transferparticular.push({"slno":transferno,"installment":paymentarr[i].installment_type,"feetype":paymentarr[i].fee_type,"bankname":paymentarr[i].bank_name,"referenceno":paymentarr[i].reference_no,"receiveddate":paymentarr[i].received_date,"installmentamount":paymentarr[i].installment_amount});
                 transferno++;
             }
         }
-
         for(var i=0;i<paymentarr.length;i++){
             if(paymentarr[i].mode_of_payment=="Cash"){
                 var obj={"schoolid":"","academicyear":"","admissionno":"","studentname":"","grade":"","installment":"","paiddate":"","receiptno":"","receipttype":"","hidereceipt":"","hideack":"","chequeview":"","transferview":"","paymentarr":""};
@@ -382,29 +388,11 @@
             }
         }
 
-        // for(var i=0;i<paymentarr.length;i++){
-        //     var flag=0;
-        //     if(feereceiptarr.length==0)
-        //         feereceiptarr.push({"installtype":arr[i].installment_type,"feetype":arr[i].fee_type});
-        //     else{
-        //     for(var j=0;j<feereceiptarr.length;j++){
-        //         if(arr[i].installment_type==splitarr[j].installtype){
-        //             flag=1;
-        //             feereceiptarr[j].feetype=feereceiptarr[j].feetype+","+arr[i].fee_type;
-        //         }
-        //     }
-        //     if(flag!=1)
-        //         feereceiptarr.push({"installtype":arr[i].installment_type,"feetype":arr[i].fee_type});
-        //     }
-        // }
-
-        // alert(JSON.stringify(splitarr));
-        // alert(JSON.stringify(paymentarr));
-
-        alert(JSON.stringify(feereceiptarr));
+        
         this.callFeeReceipt();
       },
       callFeeReceipt:function(){
+        alert('Fee paid!!');
         // alert('calling receipt');
         // alert(JSON.stringify(paymentarr));
         document.querySelector('feereceipt-outcard').paymentreceiptarr=feereceiptarr;
@@ -416,6 +404,9 @@
         paymentlength=0;
         paymentcount=0;
         feereceiptarr=[];
+        feecashcount=0;
+        feechequecount=0;
+        feetransfercount=0;
       }
     });
   })();

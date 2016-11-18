@@ -440,7 +440,7 @@
         this.$.generatediscountcodeajax.generateRequest();
       },
       generatediscountcodeResponse:function(e){
-        alert(e.detail.response.returnval);
+        // alert(e.detail.response.returnval);
         if(e.detail.response.returnval=="seqfail"){
           alert('Discountcode creation fail!!');
         }
@@ -498,8 +498,13 @@
         this.$.generateinstallmentscheduleajax.generateRequest();
       },
       generateinstallmentscheduleResponse:function(e){
-        // alert(e.detail.response.returnval);
-        if(e.detail.response.returnval!='fail'){
+        // alert(e.detail.response.returnval+" "+e.detail.response.returnflag);
+        if(e.detail.response.returnflag=='exist'){
+          alert('Installment schedule already created!!!');
+          document.querySelector('fee-structure-schedulecard').FnRefresh();
+          document.querySelector('fee-structure-schedulecard').ready();
+        }
+        else{
           this.installmentschcode=e.detail.response.returnval;
           this.createinstallmentscheduleService();
         }
@@ -575,7 +580,7 @@
         this.$.generateinstallmentcodeajax.generateRequest();
       },
       generateinstallmentcodeResponse:function(e){
-        alert(e.detail.response.returnval);
+        // alert(e.detail.response.returnval);
         if(e.detail.response.returnval!='fail'){
           this.installmentcode=e.detail.response.returnval;
           this.createinstallmentService();
@@ -591,7 +596,7 @@
         obj.academicyear=this.academicyear; 
         obj.discountcode=this.discountcode;
         obj.discounttype=this.discounttype; 
-        obj.admisssiontype=this.admissiontype;        
+        obj.admissiontype=this.admissiontype;        
         obj.installmentcode=this.installmentcode;
         obj.noofinstallment=this.noofinstallment;
         obj.createdby=localStorage.getItem("employeeid");
@@ -612,12 +617,12 @@
         }        
       },
       createinstallmentResponse:function(e){
-        alert(e.detail.response.returnval); 
+        // alert(e.detail.response.returnval); 
        if(e.detail.response.returnval=='created'){
         count2++;
        }
        if(count1==count2){
-        alert("Created!");
+        // alert("Created!");
         count1=0;count2=0;
         this.createinstallmentsplitupService();
        }
@@ -651,12 +656,14 @@
         }        
       },
       createinstallmentsplitupResponse:function(e){
-        alert(e.detail.response.returnval); 
+        // alert(e.detail.response.returnval); 
        if(e.detail.response.returnval=='created'){
         count2++;
        }
        if(count1==count2){
         alert("Created!");
+        document.querySelector('fee-structure-schedulecard').FnRefresh();
+        document.querySelector('fee-structure-schedulecard').ready();
        }
       },
       fetchinstallmentStructure:function(grade,academicyear,admissionyear){
@@ -780,8 +787,11 @@
         this.$.fetchtotalinstallmentdiscountcodeajax.generateRequest();
       },
       fetchtotalinstallmentdiscountcodeResponse:function(e){
-        instotaldiscountarr=e.detail.response.returnval;    
-               
+        instotaldiscountarr=e.detail.response.returnval; 
+        // alert(localStorage.getItem("curr_sess_installmentpattern"));
+        if(localStorage.getItem("curr_sess_installmentpattern")=='1')
+        document.querySelector('fee-type-card').FnSetTotalFeeInstallment(instotalfeearr,instotaldiscountarr); 
+        else  
         document.querySelector('installment-fee-type-card').FnSetTotalFeeInstallment(instotalfeearr,instotaldiscountarr);
         instotalfeearr=[];
         instotaldiscountarr=[];
@@ -802,9 +812,16 @@
           this.$.generateinstallmentschedulecodeajax.generateRequest();       
       },
       generateinstallmentschedulecodeResponse:function(e){
-        if(e.detail.response.returnval!="seqfail"){
-          this.insschedulecode=e.detail.response.returnval;
-          alert(e.detail.response.returnval);
+        // alert(e.detail.response.returnval);
+        if(e.detail.response.returnval=="seqfail"){
+        }
+        else if(e.detail.response.returnval=="prefixfail"){
+        }
+        else if(e.detail.response.returnflag=="exist"){
+          alert('Installment schedule already exist!!');
+        }
+        else{
+          this.insschedulecode=e.detail.response.returnval;          
           this.createinstallmentschedulecodeService();
         }
       },     
@@ -836,10 +853,14 @@
       createinstallmentschedulecodeResponse:function(e){
         if(e.detail.response.returnval=="created")
           count2++;
-        if(count1==count2)
+        if(count1==count2){
           alert('Created!');
-        else
+          count1=0;
+          count2=0;
+        }
+        else{
           alert('Not created!');
+        }
       }
     });
   })();
