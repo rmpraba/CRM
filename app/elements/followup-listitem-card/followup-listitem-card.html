@@ -9,7 +9,7 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
 -->
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
-
+<link rel="import" href="..\followup-datepicker-card/followup-datepicker-card.html">
 <dom-module id="followup-listitem-card">
   <template>
     <style>
@@ -24,10 +24,10 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
           <td class="col-sm-2">
             <div class="col-sm-12">
               <div class="col-sm-6">
-                <paper-checkbox id="callyes{{followupno}}" on-change="yescallstatusHandler" class="checkbox">Yes</paper-checkbox>
+                <paper-checkbox id="callyes{{followupno}}" on-change="yescallstatusHandler" class="checkbox" checked={{yesbox}} disabled={{disableyes}}>Yes</paper-checkbox>
               </div>
               <div class="col-sm-6">
-                <paper-checkbox id="callno{{followupno}}" on-change="nocallstatusHandler"  class="checkbox">No</paper-checkbox>
+                <paper-checkbox id="callno{{followupno}}" on-change="nocallstatusHandler"  class="checkbox" checked={{nobox}}  disabled={{disableno}}>No</paper-checkbox>
               </div>
             </div>
           </td>
@@ -39,19 +39,23 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
             </td>
           <td class="col-sm-2">
        
-          <paper-input id="dates" disabled label="Date" error-message="needs next followup date!" required value="{{nextdate}}" on-click="dialogfollowup"></paper-input>
+          <div class="col-sm-12">
+          <followup-datepicker-card showdate="{{nextdate}}"></followup-datepicker-card>
+          <!-- <paper-input id="dates" label="Date" error-message="needs next followup date!" required value="{{nextdate}}" on-click="dialogfollowup"></paper-input> -->
+          <paper-button id="reschedule" on-click="Rescheduling">Reschedule</paper-button></div>
+        
           
           </td>
           <td class="col-sm-1">
-            <paper-dropdown-menu id="followdrop" label="Confidence Level">
+            <paper-dropdown-menu id="followdrop" disabled={{disabledrop}} label="Confidence Level">
               <paper-listbox id="confidencelevel" class="dropdown-content" on-iron-select="FnConfidenceLevel">
+                <paper-item value=0>TBD</paper-item>
                 <paper-item value=1>>90%</paper-item>
                 <paper-item value=2>>75%</paper-item>
                 <paper-item value=3>>50%</paper-item>
                 <paper-item value=4><50%</paper-item>
                 <paper-item value=5><35%</paper-item>
                 <paper-item value=6><10%</paper-item>
-                <paper-item value=0>TBD</paper-item>
               </paper-listbox>
             </paper-dropdown-menu>
           </td>
@@ -62,14 +66,15 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
         
       </table>
       </div>
-      <div >{{callstatus}}/{{confidencelvl}}/{{followupno}}/{{fid}}</div>
-      <paper-dialog id="dialog1" class="paper-date-picker-dialog">
+       <paper-dialog id="dialog1" class="paper-date-picker-dialog">
         <paper-date-picker id="picker" date="{{date}}"></paper-date-picker>
         <div class="buttons">
           <paper-button on-click="close1">Cancel</paper-button>
           <paper-button on-click="FnDismissDialog1">OK</paper-button>
         </div>
       </paper-dialog>
+      <div hidden>{{callstatus}}/{{confidencelvl}}/{{followupno}}/{{fid}}/{{nextdate}}</div>
+     
       <followup-service id="followupservice"></followup-service>
   </template>
   <script>
@@ -77,79 +82,75 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
     'use stdict';
     var confidencelvl;
     var callstatus;
+    var vnextdate;
 
     Polymer({
       is: 'followup-listitem-card',
 
       ready:function(){
+        
         this.currentdate=sessionStorage.getItem("todaydate");
         this.$.followdisk.disabled=true;
-        /*if(this.comments!=""){
-            this.$.callyes.disabled=true;
-            this.$.callno.disabled=true;
-            this.$.dates.disabled=true;
-            this.$.followdrop.disabled=true;
+        /*if(this.comments!=""||this.comments!=null){
+            this.disableyes=true;
+            this.disableno=true;
+            this.disabledrop=true;
+            this.disabledate=true;
         }*/
-        alert(this.followupno);
-        //alert(this.followupno+'   '+document.querySelector('#callyes'+this.followupno));
-        /*if(this.callstatus=="Yes"){
-              document.querySelector('#callyes'+this.followupno).checked=true;
-        }
-        else if(this.callstatus=="No"){
-              document.querySelector('#callno'+this.followupno).checked=true;
+        //alert(this.followupno+'    '+this.callstatus);
+        vnextdate=this.nextdate;
+        if(vnextdate=='Re-Schedule'){
+          // this.$.dates.hidden=true;
+          this.$.reschedule.hidden=false;
         }
         else{
-
+          // this.$.dates.hidden=false;
+          this.$.reschedule.hidden=true; 
         }
+        if(this.callstatus=="Yes"){
+              this.yesbox=true;
+              //alert(this.callstatus);
+        }
+        else if(this.callstatus=="No"){
+              this.nobox=true;
+              //alert(this.callstatus);
+        }
+        else{
+          //alert(this.callstatus);
+        }
+        //alert(this.followupno+'   '+document.querySelector('#callyes'+this.followupno));
+        
         
         if(this.confidencelvl=='>90%'){
-          this.$.followdrop.selected=1;
+          //alert('>90');
+          this.$.confidencelevel.selected=1;
         }
         else if(this.confidencelvl=='>75%'){
-          this.$.followdrop.selected=2;
+          this.$.confidencelevel.selected=2;
         }
         else if(this.confidencelvl=='>50%'){
-          this.$.followdrop.selected=3;
+          this.$.confidencelevel.selected=3;
         }
         else if(this.confidencelvl=='<50%'){
-          this.$.followdrop.selected=4;
+          this.$.confidencelevel.selected=4;
         }
         else if(this.confidencelvl=='<35%'){
-          this.$.followdrop.selected=5;
+          this.$.confidencelevel.selected=5;
         }
         else if(this.confidencelvl=='<10%'){
-          this.$.followdrop.selected=6;
+          this.$.confidencelevel.selected=6;
         }
-        else if(this.confidencelvl=='TBD'){
-          this.$.followdrop.selected=0;
-        }*/
+        else if(this.confidencelvl==''||this.confidencelvl==null){
+          //alert('null');
+          this.$.confidencelevel.selected=0;
+        }
 
        
       },
-      dialogfollowup:function(){
-        document.getElementById('dialog1').open();
-      },
-      close1:function(){
-        document.getElementById('dialog1').close();
-      },
-      FnDismissDialog1:function(){
-        var pickdate=moment(this.$.picker.date).format('L');
-        var dt=new Date(pickdate);
-       var datesx=dt.getDate()+'/'+(dt.getMonth()+1)+'/'+dt.getFullYear();
-       
-       this.nextdate=datesx;
-     /*if(this.followupdate5==datesx){  
-          alert('Date Repeated! Please select difference date..');
-      }
-      else {
-          this.followupdate4 = dt.getDate()+'/'+(dt.getMonth()+1)+'/'+dt.getFullYear();
-        }*/
-        document.getElementById('dialog1').close();
-      },
-      
       yescallstatusHandler:function(){
         if(document.getElementById('callyes'+this.followupno).checked==true){
           callstatus="Yes";
+          //alert(callstatus);
           this.$.followdisk.disabled=false;
           document.getElementById('callno'+this.followupno).checked=false;
         }
@@ -161,6 +162,7 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
       nocallstatusHandler:function(){
           if(document.getElementById('callno'+this.followupno).checked==true){
           callstatus="No";
+          //alert(callstatus);
           this.$.followdisk.disabled=false;
           document.getElementById('callyes'+this.followupno).checked=false;
         }
@@ -173,15 +175,19 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
         confidencelvl=(e.target.selectedItem.textContent).trim();
       },
       FollowUp:function(){
-        if(this.comments==""||this.nextdate==""||confidencelvl==null){
-          this.$.dates.validate();
+        if(this.comments==""||vnextdate==null||confidencelvl==null){
+          //this.$.dates.validate();
           this.$.followbox.validate();
           if(confidencelvl==null){
             alert('Please select the Confidence level of this followup');
           }
+          else if(vnextdate==null){
+            alert('Please select the proper date for next followup');
+          }
         }
         else{
-            this.$.followupservice.updatefolowup(this.fid,this.scheduledate,this.followupno,this.currentdate,this.nextdate,this.comments,callstatus,confidencelvl);  
+          alert(this.fid+this.scheduledate+this.followupno+this.currentdate+vnextdate+this.comments+callstatus+confidencelvl);
+            this.$.followupservice.updatefolowup(this.fid,this.scheduledate,this.followupno,this.currentdate,vnextdate,this.comments,callstatus,confidencelvl);  
         }
         
       },Fncheck:function(){
@@ -217,6 +223,39 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
                 this.$.followdrop.selected=0;
                 break;
         }
+      },
+      
+      dialogfollowup:function(){
+        document.getElementById('dialog1').open();
+      },
+      close1:function(){
+        document.getElementById('dialog1').close();
+      },
+      FnDismissDialog1:function(){
+        var pickdate=moment(this.$.picker.date).format('L');
+        var dt=new Date(pickdate);
+       var datesx=dt.getDate()+'/'+(dt.getMonth()+1)+'/'+dt.getFullYear();
+       this.nextdate=datesx;
+       
+       //document.getElementById('fndates'+this.followupno).value=datesx;
+      // document.querySelector('followup-listitem-card').setdate(datesx);
+     /*if(this.followupdate5==datesx){  
+          alert('Date Repeated! Please select difference date..');
+      }
+      else {
+          this.followupdate4 = dt.getDate()+'/'+(dt.getMonth()+1)+'/'+dt.getFullYear();
+        }*/
+        document.getElementById('dialog1').close();
+      },
+      Rescheduling:function(){
+        this.$.followupservice.Fnreschedule(this.confidencelvl,this.fid);
+      },
+      dateclear:function(){
+        alert('You are allowed to select only future date..!');
+        vnextdate=null;
+      },
+      getdate:function(nextdate){
+        vnextdate=nextdate;
       }
 
     });
