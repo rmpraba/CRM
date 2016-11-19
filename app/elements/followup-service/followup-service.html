@@ -394,6 +394,7 @@ newdate.setDate(newdate.getDate()+resultarr[0].no_of_days);
       },
       updatefollowResponse:function(e){
           if(e.detail.response.returnval=='success'){
+
             //alert(e.detail.response.returnval);
               this.updatefollowdetailurl="http://localhost:8086/updatefollowdetail";
       for(var j=0;j<(resultarr[0].no_of_calls);j++){
@@ -417,6 +418,8 @@ newdate.setDate(newdate.getDate()+resultarr[0].no_of_days);
           this.updatefollowdetailparam=obj;
        alert(JSON.stringify(obj));
         this.$.updatefollowdetailajax.generateRequest();
+
+        this.getfollowupcount();
         }
       
           }
@@ -830,7 +833,7 @@ newdate.setDate(newdate.getDate()+resultarray[0].no_of_days);
           obj.enquiryid=enquiryidzz;
           obj.followupno=j+1;
           obj.followupdate=(datesarr[j].dates).getDate()+"/"+((datesarr[j].dates).getMonth()+1)+"/"+(datesarr[j].dates).getFullYear();
-          if(j<(resultarray[0].no_of_calls-1)){
+          if(j<(resultarray[0].no_of_schedules-1)){
           obj.nextfolowup=(datesarr[j+1].dates).getDate()+"/"+((datesarr[j+1].dates).getMonth()+1)+"/"+(datesarr[j+1].dates).getFullYear();
           }
           else{

@@ -20,7 +20,7 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
     <div>
     <table class="table table-stdiped" >
         <tbody>
-        <tr class="list-group col-sm-14 panel-body form-category">
+        <tr class="list-group col-sm-14 panel-body form-category" id="list">
           <td class="col-sm-2">
             <div class="col-sm-12">
               <div class="col-sm-6">
@@ -40,7 +40,7 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
           <td class="col-sm-2">
        
           <div class="col-sm-12">
-          <followup-datepicker-card showdate="{{nextdate}}"></followup-datepicker-card>
+          <followup-datepicker-card id="dates" showdate="{{nextdate}}"></followup-datepicker-card>
           <!-- <paper-input id="dates" label="Date" error-message="needs next followup date!" required value="{{nextdate}}" on-click="dialogfollowup"></paper-input> -->
           <paper-button id="reschedule" on-click="Rescheduling">Reschedule</paper-button></div>
         
@@ -99,14 +99,7 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
         }*/
         //alert(this.followupno+'    '+this.callstatus);
         vnextdate=this.nextdate;
-        if(vnextdate=='Re-Schedule'){
-          // this.$.dates.hidden=true;
-          this.$.reschedule.hidden=false;
-        }
-        else{
-          // this.$.dates.hidden=false;
-          this.$.reschedule.hidden=true; 
-        }
+        
         if(this.callstatus=="Yes"){
               this.yesbox=true;
               //alert(this.callstatus);
@@ -145,6 +138,21 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
           this.$.confidencelevel.selected=0;
         }
 
+         if(this.nextdate=='Re-Schedule'){
+           this.$.dates.hidden=true;
+          this.$.reschedule.hidden=false;
+        }
+        else{
+           this.$.dates.hidden=false;
+          this.$.reschedule.hidden=true; 
+        }
+
+        if(this.comments==""||this.comments==null){
+          this.$.list.disabled=false;
+        }
+          else{
+            this.$.list.disabled=true;
+          }
        
       },
       yescallstatusHandler:function(){
