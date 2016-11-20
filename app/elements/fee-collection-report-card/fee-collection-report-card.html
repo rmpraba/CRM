@@ -8,19 +8,88 @@
         @apply(--layout-horizontal);
       }
     </style>
-    <div card="datecard">
-    <fromdate-pickercard></fromdate-pickercard>
-    <todate-pickercard></todate-pickercard>
+    <div class="row">
+        <div class="well well-sm">
+          <div class="row">
+            <div class="col-md-12">
+              <!-- <div class="col-md-6"> -->
+                <div class="col-md-3" style="margin-top: -1%;">
+                  <fromdate-pickercard></fromdate-pickercard>
+                </div>
+                <div class="col-md-3" style="margin-top: -1%;">
+                  <todate-pickercard></todate-pickercard>
+                </div>
+                <div class="col-md-2" style="margin-top: 1%;">
+                  <paper-button on-click="FnView">View</paper-button>
+                </div>
+                <div class="col-md-2" style="margin-top: 1%;">
+                  <input type="button" id="btn2" onclick="tableToExcel('collectionreport', 'Fee Collection Report')" value="Export to Excel">
+                </div>
+                <div class="col-md-2" style="margin-top: 1%;">
+                <paper-dropdown-menu label="Select Category" attr-for-selected="value">
+                <paper-menu id="reportfiltertype" class="dropdown-content" required on-iron-select="FnSelectFilterType" valueattr="value" >
+                  <!-- <template  is="dom-repeat" items="{{discountarr}}" as="item"> -->
+                  <paper-item value="General">General</paper-item>
+                  <paper-item value="Cheque Collection">Cheque Collection</paper-item>
+                  <paper-item value="Fee Collection">Fee Collection</paper-item>
+                  <paper-item value="FeeTypewise Collection">FeeTypewise Collection</paper-item>
+                  <!-- <paper-item value="Overall Collection">Overall Collection</paper-item> -->
+                  <!-- </template> -->
+                </paper-menu>
+                </paper-dropdown-menu> 
+                </div>
+              <!-- </div> -->
+            </div>
+          </div>
+        </div>
     </div>
+     <table class="table table-hover" id="collectionreport">
+      <thead>
+      <tr>
+        <th>Sno</th><th>Enr/Enq No</th><th>Student Name</th><th>Grade</th><th>Installment Type</th><th>Mode Of Payment</th><th>Cheque No</th><th>Received Date</th><th>Receipt/Ack No</th><th>Amount</th><th>Fine Amount</th>
+      </tr>
+      </thead>
+      <tbody>
+      <template  is="dom-repeat" items="{{collectionarr}}" as="item">
+        <tr><td>{{item.sno}}</td><td>{{item.admission_no}}</td><td>{{item.student_name}}</td><td>{{item.grade}}</td>
+        <td>{{item.installment_type}}</td><td>{{item.mode_of_payment}}</td><td>{{item.cheque_no}}</td><td>{{item.paid_date}}</td>
+        <td>{{item.receipt_no}}</td><td>{{item.installment_amount}}</td><td>{{item.fine_amount}}</td></tr>
+      </template>
+      <tr><th colspan="11" style="text-align: right;">Total Amount: &nbsp;&nbsp;{{totalamount}}</th></tr>
+      </tbody>
+    </table>    
+    
     <fee-report-service id="feereportservice"></fee-report-service>
   </template>
+  <script type="text/javascript">
+      var tableToExcel = (function() {
+      var uri = 'data:application/vnd.ms-excel;base64,'
+      , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
+     , base64 = function(s) { return window.btoa(unescape(encodeURIComponent(s))) }
+     , format = function(s, c) { return s.replace(/{(\w+)}/g, function(m, p) { return c[p]; }) }
+     return function(table, name) {
+     if (!table.nodeType) table = document.getElementById(table)
+     var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}
+     window.location.href = uri + base64(format(template, ctx))
+     }
+     })()
+  </script>
   <script>
   (function() {
     'use strict';
+    var filtertype="1";
     Polymer({
       is: 'fee-collection-report-card',
-      FnCallService:function(){
+      FnCallService:function(){        
         this.$.feereportservice.FnFetchFeeReportService();
+      },
+      FnView:function(){
+        this.$.feereportservice.FnFetchFeeReportService();
+      },
+      FnSelectFilterType:function(e){
+        // alert(e.target.selectedItem.textContent);
+        filtertype=(e.target.selectedItem.textContent).trim();
+        this.$.feereportservice.FnFilterReportService(filtertype);
       }
     });
   })();

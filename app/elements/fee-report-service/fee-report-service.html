@@ -25,6 +25,17 @@
         on-response="fetchoverallcollectionreportResponse"
         debounce-duration="300"
         >
+        <!-- It would fetch fee collection filter -->
+     <iron-ajax
+        method="post"
+        id="fetchfilterreportajax"
+        url="{{fetchfilterreporturl}}"
+        params="{{fetchfilterreportparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchfilterreportResponse"
+        debounce-duration="300"
+        >
   </template>
   <script>
   (function() {
@@ -42,8 +53,38 @@
         this.fetchfeecollectionreportparam=obj;
         this.$.fetchfeecollectionreportajax.generateRequest();
       },
-      fetchfeereportResponse:function(e){
-
+      fetchfeecollectionreportResponse:function(e){
+        // alert(JSON.stringify(e.detail.response.returnval));
+        var totalamount=0;
+        var arr=e.detail.response.returnval;
+        for(var i=0;i<arr.length;i++){
+          arr[i].sno=i+1;
+          arr[i].fine_amount=0;
+          totalamount=parseFloat(parseFloat(totalamount)+parseFloat(arr[i].installment_amount)).toFixed(2);
+        }
+        document.querySelector('fee-collection-report-card').totalamount=totalamount;
+        document.querySelector('fee-collection-report-card').collectionarr=arr;
+      },
+      FnFilterReportService:function(filtertype){
+        this.fetchfilterreporturl=sessionStorage.getItem("addrinfo")+"/fetchfilterreport-service";
+        var obj={"schoolid":"","fromdate":"","todate":"","filtertype":""};
+        obj.schoolid=localStorage.getItem("schoolid");
+        obj.fromdate=localStorage.getItem("localsess_from_date");
+        obj.todate=localStorage.getItem("localsess_to_date");
+        obj.filtertype=filtertype;
+        this.fetchfilterreportparam=obj;
+        this.$.fetchfilterreportajax.generateRequest();
+      },
+      fetchfilterreportResponse:function(e){
+        var totalamount=0;
+        var arr=e.detail.response.returnval;
+        for(var i=0;i<arr.length;i++){
+          arr[i].sno=i+1;
+          arr[i].fine_amount=0;
+          totalamount=parseFloat(parseFloat(totalamount)+parseFloat(arr[i].installment_amount)).toFixed(2);
+        }
+        document.querySelector('fee-collection-report-card').totalamount=totalamount;
+        document.querySelector('fee-collection-report-card').collectionarr=arr;
       },
       FnFetchOverallFeeReportService:function(){
         this.fetchoverallcollectionreporturl=sessionStorage.getItem("addrinfo")+"/fetchoverallcollectionreport-service";
@@ -54,9 +95,9 @@
         this.fetchoverallcollectionreportparam=obj;
         this.$.fetchoverallcollectionreportajax.generateRequest();
       },
-      fetchfeereportResponse:function(e){
-
-      },
+      fetchoverallcollectionreportResponse:function(e){
+        // alert(JSON.stringify(e.detail.response.returnval));
+      }
 
     });
   })();

@@ -2339,6 +2339,7 @@ app.post('/insertcashfees',  urlencodedParser,function (req, res){
 
     connection.query("SELECT * FROM receipt_sequence",function(err, rows){
     response.receipt_no="REC-"+response.academic_year+"-"+rows[0].receipt_seq;
+    response1.receipt_no="REC-"+response.academic_year+"-"+rows[0].receipt_seq;
     var new_receipt_no=parseInt(rows[0].receipt_seq)+1;
     connection.query(masterinsert,[response1],function(err, rows){
     if(!err){
@@ -2433,6 +2434,7 @@ app.post('/insertchequefees',  urlencodedParser,function (req, res){
 
     connection.query("SELECT * FROM receipt_sequence",function(err, rows){
     response.ack_no="ACK-"+response.academic_year+"-"+rows[0].acknowledge_seq;
+    response1.receipt_no="ACK-"+response.academic_year+"-"+rows[0].acknowledge_seq;
     var new_ack_no=parseInt(rows[0].acknowledge_seq)+1;
     connection.query(masterinsert,[response1],function(err, rows){
       if(!err){
@@ -2520,6 +2522,7 @@ app.post('/inserttransferfees',  urlencodedParser,function (req, res){
 
     connection.query("SELECT * FROM receipt_sequence",function(err, rows){
     response.receipt_no="REC-"+response.academic_year+"-"+rows[0].transfer_seq;
+    response1.receipt_no="REC-"+response.academic_year+"-"+rows[0].transfer_seq;
     var new_receipt_no=parseInt(rows[0].transfer_seq)+1;
     connection.query(masterinsert,[response1],function(err, rows){
     if(!err){
@@ -3549,7 +3552,50 @@ app.post('/getlistdetails',  urlencodedParser,function (req, res){
 
 app.post('/fetchfeecollectionreport-service',  urlencodedParser,function (req, res){
    var qur = "SELECT * FROM mlzscrm.md_student_paidfee where paid_date>='"+req.query.fromdate+"' "+
-             "and paid_date<='"+req.query.todate+"' and school_id='"+req.query.schoolid+"'";
+             "and paid_date<='"+req.query.todate+"' and school_id='"+req.query.schoolid+"' and paid_status in('paid','inprogress')";
+  console.log('-----------------------collection report--------------------------');
+  console.log(qur);
+  console.log('-------------------------------------------------');
+   connection.query(qur,
+     function(err, rows){
+       if(!err){
+         if(rows.length>0){
+           res.status(200).json({'returnval': rows});
+         }else{
+           console.log(err);
+           res.status(200).json({'returnval':null});
+         }
+       }else{
+         console.log(err);
+       }
+     });
+ });
+
+
+app.post('/fetchfilterreport-service',  urlencodedParser,function (req, res){
+  if(req.query.filtertype=="General")
+    var qur = "SELECT * FROM mlzscrm.md_student_paidfee where paid_date>='"+req.query.fromdate+"' "+
+             "and paid_date<='"+req.query.todate+"' and school_id='"+req.query.schoolid+"' and paid_status in('paid','inprogress') order by paid_date";
+  else if(req.query.filtertype=="Cheque Collection")
+    var qur = "SELECT * FROM mlzscrm.md_student_paidfee where paid_date>='"+req.query.fromdate+"' "+
+             "and paid_date<='"+req.query.todate+"' and school_id='"+req.query.schoolid+"' and paid_status in('paid','inprogress') "+
+             " and mode_of_payment='Cheque' order by paid_date";
+  else if(req.query.filtertype=="Fee Collection")
+    var qur = "SELECT * FROM mlzscrm.md_student_paidfee where paid_date>='"+req.query.fromdate+"' "+
+             "and paid_date<='"+req.query.todate+"' and school_id='"+req.query.schoolid+"' and paid_status in('paid','inprogress') "+
+             " and mode_of_payment='Cash' order by paid_date";
+  else if(req.query.filtertype=="FeeTypewise Collection")
+    var qur = "SELECT * FROM mlzscrm.md_student_paidfee where paid_date>='"+req.query.fromdate+"' "+
+             "and paid_date<='"+req.query.todate+"' and school_id='"+req.query.schoolid+"' and paid_status in('paid','inprogress') order by installment_type";
+   else if(req.query.filtertype=="Overall Collection")
+    var qur = "SELECT * FROM mlzscrm.md_student_paidfee where paid_date>='"+req.query.fromdate+"' "+
+             "and paid_date<='"+req.query.todate+"' and school_id='"+req.query.schoolid+"' and paid_status in('paid','inprogress') order by installment_type";
+  
+
+
+  console.log('-----------------------collection report--------------------------');
+  console.log(qur);
+  console.log('-------------------------------------------------');
    connection.query(qur,
      function(err, rows){
        if(!err){
@@ -3569,6 +3615,9 @@ app.post('/fetchfeecollectionreport-service',  urlencodedParser,function (req, r
 app.post('/fetchoverallcollectionreport-service',  urlencodedParser,function (req, res){
    var qur = "SELECT installment,sum(installment_amount) FROM mlzscrm.md_student_paidfee where paid_date>='"+req.query.fromdate+"' "+
              "and paid_date<='"+req.query.todate+"' and school_id='"+req.query.schoolid+"' group by installment,mode_of_payment";
+   console.log('-----------------------collection consolidation report--------------------------');
+   console.log(qur);
+   console.log('-------------------------------------------------');
    connection.query(qur,
      function(err, rows){
        if(!err){
