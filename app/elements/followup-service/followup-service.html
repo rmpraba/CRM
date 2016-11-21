@@ -626,10 +626,11 @@ newdate.setDate(newdate.getDate()+resultarr[0].no_of_days);
      },
      getfollowupstudents:function(grade,status){
         this.getfollowupstudentsurl=sessionStorage.getItem("addrinfo")+"/getfollowupstudents";
-        var obj={"schol":"","fngrade":"","fnstatus":""};
+        var obj={"schol":"","fngrade":"","fnstatus":"","user":""};
         obj.schol=localStorage.getItem("schoolid");
         obj.fngrade=grade;
         obj.fnstatus=status;
+        obj.user=localStorage.getItem("employeename");
         this.getfollowupstudentsparam=obj;
         //alert(JSON.stringify(obj));
         this.$.getfollowupstudentsajax.generateRequest();
