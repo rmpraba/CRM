@@ -2427,6 +2427,7 @@ app.post('/insertchequefees',  urlencodedParser,function (req, res){
         paid_date:req.query.receiveddate,
         paid_status:req.query.chequestatus,
         created_by:req.query.createdby,
+        bank_name:req.query.bankname,
         receipt_no:""
     };
 
@@ -2514,6 +2515,7 @@ app.post('/inserttransferfees',  urlencodedParser,function (req, res){
         paid_date:req.query.receiveddate,
         paid_status:req.query.paidstatus,
         created_by:req.query.createdby,
+        bank_name:req.query.bankname,
         receipt_no:""
     };
 
@@ -3700,6 +3702,157 @@ app.post('/fetchfollowupmaster',  urlencodedParser,function (req, res){
      });
  });
 
+app.post('/fetchprocessingcheque-service',  urlencodedParser,function (req, res){
+   var qur = "SELECT * FROM mlzscrm.md_student_paidfee where paid_date>='"+req.query.fromdate+"' "+
+             "and paid_date<='"+req.query.todate+"' and school_id='"+req.query.schoolid+"' and mode_of_payment='Cheque' and paid_status='inprogress' order by paid_date";
+   console.log('-----------------------fetching cheques--------------------------');
+   console.log(qur);
+   console.log('-------------------------------------------------');
+   connection.query(qur,
+     function(err, rows){
+       if(!err){
+         if(rows.length>0){
+           res.status(200).json({'returnval': rows});
+         }else{
+           console.log(err);
+           res.status(200).json({'returnval':null});
+         }
+       }else{
+         console.log(err);
+       }
+     });
+ });
+
+app.post('/searchwithdrawcheques-service',  urlencodedParser,function (req, res){
+   var qur = "SELECT * FROM md_student_paidfee where school_id='"+req.query.schoolid+"' and (admission_no='"+req.query.admissionno+"' or admission_no='"+req.query.enquiryno+"') and paid_status in ('inprogress','paid') order by paid_date";
+   console.log('-----------------------fetching cheques--------------------------');
+   console.log(qur);
+   console.log('-------------------------------------------------');
+   connection.query(qur,
+     function(err, rows){
+       if(!err){
+         if(rows.length>0){
+           res.status(200).json({'returnval': rows});
+         }else{
+           console.log(err);
+           res.status(200).json({'returnval':null});
+         }
+       }else{
+         console.log(err);
+       }
+     });
+ });
+
+
+app.post('/insertreturninfo-service',  urlencodedParser,function (req, res){
+   var qur = "INSERT INTO md_withdrawal SET ?";
+
+   var response={
+    school_id:req.query.schoolid,
+    academic_year:req.query.academicyear,
+    admission_no:req.query.admissionno,
+    student_name:req.query.studentname,
+    grade:req.query.grade,
+    payable_amount:req.query.payableamount,
+    paid_amount:req.query.paidamount,
+    returned_amount:req.query.returnamount,
+    returned_date:req.query.returndate,
+    paytype:req.query.paytype,
+    cheque_no:req.query.chequeno,
+    bank_name:req.query.bankname,
+    created_by:req.query.createdby,
+    ack_no:""
+   }
+
+   connection.query("SELECT * FROM receipt_sequence",function(err, rows){
+    response.ack_no="ACK-"+response.academic_year+"-"+rows[0].withdraw_seq;
+    var new_ack_no=parseInt(rows[0].withdraw_seq)+1;
+    // console.log(new_ack_no);
+   connection.query(qur,[response],
+     function(err, result){
+       if(!err){
+         if(result.affectedRows>0){
+           
+           connection.query("UPDATE receipt_sequence SET withdraw_seq='"+new_ack_no+"'",function(err, result){
+            if(result.affectedRows>0){
+            console.log(result.affectedRows+new_ack_no);
+            res.status(200).json({'returnval': 'Done!','info':response,'receiptno':response.ack_no});
+            }
+            else
+            res.status(200).json({'returnval': 'Seq not updated!'});
+            });
+         
+           // res.status(200).json({'returnval': 'inserted'});
+         }else{
+           console.log(err);
+           res.status(200).json({'returnval': 'not inserted'});
+         }
+       }
+       else{
+         console.log(err);
+       }
+     });
+
+ });
+ });
+
+
+app.post('/updatewithdrawstatus-service',  urlencodedParser,function (req, res){
+  
+   connection.query("UPDATE md_student_paidfee SET paid_status='Withdrawn' WHERE (admission_no='"+req.query.admissionno+"' or admission_no='"+req.query.enquiryno+"') and school_id='"+req.query.schoolid+"'",function(err, rows){
+       if(!err)  {  
+        connection.query("UPDATE tr_cheque_details SET paid_status='Withdrawn' WHERE (admission_no='"+req.query.admissionno+"' or admission_no='"+req.query.enquiryno+"')  and school_id='"+req.query.schoolid+"'",function(err, rows){    
+          if(!err)  {  
+            connection.query("UPDATE tr_student_fees SET paid_status='Withdrawn' WHERE (admission_no='"+req.query.admissionno+"' or admission_no='"+req.query.enquiryno+"')  and school_id='"+req.query.schoolid+"'",function(err, rows){    
+              if(!err)  { 
+              connection.query("UPDATE tr_transfer_details SET paid_status='Withdrawn' WHERE (admission_no='"+req.query.admissionno+"' or admission_no='"+req.query.enquiryno+"') ' and school_id='"+req.query.schoolid+"'",function(err, rows){      
+                if(!err){
+                  connection.query("UPDATE student_enquiry_details SET status='Withdrawn' WHERE enquiry_no='"+req.query.enquiryno+"' and school_id='"+req.query.schoolid+"'",function(err, rows){      
+                  if(!err)
+                  res.status(200).json({'returnval': 'updated'});
+                });
+                }
+                });
+           }
+         });
+         }
+        });
+       }
+       else
+         console.log(err);
+       
+     });
+ });
+
+
+app.post('/updatechequestatus-service',  urlencodedParser,function (req, res){
+  
+  var masterupdate="UPDATE md_student_paidfee SET paid_status='"+req.query.chequestatus+"' WHERE (admission_no='"+req.query.admissionno+"' or admission_no='"+req.query.enquiryno+"') "+
+  " and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and grade='"+req.query.grade+"' and installment='"+req.query.installment+"' and "+
+  " cheque_no='"+req.query.chequeno+"' and bank_name='"+req.query.bankname+"' and paid_status='"+req.query.paidstatus+"'";
+
+  var chequeupdate="UPDATE tr_cheque_details SET paid_status='"+req.query.chequestatus+"',cheque_status='"+req.query.chequestatus+"' WHERE (admission_no='"+req.query.admissionno+"' or admission_no='"+req.query.enquiryno+"') "+
+  " and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and grade='"+req.query.grade+"' and installment='"+req.query.installment+"' and "+
+  " cheque_no='"+req.query.chequeno+"' and bank_name='"+req.query.bankname+"' and cheque_status='"+req.query.paidstatus+"'";
+
+  console.log('----------------------------------------------');
+  console.log(masterupdate);
+  console.log('----------------------------------------------');
+  console.log(chequeupdate);
+
+   connection.query(masterupdate,function(err, rows){
+       if(!err)  {  
+        connection.query(chequeupdate,function(err, rows){    
+          if(!err)  { 
+            res.status(200).json({'returnval': 'Updated!'});
+            }
+          else
+            res.status(200).json({'returnval': 'Not Updated!'});
+
+          });
+      }
+    });
+});
 
 
 app.post('/getrmnamelist',  urlencodedParser,function (req, res){

@@ -100,7 +100,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         } else if((dat.getMonth()+1)<=6){
           academic_year='AY-'+(dat.getFullYear())+'-'+(dat.getFullYear()+1);
         }
-        this.getcountyearwiseurl="http://localhost:8086/getcountyearwise";
+        this.getcountyearwiseurl=sessionStorage.getItem("addrinfo")+"/getcountyearwise";
         var obj={"schoolid":"","academicyr":""};
         obj.schoolid=localStorage.getItem("schoolid");
         obj.academicyr=academic_year;
@@ -109,7 +109,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       getcountyearwiseResponse:function(e){
         academicarr=e.detail.response.returnval;
-        this.getcurrmonthcounturl="http://localhost:8086/getcurrmonthcount";
+        this.getcurrmonthcounturl=sessionStorage.getItem("addrinfo")+"/getcurrmonthcount";
         var obj={"schoolid":"","currmonth":""};
         obj.schoolid=localStorage.getItem("schoolid");
         obj.currmonth=(dat.getMonth()+1)+'/'+'%/'+dat.getFullYear();
@@ -119,7 +119,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       getcurrmonthcountResponse:function(e){
         currmontharr=e.detail.response.returnval;
-        this.getcurrdaycounturl="http://localhost:8086/getcurrdaycount";
+        this.getcurrdaycounturl=sessionStorage.getItem("addrinfo")+"/getcurrdaycount";
         var obj={"schoolid":"","todate":""};
         obj.schoolid=localStorage.getItem("schoolid");
         obj.todate=(dat.getMonth()+1)+'/'+dat.getDate()+'/'+dat.getFullYear();
@@ -191,7 +191,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         } else if((dat.getMonth()+1)<=6){
           academic_year='AY-'+(dat.getFullYear())+'-'+(dat.getFullYear()+1);
         }
-        this.getcapacityurl="http://localhost:8086/getcapacity";
+        this.getcapacityurl=sessionStorage.getItem("addrinfo")+"/getcapacity";
         var obj={"schoolid":"","academic_year":""};
         obj.schoolid=localStorage.getItem("schoolid");
         obj.academicyr=academic_year;
@@ -265,7 +265,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         } else if((dat.getMonth()+1)<=6){
           academic_year='AY-'+(dat.getFullYear())+'-'+(dat.getFullYear()+1);
         }
-        this.getadmissioncounturl="http://localhost:8086/gettotaladmissioncount";
+        this.getadmissioncounturl=sessionStorage.getItem("addrinfo")+"/gettotaladmissioncount";
         var obj={"schoolid":"","academic_year":""};
         obj.schoolid=localStorage.getItem("schoolid");
         obj.academicyr=academic_year;
