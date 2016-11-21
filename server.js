@@ -945,7 +945,7 @@ app.post('/submitenquiry',  urlencodedParser,function (req, res)
   "first_name":req.query.firstname,"middle_name":req.query.middlename,"last_name":req.query.lastname,
   "dob":req.query.dobs,"father_name":req.query.father,"locality":req.query.location,"mother_name":req.query.mother,
   "father_email":req.query.email,"created_by":req.query.createdby,"created_on":req.query.createdate,
-  "enquiry_name":req.query.givenname,"gemail":req.query.gemail,"gmob":req.query.gmob,"parent_or_guardian":req.query.paga,"Guardianname":req.query.Guardianname,"status":"Enquired","rte_student":req.query.rtestudent,"year_type":req.query.adtype,"discount_type_code":req.query.discounttype};
+  "enquiry_name":req.query.givenname,"gemail":req.query.gemail,"gmob":req.query.gmob,"parent_or_guardian":req.query.paga,"Guardianname":req.query.Guardianname,"status":"Enquired","rte_student":req.query.rtestudent,"year_type":req.query.adtype,"discount_type_code":req.query.discounttype,"orginated_by":req.query.attendername,"followed_by":req.query.attendername};
        console.log(collection);
        connection.query('insert into student_enquiry_details set ? ',[collection],
         function(err, rows)
@@ -1037,7 +1037,7 @@ app.post('/updateenquiry',  urlencodedParser,function (req, res)
    "guardian_company":req.query.guardiancompany,"guardian_job":req.query.guardianjob,
    "guardian_occup":req.query.guardianoccup,"guardian_income":req.query.guardianincome,"locality":req.query.location,
    "mother_occupation_other":req.query.motherother,"father_occupation_other":req.query.fatherother,
-   "year_type":req.query.enrolltype,"country_name":req.query.country_name};
+   "year_type":req.query.enrolltype,"country_name":req.query.country_name,"orginated_by":req.query.attendername,"followed_by":req.query.attendername};
 
    console.log('registerenquiry.............'+req.query.admissiontestevs+"  "+req.query.admissiontestenglish+"  "+req.query.admissiontestmaths);
    var school={"school_id":req.query.schol};
@@ -2663,7 +2663,7 @@ app.post('/getadmittedcount',  urlencodedParser,function (req, res){
 
 /*this function insert the followup information in followup table*/
 app.post('/updatefollow',  urlencodedParser,function (req, res) {
-  var collection={"school_id":req.query.schol,"id":req.query.id,"enquiry_id":req.query.enquiryno,"schedule_no":req.query.schedule,"created_by":req.query.createdby,"created_on":req.query.createdon,"current_confidence_level":req.query.currconfidence,"schedule_status":req.query.schedulestatus,"schedule_flag":req.query.scheduleflag,"no_of_days":req.query.noofdays,"no_of_schedules":req.query.noofschedule,"last_schedule_date":req.query.lastscheduleon,"upcoming_date":req.query.upcomingdate};
+  var collection={"school_id":req.query.schol,"id":req.query.id,"enquiry_id":req.query.enquiryno,"schedule_no":req.query.schedule,"created_by":req.query.createdby,"created_on":req.query.createdon,"current_confidence_level":req.query.currconfidence,"schedule_status":req.query.schedulestatus,"schedule_flag":req.query.scheduleflag,"no_of_days":req.query.noofdays,"no_of_schedules":req.query.noofschedule,"last_schedule_date":req.query.lastscheduleon,"upcoming_date":req.query.upcomingdate,"followed_by":req.query.followername};
        connection.query('insert into followup set ? ',[collection],
         function(err, rows)
         {
@@ -3700,6 +3700,112 @@ app.post('/fetchfollowupmaster',  urlencodedParser,function (req, res){
      });
  });
 
+
+
+app.post('/getrmnamelist',  urlencodedParser,function (req, res){
+    var qur={"school_id":req.query.schol};
+    connection.query('SELECT employee_name FROM md_employee WHERE (role_id="ROLE101" OR role_id="ROLE102") and ?',[qur],
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      //console.log(rows);
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': ''});
+    }
+    }
+    else{
+     console.log(err);
+    }
+    });
+});
+
+
+
+/*this function gets the count of student enquired for the current academic year follwed by respective RM officer*/
+app.post('/getrmenquirydetails',  urlencodedParser,function (req, res){
+  var qurh="SELECT COUNT( * ) AS total, enquiry_source FROM  `student_enquiry_details` WHERE school_id='"+req.query.schol+"' AND followed_by='"+req.query.followed_by+"' AND academic_year='"+req.query.academicsyr+"' GROUP BY (enquiry_source)";
+  console.log(qurh);
+    connection.query(qurh,
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      //console.log(rows);
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': ''});
+    }
+    }
+    else{
+     console.log(err);
+    }
+    });
+});
+
+
+/*this function gets the count of student enquired for the current month follwed by respective RM officer*/
+app.post('/getcurrentmnthdetails',  urlencodedParser,function (req, res){
+  var  qurr="SELECT COUNT( * ) AS total, enquiry_source FROM  `student_enquiry_details` WHERE school_id='"+req.query.schol+"' AND followed_by='"+req.query.followed_by+"' AND created_on like '"+req.query.currmonth+"' GROUP BY (enquiry_source)";
+  console.log(qurr);
+    connection.query(qurr,
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      //console.log(rows);
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': ''});
+    }
+    }
+    else{
+     console.log(err);
+    }
+    });
+});
+
+/*this function gets the count of student enquired for the current date follwed by respective RM officer*/
+app.post('/getcurrentdaydetails',  urlencodedParser,function (req, res){
+  var qurz="SELECT COUNT( * ) AS total, enquiry_source FROM  `student_enquiry_details` WHERE school_id='"+req.query.schol+"' AND followed_by='"+req.query.followed_by+"' AND created_on='"+req.query.today+"' GROUP BY (enquiry_source)";
+  console.log(qurz);
+    connection.query(qurz,
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      //console.log(rows);
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': ''});
+    }
+    }
+    else{
+     console.log(err);
+    }
+    });
+});
 
 function setvalue(){
   console.log("calling setvalue.....");

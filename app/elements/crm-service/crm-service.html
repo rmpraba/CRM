@@ -371,6 +371,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       debounce-duration="300"
     >
     </iron-ajax>
+    <!-- this ajax is used to fetch the name list of counsellors and relationship manager -->
+    <iron-ajax
+      method="post"
+      id="getrmnamelistajax"
+      url="{{getrmnamelisturl}}"
+      params="{{getrmnamelistparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="getrmnamelistResponse"
+      debounce-duration="300"
+    >
+    </iron-ajax>
   </template>
   <script>
   (function() {
@@ -421,6 +433,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var walkinanalysisday={};
     var walkinanasysisyaerandmontharr=[];
     var walkinanasysisarr=[];
+    var attenderusername;
     Polymer({
       is: 'crm-service',
 
@@ -443,10 +456,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     fourthfollowupdate.setDate(fourthfollowupdate.getDate()+fourthfollowup);
     fifthfollowupdate.setDate(fifthfollowupdate.getDate()+fifthfollowup);
      },
-     submitenqiry:function(enqno,academicyear,grade,Fnfirstname,Fnmiddlename,Fnlastname,gender,dob,fathername,mothername,mob,email,textvalue,todate,gemail,gmob,Guardianname,paga,admtype,checkList,discounttype){
+     submitenqiry:function(enqno,academicyear,grade,Fnfirstname,Fnmiddlename,Fnlastname,gender,dob,fathername,mothername,mob,email,textvalue,todate,gemail,gmob,Guardianname,paga,admtype,checkList,discounttype,attendername){
       // alert(discountype);
 
-
+attenderusername=attendername;
 
       //alert(enqno+academicyr+classes+studentname+gender+dob+mob+source+locality+category);
       successbox=enqno;
@@ -454,7 +467,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        currentEnqno = enqno;
 
         this.submitenquiryurl="http://localhost:8086/submitenquiry";
-        var obj={"id":"","schol":"","acadeyr":"","contact":"","grade":"","gender":"","firstname":"","middlename":"","lastname":"","dobs":"","father":"","mother":"","email":"","location":"","createdby":"","createdate":"","givenname":"","status":"","gemail":"","gmob":"","Guardianname":"","paga":"","adtype":""}
+        var obj={"id":"","schol":"","acadeyr":"","contact":"","grade":"","gender":"","firstname":"","middlename":"","lastname":"","dobs":"","father":"","mother":"","email":"","location":"","createdby":"","createdate":"","givenname":"","status":"","gemail":"","gmob":"","Guardianname":"","paga":"","adtype":"","attendernamefn":""}
 
         obj.id=enqno;
         obj.schol=localStorage.getItem("schoolid");
@@ -479,6 +492,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         obj.Guardianname=Guardianname;
         obj.paga=paga;
         obj.adtype=admtype;
+        obj.attendernamefn=attendername;
         obj.discounttype=discounttype;
         this.submitenquiryparam=obj;
 
@@ -524,7 +538,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        // alert(JSON.stringify(result));
        if (result == "success") {
          alert("Submited Successfully for Enquiry ID :" + successbox);
-         document.querySelector('followup-service').GenerateFollowups(successbox);
+         document.querySelector('followup-service').GenerateFollowups(successbox,attenderusername);
 
          this.updatesequrl = "http://localhost:8086/updateseq";
          var obj = {"id": "", "schol": ""};
@@ -715,7 +729,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           alert("Form Submit Interrupted")
         }
       },
-      registerenquiryform:function(enqno,firstname,middlename,lastname,gender,grade,dob,oldclass,oldschool,mothertongue,fathername,mothername,fatheredu,motheredu,fathermob,mothermob,fathermail,mothermail,fathercompany,mothercompany,fatherjob,motherjob,flat,address1,address2,address3,city,pincode,state,enquiysource,siblingname,siblingdetail,transportreq,canteenreq,secondlanguage,thirdlanguage,propspectus,dadpost,mompost,dadsalary,momsalary,prospect, academicyear,admissiontest,admissiondate, admissiontestenglish, admissiontestmaths,admissiontestevs,guardianname,guardianmobile,guardianemail,guardiancompany,guardianjob,guardianoccup,guardianincome,location,fatherother,motherother,guardianother,enrolltype,country_name,rteno,checkList){
+      registerenquiryform:function(enqno,firstname,middlename,lastname,gender,grade,dob,oldclass,oldschool,mothertongue,fathername,mothername,fatheredu,motheredu,fathermob,mothermob,fathermail,mothermail,fathercompany,mothercompany,fatherjob,motherjob,flat,address1,address2,address3,city,pincode,state,enquiysource,siblingname,siblingdetail,transportreq,canteenreq,secondlanguage,thirdlanguage,propspectus,dadpost,mompost,dadsalary,momsalary,prospect, academicyear,admissiontest,admissiondate, admissiontestenglish, admissiontestmaths,admissiontestevs,guardianname,guardianmobile,guardianemail,guardiancompany,guardianjob,guardianoccup,guardianincome,location,fatherother,motherother,guardianother,enrolltype,country_name,rteno,checkList,attendername){
+        attenderusername=attendername;
         enquirynjski=enqno;
         testenqid=enqno;
         testdate=admissiondate;
@@ -726,7 +741,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         rte_number = rteno;
         //alert(enqno+firstname+middlename+lastname+gender+grade+dob+oldclass+oldschool+mothertongue+fathername+mothername+fatheredu+motheredu+fathermob+mothermob+fathermail+mothermail+fathercompany+mothercompany+fatherjob+motherjob+flat+address1+address2+address3+city+pincode+state+enquiysource+siblingname+siblingdetail+transportreq+canteenreq+secondlanguage+thirdlanguage+propspectus+dadpost+mompost+dadsalary+momsalary);
         this.registerenquiryformurl="http://localhost:8086/registerenquiryform";
-        var obj={"schol":"","enq":"","firstname":"","middlename":"","lastname":"","gender":"","grade":"","dob":"","oldclass":"","oldschool":"","mothertongue":"","fathername":"","mothername":"","fatheredu":"","motheredu":"","fathermob":"","mothermob":"","fathermail":"","mothermail":"","fathercompany":"","mothercompany":"","fatherjob":"","motherjobfn":"","flatno":"","address1":"","address2":"","address3":"","city":"","pincode":"","statename":"","enquiysource":"","siblingname":"","siblingdetails":"","transportreq":"","canteenreq":"","secondlanguage":"","thirdlanguage":"","modified":"","prospectstatus":"","daddesignation":"","momdesignation":"","dadincome":"","momincome":"","prospectusno":"", "academicyear":"","givenname":"", "status":"","admissiontest":"","admissiondate":"",'admissiontestenglish':"","admissiontestmaths":"","admissiontestevs":"","guardianname":"","guardianmobile":"","guardianemail":"","guardiancompany":"","guardianjob":"","guardianoccup":"","guardianincome":"","location":"","fatherother":"","motherother":"","guardianother":"","enrolltype":"","country_name":""};
+        var obj={"schol":"","enq":"","firstname":"","middlename":"","lastname":"","gender":"","grade":"","dob":"","oldclass":"","oldschool":"","mothertongue":"","fathername":"","mothername":"","fatheredu":"","motheredu":"","fathermob":"","mothermob":"","fathermail":"","mothermail":"","fathercompany":"","mothercompany":"","fatherjob":"","motherjobfn":"","flatno":"","address1":"","address2":"","address3":"","city":"","pincode":"","statename":"","enquiysource":"","siblingname":"","siblingdetails":"","transportreq":"","canteenreq":"","secondlanguage":"","thirdlanguage":"","modified":"","prospectstatus":"","daddesignation":"","momdesignation":"","dadincome":"","momincome":"","prospectusno":"", "academicyear":"","givenname":"", "status":"","admissiontest":"","admissiondate":"",'admissiontestenglish':"","admissiontestmaths":"","admissiontestevs":"","guardianname":"","guardianmobile":"","guardianemail":"","guardiancompany":"","guardianjob":"","guardianoccup":"","guardianincome":"","location":"","fatherother":"","motherother":"","guardianother":"","enrolltype":"","country_name":"","attendernamefn":""};
         obj.schol=localStorage.getItem("schoolid");
         obj.enq=enqno;
         obj.firstname=firstname;
@@ -794,6 +809,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         obj.guardianother=guardianother;
         obj.enrolltype=enrolltype;
         obj.country_name=country_name;
+        obj.attendername=attendernamefn;
         this.registerenquiryformparam=obj;
         this.$.registerenquiryformajax.generateRequest();
 
@@ -846,7 +862,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           document.querySelector('enquiry-card').ready();
           this.updateenquiryno();
           document.querySelector('detailed-enquiry-form').Fnclear();
-          document.querySelector('followup-service').GenerateFollowups(enquirynjski);
+        document.querySelector('followup-service').GenerateFollowups(enquirynjski,attenderusername);
             }
           if (rte_number) {
             this.rtenumberurl = "http://localhost:8086/rtenumber";
@@ -1332,6 +1348,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var result  = e.detail.response.returnval;
         document.querySelector('walkin-analysis-filter-card').reportarr=result;
         document.querySelector('walkin-analysis-filter-card').showReport();
+      },
+      getrmnamelist:function(){
+        this.getrmnamelisturl="http://localhost:8086/getrmnamelist";
+        var obj={"schol":""};
+        obj.schol=localStorage.getItem("schoolid");
+        this.getrmnamelistparam=obj;
+        this.$.getrmnamelistajax.generateRequest();
+
+      },
+      getrmnamelistResponse:function(e){
+          var resultarr=e.detail.response.returnval;
+          if(resultarr.length>0){
+               document.querySelector('newenquiry-card').listnamearr=resultarr;
+               document.querySelector('detailed-enquiry-form').listnamearr=resultarr;
+               document.querySelector('callanalysis-report-card').listnamearr=resultarr;
+          }
       }
     });
   })();
