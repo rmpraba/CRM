@@ -1,0 +1,85 @@
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="exchange-followup">
+  <template>
+  <div class="col-sm-6">
+    <label>Orignated</label>&nbsp
+    <paper-dropdown-menu id="fromcounsellor" label="Select Counsellor" on-iron-select="FnCounsellor"  style="margin-top: 3%;">
+      <paper-menu class="dropdown-content"  class="dropdown-content">
+        <template  is="dom-repeat" items="{{counsellorarr}}" as="item">
+          <paper-item>{{item.orginated_by}}</paper-item>
+        </template>
+      </paper-menu>
+    </paper-dropdown-menu>
+  </div>
+  <div class="col-sm-6">
+    <label>Exchange to</label>&nbsp
+    <paper-dropdown-menu id="tocounsellor" label="Select Counsellor" on-iron-select="exchangeTo"  style="margin-top: 3%;">
+      <paper-menu class="dropdown-content"  class="dropdown-content">
+        <template  is="dom-repeat" items="{{counsellorarr}}" as="item">
+          <paper-item>{{item.orginated_by}}</paper-item>
+        </template>
+      </paper-menu>
+    </paper-dropdown-menu>
+  </div>
+  <table class="table table-hover" hidden$={{exchangetable}}>
+      <thead>
+        <tr>
+          <th>Enquiry No</th>
+          <th>Student Name</th>
+          <th>Grade</th>
+          <th>Enquiry Date</th>
+          <th>Save</th>
+        </tr>
+      </thead>
+      <tbody>
+        <template  is="dom-repeat" items="{{studentarr}}" as="view">
+          <tr>
+            <exchange-followup-item-card enquiryno="{{view.enquiry_no}}" enquiryname="{{view.enquiry_name}}" grade="{{view.class}}" createdby="{{view.created_on}}"></exchange-followup-item-card>
+          </tr>
+        </template>
+      </tbody>
+    </table>
+    <paper-button class="btn btn-primary col-sm-1 col-sm-offset-5" id="exchangesubmit" on-click="submit" disabled={{exchangesubmit}} hidden$={{exchangesubmitbtn}}>Submit</paper-button> 
+  <exchange-followup-service id="exchange"></exchange-followup-service>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+    var counsellor='';
+    var exchangetocounsellor='';
+    var exchangearr=[];
+    Polymer({
+      is: 'exchange-followup',
+      ready:function(){
+        this.$.exchange.getcounsellor();
+        this.exchangesubmit = true;
+        this.exchangesubmitbtn = true;
+        this.exchangetable = true;
+      },
+      FnCounsellor:function(e){
+        counsellor=(e.target.selectedItem.textContent).trim();
+        this.$.exchange.getStudentsForCounsellor(counsellor);
+        this.exchangetable = false;
+        this.exchangesubmitbtn = false;
+      },
+      exchangeTo:function(e){
+        exchangetocounsellor=(e.target.selectedItem.textContent).trim();
+        this.exchangesubmit = false;
+      },
+      exchange:function(enquiryno){
+        exchangearr.push(enquiryno);
+      },
+      noexchange:function(enquiryno){
+        var i = exchangearr.indexOf(enquiryno);
+        if(i != -1) {
+          exchangearr.splice(i, 1);
+        }
+      },
+      submit:function(){
+        this.$.exchange.exchangestudents(exchangetocounsellor, exchangearr);
+      }
+    });
+  })();
+  </script>
+</dom-module>

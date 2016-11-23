@@ -1320,10 +1320,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         obj.schol=localStorage.getItem("schoolid");
         var fromdate = new Date(from_date);
         var month1 = fromdate.getMonth() + 1;
-        obj.from_date =  fromdate.getDate()+'/'+month1+'/' + fromdate.getFullYear();
+        obj.from_date =  month1+'/'+fromdate.getDate()+'/'+ fromdate.getFullYear();
         var todate = new Date(to_date);
         var month2 = todate.getMonth() + 1;
-        obj.to_date = todate.getDate() + '/' +month2+ '/' + todate.getFullYear();
+        obj.to_date = month2+ '/'+todate.getDate() + '/' + todate.getFullYear();
         this.getbetweendatereportparam=obj;
         this.$.getbetweendatereportajax.generateRequest();
       },
