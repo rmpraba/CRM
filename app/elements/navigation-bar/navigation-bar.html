@@ -756,7 +756,6 @@
         if(localStorage.getItem("admapproval")=='true'){
           this.$.admapp.hidden=true;
         }
-
       },
       FnFeetypeschedule:function(e){
         document.querySelector('feetype-schedule-card').FnRefresh();
@@ -871,11 +870,10 @@
           document.querySelector('fees-card').FnRefresh();
           document.querySelector('fees-card').ready();
       },
-<<<<<<< HEAD
       exchange_followup:function(){
         document.querySelector('app-list').setPage("exchange-followup","Balance Followup");
         document.querySelector('exchange-followup').ready();
-=======
+      },  
       call_analysis:function(){
         document.querySelector('app-list').setPage("callanalysis-report-card","Follow-Up Call Analysis Report");
           document.querySelector('callanalysis-report-card').ready();
@@ -886,7 +884,6 @@
       },
       FnWithdrawal:function(){
           document.querySelector('app-list').setPage("withdrawal-card","Withdrawal Processing");
->>>>>>> 1d812aa79f72c44eeafc6d58226cb7e8ffa1df35
       }
     });
   })();
