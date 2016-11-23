@@ -260,26 +260,7 @@
           <li id="dashboard">
             <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
           </li>
-          <li id="reports">
-            <a href="" aria-hidden="true"><i class="fa fa-table fa-fw"></i>Report<span class="fa arrow"></span></a>
-            <ul class="nav nav-second-level">
-              <li>
-                <a href="" on-click="walkin_analysis" aria-hidden="true">Walkin Analysis</a>
-                <!-- <a href="flot.html"></a> -->
-              </li>
-              <li>
-                <a href="" on-click="walkin_analysis_filter" aria-hidden="true">Walkin Analysis With Filter</a>
-                <!-- <a href="flot.html"></a> -->
-              </li>
-              <li>
-                <a href="" on-click="call_analysis" aria-hidden="true">Follow-Up Call Analysis</a>
-                <!-- <a href="flot.html"></a> -->
-              </li>
-              <li>
-                <a href="" on-click="Fnmasteranalysis" aria-hidden="true">Master Enquiry Analysis</a>
-              </li>
-            </ul>
-          </li>
+          
           <li id="enquiry">
             <a href="" aria-hidden="true" on-click="enquiry"><i class="fa fa-phone-square fa-fw"></i> Enquiry<span class="fa arrow"></span></a>
             <ul class="nav nav-second-level">
@@ -290,17 +271,40 @@
               <li>
                 <a href="" on-click="Fnenqform" aria-hidden="true" data-toggle="modal" data-target="#addDetailedEnquiry">Enquiry Form</a>
               </li>
+               <li id="">
+            <a href="" aria-hidden="true" on-click="followupdashboard" data-toggle="modal"> Follow Up</a>
+          </li>
             </ul>
+          </li>
 
-          </li>
-          <li id="">
-            <a href="" aria-hidden="true" on-click="followupdashboard"><i class="fa fa-calendar fa-fw"></i> Follow Up</a>
-          </li>
+          <li id="admission">
+            <a href="" aria-hidden="true" on-click="schedule"><i class="fa fa-check fa-fw"></i>Fees Structure</a>
+            <ul class="nav nav-second-level">
+              <li>
+                <a href="" aria-hidden="true" data-toggle="modal" data-target="#feetypeschedule" on-click="FnFeetypeschedule">Fee Type Schedule</a>
+              </li>
+              <li>
+                <a href="" aria-hidden="true" data-toggle="modal" data-target="#discountschedule" on-click="FnDiscountschedule">Discount Schedule</a>
+              </li>
+              <li>
+                <a href="" aria-hidden="true" data-toggle="modal" data-target="#feestructureschedule" on-click="FnFeestructureschedule">Installment Schedule</a>
+              </li>
+              </ul>
+           </li>
+
+        <li id="enrollment">
+            <a href="" aria-hidden="true"><i class="fa fa-phone-square fa-fw"></i> Enrollment<span class="fa arrow"></span></a>
+            <ul class="nav nav-second-level">         
           <li id="adtest">
-            <a href="" aria-hidden="true" data-toggle="modal" data-target="#admissiontest" data-backdrop="static" data-keyboard="false" on-click="FnAdmissionTest"><i class="fa fa-check fa-fw"></i>Admission Test</a>
+            <a href="" aria-hidden="true" data-toggle="modal" data-target="#admissiontest" data-backdrop="static" data-keyboard="false" on-click="FnAdmissionTest"><i class="fa fa-table fa-fw"></i>Admission Test</a>
           </li>
           <li id="admission">
-            <a href="" aria-hidden="true" data-toggle="modal" data-target="#newadmission" data-backdrop="static" data-keyboard="false" on-click="FnAdmission"><i class="fa fa-check fa-fw"></i>Admission</a>
+            <a href="" aria-hidden="true" data-toggle="modal" data-target="#newadmission" data-backdrop="static" data-keyboard="false" on-click="FnAdmission"><i class="fa fa-table fa-fw"></i>Admission</a>
+          </li>
+           <li id="withdrawalprocess">
+            <a href="" aria-hidden="true" on-click="FnWithdrawal"><i class="fa fa-table fa-fw"></i>Wthdrawal Processing</a>
+           </li>
+          </ul>
           </li>
           <!-- <li id="payment">
             <a href="" aria-hidden="true" data-toggle="modal" data-target="#feepayment"><i class="fa fa-money fa-fw"></i>Fee Payment</a>
@@ -322,31 +326,46 @@
             </nav-second-level>
           </li>
 
-           <li id="admission">
-            <a href="" aria-hidden="true" on-click="schedule"><i class="fa fa-check fa-fw"></i>Schedule Fees</a>
+          <li id="reports">
+            <a href="" aria-hidden="true"><i class="fa fa-table fa-fw"></i>Report<span class="fa arrow"></span></a>
             <ul class="nav nav-second-level">
+            <li id="enquiryreports">
+            <a href="" aria-hidden="true"><i class="fa fa-table fa-fw"></i>Enquiry Analysis Report<span class="fa arrow"></span></a>
+            <ul class="nav nav-third-level">
               <li>
-                <a href="" aria-hidden="true" data-toggle="modal" data-target="#feetypeschedule" on-click="FnFeetypeschedule">Fee Type Schedule</a>
+                <a href="" on-click="walkin_analysis" aria-hidden="true">Walkin Analysis</a>
+                <!-- <a href="flot.html"></a> -->
               </li>
               <li>
-                <a href="" aria-hidden="true" data-toggle="modal" data-target="#discountschedule" on-click="FnDiscountschedule">Discount Schedule</a>
+                <a href="" on-click="walkin_analysis_filter" aria-hidden="true">Walkin Analysis With Filter</a>
+                <!-- <a href="flot.html"></a> -->
               </li>
               <li>
-                <a href="" aria-hidden="true" data-toggle="modal" data-target="#feestructureschedule" on-click="FnFeestructureschedule">Installment Schedule</a>
+                <a href="" on-click="call_analysis" aria-hidden="true">Follow-Up Call Analysis</a>
+                <!-- <a href="flot.html"></a> -->
               </li>
-              </ul>
+              <li>
+                <a href="" on-click="Fnmasteranalysis" aria-hidden="true">Master Enquiry Analysis</a>
+              </li>
+            </ul>
+            </li>
+            <li id="collectionreports">
+            <a href="" aria-hidden="true"><i class="fa fa-table fa-fw"></i>Fee Collection Report<span class="fa arrow"></span></a>
+            <ul class="nav nav-third-level">
+              <li id="feecollectionreport">
+            <a href="" aria-hidden="true" on-click="FnFeeCollectionReport"><i class="fa fa-table fa-fw"></i>Fee Collection Report</a>
+            <li id="chequerealization">
+            <a href="" aria-hidden="true" on-click="FnChequerealization"><i class="fa fa-table fa-fw"></i>Cheque Realization</a>
            </li>
+           </li>
+            </ul>
+            </li>
+            </ul>
+          </li> 
 
-           <li id="feecollectionreport">
-            <a href="" aria-hidden="true" on-click="FnFeeCollectionReport"><i class="fa fa-check fa-fw"></i>Fee Collection Report</a>
-           </li>
-           <li id="chequerealization">
-            <a href="" aria-hidden="true" on-click="FnChequerealization"><i class="fa fa-check fa-fw"></i>Cheque Realization</a>
-           </li>
-           <li id="withdrawalprocess">
-            <a href="" aria-hidden="true" on-click="FnWithdrawal"><i class="fa fa-check fa-fw"></i>Wthdrawal Processing</a>
-           </li>
-
+           
+           
+          
           <li id="admform">
             <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Admission Form<!-- <span class="fa arrow"></span> --></a>
           </li>

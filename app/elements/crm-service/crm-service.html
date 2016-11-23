@@ -467,7 +467,7 @@ attenderusername=attendername;
        currentEnqno = enqno;
 
         this.submitenquiryurl=sessionStorage.getItem("addrinfo")+"/submitenquiry";
-        var obj={"id":"","schol":"","acadeyr":"","contact":"","grade":"","gender":"","firstname":"","middlename":"","lastname":"","dobs":"","father":"","mother":"","email":"","location":"","createdby":"","createdate":"","givenname":"","status":"","gemail":"","gmob":"","Guardianname":"","paga":"","adtype":"","attendernamefn":""}
+        var obj={"id":"","schol":"","acadeyr":"","contact":"","grade":"","gender":"","firstname":"","middlename":"","lastname":"","dobs":"","father":"","mother":"","email":"","location":"","createdby":"","createdate":"","givenname":"","status":"","gemail":"","gmob":"","Guardianname":"","paga":"","adtype":"","attendername":""}
 
         obj.id=enqno;
         obj.schol=localStorage.getItem("schoolid");
@@ -492,7 +492,7 @@ attenderusername=attendername;
         obj.Guardianname=Guardianname;
         obj.paga=paga;
         obj.adtype=admtype;
-        obj.attendernamefn=attendername;
+        obj.attendername=attendername;
         obj.discounttype=discounttype;
         this.submitenquiryparam=obj;
 
@@ -1077,21 +1077,16 @@ attenderusername=attendername;
       obj.schol=localStorage.getItem("schoolid");
       this.getparentnameparam=obj;
       this.$.getparentnameajax.generateRequest();
-
-
      },
      getparentnameResponse:function(e){
       parentarr=e.detail.response.returnval;
       //alert(JSON.stringify(parentarr));
-
-
       for(var i=0;i<parentarr.length;i++){
         //alert(parentarr[i].parent_name);
         var obj={"listname":""}
         obj.listname=parentarr[i].parent_name;
         namelistarr.push(obj);
       }
-
       this.getstudentnameurl=sessionStorage.getItem("addrinfo")+"/getstudentnamelist";
       var obj={"schol":""}
       obj.schol=localStorage.getItem("schoolid");
