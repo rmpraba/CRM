@@ -42,7 +42,7 @@
         //alert(JSON.stringify(e.detail.response.address));
       },
       Fn_login_userlogin:function(username,password){ 
-         this.loginpageurl="http://localhost:8086/loginpage";
+         this.loginpageurl=sessionStorage.getItem("addrinfo")+"/loginpage";
         var obj={"username":"","password":""}
         obj.username=username;
         obj.password=password;
@@ -97,6 +97,7 @@
         document.querySelector('app-list').setPage("enquiry","Enquiry");
         }
       }
+
 
      
       });

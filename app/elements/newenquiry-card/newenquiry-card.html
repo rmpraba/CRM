@@ -148,6 +148,15 @@
             </template>
           </paper-listbox>
         </div>
+        <div class="col-sm-6">
+          <paper-dropdown-menu label="Attended By" id="rmnames">
+            <paper-menu id="class" class="dropdown-content" required on-iron-select="attendedby" valueattr="value" >
+              <template  is="dom-repeat" items="{{listnamearr}}" as="view">
+                <paper-item >{{view.employee_name}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
+        </div>
            </div>
 
       <div class="col-md-12 form-button">
@@ -214,12 +223,14 @@
         var yearsxz;
         var checkList=[];
         var todaydat;
+        var attendername;
     Polymer({
       is: 'newenquiry-card',
 ready:function () {
         this.$.service.getclasses();
         this.$.service.getlocation();
         this.$.service.getdiscounts();
+        this.$.service.getrmnamelist();
         this.$.fathersdetails.hidden=true;
         this.$.Guardiandetails.hidden=true;
         var dt=new Date();
@@ -552,7 +563,7 @@ ready:function () {
         }
         else{
           // alert('coming........');
-        this.$.service.submitenqiry(this.enqno,this.academicyear,grade,this.firstname,this.middlename,this.lastname,gender,dobdate,this.fathername,this.mothername,this.mob,this.email,this.textvalue,this.todaydate,this.gemail,this.gmob,this.Guardianname,paga,enrolltype,checkList,this.discounttypecode);
+        this.$.service.submitenqiry(this.enqno,this.academicyear,grade,this.firstname,this.middlename,this.lastname,gender,dobdate,this.fathername,this.mothername,this.mob,this.email,this.textvalue,this.todaydate,this.gemail,this.gmob,this.Guardianname,paga,enrolltype,checkList,this.discounttypecode,attendername);
       }}
       },
       verifymob:function(){
@@ -647,6 +658,8 @@ ready:function () {
             enrolltype=null;
             this.academicyear="";
           }
+      },attendedby:function(e){
+          attendername=(e.target.selectedItem.textContent).trim();
       }
     });
   })();

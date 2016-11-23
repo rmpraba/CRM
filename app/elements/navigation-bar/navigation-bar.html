@@ -272,6 +272,10 @@
                 <!-- <a href="flot.html"></a> -->
               </li>
               <li>
+                <a href="" on-click="call_analysis" aria-hidden="true">Follow-Up Call Analysis</a>
+                <!-- <a href="flot.html"></a> -->
+              </li>
+              <li>
                 <a href="" on-click="Fnmasteranalysis" aria-hidden="true">Master Enquiry Analysis</a>
               </li>
             </ul>
@@ -338,6 +342,12 @@
 
            <li id="feecollectionreport">
             <a href="" aria-hidden="true" on-click="FnFeeCollectionReport"><i class="fa fa-check fa-fw"></i>Fee Collection Report</a>
+           </li>
+           <li id="chequerealization">
+            <a href="" aria-hidden="true" on-click="FnChequerealization"><i class="fa fa-check fa-fw"></i>Cheque Realization</a>
+           </li>
+           <li id="withdrawalprocess">
+            <a href="" aria-hidden="true" on-click="FnWithdrawal"><i class="fa fa-check fa-fw"></i>Wthdrawal Processing</a>
            </li>
 
           <li id="admform">
@@ -814,7 +824,7 @@
       FnRefresh:function(){
         document.querySelector('fees-card').ready();
         document.querySelector('fees-card').FnRefresh();
-        document.querySelector('admission-service').FnRefresh();
+        // document.querySelector('admission-service').FnRefresh();
       },
       enquiry:function(){
         this.$.service.getenquirycount();
@@ -861,9 +871,22 @@
           document.querySelector('fees-card').FnRefresh();
           document.querySelector('fees-card').ready();
       },
+<<<<<<< HEAD
       exchange_followup:function(){
         document.querySelector('app-list').setPage("exchange-followup","Balance Followup");
         document.querySelector('exchange-followup').ready();
+=======
+      call_analysis:function(){
+        document.querySelector('app-list').setPage("callanalysis-report-card","Follow-Up Call Analysis Report");
+          document.querySelector('callanalysis-report-card').ready();
+        },
+      FnChequerealization:function(){
+          document.querySelector('app-list').setPage("cheque-realization-card","Cheque Processing");
+          document.querySelector('cheque-realization-card').FnCallService();
+      },
+      FnWithdrawal:function(){
+          document.querySelector('app-list').setPage("withdrawal-card","Withdrawal Processing");
+>>>>>>> 1d812aa79f72c44eeafc6d58226cb7e8ffa1df35
       }
     });
   })();
