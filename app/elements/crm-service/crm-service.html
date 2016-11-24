@@ -383,6 +383,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       debounce-duration="300"
     >
     </iron-ajax>
+    <!-- this ajax is used to get the enquiry sources available to generate the list -->
+    <iron-ajax
+      method="post"
+      id="getenquirysourceajax"
+      url="{{getenquirysourceurl}}"
+      params="{{getenquirysourceparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="getenquirysourceResponse"
+      debounce-duration="300"
+    >
+    </iron-ajax>
   </template>
   <script>
   (function() {
@@ -456,18 +468,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     fourthfollowupdate.setDate(fourthfollowupdate.getDate()+fourthfollowup);
     fifthfollowupdate.setDate(fifthfollowupdate.getDate()+fifthfollowup);
      },
-     submitenqiry:function(enqno,academicyear,grade,Fnfirstname,Fnmiddlename,Fnlastname,gender,dob,fathername,mothername,mob,email,textvalue,todate,gemail,gmob,Guardianname,paga,admtype,checkList,discounttype,attendername){
+     submitenqiry:function(enqno,academicyear,grade,Fnfirstname,Fnmiddlename,Fnlastname,gender,dob,fathername,mothername,mob,email,textvalue,todate,gemail,gmob,Guardianname,paga,admtype,discounttype,attendername,source){
       // alert(discountype);
 
 attenderusername=attendername;
 
       //alert(enqno+academicyr+classes+studentname+gender+dob+mob+source+locality+category);
       successbox=enqno;
-      discountArr =  checkList;
+     // discountArr =  checkList;
        currentEnqno = enqno;
 
         this.submitenquiryurl=sessionStorage.getItem("addrinfo")+"/submitenquiry";
-        var obj={"id":"","schol":"","acadeyr":"","contact":"","grade":"","gender":"","firstname":"","middlename":"","lastname":"","dobs":"","father":"","mother":"","email":"","location":"","createdby":"","createdate":"","givenname":"","status":"","gemail":"","gmob":"","Guardianname":"","paga":"","adtype":"","attendernamefn":""}
+        var obj={"id":"","schol":"","acadeyr":"","contact":"","grade":"","gender":"","firstname":"","middlename":"","lastname":"","dobs":"","father":"","mother":"","email":"","location":"","createdby":"","createdate":"","givenname":"","status":"","gemail":"","gmob":"","Guardianname":"","paga":"","adtype":"","attendernamefn":"","fnsource":""}
 
         obj.id=enqno;
         obj.schol=localStorage.getItem("schoolid");
@@ -492,8 +504,9 @@ attenderusername=attendername;
         obj.Guardianname=Guardianname;
         obj.paga=paga;
         obj.adtype=admtype;
-        obj.attendernamefn=attendername;
+        obj.attendernamefn=attenderusername;
         obj.discounttype=discounttype;
+        obj.fnsource=source;
         this.submitenquiryparam=obj;
 
         //alert(JSON.stringify(obj));
@@ -548,7 +561,7 @@ attenderusername=attendername;
          //alert(JSON.stringify(obj));
          this.$.updateseqajax.generateRequest();
 
-         //this.getenquirycount();
+         this.getenquirycount();
          document.querySelector('enquiry-card').ready();
 
          document.querySelector('newenquiry-card').Fnclear();
@@ -688,6 +701,7 @@ attenderusername=attendername;
       var result=e.detail.response.returnval;
       // alert(result);
       if(result="success"){
+        this.getenquirycount();
         if(discountArr.length > 0){
           for(var i=0;i < discountArr.length;i++){
             this.discountdetenqurl=sessionStorage.getItem("addrinfo")+"/discountenq";
@@ -741,11 +755,11 @@ attenderusername=attendername;
         rte_number = rteno;
         //alert(enqno+firstname+middlename+lastname+gender+grade+dob+oldclass+oldschool+mothertongue+fathername+mothername+fatheredu+motheredu+fathermob+mothermob+fathermail+mothermail+fathercompany+mothercompany+fatherjob+motherjob+flat+address1+address2+address3+city+pincode+state+enquiysource+siblingname+siblingdetail+transportreq+canteenreq+secondlanguage+thirdlanguage+propspectus+dadpost+mompost+dadsalary+momsalary);
         this.registerenquiryformurl=sessionStorage.getItem("addrinfo")+"/registerenquiryform";
-        var obj={"schol":"","enq":"","firstname":"","middlename":"","lastname":"","gender":"","grade":"","dob":"","oldclass":"","oldschool":"","mothertongue":"","fathername":"","mothername":"","fatheredu":"","motheredu":"","fathermob":"","mothermob":"","fathermail":"","mothermail":"","fathercompany":"","mothercompany":"","fatherjob":"","motherjobfn":"","flatno":"","address1":"","address2":"","address3":"","city":"","pincode":"","statename":"","enquiysource":"","siblingname":"","siblingdetails":"","transportreq":"","canteenreq":"","secondlanguage":"","thirdlanguage":"","modified":"","prospectstatus":"","daddesignation":"","momdesignation":"","dadincome":"","momincome":"","prospectusno":"", "academicyear":"","givenname":"", "status":"","admissiontest":"","admissiondate":"",'admissiontestenglish':"","admissiontestmaths":"","admissiontestevs":"","guardianname":"","guardianmobile":"","guardianemail":"","guardiancompany":"","guardianjob":"","guardianoccup":"","guardianincome":"","location":"","fatherother":"","motherother":"","guardianother":"","enrolltype":"","country_name":"","attendernamefn":""};
+        var obj={"schol":"","enq":"","firstname":"","middlename":"","lastname":"","gender":"","grade":"","dob":"","oldclass":"","oldschool":"","mothertongue":"","fathername":"","mothername":"","fatheredu":"","motheredu":"","fathermob":"","mothermob":"","fathermail":"","mothermail":"","fathercompany":"","mothercompany":"","fatherjob":"","motherjobfn":"","flatno":"","address1":"","address2":"","address3":"","city":"","pincode":"","statename":"","enquiysource":"","siblingname":"","siblingdetails":"","transportreq":"","canteenreq":"","secondlanguage":"","thirdlanguage":"","modified":"","prospectstatus":"","daddesignation":"","momdesignation":"","dadincome":"","momincome":"","prospectusno":"", "academicyear":"","givenname":"", "status":"","admissiontest":"","admissiondate":"",'admissiontestenglish':"","admissiontestmaths":"","admissiontestevs":"","guardianname":"","guardianmobile":"","guardianemail":"","guardiancompany":"","guardianjob":"","guardianoccup":"","guardianincome":"","location":"","fatherother":"","motherother":"","guardianother":"","enrolltype":"","country_name":"","attendernamefn":"","createdon":""};
         obj.schol=localStorage.getItem("schoolid");
         obj.enq=enqno;
         obj.firstname=firstname;
-        
+        obj.createdon=localStorage.getItem("todaydate");
         obj.middlename=middlename;
         obj.lastname=lastname;
         obj.gender=gender;
@@ -790,7 +804,7 @@ attenderusername=attendername;
         obj.prospectusno=prospect;
         obj.academicyear=academicyear;
         obj.givenname=firstname + middlename + lastname;
-        obj.status="Open";
+        obj.status="Enquired";
         obj.admissiontest=admissiontest;
         obj.admissiondate=admissiondate;
         obj.admissiontestenglish=admissiontestenglish;
@@ -809,7 +823,7 @@ attenderusername=attendername;
         obj.guardianother=guardianother;
         obj.enrolltype=enrolltype;
         obj.country_name=country_name;
-        obj.attendername=attendernamefn;
+        obj.attendername=attenderusername;
         this.registerenquiryformparam=obj;
         this.$.registerenquiryformajax.generateRequest();
 
@@ -863,6 +877,7 @@ attenderusername=attendername;
           this.updateenquiryno();
           document.querySelector('detailed-enquiry-form').Fnclear();
         document.querySelector('followup-service').GenerateFollowups(enquirynjski,attenderusername);
+        this.getenquirycount();
             }
           if (rte_number) {
             this.rtenumberurl = sessionStorage.getItem("addrinfo")+"/rtenumber";
@@ -1137,6 +1152,7 @@ attenderusername=attendername;
             document.querySelector('detailed-enquiry-form').fathername=result[0].father_name;
             document.querySelector('detailed-enquiry-form').mothername=result[0].mother_name;
             document.querySelector('detailed-enquiry-form').fathermail=result[0].father_email;
+            document.querySelector('detailed-enquiry-form').enqsource=result[0].enquiry_source;
             document.querySelector('detailed-enquiry-form').Fngrade(result[0].class,result[0].rte_student);
             document.querySelector('detailed-enquiry-form').Fnresult(result[0].dob,result[0].gender);
             document.querySelector('detailed-enquiry-form').dob=result[0].dob;
@@ -1145,6 +1161,7 @@ attenderusername=attendername;
             document.querySelector('detailed-enquiry-form').enqno=result[0].enquiry_no;
             document.querySelector('detailed-enquiry-form').firstname=result[0].first_name;
             document.querySelector('detailed-enquiry-form').middlename=result[0].middle_name;
+            document.querySelector('detailed-enquiry-form').enqsource=result[0].enquiry_source;
             document.querySelector('detailed-enquiry-form').lastname=result[0].last_name;
             document.querySelector('detailed-enquiry-form').guardianname=result[0].Guardianname;
             document.querySelector('detailed-enquiry-form').guardianmobile=result[0].gmob;
@@ -1364,6 +1381,18 @@ attenderusername=attendername;
                document.querySelector('detailed-enquiry-form').listnamearr=resultarr;
                document.querySelector('callanalysis-report-card').listnamearr=resultarr;
           }
+      },
+      getenquirysource:function(){
+        this.getenquirysourceurl=sessionStorage.getItem("addrinfo")+"/getenquirysource";
+        var obj={"schol":""};
+        obj.schol=localStorage.getItem("schoolid");
+        this.getenquirysourceparam=obj;
+        this.$.getenquirysourceajax.generateRequest();
+      },
+      getenquirysourceResponse:function(e){
+          var result=e.detail.response.returnval;
+           document.querySelector('detailed-enquiry-form').sourcearr=result;
+           document.querySelector('newenquiry-card').sourcearr=result;
       }
     });
   })();

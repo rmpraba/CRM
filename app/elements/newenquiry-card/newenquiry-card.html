@@ -149,7 +149,19 @@
           </paper-listbox>
         </div>
         <div class="col-sm-6">
-          <paper-dropdown-menu label="Attended By" id="rmnames">
+           <paper-dropdown-menu label="Enquiry Source" on-iron-select="source" attr-for-selected="value"  style="margin-top: 3%;">
+            <paper-menu class="dropdown-content" id="source"  class="dropdown-content">
+              <template  is="dom-repeat" items="{{sourcearr}}" as="item">
+                <paper-item>{{item.source}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
+        </div>
+           </div>
+
+           <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+              <paper-dropdown-menu label="Attended By" id="rmnames">
             <paper-menu id="class" class="dropdown-content" required on-iron-select="attendedby" valueattr="value" >
               <template  is="dom-repeat" items="{{listnamearr}}" as="view">
                 <paper-item >{{view.employee_name}}</paper-item>
@@ -157,8 +169,7 @@
             </paper-menu>
           </paper-dropdown-menu>
         </div>
-           </div>
-
+        </div>
       <div class="col-md-12 form-button">
         <paper-button class="btn btn-primary" on-click="submit">SUBMIT</paper-button>
       </div>
@@ -224,6 +235,7 @@
         var checkList=[];
         var todaydat;
         var attendername;
+        var enquiysource;
     Polymer({
       is: 'newenquiry-card',
 ready:function () {
@@ -231,6 +243,7 @@ ready:function () {
         this.$.service.getlocation();
         this.$.service.getdiscounts();
         this.$.service.getrmnamelist();
+        this.$.service.getenquirysource();
         this.$.fathersdetails.hidden=true;
         this.$.Guardiandetails.hidden=true;
         var dt=new Date();
@@ -247,6 +260,7 @@ ready:function () {
           this.$.parents.checked=false;
           this.$.Gurdians.checked=false;
           this.$.itemlist.selected=-1;
+          this.$.source.selected=-1;
           this.firstname="";
           this.middlename="";
           this.Guardianname="";
@@ -260,7 +274,7 @@ ready:function () {
           this.email="";
           this.textvalue="";
           this.datepekar="";
-          enqsource=null;
+           enquiysource=null;
          enqcategory=null;
          dobdate=null;
          habitatid=null;
@@ -279,6 +293,11 @@ ready:function () {
       classes:function(e){
           grade=(e.target.selectedItem.textContent).trim();
       },
+       source:function(e){
+        enquiysource=(e.target.selectedItem.textContent).trim();
+//alert(enquiysource);
+       
+    },
 
      /* Fnacademicyr:function(e){
         academicyear=(e.target.selectedItem.textContent).trim();
@@ -523,7 +542,7 @@ ready:function () {
         }
         else{
           // alert('coming........');
-        this.$.service.submitenqiry(this.enqno,this.academicyear,grade,this.firstname,this.middlename,this.lastname,gender,dobdate,this.fathername,this.mothername,this.mob,this.email,this.textvalue,this.todaydate,this.gemail,this.gmob,this.Guardianname,paga,enrolltype,rtestudent);
+        this.$.service.submitenqiry(this.enqno,this.academicyear,grade,this.firstname,this.middlename,this.lastname,gender,dobdate,this.fathername,this.mothername,this.mob,this.email,this.textvalue,this.todaydate,this.gemail,this.gmob,this.Guardianname,paga,enrolltype,this.discounttypecode,attendername,enquiysource);
       }
 
       }
@@ -563,7 +582,7 @@ ready:function () {
         }
         else{
           // alert('coming........');
-        this.$.service.submitenqiry(this.enqno,this.academicyear,grade,this.firstname,this.middlename,this.lastname,gender,dobdate,this.fathername,this.mothername,this.mob,this.email,this.textvalue,this.todaydate,this.gemail,this.gmob,this.Guardianname,paga,enrolltype,checkList,this.discounttypecode,attendername);
+        this.$.service.submitenqiry(this.enqno,this.academicyear,grade,this.firstname,this.middlename,this.lastname,gender,dobdate,this.fathername,this.mothername,this.mob,this.email,this.textvalue,this.todaydate,this.gemail,this.gmob,this.Guardianname,paga,enrolltype,this.discounttypecode,attendername,enquiysource);
       }}
       },
       verifymob:function(){

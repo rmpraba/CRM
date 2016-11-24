@@ -945,7 +945,7 @@ app.post('/submitenquiry',  urlencodedParser,function (req, res)
   "first_name":req.query.firstname,"middle_name":req.query.middlename,"last_name":req.query.lastname,
   "dob":req.query.dobs,"father_name":req.query.father,"locality":req.query.location,"mother_name":req.query.mother,
   "father_email":req.query.email,"created_by":req.query.createdby,"created_on":req.query.createdate,
-  "enquiry_name":req.query.givenname,"gemail":req.query.gemail,"gmob":req.query.gmob,"parent_or_guardian":req.query.paga,"Guardianname":req.query.Guardianname,"status":"Enquired","rte_student":req.query.rtestudent,"year_type":req.query.adtype,"discount_type_code":req.query.discounttype,"orginated_by":req.query.attendername,"followed_by":req.query.attendername};
+  "enquiry_name":req.query.givenname,"gemail":req.query.gemail,"gmob":req.query.gmob,"parent_or_guardian":req.query.paga,"Guardianname":req.query.Guardianname,"status":"Enquired","rte_student":req.query.rtestudent,"year_type":req.query.adtype,"discount_type_code":req.query.discounttype,"orginated_by":req.query.attendernamefn,"followed_by":req.query.attendernamefn,"enquiry_source":req.query.fnsource};
        console.log(collection);
        connection.query('insert into student_enquiry_details set ? ',[collection],
         function(err, rows)
@@ -1037,7 +1037,7 @@ app.post('/updateenquiry',  urlencodedParser,function (req, res)
    "guardian_company":req.query.guardiancompany,"guardian_job":req.query.guardianjob,
    "guardian_occup":req.query.guardianoccup,"guardian_income":req.query.guardianincome,"locality":req.query.location,
    "mother_occupation_other":req.query.motherother,"father_occupation_other":req.query.fatherother,
-   "year_type":req.query.enrolltype,"country_name":req.query.country_name,"orginated_by":req.query.attendername,"followed_by":req.query.attendername};
+   "year_type":req.query.enrolltype,"country_name":req.query.country_name,"orginated_by":req.query.attendername,"followed_by":req.query.attendername,"created_on":req.query.createdon};
 
    console.log('registerenquiry.............'+req.query.admissiontestevs+"  "+req.query.admissiontestenglish+"  "+req.query.admissiontestmaths);
    var school={"school_id":req.query.schol};
@@ -3941,6 +3941,32 @@ app.post('/getcurrentdaydetails',  urlencodedParser,function (req, res){
   var qurz="SELECT COUNT( * ) AS total, enquiry_source FROM  `student_enquiry_details` WHERE school_id='"+req.query.schol+"' AND followed_by='"+req.query.followed_by+"' AND created_on='"+req.query.today+"' GROUP BY (enquiry_source)";
   console.log(qurz);
     connection.query(qurz,
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      //console.log(rows);
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': ''});
+    }
+    }
+    else{
+     console.log(err);
+    }
+    });
+});
+
+
+/*this function is used to get the type of enquiry sources available*/
+app.post('/getenquirysource',  urlencodedParser,function (req, res){
+  var qur={"school_id":req.query.schol};
+    connection.query('select * from md_enquiry_source where ?',[qur],
     function(err, rows)
     {
     if(!err)
