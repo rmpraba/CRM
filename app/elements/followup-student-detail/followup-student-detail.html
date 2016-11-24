@@ -37,7 +37,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <a on-click="showmoredetails"><i class="fa fa-external-link"></i> View more details...</a>
         </div>
       </div>
-      <div><p><center><strong style="font-size: larger;">FollowUp Schedule - {{schedule}}</strong></center></p></div>
+      <div><div><center><strong style="font-size: larger;">FollowUp Schedule - {{schedule}}</strong></center></div> <div style="text-align: right;">Status : <a href="" class="glyphicon glyphicon-pencil" on-click="changestatus">{{fnstatus}}</a></div></div>
 <div class="list-group col-sm-12 panel-body form-category">
       <table class="table table-striped" >
         <thead>
@@ -133,8 +133,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </div>
       </paper-dialog>
 
-<paper-item hiddem>{{lastdate}}</paper-item>
-    <paper-input readonly value="{{status}}"></paper-input>
+      <paper-dialog id="statusdialog" class="paper-date-picker-dialog">
+        <paper-dropdown-menu label="Change Status" >
+              <paper-menu id="statuschange" class="dropdown-content" on-iron-select="Fnchangestatus" valueattr="value" >
+                <paper-item >Closed</paper-item>
+                <paper-item >Re-Schedule</paper-item>
+                <paper-item >Not Interested</paper-item>
+              </paper-menu>
+            </paper-dropdown-menu>
+      </paper-dialog>
+
+<paper-item hidden>{{lastdate}}</paper-item>
     <!-- Modal -->
 
         <followup-service id="followupservice"></followup-service>
@@ -185,6 +194,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           document.getElementById('cbenglsh').checked=englsh;
           document.getElementById('cbmaths').checked=maths;
           document.getElementById('cbevs').checked=evs;
+      },
+      changestatus:function(){
+        document.querySelector('#statusdialog').open();
+      },
+      Fnchangestatus:function(e){
+        var statuszx=(e.target.selectedItem.textContent).trim();
+        alert(statuszx);
+        if(statuszx=='Re-Schedule'){
+
+        }
+        else{
+          this.$.followupservice.FnChangestatus(this.followupid,statuszx,this.enqno);
+        }
+      document.querySelector('#statusdialog').close();
       }
     
     });

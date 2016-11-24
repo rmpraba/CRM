@@ -4079,6 +4079,45 @@ app.post('/getenquirysource',  urlencodedParser,function (req, res){
 });
   });
 
+ app.post('/FnChangestatus',  urlencodedParser,function (req, res)
+ {
+    var check=req.query.fnstatus;
+    var enquiryid=req.query.fnenqid;
+   var school={"school_id":req.query.schol};
+   var collection={"reschedule_by":req.query.user,"rescheduled_on":req.query.today,"schedule_status":req.query.fnstatus};
+   var followupid={"id":req.query.followupid};
+   connection.query('update followup set ? where ? and ?',[collection,school,followupid],
+     function(err, rows)
+     {
+       if(!err)
+       {
+         console.log('inserted');
+         res.status(200).json({'returnval': 'success'});
+         if(check=='Not Interested'){
+            connection.query('update student_enquiry_details set status="Closed" where ? and ?',[school,enquiryid],
+             function(err, rows)
+             {
+               if(!err)
+               {
+                 console.log('inserted');
+               }
+               else
+               {
+                 console.log(err);
+               }
+
+             });
+         }
+       }
+       else
+       {
+         console.log(err);
+         res.status(200).json({'returnval': 'invalid'});
+       }
+
+     });
+ });
+
 function setvalue(){
   console.log("calling setvalue.....");
 }
