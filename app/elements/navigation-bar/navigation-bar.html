@@ -280,6 +280,9 @@
               </li>
             </ul>
           </li>
+          <li id="exchange-followup">
+            <a href="" on-click="exchange_followup" ><i class="fa fa-exchange fa-fw"></i>Balance Followup</a>
+          </li>
           <li id="enquiry">
             <a href="" aria-hidden="true" on-click="enquiry"><i class="fa fa-phone-square fa-fw"></i> Enquiry<span class="fa arrow"></span></a>
             <ul class="nav nav-second-level">
@@ -878,7 +881,11 @@
       },
       FnWithdrawal:function(){
           document.querySelector('app-list').setPage("withdrawal-card","Withdrawal Processing");
-      }
+      },
+      exchange_followup:function(){
+        document.querySelector('app-list').setPage("exchange-followup","Balance Followup");
+        document.querySelector('exchange-followup').ready();
+      },  
     });
   })();
   </script>
