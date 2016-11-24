@@ -26,6 +26,7 @@
         <!-- </div> -->
       </section>
     </iron-pages>
+    <login-service id="login"></login-service>
 </template>
 
 <script>
@@ -33,8 +34,7 @@
     is: "CRM-app",
     ready: function()
     {
-
-
+this.$.login.addinfoconfig();
       this.page="loginpage";
 
 

@@ -279,6 +279,11 @@
 
           <li id="admission">
             <a href="" aria-hidden="true" on-click="schedule"><i class="fa fa-check fa-fw"></i>Fees Structure</a>
+          <li id="exchange-followup">
+            <a href="" on-click="exchange_followup" ><i class="fa fa-exchange fa-fw"></i>Balance Followup</a>
+          </li>
+          <li id="enquiry">
+            <a href="" aria-hidden="true" on-click="enquiry"><i class="fa fa-phone-square fa-fw"></i> Enquiry<span class="fa arrow"></span></a>
             <ul class="nav nav-second-level">
               <li>
                 <a href="" aria-hidden="true" data-toggle="modal" data-target="#feetypeschedule" on-click="FnFeetypeschedule">Fee Type Schedule</a>
@@ -897,7 +902,11 @@
       },
       FnWithdrawal:function(){
           document.querySelector('app-list').setPage("withdrawal-card","Withdrawal Processing");
-      }
+      },
+      exchange_followup:function(){
+        document.querySelector('app-list').setPage("exchange-followup","Balance Followup");
+        document.querySelector('exchange-followup').ready();
+      },  
     });
   })();
   </script>

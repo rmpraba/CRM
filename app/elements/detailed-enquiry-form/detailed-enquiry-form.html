@@ -63,7 +63,7 @@
           </div>
         </div>
         <div class="col-sm-9 enquiry-input">
-          <label>Category</label>
+          <label>Special Discounts</label>
           <template  is="dom-repeat" items="{{discountarr}}" as="view">
             <special-discount-card code="{{view.id}}" discountname="{{view.discount_type_name}}"></special-discount-card>
           </template>
@@ -359,23 +359,14 @@
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-4">
-          <paper-dropdown-menu label="Enquiry Source" >
-            <paper-menu id="source" class="dropdown-content" on-iron-select="source" valueattr="value" >
-              <paper-item >Walk-Ins</paper-item>
-              <paper-item >Zee Television Ads</paper-item>
-              <paper-item >Newspaper</paper-item>
-              <paper-item >Print Media</paper-item>
-              <paper-item >Poll Board</paper-item>
-              <paper-item >Direction Boards</paper-item>
-              <paper-item >Bounties</paper-item>
-              <paper-item >FM/Radio</paper-item>
-              <paper-item >BTL Activities</paper-item>
-              <paper-item >Referrer</paper-item>
-              <paper-item >Weblinks</paper-item>
-              <paper-item >Website</paper-item>
-              <paper-item >Siblings</paper-item>
+         <paper-dropdown-menu hidden={{enqsource1}} label="Enquiry Source" on-iron-select="source" attr-for-selected="value"  style="margin-top: 3%;">
+            <paper-menu class="dropdown-content" id="source"  class="dropdown-content">
+              <template  is="dom-repeat" items="{{sourcearr}}"  as="item" selected={{enqsource}}>
+                <paper-item>{{item.source}}</paper-item>
+              </template>
             </paper-menu>
           </paper-dropdown-menu>
+          <paper-input hidden={{enqsource2}} readonly value={{enqsource}}></paper-input>
         </div>
         <div class="col-sm-4" id="sibname">
           <paper-input  label="Names of sibling" value="{{siblingname}}"></paper-input>
@@ -461,7 +452,7 @@
           <paper-input id="prospectno" label="Prospectus / Admission Number" value="{{prospectusno}}"></paper-input>
         </div>
       </div>
-      <div class="col-md-12 form-button" style='margin-left: -10%;'>
+      <div class="col-md-12 form-button">
          <div class="col-sm-6">
           <paper-dropdown-menu label="Attended By" id="rmnames">
             <paper-menu id="class" class="dropdown-content" required on-iron-select="attendedby" valueattr="value" >
@@ -517,7 +508,9 @@
     Polymer({
       is: 'detailed-enquiry-form',
       ready:function(){
+        this.Fnsource(false,true);
         this.$.service.getrmnamelist();
+        this.$.service.getenquirysource();
         this.$.searchenq.hidden=false;
         this.$.searchtext.hidden=false;
         this.$.searchenquiry.hidden=false;
@@ -973,7 +966,7 @@
       },
     source:function(e){
         enquiysource=(e.target.selectedItem.textContent).trim();
-
+//alert(enquiysource);
         if(enquiysource=="Siblings"){
           this.$.sibname.hidden=false;
           this.$.sibdetail.hidden=false;
@@ -1632,8 +1625,34 @@ Fnlistbox:function(nameitem){
     },
       rteHandler:function(){
         this.$.rtereference.hidden = true;
-      },attendedby:function(e){
+      },
+      attendedby:function(e){
           attendername=(e.target.selectedItem.textContent).trim();
+      },
+      Fnenqsource:function(source){
+            enquiysource=source;
+            this.enqsource=source;
+//alert(enquiysource);
+        if(enquiysource=="Siblings"){
+          this.$.sibname.hidden=false;
+          this.$.sibdetail.hidden=false;
+          this.$.referrer.hidden=true;
+        }
+        else if(enquiysource=="Referrer"){
+          this.$.referrer.hidden=false;
+          this.$.sibname.hidden=true;
+          this.$.sibdetail.hidden=true;
+           this.$.service.getreferrername();
+        }
+        else{
+          this.$.sibname.hidden=true;
+          this.$.sibdetail.hidden=true;
+          this.$.referrer.hidden=true;
+        }
+      },
+      Fnsource:function(source1,source2){
+        this.enqsource1=source1;
+        this.enqsource2=source2;
       }
     });
   })();

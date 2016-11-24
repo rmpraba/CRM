@@ -356,6 +356,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         debounce-duration="300"
         >
   </iron-ajax>
+  <!-- this ajax is used to change the status of the current follow up -->
+  <iron-ajax
+        method="post"
+        id="FnChangestatusajax"
+        url="{{FnChangestatusurl}}"
+        params="{{FnChangestatusparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="FnChangestatusResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
   </template>
   <script>
   (function() {
@@ -460,7 +472,6 @@ newdate.setDate(newdate.getDate()+resultarr[0].no_of_days);
          obj.createdby=localStorage.getItem("employeeid");
         obj.createdon=sessionStorage.getItem("todaydate");
           this.updatefollowdetailparam=obj;
-       // alert(JSON.stringify(obj));
         this.$.updatefollowdetailajax.generateRequest();
 
         this.getfollowupcount();
@@ -474,9 +485,10 @@ newdate.setDate(newdate.getDate()+resultarr[0].no_of_days);
       },
       updatefollowdetailResponse:function(e){
         if(e.detail.response.returnval=='success'){
-          // alert(e.detail.response.returnval);
+          //alert(e.detail.response.returnval);
           countresult=countresult+1;
           if(countresult==resultarr[0].no_of_calls){
+            this.getfollowupcount();
           alert('The follwup schedule is updated successfully');
           }
         }
@@ -656,6 +668,7 @@ newdate.setDate(newdate.getDate()+resultarr[0].no_of_days);
       },
       viewdetailResponse:function(e){
         var res=e.detail.response.returnval;
+        alert(JSON.stringify(res));
         var parentid,guardianid;
         document.querySelector('followup-student-detail').enqno=res[0].enquiry_no;
         document.querySelector('followup-student-detail').followupid=res[0].id;
@@ -668,7 +681,7 @@ newdate.setDate(newdate.getDate()+resultarr[0].no_of_days);
         document.querySelector('followup-student-detail').gmobno=res[0].gmob;
         document.querySelector('followup-student-detail').lastdate=res[0].last_schedule_date;
         document.querySelector('followup-student-detail').schedule=res[0].schedule_no;
-        document.querySelector('followup-student-detail').status=res[0].schedule_status;
+        document.querySelector('followup-student-detail').fnstatus=res[0].schedule_Status;
         if((res[0].father_name=="")||(res[0].father_name==null)){
           parentid=true;
         }else{
@@ -766,7 +779,7 @@ newdate.setDate(newdate.getDate()+resultarr[0].no_of_days);
         obj.callstatus=fncallstatus;
         obj.confidencelvl=fnconfidencelvl;
         this.updatefollowupdetailsparam=obj;
-       // alert(JSON.stringify(obj));
+       //alert(JSON.stringify(obj));
         this.$.updatefollowupdetailsajax.generateRequest();
         
       },
@@ -806,12 +819,12 @@ newdate.setDate(newdate.getDate()+resultarr[0].no_of_days);
         obj.user=localStorage.getItem("employeeid");
         obj.today=sessionStorage.getItem("todaydate");
         this.updateschedulestatusparam=obj;
-       // alert(JSON.stringify(obj));
+      // alert(JSON.stringify(obj));
         this.$.updateschedulestatusajax.generateRequest();
     },
     updateschedulestatusResponse:function(e){
         if(e.detail.response.returnval=='success'){
-          // alert(e.detail.response.returnval);
+         // alert(e.detail.response.returnval);
               this.fetchfollowupmasterurl=sessionStorage.getItem("addrinfo")+"/fetchfollowupmaster";
               var obj={"schol":"","fid":"","enquiry":""}
               obj.schol=localStorage.getItem("schoolid");
@@ -864,7 +877,7 @@ newdate.setDate(newdate.getDate()+resultarray[0].no_of_days);
         obj.createdby=localStorage.getItem("employeeid");
         obj.createdon=sessionStorage.getItem("todaydate");
         this.insertfollowupmasterparam=obj;
-        // alert(JSON.stringify(obj));
+       // alert(JSON.stringify(obj));
         this.$.insertfollowupmasterajax.generateRequest();
               
         }
@@ -927,7 +940,7 @@ newdate.setDate(newdate.getDate()+resultarray[0].no_of_days);
     } ,getcurrentmnthdetailsResponse:function(e){
       fncurrmnth=e.detail.response.returnval;
       var dt=new Date();
-         // alert(JSON.stringify(fncurrmnth));
+       //  alert(JSON.stringify(fncurrmnth));
               this.getcurrentdaydetailsurl=sessionStorage.getItem("addrinfo")+"/getcurrentdaydetails";
               var obj={"schol":"","followed_by":"","today":""}
               obj.schol=localStorage.getItem("schoolid");
@@ -986,11 +999,25 @@ newdate.setDate(newdate.getDate()+resultarray[0].no_of_days);
             }
           }
           document.querySelector('callanalysis-report-card').callinanasysisyaerandmontharr=callinanasysisyaerandmontharr;
-          // alert(JSON.stringify(callinanasysisyaerandmontharr));
+         // alert(JSON.stringify(callinanasysisyaerandmontharr));
         } else {
           document.querySelector('callanalysis-report-card').callinanasysisyaerandmontharr=callinanasysisyaerandmontharr;
-          // alert(JSON.stringify(callinanasysisyaerandmontharr));
+          //alert(JSON.stringify(callinanasysisyaerandmontharr));
         }
+      },
+      FnChangestatus:function(fid,status,enqid){
+        var dt=new Date();
+         this.FnChangestatusurl=sessionStorage.getItem("addrinfo")+"/FnChangestatus";
+              var obj={"schol":"","followupid":"","today":"","user":"","fnstatus":"","fnenqid":""}
+              obj.schol=localStorage.getItem("schoolid");
+              obj.followupid=fid;
+              obj.today=dt.getDate()+(dt.getFullYear()+1)+'/'+dt.getFullYear();
+              obj.user=localStorage.getItem("employeeid");
+              obj.fnstatus=status;
+              obj.fnenqid=enqid;
+              this.FnChangestatusparam=obj;
+             alert(JSON.stringify(obj));
+              this.$.FnChangestatusajax.generateRequest();
       }
     });
   })();

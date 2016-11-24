@@ -50,6 +50,7 @@
           if(days<=0){
           document.querySelector('newenquiry-card').dateclear();
           document.querySelector('detailed-enquiry-form').dateclear();
+          this.showdate="";
           }
           else{
           this.showdate = moment(this.$.picker.date).format('L');
