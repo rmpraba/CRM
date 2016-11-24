@@ -460,7 +460,6 @@ newdate.setDate(newdate.getDate()+resultarr[0].no_of_days);
          obj.createdby=localStorage.getItem("employeeid");
         obj.createdon=sessionStorage.getItem("todaydate");
           this.updatefollowdetailparam=obj;
-       // alert(JSON.stringify(obj));
         this.$.updatefollowdetailajax.generateRequest();
 
         this.getfollowupcount();
@@ -474,9 +473,10 @@ newdate.setDate(newdate.getDate()+resultarr[0].no_of_days);
       },
       updatefollowdetailResponse:function(e){
         if(e.detail.response.returnval=='success'){
-          // alert(e.detail.response.returnval);
+          //alert(e.detail.response.returnval);
           countresult=countresult+1;
           if(countresult==resultarr[0].no_of_calls){
+            this.getfollowupcount();
           alert('The follwup schedule is updated successfully');
           }
         }
@@ -766,7 +766,7 @@ newdate.setDate(newdate.getDate()+resultarr[0].no_of_days);
         obj.callstatus=fncallstatus;
         obj.confidencelvl=fnconfidencelvl;
         this.updatefollowupdetailsparam=obj;
-       // alert(JSON.stringify(obj));
+       //alert(JSON.stringify(obj));
         this.$.updatefollowupdetailsajax.generateRequest();
         
       },
@@ -806,12 +806,12 @@ newdate.setDate(newdate.getDate()+resultarr[0].no_of_days);
         obj.user=localStorage.getItem("employeeid");
         obj.today=sessionStorage.getItem("todaydate");
         this.updateschedulestatusparam=obj;
-       // alert(JSON.stringify(obj));
+      // alert(JSON.stringify(obj));
         this.$.updateschedulestatusajax.generateRequest();
     },
     updateschedulestatusResponse:function(e){
         if(e.detail.response.returnval=='success'){
-          // alert(e.detail.response.returnval);
+         // alert(e.detail.response.returnval);
               this.fetchfollowupmasterurl=sessionStorage.getItem("addrinfo")+"/fetchfollowupmaster";
               var obj={"schol":"","fid":"","enquiry":""}
               obj.schol=localStorage.getItem("schoolid");
@@ -864,7 +864,7 @@ newdate.setDate(newdate.getDate()+resultarray[0].no_of_days);
         obj.createdby=localStorage.getItem("employeeid");
         obj.createdon=sessionStorage.getItem("todaydate");
         this.insertfollowupmasterparam=obj;
-        // alert(JSON.stringify(obj));
+       // alert(JSON.stringify(obj));
         this.$.insertfollowupmasterajax.generateRequest();
               
         }
@@ -927,7 +927,7 @@ newdate.setDate(newdate.getDate()+resultarray[0].no_of_days);
     } ,getcurrentmnthdetailsResponse:function(e){
       fncurrmnth=e.detail.response.returnval;
       var dt=new Date();
-         // alert(JSON.stringify(fncurrmnth));
+       //  alert(JSON.stringify(fncurrmnth));
               this.getcurrentdaydetailsurl=sessionStorage.getItem("addrinfo")+"/getcurrentdaydetails";
               var obj={"schol":"","followed_by":"","today":""}
               obj.schol=localStorage.getItem("schoolid");
@@ -986,10 +986,10 @@ newdate.setDate(newdate.getDate()+resultarray[0].no_of_days);
             }
           }
           document.querySelector('callanalysis-report-card').callinanasysisyaerandmontharr=callinanasysisyaerandmontharr;
-          // alert(JSON.stringify(callinanasysisyaerandmontharr));
+         // alert(JSON.stringify(callinanasysisyaerandmontharr));
         } else {
           document.querySelector('callanalysis-report-card').callinanasysisyaerandmontharr=callinanasysisyaerandmontharr;
-          // alert(JSON.stringify(callinanasysisyaerandmontharr));
+          //alert(JSON.stringify(callinanasysisyaerandmontharr));
         }
       }
     });
