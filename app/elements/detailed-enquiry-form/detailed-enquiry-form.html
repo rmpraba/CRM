@@ -359,23 +359,14 @@
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-4">
-          <paper-dropdown-menu label="Enquiry Source" >
-            <paper-menu id="source" class="dropdown-content" on-iron-select="source" valueattr="value" >
-              <paper-item >Walk-Ins</paper-item>
-              <paper-item >Zee Television Ads</paper-item>
-              <paper-item >Newspaper</paper-item>
-              <paper-item >Print Media</paper-item>
-              <paper-item >Poll Board</paper-item>
-              <paper-item >Direction Boards</paper-item>
-              <paper-item >Bounties</paper-item>
-              <paper-item >FM/Radio</paper-item>
-              <paper-item >BTL Activities</paper-item>
-              <paper-item >Referrer</paper-item>
-              <paper-item >Weblinks</paper-item>
-              <paper-item >Website</paper-item>
-              <paper-item >Siblings</paper-item>
+         <paper-dropdown-menu label="Enquiry Source" on-iron-select="source" attr-for-selected="value"  style="margin-top: 3%;">
+            <paper-menu class="dropdown-content" id="source"  class="dropdown-content">
+              <template  is="dom-repeat" items="{{sourcearr}}" as="item">
+                <paper-item>{{item.source}}</paper-item>
+              </template>
             </paper-menu>
           </paper-dropdown-menu>
+          
         </div>
         <div class="col-sm-4" id="sibname">
           <paper-input  label="Names of sibling" value="{{siblingname}}"></paper-input>
@@ -518,6 +509,7 @@
       is: 'detailed-enquiry-form',
       ready:function(){
         this.$.service.getrmnamelist();
+        this.$.service.getenquirysource();
         this.$.searchenq.hidden=false;
         this.$.searchtext.hidden=false;
         this.$.searchenquiry.hidden=false;
@@ -972,7 +964,7 @@
       },
     source:function(e){
         enquiysource=(e.target.selectedItem.textContent).trim();
-
+alert(enquiysource);
         if(enquiysource=="Siblings"){
           this.$.sibname.hidden=false;
           this.$.sibdetail.hidden=false;

@@ -92,9 +92,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       var reportwithcapacity=[];
       var report=[];
       var dat=new Date();
-      var montharrlength ="";
-      var academicarrlength = "";
-      var admissioncountarrlength ="";
     Polymer({
       is: 'reporting-service',
       masterReportService:function(){
@@ -112,12 +109,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       getcountyearwiseResponse:function(e){
         academicarr=e.detail.response.returnval;
-        if(academicarr == null){
-          academicarrlength = 0;
-        } else{
-          academicarrlength = academicarr.length;
-        }
-        this.getcurrmonthcounturl="http://localhost:8086/getcurrmonthcount";
         this.getcurrmonthcounturl=sessionStorage.getItem("addrinfo")+"/getcurrmonthcount";
         var obj={"schoolid":"","currmonth":""};
         obj.schoolid=localStorage.getItem("schoolid");
@@ -128,13 +119,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       getcurrmonthcountResponse:function(e){
         currmontharr=e.detail.response.returnval;
-        if(currmontharr == null){
-          montharrlength = 0;
-        } else{
-          montharrlength = currmontharr.length;
-        }
-        alert(montharrlength);
-        this.getcurrdaycounturl="http://localhost:8086/getcurrdaycount";
         this.getcurrdaycounturl=sessionStorage.getItem("addrinfo")+"/getcurrdaycount";
         var obj={"schoolid":"","todate":""};
         obj.schoolid=localStorage.getItem("schoolid");
@@ -148,14 +132,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.reportforyearandmonth();
       },
       reportforyearandmonth:function(){
-        for(var i = 0; i < academicarrlength; i++){
+        for(var i = 0; i < academicarr.length; i++){
           var f=0;
           if(currdayarr){
             var obj={"grade":"", "year":"","month":"","day":"","prospectus":""};
           }else {
             var obj={"grade":"", "year":"","month":"","day":0,"prospectus":""};
           }
-          for(var j = 0;j<montharrlength;j++){
+          for(var j = 0;j<currmontharr.length;j++){
             if(academicarr[i].classes == currmontharr[j].classes){
               f=1;
               obj.grade = currmontharr[j].classes;
@@ -291,15 +275,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       getadmissioncountResponse:function(e){
         var admissioncountarr=e.detail.response.returnval;
-        if(admissioncountarr == null){
-          admissioncountarrlength = 0;
-        }else {
-          admissioncountarrlength = admissioncountarr.length;
-        }
         for(var i=0; i<reportwithcapacity.length;i++){
           var f=0;
           var obj = {"grade":"","year":"","month":"","day":"","prospectus":"","max_capacity":"","current_capacity":"","admission":""};
-          for(var j=0; j<admissioncountarrlength; j++){
+          for(var j=0; j<admissioncountarr.length; j++){
             if(reportwithcapacity[i].grade == admissioncountarr[j].classes){
               f=1;
               obj.grade=reportwithcapacity[i].grade;

@@ -14,6 +14,9 @@
         debounce-duration="300"
         >
   </iron-ajax>
+
+
+
   <!-- this below function is to do verify the login information from the database -->
   <iron-ajax
         method="post"
@@ -31,12 +34,17 @@
 
   <script>
   (function() {
+    var addr;
     Polymer({
       is: "login-service",
 
+      addinfoconfig:function(){
+          this.$.addressajax.generateRequest();
+      },
+      
      addressResponse:function(e)
       {
-        var addr=e.detail.response.address;
+        addr=e.detail.response.address;
         //alert(addr);
         sessionStorage.setItem("addrinfo",addr);
         //alert(JSON.stringify(e.detail.response.address));

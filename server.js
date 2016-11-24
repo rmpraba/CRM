@@ -945,7 +945,7 @@ app.post('/submitenquiry',  urlencodedParser,function (req, res)
   "first_name":req.query.firstname,"middle_name":req.query.middlename,"last_name":req.query.lastname,
   "dob":req.query.dobs,"father_name":req.query.father,"locality":req.query.location,"mother_name":req.query.mother,
   "father_email":req.query.email,"created_by":req.query.createdby,"created_on":req.query.createdate,
-  "enquiry_name":req.query.givenname,"gemail":req.query.gemail,"gmob":req.query.gmob,"parent_or_guardian":req.query.paga,"Guardianname":req.query.Guardianname,"status":"Enquired","rte_student":req.query.rtestudent,"year_type":req.query.adtype,"discount_type_code":req.query.discounttype,"orginated_by":req.query.attendername,"followed_by":req.query.attendername};
+  "enquiry_name":req.query.givenname,"gemail":req.query.gemail,"gmob":req.query.gmob,"parent_or_guardian":req.query.paga,"Guardianname":req.query.Guardianname,"status":"Enquired","rte_student":req.query.rtestudent,"year_type":req.query.adtype,"discount_type_code":req.query.discounttype,"orginated_by":req.query.attendername,"followed_by":req.query.attendername,"enquiry_source":req.query.fnsource};
        console.log(collection);
        connection.query('insert into student_enquiry_details set ? ',[collection],
         function(err, rows)
@@ -3961,6 +3961,102 @@ app.post('/getcurrentdaydetails',  urlencodedParser,function (req, res){
     }
     });
 });
+
+
+/*this function is used to get the type of enquiry sources available*/
+app.post('/getenquirysource',  urlencodedParser,function (req, res){
+  var qur={"school_id":req.query.schol};
+    connection.query('select * from md_enquiry_source where ?',[qur],
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      //console.log(rows);
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': ''});
+    }
+    }
+    else{
+     console.log(err);
+    }
+    });
+});
+
+  app.post('/getcounsellor',  urlencodedParser,function (req, res){
+   connection.query("SELECT distinct orginated_by FROM `student_enquiry_details` WHERE `school_id` =  '"+req.query.schoolid+"'",
+     function(err, rows)
+     {
+       if(!err)
+       {
+         if(rows.length>0)
+         {
+           //console.log(rows);
+           res.status(200).json({'returnval': rows});
+         }
+         else
+         {
+           console.log(err);
+           res.status(200).json({'returnval':null});
+         }
+       }
+       else{
+         console.log(err);
+       }
+     });
+ });
+
+  app.post('/getstudentsforcounselor',  urlencodedParser,function (req, res){
+   connection.query("SELECT enquiry_name, enquiry_no,created_on, class FROM `student_enquiry_details` WHERE `school_id` = '"+req.query.schoolid+"' AND `orginated_by` =  '"+req.query.counsellor+"'",
+     function(err, rows)
+     {
+       if(!err)
+       {
+         if(rows.length>0)
+         {
+          console.log(rows);
+           res.status(200).json({'returnval': rows});
+         }
+         else
+         {
+           console.log(err);
+           res.status(200).json({'returnval':null});
+         }
+       }
+       else{
+         console.log(err);
+       }
+     });
+ });
+    app.post('/exchangestudents',  urlencodedParser,function (req, res){
+   connection.query("UPDATE `student_enquiry_details` SET `followed_by` = '"+req.query.counsellor+"' WHERE `school_id` = '"+req.query.schoolid+"' AND `enquiry_no` =  '"+req.query.enquiryno+"'",
+     function(err, rows)
+    {
+    if(!err)
+    {
+      connection.query("UPDATE `followup` SET `followed_by` = '"+req.query.counsellor+"' WHERE `school_id` = '"+req.query.schoolid+"' AND `enquiry_id` =  '"+req.query.enquiryno+"'",function(err, rows){
+        if(!err){
+          console.log('inserted');
+          res.status(200).json({'returnval': 'success'});
+        }else{
+          console.log(err);
+          res.status(200).json({'returnval': 'invalid'});
+        }
+      });
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+
+});
+  });
 
 function setvalue(){
   console.log("calling setvalue.....");

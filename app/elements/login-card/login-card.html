@@ -22,7 +22,9 @@
     'use strict';
     Polymer({
       is: 'login-card',
-    
+    ready:function(){
+      this.$.login.addinfoconfig();
+    },
       login:function(){
         this.$.login.Fn_login_userlogin(this.username,this.password);
 
