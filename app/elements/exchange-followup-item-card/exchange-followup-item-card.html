@@ -6,12 +6,6 @@
     <td>{{enquiryname}}</td>
     <td>{{grade}}</td>
     <td>{{createdby}}</td>
-    <td>
-      <paper-radio-group>
-        <paper-radio-button name="small" on-click="exchangecheck">Add</paper-radio-button>
-        <paper-radio-button name="medium" on-click="removecheck">Remove</paper-radio-button>
-      </paper-radio-group>
-    </td>
   </template>
   <script>
   (function() {
@@ -23,12 +17,6 @@
       ready:function(){
 
       },
-      exchangecheck:function(e){
-        document.querySelector('exchange-followup').exchange(this.enquiryno);
-      },
-      removecheck:function(){
-        document.querySelector('exchange-followup').noexchange(this.enquiryno);
-      }
     });
   })();
   </script>

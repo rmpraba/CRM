@@ -10,6 +10,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 <link rel="import" href="../exchange-followup-item-card/exchange-followup-item-card.html">
+<link rel="import" href="../exchange-followup-item-card-2/exchange-followup-item-card-2.html">
 
 <dom-module id="exchange-followup">
   <template>
@@ -40,13 +41,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <th>Student Name</th>
           <th>Grade</th>
           <th>Enquiry Date</th>
-          <th>Save</th>
+          <th>Add / Remove</th>
         </tr>
       </thead>
       <tbody>
         <template  is="dom-repeat" items="{{studentsarr}}" as="view">
           <tr>
-            <exchange-followup-item-card enquiryno="{{view.enquiry_no}}" enquiryname="{{view.enquiry_name}}" grade="{{view.class}}" createdby="{{view.created_on}}"></exchange-followup-item-card>
+            <td><exchange-followup-item-card enquiryno="{{view.enquiry_no}}"></exchange-followup-item-card></td>
+            <td><exchange-followup-item-card enquiryname="{{view.enquiry_name}}"></exchange-followup-item-card></td>
+            <td><exchange-followup-item-card grade="{{view.class}}"></exchange-followup-item-card> </td>
+            <td><exchange-followup-item-card createdby="{{view.created_on}}"></exchange-followup-item-card> </td>
+            <td><exchange-followup-item-card-2 enquiryno="{{view.enquiry_no}}"></exchange-followup-item-card-2></td>
           </tr>
         </template>
       </tbody>
