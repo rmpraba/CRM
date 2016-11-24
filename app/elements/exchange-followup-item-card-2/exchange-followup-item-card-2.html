@@ -14,10 +14,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <template>
     <input type="hidden" value="{{enquiryno}}">
     <td>
-      <paper-radio-group>
-        <paper-radio-button name="small" on-click="exchangecheck">Add</paper-radio-button>
-        <paper-radio-button name="medium" on-click="removecheck">Remove</paper-radio-button>
-      </paper-radio-group>
+      <paper-checkbox on-change="exchangecheck"></paper-checkbox>
     </td>
   </template>
   <script>
@@ -30,10 +27,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       },
       exchangecheck:function(e){
-        document.querySelector('exchange-followup').exchange(this.enquiryno);
-      },
-      removecheck:function(){     
-        document.querySelector('exchange-followup').noexchange(this.enquiryno);
+        if(e.target.checked==true){
+          document.querySelector('exchange-followup').exchange(this.enquiryno);
+        } else {
+          document.querySelector('exchange-followup').noexchange(this.enquiryno);
+        }
       }
     });
   })();
