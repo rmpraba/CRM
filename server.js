@@ -2075,16 +2075,36 @@ app.post('/searchadmission',  urlencodedParser,function (req, res){
 // Fetching fees for admission
 app.post('/fetchfees',  urlencodedParser,function (req, res){
 
+  var response={"fee_code":"","total_fees":""};
     var qur="SELECT * FROM fee_master WHERE school_id='"+req.query.schoolid+"' and admission_year = '"+req.query.admissionyear+"' and academic_year='"+req.query.academicyear+"' and grade_id='"+req.query.grade+"'";
+
+    // var qur1="SELECT total_fee FROM fee_splitup WHERE school_id='"+req.query.schoolid+"' and fee_code='"++"'";
     console.log(qur);
-    connection.query(qur,
-    function(err, rows)
-    {
+    connection.query(qur,function(err, rows){
     if(!err)
     {
     if(rows.length>0)
     {
-      res.status(200).json({'returnval': rows});
+      response.fee_code=rows[0].fee_code;
+      response.total_fees=rows[0].fees;
+      var qur1="SELECT total_fee FROM fee_splitup WHERE school_id='"+req.query.schoolid+"' and fee_code='"+response.fee_code+"' and fee_type='Registration fee'";
+      connection.query(qur1,function(err, rows){
+        var result=[];
+        var obj={"fee_code":"","fees":""};
+        obj.fee_code=response.fee_code;
+        if(rows.length>0){
+        obj.fees=parseFloat(parseFloat(response.total_fees)-parseFloat(rows[0].total_fee)).toFixed(2);
+        console.log('fees..............'+obj.fees);
+        }
+        else{
+        obj.fees=parseFloat(response.total_fees).toFixed(2);
+        console.log('fees..............'+obj.fees);
+        }
+        result.push(obj);
+        if(result.length>0)
+        res.status(200).json({'returnval': result});
+      });
+      // res.status(200).json({'returnval': rows});
     }
     else
     {
@@ -2102,7 +2122,7 @@ app.post('/fetchfees',  urlencodedParser,function (req, res){
 // Fetching fees info for admission
 app.post('/fetchfeesinfo-service',  urlencodedParser,function (req, res){
 
-    var qur="SELECT discount ,sum(payable_amount) as payableamount FROM installment_splitup WHERE school_id='"+req.query.schoolid+"' and admission_year = '"+req.query.admissionyear+"' and academic_year='"+req.query.academicyear+"' and grade='"+req.query.grade+"' and discount_type_code='"+req.query.discounttype+"' and admission_type='"+req.query.admissiontype+"' group by fee_type";
+    var qur="SELECT discount ,sum(payable_amount) as payableamount FROM installment_splitup WHERE school_id='"+req.query.schoolid+"' and admission_year = '"+req.query.admissionyear+"' and academic_year='"+req.query.academicyear+"' and grade='"+req.query.grade+"' and discount_type_code='"+req.query.discounttype+"' and admission_type='"+req.query.admissiontype+"' and no_of_installment='"+req.query.noofinstallment+"' group by fee_type";
     console.log(qur);
     connection.query(qur,
     function(err, rows)
@@ -2128,7 +2148,7 @@ app.post('/fetchfeesinfo-service',  urlencodedParser,function (req, res){
 
 // Fetching fees splitup
 app.post('/fetchfeesplitup',  urlencodedParser,function (req, res){
-    var qur="SELECT * FROM installment_schedule_master WHERE school_id='"+req.query.schoolid+"' and admission_year = '"+req.query.admissionyear+"' and academic_year='"+req.query.academicyear+"' and grade='"+req.query.grade+"' and discount_type_code='"+req.query.discounttype+"' and admission_type='"+req.query.admissiontype+"'";
+    var qur="SELECT * FROM installment_schedule_master WHERE school_id='"+req.query.schoolid+"' and admission_year = '"+req.query.admissionyear+"' and academic_year='"+req.query.academicyear+"' and grade='"+req.query.grade+"' and discount_type_code='"+req.query.discounttype+"' and admission_type='"+req.query.admissiontype+"' and no_of_installment='"+req.query.noofinstallment+"'";
     console.log(qur);
     connection.query(qur,
     function(err, rows)

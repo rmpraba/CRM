@@ -23,7 +23,7 @@
 
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6 enquiry-input">
-          <paper-dropdown-menu label="Select Discount Category" >
+          <paper-dropdown-menu label="Select Category" >
             <paper-menu id="structurediscount" class="dropdown-content" required on-iron-select="FnSelectDiscountType" valueattr="value" >
               <template  is="dom-repeat" items="{{discountarr}}" as="item">
               <paper-item value="{{item.discount_type_id}}">{{item.discount_type}}</paper-item>
@@ -36,11 +36,17 @@
             <span><paper-checkbox class="col-sm-6" id="structurespotyes" readonly class="checkbox" on-change="spotyesHandler">Yes</paper-checkbox></span>
             <span><paper-checkbox class="col-sm-6" id="structurespotno" readonly class="checkbox" on-change="spotnoHandler">No</paper-checkbox></span>
         </div>
-        <div class="col-sm-6 enquiry-input" hidden$="{{hideinstallmentpattern}}">
-            <span class="col-sm-12"><h5>Installment pattern</h5></span>
-            <span><paper-checkbox class="col-sm-6" id="structuregeneral" readonly class="checkbox" on-change="generalHandler">Standard</paper-checkbox></span>
-            <span><paper-checkbox class="col-sm-6" id="structureinstallment" readonly class="checkbox" on-change="installmentHandler">Installment</paper-checkbox></span>
-        </div>
+
+      </div>
+
+      <div class="list-group col-sm-12 panel-body form-category">
+            <div class="col-sm-12 enquiry-input" hidden$="{{hideinstallmentpattern}}">
+            <span class="col-sm-12"><h5>Installment Pattern</h5></span>
+            <span><paper-checkbox class="col-sm-3" id="structuregeneral" readonly class="checkbox" on-change="generalHandler" checked>Standard Pattern</paper-checkbox></span>
+            <span><paper-checkbox class="col-sm-3" id="structureinstallment" readonly class="checkbox" on-change="installmentHandler">Custom Pattern</paper-checkbox></span>
+            <span><paper-checkbox class="col-sm-3" id="structurelumpsum" readonly class="checkbox" on-change="lumpsumHandler">Lumpsum</paper-checkbox></span>
+            <!-- <span><paper-checkbox class="col-sm-3" id="structurethirdparty" readonly class="checkbox" on-change="thirdpartyHandler">Thirdparty</paper-checkbox></span> -->
+            </div>
       </div>
 
       <div class="list-group col-sm-12 panel-body form-category">
@@ -97,6 +103,12 @@
           </template>       
         </div>
 
+        <div class="list-group col-sm-12 panel-body form-category" hidden$="{{hidelumpsumfeecomponentcard}}">
+          <template  is="dom-repeat" items="{{installmentarr}}" as="item">
+            <lumpsum-fee-component-card installment="{{item.val}}" no="{{item.no}}" actualamount="{{item.actualamount}}" discount="{{item.discount}}" payableamount="{{item.payableamount}}"></lumpsum-fee-component-card> 
+          </template>       
+        </div>
+
         <div class="col-md-12 form-button" hidden$="{{hidegenerateinstallment}}">
           <paper-button class="btn btn-primary" on-click="FnGenerate">Generate</paper-button>          
           <paper-button hidden$="{{hidefeecomponent}}" class="btn btn-primary" on-click="FnCancel">Cancel</paper-button>
@@ -137,11 +149,12 @@
         this.schoolname=localStorage.getItem("schoolname");
         this.hidefeecomponentcard=true;
         this.hideadmissiontype=false;
-        this.hideinstallmentpattern=true;
+        // this.hideinstallmentpattern=true;
         this.hideinstallmentfeecomponentcard=true;
         this.hidenoofinstallment=true;
         this.hidesubmitinstallment=true;
         this.hidegenerateinstallment=false;
+        this.hidelumpsumfeecomponentcard=true;
         this.fetchnoofinstallmenturl=sessionStorage.getItem("addrinfo")+"/fetchnoofinstallment-service";
         this.$.fetchnoofinstallmentajax.generateRequest();
         localStorage.setItem("curr_sess_installmentpattern",installmentpattern);
@@ -183,6 +196,8 @@
         this.installmentarr=ins;
         if(installmentpattern=="2")
           this.hideinstallmentfeecomponentcard=false;
+        else if(installmentpattern=="3")
+          this.hidelumpsumfeecomponentcard=false;
         else
           this.hidefeecomponentcard=false;
         }
@@ -191,7 +206,7 @@
       },
       FnSelectInsatllmentNo:function(e){
         noofinstallment=(e.target.selectedItem.textContent).trim();  
-        // localStorage.setItem("curr_sess_noofinstallment",noofinstallment);
+        localStorage.setItem("curr_sess_noofinstallment",noofinstallment);
         // if(grade==""||grade==null||admissionyear==""||admissionyear==null||academicyear==""||academicyear==null||noofinstallment==""||noofinstallment==null|admissiontype==""||admissiontype==null||discountcode==null||discountcode==""){
         //   alert("Please Select all the fields for generating schedule!!");
         // }      
@@ -326,12 +341,12 @@
         discounttype=(e.target.selectedItem.textContent).trim();
         if(discountcode==2){
           this.hideadmissiontype=true;
-          this.hideinstallmentpattern=false;
+          // this.hideinstallmentpattern=false;
           admissiontype="0";
         }
         else{
           this.hideadmissiontype=false;
-          this.hideinstallmentpattern=true;
+          // this.hideinstallmentpattern=true;
         }
         localStorage.setItem("curr_sess_discounttypecode",discountcode);
         localStorage.setItem("curr_sess_discounttype",discounttype);
@@ -356,6 +371,8 @@
         if(document.querySelector("#structuregeneral").checked==true)
         {
          document.querySelector("#structureinstallment").checked=false;
+         document.querySelector("#structurelumpsum").checked=false;
+         document.querySelector("#structurethirdparty").checked=false;
          this.hidenoofinstallment=true;
          installmentpattern="1";
          localStorage.setItem("curr_sess_installmentpattern",installmentpattern);
@@ -365,8 +382,36 @@
         if(document.querySelector("#structureinstallment").checked==true)
         {
          document.querySelector("#structuregeneral").checked=false;
+         document.querySelector("#structurelumpsum").checked=false;
+         document.querySelector("#structurethirdparty").checked=false;
          this.hidenoofinstallment=false;
          installmentpattern="2";
+         localStorage.setItem("curr_sess_installmentpattern",installmentpattern);
+        }
+      },
+      lumpsumHandler:function(e){
+        if(document.querySelector("#structurelumpsum").checked==true)
+        {
+         document.querySelector("#structuregeneral").checked=false;
+         document.querySelector("#structureinstallment").checked=false;
+         document.querySelector("#structurethirdparty").checked=false;
+         this.hidenoofinstallment=true;
+         installmentpattern="3";
+         noofinstallment=1;
+         localStorage.setItem("curr_sess_noofinstallment",1);
+         localStorage.setItem("curr_sess_installmentpattern",installmentpattern);
+        }
+      },
+      thirdpartyHandler:function(e){
+        if(document.querySelector("#structurethirdparty").checked==true)
+        {
+         document.querySelector("#structuregeneral").checked=false;
+         document.querySelector("#structureinstallment").checked=false;
+         document.querySelector("#structurelumpsum").checked=false;
+         this.hidenoofinstallment=true;
+         installmentpattern="4";
+         noofinstallment=0;
+         localStorage.setItem("curr_sess_noofinstallment",0);
          localStorage.setItem("curr_sess_installmentpattern",installmentpattern);
         }
       }  

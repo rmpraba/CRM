@@ -19,13 +19,7 @@
                 <div class="col-md-3" style="margin-top: -1%;">
                   <todate-pickercard></todate-pickercard>
                 </div>
-                <div class="col-md-2" style="margin-top: 1%;">
-                  <paper-button on-click="FnView">View</paper-button>
-                </div>
-                <div class="col-md-2" style="margin-top: 1%;">
-                  <input type="button" id="btn2" onclick="tableToExcel('collectionreport', 'Fee Collection Report')" value="Export to Excel">
-                </div>
-                <div class="col-md-2" style="margin-top: 1%;">
+                <div class="col-md-2" style="margin-top: -1%;">
                 <paper-dropdown-menu label="Select Category" attr-for-selected="value">
                 <paper-menu id="reportfiltertype" class="dropdown-content" required on-iron-select="FnSelectFilterType" valueattr="value" >
                   <!-- <template  is="dom-repeat" items="{{discountarr}}" as="item"> -->
@@ -38,6 +32,14 @@
                 </paper-menu>
                 </paper-dropdown-menu> 
                 </div>
+                <div class="col-md-2" style="margin-top: 1%;">
+                  <paper-button on-click="FnView" class="btn btn-primary">View</paper-button>
+                </div>
+
+                <div class="col-md-2" style="margin-top: 1%;">
+                  <input type="button" id="btn2" onclick="tableToExcel('collectionreport', 'Fee Collection Report')" value="Export to Excel">
+                </div>
+                
               <!-- </div> -->
             </div>
           </div>

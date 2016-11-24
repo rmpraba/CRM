@@ -491,6 +491,7 @@
               obj.discounttypecode=localStorage.getItem("curr_sess_discounttypecode"); 
               obj.discounttype=localStorage.getItem("curr_sess_discounttype"); 
               obj.noofinstallment=localStorage.getItem("curr_sess_noofinstallment");
+              // alert(localStorage.getItem("curr_sess_noofinstallment"));
               obj.admissiontype=localStorage.getItem("curr_sess_admissiontype");                 
               obj.prefixid=4;
               obj.createdby=localStorage.getItem("employeeid");
@@ -640,6 +641,7 @@
         obj.noofinstallment=this.noofinstallment;
         obj.discountcode=this.discountcode;
         obj.discounttype=this.discounttype;
+        obj.admissiontype=this.admissiontype;
         obj.createdby=localStorage.getItem("employeeid");
         count1=(this.installmentsubarr).length;
         for(var i=0;i<(this.installmentsubarr).length;i++){
@@ -791,7 +793,7 @@
         // alert(localStorage.getItem("curr_sess_installmentpattern"));
         if(localStorage.getItem("curr_sess_installmentpattern")=='1')
         document.querySelector('fee-type-card').FnSetTotalFeeInstallment(instotalfeearr,instotaldiscountarr); 
-        else  
+        else if(localStorage.getItem("curr_sess_installmentpattern")=='2')
         document.querySelector('installment-fee-type-card').FnSetTotalFeeInstallment(instotalfeearr,instotaldiscountarr);
         instotalfeearr=[];
         instotaldiscountarr=[];
