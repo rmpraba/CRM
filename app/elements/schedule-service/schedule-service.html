@@ -747,6 +747,7 @@
         obj.grade=this.grade;
         obj.admissionyear=this.admissionyear;
         obj.academicyear=this.academicyear; 
+        obj.noofinstallment=localStorage.getItem("curr_sess_noofinstallment");
         // obj.feetype=feetype;       
         this.fetchtotalinstallmentfeecodeparam=obj;
         this.$.fetchtotalinstallmentfeecodeajax.generateRequest();
@@ -754,14 +755,6 @@
       fetchtotalinstallmentfeecodeResponse:function(e){
         instotalfeearr=e.detail.response.returnval;
         instotalfees=e.detail.response.totalfees;
-        // for(var i=0;i<instotalfeearr.length;i++){
-        //   if(instotalfeearr[i].feetype=="Registration fee")
-        //     this.no=0;
-        //   else
-        //     this.no=-1;
-        // }
-        // alert('hi!!!'+document.querySelector('fee-structure-schedulecard'));
-        // document.querySelector('fee-structure-schedulecard').FnMakeVisbleInstallmentCard(this.no);
         this.fetchtotalinstallmentdiscountcode();
       },
       fetchtotalinstallmentdiscountcode:function(){
@@ -795,6 +788,8 @@
         document.querySelector('fee-type-card').FnSetTotalFeeInstallment(instotalfeearr,instotaldiscountarr); 
         else if(localStorage.getItem("curr_sess_installmentpattern")=='2')
         document.querySelector('installment-fee-type-card').FnSetTotalFeeInstallment(instotalfeearr,instotaldiscountarr);
+        else if(localStorage.getItem("curr_sess_installmentpattern")=='3')
+        document.querySelector('lumpsum-fee-component-card').FnSetTotalFeeInstallment(instotalfees,instotalfeearr,instotaldiscountarr);
         instotalfeearr=[];
         instotaldiscountarr=[];
       },

@@ -164,15 +164,6 @@
           this.payableamount=localStorage.getItem("curr_sess_payableamount");
           this.remainingamount=parseFloat(parseFloat(this.actualamount)-parseFloat(this.payableamount)).toFixed(2);
         }
-        // this.FnFormFeeStructure(feetype);
-        // var temp=parseInt(this.actualamount)-(parseInt(this.payableamount)+parseInt(this.discount));
-        // if(temp>=0)
-        // this.remainingamount=parseInt(this.actualamount)-(parseInt(this.payableamount)+parseInt(this.discount));
-        // else{
-        // this.payableamount=localStorage.getItem("curr_sess_payableamount");
-        // // this.payflag=1;
-        // alert("Please enter proper amount!!Installment amount exceeds the payable amount!!!");
-        // }
       },
       FnSetTotalFeeInstallment:function(totalfeearr,totaldiscountarr){
         // alert(JSON.stringify(totalfeearr));

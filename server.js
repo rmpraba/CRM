@@ -3982,6 +3982,33 @@ app.post('/getcurrentdaydetails',  urlencodedParser,function (req, res){
     });
 });
 
+
+app.post('/fetchdiscountpercentageinfo',  urlencodedParser,function (req, res){
+  var qurz="SELECT * from discount_percentage where school_id='"+req.query.schoolid+"'";
+  console.log(qurz);
+    connection.query(qurz,
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      //console.log(rows);
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': '0'});
+    }
+    }
+    else{
+     console.log(err);
+    }
+    });
+});
+
+
 function setvalue(){
   console.log("calling setvalue.....");
 }

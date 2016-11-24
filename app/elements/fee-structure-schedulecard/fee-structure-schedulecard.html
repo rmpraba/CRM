@@ -207,27 +207,6 @@
       FnSelectInsatllmentNo:function(e){
         noofinstallment=(e.target.selectedItem.textContent).trim();  
         localStorage.setItem("curr_sess_noofinstallment",noofinstallment);
-        // if(grade==""||grade==null||admissionyear==""||admissionyear==null||academicyear==""||academicyear==null||noofinstallment==""||noofinstallment==null|admissiontype==""||admissiontype==null||discountcode==null||discountcode==""){
-        //   alert("Please Select all the fields for generating schedule!!");
-        // }      
-        // else
-        // {
-        // this.$.schedulefee.fetchtotalinstallmentfeecode(discountcode,discounttype,admissiontype);
-        // var ins=[];
-        // noofinstallment=noofinstallment;
-        // for(var i=0;i<noofinstallment;i++)
-        // {
-        //   var obj={"val":"","no":""};
-        //   obj.no=i+1;
-        //   obj.val="Installment"+(i+1);
-        //   ins.push(obj);
-        // }        
-        // this.installmentarr=ins;
-        // if(installmentpattern=="2")
-        //   this.hideinstallmentfeecomponentcard=false;
-        // else
-        //   this.hidefeecomponentcard=false;
-        // }
       },
       FnMakeVisbleInstallmentCard:function(insno){
         var ins=[];
@@ -372,7 +351,7 @@
         {
          document.querySelector("#structureinstallment").checked=false;
          document.querySelector("#structurelumpsum").checked=false;
-         document.querySelector("#structurethirdparty").checked=false;
+         // document.querySelector("#structurethirdparty").checked=false;
          this.hidenoofinstallment=true;
          installmentpattern="1";
          localStorage.setItem("curr_sess_installmentpattern",installmentpattern);
@@ -383,38 +362,43 @@
         {
          document.querySelector("#structuregeneral").checked=false;
          document.querySelector("#structurelumpsum").checked=false;
-         document.querySelector("#structurethirdparty").checked=false;
+         // document.querySelector("#structurethirdparty").checked=false;
          this.hidenoofinstallment=false;
          installmentpattern="2";
          localStorage.setItem("curr_sess_installmentpattern",installmentpattern);
         }
       },
       lumpsumHandler:function(e){
+        
         if(document.querySelector("#structurelumpsum").checked==true)
         {
+          
          document.querySelector("#structuregeneral").checked=false;
          document.querySelector("#structureinstallment").checked=false;
-         document.querySelector("#structurethirdparty").checked=false;
+         // document.querySelector("#structurethirdparty").checked=false;
          this.hidenoofinstallment=true;
          installmentpattern="3";
          noofinstallment=1;
-         localStorage.setItem("curr_sess_noofinstallment",1);
+         localStorage.setItem("curr_sess_noofinstallment",noofinstallment);
+         
          localStorage.setItem("curr_sess_installmentpattern",installmentpattern);
         }
-      },
-      thirdpartyHandler:function(e){
-        if(document.querySelector("#structurethirdparty").checked==true)
-        {
-         document.querySelector("#structuregeneral").checked=false;
-         document.querySelector("#structureinstallment").checked=false;
-         document.querySelector("#structurelumpsum").checked=false;
-         this.hidenoofinstallment=true;
-         installmentpattern="4";
-         noofinstallment=0;
-         localStorage.setItem("curr_sess_noofinstallment",0);
-         localStorage.setItem("curr_sess_installmentpattern",installmentpattern);
-        }
-      }  
+       }
+       // ,
+      // thirdpartyHandler:function(e){
+      //   if(document.querySelector("#structurethirdparty").checked==true)
+      //   {
+      //    document.querySelector("#structuregeneral").checked=false;
+      //    document.querySelector("#structureinstallment").checked=false;
+      //    document.querySelector("#structurelumpsum").checked=false;
+      //    this.hidenoofinstallment=true;
+      //    installmentpattern="4";
+      //    noofinstallment=0;
+      //    localStorage.setItem("curr_sess_noofinstallment",noofinstallment);
+         
+      //    localStorage.setItem("curr_sess_installmentpattern",installmentpattern);
+      //   }
+      // }  
       });  
   })();
   </script>

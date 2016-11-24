@@ -298,7 +298,7 @@
          // document.querySelector("#structurethirdparty1").checked=false;
          this.hidenoofinstallment=true;
          installmentpattern="1";
-         localStorage.setItem("curr_sess_installmentpattern1",installmentpattern);
+         localStorage.setItem("curr_sess_installmentpattern",installmentpattern);
          this.$.admissionservice.searchfeeadmissionpaidinfoService(localStorage.getItem("curr_sess_enquiryno"));
          this.$.admissionservice.searchfeeadmissioninfoService(localStorage.getItem("curr_sess_enquiryno"));
         }
