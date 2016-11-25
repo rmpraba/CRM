@@ -14,7 +14,7 @@
           </paper-input>
         </span>
         <span class="col-sm-5">
-          <paper-dropdown-menu id="searchenquiry" label="Select Enquiry No" on-iron-select="FnSelectEnquiry"  style="margin-top: 3%;">
+          <paper-dropdown-menu id="searchenquiry" label="Select Enquiry No" on-iron-select="FnSelectEnquiry"  style="margin-top: 4%;width:70%;">
             <paper-menu class="dropdown-content"  class="dropdown-content">
               <template  is="dom-repeat" items="{{enquiryarr}}" as="item">
                 <paper-item>{{item.enquiry_no}}-{{item.enquiry_name}}</paper-item>
@@ -63,17 +63,19 @@
           </div>
         </div>
         <div class="col-sm-9 enquiry-input">
-          <label>Special Discounts</label>
+          <label>Category</label>
+          <div style='margin-top: 1%;'>
           <template  is="dom-repeat" items="{{discountarr}}" as="view">
             <special-discount-card code="{{view.id}}" discountname="{{view.discount_type_name}}"></special-discount-card>
           </template>
+          </div>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
 
-        <div class="col-sm-6 enquiry-input">
+        <div class="col-sm-6 enquiry-input" >
           <!--<paper-input id="grade"  error-message="needs grade seeking for!" label="Class Admission Seeking for" value="{{grade}}"></paper-input>-->
-          <paper-dropdown-menu label="Select Grade" >
+          <paper-dropdown-menu label="Select Grade" style="width:70%;">
             <paper-menu id="classes" class="dropdown-content"  on-iron-select="classseeking" attr-for-selected="value" selected="{{grades}}">
               <template  is="dom-repeat" items="{{itemarr}}" as="view">
                 <paper-item value="{{view.class}}">{{view.class}}</paper-item>

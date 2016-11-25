@@ -2,6 +2,14 @@
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 
 <dom-module id="fee-structure-schedulecard">
+<style>
+  paper-dropdown-menu{
+    --paper-input-container-label: { color: red };
+  }
+  #lbl{
+    color: red;
+  }
+</style>
   <template>
      
     <div class="row enquiry-form">
@@ -43,7 +51,7 @@
             <div class="col-sm-12 enquiry-input" hidden$="{{hideinstallmentpattern}}">
             <span class="col-sm-12"><h5>Installment Pattern</h5></span>
             <span><paper-checkbox class="col-sm-3" id="structuregeneral" readonly class="checkbox" on-change="generalHandler" checked>Standard Pattern</paper-checkbox></span>
-            <span><paper-checkbox class="col-sm-3" id="structureinstallment" readonly class="checkbox" on-change="installmentHandler">Custom Pattern</paper-checkbox></span>
+            <span><paper-checkbox class="col-sm-3" id="structureinstallmentt" readonly class="checkbox" on-change="installmentHandler">Custom Pattern</paper-checkbox></span>
             <span><paper-checkbox class="col-sm-3" id="structurelumpsum" readonly class="checkbox" on-change="lumpsumHandler">Lumpsum</paper-checkbox></span>
             <!-- <span><paper-checkbox class="col-sm-3" id="structurethirdparty" readonly class="checkbox" on-change="thirdpartyHandler">Thirdparty</paper-checkbox></span> -->
             </div>
@@ -75,10 +83,10 @@
           <paper-dropdown-menu label="No Of Installment" attr-for-selected="value">
             <paper-menu id="structureinstallment" class="dropdown-content" required on-iron-select="FnSelectInsatllmentNo" valueattr="value" >
               <!-- <template  is="dom-repeat" items="{{academicarr}}" as="item"> -->
-              <paper-item>1</paper-item>
+              <!-- <paper-item>1</paper-item>
               <paper-item>2</paper-item>
               <paper-item>3</paper-item>
-              <paper-item>4</paper-item>
+              <paper-item>4</paper-item> -->
               <paper-item>5</paper-item>
               <paper-item>6</paper-item>
               <paper-item>7</paper-item>
@@ -246,7 +254,7 @@
         document.querySelector('#structureinstallment').selected=-1;
         document.querySelector('#structurediscount').selected=-1;
         document.querySelector('#structuregeneral').selected=-1;
-        document.querySelector('#structureinstallment').selected=-1;
+        document.querySelector('#structureinstallmentt').selected=-1;
         document.querySelector('#structurespotyes').selected=-1;
         document.querySelector('#structurespotno').selected=-1;
         localStorage.setItem("curr_sess_installmentpattern",installmentpattern);
@@ -271,7 +279,7 @@
         document.querySelector('#structureinstallment').selected=-1;
         document.querySelector('#structurediscount').selected=-1;
         document.querySelector('#structuregeneral').selected=-1;
-        document.querySelector('#structureinstallment').selected=-1;
+        document.querySelector('#structureinstallmentt').selected=-1;
         document.querySelector('#structurespotyes').selected=-1;
         document.querySelector('#structurespotno').selected=-1;
         localStorage.setItem("curr_sess_installmentpattern",installmentpattern);
@@ -293,7 +301,7 @@
         document.querySelector('#structureinstallment').selected=-1;
         document.querySelector('#structurediscount').selected=-1;
         document.querySelector('#structuregeneral').selected=-1;
-        document.querySelector('#structureinstallment').selected=-1;
+        document.querySelector('#structureinstallmentt').selected=-1;
         document.querySelector('#structurespotyes').selected=-1;
         document.querySelector('#structurespotno').selected=-1;
         localStorage.setItem("curr_sess_installmentpattern",installmentpattern);
@@ -349,7 +357,7 @@
       generalHandler:function(e){
         if(document.querySelector("#structuregeneral").checked==true)
         {
-         document.querySelector("#structureinstallment").checked=false;
+         document.querySelector("#structureinstallmentt").checked=false;
          document.querySelector("#structurelumpsum").checked=false;
          // document.querySelector("#structurethirdparty").checked=false;
          this.hidenoofinstallment=true;
@@ -358,8 +366,9 @@
         }
       },
       installmentHandler:function(e){
-        if(document.querySelector("#structureinstallment").checked==true)
-        {
+        
+        if(document.querySelector("#structureinstallmentt").checked==true)
+        {          
          document.querySelector("#structuregeneral").checked=false;
          document.querySelector("#structurelumpsum").checked=false;
          // document.querySelector("#structurethirdparty").checked=false;
@@ -374,7 +383,7 @@
         {
           
          document.querySelector("#structuregeneral").checked=false;
-         document.querySelector("#structureinstallment").checked=false;
+         document.querySelector("#structureinstallmentt").checked=false;
          // document.querySelector("#structurethirdparty").checked=false;
          this.hidenoofinstallment=true;
          installmentpattern="3";
