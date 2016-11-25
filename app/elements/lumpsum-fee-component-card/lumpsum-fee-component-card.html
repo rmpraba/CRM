@@ -59,16 +59,22 @@
       },
       FnSetTotalFeeInstallment:function(totalfees,totalfeearr,totaldiscountarr){
         var fees="";
-        fees=totalfees;
+        
         var discount=0;
         var totalfeearray=[];
         var totaldiscountarray=[];
         totalfeearray=totalfeearr;
         totaldiscountarray=totaldiscountarr;
+        for(var i=0;i<totalfeearray.length;i++){
+          if(totalfeearray[i].fee_type=='Registration fee')
+          totalfees=parseFloat(totalfees)-parseFloat(totalfeearray[i].total_fee);
+        }
         for(var i=0;i<totaldiscountarr.length;i++){
+          if(totaldiscountarr[i].fee_type!='Registration fee')
           discount=parseFloat(parseFloat(totaldiscountarr[i].amount)+parseFloat(discount)).toFixed(2);
         }
-
+        // alert(discount);
+        fees=totalfees;
         var obj={"schoolid":"","academicyear":"","admissionyear":"","grade":"","admissiontype":"",
         "discountcode":"","discounttype":"","feecode":"","actualamount":"","payableamount":""};
               obj.schoolid=localStorage.getItem("schoolid");
@@ -117,10 +123,7 @@
               obj.payableamount=this.payableamount;
               obj.installmentdate='';
               // obj.remainingamount=0;
-
               subinstallment.push(obj);
-
-
               document.querySelector('fee-structure-schedulecard').FnSetInsatllment(installment,subinstallment);
       }
     });
