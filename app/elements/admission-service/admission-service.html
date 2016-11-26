@@ -923,6 +923,7 @@ insertstudenthistoryResponse:function(e){
       },
      
        callfetchfeesService:function(academicyear,admissionyear,grade){
+        // alert(localStorage.getItem("curr_sess_installmentpattern"));
         this.fetchfeesurl=sessionStorage.getItem("addrinfo")+"/fetchfees";
         var obj={"schoolid":"","academicyear":"","admissionyear":"","grade":""}        
         obj.admissionyear=admissionyear; 

@@ -15,6 +15,9 @@
       {
         --paper-input-container-label: { color: red };
       }
+      paper-dropdown-menu{
+        --paper-input-container-label: { color: red };
+      }
       #mangender{
         color: red;
       }
@@ -34,21 +37,21 @@
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
 
-        <div class="col-sm-3">
+        <div class="col-sm-4">
           <paper-input label="Date of Enquiry" readonly value="{{todaydate}}"></paper-input>
         </div>
-         <div class="col-sm-3">
+         <div class="col-sm-3" style='margin-top: 1%;'>
          <paper-checkbox id="nextyear" class="checkbox" on-change="nextyearfhandler"> Next Year</paper-checkbox>
          </div>
-         <div class="col-sm-3">
+         <div class="col-sm-3" style='margin-top: 1%;'>
          <paper-checkbox id="midyear" class="checkbox" on-change="midyearfhandler"> Mid Term</paper-checkbox>
          </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
-        <div class="col-sm-3 enquiry-input">
-         <paper-input label="Academics Year" id="acyr" readonly required error-message="needs academics year!" allowed-pattern="[a-zA-Z ]" value="{{academicyear}}"></paper-input>
+        <div class="col-sm-4 enquiry-input">
+         <paper-input label="Academic Year" id="acyr" readonly required error-message="needs academics year!" allowed-pattern="[a-zA-Z ]" value="{{academicyear}}"></paper-input>
         </div>
-        <div class="col-sm-3">
+        <div class="col-sm-4">
           <paper-dropdown-menu label="Grade" id="gradeclass">
             <paper-menu id="class" class="dropdown-content" required on-iron-select="classes" valueattr="value" >
               <template  is="dom-repeat" items="{{itemarr}}" as="view">
@@ -83,16 +86,17 @@
             <span class="col-sm-4"><paper-checkbox  id="female" class="checkbox" on-change="femaleHandler">Girl</paper-checkbox></span>
           </div>
         </div>
-        <label>Category</label>
-        <div class="col-sm-9 enquiry-input">
+        <!-- <label>Category</label> -->
+        <div class="lbl"><label>Category </label><p id="mangender">&nbsp; *</p> </div>
+        <div class="col-sm-9 enquiry-input" style='margin-top: 0.5%;'>
           <template  is="dom-repeat" items="{{discountarr}}" as="view">
             <special-discount-card code="{{view.id}}" discountname="{{view.discount_type_name}}"></special-discount-card>
           </template>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
-        <div class="col-sm-6">
-          <dateofbirth-datepicker></dateofbirth-datepicker>
+        <div class="col-sm-6" style='margin-top: -1%;'>
+          <dateofbirth-datepicker showdate="{{showdate}}"></dateofbirth-datepicker>
         </div>
         <div class="col-sm-6">
           <paper-input readonly label="Age(In Years)" value="{{ageofyr}}"></paper-input>
@@ -140,7 +144,7 @@
           </div>
      </div>
       <div class="list-group col-sm-12 panel-body form-category">
-        <div class="col-sm-6">
+        <div class="col-sm-4">
           <paper-input  id="locality" required error-message="needs locality!" label="Enter location/Landmark" is="" value="{{textvalue}}" on-keydown="FnInputChanged"></paper-input>
           <paper-listbox class="dropdown-content" id="itemlist" on-iron-select="Fnselected" valueattr="value">
             <template is="dom-repeat" items="{{itemArray}}" as="item">
@@ -148,7 +152,7 @@
             </template>
           </paper-listbox>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-4" style='margin-top: -1%;'>
            <paper-dropdown-menu label="Enquiry Source" on-iron-select="source" attr-for-selected="value"  style="margin-top: 3%;">
             <paper-menu class="dropdown-content" id="source"  class="dropdown-content">
               <template  is="dom-repeat" items="{{sourcearr}}" as="item">
@@ -170,10 +174,18 @@
               <paper-item >{{item.itemdesz}}</paper-item>
             </template>
           </paper-listbox>
+         <div class="col-sm-4">
+              <paper-dropdown-menu label="Attended By" id="rmnames">
+            <paper-menu id="class" class="dropdown-content" required on-iron-select="attendedby" valueattr="value" >
+              <template  is="dom-repeat" items="{{listnamearr}}" as="view">
+                <paper-item >{{view.employee_name}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
         </div>
            </div>
 
-           <div class="list-group col-sm-12 panel-body form-category">
+           <!-- <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
               <paper-dropdown-menu label="Attended By" id="rmnames">
             <paper-menu id="class" class="dropdown-content" required on-iron-select="attendedby" valueattr="value" >
@@ -183,7 +195,7 @@
             </paper-menu>
           </paper-dropdown-menu>
         </div>
-        </div>
+        </div> -->
       <div class="col-md-12 form-button">
         <paper-button class="btn btn-primary" on-click="submit">SUBMIT</paper-button>
       </div>
@@ -269,6 +281,7 @@ ready:function () {
         sessionStorage.setItem("todaydate",todaydat);
         this.todaydate=todaydat;
         this.$.itemlist.hidden=true;
+        this.showdate=(dt.getMonth()+1)+"/"+dt.getDate()+"/"+dt.getFullYear();
       },Fnclear:function(){
           this.ready();
           //this.$.academics.selected=-1;

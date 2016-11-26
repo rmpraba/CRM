@@ -3984,10 +3984,32 @@ app.post('/getcurrentdaydetails',  urlencodedParser,function (req, res){
 });
 
 
+
+app.post('/fetchdiscountpercentageinfo',  urlencodedParser,function (req, res){
+  var qurz="SELECT * from discount_percentage where school_id='"+req.query.schoolid+"'";
+  console.log(qurz);
+    connection.query(qurz,function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      //console.log(rows);
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      res.status(200).json({'returnval': '0'});
+    }
+    }
+  });
+  });
+
 /*this function is used to get the type of enquiry sources available*/
 app.post('/getenquirysource',  urlencodedParser,function (req, res){
   var qur={"school_id":req.query.schol};
     connection.query('select * from md_enquiry_source where ?',[qur],
+
     function(err, rows)
     {
     if(!err)
@@ -4000,7 +4022,9 @@ app.post('/getenquirysource',  urlencodedParser,function (req, res){
     else
     {
       console.log(err);
+
       res.status(200).json({'returnval': ''});
+
     }
     }
     else{
@@ -4008,6 +4032,7 @@ app.post('/getenquirysource',  urlencodedParser,function (req, res){
     }
     });
 });
+
 
   app.post('/getcounsellor',  urlencodedParser,function (req, res){
    connection.query("SELECT distinct orginated_by FROM `student_enquiry_details` WHERE `school_id` =  '"+req.query.schoolid+"'",
@@ -4117,6 +4142,7 @@ app.post('/getenquirysource',  urlencodedParser,function (req, res){
 
      });
  });
+
 
 function setvalue(){
   console.log("calling setvalue.....");

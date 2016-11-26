@@ -58,12 +58,12 @@
       </div> -->
       <div class="col-sm-4" hidden$="{{hidenoofinstallment}}">
           <paper-dropdown-menu label="No Of Installment" attr-for-selected="value">
-            <paper-menu id="structureinstallment" class="dropdown-content" required on-iron-select="FnSelectInsatllmentNo" valueattr="value" >
+            <paper-menu id="feesinstallment" class="dropdown-content" required on-iron-select="FnSelectInsatllmentNo" valueattr="value" >
               <!-- <template  is="dom-repeat" items="{{academicarr}}" as="item"> -->
-              <paper-item>1</paper-item>
+              <!-- <paper-item>1</paper-item>
               <paper-item>2</paper-item>
               <paper-item>3</paper-item>
-              <paper-item>4</paper-item>
+              <paper-item>4</paper-item> -->
               <paper-item>5</paper-item>
               <paper-item>6</paper-item>
               <paper-item>7</paper-item>
@@ -143,6 +143,18 @@
 
     <admission-service id="admissionservice"></admission-service>
     <fees-service id="feeservice"></fees-service>
+    <schedule-service id="schedulefee"></schedule-service>
+       <!-- Fetch no of installment-->
+     <iron-ajax
+        method="post"
+        id="fetchnoofinstallmentajax"
+        url="{{fetchnoofinstallmenturl}}"
+        params="{{fetchnoofinstallmentparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchnoofinstallmentResponse"
+        debounce-duration="300"
+        >
   </template>
   <script>
   (function() {
@@ -163,8 +175,18 @@
         this.hidenoofinstallment=true;
         localStorage.setItem("curr_sess_waiveoff",0);
         localStorage.setItem("curr_sess_fees",0); 
+        this.fetchnoofinstallmenturl=sessionStorage.getItem("addrinfo")+"/fetchnoofinstallment-service";
+        this.$.fetchnoofinstallmentajax.generateRequest();
+        localStorage.setItem("curr_sess_installmentpattern",installmentpattern);
+        this.flag=0;
       },  
-
+      fetchnoofinstallmentResponse:function(e){
+        noofinstallment=e.detail.response.returnval;
+        // alert(noofinstallment);
+        localStorage.setItem("curr_sess_noofinstallment",noofinstallment);
+         this.$.admissionservice.searchfeeadmissionpaidinfoService(localStorage.getItem("curr_sess_enquiryno"));
+         this.$.admissionservice.searchfeeadmissioninfoService(localStorage.getItem("curr_sess_enquiryno"));
+      },
       FnSelectFeeType:function(e){
         var feetype=(e.target.selectedItem.textContent).trim();
         localStorage.setItem("curr_sess_feetype",feetype);
@@ -183,8 +205,14 @@
         var enquiry_name=enquiry.substring(inx+1);
         localStorage.setItem("curr_sess_enquiryno",enquiry_no);
         localStorage.setItem("curr_sess_enquiryname",enquiry_name);
-        // this.$.admissionservice.searchfeeadmissionpaidinfoService(enquiry_no);
-        // this.$.admissionservice.searchfeeadmissioninfoService(enquiry_no);
+        if(this.flag==0){
+
+        }
+        else{
+        this.$.admissionservice.searchfeeadmissionpaidinfoService(enquiry_no);
+        this.$.admissionservice.searchfeeadmissioninfoService(enquiry_no);
+        }
+        this.flag=1;
       },
       FnHiddenPayment:function(){
         this.hiddenpayment=false;
@@ -239,6 +267,7 @@
         document.querySelector('#waiveoff').checked=false;
       },
       FnRefresh:function(){
+        this.flag=0;
         installment=[];
         paymentmode="";
         this.enquiryno="";
@@ -266,6 +295,8 @@
         // document.querySelector('#feescardenquiry').selected=-1;
       },
       FnRefresh1:function(){
+        this.flag=0;
+        
         installment=[];
         paymentmode="";
         // this.enquiryno="";
@@ -293,14 +324,20 @@
       generalHandler:function(e){
         if(document.querySelector("#structuregeneral1").checked==true)
         {
+          // alert('general');
          document.querySelector("#structureinstallment1").checked=false;
          document.querySelector("#structurelumpsum1").checked=false;
+         this.totalfees="";
+         this.discountamount="";
+         this.payableamount="";
+         this.feearr=[];
          // document.querySelector("#structurethirdparty1").checked=false;
          this.hidenoofinstallment=true;
          installmentpattern="1";
-         localStorage.setItem("curr_sess_installmentpattern1",installmentpattern);
-         this.$.admissionservice.searchfeeadmissionpaidinfoService(localStorage.getItem("curr_sess_enquiryno"));
-         this.$.admissionservice.searchfeeadmissioninfoService(localStorage.getItem("curr_sess_enquiryno"));
+         localStorage.setItem("curr_sess_installmentpattern",installmentpattern);
+         this.fetchnoofinstallmenturl=sessionStorage.getItem("addrinfo")+"/fetchnoofinstallment-service";
+         this.$.fetchnoofinstallmentajax.generateRequest();
+
         }
       },
       installmentHandler:function(e){
@@ -308,17 +345,28 @@
         {
          document.querySelector("#structuregeneral1").checked=false;
          document.querySelector("#structurelumpsum1").checked=false;
+         this.feearr=[];
+         this.totalfees="";
+         this.discountamount="";
+         this.payableamount="";
          // document.querySelector("#structurethirdparty1").checked=false;
          this.hidenoofinstallment=false;
          installmentpattern="2";
          localStorage.setItem("curr_sess_installmentpattern",installmentpattern);
+         // this.$.admissionservice.searchfeeadmissionpaidinfoService(localStorage.getItem("curr_sess_enquiryno"));
+         // this.$.admissionservice.searchfeeadmissioninfoService(localStorage.getItem("curr_sess_enquiryno"));
         }
       },
       lumpsumHandler:function(e){
         if(document.querySelector("#structurelumpsum1").checked==true)
         {
+          // alert('lumpsum');
          document.querySelector("#structuregeneral1").checked=false;
          document.querySelector("#structureinstallment1").checked=false;
+         this.feearr=[];
+         this.totalfees="";
+         this.discountamount="";
+         this.payableamount="";
          // document.querySelector("#structurethirdparty1").checked=false;
          this.hidenoofinstallment=true;
          installmentpattern="3";
