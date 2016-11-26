@@ -157,6 +157,20 @@
             </paper-menu>
           </paper-dropdown-menu>
         </div>
+        <div class="col-sm-4" id="sibname">
+          <paper-input  label="Names of sibling" value="{{siblingname}}"></paper-input>
+        </div>
+        <div class="col-sm-6" id="sibdetail">
+          <paper-input  label="Grade of sibling" value="{{siblingdetails}}"></paper-input>
+        </div>
+        <div class="col-sm-6" id="referrer">
+          <paper-input  error-message="needs referrer!" label="Enter referrer name.." is="" value="{{referrername}}" on-keydown="FnInputChangedz"></paper-input>
+          <paper-listbox class="dropdown-content" id="itemlistz" on-iron-select="Fnselectedz" valueattr="value">
+            <template is="dom-repeat" items="{{itemArrayz}}" as="item">
+              <paper-item >{{item.itemdesz}}</paper-item>
+            </template>
+          </paper-listbox>
+        </div>
            </div>
 
            <div class="list-group col-sm-12 panel-body form-category">
@@ -222,6 +236,7 @@
         var enqcategory;
         var dobdate;
         var namearr=[];
+        var namearrz=[];
         var habitatid;
         //var academicyear;
         var gender;
@@ -246,6 +261,9 @@ ready:function () {
         this.$.service.getenquirysource();
         this.$.fathersdetails.hidden=true;
         this.$.Guardiandetails.hidden=true;
+        this.$.sibname.hidden=true;
+          this.$.sibdetail.hidden=true;
+          this.$.referrer.hidden=true;
         var dt=new Date();
         todaydat=dt.getDate()+"/"+(dt.getMonth()+1)+"/"+dt.getFullYear();
         sessionStorage.setItem("todaydate",todaydat);
@@ -296,6 +314,22 @@ ready:function () {
        source:function(e){
         enquiysource=(e.target.selectedItem.textContent).trim();
 //alert(enquiysource);
+if(enquiysource=="Siblings"){
+          this.$.sibname.hidden=false;
+          this.$.sibdetail.hidden=false;
+          this.$.referrer.hidden=true;
+        }
+        else if(enquiysource=="Referrer"){
+          this.$.referrer.hidden=false;
+          this.$.sibname.hidden=true;
+          this.$.sibdetail.hidden=true;
+           this.$.service.getreferrername();
+        }
+        else{
+          this.$.sibname.hidden=true;
+          this.$.sibdetail.hidden=true;
+          this.$.referrer.hidden=true;
+        }
        
     },
 
@@ -543,7 +577,7 @@ ready:function () {
         else{
           // alert('coming........');
 
-        this.$.service.submitenqiry(this.enqno,this.academicyear,grade,this.firstname,this.middlename,this.lastname,gender,dobdate,this.fathername,this.mothername,this.mob,this.email,this.textvalue,this.todaydate,this.gemail,this.gmob,this.Guardianname,paga,enrolltype,this.discounttypecode,attendername,enquiysource);
+        this.$.service.submitenqiry(this.enqno,this.academicyear,grade,this.firstname,this.middlename,this.lastname,gender,dobdate,this.fathername,this.mothername,this.mob,this.email,this.textvalue,this.todaydate,this.gemail,this.gmob,this.Guardianname,paga,enrolltype,this.discounttypecode,attendername,enquiysource,this.siblingname,this.siblingdetails,this.referrername);
       }
 
       }
@@ -584,7 +618,7 @@ ready:function () {
         else{
           // alert('coming........');
 
-        this.$.service.submitenqiry(this.enqno,this.academicyear,grade,this.firstname,this.middlename,this.lastname,gender,dobdate,this.fathername,this.mothername,this.mob,this.email,this.textvalue,this.todaydate,this.gemail,this.gmob,this.Guardianname,paga,enrolltype,this.discounttypecode,attendername,enquiysource);
+        this.$.service.submitenqiry(this.enqno,this.academicyear,grade,this.firstname,this.middlename,this.lastname,gender,dobdate,this.fathername,this.mothername,this.mob,this.email,this.textvalue,this.todaydate,this.gemail,this.gmob,this.Guardianname,paga,enrolltype,this.discounttypecode,attendername,enquiysource,this.siblingname,this.siblingdetails,this.referrername);
       }}
       },
       verifymob:function(){
@@ -681,7 +715,83 @@ ready:function () {
           }
       },attendedby:function(e){
           attendername=(e.target.selectedItem.textContent).trim();
-      }
+      },
+      Fnlistboxz:function(nameitem){
+          namearrz=nameitem;
+        },
+        FnInputChangedz:function(e){
+          this.$.itemlistz.hidden=false;
+          if(e.keyCode==13|| e.keyCode==40)
+            this.querySelector('paper-listbox').focus();
+
+          var arr=[];
+          arr.push({"itemdesz":"-----Select-----"});
+          this.querySelector('paper-listbox').style.visibility='visible';
+          if(e.keyCode==8){
+            this.itemflagz="true";
+            this.itemvalz="";
+            //alert('yes');
+            var len=(this.referrername).length;
+            if(len<=1){
+              this.querySelector('paper-listbox').style.visibility='hidden';
+              this.itemArrayz="";
+              this.itemvalz="";
+            }
+            if(len>1){
+              this.querySelector('paper-listbox').style.visibility='visible';
+              var backsubval=(((this.referrername).substring(0,(len-1))).trim()).toUpperCase();
+              for(var i=0;i<namearrz.length;i++)
+              {
+                var subval=((namearrz[i].listname).trim()).substring(0,backsubval.length);
+                if((namearrz[i].listname).toUpperCase().indexOf((this.refferername).toUpperCase())!=-1)
+                {
+                  var obj={"itemdesz":""};
+                  obj.itemdesz=namearrz[i].listname;
+                  arr.push(obj);
+                }
+              }
+              this.itemArrayz=arr;
+            }
+          }
+          if(e.keyCode!=8&& e.keyCode!=16&& e.keyCode!=13 && e.keyCode!=38&&e.keyCode!=40&&e.keyCode!=37&&e.keyCode!=39){
+            if(this.itemflagz=="true") {
+              this.itemvalz = (this.referrername).toUpperCase()+String.fromCharCode((e.keyCode)).toUpperCase();
+              this.itemflagz="false";
+            }
+            else
+            this.itemvalz = this.referrername +String.fromCharCode((e.keyCode));
+            if(this.itemvalz.length>0)
+            {
+              for(var i=0;i<namearrz.length;i++){
+                var subval=((namearrz[i].listname).trim()).substring(0,this.itemvalz.length);
+                if((namearrz[i].listname).toUpperCase().indexOf((this.itemvalz).toUpperCase())!=-1)
+                {
+                  var obj={"itemdesz":""};
+                  obj.itemdesz=namearrz[i].listname;
+                  arr.push(obj);
+                }
+              }
+              if(arr.length>0)
+                this.itemArrayz=arr;
+              else {
+                var obj={"itemdesz":""};
+                  obj.itemdesz="NO Item Found";
+                  arr.push(obj);
+                this.itemArrayz=arr;
+              }
+            }
+          }
+
+        },
+        Fnselectedz:function(e)
+        {
+          //alert('s');
+          this.querySelector('paper-listbox').style.visibility='hidden';
+          this.referrername = e.target.selectedItem.textContent.trim();
+          this.itemArrayz=[];
+          document.querySelector('#itemlist').selected=-1;
+          this.$.itemlistz.hidden=true;
+        }
     });
   })();
   </script>

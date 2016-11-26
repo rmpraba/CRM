@@ -502,7 +502,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     fourthfollowupdate.setDate(fourthfollowupdate.getDate()+fourthfollowup);
     fifthfollowupdate.setDate(fifthfollowupdate.getDate()+fifthfollowup);
      },
-     submitenqiry:function(enqno,academicyear,grade,Fnfirstname,Fnmiddlename,Fnlastname,gender,dob,fathername,mothername,mob,email,textvalue,todate,gemail,gmob,Guardianname,paga,admtype,discounttype,attendername,source){
+     submitenqiry:function(enqno,academicyear,grade,Fnfirstname,Fnmiddlename,Fnlastname,gender,dob,fathername,mothername,mob,email,textvalue,todate,gemail,gmob,Guardianname,paga,admtype,discounttype,attendername,source,siblingnamefn,siblingdetailfn,referrernamefn){
       // alert(discountype);
 
 attenderusername=attendername;
@@ -513,7 +513,7 @@ attenderusername=attendername;
        currentEnqno = enqno;
 
         this.submitenquiryurl=sessionStorage.getItem("addrinfo")+"/submitenquiry";
-        var obj={"id":"","schol":"","acadeyr":"","contact":"","grade":"","gender":"","firstname":"","middlename":"","lastname":"","dobs":"","father":"","mother":"","email":"","location":"","createdby":"","createdate":"","givenname":"","status":"","gemail":"","gmob":"","Guardianname":"","paga":"","adtype":"","attendernamefn":"","fnsource":""}
+        var obj={"id":"","schol":"","acadeyr":"","contact":"","grade":"","gender":"","firstname":"","middlename":"","lastname":"","dobs":"","father":"","mother":"","email":"","location":"","createdby":"","createdate":"","givenname":"","status":"","gemail":"","gmob":"","Guardianname":"","paga":"","adtype":"","attendernamefn":"","fnsource":"sibilingname","sibilingdetail":"","referrername":""}
 
         obj.id=enqno;
         obj.schol=localStorage.getItem("schoolid");
@@ -541,6 +541,9 @@ attenderusername=attendername;
         obj.attendernamefn=attenderusername;
         obj.discounttype=discounttype;
         obj.fnsource=source;
+        obj.sibilingname=siblingnamefn;
+        obj.sibilingdetail=siblingdetailfn;
+        obj.referrername=referrernamefn;
         this.submitenquiryparam=obj;
 
         //alert(JSON.stringify(obj));
@@ -1126,14 +1129,10 @@ attenderusername=attendername;
       obj.schol=localStorage.getItem("schoolid");
       this.getparentnameparam=obj;
       this.$.getparentnameajax.generateRequest();
-
-
      },
      getparentnameResponse:function(e){
       parentarr=e.detail.response.returnval;
       //alert(JSON.stringify(parentarr));
-
-
       for(var i=0;i<parentarr.length;i++){
         //alert(parentarr[i].parent_name);
         var obj={"listname":""}
@@ -1152,16 +1151,14 @@ attenderusername=attendername;
      getstudentnameResponse:function(e){
         studentarr=e.detail.response.returnval;
         //alert(JSON.stringify(studentarr));
-
         for(var i=0;i<studentarr.length;i++){
         var obj={"listname":""}
         obj.listname=studentarr[i].student_name;
         namelistarr.push(obj);
          }
 
-      //alert(JSON.stringify(namelistarr));
-      //alert(document.querySelector('detailed-enquiry-form').Fnautocompletename(namelistarr));
-     document.querySelector('detailed-enquiry-form').Fnlistbox(namelistarr);
+     //document.querySelector('detailed-enquiry-form').Fnlistbox(namelistarr);
+     document.querySelector('newenquiry-card').Fnlistboxz(namelistarr);
      },
 
 
