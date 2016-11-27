@@ -105,7 +105,7 @@
                 </div>
 
                 <div class="button">
-                  <paper-button class="button" on-click="update" class="btn btn-primary">Update</paper-button>
+                  <paper-button  on-click="update" class="btn btn-primary">Update</paper-button>
                 </div>
           </div>
       </div>
@@ -134,7 +134,6 @@
         this.$.admissionservice.callSearchenquiryService(enquiryno);  
       },
       FnSelectEnquiry:function(e){
-        this.hidetable=false;
         var enquiry=(e.target.selectedItem.textContent).trim();
         var inx=enquiry.indexOf('-');
         var enquiry_no=enquiry.substring(0,inx);
@@ -142,6 +141,9 @@
         localStorage.setItem("curr_sess_enquiryno",enquiry_no);
         localStorage.setItem("curr_sess_enquiryname",enquiry_name);
         this.$.admissionservice.callFetchadmissiontestinfo(enquiry_no);
+      },
+      FnShowTable:function(){
+        this.hidetable=false;
       },
       FnRefresh:function(){
         this.hidetable=true;

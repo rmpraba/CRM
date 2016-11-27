@@ -53,9 +53,9 @@
         </div>
         <div class="col-sm-4">
           <paper-dropdown-menu label="Grade" id="gradeclass">
-            <paper-menu id="class" class="dropdown-content" required on-iron-select="classes" valueattr="value" >
+            <paper-menu  class="dropdown-content" id="newenqcardgrade" required on-iron-select="classes" valueattr="value" >
               <template  is="dom-repeat" items="{{itemarr}}" as="view">
-                <paper-item >{{view.class}}</paper-item>
+                <paper-item value="{{view.class}}">{{view.class}}</paper-item>
               </template>
             </paper-menu>
           </paper-dropdown-menu>
@@ -320,6 +320,8 @@ ready:function () {
          document.querySelector('#midyear').checked=false;
          //document.querySelector('#rtestudent').checked=false;
          document.querySelector('dateofbirth-datepicker').FnClear();
+         document.querySelector('#newenqcardgrade').selected=-1;
+         
       },
       classes:function(e){
           grade=(e.target.selectedItem.textContent).trim();

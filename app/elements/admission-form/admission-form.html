@@ -62,7 +62,7 @@
           <span><paper-checkbox  checked class="col-sm-6" id="general" class="checkbox" on-change="generalHandler">General</paper-checkbox></span>
           <span><paper-checkbox class="col-sm-6" id="spot" class="checkbox" on-change="spotHandler">Spot</paper-checkbox></span>          
         </div>
-        <label>Special Discounts</label>
+        <label>Category</label>
         <div class="col-sm-8 enquiry-input">
           <template  is="dom-repeat" items="{{discountarr}}" as="view">
             <special-discount-card code="{{view.id}}" discountname="{{view.discount_type_name}}"></special-discount-card>
@@ -173,7 +173,7 @@
           <span class="col-sm-12"><h5>Caste</h5></span>
           <span><paper-checkbox class="col-sm-2" id="SC" readonly class="checkbox" on-change="casteHandlersc">SC</paper-checkbox></span>
            <span><paper-checkbox class="col-sm-2" id="ST" readonly class="checkbox" on-change="casteHandlerst">ST</paper-checkbox></span>
-           <span><paper-checkbox class="col-sm-2" id="MBC" readonly class="checkbox" on-change="casteHandlermbc">MBC</paper-checkbox></span>
+           <span><paper-checkbox class="col-sm-2" id="MBC" readonly class="checkbox" on-change="casteHandlermbc">FC</paper-checkbox></span>
            <span><paper-checkbox class="col-sm-2" id="OBC" readonly class="checkbox" on-change="casteHandlerobc">OBC</paper-checkbox></span>
            <span><paper-checkbox class="col-sm-2" id="Others" readonly class="checkbox" on-change="casteHandlerother">Others</paper-checkbox></span>
         </div>
@@ -633,7 +633,7 @@
         this.$.scheduleservice.fetchgradeService();
         this.$.scheduleservice.fetchacademicyearService();
         this.$.scheduleservice.fetchadmissionyearService();
-        this.Nationality="Indian";
+        this.nationality="Indian";
         },
       FnSearchEnquiry:function(){
         document.querySelector('#enradmnsearch').selected="-1";

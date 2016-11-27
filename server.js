@@ -519,7 +519,7 @@ app.post('/generateinstallmentschedule-service',  urlencodedParser,function (req
     var response={"prefixname":""};
     var qur="SELECT * FROM md_installment_master WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' "+
     " and admission_year='"+req.query.admissionyear+"' and grade='"+req.query.grade+"' and no_of_installment='"+req.query.noofinstallment+"' "+
-    " and admission_type='"+req.query.admissiontype+"' and discount_type_code='"+req.query.discounttypecode+"' and admission_type='"+req.query.admissiontype+"'";
+    " and schedulename='"+req.query.schedulename+"' and installment_pattern='"+req.query.installmentpattern+"' and no_of_installment='"+req.query.noofinstallment+"'";
     
     console.log('------------instllment master-------------');
     console.log(qur);
@@ -2941,7 +2941,7 @@ app.post('/getadmissioncount',  urlencodedParser,function (req, res){
          else
          {
            console.log(err);
-           res.status(200).json({'returnval': 0});
+           res.status(200).json({'returnval':'no rows'});
          }
        }
        else{
