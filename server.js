@@ -1433,7 +1433,6 @@ app.post('/fetchenquiryinfo',  urlencodedParser,function (req, res){
 // Fetching admission paid info
 app.post('/fetchexistingadmissionpaidinfo',  urlencodedParser,function (req, res){
     var qur="SELECT * FROM md_student_paidfee WHERE school_id='"+req.query.schoolid+"' and (admission_no = '"+req.query.admissionno+"' or enquiry_no='"+req.query.admissionno+"') and installment not in ('Registration fee','Application fee')";
-    console.log(qur);
     connection.query(qur,
     function(err, rows)
     {
@@ -1459,7 +1458,6 @@ app.post('/fetchexistingadmissionpaidinfo',  urlencodedParser,function (req, res
 // Fetching admission info
 app.post('/fetchexistingadmissioninfo',  urlencodedParser,function (req, res){
     var qur="SELECT * FROM md_admission WHERE school_id='"+req.query.schoolid+"' and (admission_no = '"+req.query.admissionno+"' or enquiry_no='"+req.query.admissionno+"')";
-    console.log(qur);
     connection.query(qur,
     function(err, rows)
     {
@@ -1946,7 +1944,6 @@ app.post('/studenthistory_service', urlencodedParser,function (req, res){
 // Fetching enquiry no for admission
 app.post('/searchfeeenquiry',  urlencodedParser,function (req, res){
     var qur="SELECT * FROM student_enquiry_details WHERE school_id='"+req.query.schoolid+"' and enquiry_no = '"+req.query.enquiryno+"' or first_name='"+req.query.firstname+"' and prospectus_sold='yes' and status in('Enquired','Admitted')";
-    console.log(qur);
     connection.query(qur,
     function(err, rows)
     {
@@ -2124,7 +2121,6 @@ app.post('/fetchfees',  urlencodedParser,function (req, res){
 app.post('/fetchfeesinfo-service',  urlencodedParser,function (req, res){
 
     var qur="SELECT discount ,sum(payable_amount) as payableamount FROM installment_splitup WHERE school_id='"+req.query.schoolid+"' and admission_year = '"+req.query.admissionyear+"' and academic_year='"+req.query.academicyear+"' and grade='"+req.query.grade+"' and discount_type_code='"+req.query.discounttype+"' and admission_type='"+req.query.admissiontype+"' and no_of_installment='"+req.query.noofinstallment+"' group by fee_type";
-    console.log(qur);
     connection.query(qur,
     function(err, rows)
     {
@@ -2150,7 +2146,6 @@ app.post('/fetchfeesinfo-service',  urlencodedParser,function (req, res){
 // Fetching fees splitup
 app.post('/fetchfeesplitup',  urlencodedParser,function (req, res){
     var qur="SELECT * FROM installment_schedule_master WHERE school_id='"+req.query.schoolid+"' and admission_year = '"+req.query.admissionyear+"' and academic_year='"+req.query.academicyear+"' and grade='"+req.query.grade+"' and discount_type_code='"+req.query.discounttype+"' and admission_type='"+req.query.admissiontype+"' and no_of_installment='"+req.query.noofinstallment+"'";
-    console.log(qur);
     connection.query(qur,
     function(err, rows)
     {
@@ -2230,7 +2225,6 @@ app.post('/fetchregfeediscount-service',  urlencodedParser,function (req, res){
 // Fetching admission paid info
 app.post('/fetchexistingadmissionregpaidinfo',  urlencodedParser,function (req, res){
     var qur="SELECT * FROM md_student_paidfee WHERE school_id='"+req.query.schoolid+"' and (admission_no = '"+req.query.admissionno+"' or enquiry_no='"+req.query.admissionno+"') and installment='"+req.query.feetype+"'";
-    console.log(qur);
     connection.query(qur,
     function(err, rows)
     {
@@ -2258,7 +2252,6 @@ app.post('/fetchexistingadmissionregpaidinfo',  urlencodedParser,function (req, 
 // Fetching fees splitup
 app.post('/fetchnoofinstallment',  urlencodedParser,function (req, res){
     var qur="SELECT * FROM installment_master WHERE school_id='"+req.query.schoolid+"' and fee_code='"+req.query.feecode+"' and fee_type='"+req.query.feetype+"'";
-    console.log(qur);
     connection.query(qur,
     function(err, rows)
     {
@@ -2284,7 +2277,6 @@ app.post('/fetchnoofinstallment',  urlencodedParser,function (req, res){
 // Fetching fees installment names
 app.post('/fetchinstallmentseperation',  urlencodedParser,function (req, res){
     var qur="SELECT * FROM installment_splitup WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and admission_year='"+req.query.admissionyear+"' and grade='"+req.query.grade+"'";
-    console.log(qur);
     connection.query(qur,
     function(err, rows)
     {
@@ -2310,7 +2302,6 @@ app.post('/fetchinstallmentseperation',  urlencodedParser,function (req, res){
 // Fetching fees splitup
 app.post('/insertcashfees',  urlencodedParser,function (req, res){
     var qur="INSERT INTO tr_student_fees SET ?";
-    console.log(qur);
 
     var response={
         school_id:req.query.schoolid,
@@ -4057,6 +4048,48 @@ app.post('/getenquirysource',  urlencodedParser,function (req, res){
      });
  });
 
+  app.post('/getcounsellorattendedby',  urlencodedParser,function (req, res){
+   connection.query("SELECT * FROM `md_counsellor` WHERE `school_id` =  '"+req.query.schol+"'",
+     function(err, rows)
+     {
+       if(!err)
+       {
+         if(rows.length>0)
+         {
+           res.status(200).json({'returnval': rows});
+         }
+         else
+         {
+           console.log(err);
+           res.status(200).json({'returnval':null});
+         }
+       }
+       else{
+         console.log(err);
+       }
+     });
+ });
+  app.post('/getmothertongue',  urlencodedParser,function (req, res){
+   connection.query("SELECT * FROM `md_mother_tongue`",
+     function(err, rows)
+     {
+       if(!err)
+       {
+         if(rows.length>0)
+         {
+           res.status(200).json({'returnval': rows});
+         }
+         else
+         {
+           console.log(err);
+           res.status(200).json({'returnval':null});
+         }
+       }
+       else{
+         console.log(err);
+       }
+     });
+ });
   app.post('/getstudentsforcounselor',  urlencodedParser,function (req, res){
    connection.query("SELECT enquiry_name, enquiry_no,created_on, class FROM `student_enquiry_details` WHERE `school_id` = '"+req.query.schoolid+"' AND `orginated_by` =  '"+req.query.counsellor+"'",
      function(err, rows)
@@ -4143,6 +4176,49 @@ app.post('/getenquirysource',  urlencodedParser,function (req, res){
      });
  });
 
+app.post('/submitenqdetails',  urlencodedParser,function (req, res){
+    var response={
+      school_id:req.query.schol,
+      created_on:req.query.todate,
+      academic_year:req.query.academicyear,
+      class:req.query.grade,
+      first_name:req.query.firstname,
+      middle_name:req.query.middlename,
+      last_name:req.query.lastname,
+      gender:req.query.gender,
+      dob:req.query.dobdate,
+      father_mob:req.query.mob,
+      mother_mob:req.query.mothermob,
+      enquiry_source:req.query.enquiysource,
+      locality:req.query.location,
+      father_name:req.query.fathername,
+      mother_name:req.query.mothername,
+      father_occupation:req.query.dadoccupationinfo,
+      mother_occupation:req.query.motheroccupationinfo,
+      father_email:req.query.email,
+      mother_email:req.query.motheremail,
+      mother_tongue:req.query.mothertonguelanguage,
+      sibiling_name:req.query.siblingname,
+      sibling_detail:req.query.siblingdetails,
+      enquiry_name:req.query.enquiryname,
+      status:req.query.status,
+      guardian_mail:req.query.guardianemail,
+      guardian_mobile:req.query.guardianmobile,
+      guardian_name:req.query.guardianname,
+      year_type:req.query.enrolltype,
+      orginated_by:req.query.attenedcounsellorname
+    };
+    console.log(response);
+    connection.query('INSERT INTO student_enquiry_details SET ?',[response],function(err, rows){
+      if(!err)
+      res.status(200).json({'returnval': 'inserted'});
+      else{
+      console.log(err);
+      res.status(200).json({'returnval': 'not inserted'});
+    }
+    });
+
+});
 
 function setvalue(){
   console.log("calling setvalue.....");

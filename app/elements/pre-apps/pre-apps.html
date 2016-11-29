@@ -1,0 +1,606 @@
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="pre-apps">
+  <template>
+    <style type="text/css">
+      .horizontalframe{
+        display: flex;
+        @apply(--layout-horizontal);
+      }
+      #fname,#lname,#gradeclass,#dadname,#momname,#mobile,#email,#gemail,#Guardianname,#MobileNumber,#locality,#nextyear,#midyear,#gmobile{
+        --paper-input-container-label: { color: red };
+      }
+      paper-dropdown-menu{
+        --paper-input-container-label: { color: red };
+      }
+      #mangender{
+        color: red;
+      }
+      .lbl{
+        @apply(--layout-horizontal);
+      }
+      #pgdetail{
+        color: red;
+      }
+      .lb2,#lb2{
+        @apply(--layout-horizontal);
+      }
+    </style>
+    <div class="row enquiry-form">
+      <div class="form-group-heading">
+        <h4>Enquiry Detail</h4>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-4">
+          <paper-input label="Date of Enquiry" readonly value="{{todaydate}}"></paper-input>
+        </div>
+        <div class="col-sm-3" style='margin-top: 1%;'>
+          <paper-checkbox id="nextacademicyear" class="checkbox" on-change="nextyearhandler"> Next Year</paper-checkbox>
+        </div>
+        <div class="col-sm-3" style='margin-top: 1%;'>
+          <paper-checkbox id="thismidyear" class="checkbox" on-change="midyearhandler"> Mid Term</paper-checkbox>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-4 enquiry-input">
+           <paper-input label="Academic Year" id="acyr" readonly required error-message="needs academics year!" allowed-pattern="[a-zA-Z ]" value="{{academicyear}}"></paper-input>
+        </div>
+        <div class="col-sm-4">
+          <paper-dropdown-menu label="Grade" id="gradeclass">
+            <paper-menu  class="dropdown-content" id="newenqcardgrade" required on-iron-select="classes" valueattr="value" >
+              <template  is="dom-repeat" items="{{gradeinschoolarr}}" as="grade">
+                <paper-item value="{{grade.class}}">{{grade.class}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
+        </div>
+        <div class="col-sm-3 enquiry-input">
+          <paper-input label="Enquiry Number" hidden value="{{enqno}}"></paper-input>
+        </div>
+      </div>
+      <div class="form-group-heading">
+        <h4>Student Detail</h4>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-4">
+          <paper-input label="First Name" id="fname" required error-message="needs first name!" allowed-pattern="[a-zA-Z ]" value="{{firstname}}"></paper-input>
+        </div>
+        <div class="col-sm-4">
+          <paper-input label="Middle Name" id="mname" required error-message="needs middle name!" allowed-pattern="[a-zA-Z ]" value="{{middlename}}"></paper-input>
+        </div>
+        <div class="col-sm-4">
+          <paper-input label="Last Name" id="lname" required error-message="needs last name!" allowed-pattern="[a-zA-Z ]" value="{{lastname}}"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6 enquiry-input">
+          <div class="lbl"><label>Gender </label><p id="mangender">&nbsp; *</p> </div>
+          <div class="gender">
+            <paper-radio-group>
+              <paper-radio-button name="yes" on-click="maleHandler">Boy</paper-radio-button>
+              <paper-radio-button name="no" on-click="femaleHandler">Girl</paper-radio-button>
+            </paper-radio-group>
+          </div>
+        </div>
+        <div class="col-sm-6 enquiry-input">
+          <div class="lbl"><label>Sibling </label><p id="mangender">&nbsp; *</p> </div>
+          <div class="gender">
+            <paper-radio-group>
+              <paper-radio-button name="yes" on-click="siblingyes">Yes</paper-radio-button>
+              <paper-radio-button name="no" on-click="siblingno">No</paper-radio-button>
+            </paper-radio-group>
+          </div>  
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-4" style='margin-top: -1%;'>
+          <dateofbirth-datepicker showdate="{{showdate}}"></dateofbirth-datepicker>
+        </div>
+        <div class="col-sm-4">
+          <paper-input readonly label="Age(In Years)" value="{{ageofyr}}"></paper-input>
+        </div>
+        <div class="col-sm-4">
+          <paper-dropdown-menu label="Mother Tongue" id="mothertongue">
+            <paper-menu  class="dropdown-content" required on-iron-select="mothertongue" valueattr="value" >
+              <template  is="dom-repeat" items="{{mothertonguearr}}" as="language">
+                <paper-item value="{{language.mother_tongue}}">{{language.mother_tongue}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
+        </div>
+      </div>
+      <div class="form-group-heading">
+         <span class="col-sm-3"><h4>Parent/Guardian Detail</h4></span><span class="col-sm-2" style="margin-left:-3%;"><p id="pgdetail">&nbsp;*</p></span>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+         <div class="col-sm-6 enquiry-input">
+           <div class="gender">
+             <span class="col-sm-6"><paper-checkbox  id="parenthandler" class="checkbox" on-change="parentsHandler"><h5>Parent</h5></paper-checkbox></span>
+            <span class="col-sm-6"><paper-checkbox id="guardianhandler"  class="checkbox" on-change="gardiansHandler"><h5>Guardian</h5></paper-checkbox></span>
+           </div>
+        </div>
+      </div>
+     <div  class="list-group col-sm-12 panel-body form-category" hidden$="{{parentinfo}}">
+        <div class="col-sm-6">
+          <paper-input label="Father's Name" id="dadname" required error-message="needs father's name!" allowed-pattern="[a-zA-Z ]" value="{{fathername}}"></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <paper-input label="Mother's Name" id="momname" required error-message="needs mother's name!" allowed-pattern="[a-zA-Z ]" value="{{mothername}}"></paper-input>
+        </div>
+      </div>  
+      <div class="list-group col-sm-12 panel-body form-category" hidden$="{{parentinfo}}">
+        <div class="col-sm-6">
+          <paper-input id="mobile" error-message="enter proper mobile no!" label="Father Mobile Number" allowed-pattern="[0-9]" maxlength="10" value="{{mob}}" on-change="verifymob"></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <paper-input id="mobile" error-message="enter proper mobile no!" label="Mother Mobile Number" allowed-pattern="[0-9]" maxlength="10" value="{{mothermob}}" on-change="verifymob"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category" hidden$="{{parentinfo}}">
+        <div class="col-sm-6">
+          <gold-email-input id="email" error-message="needs email ID!" label="Father Email" value="{{email}}"></gold-email-input>
+        </div>
+        <div class="col-sm-6">
+          <gold-email-input id="email" error-message="needs email ID!" label="Mother Email" value="{{motheremail}}"></gold-email-input>
+        </div>
+      </div>
+     <div class="list-group col-sm-12 panel-body form-category" hidden$="{{guardianinfo}}">
+        <div class="col-sm-6">
+          <paper-input label="Guardian's Name" id="Guardianname" required error-message="needs Guardian's Name!" allowed-pattern="[a-zA-Z ]" value="{{guardianname}}"></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <paper-input id="gmobile" required error-message="enter proper mobile no!" label="Mobile Number" allowed-pattern="[0-9]" maxlength="10" value="{{guardianmobile}}" on-change="gverifymob"></paper-input>
+        </div>
+     </div>
+      <div class="list-group col-sm-12 panel-body form-category" hidden$="{{guardianinfo}}">
+        <div class="col-sm-6">
+          <gold-email-input id="gemail" auto-validate required error-message="needs email ID!" label="Guardian Email" value="{{guardianemail}}"></gold-email-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-4 enquiry-input">
+          <div class="lbl"><label>Both are Working? </label><p id="mangender">&nbsp; *</p> </div>
+          <div class="gender">
+            <paper-radio-group>
+              <paper-radio-button name="yes" on-click="parentworkyes">Yes</paper-radio-button>
+              <paper-radio-button name="no" on-click="parentworkno">No</paper-radio-button>
+            </paper-radio-group>
+          </div>
+        </div>
+        <div  class="col-sm-4 enquiry-input" hidden$="{{hideoccupation}}">
+          <div class="lbl"><label>Choose Who is working</label><p id="mangender">&nbsp; *</p> </div>
+          <div class="gender">
+              <paper-radio-group>
+                <paper-radio-button name="yes" on-click="father">Father</paper-radio-button>
+                <paper-radio-button name="no" on-click="mother">Mother</paper-radio-button>
+              </paper-radio-group>
+            </div>
+        </div>
+        <div class="col-sm-4 enquiry-input" hidden$="{{dadoccupation}}">
+          <paper-dropdown-menu label="Father's Occupation">
+            <paper-menu id="dadoccupation" class="dropdown-content" on-iron-select="dadoccupationselector" valueattr="value" >
+              <paper-item >Self Employed</paper-item>
+              <paper-item >Public Sector</paper-item>
+              <paper-item >Private Sector</paper-item>
+              <paper-item >Others</paper-item>
+            </paper-menu>
+          </paper-dropdown-menu>
+        </div>
+        <div class="col-sm-4 enquiry-input" hidden$="{{motheroccupation}}">
+          <paper-dropdown-menu label="Mother's Occupation" >
+            <paper-menu id="motheroccupation" class="dropdown-content" on-iron-select="motheroccupationselector" valueattr="value" >
+              <paper-item >Self Employed</paper-item>
+              <paper-item >Public Sector</paper-item>
+              <paper-item >Private Sector</paper-item>
+              <paper-item >Others</paper-item>
+            </paper-menu>
+          </paper-dropdown-menu>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <paper-input  id="locality" required error-message="needs locality!" label="Enter location/Landmark" is="" value="{{textvalue}}" on-keydown="FnInputChanged"></paper-input>
+          <paper-listbox class="dropdown-content" id="itemlist" on-iron-select="Fnselected" valueattr="value">
+            <template is="dom-repeat" items="{{itemArray}}" as="item">
+              <paper-item value="{{item.itemid}}">{{item.itemdes}}</paper-item>
+            </template>
+          </paper-listbox>
+        </div>
+        <div class="col-sm-4" style='margin-top: -1%;'>
+          <paper-dropdown-menu label="Enquiry Source" style="margin-top: 3%;">
+            <paper-menu class="dropdown-content"  class="dropdown-content" id="source" on-iron-select="source" >
+              <template  is="dom-repeat" items="{{sourcearr}}" as="item">
+                <paper-item>{{item.source}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
+        </div>
+      </div>  
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-4" id="sibname">
+          <paper-input  label="Names of sibling" value="{{siblingname}}"></paper-input>
+        </div>
+        <div class="col-sm-6" id="sibdetail">
+          <paper-input  label="Grade of sibling" value="{{siblingdetails}}"></paper-input>
+        </div>
+        <div class="col-sm-6" id="referrer">
+          <paper-input  error-message="needs referrer!" label="Enter referrer name.." is="" value="{{referrername}}" on-keydown="FnInputChangedz"></paper-input>
+          <paper-listbox class="dropdown-content" id="itemlistz" on-iron-select="Fnselectedz" valueattr="value">
+            <template is="dom-repeat" items="{{itemArrayz}}" as="item">
+              <paper-item >{{item.itemdesz}}</paper-item>
+            </template>
+          </paper-listbox>
+        </div> 
+        <div class="col-sm-4">
+          <paper-dropdown-menu label="Attended By" style="margin-top: 3%;" id="rmnames">
+            <paper-menu class="dropdown-content" on-iron-select="attendedby" >
+              <template  is="dom-repeat" items="{{counsellor}}" as="name">
+                <paper-item value="{{name.counsellor_name}}">{{name.counsellor_id}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
+        </div> 
+      </div>   
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6 enquiry-input" style='margin-top: 0.5%;'>
+          <template  is="dom-repeat" items="{{discountarr}}" as="view">
+            <special-discount-card code="{{view.id}}" discountname="{{view.discount_type_name}}"></special-discount-card>
+          </template>
+        </div>  
+      </div> 
+    </div>
+      <div class="col-md-12 form-button">
+        <paper-button class="btn btn-primary" on-click="getvalues">SUBMIT</paper-button>
+      </div>
+    <pre-apps-service id='preapps'></pre-apps-service>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    var enrolltype;
+    var yr1;
+    var yr2;
+    var yearsxz;
+    var todaydat;
+    var dobdate;
+    var grade;
+    var paga;
+    var namearr=[];
+    var namearrz=[];
+    var enquiysource;
+    var havesibling;
+    var gender;
+    var mothertonguelanguage;
+    var attenedcounsellorname;
+    var dadoccupationinfo;
+    var motheroccupationinfo
+
+    Polymer({
+      is: 'pre-apps',
+
+    ready:function(){
+      this.$.parenthandler.checked=true;
+      this.guardianinfo=true;
+      this.$.preapps.getclasses();
+      this.$.preapps.getdiscounts();
+      this.$.preapps.getenquirysource();
+      this.$.preapps.getcounsellorattendedby();
+      this.$.preapps.getlocation();
+      this.$.preapps.getmothertongue();
+      this.$.sibname.hidden=true;
+      this.$.sibdetail.hidden=true;
+      this.$.referrer.hidden=true;
+      this.hideoccupation = true;
+      this.dadoccupation = true;
+      this.motheroccupation = true;
+      var dt=new Date();
+      todaydat=dt.getDate()+"/"+(dt.getMonth()+1)+"/"+dt.getFullYear();
+      sessionStorage.setItem("todaydate",todaydat);
+      this.todaydate=todaydat;
+      /*this.$.service.getdiscounts();
+      this.$.service.getrmnamelist();
+      */
+    },
+    midyearhandler:function(e){
+      if(e.target.checked==true){
+        document.getElementById("nextacademicyear").checked=false;
+        enrolltype="midyear";
+        var dt=new Date();
+        var month=dt.getMonth()+1;
+        yr1=(dt.getFullYear())-2000;
+        yr2=(dt.getFullYear()+1)-2000;
+        yearsxz='AY-'+dt.getFullYear()+'-'+(dt.getFullYear()+1);
+        this.academicyear=yearsxz;
+      } else {
+        enrolltype=null;
+        this.academicyear="";
+      } 
+    },
+    nextyearhandler:function(e){
+      if(e.target.checked==true){
+        document.getElementById("thismidyear").checked=false;
+        enrolltype="fullyear";
+        var dt=new Date();
+        yr1=(dt.getFullYear()+1)-2000;
+        yr2=(dt.getFullYear()+2)-2000;
+        yearsxz='AY-'+(dt.getFullYear()+1)+'-'+(dt.getFullYear()+2);
+        this.academicyear=yearsxz;
+      }else{
+        enrolltype=null;
+        this.academicyear="";
+      }
+    },  
+    classes:function(e){
+      grade=(e.target.selectedItem.textContent).trim();
+    },
+    dateclear:function(){
+      alert("Select DOB properly, it cannot be future date");
+    },
+    getdate:function(dates){
+      var dt1=new Date(dates);
+      dobdate=dates;
+      var dt=new Date();
+      var pr_month = dt.getMonth()+1;
+      var bt_month = dt1.getMonth()+1;
+      var diffmonth = parseInt(pr_month-bt_month);
+      var pr_year=dt.getFullYear();
+      var bt_year=dt1.getFullYear();
+      var diff=parseInt(pr_year-bt_year);
+      //alert(diff);
+      //alert(diffmonth);
+      this.ageofyr=diff+" Years";
+      this.$.preapps.verifyage(grade,diff);
+    },
+    gardiansHandler:function(e){
+      if(e.target.checked==true){
+        document.getElementById("parenthandler").checked=false;
+        paga="Guardian";
+        this.guardianinfo=false;
+        this.parentinfo=true;
+        //alert(gender);
+        this.fathername="";
+        this.mothername="";
+        this.mob="";
+        this.email="";
+      } else {
+        paga=null;
+        this.Guardianname="";
+        this.gmob="";
+        this.gemail="";
+      }
+    },
+    parentsHandler:function(e){
+      if(e.target.checked==true){
+        document.getElementById("guardianhandler").checked=false;
+        this.guardianinfo=true;
+        this.parentinfo=false;
+        paga="parents";
+        this.Guardianname="";
+        this.gmob="";
+        this.gemail="";
+        //alert(gender);
+      } else {
+        paga=null;
+        this.fathername="";
+        this.mothername="";
+        this.mob="";
+        this.email="";
+      }
+    },
+    source:function(e){
+      enquiysource=(e.target.selectedItem.textContent).trim();
+      if(enquiysource=="Siblings"){
+        this.$.sibname.hidden=false;
+        this.$.sibdetail.hidden=false;
+        this.$.referrer.hidden=true;
+      } else if(enquiysource=="Referrer") {
+        this.$.referrer.hidden=false;
+        this.$.sibname.hidden=true;
+        this.$.sibdetail.hidden=true;
+        this.$.preapps.getreferrername();
+      } else {
+        this.$.sibname.hidden=true;
+        this.$.sibdetail.hidden=true;
+        this.$.referrer.hidden=true;
+      }
+    },
+    Fnlistboxz:function(nameitem){
+       namearrz=nameitem;
+    },
+    FnInputChangedz:function(e){
+          this.$.itemlistz.hidden=false;
+          if(e.keyCode==13|| e.keyCode==40)
+            this.querySelector('paper-listbox').focus();
+
+          var arr=[];
+          arr.push({"itemdesz":"-----Select-----"});
+          this.querySelector('paper-listbox').style.visibility='visible';
+          if(e.keyCode==8){
+            this.itemflagz="true";
+            this.itemvalz="";
+            //alert('yes');
+            var len=(this.referrername).length;
+            if(len<=1){
+              this.querySelector('paper-listbox').style.visibility='hidden';
+              this.itemArrayz="";
+              this.itemvalz="";
+            }
+            if(len>1){
+              this.querySelector('paper-listbox').style.visibility='visible';
+              var backsubval=(((this.referrername).substring(0,(len-1))).trim()).toUpperCase();
+              for(var i=0;i<namearrz.length;i++)
+              {
+                var subval=((namearrz[i].listname).trim()).substring(0,backsubval.length);
+                if((namearrz[i].listname).toUpperCase().indexOf((this.refferername).toUpperCase())!=-1)
+                {
+                  var obj={"itemdesz":""};
+                  obj.itemdesz=namearrz[i].listname;
+                  arr.push(obj);
+                }
+              }
+              this.itemArrayz=arr;
+            }
+          }
+          if(e.keyCode!=8&& e.keyCode!=16&& e.keyCode!=13 && e.keyCode!=38&&e.keyCode!=40&&e.keyCode!=37&&e.keyCode!=39){
+            if(this.itemflagz=="true") {
+              this.itemvalz = (this.referrername).toUpperCase()+String.fromCharCode((e.keyCode)).toUpperCase();
+              this.itemflagz="false";
+            }
+            else
+            this.itemvalz = this.referrername +String.fromCharCode((e.keyCode));
+            if(this.itemvalz.length>0)
+            {
+              for(var i=0;i<namearrz.length;i++){
+                var subval=((namearrz[i].listname).trim()).substring(0,this.itemvalz.length);
+                if((namearrz[i].listname).toUpperCase().indexOf((this.itemvalz).toUpperCase())!=-1)
+                {
+                  var obj={"itemdesz":""};
+                  obj.itemdesz=namearrz[i].listname;
+                  arr.push(obj);
+                }
+              }
+              if(arr.length>0)
+                this.itemArrayz=arr;
+              else {
+                var obj={"itemdesz":""};
+                  obj.itemdesz="NO Item Found";
+                  arr.push(obj);
+                this.itemArrayz=arr;
+              }
+            }
+          }
+
+    },
+    Fnselectedz:function(e){
+      //alert('s');
+      this.querySelector('paper-listbox').style.visibility='hidden';
+      this.referrername = e.target.selectedItem.textContent.trim();
+      this.itemArrayz=[];
+      document.querySelector('#itemlist').selected=-1;
+      this.$.itemlistz.hidden=true;
+    },
+    attendedby:function(e){
+      attenedcounsellorname = e.target.selectedItem.value;
+    },
+    autocompletename(nameitem){
+      namearr=nameitem;
+    },
+    FnInputChanged:function(e){
+          this.$.itemlist.hidden=false;
+          if(e.keyCode==13|| e.keyCode==40)
+            this.querySelector('paper-listbox').focus();
+          var arr=[];
+          arr.push({"itemdes":"-----Select-----"});
+          this.querySelector('paper-listbox').style.visibility='visible';
+          if(e.keyCode==8){
+            this.itemflag="true";
+            this.itemval="";
+            //alert('yes');
+            var len=(this.textvalue).length;
+            if(len<=1){
+              this.querySelector('paper-listbox').style.visibility='hidden';
+              this.itemArray="";
+              this.itemval="";
+            }
+            if(len>1){
+              this.querySelector('paper-listbox').style.visibility='visible';
+              var backsubval=(((this.textvalue).substring(0,(len-1))).trim()).toUpperCase();
+              for(var i=0;i<namearr.length;i++)
+              {
+                var subval=((namearr[i].habitat_name).trim()).substring(0,backsubval.length);
+                if((subval).toUpperCase()==(backsubval).toUpperCase())
+                {
+                  var obj={"itemdes":"","itemid":""};
+                  obj.itemdes=namearr[i].habitat_name;
+                  obj.itemid=namearr[i].habitat_id;
+                  arr.push(obj);
+                }
+              }
+              this.itemArray=arr;
+            }
+          }
+          if(e.keyCode!=8&& e.keyCode!=16&& e.keyCode!=13 && e.keyCode!=38&&e.keyCode!=40&&e.keyCode!=37&&e.keyCode!=39){
+            if(this.itemflag=="true") {
+              this.itemval = (this.textvalue).toUpperCase()+String.fromCharCode((e.keyCode)).toUpperCase();
+              this.itemflag="false";
+            }
+            else
+            this.itemval = this.textvalue +String.fromCharCode((e.keyCode));
+            if(this.itemval.length>0)
+            {
+              for(var i=0;i<namearr.length;i++){
+                var subval=((namearr[i].habitat_name).trim()).substring(0,this.itemval.length);
+                if((subval).toUpperCase()==(this.itemval).toUpperCase()){
+                  var obj={"itemdes":"","itemid":""};
+                  obj.itemdes=namearr[i].habitat_name;
+                  obj.itemid=namearr[i].habitat_id;
+                  arr.push(obj);
+                }
+              }
+              if(arr.length>0)
+                this.itemArray=arr;
+              else {
+                var obj={"itemdes":"","itemid":""};
+                  obj.itemdes=namearr[i].habitat_name;
+                  obj.itemid=namearr[i].habitat_id;
+                  arr.push(obj);
+                this.itemArray=arr;
+              }
+            }
+          }
+    },
+    Fnselected:function(e){
+      //alert('s');
+      this.querySelector('paper-listbox').style.visibility='hidden';
+      this.textvalue = e.target.selectedItem.textContent.trim();
+      this.itemArray=[];
+      document.querySelector('#itemlist').selected=-1;
+      this.$.itemlist.hidden=true;
+    },
+    siblingyes:function(){
+      havesibling = "yes";
+    },
+    siblingno:function(){
+      havesibling = "no";
+    },
+    parentworkyes:function(){
+      this.hideoccupation = true;
+      this.dadoccupation = false;
+      this.motheroccupation = false;
+    },
+    parentworkno:function(){
+      this.hideoccupation = false;
+      this.dadoccupation = true;
+      this.motheroccupation = true;
+    },
+    father:function(){
+      this.dadoccupation = false;
+      this.motheroccupation = true;
+    },
+    mother:function(){
+      this.dadoccupation = true;
+      this.motheroccupation = false;
+    },
+    maleHandler:function(){
+      gender = "boy";
+    },
+    femaleHandler:function(){
+      gender = "girl";
+    },
+    mothertongue:function(e){
+      mothertonguelanguage = e.target.selectedItem.value
+    },
+    dadoccupationselector:function(e){
+      dadoccupationinfo = (e.target.selectedItem.textContent).trim();
+    }, 
+    motheroccupationselector:function(e){
+      motheroccupationinfo = (e.target.selectedItem.textContent).trim();
+    },
+    getvalues:function(){
+      this.$.preapps.submitenqdetails(this.todate,enrolltype,this.academicyear,grade,this.firstname,this.middlename,this.lastname,gender,havesibling,this.ageofyr,dobdate,mothertonguelanguage,this.fathername,this.mothername,this.mob,this.mothermob,this.email,this.motheremail,this.guardianname,this.guardianmobile,this.guardianemail,dadoccupationinfo,motheroccupationinfo,this.textvalue,enquiysource,attenedcounsellorname,this.siblingname,this.siblingdetails,this.referrername);
+    },
+    });
+  })();
+  </script>
+</dom-module>

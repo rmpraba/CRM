@@ -71,18 +71,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       debounce-duration="300"
     >
     </iron-ajax>
-<!-- this ajax is to fetch the available classes with repect to the school -->
-   <iron-ajax
-        method="post"
-        id="getclassesajax"
-        url="{{getclassesurl}}"
-        params="{{getclassesparam}}"
-        handle-as="json"
-        content-type="application/json"
-        on-response="getclassesResponse"
-        debounce-duration="300"
-        >
-  </iron-ajax>
   <!-- this ajax fetched the list of locations available with respect to school -->
   <iron-ajax
         method="post"
@@ -989,20 +977,6 @@ attenderusername=attendername;
         document.querySelector('detailed-enquiry-form').setenqno(enquiryif);
         document.querySelector('detailed-enquiry-form').complete();
       },
-      getclasses:function(){
-      this.getclassesurl=sessionStorage.getItem("addrinfo")+"/getclasses";
-        var obj={"schol":""};
-        obj.schol=localStorage.getItem("schoolid");
-        this.getclassesparam=obj;
-       //alert(JSON.stringify(obj));
-        this.$.getclassesajax.generateRequest();
-     },
-     getclassesResponse:function(e){
-        var result=e.detail.response.returnval;
-       document.querySelector('newenquiry-card').itemarr=result;
-       document.querySelector('detailed-enquiry-form').itemarr=result;
-       // document.querySelector('admission-approval-card').itemarr=result;
-     },
      getlocation:function(){
       this.getlocationurl=sessionStorage.getItem("addrinfo")+"/getlocation";
         var obj={"schol":""};
@@ -1139,7 +1113,6 @@ attenderusername=attendername;
         obj.listname=parentarr[i].parent_name;
         namelistarr.push(obj);
       }
-
       this.getstudentnameurl=sessionStorage.getItem("addrinfo")+"/getstudentnamelist";
       var obj={"schol":""}
       obj.schol=localStorage.getItem("schoolid");
@@ -1148,17 +1121,16 @@ attenderusername=attendername;
       this.$.getstudentnameajax.generateRequest();
 
      },
-     getstudentnameResponse:function(e){
+      getstudentnameResponse:function(e){
         studentarr=e.detail.response.returnval;
         //alert(JSON.stringify(studentarr));
         for(var i=0;i<studentarr.length;i++){
-        var obj={"listname":""}
-        obj.listname=studentarr[i].student_name;
-        namelistarr.push(obj);
-         }
-
-     //document.querySelector('detailed-enquiry-form').Fnlistbox(namelistarr);
-     document.querySelector('newenquiry-card').Fnlistboxz(namelistarr);
+          var obj={"listname":""}
+          obj.listname=studentarr[i].student_name;
+          namelistarr.push(obj);
+        }
+        //document.querySelector('detailed-enquiry-form').Fnlistbox(namelistarr);
+        document.querySelector('newenquiry-card').Fnlistboxz(namelistarr);
      },
 
 
@@ -1426,8 +1398,8 @@ attenderusername=attendername;
       },
       getenquirysourceResponse:function(e){
           var result=e.detail.response.returnval;
-           document.querySelector('detailed-enquiry-form').sourcearr=result;
            document.querySelector('newenquiry-card').sourcearr=result;
+           document.querySelector('detailed-enquiry-form').sourcearr=result;
       },
 
      getcounsellor:function(){
