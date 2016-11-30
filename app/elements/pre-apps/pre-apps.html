@@ -43,7 +43,7 @@
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-4 enquiry-input">
-           <paper-input label="Academic Year" id="acyr" readonly required error-message="needs academics year!" allowed-pattern="[a-zA-Z ]" value="{{academicyear}}"></paper-input>
+           <paper-input label="Academic Year" id="idacyr" readonly required error-message="needs academics year!" allowed-pattern="[a-zA-Z ]" value="{{academicyear}}"></paper-input>
         </div>
         <div class="col-sm-4">
           <paper-dropdown-menu label="Grade">
@@ -358,7 +358,7 @@
     gardiansHandler:function(e){
       if(e.target.checked==true){
         document.getElementById("parenthandler").checked=false;
-        paga="Guardian";
+        paga="guardian";
         this.guardianinfo=false;
         this.parentinfo=true;
         //alert(gender);
@@ -368,9 +368,9 @@
         this.email="";
       } else {
         paga=null;
-        this.Guardianname="";
-        this.gmob="";
-        this.gemail="";
+        this.guardianname="";
+        this.guardianmobile="";
+        this.guardianemail="";
       }
     },
     parentsHandler:function(e){
@@ -378,10 +378,10 @@
         document.getElementById("idguardianhandler").checked=false;
         this.guardianinfo=true;
         this.parentinfo=false;
-        paga="parents";
-        this.Guardianname="";
-        this.gmob="";
-        this.gemail="";
+        paga="parent";
+        this.guardianname="";
+        this.guardianmobile="";
+        this.guardianemail="";
         //alert(gender);
       } else {
         paga=null;
@@ -602,6 +602,64 @@
     },
     getenquirynumber:function(){
       this.$.preapps.getenquiryno();
+    },
+    complete:function(){
+      if(paga=="guardian"){
+        if(this.firstname==""||this.lastname==""||this.textvalue==""||this.guardianname==""||this.guardianemail==""||this.guardianmobile==""||this.academicyear==''){
+          // alert('1');
+          this.$.fname.validate();
+          this.$.lname.validate();
+          this.$.locality.validate();
+          this.$.guardianname.validate();
+          this.$.gmobile.validate();
+          this.$.guardianemail.validate();
+          this.$.idacyr.validate();
+        } else if(grade==null){
+          // alert('4');
+          alert('Select the grade your seeking for admission');
+        } else if(gender==null){
+          // alert('5');
+          alert('Select the gender of the student');
+        } else if(dobdate==null){
+          // alert('6');
+          alert('Select date of birth properly')
+        } else if(this.textvalue==null||this.textvalue==""){
+          // alert('7');
+          alert('Select the Location');
+        } else if(enrolltype==null){
+           alert('Select the Academics Year Type');
+        } else{
+          this.getvalues();
+        }
+      } else if(paga=="parent") {
+        if(this.firstname==""||this.lastname==""||this.textvalue==""||this.fathername==""||this.mothername==""||this.mob==""||this.email==""||this.academicyear==""){
+          this.$.fname.validate();
+          // this.$.mname.validate();
+          this.$.lname.validate();
+          this.$.locality.validate();
+          this.$.dadname.validate();
+          this.$.momname.validate();
+          this.$.mobile.validate();
+          this.$.email.validate();
+          this.$.idacyr.validate();
+        } else if(grade==null) {
+          // alert('4');
+          alert('Select the grade your seeking for admission');
+        } else if(gender==null){
+          // alert('5');
+          alert('Select the gender of the student');
+        } else if(dobdate==null){
+          // alert('6');
+          alert('Select date of birth properly')
+        } else if(this.textvalue==null||this.textvalue==""){
+          // alert('7');
+          alert('Select the Location');
+        } else if(enrolltype==null){
+           alert('Select the Academic Year Type');
+        } else{
+          this.getvalues();
+        }
+      },
     },
     getvalues:function(){
       this.$.preapps.submitenqdetails(currentdate,enrolltype,this.academicyear,grade,this.firstname,this.middlename,this.lastname,gender,havesibling,this.ageofyr,dobdate,mothertonguelanguage,this.fathername,this.mothername,this.mob,this.mothermob,this.email,this.motheremail,this.guardianname,this.guardianmobile,this.guardianemail,dadoccupationinfo,motheroccupationinfo,this.textvalue,enquiysource,attenedcounsellorname,this.siblingname,this.siblingdetails,this.referrername,this.enquiry_number);
