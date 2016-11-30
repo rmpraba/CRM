@@ -4179,7 +4179,7 @@ app.post('/getenquirysource',  urlencodedParser,function (req, res){
 app.post('/submitenqdetails',  urlencodedParser,function (req, res){
     var response={
       school_id:req.query.schol,
-      created_on:req.query.todate,
+      created_on:req.query.createdon,
       academic_year:req.query.academicyear,
       class:req.query.grade,
       first_name:req.query.firstname,
@@ -4191,6 +4191,7 @@ app.post('/submitenqdetails',  urlencodedParser,function (req, res){
       mother_mob:req.query.mothermob,
       enquiry_source:req.query.enquiysource,
       locality:req.query.location,
+      have_sibling:req.query.havesibling,
       father_name:req.query.fathername,
       mother_name:req.query.mothername,
       father_occupation:req.query.dadoccupationinfo,
@@ -4206,6 +4207,7 @@ app.post('/submitenqdetails',  urlencodedParser,function (req, res){
       guardian_mobile:req.query.guardianmobile,
       guardian_name:req.query.guardianname,
       year_type:req.query.enrolltype,
+      enquiry_no:req.query.enquiry_no,
       orginated_by:req.query.attenedcounsellorname
     };
     console.log(response);

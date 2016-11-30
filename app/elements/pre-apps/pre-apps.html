@@ -55,7 +55,7 @@
           </paper-dropdown-menu>
         </div>
         <div class="col-sm-3 enquiry-input">
-          <paper-input label="Enquiry Number" hidden value="{{enqno}}"></paper-input>
+          <paper-input label="Enquiry Number" hidden value="{{enquiry_number}}"></paper-input>
         </div>
       </div>
       <div class="form-group-heading">
@@ -250,7 +250,7 @@
       </div> 
     </div>
       <div class="col-md-12 form-button">
-        <paper-button class="btn btn-primary" on-click="getvalues">SUBMIT</paper-button>
+        <paper-button class="btn btn-primary" on-click="getenquirynumber">SUBMIT</paper-button>
       </div>
     <pre-apps-service id='preapps'></pre-apps-service>
   </template>
@@ -266,6 +266,7 @@
     var dobdate;
     var grade;
     var paga;
+    var currentdate;
     var namearr=[];
     var namearrz=[];
     var enquiysource;
@@ -298,6 +299,7 @@
       todaydat=dt.getDate()+"/"+(dt.getMonth()+1)+"/"+dt.getFullYear();
       sessionStorage.setItem("todaydate",todaydat);
       this.todaydate=todaydat;
+      currentdate=dt.getFullYear()+"-"+(dt.getMonth()+1)+"-"+dt.getDate();
       /*this.$.service.getdiscounts();
       this.$.service.getrmnamelist();
       */
@@ -597,8 +599,11 @@
     motheroccupationselector:function(e){
       motheroccupationinfo = (e.target.selectedItem.textContent).trim();
     },
+    getenquirynumber:function(){
+      this.$.preapps.getenquiryno();
+    },
     getvalues:function(){
-      this.$.preapps.submitenqdetails(this.todate,enrolltype,this.academicyear,grade,this.firstname,this.middlename,this.lastname,gender,havesibling,this.ageofyr,dobdate,mothertonguelanguage,this.fathername,this.mothername,this.mob,this.mothermob,this.email,this.motheremail,this.guardianname,this.guardianmobile,this.guardianemail,dadoccupationinfo,motheroccupationinfo,this.textvalue,enquiysource,attenedcounsellorname,this.siblingname,this.siblingdetails,this.referrername);
+      this.$.preapps.submitenqdetails(currentdate,enrolltype,this.academicyear,grade,this.firstname,this.middlename,this.lastname,gender,havesibling,this.ageofyr,dobdate,mothertonguelanguage,this.fathername,this.mothername,this.mob,this.mothermob,this.email,this.motheremail,this.guardianname,this.guardianmobile,this.guardianemail,dadoccupationinfo,motheroccupationinfo,this.textvalue,enquiysource,attenedcounsellorname,this.siblingname,this.siblingdetails,this.referrername,this.enquiry_number);
     },
     });
   })();
