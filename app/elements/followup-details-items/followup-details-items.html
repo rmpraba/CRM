@@ -11,12 +11,12 @@
        <table class="striped" style="margin: 2% 0 0 5%;">
          <tbody>
            <tr>
-             <td style="width:10%">{{id}}</td>
-             <td style="width:10%">{{student}}</td>
-             <td style="width:10%">{{currdate}}</td>
-             <td style="width:10%">{{confidencelevel}}</td>
-             <td style="width:10%">{{followupflag}}</td>
-             <td style="width:10%"> <button class="btn" on-click="viewdetail" data-toggle="modal" data-target="#studentfollowup"><a>Click</a></button></td>
+             <td style="width:7%">{{id}}</td>
+             <td style="width:12%; text-align: center;">{{student}}</td>
+             <td style="width:12%">{{currdate}}</td>
+             <td style="width:8%">{{confidencelevel}}</td>
+             <td style="width:4%;text-align: center;">{{followupflag}}</td>
+             <td style="width:15%;text-align: center;"> <button class="btn" on-click="viewdetail" data-toggle="modal" data-target="#studentfollowup"><a>Click</a></button></td>
            </tr>
          </tbody>
        </table>
@@ -48,6 +48,10 @@
 
     Polymer({
       is: 'followup-details-items',
+      ready:function(){
+        var sche=new Date(this.currdate);
+        this.currdate=sche.getFullYear()+'-'+(sche.getMonth()+1)+'-'+sche.getDate();
+      },
 
       viewdetail:function(){
         //alert(this.status+   +this.followupid);

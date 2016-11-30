@@ -14,6 +14,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <dom-module id="followup-student-detail">
   <template>
+  <style >
+    #statusdialog{
+            margin-left: -30%;
+                top: 33%;
+      }
+  </style>
     <div class="row enquiry-form">
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="list-group col-sm-12 panel-body form-category">
@@ -37,18 +43,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <a on-click="showmoredetails"><i class="fa fa-external-link"></i> View more details...</a>
         </div>
       </div>
-      <div><div><center><strong style="font-size: larger;">FollowUp Schedule - {{schedule}}</strong></center></div> <div style="text-align: right;">Status : <a href="" class="glyphicon glyphicon-pencil" on-click="changestatus">{{fnstatus}}</a></div></div>
+      <div>
+              <div style="font-size: larger; text-align: center; font-weight: bolder;">FollowUp Schedule - {{schedule}}</div> 
+              <div style="text-align: right; margin-right: 5%; padding: 1%;">Status : <a href="" class="glyphicon glyphicon-pencil" on-click="changestatus">{{fnstatus}}</a></div>
+              </div>
 <div class="list-group col-sm-12 panel-body form-category">
       <table class="table table-striped" >
         <thead>
-        <tr class="list-group col-sm-12 panel-body form-category">
-          <th class="col-sm-2">Call picked</th>
-          <th class="col-sm-2">Schedule Date</th>
-          <th class="col-sm-2">Actual Date</th>
-          <th class="col-sm-2">Next Followup</th>
-          <th class="col-sm-1">Confidence Level</th>
-          <th class="col-sm-2">Comments</th>
-          <th class="col-sm-1">Click Here</th>
+        <tr class="list-group col-sm-14 panel-body form-category">
+          <th class="col-sm-2" style="text-align:center;">FollowUp No</th>
+           <th class="col-sm-3" style="text-align:center;">Call picked Status</th>
+          <th class="col-sm-2" style="text-align:center;">Schedule Date</th>
+          <th class="col-sm-3" style="text-align:center;">Next Followup</th>
+         <th class="col-sm-3" style="text-align:center;">Status</th>
         </tr>
         </thead>
             
@@ -58,7 +65,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <checkbox-card id={{view.followup_no}} status={{view.followup_status}}></checkbox-card>
           </div>
           <div class="list-group col-sm-10"> -->
-            <followup-listitem-card scheduledate="{{view.schedule_date}}" nextdate="{{view.next_followup_date}}" comments="{{view.followup_comments}}" callstatus="{{view.followup_status}}" confidencelvl="{{view.confidence_level}}" followupno="{{view.followup_no}}" fid="{{view.schedule_id}}" enquiryid="{{view.enquiry_id}}"></followup-listitem-card>
+            <followup-listitem-card scheduledate="{{view.schedule_date}}" nextdate="{{view.next_followup_date}}" value="{{view.followup_comments}}" callstatus="{{view.followup_status}}" confidencelvl="{{view.confidence_level}}" followupno="{{view.followup_no}}" fid="{{view.schedule_id}}" enquiryid="{{view.enquiry_id}}" sno="{{view.slno}}"></followup-listitem-card>
             <!-- </div> -->
       </template>
     </div>
@@ -202,7 +209,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var statuszx=(e.target.selectedItem.textContent).trim();
         alert(statuszx);
         if(statuszx=='Re-Schedule'){
-
+            this.$.followupservice.Fnreschedule('>75%',this.followupid);
         }
         else{
           this.$.followupservice.FnChangestatus(this.followupid,statuszx,this.enqno);

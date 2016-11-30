@@ -375,8 +375,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var enquiryidzz;
     var datesarr=[];
     var generateid;
-    var resultarr;
-    var countresult=0;
+    var resultarr=[];
+    var countresult;
     var upfollowupid;
     var upconfidencelvl;
     var upfollowno;
@@ -439,8 +439,8 @@ newdate.setDate(newdate.getDate()+resultarr[0].no_of_days);
         obj.scheduleflag=1;
         obj.noofdays=resultarr[0].no_of_days;
         obj.noofschedule=resultarr[0].no_of_calls;
-        obj.upcomingdate=newdate.getDate()+'/'+(newdate.getMonth()+1)+'/'+newdate.getFullYear();
-        obj.lastscheduleon=lastdate.getDate()+'/'+(lastdate.getMonth()+1)+'/'+lastdate.getFullYear();
+        obj.upcomingdate=newdate.getFullYear()+'-'+(newdate.getMonth()+1)+'-'+newdate.getDate();
+        obj.lastscheduleon=lastdate.getFullYear()+'-'+(lastdate.getMonth()+1)+'-'+lastdate.getDate();
         obj.createdby=localStorage.getItem("employeeid");
         obj.createdon=sessionStorage.getItem("todaydate");
         obj.followername=usernameattend;
@@ -448,6 +448,7 @@ newdate.setDate(newdate.getDate()+resultarr[0].no_of_days);
         //alert(JSON.stringify(obj));
         this.$.updatefollowajax.generateRequest();
       },
+
       updatefollowResponse:function(e){
           if(e.detail.response.returnval=='success'){
 
@@ -459,12 +460,12 @@ newdate.setDate(newdate.getDate()+resultarr[0].no_of_days);
           obj.id=generateid;
           obj.enquiryid=enquiryidzz;
           obj.followupno=j+1;
-          obj.followupdate=(datesarr[j].dates).getDate()+"/"+((datesarr[j].dates).getMonth()+1)+"/"+(datesarr[j].dates).getFullYear();
+          obj.followupdate=datesarr[j].dates.getFullYear()+'-'+(datesarr[j].dates.getMonth()+1)+'-'+datesarr[j].dates.getDate();
           if(j<(resultarr[0].no_of_calls-1)){
-          obj.nextfolowup=(datesarr[j+1].dates).getDate()+"/"+((datesarr[j+1].dates).getMonth()+1)+"/"+(datesarr[j+1].dates).getFullYear();
+          obj.nextfolowup=datesarr[j+1].dates.getFullYear()+'-'+(datesarr[j+1].dates.getMonth()+1)+'-'+datesarr[j+1].dates.getDate();
           }
           else{
-           obj.nextfolowup="Re-Schedule"; 
+           obj.nextfolowup=null; 
           }
           obj.flag='F';
           obj.schedule=newscheduleno+1;
@@ -484,10 +485,11 @@ newdate.setDate(newdate.getDate()+resultarr[0].no_of_days);
       
       },
       updatefollowdetailResponse:function(e){
+        countresult=0;
         if(e.detail.response.returnval=='success'){
           //alert(e.detail.response.returnval);
           countresult=countresult+1;
-          if(countresult==resultarr[0].no_of_calls){
+          if((countresult==resultarr[0].no_of_calls)||(countresult==resultarray[0].no_of_schedules)){
             this.getfollowupcount();
           alert('The follwup schedule is updated successfully');
           }
@@ -650,8 +652,20 @@ newdate.setDate(newdate.getDate()+resultarr[0].no_of_days);
       },
       getfollowupstudentsResponse:function(e){
        var res=e.detail.response.returnval;
-       
-       document.querySelector('followup-details').followuparr=res;
+       var requery=[];
+              for(var i=0;i<res.length;i++){
+                var dsta=new Date(res[i].upcoming_date);
+                    var obj={"enquiry_id":"","enquiry_name":"","upcoming_date":"","current_confidence_level":"","schedule_flag":"","schedule_status":"","id":""};
+                    obj.enquiry_id=res[i].enquiry_id;
+                    obj.enquiry_name=res[i].enquiry_name;
+                    obj.upcoming_date=dsta.getFullYear()+'-'+(dsta.getMonth()+1)+'-'+dsta.getDate();
+                    obj.current_confidence_level=res[i].current_confidence_level;
+                    obj.schedule_flag=res[i].schedule_flag;
+                    obj.schedule_status=res[i].schedule_status;
+                    obj.id=res[i].id;
+                    requery.push(obj);              
+              }
+       document.querySelector('followup-details').followuparr=requery;
         document.querySelector('app-list').setPage("followup-details","Followup Student List");
 
       },
@@ -668,7 +682,7 @@ newdate.setDate(newdate.getDate()+resultarr[0].no_of_days);
       },
       viewdetailResponse:function(e){
         var res=e.detail.response.returnval;
-        alert(JSON.stringify(res));
+        //alert(JSON.stringify(res));
         var parentid,guardianid;
         document.querySelector('followup-student-detail').enqno=res[0].enquiry_no;
         document.querySelector('followup-student-detail').followupid=res[0].id;
@@ -752,13 +766,37 @@ newdate.setDate(newdate.getDate()+resultarr[0].no_of_days);
         obj.fid=followypid;
         obj.flag=schedule;
         this.getlistdetailsparam=obj;
-       //alert(JSON.stringify(obj));
+       alert(JSON.stringify(obj));
         this.$.getlistdetailsajax.generateRequest();
 
       },
       getlistdetailsResponse:function(e){
-        // alert(JSON.stringify(e.detail.response.returnval));
-        document.querySelector('followup-student-detail').followupdetailarr=e.detail.response.returnval;
+        var resultarrS=[];
+        var result=e.detail.response.returnval;
+         alert(JSON.stringify(e.detail.response.returnval));
+         
+         for(var i=0;i<result.length;i++){
+          var sche=new Date(result[i].schedule_date);
+          var next=new Date (result[i].next_followup_date);
+          var obj={"school_id":"","schedule_id":"","enquiry_id":"","followup_no":"","schedule_date":"","confidence_level":"","followup_comments":"","next_followup_date":"","schedule":"","created_on":"","created_by":"","actual_date":"","followup_status":"","slno":""};
+            obj.slno=i+1;
+            obj.school_id=result[i].school_id;
+            obj.schedule_id=result[i].schedule_id;
+            obj.enquiry_id=result[i].enquiry_id;
+            obj.followup_no=result[i].followup_no;
+            obj.schedule_date=sche.getFullYear()+'-'+(sche.getMonth()+1)+'-'+sche.getDate();
+            obj.confidence_level=result[i].confidence_level;
+            obj.followup_comments=result[i].followup_comments;
+            obj.next_followup_date=next.getFullYear()+'-'+(next.getMonth()+1)+'-'+next.getDate();
+            obj.schedule=result[i].schedule;
+            obj.created_on=result[i].created_on;
+            obj.created_by=result[i].created_by;
+            obj.actual_date=result[i].actual_date;
+            obj.followup_status=result[i].followup_status;
+            resultarrS.push(obj);
+         }
+         alert(JSON.stringify(resultarrS));
+        document.querySelector('followup-student-detail').followupdetailarr=resultarrS;
         //document.querySelector('followup-student-detail').Fncheck();
 
       },
@@ -779,7 +817,7 @@ newdate.setDate(newdate.getDate()+resultarr[0].no_of_days);
         obj.callstatus=fncallstatus;
         obj.confidencelvl=fnconfidencelvl;
         this.updatefollowupdetailsparam=obj;
-       //alert(JSON.stringify(obj));
+       alert(JSON.stringify(obj));
         this.$.updatefollowupdetailsajax.generateRequest();
         
       },
@@ -866,14 +904,14 @@ newdate.setDate(newdate.getDate()+resultarray[0].no_of_days);
         obj.schol=localStorage.getItem("schoolid");
         obj.id=generateid;
         obj.enquiryno=enquiryidzz;
-        obj.schedule=parseInt(newscheduleno+1);
+        obj.schedule=parseInt(newscheduleno)+1;
         obj.currconfidence=reschconfidence;
         obj.schedulestatus="Inprogress";
         obj.scheduleflag=1;
         obj.noofdays=resultarray[0].no_of_days;
         obj.noofschedule=resultarray[0].no_of_schedules;
-        obj.upcomingdate=newdate.getDate()+'/'+(newdate.getMonth()+1)+'/'+newdate.getFullYear();
-        obj.lastscheduleon=lastdate.getDate()+'/'+(lastdate.getMonth()+1)+'/'+lastdate.getFullYear();
+        obj.upcomingdate=newdate.getFullYear()+'-'+(newdate.getMonth()+1)+'-'+newdate.getDate();
+        obj.lastscheduleon=lastdate.getFullYear()+'-'+(lastdate.getMonth()+1)+'-'+lastdate.getDate();
         obj.createdby=localStorage.getItem("employeeid");
         obj.createdon=sessionStorage.getItem("todaydate");
         this.insertfollowupmasterparam=obj;
@@ -890,15 +928,15 @@ newdate.setDate(newdate.getDate()+resultarray[0].no_of_days);
           obj.id=generateid;
           obj.enquiryid=enquiryidzz;
           obj.followupno=j+1;
-          obj.followupdate=(datesarr[j].dates).getDate()+"/"+((datesarr[j].dates).getMonth()+1)+"/"+(datesarr[j].dates).getFullYear();
+          obj.followupdate=datesarr[j].dates.getFullYear()+'-'+(datesarr[j].dates.getMonth()+1)+'-'+datesarr[j].dates.getDate();
           if(j<(resultarray[0].no_of_schedules-1)){
-          obj.nextfolowup=(datesarr[j+1].dates).getDate()+"/"+((datesarr[j+1].dates).getMonth()+1)+"/"+(datesarr[j+1].dates).getFullYear();
+          obj.nextfolowup=datesarr[j+1].dates.getFullYear()+'-'+(datesarr[j+1].dates.getMonth()+1)+'-'+datesarr[j+1].dates.getDate();
           }
           else{
-           obj.nextfolowup="Re-Schedule"; 
+           obj.nextfolowup=null; 
           }
           obj.flag='F';
-          obj.schedule=newscheduleno+1;
+          obj.schedule=parseInt(newscheduleno)+1;
           obj.followupno=j+1;
          obj.createdby=localStorage.getItem("employeeid");
         obj.createdon=sessionStorage.getItem("todaydate");

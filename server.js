@@ -1298,8 +1298,8 @@ app.post('/searchenquiry',  urlencodedParser,function (req, res){
     var qur="SELECT * FROM student_enquiry_details WHERE school_id='"+req.query.schoolid+"' and enquiry_no like '%"+req.query.enquiryno+"%' or enquiry_name like '%"+req.query.enquiryno+"%' and status='Enquired'";
 
     var checkqur="SELECT * FROM student_enquiry_details WHERE school_id='"+req.query.schoolid+"' and (enquiry_no like '%"+req.query.enquiryno+"%' or enquiry_name like '%"+req.query.enquiryno+"%') and status='Admitted'";
-    console.log(qur);
-    console.log(checkqur);
+   // console.log(qur);
+  //  console.log(checkqur);
     connection.query(qur,function(err, rows){
       if(rows.length==0){
     connection.query(checkqur,function(err, rows)
@@ -1356,7 +1356,7 @@ app.post('/searchenquiry',  urlencodedParser,function (req, res){
 // Searching admission no of existing admission
 app.post('/searchexistingadmission',  urlencodedParser,function (req, res){
     var qur="SELECT * FROM md_admission WHERE school_id='"+req.query.schoolid+"' and admission_no like '%"+req.query.admissionno+"%' or student_name like '%"+req.query.admissionno+"%' or enquiry_no like '%"+req.query.admissionno+"%'";
-    console.log(qur);
+   // console.log(qur);
     connection.query(qur,
     function(err, rows)
     {
@@ -1382,7 +1382,7 @@ app.post('/searchexistingadmission',  urlencodedParser,function (req, res){
 // Searching admitted student info for fee payment
 app.post('/searchfeeadmission',  urlencodedParser,function (req, res){
     var qur="SELECT * FROM md_admission WHERE school_id='"+req.query.schoolid+"' and admission_no like '%"+req.query.admissionno+"%' or student_name like '%"+req.query.admissionno+"%' or enquiry_no like '%"+req.query.admissionno+"%'";
-    console.log(qur);
+   // console.log(qur);
     connection.query(qur,
     function(err, rows)
     {
@@ -1407,7 +1407,7 @@ app.post('/searchfeeadmission',  urlencodedParser,function (req, res){
 // Fetching enquiry no for admission
 app.post('/fetchenquiryinfo',  urlencodedParser,function (req, res){
     var qur="SELECT * FROM student_enquiry_details WHERE school_id='"+req.query.schoolid+"' and enquiry_no = '"+req.query.enquiryno+"' and status='Enquired' and admission_status='Pass'";
-    console.log(qur);
+   // console.log(qur);
     connection.query(qur,
     function(err, rows)
     {
@@ -1433,7 +1433,7 @@ app.post('/fetchenquiryinfo',  urlencodedParser,function (req, res){
 // Fetching admission paid info
 app.post('/fetchexistingadmissionpaidinfo',  urlencodedParser,function (req, res){
     var qur="SELECT * FROM md_student_paidfee WHERE school_id='"+req.query.schoolid+"' and (admission_no = '"+req.query.admissionno+"' or enquiry_no='"+req.query.admissionno+"') and installment not in ('Registration fee','Application fee')";
-    console.log(qur);
+   // console.log(qur);
     connection.query(qur,
     function(err, rows)
     {
@@ -1459,7 +1459,7 @@ app.post('/fetchexistingadmissionpaidinfo',  urlencodedParser,function (req, res
 // Fetching admission info
 app.post('/fetchexistingadmissioninfo',  urlencodedParser,function (req, res){
     var qur="SELECT * FROM md_admission WHERE school_id='"+req.query.schoolid+"' and (admission_no = '"+req.query.admissionno+"' or enquiry_no='"+req.query.admissionno+"')";
-    console.log(qur);
+   // console.log(qur);
     connection.query(qur,
     function(err, rows)
     {
@@ -1484,7 +1484,7 @@ app.post('/fetchexistingadmissioninfo',  urlencodedParser,function (req, res){
 // Fetching admission stud info
 app.post('/fetchexistingadmissionstudinfo',  urlencodedParser,function (req, res){
     var qur="SELECT * FROM md_student WHERE school_id='"+req.query.schoolid+"' and enquiry_no = '"+req.query.admissionno+"'";
-    console.log(qur);
+  //  console.log(qur);
     connection.query(qur,
     function(err, rows)
     {
@@ -1509,7 +1509,7 @@ app.post('/fetchexistingadmissionstudinfo',  urlencodedParser,function (req, res
 // Fetching admission acheivement info
 app.post('/fetchexistingadmissioncoinfo',  urlencodedParser,function (req, res){
     var qur="SELECT * FROM md_student_cocurricular_details WHERE school_id='"+req.query.schoolid+"' and enquiry_no = '"+req.query.admissionno+"'";
-    console.log(qur);
+  //  console.log(qur);
     connection.query(qur,
     function(err, rows)
     {
@@ -1534,7 +1534,7 @@ app.post('/fetchexistingadmissioncoinfo',  urlencodedParser,function (req, res){
 // Fetching admission stud info
 app.post('/fetchexistingadmissionphysicinfo',  urlencodedParser,function (req, res){
     var qur="SELECT * FROM md_disability_student_details WHERE school_id='"+req.query.schoolid+"' and enquiry_no = '"+req.query.admissionno+"'";
-    console.log(qur);
+  //  console.log(qur);
     connection.query(qur,
     function(err, rows)
     {
@@ -1559,7 +1559,7 @@ app.post('/fetchexistingadmissionphysicinfo',  urlencodedParser,function (req, r
 // Fetching admission stud school history info
 app.post('/fetchexistingadmissionhistoryinfo',  urlencodedParser,function (req, res){
     var qur="SELECT * FROM md_student_school_history WHERE school_id='"+req.query.schoolid+"' and enquiry_no = '"+req.query.admissionno+"'";
-    console.log(qur);
+   // console.log(qur);
     connection.query(qur,
     function(err, rows)
     {
@@ -1611,7 +1611,7 @@ app.post('/insertadmission',  urlencodedParser,function (req, res){
     }
 
     var qur="SELECT * FROM auto_admission_no";
-    console.log(qur);
+   // console.log(qur);
     connection.query(qur,function(err, rows)
     {
     if(!err)
@@ -1946,7 +1946,7 @@ app.post('/studenthistory_service', urlencodedParser,function (req, res){
 // Fetching enquiry no for admission
 app.post('/searchfeeenquiry',  urlencodedParser,function (req, res){
     var qur="SELECT * FROM student_enquiry_details WHERE school_id='"+req.query.schoolid+"' and enquiry_no = '"+req.query.enquiryno+"' or first_name='"+req.query.firstname+"' and prospectus_sold='yes' and status in('Enquired','Admitted')";
-    console.log(qur);
+    //console.log(qur);
     connection.query(qur,
     function(err, rows)
     {
@@ -1972,7 +1972,7 @@ app.post('/searchfeeenquiry',  urlencodedParser,function (req, res){
 // Fetching enquiry no for admission
 app.post('/searchprospectenquiry',  urlencodedParser,function (req, res){
     var qur="SELECT * FROM student_enquiry_details WHERE school_id='"+req.query.schoolid+"' and enquiry_no like '%"+req.query.enquiryno+"%' or first_name like '%"+req.query.firstname+"%' and prospectus_sold='yes' and status in('Enquired','Admitted')";
-    console.log(qur);
+   // console.log(qur);
     connection.query(qur,
     function(err, rows)
     {
@@ -1998,7 +1998,7 @@ app.post('/searchprospectenquiry',  urlencodedParser,function (req, res){
 // Fetching enquiry no for admission
 app.post('/searchprospectenquiryinfo',  urlencodedParser,function (req, res){
     var qur="SELECT * FROM student_enquiry_details WHERE school_id='"+req.query.schoolid+"' and enquiry_no = '"+req.query.enquiryno+"'";
-    console.log(qur);
+   // console.log(qur);
     connection.query(qur,
     function(err, rows)
     {
@@ -2024,7 +2024,7 @@ app.post('/searchprospectenquiryinfo',  urlencodedParser,function (req, res){
 // Fetching enquiry no for admission
 app.post('/searchadmnenquiry',  urlencodedParser,function (req, res){
     var qur="SELECT * FROM md_admission WHERE school_id='"+req.query.schoolid+"' and enquiry_no = '"+req.query.enquiryno+"' or first_name='"+req.query.firstname+"'";
-    console.log(qur);
+  //  console.log(qur);
     connection.query(qur,
     function(err, rows)
     {
@@ -2050,7 +2050,7 @@ app.post('/searchadmnenquiry',  urlencodedParser,function (req, res){
 // Fetching enquiry no for admission
 app.post('/searchadmission',  urlencodedParser,function (req, res){
     var qur="SELECT * FROM md_admission WHERE school_id='"+req.query.schoolid+"' and admission_no = '"+req.query.admissionno+"' or first_name='"+req.query.firstname+"'";
-    console.log(qur);
+    //console.log(qur);
     connection.query(qur,
     function(err, rows)
     {
@@ -2080,7 +2080,7 @@ app.post('/fetchfees',  urlencodedParser,function (req, res){
     var qur="SELECT * FROM fee_master WHERE school_id='"+req.query.schoolid+"' and admission_year = '"+req.query.admissionyear+"' and academic_year='"+req.query.academicyear+"' and grade_id='"+req.query.grade+"'";
 
     // var qur1="SELECT total_fee FROM fee_splitup WHERE school_id='"+req.query.schoolid+"' and fee_code='"++"'";
-    console.log(qur);
+   // console.log(qur);
     connection.query(qur,function(err, rows){
     if(!err)
     {
@@ -2124,7 +2124,7 @@ app.post('/fetchfees',  urlencodedParser,function (req, res){
 app.post('/fetchfeesinfo-service',  urlencodedParser,function (req, res){
 
     var qur="SELECT discount ,sum(payable_amount) as payableamount FROM installment_splitup WHERE school_id='"+req.query.schoolid+"' and admission_year = '"+req.query.admissionyear+"' and academic_year='"+req.query.academicyear+"' and grade='"+req.query.grade+"' and discount_type_code='"+req.query.discounttype+"' and admission_type='"+req.query.admissiontype+"' and no_of_installment='"+req.query.noofinstallment+"' group by fee_type";
-    console.log(qur);
+   // console.log(qur);
     connection.query(qur,
     function(err, rows)
     {
@@ -2150,7 +2150,7 @@ app.post('/fetchfeesinfo-service',  urlencodedParser,function (req, res){
 // Fetching fees splitup
 app.post('/fetchfeesplitup',  urlencodedParser,function (req, res){
     var qur="SELECT * FROM installment_schedule_master WHERE school_id='"+req.query.schoolid+"' and admission_year = '"+req.query.admissionyear+"' and academic_year='"+req.query.academicyear+"' and grade='"+req.query.grade+"' and discount_type_code='"+req.query.discounttype+"' and admission_type='"+req.query.admissiontype+"' and no_of_installment='"+req.query.noofinstallment+"'";
-    console.log(qur);
+   // console.log(qur);
     connection.query(qur,
     function(err, rows)
     {
@@ -2177,7 +2177,7 @@ app.post('/fetchfeesplitup',  urlencodedParser,function (req, res){
 app.post('/fetchregfeesinfo-service',  urlencodedParser,function (req, res){
 
     var qur="SELECT * FROM fee_splitup WHERE fee_code='"+req.query.feecode+"' and school_id='"+req.query.schoolid+"' and fee_type='Registration fee'";
-    console.log(qur);
+  //  console.log(qur);
     connection.query(qur,
     function(err, rows)
     {
@@ -2204,7 +2204,7 @@ app.post('/fetchregfeesinfo-service',  urlencodedParser,function (req, res){
 app.post('/fetchregfeediscount-service',  urlencodedParser,function (req, res){
 
     var qur="SELECT * FROM md_discount_master WHERE school_id='"+req.query.schoolid+"' and admission_year = '"+req.query.admissionyear+"' and academic_year='"+req.query.academicyear+"' and grade='"+req.query.grade+"' and discount_type_code='"+req.query.discounttype+"' and admission_type='"+req.query.admissiontype+"' and fee_type='Registration fee'";
-    console.log(qur);
+  //  console.log(qur);
     connection.query(qur,
     function(err, rows)
     {
@@ -2230,7 +2230,7 @@ app.post('/fetchregfeediscount-service',  urlencodedParser,function (req, res){
 // Fetching admission paid info
 app.post('/fetchexistingadmissionregpaidinfo',  urlencodedParser,function (req, res){
     var qur="SELECT * FROM md_student_paidfee WHERE school_id='"+req.query.schoolid+"' and (admission_no = '"+req.query.admissionno+"' or enquiry_no='"+req.query.admissionno+"') and installment='"+req.query.feetype+"'";
-    console.log(qur);
+  //  console.log(qur);
     connection.query(qur,
     function(err, rows)
     {
@@ -2258,7 +2258,7 @@ app.post('/fetchexistingadmissionregpaidinfo',  urlencodedParser,function (req, 
 // Fetching fees splitup
 app.post('/fetchnoofinstallment',  urlencodedParser,function (req, res){
     var qur="SELECT * FROM installment_master WHERE school_id='"+req.query.schoolid+"' and fee_code='"+req.query.feecode+"' and fee_type='"+req.query.feetype+"'";
-    console.log(qur);
+  //  console.log(qur);
     connection.query(qur,
     function(err, rows)
     {
@@ -2284,7 +2284,7 @@ app.post('/fetchnoofinstallment',  urlencodedParser,function (req, res){
 // Fetching fees installment names
 app.post('/fetchinstallmentseperation',  urlencodedParser,function (req, res){
     var qur="SELECT * FROM installment_splitup WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and admission_year='"+req.query.admissionyear+"' and grade='"+req.query.grade+"'";
-    console.log(qur);
+   // console.log(qur);
     connection.query(qur,
     function(err, rows)
     {
@@ -2310,7 +2310,7 @@ app.post('/fetchinstallmentseperation',  urlencodedParser,function (req, res){
 // Fetching fees splitup
 app.post('/insertcashfees',  urlencodedParser,function (req, res){
     var qur="INSERT INTO tr_student_fees SET ?";
-    console.log(qur);
+   // console.log(qur);
 
     var response={
         school_id:req.query.schoolid,
@@ -2398,7 +2398,7 @@ app.post('/insertcashfees',  urlencodedParser,function (req, res){
 // Fetching fees splitup
 app.post('/insertchequefees',  urlencodedParser,function (req, res){
     var qur="INSERT INTO tr_cheque_details SET ?";
-    console.log(qur);
+   // console.log(qur);
 
     var response={
        school_id:req.query.schoolid,
@@ -2758,7 +2758,7 @@ app.post('/getparentname',  urlencodedParser,function (req, res){
 
 app.post('/getstudentnamelist',  urlencodedParser,function (req, res){
     var qur={"school_id":req.query.schol};
-    console.log('qur');
+  //  console.log('qur');
     connection.query('SELECT student_name FROM `student_details` WHERE ?',[qur],
     function(err, rows)
     {
@@ -2825,7 +2825,7 @@ app.post('/getfollowupcount',  urlencodedParser,function (req, res){
    else{
         var qur = "SELECT f.enquiry_id,f.schedule_flag,s.enquiry_name,f.schedule_status,f.id,f.current_confidence_level,f.upcoming_date FROM followup f join student_enquiry_details s on f.enquiry_id=s.enquiry_no WHERE f.schedule_status='"+req.query.fnstatus+"' and s.class='"+req.query.fngrade+"' and s.school_id = '"+req.query.schol+"' and s.followed_By='"+req.query.user+"' ORDER BY (upcoming_date)";
    }
-   console.log(qur);
+   //console.log(qur);
    connection.query(qur,
      function(err, rows)
      {
@@ -2849,7 +2849,7 @@ app.post('/getfollowupcount',  urlencodedParser,function (req, res){
    var school={"school_id":req.query.schol};
    var id={"enquiry_no":req.query.id};
    var qur = "select f.enquiry_id,f.id,f.schedule_no,f.last_schedule_date,f.schedule_Status,d.enquiry_no,d.enquiry_name,d.class,d.created_on,d.father_name,d.father_mob,d.gmob,d.guardianname,d.admission_test from followup as f Join student_enquiry_details d on d.enquiry_no=f.enquiry_id where f.id='"+req.query.fid+"' and f.enquiry_id='"+req.query.id+"' and f.school_id='"+req.query.schol+"' and f.schedule_status='"+req.query.fstatus+"'";
-console.log(qur);
+//console.log(qur);
 
    connection.query(qur,
      function(err, rows)
@@ -2927,7 +2927,7 @@ app.post('/getadmissioncount',  urlencodedParser,function (req, res){
 
    //console.log('qur');
    var qur="SELECT d.enquiry_no, d.enquiry_name, d.class, d.created_on, a.english_status, a.maths_status, a.evs_status, a.test_date,a.english_mark,a.maths_mark,a.evs_mark,a.result_status  FROM student_enquiry_details as d join admission_test_details as a WHERE (a.school_id='"+req.query.schoolid+"' and a.enquiry_id='"+req.query.enquiryno+"') and d.status='Enquired' and d.admission_test='Yes' and (d.enquiry_no='"+req.query.enquiryno+"' and d.school_id='"+req.query.schoolid+"')";
-   console.log('...........admission test............'+qur);
+ //  console.log('...........admission test............'+qur);
    connection.query(qur,
      function(err, rows)
      {
@@ -2958,8 +2958,8 @@ app.post('/getadmissioncount',  urlencodedParser,function (req, res){
    var qur1="UPDATE admission_test_details SET english_mark='"+req.query.englishmark+"' , maths_mark='"+req.query.mathsmark+"' "+
             " , evs_mark='"+req.query.evsmark+"' , result_status='"+req.query.status+"' ,evaluated_by='"+req.query.evaluatedby+"' ,evaluated_on='"+req.query.evaluatedon+"' "+
             " WHERE school_id='"+req.query.schoolid+"' and enquiry_id='"+req.query.enquiryno+"' ";
-   console.log(qur);
-   console.log(qur1);
+  // console.log(qur);
+ //  console.log(qur1);
    connection.query(qur,
      function(err, result)
      {
@@ -3018,7 +3018,7 @@ app.post('/getadmissioncount',  urlencodedParser,function (req, res){
    var enquiry={"enquiry_id":req.query.enqno};
    var followupid={"followup_id":req.query.fwupid};
    var collection = {"followup_flag":req.query.nextflag,"next_followup_date":req.query.nextdate};
-   console.log(collection);
+  // console.log(collection);
    connection.query('update followupdetail set ? where ? and ?',[collection,school,followupid],
      function(err, rows)
      {
@@ -3076,7 +3076,7 @@ app.post('/verifyage',  urlencodedParser,function (req, res){
     {
     if(rows.length>0)
     {
-      console.log(rows);
+   //   console.log(rows);
       res.status(200).json({'returnval': rows});
     }
     else
@@ -3173,7 +3173,7 @@ app.post('/updatetestdetails', urlencodedParser,function (req, res){
 
    //console.log('qur');
    var qur="UPDATE admission_test_details SET english_mark='"+req.query.english+"', maths_mark='"+req.query.maths+"', evs_mark='"+req.query.evs+"', result_status='"+req.query.status+"', evaluated_by='"+req.query.evaluatedby+"', evaluated_on='"+req.query.evaluatedon+"' WHERE school_id='"+req.query.schoolid+"' and enquiry_id='"+req.query.enquiryno+"'";
-   console.log(qur);
+  // console.log(qur);
    connection.query(qur,
      function(err, result)
      {
@@ -3258,7 +3258,7 @@ app.post('/updatetestdetails', urlencodedParser,function (req, res){
 
  app.post('/walkinanalysismonth',  urlencodedParser,function (req, res){
    var qur = "SELECT count(*) as totalenq, enquiry_source FROM `student_enquiry_details` WHERE created_on like'"+req.query.current_year+"' and school_id = '"+req.query.schol+"' GROUP BY enquiry_source";
-   console.log(qur);
+   //console.log(qur);
    connection.query(qur,
      function(err, rows)
      {
@@ -3433,16 +3433,17 @@ app.post('/getlistdetails',  urlencodedParser,function (req, res){
     var school={"school_id":req.query.schol};
     var flwpid={"schedule_id":req.query.fid};
     var scheduleno={"schedule":req.query.flag};
-    console.log('qur');
+    var qur="SELECT * FROM followupdetail WHERE school_id='"+req.query.schol+"' and schedule_id='"+req.query.fid+"' and schedule='"+req.query.flag+"' ORDER BY (schedule_date)";
+  //  console.log('qur');
 
-    connection.query('SELECT * FROM followupdetail WHERE ? and ? and ?',[school,flwpid,scheduleno],
+    connection.query(qur,
     function(err, rows)
     {
     if(!err)
     {
     if(rows.length>0)
     {
-      //console.log(rows);
+     // console.log(rows);
       res.status(200).json({'returnval': rows});
     }
     else
@@ -3476,7 +3477,7 @@ app.post('/getlistdetails',  urlencodedParser,function (req, res){
  });
  app.post('/getadmissionprospectus',  urlencodedParser,function (req, res){
    var querryyy="SELECT class as classes, COUNT( prospectus_no ) AS prospectus FROM  student_enquiry_details WHERE `school_id` =  '"+req.query.schoolid+"' AND academic_year like'"+req.query.academicyr+"' GROUP BY class ORDER BY (`class`)";
-   console.log(querryyy);
+  // console.log(querryyy);
    connection.query(querryyy,
      function(err, rows)
      {
@@ -3530,7 +3531,7 @@ app.post('/getlistdetails',  urlencodedParser,function (req, res){
   var followupid={"schedule_id":req.query.fid};
   var no={"followup_no":req.query.followupno};
   var collection={"actual_date":req.query.currentdate,"next_followup_date":req.query.nextdate,"followup_comments":req.query.comments,"followup_status":req.query.callstatus,"confidence_level":req.query.confidencelvl};
-       connection.query('update followupdetail set ? where ? and ? and ? and ?',[collection,school,scheduledon,followupid,no],
+       connection.query('update followupdetail set ? where ? and ? and ?',[collection,school,followupid,no],
         function(err, rows)
         {
     if(!err)
@@ -3578,9 +3579,9 @@ app.post('/getlistdetails',  urlencodedParser,function (req, res){
 app.post('/fetchfeecollectionreport-service',  urlencodedParser,function (req, res){
    var qur = "SELECT * FROM mlzscrm.md_student_paidfee where paid_date>='"+req.query.fromdate+"' "+
              "and paid_date<='"+req.query.todate+"' and school_id='"+req.query.schoolid+"' and paid_status in('paid','inprogress')";
-  console.log('-----------------------collection report--------------------------');
-  console.log(qur);
-  console.log('-------------------------------------------------');
+ // console.log('-----------------------collection report--------------------------');
+ // console.log(qur);
+//  console.log('-------------------------------------------------');
    connection.query(qur,
      function(err, rows){
        if(!err){
@@ -3618,9 +3619,9 @@ app.post('/fetchfilterreport-service',  urlencodedParser,function (req, res){
   
 
 
-  console.log('-----------------------collection report--------------------------');
-  console.log(qur);
-  console.log('-------------------------------------------------');
+  //console.log('-----------------------collection report--------------------------');
+ // console.log(qur);
+  //console.log('-------------------------------------------------');
    connection.query(qur,
      function(err, rows){
        if(!err){
@@ -3640,9 +3641,9 @@ app.post('/fetchfilterreport-service',  urlencodedParser,function (req, res){
 app.post('/fetchoverallcollectionreport-service',  urlencodedParser,function (req, res){
    var qur = "SELECT installment,sum(installment_amount) FROM mlzscrm.md_student_paidfee where paid_date>='"+req.query.fromdate+"' "+
              "and paid_date<='"+req.query.todate+"' and school_id='"+req.query.schoolid+"' group by installment,mode_of_payment";
-   console.log('-----------------------collection consolidation report--------------------------');
-   console.log(qur);
-   console.log('-------------------------------------------------');
+   //console.log('-----------------------collection consolidation report--------------------------');
+  // console.log(qur);
+  // console.log('-------------------------------------------------');
    connection.query(qur,
      function(err, rows){
        if(!err){
@@ -3664,7 +3665,7 @@ app.post('/updateschedulestatus',  urlencodedParser,function (req, res)
   var school={"school_id":req.query.schol};
   var followupid={"id":req.query.fid};
   var collection={"reschedule_by":req.query.user,"rescheduled_on":req.query.today,"schedule_status":"Exhausted"};
-  console.log(collection+'  '+followupid);
+ // console.log(collection+'  '+followupid);
        connection.query('update followup set ? where ? and ?',[collection,school,followupid],
         function(err, rows)
         {
@@ -3685,7 +3686,7 @@ app.post('/updateschedulestatus',  urlencodedParser,function (req, res)
 /*this fucntion fetches the all corresponding detail of the current followup*/
 app.post('/fetchfollowupmaster',  urlencodedParser,function (req, res){
    var qur = "SELECT * FROM mlzscrm.followup where school_id='"+req.query.schol+"' and id='"+req.query.fid+"' and enquiry_id='"+req.query.enquiry+"'";
-   console.log(qur);
+ //  console.log(qur);
    connection.query(qur,
      function(err, rows){
        if(!err){
@@ -3728,9 +3729,9 @@ app.post('/fetchfollowupmaster',  urlencodedParser,function (req, res){
 app.post('/fetchprocessingcheque-service',  urlencodedParser,function (req, res){
    var qur = "SELECT * FROM mlzscrm.md_student_paidfee where paid_date>='"+req.query.fromdate+"' "+
              "and paid_date<='"+req.query.todate+"' and school_id='"+req.query.schoolid+"' and mode_of_payment='Cheque' and paid_status='inprogress' order by paid_date";
-   console.log('-----------------------fetching cheques--------------------------');
-   console.log(qur);
-   console.log('-------------------------------------------------');
+  // console.log('-----------------------fetching cheques--------------------------');
+ //  console.log(qur);
+ //  console.log('-------------------------------------------------');
    connection.query(qur,
      function(err, rows){
        if(!err){
@@ -3748,9 +3749,9 @@ app.post('/fetchprocessingcheque-service',  urlencodedParser,function (req, res)
 
 app.post('/searchwithdrawcheques-service',  urlencodedParser,function (req, res){
    var qur = "SELECT * FROM md_student_paidfee where school_id='"+req.query.schoolid+"' and (admission_no='"+req.query.admissionno+"' or admission_no='"+req.query.enquiryno+"') and paid_status in ('inprogress','paid') order by paid_date";
-   console.log('-----------------------fetching cheques--------------------------');
-   console.log(qur);
-   console.log('-------------------------------------------------');
+  // console.log('-----------------------fetching cheques--------------------------');
+  // console.log(qur);
+  // console.log('-------------------------------------------------');
    connection.query(qur,
      function(err, rows){
        if(!err){
@@ -3858,10 +3859,10 @@ app.post('/updatechequestatus-service',  urlencodedParser,function (req, res){
   " and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and grade='"+req.query.grade+"' and installment='"+req.query.installment+"' and "+
   " cheque_no='"+req.query.chequeno+"' and bank_name='"+req.query.bankname+"' and cheque_status='"+req.query.paidstatus+"'";
 
-  console.log('----------------------------------------------');
-  console.log(masterupdate);
-  console.log('----------------------------------------------');
-  console.log(chequeupdate);
+ // console.log('----------------------------------------------');
+ // console.log(masterupdate);
+ // console.log('----------------------------------------------');
+ // console.log(chequeupdate);
 
    connection.query(masterupdate,function(err, rows){
        if(!err)  {  
@@ -3907,7 +3908,7 @@ app.post('/getrmnamelist',  urlencodedParser,function (req, res){
 /*this function gets the count of student enquired for the current academic year follwed by respective RM officer*/
 app.post('/getrmenquirydetails',  urlencodedParser,function (req, res){
   var qurh="SELECT COUNT( * ) AS total, enquiry_source FROM  `student_enquiry_details` WHERE school_id='"+req.query.schol+"' AND followed_by='"+req.query.followed_by+"' AND academic_year='"+req.query.academicsyr+"' GROUP BY (enquiry_source)";
-  console.log(qurh);
+ // console.log(qurh);
     connection.query(qurh,
     function(err, rows)
     {
@@ -3934,7 +3935,7 @@ app.post('/getrmenquirydetails',  urlencodedParser,function (req, res){
 /*this function gets the count of student enquired for the current month follwed by respective RM officer*/
 app.post('/getcurrentmnthdetails',  urlencodedParser,function (req, res){
   var  qurr="SELECT COUNT( * ) AS total, enquiry_source FROM  `student_enquiry_details` WHERE school_id='"+req.query.schol+"' AND followed_by='"+req.query.followed_by+"' AND created_on like '"+req.query.currmonth+"' GROUP BY (enquiry_source)";
-  console.log(qurr);
+ // console.log(qurr);
     connection.query(qurr,
     function(err, rows)
     {
@@ -3960,7 +3961,7 @@ app.post('/getcurrentmnthdetails',  urlencodedParser,function (req, res){
 /*this function gets the count of student enquired for the current date follwed by respective RM officer*/
 app.post('/getcurrentdaydetails',  urlencodedParser,function (req, res){
   var qurz="SELECT COUNT( * ) AS total, enquiry_source FROM  `student_enquiry_details` WHERE school_id='"+req.query.schol+"' AND followed_by='"+req.query.followed_by+"' AND created_on='"+req.query.today+"' GROUP BY (enquiry_source)";
-  console.log(qurz);
+  //console.log(qurz);
     connection.query(qurz,
     function(err, rows)
     {
@@ -3987,7 +3988,7 @@ app.post('/getcurrentdaydetails',  urlencodedParser,function (req, res){
 
 app.post('/fetchdiscountpercentageinfo',  urlencodedParser,function (req, res){
   var qurz="SELECT * from discount_percentage where school_id='"+req.query.schoolid+"'";
-  console.log(qurz);
+  //console.log(qurz);
     connection.query(qurz,function(err, rows)
     {
     if(!err)

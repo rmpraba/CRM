@@ -16,14 +16,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host {
         display: block;
       }
+      .paper-button{
+        background-color: silver;
+      }
     </style>
     <div class="datepicker">
-    <paper-input label="Date Of Birth" class="btn" on-click="FnShowDialog" raised value="{{showdate}}"></paper-input>
+    <div>
+    <div>Next Follow-Up Date :</div> <paper-input style="width:65%; margin-left: 20%;" class="btn" on-click="FnShowDialog" raised value="{{showdate}}"></paper-input>
+    <div>( Please select next followup date..! )</div>
+    </div>
     <paper-dialog id="dialog" class="paper-date-picker-dialog" modal on-iron-overlay-closed="FnDismissDialog" style="left: 0 !important;">
       <paper-date-picker id="picker" date="{{date}}"></paper-date-picker>
       <div class="buttons">
-        <paper-button dialog-dismiss>Cancel</paper-button>
-        <paper-button dialog-confirm>OK</paper-button>
+        <paper-button style="background-color: silver;" raised dialog-dismiss>Cancel</paper-button>
+        <paper-button style="background-color: silver;" raised dialog-confirm>OK</paper-button>
       </div>
     </paper-dialog>
   </div>
@@ -38,6 +44,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       ready:function()
       {
+
         this.showdate=moment(new Date()).format('L');
         localStorage.setItem("localsess_curr_date",this.showdate);
       
@@ -61,7 +68,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           }
           else{
           var dt =new Date(moment(this.$.picker.date).format('L'));
-          this.showdate=dt.getDate()+"/"+(dt.getMonth()+1)+"/"+dt.getFullYear();
+          this.showdate=dt.getFullYear()+'-'+(dt.getMonth()+1)+'-'+dt.getDate();
           localStorage.setItem("localsess_start_date",this.showdate);
           document.querySelector('followup-listitem-card').getdate(this.showdate);
           }
