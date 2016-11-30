@@ -46,8 +46,8 @@
            <paper-input label="Academic Year" id="acyr" readonly required error-message="needs academics year!" allowed-pattern="[a-zA-Z ]" value="{{academicyear}}"></paper-input>
         </div>
         <div class="col-sm-4">
-          <paper-dropdown-menu label="Grade" id="gradeclass">
-            <paper-menu  class="dropdown-content" id="newenqcardgrade" required on-iron-select="classes" valueattr="value" >
+          <paper-dropdown-menu label="Grade">
+            <paper-menu  class="dropdown-content" id="newenqcardgrades" required on-iron-select="classes" valueattr="value" >
               <template  is="dom-repeat" items="{{gradeinschoolarr}}" as="grade">
                 <paper-item value="{{grade.class}}">{{grade.class}}</paper-item>
               </template>
@@ -77,8 +77,8 @@
           <div class="lbl"><label>Gender </label><p id="mangender">&nbsp; *</p> </div>
           <div class="gender">
             <paper-radio-group>
-              <paper-radio-button name="yes" on-click="maleHandler">Boy</paper-radio-button>
-              <paper-radio-button name="no" on-click="femaleHandler">Girl</paper-radio-button>
+              <paper-radio-button id="boyid" name="yes" on-click="maleHandler">Boy</paper-radio-button>
+              <paper-radio-button id="girlid" name="no" on-click="femaleHandler">Girl</paper-radio-button>
             </paper-radio-group>
           </div>
         </div>
@@ -86,8 +86,8 @@
           <div class="lbl"><label>Sibling </label><p id="mangender">&nbsp; *</p> </div>
           <div class="gender">
             <paper-radio-group>
-              <paper-radio-button name="yes" on-click="siblingyes">Yes</paper-radio-button>
-              <paper-radio-button name="no" on-click="siblingno">No</paper-radio-button>
+              <paper-radio-button id="siblingyes" name="yes" on-click="siblingyes">Yes</paper-radio-button>
+              <paper-radio-button id="siblingno" name="no" on-click="siblingno">No</paper-radio-button>
             </paper-radio-group>
           </div>  
         </div>
@@ -100,8 +100,8 @@
           <paper-input readonly label="Age(In Years)" value="{{ageofyr}}"></paper-input>
         </div>
         <div class="col-sm-4">
-          <paper-dropdown-menu label="Mother Tongue" id="mothertongue">
-            <paper-menu  class="dropdown-content" required on-iron-select="mothertongue" valueattr="value" >
+          <paper-dropdown-menu label="Mother Tongue">
+            <paper-menu id="mothertongue" class="dropdown-content" required on-iron-select="mothertongue" valueattr="value" >
               <template  is="dom-repeat" items="{{mothertonguearr}}" as="language">
                 <paper-item value="{{language.mother_tongue}}">{{language.mother_tongue}}</paper-item>
               </template>
@@ -115,8 +115,8 @@
       <div class="list-group col-sm-12 panel-body form-category">
          <div class="col-sm-6 enquiry-input">
            <div class="gender">
-             <span class="col-sm-6"><paper-checkbox  id="parenthandler" class="checkbox" on-change="parentsHandler"><h5>Parent</h5></paper-checkbox></span>
-            <span class="col-sm-6"><paper-checkbox id="guardianhandler"  class="checkbox" on-change="gardiansHandler"><h5>Guardian</h5></paper-checkbox></span>
+             <span class="col-sm-6"><paper-checkbox  id="idparenthandler" class="checkbox" on-change="parentsHandler"><h5>Parent</h5></paper-checkbox></span>
+            <span class="col-sm-6"><paper-checkbox id="idguardianhandler"  class="checkbox" on-change="gardiansHandler"><h5>Guardian</h5></paper-checkbox></span>
            </div>
         </div>
       </div>
@@ -162,8 +162,8 @@
           <div class="lbl"><label>Both are Working? </label><p id="mangender">&nbsp; *</p> </div>
           <div class="gender">
             <paper-radio-group>
-              <paper-radio-button name="yes" on-click="parentworkyes">Yes</paper-radio-button>
-              <paper-radio-button name="no" on-click="parentworkno">No</paper-radio-button>
+              <paper-radio-button id="parentworkyes" name="yes" on-click="parentworkyes">Yes</paper-radio-button>
+              <paper-radio-button  id="parentworkno" name="no" on-click="parentworkno">No</paper-radio-button>
             </paper-radio-group>
           </div>
         </div>
@@ -171,14 +171,14 @@
           <div class="lbl"><label>Choose Who is working</label><p id="mangender">&nbsp; *</p> </div>
           <div class="gender">
               <paper-radio-group>
-                <paper-radio-button name="yes" on-click="father">Father</paper-radio-button>
-                <paper-radio-button name="no" on-click="mother">Mother</paper-radio-button>
+                <paper-radio-button id="father" name="yes" on-click="father">Father</paper-radio-button>
+                <paper-radio-button id="mother" name="no" on-click="mother">Mother</paper-radio-button>
               </paper-radio-group>
             </div>
         </div>
         <div class="col-sm-4 enquiry-input" hidden$="{{dadoccupation}}">
           <paper-dropdown-menu label="Father's Occupation">
-            <paper-menu id="dadoccupation" class="dropdown-content" on-iron-select="dadoccupationselector" valueattr="value" >
+            <paper-menu id="iddadoccupation" class="dropdown-content" on-iron-select="dadoccupationselector" valueattr="value" >
               <paper-item >Self Employed</paper-item>
               <paper-item >Public Sector</paper-item>
               <paper-item >Private Sector</paper-item>
@@ -188,7 +188,7 @@
         </div>
         <div class="col-sm-4 enquiry-input" hidden$="{{motheroccupation}}">
           <paper-dropdown-menu label="Mother's Occupation" >
-            <paper-menu id="motheroccupation" class="dropdown-content" on-iron-select="motheroccupationselector" valueattr="value" >
+            <paper-menu id="idmotheroccupation" class="dropdown-content" on-iron-select="motheroccupationselector" valueattr="value" >
               <paper-item >Self Employed</paper-item>
               <paper-item >Public Sector</paper-item>
               <paper-item >Private Sector</paper-item>
@@ -199,8 +199,8 @@
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
-          <paper-input  id="locality" required error-message="needs locality!" label="Enter location/Landmark" is="" value="{{textvalue}}" on-keydown="FnInputChanged"></paper-input>
-          <paper-listbox class="dropdown-content" id="itemlist" on-iron-select="Fnselected" valueattr="value">
+          <paper-input  id="idlocality" required error-message="needs locality!" label="Enter location/Landmark" is="" value="{{textvalue}}" on-keydown="FnInputChanged"></paper-input>
+          <paper-listbox class="dropdown-content" id="iditemlist" on-iron-select="Fnselected" valueattr="value">
             <template is="dom-repeat" items="{{itemArray}}" as="item">
               <paper-item value="{{item.itemid}}">{{item.itemdes}}</paper-item>
             </template>
@@ -208,7 +208,7 @@
         </div>
         <div class="col-sm-4" style='margin-top: -1%;'>
           <paper-dropdown-menu label="Enquiry Source" style="margin-top: 3%;">
-            <paper-menu class="dropdown-content"  class="dropdown-content" id="source" on-iron-select="source" >
+            <paper-menu class="dropdown-content"  class="dropdown-content" id="enquiry-source" on-iron-select="source" >
               <template  is="dom-repeat" items="{{sourcearr}}" as="item">
                 <paper-item>{{item.source}}</paper-item>
               </template>
@@ -225,15 +225,15 @@
         </div>
         <div class="col-sm-6" id="referrer">
           <paper-input  error-message="needs referrer!" label="Enter referrer name.." is="" value="{{referrername}}" on-keydown="FnInputChangedz"></paper-input>
-          <paper-listbox class="dropdown-content" id="itemlistz" on-iron-select="Fnselectedz" valueattr="value">
+          <paper-listbox class="dropdown-content" id="iditemlistz" on-iron-select="Fnselectedz" valueattr="value">
             <template is="dom-repeat" items="{{itemArrayz}}" as="item">
               <paper-item >{{item.itemdesz}}</paper-item>
             </template>
           </paper-listbox>
         </div> 
         <div class="col-sm-4">
-          <paper-dropdown-menu label="Attended By" style="margin-top: 3%;" id="rmnames">
-            <paper-menu class="dropdown-content" on-iron-select="attendedby" >
+          <paper-dropdown-menu label="Attended By" style="margin-top: 3%;">
+            <paper-menu class="dropdown-content" on-iron-select="attendedby" id="idrmnames">
               <template  is="dom-repeat" items="{{counsellor}}" as="name">
                 <paper-item value="{{name.counsellor_name}}">{{name.counsellor_id}}</paper-item>
               </template>
@@ -241,16 +241,17 @@
           </paper-dropdown-menu>
         </div> 
       </div>   
-      <div class="list-group col-sm-12 panel-body form-category">
+      <!-- <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6 enquiry-input" style='margin-top: 0.5%;'>
           <template  is="dom-repeat" items="{{discountarr}}" as="view">
             <special-discount-card code="{{view.id}}" discountname="{{view.discount_type_name}}"></special-discount-card>
           </template>
         </div>  
-      </div> 
+      </div>  -->
     </div>
       <div class="col-md-12 form-button">
         <paper-button class="btn btn-primary" on-click="getenquirynumber">SUBMIT</paper-button>
+        <paper-button class="btn btn-primary" on-click="FnClear">clear</paper-button>
       </div>
     <pre-apps-service id='preapps'></pre-apps-service>
   </template>
@@ -281,7 +282,7 @@
       is: 'pre-apps',
 
     ready:function(){
-      this.$.parenthandler.checked=true;
+      this.$.idparenthandler.checked=true;
       this.guardianinfo=true;
       this.$.preapps.getclasses();
       this.$.preapps.getdiscounts();
@@ -374,7 +375,7 @@
     },
     parentsHandler:function(e){
       if(e.target.checked==true){
-        document.getElementById("guardianhandler").checked=false;
+        document.getElementById("idguardianhandler").checked=false;
         this.guardianinfo=true;
         this.parentinfo=false;
         paga="parents";
@@ -411,7 +412,7 @@
        namearrz=nameitem;
     },
     FnInputChangedz:function(e){
-          this.$.itemlistz.hidden=false;
+          this.$.iditemlistz.hidden=false;
           if(e.keyCode==13|| e.keyCode==40)
             this.querySelector('paper-listbox').focus();
 
@@ -479,8 +480,8 @@
       this.querySelector('paper-listbox').style.visibility='hidden';
       this.referrername = e.target.selectedItem.textContent.trim();
       this.itemArrayz=[];
-      document.querySelector('#itemlist').selected=-1;
-      this.$.itemlistz.hidden=true;
+      document.querySelector('#iditemlist').selected=-1;
+      this.$.iditemlistz.hidden=true;
     },
     attendedby:function(e){
       attenedcounsellorname = e.target.selectedItem.value;
@@ -489,7 +490,7 @@
       namearr=nameitem;
     },
     FnInputChanged:function(e){
-          this.$.itemlist.hidden=false;
+          this.$.iditemlist.hidden=false;
           if(e.keyCode==13|| e.keyCode==40)
             this.querySelector('paper-listbox').focus();
           var arr=[];
@@ -557,8 +558,8 @@
       this.querySelector('paper-listbox').style.visibility='hidden';
       this.textvalue = e.target.selectedItem.textContent.trim();
       this.itemArray=[];
-      document.querySelector('#itemlist').selected=-1;
-      this.$.itemlist.hidden=true;
+      document.querySelector('#iditemlist').selected=-1;
+      this.$.iditemlist.hidden=true;
     },
     siblingyes:function(){
       havesibling = "yes";
@@ -604,6 +605,44 @@
     },
     getvalues:function(){
       this.$.preapps.submitenqdetails(currentdate,enrolltype,this.academicyear,grade,this.firstname,this.middlename,this.lastname,gender,havesibling,this.ageofyr,dobdate,mothertonguelanguage,this.fathername,this.mothername,this.mob,this.mothermob,this.email,this.motheremail,this.guardianname,this.guardianmobile,this.guardianemail,dadoccupationinfo,motheroccupationinfo,this.textvalue,enquiysource,attenedcounsellorname,this.siblingname,this.siblingdetails,this.referrername,this.enquiry_number);
+    },
+    FnClear:function(){
+      this.firstname = "";
+      this.middlename = "";
+      this.lastname = "";
+      this.siblingname = "";
+      this.siblingdetails = "";
+      this.ageofyr = "";
+      document.querySelector('#newenqcardgrades').selected=-1;
+      document.querySelector('#mothertongue').selected=-1;
+      document.querySelector('#iddadoccupation').selected=-1;
+      document.querySelector('#idmotheroccupation').selected=-1;
+      this.textvalue = "";
+      this.referrername="";
+      document.querySelector('#idrmnames').selected=-1;
+      document.querySelector('#enquiry-source').selected=-1;
+      document.getElementById("nextacademicyear").checked=false;
+      document.getElementById("thismidyear").checked=false;
+      this.academicyear = "";
+      this.fathername = "";
+      this.mothername = "";
+      this.mob = "";
+      this.mothermob = "";
+      this.email = "";
+      this.motheremail = "";
+      this.guardianname = "";
+      this.guardianmobile ="";
+      this.guardianemail = "";
+      this.$.parentworkyes.checked = false;
+      this.$.parentworkno.checked = false;
+      this.$.father.checked = false;
+      this.$.mother.checked = false;
+      this.$.siblingyes.checked = false;
+      this.$.siblingno.checked = false;
+      this.$.boyid.checked = false;
+      this.$.girlid.checked = false;
+      this.$.idparenthandler.checked = true;
+      this.$.idguardianhandler.checked = false;
     },
     });
   })();

@@ -334,7 +334,6 @@
         var obj={"schol":""};
         obj.schol=localStorage.getItem("schoolid");
         this.getenquirynoparam=obj;
-       alert(JSON.stringify(obj));
         this.$.getenquirynoajax.generateRequest();
      },
      getenquirynoResponse:function(e){
@@ -349,18 +348,21 @@
       document.querySelector('pre-apps').getvalues();
      },
       updateenquiryno:function(){
-        alert('hi');
         this.updatesequrl=sessionStorage.getItem("addrinfo")+"/updateseq";
         var obj={"id":"","schol":""};
         obj.id=seqno;
         obj.schol=localStorage.getItem("schoolid");
         this.updateseqparam=obj;
-        alert(JSON.stringify(obj));
         this.$.updateseqajax.generateRequest();
       },
       updateseqResponse:function(e){
         var result = e.detail.response.returnval;
-        alert(JSON.stringify(result));
+        if(result == 'success'){
+          alert('Submitted!');
+          document.querySelector('pre-apps').FnClear();
+        } else {
+          alert('Form Submission intertupted!');
+        }
       }
     });
   })();
