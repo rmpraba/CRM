@@ -4058,6 +4058,48 @@ app.post('/getenquirysource',  urlencodedParser,function (req, res){
      });
  });
 
+  app.post('/getcounsellorattendedby',  urlencodedParser,function (req, res){
+   connection.query("SELECT * FROM `md_counsellor` WHERE `school_id` =  '"+req.query.schol+"'",
+     function(err, rows)
+     {
+       if(!err)
+       {
+         if(rows.length>0)
+         {
+           res.status(200).json({'returnval': rows});
+         }
+         else
+         {
+           console.log(err);
+           res.status(200).json({'returnval':null});
+         }
+       }
+       else{
+         console.log(err);
+       }
+     });
+ });
+  app.post('/getmothertongue',  urlencodedParser,function (req, res){
+   connection.query("SELECT * FROM `md_mother_tongue`",
+     function(err, rows)
+     {
+       if(!err)
+       {
+         if(rows.length>0)
+         {
+           res.status(200).json({'returnval': rows});
+         }
+         else
+         {
+           console.log(err);
+           res.status(200).json({'returnval':null});
+         }
+       }
+       else{
+         console.log(err);
+       }
+     });
+ });
   app.post('/getstudentsforcounselor',  urlencodedParser,function (req, res){
    connection.query("SELECT enquiry_name, enquiry_no,created_on, class FROM `student_enquiry_details` WHERE `school_id` = '"+req.query.schoolid+"' AND `orginated_by` =  '"+req.query.counsellor+"'",
      function(err, rows)
@@ -4144,6 +4186,51 @@ app.post('/getenquirysource',  urlencodedParser,function (req, res){
      });
  });
 
+app.post('/submitenqdetails',  urlencodedParser,function (req, res){
+    var response={
+      school_id:req.query.schol,
+      created_on:req.query.createdon,
+      academic_year:req.query.academicyear,
+      class:req.query.grade,
+      first_name:req.query.firstname,
+      middle_name:req.query.middlename,
+      last_name:req.query.lastname,
+      gender:req.query.gender,
+      dob:req.query.dobdate,
+      father_mob:req.query.mob,
+      mother_mob:req.query.mothermob,
+      enquiry_source:req.query.enquiysource,
+      locality:req.query.location,
+      have_sibling:req.query.havesibling,
+      father_name:req.query.fathername,
+      mother_name:req.query.mothername,
+      father_occupation:req.query.dadoccupationinfo,
+      mother_occupation:req.query.motheroccupationinfo,
+      father_email:req.query.email,
+      mother_email:req.query.motheremail,
+      mother_tongue:req.query.mothertonguelanguage,
+      sibiling_name:req.query.siblingname,
+      sibling_detail:req.query.siblingdetails,
+      enquiry_name:req.query.enquiryname,
+      status:req.query.status,
+      guardian_mail:req.query.guardianemail,
+      guardian_mobile:req.query.guardianmobile,
+      guardian_name:req.query.guardianname,
+      year_type:req.query.enrolltype,
+      enquiry_no:req.query.enquiry_no,
+      orginated_by:req.query.attenedcounsellorname
+    };
+    console.log(response);
+    connection.query('INSERT INTO student_enquiry_details SET ?',[response],function(err, rows){
+      if(!err)
+      res.status(200).json({'returnval': 'inserted'});
+      else{
+      console.log(err);
+      res.status(200).json({'returnval': 'not inserted'});
+    }
+    });
+
+});
 
 function setvalue(){
   console.log("calling setvalue.....");
