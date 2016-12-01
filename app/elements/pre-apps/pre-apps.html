@@ -299,6 +299,7 @@
     var motherworkdet;
     var parent_or_guardian_work;
     var yearAge ;
+    var professionanyoneselected;
     Polymer({
       is: 'pre-apps',
 
@@ -320,6 +321,7 @@
       this.motheroccupation = true;
       this.guardianoccupation = true;
       this.guardianworkinfo = true;
+      professionanyoneselected = "";
       var dt=new Date();
       todaydat=dt.getDate()+"/"+(dt.getMonth()+1)+"/"+dt.getFullYear();
       sessionStorage.setItem("todaydate",todaydat);
@@ -687,18 +689,21 @@
       this.hideoccupation = false;
       this.dadoccupation = true;
       this.motheroccupation = true;
+      professionanyoneselected = false;
     },
     father:function(){
       this.dadoccupation = false;
       this.motheroccupation = true;
       fatherworkdet = "yes";
       motherworkdet = "no";
+      professionanyoneselected = true;
     },
     mother:function(){
       this.dadoccupation = true;
       fatherworkdet = "no";
       motherworkdet = "yes";
       this.motheroccupation = false;
+      professionanyoneselected = true;
     },
     maleHandler:function(){
       gender = "boy";
@@ -824,18 +829,43 @@
         } else if(havesibling == null){
             alert("Select the student having sibling or not");
         } else{
-          this.getvalues();
+          if(bothparentswork == "yes"){
+            if( dadoccupationinfo ==null && motheroccupationinfo == null){
+              alert("Select Parent's Profession");
+            } else {
+              this.getvalues();
+            }
+          } else {
+            if(professionanyoneselected == false){
+              alert("Select any one of the parent");
+            } else {
+              if(fatherworkdet == "yes"){
+                if(dadoccupationinfo == null){
+                  alert("Select Father's Profession");
+                } else {
+                  this.getvalues();
+                }
+              }
+              if(motherworkdet == "yes"){
+                if(motheroccupationinfo == null){
+                  alert("Select Mother's Profession");
+                } else {
+                  this.getvalues();
+                }
+              }
+            }
+          }
         }
       } else {
         alert("Error");
       }
     },
     getvalues:function(){
-      alert("hi");
       this.$.preapps.submitenqdetails(currentdate,enrolltype,this.academicyear,grade,this.firstname,this.middlename,this.lastname,gender,havesibling,this.ageofyr,dobdate,mothertonguelanguage,this.fathername,this.mothername,this.mob,this.mothermob,this.email,this.motheremail,this.guardianname,this.guardianmobile,this.guardianemail,dadoccupationinfo,motheroccupationinfo,this.textvalue,enquiysource,attenedcounsellorname,this.siblingname,this.siblingdetails,this.referrername,this.enquiry_number,guardianoccupationinfo,parent_or_guardian_work);
     },
     FnClear:function(){
       this.callnextyearhandler();
+      professionanyoneselected = "";
       paga="parent";
       this.firstname = "";
       this.middlename = "";
