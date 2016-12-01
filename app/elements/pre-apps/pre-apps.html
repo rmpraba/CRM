@@ -32,7 +32,7 @@
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-4">
-          <paper-input label="Date of Enquiry" readonly value="{{todaydate}}"></paper-input>
+          <paper-input label="Date of Enquiry" id="today" readonly value="{{todaydate}}"></paper-input>
         </div>
         <div class="col-sm-3" style='margin-top: 1%;'>
           <paper-checkbox id="nextacademicyear" class="checkbox" on-change="nextyearhandler"> Next Year</paper-checkbox>
@@ -63,13 +63,13 @@
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-4">
-          <paper-input label="First Name" id="fname" required error-message="needs first name!" allowed-pattern="[a-zA-Z ]" value="{{firstname}}"></paper-input>
+          <paper-input label="First Name" id="idfname" required error-message="needs first name!" allowed-pattern="[a-zA-Z ]" value="{{firstname}}"></paper-input>
         </div>
         <div class="col-sm-4">
-          <paper-input label="Middle Name" id="mname" required error-message="needs middle name!" allowed-pattern="[a-zA-Z ]" value="{{middlename}}"></paper-input>
+          <paper-input label="Middle Name" id="idmname" required error-message="needs middle name!" allowed-pattern="[a-zA-Z ]" value="{{middlename}}"></paper-input>
         </div>
         <div class="col-sm-4">
-          <paper-input label="Last Name" id="lname" required error-message="needs last name!" allowed-pattern="[a-zA-Z ]" value="{{lastname}}"></paper-input>
+          <paper-input label="Last Name" id="idlname" required error-message="needs last name!" allowed-pattern="[a-zA-Z ]" value="{{lastname}}"></paper-input>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
@@ -97,7 +97,7 @@
           <dateofbirth-datepicker showdate="{{showdate}}"></dateofbirth-datepicker>
         </div>
         <div class="col-sm-4">
-          <paper-input readonly label="Age(In Years)" value="{{ageofyr}}"></paper-input>
+          <paper-input readonly label="Age(In Years)" id="age" value="{{ageofyr}}"></paper-input>
         </div>
         <div class="col-sm-4">
           <paper-dropdown-menu label="Mother Tongue">
@@ -138,10 +138,10 @@
       </div>
       <div class="list-group col-sm-12 panel-body form-category" hidden$="{{parentinfo}}">
         <div class="col-sm-6">
-          <gold-email-input id="email" error-message="needs email ID!" label="Father Email" value="{{email}}"></gold-email-input>
+          <gold-email-input id="email" auto-validate error-message="needs email ID!" label="Father Email" value="{{email}}"></gold-email-input>
         </div>
         <div class="col-sm-6">
-          <gold-email-input id="email" error-message="needs email ID!" label="Mother Email" value="{{motheremail}}"></gold-email-input>
+          <gold-email-input id="motheremail" auto-validate error-message="needs email ID!" label="Mother Email" value="{{motheremail}}"></gold-email-input>
         </div>
       </div>
      <div class="list-group col-sm-12 panel-body form-category" hidden$="{{guardianinfo}}">
@@ -251,7 +251,6 @@
     </div>
       <div class="col-md-12 form-button">
         <paper-button class="btn btn-primary" on-click="getenquirynumber">SUBMIT</paper-button>
-        <paper-button class="btn btn-primary" on-click="FnClear">clear</paper-button>
       </div>
     <pre-apps-service id='preapps'></pre-apps-service>
   </template>
@@ -276,7 +275,8 @@
     var mothertonguelanguage;
     var attenedcounsellorname;
     var dadoccupationinfo;
-    var motheroccupationinfo
+    var motheroccupationinfo;
+    var bothparentswork;
 
     Polymer({
       is: 'pre-apps',
@@ -301,6 +301,7 @@
       sessionStorage.setItem("todaydate",todaydat);
       this.todaydate=todaydat;
       currentdate=dt.getFullYear()+"-"+(dt.getMonth()+1)+"-"+dt.getDate();
+      paga="parent";
       /*this.$.service.getdiscounts();
       this.$.service.getrmnamelist();
       */
@@ -568,11 +569,13 @@
       havesibling = "no";
     },
     parentworkyes:function(){
+      bothparentswork = "yes";
       this.hideoccupation = true;
       this.dadoccupation = false;
       this.motheroccupation = false;
     },
     parentworkno:function(){
+      bothparentswork = "no" ;
       this.hideoccupation = false;
       this.dadoccupation = true;
       this.motheroccupation = true;
@@ -605,15 +608,17 @@
     },
     complete:function(){
       if(paga=="guardian"){
-        if(this.firstname==""||this.lastname==""||this.textvalue==""||this.guardianname==""||this.guardianemail==""||this.guardianmobile==""||this.academicyear==''){
+        if(this.todaydate == ""|| this.firstname==""||this.lastname==""||this.textvalue==""||this.guardianname==""||this.guardianemail==""||this.guardianmobile==""||this.academicyear=='' || this.ageofyr ==""){
           // alert('1');
-          this.$.fname.validate();
-          this.$.lname.validate();
-          this.$.locality.validate();
+          this.$.today.validate();
+          this.$.idfname.validate();
+          this.$.idlname.validate();
+          this.$.idlocality.validate();
           this.$.guardianname.validate();
           this.$.gmobile.validate();
           this.$.guardianemail.validate();
           this.$.idacyr.validate();
+          this.$.age.validate();
         } else if(grade==null){
           // alert('4');
           alert('Select the grade your seeking for admission');
@@ -628,43 +633,66 @@
           alert('Select the Location');
         } else if(enrolltype==null){
            alert('Select the Academics Year Type');
+        } else if(enquiysource == null){
+            alert("Select Enquiry Source");
+        } else if(attenedcounsellorname == null){
+            alert("Select Counsellor");
+        } else if(bothparentswork == null){
+            alert("Check Both Parent are working or not");
+        } else if(mothertonguelanguage == null){
+            alert("Select Mother Tongue");
+        } else if(havesibling == null){
+            alert("Select the student having sibling or not");
         } else{
           this.getvalues();
         }
       } else if(paga=="parent") {
-        if(this.firstname==""||this.lastname==""||this.textvalue==""||this.fathername==""||this.mothername==""||this.mob==""||this.email==""||this.academicyear==""){
-          this.$.fname.validate();
+        if(this.todaydate == ""|| this.firstname==""||this.lastname==""||this.textvalue==""||this.fathername==""||this.mothername==""||this.mob==""||this.email==""||this.academicyear==""  || this.ageofyr ==""){
+          alert("1");
+          this.$.today.validate();
+          this.$.idfname.validate();
           // this.$.mname.validate();
-          this.$.lname.validate();
-          this.$.locality.validate();
+          this.$.idlname.validate();
+          this.$.idlocality.validate();
           this.$.dadname.validate();
           this.$.momname.validate();
           this.$.mobile.validate();
           this.$.email.validate();
           this.$.idacyr.validate();
+          this.$.age.validate();
         } else if(grade==null) {
-          // alert('4');
           alert('Select the grade your seeking for admission');
         } else if(gender==null){
-          // alert('5');
           alert('Select the gender of the student');
         } else if(dobdate==null){
-          // alert('6');
           alert('Select date of birth properly')
         } else if(this.textvalue==null||this.textvalue==""){
-          // alert('7');
           alert('Select the Location');
         } else if(enrolltype==null){
            alert('Select the Academic Year Type');
+        }  else if(enquiysource == null){
+            alert("Select Enquiry Source");
+        } else if(attenedcounsellorname == null){
+            alert("Select Counsellor");
+        } else if(bothparentswork == null){
+            alert("Check Both Parent are working or not");
+        } else if(mothertonguelanguage == null){
+            alert("Select Mother Tongue");
+        } else if(havesibling == null){
+            alert("Select the student having sibling or not");
         } else{
           this.getvalues();
         }
-      },
+      } else {
+        alert("Error");
+      }
     },
     getvalues:function(){
+      alert("hi");
       this.$.preapps.submitenqdetails(currentdate,enrolltype,this.academicyear,grade,this.firstname,this.middlename,this.lastname,gender,havesibling,this.ageofyr,dobdate,mothertonguelanguage,this.fathername,this.mothername,this.mob,this.mothermob,this.email,this.motheremail,this.guardianname,this.guardianmobile,this.guardianemail,dadoccupationinfo,motheroccupationinfo,this.textvalue,enquiysource,attenedcounsellorname,this.siblingname,this.siblingdetails,this.referrername,this.enquiry_number);
     },
     FnClear:function(){
+      paga="parent";
       this.firstname = "";
       this.middlename = "";
       this.lastname = "";

@@ -338,14 +338,13 @@
      },
      getenquirynoResponse:function(e){
       seqno=e.detail.response.returnval[0].enquiry_no;
-      //alert(seqno);
       seqno=seqno+1;
       var enquiryif="ENQ1718"+seqno;
       document.querySelector('pre-apps').enquiry_number=enquiryif;
       /*var today = new Date(); var yyyy = today.getFullYear();
       var academicyr=yyyy+'-'+(yyyy+1);
       document.querySelector('pre-apps').academicyr=academicyr;*/
-      document.querySelector('pre-apps').getvalues();
+      document.querySelector('pre-apps').complete();
      },
       updateenquiryno:function(){
         this.updatesequrl=sessionStorage.getItem("addrinfo")+"/updateseq";
