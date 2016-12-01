@@ -874,7 +874,8 @@
 
       Fnpreapp:function(){
         document.querySelector('app-list').setPage("pre-apps","Pre Apps");
-        //document.querySelector('newenquiry-card').Fngetvalues();
+        document.querySelector('pre-apps').ready();
+        document.querySelector('pre-apps').callnextyearhandler();
           // document.querySelector('newenquiry-card').Fnclear();
           // document.querySelector('special-discount-card').ready();
           

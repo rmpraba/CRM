@@ -108,6 +108,17 @@
         debounce-duration="300"
         >
   </iron-ajax>
+  <iron-ajax
+        method="post"
+        id="getprofessionajax"
+        url="{{getprofessionurl}}"
+        params="{{getprofessionparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getprofessionResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
     <iron-ajax
         method="post"
         id="submitenqdetailsajax"
@@ -283,7 +294,19 @@
         var result=e.detail.response.returnval;
         document.querySelector('pre-apps').mothertonguearr=result;
       },
-      submitenqdetails:function(todate,enrolltype,academicyear,grade,firstname,middlename,lastname,gender,havesibling,ageofyr,dobdate,mothertonguelanguage,fathername,mothername,mob,mothermob,email,motheremail,guardianname,guardianmobile,guardianemail,dadoccupationinfo,motheroccupationinfo,textvalue,enquiysource,attenedcounsellorname,siblingname,siblingdetails,referrername,enqno){
+      getprofession:function(){
+        this.getprofessionurl=sessionStorage.getItem("addrinfo")+"/getprofession";
+        var obj={"schol":""};
+        obj.schol=localStorage.getItem("schoolid");
+        this.getprofessionparam=obj;
+        //alert(JSON.stringify(obj));
+        this.$.getprofessionajax.generateRequest();
+      },
+      getprofessionResponse:function(e){
+        var result=e.detail.response.returnval;
+        document.querySelector('pre-apps').professionarr=result;
+      },
+      submitenqdetails:function(todate,enrolltype,academicyear,grade,firstname,middlename,lastname,gender,havesibling,ageofyr,dobdate,mothertonguelanguage,fathername,mothername,mob,mothermob,email,motheremail,guardianname,guardianmobile,guardianemail,dadoccupationinfo,motheroccupationinfo,textvalue,enquiysource,attenedcounsellorname,siblingname,siblingdetails,referrername,enqno,guardianoccupationinfo){
         this.submitenqdetailsurl=sessionStorage.getItem("addrinfo")+"/submitenqdetails";
         var obj={"schol":"","createdon":"","enrolltype":"","academicyear":"","grade":"","firstname":"","middlename":"","lastname":"","gender":"","havesibling":"","ageofyr":"","dobdate":"","mothertonguelanguage":"","fathername":"","mothername":"","mob":"","mothermob":"","email":"","motheremail":"","guardianname":"","guardianmobile":"","guardianemail":"","dadoccupationinfo":"","motheroccupationinfo":"","location":"","enquiysource":"","attenedcounsellorname":"","siblingname":"","siblingdetails":"","referrername":"","status":"","enquiryname":"","enquiry_no":""};
         obj.schol=localStorage.getItem("schoolid");
@@ -319,6 +342,7 @@
         obj.enquiryname = firstname + middlename +lastname;
         obj.status = "open";
         obj.enquiry_no = enqno;
+        obj.guardianoccupationinfo = guardianoccupationinfo;
         this.submitenqdetailsparam=obj;
         this.$.submitenqdetailsajax.generateRequest();
       },

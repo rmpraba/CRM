@@ -4218,7 +4218,8 @@ app.post('/submitenqdetails',  urlencodedParser,function (req, res){
       guardian_name:req.query.guardianname,
       year_type:req.query.enrolltype,
       enquiry_no:req.query.enquiry_no,
-      orginated_by:req.query.attenedcounsellorname
+      orginated_by:req.query.attenedcounsellorname,
+      guardian_occup:req.query.guardianoccupationinfo
     };
     console.log(response);
     connection.query('INSERT INTO student_enquiry_details SET ?',[response],function(err, rows){
@@ -4230,6 +4231,21 @@ app.post('/submitenqdetails',  urlencodedParser,function (req, res){
     }
     });
 
+});
+app.post('/getprofession',  urlencodedParser,function (req, res){
+  connection.query("SELECT * FROM `md_profession`",
+    function(err, rows){
+      if(!err){
+        if(rows.length>0){
+          res.status(200).json({'returnval': rows});
+        } else {
+          console.log(err);
+          res.status(200).json({'returnval':null});
+        }
+      } else {
+        console.log(err);
+      }
+    });
 });
 
 function setvalue(){

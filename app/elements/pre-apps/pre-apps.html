@@ -158,7 +158,7 @@
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
-        <div class="col-sm-4 enquiry-input">
+        <div class="col-sm-4 enquiry-input" hidden$="{{parentworkinfo}}">
           <div class="lbl"><label>Both are Working? </label><p id="mangender">&nbsp; *</p> </div>
           <div class="gender">
             <paper-radio-group>
@@ -166,6 +166,24 @@
               <paper-radio-button  id="parentworkno" name="no" on-click="parentworkno">No</paper-radio-button>
             </paper-radio-group>
           </div>
+        </div>
+        <div class="col-sm-4 enquiry-input" hidden$="{{guardianworkinfo}}">
+          <div class="lbl"><label>Guardian is Working? </label><p id="mangender">&nbsp; *</p> </div>
+          <div class="gender">
+            <paper-radio-group>
+              <paper-radio-button id="guardianworkyes" name="yes" on-click="guardianworkyes">Yes</paper-radio-button>
+              <paper-radio-button  id="guardianworkno" name="no" on-click="guardianworkno">No</paper-radio-button>
+            </paper-radio-group>
+          </div>
+        </div>
+        <div class="col-sm-4 enquiry-input" hidden$="{{guardianoccupation}}">
+          <paper-dropdown-menu label="Guardian's Profession" style="margin-top: 3%;">
+            <paper-menu class="dropdown-content"  class="dropdown-content" id="idguardianoccupation" on-iron-select="guardianoccupationselector" >
+              <template  is="dom-repeat" items="{{professionarr}}" as="item">
+                <paper-item>{{item.profession}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
         </div>
         <div  class="col-sm-4 enquiry-input" hidden$="{{hideoccupation}}">
           <div class="lbl"><label>Choose Who is working</label><p id="mangender">&nbsp; *</p> </div>
@@ -177,22 +195,20 @@
             </div>
         </div>
         <div class="col-sm-4 enquiry-input" hidden$="{{dadoccupation}}">
-          <paper-dropdown-menu label="Father's Occupation">
-            <paper-menu id="iddadoccupation" class="dropdown-content" on-iron-select="dadoccupationselector" valueattr="value" >
-              <paper-item >Self Employed</paper-item>
-              <paper-item >Public Sector</paper-item>
-              <paper-item >Private Sector</paper-item>
-              <paper-item >Others</paper-item>
+          <paper-dropdown-menu label="Father's Profession" style="margin-top: 3%;">
+            <paper-menu class="dropdown-content"  class="dropdown-content" id="iddadoccupation" on-iron-select="dadoccupationselector" >
+              <template  is="dom-repeat" items="{{professionarr}}" as="item">
+                <paper-item>{{item.profession}}</paper-item>
+              </template>
             </paper-menu>
           </paper-dropdown-menu>
         </div>
         <div class="col-sm-4 enquiry-input" hidden$="{{motheroccupation}}">
-          <paper-dropdown-menu label="Mother's Occupation" >
-            <paper-menu id="idmotheroccupation" class="dropdown-content" on-iron-select="motheroccupationselector" valueattr="value" >
-              <paper-item >Self Employed</paper-item>
-              <paper-item >Public Sector</paper-item>
-              <paper-item >Private Sector</paper-item>
-              <paper-item >Others</paper-item>
+          <paper-dropdown-menu label="Mother's Profession" style="margin-top: 3%;">
+            <paper-menu class="dropdown-content"  class="dropdown-content" id="idmotheroccupation" on-iron-select="motheroccupationselector" >
+              <template  is="dom-repeat" items="{{professionarr}}" as="item">
+                <paper-item>{{item.profession}}</paper-item>
+              </template>
             </paper-menu>
           </paper-dropdown-menu>
         </div>
@@ -276,8 +292,9 @@
     var attenedcounsellorname;
     var dadoccupationinfo;
     var motheroccupationinfo;
+    var guardianoccupationinfo;
     var bothparentswork;
-
+    var guardianwork;
     Polymer({
       is: 'pre-apps',
 
@@ -290,12 +307,15 @@
       this.$.preapps.getcounsellorattendedby();
       this.$.preapps.getlocation();
       this.$.preapps.getmothertongue();
+      this.$.preapps.getprofession();
       this.$.sibname.hidden=true;
       this.$.sibdetail.hidden=true;
       this.$.referrer.hidden=true;
       this.hideoccupation = true;
       this.dadoccupation = true;
       this.motheroccupation = true;
+      this.guardianoccupation = true;
+      this.guardianworkinfo = true;
       var dt=new Date();
       todaydat=dt.getDate()+"/"+(dt.getMonth()+1)+"/"+dt.getFullYear();
       sessionStorage.setItem("todaydate",todaydat);
@@ -320,6 +340,15 @@
         enrolltype=null;
         this.academicyear="";
       } 
+    },
+    callnextyearhandler:function(e){
+      this.$.nextacademicyear.checked = true;
+      enrolltype="fullyear";
+      var dt=new Date();
+      yr1=(dt.getFullYear()+1)-2000;
+      yr2=(dt.getFullYear()+2)-2000;
+      yearsxz='AY-'+(dt.getFullYear()+1)+'-'+(dt.getFullYear()+2);
+      this.academicyear=yearsxz;
     },
     nextyearhandler:function(e){
       if(e.target.checked==true){
@@ -358,11 +387,15 @@
     },
     gardiansHandler:function(e){
       if(e.target.checked==true){
-        document.getElementById("parenthandler").checked=false;
+        document.getElementById("idparenthandler").checked=false;
         paga="guardian";
         this.guardianinfo=false;
         this.parentinfo=true;
-        //alert(gender);
+        this.hideoccupation = true;
+        this.parentworkinfo = true;
+        this.guardianworkinfo = false;
+        this.motheroccupation = true;
+        this.dadoccupation = true;
         this.fathername="";
         this.mothername="";
         this.mob="";
@@ -379,6 +412,9 @@
         document.getElementById("idguardianhandler").checked=false;
         this.guardianinfo=true;
         this.parentinfo=false;
+        this.parentworkinfo = false;
+        this.guardianworkinfo = true;
+        this.guardianoccupation = true;
         paga="parent";
         this.guardianname="";
         this.guardianmobile="";
@@ -575,7 +611,7 @@
       this.motheroccupation = false;
     },
     parentworkno:function(){
-      bothparentswork = "no" ;
+      bothparentswork = "no";
       this.hideoccupation = false;
       this.dadoccupation = true;
       this.motheroccupation = true;
@@ -606,13 +642,23 @@
     getenquirynumber:function(){
       this.$.preapps.getenquiryno();
     },
+    guardianworkyes:function(){
+      this.guardianoccupation = false;
+      guardianwork = "yes";
+    },
+    guardianworkno:function(){
+      this.guardianoccupation = true;
+      guardianwork = "no";
+    },
+    guardianoccupationselector:function(){
+      guardianoccupationinfo = (e.target.selectedItem.textContent).trim();
+    },
     complete:function(){
       if(paga=="guardian"){
-        if(this.todaydate == ""|| this.firstname==""||this.lastname==""||this.textvalue==""||this.guardianname==""||this.guardianemail==""||this.guardianmobile==""||this.academicyear=='' || this.ageofyr ==""){
+        if(this.todaydate == ""|| this.firstname==""||this.textvalue==""||this.guardianname==""||this.guardianemail==""||this.guardianmobile==""||this.academicyear=='' || this.ageofyr ==""){
           // alert('1');
           this.$.today.validate();
           this.$.idfname.validate();
-          this.$.idlname.validate();
           this.$.idlocality.validate();
           this.$.guardianname.validate();
           this.$.gmobile.validate();
@@ -637,22 +683,20 @@
             alert("Select Enquiry Source");
         } else if(attenedcounsellorname == null){
             alert("Select Counsellor");
-        } else if(bothparentswork == null){
-            alert("Check Both Parent are working or not");
-        } else if(mothertonguelanguage == null){
+        }else if(mothertonguelanguage == null){
             alert("Select Mother Tongue");
         } else if(havesibling == null){
             alert("Select the student having sibling or not");
-        } else{
+        } else if(guardianwork == null){
+          alert("Select Guardian Work");
+        } else {
           this.getvalues();
         }
       } else if(paga=="parent") {
-        if(this.todaydate == ""|| this.firstname==""||this.lastname==""||this.textvalue==""||this.fathername==""||this.mothername==""||this.mob==""||this.email==""||this.academicyear==""  || this.ageofyr ==""){
+        if(this.todaydate == ""|| this.firstname==""||this.textvalue==""||this.fathername==""||this.mothername==""||this.mob==""||this.email==""||this.academicyear==""  || this.ageofyr ==""){
           alert("1");
           this.$.today.validate();
           this.$.idfname.validate();
-          // this.$.mname.validate();
-          this.$.idlname.validate();
           this.$.idlocality.validate();
           this.$.dadname.validate();
           this.$.momname.validate();
@@ -689,9 +733,10 @@
     },
     getvalues:function(){
       alert("hi");
-      this.$.preapps.submitenqdetails(currentdate,enrolltype,this.academicyear,grade,this.firstname,this.middlename,this.lastname,gender,havesibling,this.ageofyr,dobdate,mothertonguelanguage,this.fathername,this.mothername,this.mob,this.mothermob,this.email,this.motheremail,this.guardianname,this.guardianmobile,this.guardianemail,dadoccupationinfo,motheroccupationinfo,this.textvalue,enquiysource,attenedcounsellorname,this.siblingname,this.siblingdetails,this.referrername,this.enquiry_number);
+      this.$.preapps.submitenqdetails(currentdate,enrolltype,this.academicyear,grade,this.firstname,this.middlename,this.lastname,gender,havesibling,this.ageofyr,dobdate,mothertonguelanguage,this.fathername,this.mothername,this.mob,this.mothermob,this.email,this.motheremail,this.guardianname,this.guardianmobile,this.guardianemail,dadoccupationinfo,motheroccupationinfo,this.textvalue,enquiysource,attenedcounsellorname,this.siblingname,this.siblingdetails,this.referrername,this.enquiry_number,guardianoccupationinfo);
     },
     FnClear:function(){
+      this.nextyearhandler();
       paga="parent";
       this.firstname = "";
       this.middlename = "";
@@ -737,6 +782,8 @@
       this.$.sibname.hidden=true;
       this.$.sibdetail.hidden=true;
       this.$.referrer.hidden=true;
+      this.guardianoccupation = true;
+      this.guardianworkinfo = true;
     },
     });
   })();
