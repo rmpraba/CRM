@@ -306,9 +306,9 @@
         var result=e.detail.response.returnval;
         document.querySelector('pre-apps').professionarr=result;
       },
-      submitenqdetails:function(todate,enrolltype,academicyear,grade,firstname,middlename,lastname,gender,havesibling,ageofyr,dobdate,mothertonguelanguage,fathername,mothername,mob,mothermob,email,motheremail,guardianname,guardianmobile,guardianemail,dadoccupationinfo,motheroccupationinfo,textvalue,enquiysource,attenedcounsellorname,siblingname,siblingdetails,referrername,enqno,guardianoccupationinfo){
+      submitenqdetails:function(todate,enrolltype,academicyear,grade,firstname,middlename,lastname,gender,havesibling,ageofyr,dobdate,mothertonguelanguage,fathername,mothername,mob,mothermob,email,motheremail,guardianname,guardianmobile,guardianemail,dadoccupationinfo,motheroccupationinfo,textvalue,enquiysource,attenedcounsellorname,siblingname,siblingdetails,referrername,enqno,guardianoccupationinfo,parent_or_guardian_work){
         this.submitenqdetailsurl=sessionStorage.getItem("addrinfo")+"/submitenqdetails";
-        var obj={"schol":"","createdon":"","enrolltype":"","academicyear":"","grade":"","firstname":"","middlename":"","lastname":"","gender":"","havesibling":"","ageofyr":"","dobdate":"","mothertonguelanguage":"","fathername":"","mothername":"","mob":"","mothermob":"","email":"","motheremail":"","guardianname":"","guardianmobile":"","guardianemail":"","dadoccupationinfo":"","motheroccupationinfo":"","location":"","enquiysource":"","attenedcounsellorname":"","siblingname":"","siblingdetails":"","referrername":"","status":"","enquiryname":"","enquiry_no":""};
+        var obj={"schol":"","createdon":"","enrolltype":"","academicyear":"","grade":"","firstname":"","middlename":"","lastname":"","gender":"","havesibling":"","ageofyr":"","dobdate":"","mothertonguelanguage":"","fathername":"","mothername":"","mob":"","mothermob":"","email":"","motheremail":"","guardianname":"","guardianmobile":"","guardianemail":"","dadoccupationinfo":"","motheroccupationinfo":"","location":"","enquiysource":"","attenedcounsellorname":"","siblingname":"","siblingdetails":"","referrername":"","status":"","enquiryname":"","enquiry_no":"","parent_or_guardian_work":"","guardianoccupationinfo":""};
         obj.schol=localStorage.getItem("schoolid");
         obj.createdon = todate;
         obj.enrolltype = enrolltype;
@@ -343,6 +343,7 @@
         obj.status = "open";
         obj.enquiry_no = enqno;
         obj.guardianoccupationinfo = guardianoccupationinfo;
+        obj.parent_or_guardian_work = parent_or_guardian_work;
         this.submitenqdetailsparam=obj;
         this.$.submitenqdetailsajax.generateRequest();
       },

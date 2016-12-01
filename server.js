@@ -4219,7 +4219,8 @@ app.post('/submitenqdetails',  urlencodedParser,function (req, res){
       year_type:req.query.enrolltype,
       enquiry_no:req.query.enquiry_no,
       orginated_by:req.query.attenedcounsellorname,
-      guardian_occup:req.query.guardianoccupationinfo
+      guardian_occup:req.query.guardianoccupationinfo,
+      parent_or_guardian_work:req.query.parent_or_guardian_work
     };
     console.log(response);
     connection.query('INSERT INTO student_enquiry_details SET ?',[response],function(err, rows){

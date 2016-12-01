@@ -295,6 +295,9 @@
     var guardianoccupationinfo;
     var bothparentswork;
     var guardianwork;
+    var fatherworkdet;
+    var motherworkdet;
+    var parent_or_guardian_work;
     Polymer({
       is: 'pre-apps',
 
@@ -619,9 +622,13 @@
     father:function(){
       this.dadoccupation = false;
       this.motheroccupation = true;
+      fatherworkdet = "yes";
+      motherworkdet = "no";
     },
     mother:function(){
       this.dadoccupation = true;
+      fatherworkdet = "no";
+      motherworkdet = "yes";
       this.motheroccupation = false;
     },
     maleHandler:function(){
@@ -640,6 +647,19 @@
       motheroccupationinfo = (e.target.selectedItem.textContent).trim();
     },
     getenquirynumber:function(){
+      if(guardianwork == "yes"){
+          parent_or_guardian_work = "guardian";
+      } else {
+        if(bothparentswork == "yes"){
+          parent_or_guardian_work = "parents";
+        } else {
+          if(fatherworkdet == "yes"){
+            parent_or_guardian_work = "father";
+          } else {
+            parent_or_guardian_work = "mother";
+          }
+        }
+      }
       this.$.preapps.getenquiryno();
     },
     guardianworkyes:function(){
@@ -650,7 +670,7 @@
       this.guardianoccupation = true;
       guardianwork = "no";
     },
-    guardianoccupationselector:function(){
+    guardianoccupationselector:function(e){
       guardianoccupationinfo = (e.target.selectedItem.textContent).trim();
     },
     complete:function(){
@@ -733,7 +753,7 @@
     },
     getvalues:function(){
       alert("hi");
-      this.$.preapps.submitenqdetails(currentdate,enrolltype,this.academicyear,grade,this.firstname,this.middlename,this.lastname,gender,havesibling,this.ageofyr,dobdate,mothertonguelanguage,this.fathername,this.mothername,this.mob,this.mothermob,this.email,this.motheremail,this.guardianname,this.guardianmobile,this.guardianemail,dadoccupationinfo,motheroccupationinfo,this.textvalue,enquiysource,attenedcounsellorname,this.siblingname,this.siblingdetails,this.referrername,this.enquiry_number,guardianoccupationinfo);
+      this.$.preapps.submitenqdetails(currentdate,enrolltype,this.academicyear,grade,this.firstname,this.middlename,this.lastname,gender,havesibling,this.ageofyr,dobdate,mothertonguelanguage,this.fathername,this.mothername,this.mob,this.mothermob,this.email,this.motheremail,this.guardianname,this.guardianmobile,this.guardianemail,dadoccupationinfo,motheroccupationinfo,this.textvalue,enquiysource,attenedcounsellorname,this.siblingname,this.siblingdetails,this.referrername,this.enquiry_number,guardianoccupationinfo,parent_or_guardian_work);
     },
     FnClear:function(){
       this.nextyearhandler();
