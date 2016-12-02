@@ -4248,7 +4248,23 @@ app.post('/getprofession',  urlencodedParser,function (req, res){
       }
     });
 });
-
+app.post('/getstudentsinlocation',  urlencodedParser,function (req, res){
+  var qur = "SELECT COUNT(*)as total_students FROM student_point WHERE school_id = '"+req.query.schol+"' AND pickup_point = (SELECT id FROM point WHERE point_name ='"+req.query.point_name+"' and school_id = '"+req.query.schol+"' AND trip = '"+req.query.trip+"' )";
+  console.log(qur);
+  connection.query(qur,
+    function(err, rows){
+      if(!err){
+        if(rows.length>0){
+          res.status(200).json({'returnval': rows});
+        } else {
+          console.log(err);
+          res.status(200).json({'returnval':null});
+        }
+      } else {
+        console.log(err);
+      }
+    });
+});
 function setvalue(){
   console.log("calling setvalue.....");
 }

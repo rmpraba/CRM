@@ -152,6 +152,17 @@
         debounce-duration="300"
         >
   </iron-ajax>
+  <iron-ajax
+        method="post"
+        id="getstudentsinlocationajax"
+        url="{{getstudentsinlocationurl}}"
+        params="{{getstudentsinlocationparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getstudentsinlocationResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
   </template>
   <script>
   (function() {
@@ -387,6 +398,19 @@
         } else {
           alert('Form Submission intertupted!');
         }
+      },
+      getstudentsinlocation:function(location,trip){
+        this.getstudentsinlocationurl=sessionStorage.getItem("addrinfo")+"/getstudentsinlocation";
+        var obj={"point_name":"","schol":"", "trip":""}; 
+        obj.schol=localStorage.getItem("schoolid");
+        obj.point_name=location;
+        obj.trip = trip;
+        this.getstudentsinlocationparam=obj;
+        this.$.getstudentsinlocationajax.generateRequest();
+      },
+      getstudentsinlocationResponse:function(e){
+        var result = e.detail.response.returnval[0].total_students;
+        document.querySelector('pre-apps').opentotalstudentdialog(result);
       }
     });
   })();

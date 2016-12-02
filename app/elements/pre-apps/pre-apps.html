@@ -268,6 +268,30 @@
       <div class="col-md-12 form-button">
         <paper-button class="btn btn-primary" on-click="getenquirynumber">SUBMIT</paper-button>
       </div>
+      <paper-dialog id="totalstudentnonzero" modal>
+        <paper-dialog-scrollable>
+          <div class="row">
+            <div class="col-sm-8 col-sm-offset-2">
+              <h4>There are <strong>{{total_students}}</strong> students already using transport from this location</h4> 
+            </div>
+          </div>
+        </paper-dialog-scrollable>
+        <div class="buttons">
+          <paper-button class="col-sm-4 col-sm-offset-4"  dialog-dismiss>Cancel</paper-button>
+        </div>
+      </paper-dialog>
+      <paper-dialog id="totalstudentzero" modal>
+        <paper-dialog-scrollable>
+          <div class="row">
+            <div class="col-sm-8 col-sm-offset-2">
+              <h4>This is the first student from this location</h4> 
+            </div>
+          </div>
+        </paper-dialog-scrollable>
+        <div class="buttons">
+          <paper-button class="col-sm-4 col-sm-offset-4"  dialog-dismiss>Cancel</paper-button>
+        </div>
+      </paper-dialog>
     <pre-apps-service id='preapps'></pre-apps-service>
   </template>
   <script>
@@ -300,6 +324,9 @@
     var parent_or_guardian_work;
     var yearAge ;
     var professionanyoneselected;
+    var trip;
+    var zero;
+    var somevalue;
     Polymer({
       is: 'pre-apps',
 
@@ -328,6 +355,9 @@
       this.todaydate=todaydat;
       currentdate=dt.getFullYear()+"-"+(dt.getMonth()+1)+"-"+dt.getDate();
       paga="parent";
+      this.$.totalstudentnonzero.close();
+      this.$.totalstudentzero.close();
+
       /*this.$.service.getdiscounts();
       this.$.service.getrmnamelist();
       */
@@ -667,6 +697,7 @@
     Fnselected:function(e){
       //alert('s');
       this.querySelector('paper-listbox').style.visibility='hidden';
+      this.getstudentsinlocation(e.target.selectedItem.textContent.trim());
       this.textvalue = e.target.selectedItem.textContent.trim();
       this.itemArray=[];
       document.querySelector('#iditemlist').selected=-1;
@@ -746,6 +777,29 @@
     },
     guardianoccupationselector:function(e){
       guardianoccupationinfo = (e.target.selectedItem.textContent).trim();
+    },
+    getstudentsinlocation:function(location){
+      if(grade==null) {
+        alert('Select the grade your seeking for admission');
+      } else{
+        if(grade=='Nursery'||grade=='LKG'||grade=='UKG'){
+          trip = 2;
+          this.$.preapps.getstudentsinlocation(location, trip);
+        } else{
+          trip = 1;
+          this.$.preapps.getstudentsinlocation(location, trip);
+        }
+      }
+      
+    },
+    opentotalstudentdialog:function(result){
+      if(result == 0){
+        this.total_students = result;
+        this.$.totalstudentzero.open();
+      } else {
+        this.total_students = result;
+        this.$.totalstudentnonzero.open();
+      }
     },
     complete:function(){
       if(paga=="guardian"){
@@ -913,6 +967,8 @@
       this.$.referrer.hidden=true;
       this.guardianoccupation = true;
       this.guardianworkinfo = true;
+      this.$.totalstudentnonzero.close();
+      this.$.totalstudentzero.close();
     },
     });
   })();
