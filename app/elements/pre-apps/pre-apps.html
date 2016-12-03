@@ -234,7 +234,13 @@
       </div>  
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-4" id="sibname">
-          <paper-input  label="Names of sibling" value="{{siblingname}}"></paper-input>
+          <paper-input  error-message="needs referrer!" label="Enter Sibling Name.." is="" value="{{siblingname}}" on-keydown="SibFnInputChanged"></paper-input>
+          <paper-listbox class="dropdown-content" id="sibiditemlist" on-iron-select="SibFnselected" valueattr="value">
+            <template is="dom-repeat" items="{{sibitemArray}}" as="item">
+              <paper-item value="{{item.itemid}}">{{item.sibitemdes}}</paper-item>
+            </template>
+          </paper-listbox>
+        </div>
         </div>
         <div class="col-sm-6" id="sibdetail">
           <paper-input  label="Grade of sibling" value="{{siblingdetails}}"></paper-input>
@@ -243,7 +249,7 @@
           <paper-input  error-message="needs referrer!" label="Enter referrer name.." is="" value="{{referrername}}" on-keydown="FnInputChangedz"></paper-input>
           <paper-listbox class="dropdown-content" id="iditemlistz" on-iron-select="Fnselectedz" valueattr="value">
             <template is="dom-repeat" items="{{itemArrayz}}" as="item">
-              <paper-item >{{item.itemdesz}}</paper-item>
+              <paper-item value="{{item.itemidz}}">{{item.itemdesz}}</paper-item>
             </template>
           </paper-listbox>
         </div> 
@@ -309,6 +315,7 @@
     var currentdate;
     var namearr=[];
     var namearrz=[];
+    var sibnamearr=[];
     var enquiysource;
     var havesibling;
     var gender;
@@ -538,6 +545,7 @@
         this.$.sibname.hidden=false;
         this.$.sibdetail.hidden=false;
         this.$.referrer.hidden=true;
+        this.$.preapps.getreferrername();
       } else if(enquiysource=="Referrer") {
         this.$.referrer.hidden=false;
         this.$.sibname.hidden=true;
@@ -580,6 +588,7 @@
                 {
                   var obj={"itemdesz":""};
                   obj.itemdesz=namearrz[i].listname;
+                  obj.itemidz=namearrz[i].listid;
                   arr.push(obj);
                 }
               }
@@ -599,8 +608,9 @@
                 var subval=((namearrz[i].listname).trim()).substring(0,this.itemvalz.length);
                 if((namearrz[i].listname).toUpperCase().indexOf((this.itemvalz).toUpperCase())!=-1)
                 {
-                  var obj={"itemdesz":""};
+                  var obj={"itemdesz":"","itemidz":""};
                   obj.itemdesz=namearrz[i].listname;
+                  obj.itemidz=namearrz[i].listid;
                   arr.push(obj);
                 }
               }
@@ -619,6 +629,7 @@
     Fnselectedz:function(e){
       //alert('s');
       this.querySelector('paper-listbox').style.visibility='hidden';
+      this.getreferraldetails((e.target.selectedItem.value));
       this.referrername = e.target.selectedItem.textContent.trim();
       this.itemArrayz=[];
       document.querySelector('#iditemlist').selected=-1;
@@ -702,6 +713,82 @@
       this.itemArray=[];
       document.querySelector('#iditemlist').selected=-1;
       this.$.iditemlist.hidden=true;
+    },
+    SibFnlistboxz:function(siblingnameitem){
+      sibnamearr=siblingnameitem;
+    },
+    SibFnInputChanged:function(e){
+          this.$.sibiditemlist.hidden=false;
+          if(e.keyCode==13|| e.keyCode==40)
+            this.querySelector('paper-listbox').focus();
+          var arr=[];
+          arr.push({"sibitemdes":"-----Select-----"});
+          this.querySelector('paper-listbox').style.visibility='visible';
+          if(e.keyCode==8){
+            this.sibitemflag="true";
+            this.sibitemval="";
+            //alert('yes');
+            var len=(this.siblingname).length;
+            if(len<=1){
+              this.querySelector('paper-listbox').style.visibility='hidden';
+              this.sibitemArray="";
+              this.sibitemval="";
+            }
+            if(len>1){
+              this.querySelector('paper-listbox').style.visibility='visible';
+              var backsubval=(((this.siblingname).substring(0,(len-1))).trim()).toUpperCase();
+              for(var i=0;i<sibnamearr.length;i++)
+              {
+                var subval=((sibnamearr[i].habitat_name).trim()).substring(0,backsubval.length);
+                if((subval).toUpperCase()==(backsubval).toUpperCase())
+                {
+                  var obj={"sibitemdes":"","itemid":""};
+                  obj.sibitemdes=sibnamearr[i].siblistname;
+                  obj.itemid=sibnamearr[i].siblistid;
+                  arr.push(obj);
+                }
+              }
+              this.sibitemArray=arr;
+            }
+          }
+          if(e.keyCode!=8&& e.keyCode!=16&& e.keyCode!=13 && e.keyCode!=38&&e.keyCode!=40&&e.keyCode!=37&&e.keyCode!=39){
+            if(this.sibitemflag=="true") {
+              this.sibitemval = (this.siblingname).toUpperCase()+String.fromCharCode((e.keyCode)).toUpperCase();
+              this.sibitemflag="false";
+            }
+            else
+            this.sibitemval = this.siblingname +String.fromCharCode((e.keyCode));
+            if(this.sibitemval.length>0)
+            {
+              for(var i=0;i<sibnamearr.length;i++){
+                var subval=((sibnamearr[i].siblistname).trim()).substring(0,this.sibitemval.length);
+                if((subval).toUpperCase()==(this.sibitemval).toUpperCase()){
+                  var obj={"sibitemdes":"","itemid":""};
+                  obj.sibitemdes=sibnamearr[i].siblistname;
+                  obj.itemid=sibnamearr[i].siblistid;
+                  arr.push(obj);
+                }
+              }
+              if(arr.length>0)
+                this.sibitemArray=arr;
+              else {
+                var obj={"sibitemdes":"","itemid":""};
+                  obj.sibitemdes=sibnamearr[i].siblistname;
+                  obj.itemid=sibnamearr[i].siblistid;
+                  arr.push(obj);
+                this.sibitemArray=arr;
+              }
+            }
+          }
+    },
+    SibFnselected:function(e){
+      //alert('s');
+      this.querySelector('paper-listbox').style.visibility='hidden';
+      this.getsiblingdetails((e.target.selectedItem.value));
+      this.siblingname = e.target.selectedItem.textContent.trim();
+      this.sibitemArray=[];
+      document.querySelector('#sibiditemlist').selected=-1;
+      this.$.sibiditemlist.hidden=true;
     },
     siblingyes:function(){
       havesibling = "yes";
@@ -800,6 +887,12 @@
         this.total_students = result;
         this.$.totalstudentnonzero.open();
       }
+    },
+    getsiblingdetails(siblingid){
+      alert(siblingid);
+    },
+    getreferraldetails(referralstudentid){
+      alert(referralstudentid);
     },
     complete:function(){
       if(paga=="guardian"){

@@ -2731,7 +2731,7 @@ app.post('/updatefollowdetail',  urlencodedParser,function (req, res)
 app.post('/getparentname',  urlencodedParser,function (req, res){
     var qur={"school_id":req.query.schol};
     //console.log('qur');
-    connection.query('SELECT parent_name FROM `parent` WHERE ?',[qur],
+    connection.query('SELECT parent_name, student_id FROM `parent` WHERE ?',[qur],
     function(err, rows)
     {
     if(!err)
@@ -2759,7 +2759,7 @@ app.post('/getparentname',  urlencodedParser,function (req, res){
 app.post('/getstudentnamelist',  urlencodedParser,function (req, res){
     var qur={"school_id":req.query.schol};
   //  console.log('qur');
-    connection.query('SELECT student_name FROM `student_details` WHERE ?',[qur],
+    connection.query('SELECT id, student_name FROM `student_details` WHERE ?',[qur],
     function(err, rows)
     {
     if(!err)

@@ -173,6 +173,7 @@
     var parentarr=[];
     var studentarr=[];
     var namelistarr=[];
+    var sibnamelistarr = [];
     var seqno;
 
     Polymer({
@@ -251,10 +252,13 @@
       getparentnameResponse:function(e){
         parentarr=e.detail.response.returnval;
         for(var i=0;i<parentarr.length;i++){
-          var obj={"listname":""}
+          var obj={"listname":""};
           obj.listname=parentarr[i].parent_name;
+          obj.listid = parentarr[i].student_id;
           namelistarr.push(obj);
         }
+        document.querySelector('pre-apps').Fnlistboxz(namelistarr);
+
         this.getstudentnameurl=sessionStorage.getItem("addrinfo")+"/getstudentnamelist";
         var obj={"schol":""}
         obj.schol=localStorage.getItem("schoolid");
@@ -264,11 +268,12 @@
       getstudentnameResponse:function(e){
         studentarr=e.detail.response.returnval;
         for(var i=0;i<studentarr.length;i++){
-          var obj={"listname":""}
-          obj.listname=studentarr[i].student_name;
-          namelistarr.push(obj);
+          var obj={"siblistname":""};
+          obj.siblistname=studentarr[i].student_name;
+          obj.siblistid=studentarr[i].id;
+          sibnamelistarr.push(obj);
         }
-        document.querySelector('pre-apps').Fnlistboxz(namelistarr);
+        document.querySelector('pre-apps').SibFnlistboxz(sibnamelistarr);
       },
       getcounsellorattendedby:function(){
         this.getcounsellorattendedbyurl=sessionStorage.getItem("addrinfo")+"/getcounsellorattendedby";
