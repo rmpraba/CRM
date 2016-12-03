@@ -4209,8 +4209,6 @@ app.post('/submitenqdetails',  urlencodedParser,function (req, res){
       father_email:req.query.email,
       mother_email:req.query.motheremail,
       mother_tongue:req.query.mothertonguelanguage,
-      sibiling_name:req.query.siblingname,
-      sibling_detail:req.query.siblingdetails,
       enquiry_name:req.query.enquiryname,
       status:req.query.status,
       guardian_mail:req.query.guardianemail,
@@ -4222,7 +4220,6 @@ app.post('/submitenqdetails',  urlencodedParser,function (req, res){
       guardian_occup:req.query.guardianoccupationinfo,
       parent_or_guardian_work:req.query.parent_or_guardian_work
     };
-    console.log(response);
     connection.query('INSERT INTO student_enquiry_details SET ?',[response],function(err, rows){
       if(!err)
       res.status(200).json({'returnval': 'inserted'});
@@ -4297,6 +4294,27 @@ app.post('/referraldetails',  urlencodedParser,function (req, res){
         console.log(err);
       }
     });
+});
+
+app.post('/savereferraldata',  urlencodedParser,function (req, res){
+    var response={
+      school_id:req.query.schol,
+      enquiry_no:req.query.enquiry_no,
+      referred_student_name:req.query.studentname,
+      referred_parent_name:req.query.parentname,
+      referred_student_grade:req.query.grade,
+      school_id:req.query.section,
+      referral_type:req.query.referral_type
+    };
+    connection.query('INSERT INTO tr_referrals SET ?',[response],function(err, rows){
+      if(!err)
+      res.status(200).json({'returnval': 'Inserted'});
+      else{
+      console.log(err);
+      res.status(200).json({'returnval': 'not inserted'});
+    }
+    });
+
 });
 function setvalue(){
   console.log("calling setvalue.....");

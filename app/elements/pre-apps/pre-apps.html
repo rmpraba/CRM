@@ -232,7 +232,7 @@
           </paper-dropdown-menu>
         </div>
       </div>  
-      <div class="list-group col-sm-12 panel-body form-category">
+      <div class="list-group col-sm-12 panel-body form-category" hidden$="{{sibling}}">
         <div class="col-sm-4" id="sibname">
           <paper-input  error-message="needs referrer!" label="Enter Sibling Name.." is="" value="{{siblingname}}" on-keydown="SibFnInputChanged"></paper-input>
           <paper-listbox class="dropdown-content" id="sibiditemlist" on-iron-select="SibFnselected" valueattr="value">
@@ -241,20 +241,13 @@
             </template>
           </paper-listbox>
         </div>
-        <div class="col-sm-8" id="sibdetail">
+        <div class="col-sm-8" hidden$="{{sibdetail}}">
           <template is="dom-repeat" items="{{siblingdetailsarr}}" as="item">
-            <div class="col-sm-6 enquiry-input">
-              <div class="lbl"><label>Parent Name</label></div>
-              <h5>{{item.parent_name}}</h5>
-            </div>
-            <div class="col-sm-6 enquiry-input">
-              <div class="lbl"><label>Grade</label></div>
-              <h5>{{item.class}} - {{item.section}}</h5>
-            </div>
+            <sibling-detail-card parentname="{{item.parent_name}}" class="{{item.class}}" section = "{{item.section}}"></sibling-detail--card>
           </template>
         </div>
       </div>
-      <div class="list-group col-sm-12 panel-body form-category">
+      <div class="list-group col-sm-12 panel-body form-category" hidden$ = "{{referral}}">
         <div class="col-sm-4" id="referrer">
           <paper-input  error-message="needs referrer!" label="Enter referrer name.." is="" value="{{referrername}}" on-keydown="FnInputChangedz"></paper-input>
           <paper-listbox class="dropdown-content" id="iditemlistz" on-iron-select="Fnselectedz" valueattr="value">
@@ -263,16 +256,9 @@
             </template>
           </paper-listbox>
         </div> 
-        <div class="col-sm-8" id="referraldetail">
+        <div class="col-sm-8" hidden$="{{referraldetail}}">
           <template is="dom-repeat" items="{{referraldetailsarr}}" as="item">
-            <div class="col-sm-6 enquiry-input">
-              <div class="lbl"><label>Student Name</label></div>
-              <h5>{{item.student_name}}</h5>
-            </div>
-            <div class="col-sm-6 enquiry-input">
-              <div class="lbl"><label>Grade</label></div>
-              <h5>{{item.class}} - {{item.section}}</h5>
-            </div>
+            <referral-detail-card studentname="{{item.student_name}}" class="{{item.class}}" section = "{{item.section}}"></referral-detail--card>
           </template>
         </div>
       </div>
@@ -358,6 +344,12 @@
     var trip;
     var zero;
     var somevalue;
+    var selectedsiblingparentname;
+    var selectedsiblingclass;
+    var selectedsiblingsection;
+    var selectedreferralstudentname;
+    var selectedreferralclass;
+    var selectedreferralsection;
     Polymer({
       is: 'pre-apps',
 
@@ -378,6 +370,10 @@
       this.motheroccupation = true;
       this.guardianoccupation = true;
       this.guardianworkinfo = true;
+      this.sibdetail = true;
+      this.referraldetail =true;
+      this.sibling = true;
+      this.referral = true;
       professionanyoneselected = "";
       var dt=new Date();
       todaydat=dt.getDate()+"/"+(dt.getMonth()+1)+"/"+dt.getFullYear();
@@ -564,13 +560,21 @@
     },
     source:function(e){
       enquiysource=(e.target.selectedItem.textContent).trim();
-      if(enquiysource=="Siblings"){
+      if(enquiysource=="Sibling"){
         this.$.sibname.hidden=false;
         this.$.referrer.hidden=true;
+        this.sibdetail = false;
+        this.sibling = false;
+        this.referraldetail =true;
+        this.referral = true;
         this.$.preapps.getreferrername();
-      } else if(enquiysource=="Referrer") {
+      } else if(enquiysource=="Referral") {
         this.$.referrer.hidden=false;
         this.$.sibname.hidden=true;
+        this.sibdetail = true;
+        this.sibling = true;
+        this.referraldetail =false;
+        this.referral = false;
         this.$.preapps.getreferrername();
       } else {
         this.$.sibname.hidden=true;
@@ -1000,7 +1004,26 @@
             if( dadoccupationinfo ==null && motheroccupationinfo == null){
               alert("Select Parent's Profession");
             } else {
-              this.getvalues();
+              if(enquiysource=="Sibling" || enquiysource=="Referral"){
+                    if(enquiysource=="Sibling"){
+                      if(selectedsiblingparentname == ""|| selectedsiblingclass == "" || selectedsiblingsection == ""){
+                        alert("Sibling Name Required");
+                      } else {
+                        this.$.preapps.savereferraldata(this.enquiry_number,this.siblingname, selectedsiblingparentname, selectedsiblingclass, selectedsiblingsection,enquiysource);
+                        this.getvalues();
+                      }
+                    }
+                    if(enquiysource=="Referral"){
+                      if(selectedreferralstudentname == "" || selectedreferralclass == "" || selectedsiblingsection == ""){
+                        alert("Referral Name Required");
+                      } else {
+                        this.$.preapps.savereferraldata(this.enquiry_number,selectedreferralstudentname,this.referrername, selectedreferralclass, selectedreferralsection,enquiysource);
+                        this.getvalues();
+                      }  
+                    }
+                  } else {
+                    this.getvalues();
+                  }
             }
           } else {
             if(professionanyoneselected == false){
@@ -1010,14 +1033,52 @@
                 if(dadoccupationinfo == null){
                   alert("Select Father's Profession");
                 } else {
-                  this.getvalues();
+                  if(enquiysource=="Sibling" || enquiysource=="Referral"){
+                    if(enquiysource=="Sibling"){
+                      if(selectedsiblingparentname == ""|| selectedsiblingclass == "" ||selectedsiblingsection == ""){
+                        alert("Sibling Name Required");
+                      } else {
+                        this.$.preapps.savereferraldata(this.enquiry_number,this.siblingname, selectedsiblingparentname, selectedsiblingclass, selectedsiblingsection,enquiysource);
+                        this.getvalues();
+                      }
+                    }
+                    if(enquiysource=="Referral"){
+                      if(selectedreferralstudentname == ""|| selectedreferralclass == "" || selectedsiblingsection == ""){
+                        alert("Referral Name Required");
+                      } else {
+                        this.$.preapps.savereferraldata(this.enquiry_number,selectedreferralstudentname,this.referrername, selectedreferralclass, selectedreferralsection,enquiysource);
+                        this.getvalues();
+                      }  
+                    }
+                  } else {
+                    this.getvalues();
+                  }
                 }
               }
               if(motherworkdet == "yes"){
                 if(motheroccupationinfo == null){
                   alert("Select Mother's Profession");
                 } else {
-                  this.getvalues();
+                  if(enquiysource=="Sibling" || enquiysource=="Referral"){
+                    if(enquiysource=="Sibling"){
+                      if(selectedsiblingparentname == ""|| selectedsiblingclass == "" ||selectedsiblingsection == ""){
+                        alert("Sibling Name Required");
+                      } else {
+                        this.$.preapps.savereferraldata(this.enquiry_number,this.siblingname, selectedsiblingparentname, selectedsiblingclass, selectedsiblingsection,enquiysource);
+                        this.getvalues();
+                      }
+                    }
+                    if(enquiysource=="Referral"){
+                      if(selectedreferralstudentname == "" || selectedreferralclass == ""||selectedsiblingsection == ""){
+                        alert("Referral Name Required");
+                      } else {
+                        this.$.preapps.savereferraldata(this.enquiry_number,selectedreferralstudentname,this.referrername, selectedreferralclass, selectedreferralsection,enquiysource);
+                        this.getvalues();
+                      }  
+                    }
+                  } else {
+                    this.getvalues();
+                  }
                 }
               }
             }
@@ -1028,7 +1089,7 @@
       }
     },
     getvalues:function(){
-      this.$.preapps.submitenqdetails(currentdate,enrolltype,this.academicyear,grade,this.firstname,this.middlename,this.lastname,gender,havesibling,this.ageofyr,dobdate,mothertonguelanguage,this.fathername,this.mothername,this.mob,this.mothermob,this.email,this.motheremail,this.guardianname,this.guardianmobile,this.guardianemail,dadoccupationinfo,motheroccupationinfo,this.textvalue,enquiysource,attenedcounsellorname,this.siblingname,this.siblingdetails,this.referrername,this.enquiry_number,guardianoccupationinfo,parent_or_guardian_work);
+      this.$.preapps.submitenqdetails(currentdate,enrolltype,this.academicyear,grade,this.firstname,this.middlename,this.lastname,gender,havesibling,this.ageofyr,dobdate,mothertonguelanguage,this.fathername,this.mothername,this.mob,this.mothermob,this.email,this.motheremail,this.guardianname,this.guardianmobile,this.guardianemail,dadoccupationinfo,motheroccupationinfo,this.textvalue,enquiysource,attenedcounsellorname,this.enquiry_number,guardianoccupationinfo,parent_or_guardian_work);
     },
     FnClear:function(){
       this.callnextyearhandler();
@@ -1038,14 +1099,13 @@
       this.middlename = "";
       this.lastname = "";
       this.siblingname = "";
-      this.siblingdetails = "";
+      this.referrername = "";
       this.ageofyr = "";
       document.querySelector('#newenqcardgrades').selected=-1;
       document.querySelector('#mothertongue').selected=-1;
       document.querySelector('#iddadoccupation').selected=-1;
       document.querySelector('#idmotheroccupation').selected=-1;
       this.textvalue = "";
-      this.referrername="";
       document.querySelector('#idrmnames').selected=-1;
       document.querySelector('#enquiry-source').selected=-1;
       document.getElementById("nextacademicyear").checked=false;
@@ -1075,12 +1135,27 @@
       this.dadoccupation = true;
       this.motheroccupation = true;
       this.guardianinfo=true;
-      this.$.sibname.hidden=true;
-      this.$.referrer.hidden=true;
       this.guardianoccupation = true;
       this.guardianworkinfo = true;
       this.$.totalstudentnonzero.close();
       this.$.totalstudentzero.close();
+      this.sibdetail = true;
+      this.sibling = true;
+      this.referraldetail = true;
+      this.referral =true;
+      namearr=[];
+      namearrz=[];
+      sibnamearr=[];
+    },
+    Fnselectedsiblingdetail:function(parent,grade,section){
+      selectedsiblingparentname=parent;
+      selectedsiblingclass = grade;
+      selectedsiblingsection = section;
+    },
+    Fnselectedreferraldetail:function(student,grade,section){
+      selectedreferralstudentname=student;
+      selectedreferralclass = grade;
+      selectedreferralsection = section;
     },
     });
   })();
