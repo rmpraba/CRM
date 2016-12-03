@@ -241,11 +241,21 @@
             </template>
           </paper-listbox>
         </div>
+        <div class="col-sm-8" id="sibdetail">
+          <template is="dom-repeat" items="{{siblingdetailsarr}}" as="item">
+            <div class="col-sm-6 enquiry-input">
+              <div class="lbl"><label>Parent Name</label></div>
+              <h5>{{item.parent_name}}</h5>
+            </div>
+            <div class="col-sm-6 enquiry-input">
+              <div class="lbl"><label>Grade</label></div>
+              <h5>{{item.class}} - {{item.section}}</h5>
+            </div>
+          </template>
         </div>
-        <div class="col-sm-6" id="sibdetail">
-          <paper-input  label="Grade of sibling" value="{{siblingdetails}}"></paper-input>
-        </div>
-        <div class="col-sm-6" id="referrer">
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-4" id="referrer">
           <paper-input  error-message="needs referrer!" label="Enter referrer name.." is="" value="{{referrername}}" on-keydown="FnInputChangedz"></paper-input>
           <paper-listbox class="dropdown-content" id="iditemlistz" on-iron-select="Fnselectedz" valueattr="value">
             <template is="dom-repeat" items="{{itemArrayz}}" as="item">
@@ -253,6 +263,20 @@
             </template>
           </paper-listbox>
         </div> 
+        <div class="col-sm-8" id="referraldetail">
+          <template is="dom-repeat" items="{{referraldetailsarr}}" as="item">
+            <div class="col-sm-6 enquiry-input">
+              <div class="lbl"><label>Student Name</label></div>
+              <h5>{{item.student_name}}</h5>
+            </div>
+            <div class="col-sm-6 enquiry-input">
+              <div class="lbl"><label>Grade</label></div>
+              <h5>{{item.class}} - {{item.section}}</h5>
+            </div>
+          </template>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">  
         <div class="col-sm-4">
           <paper-dropdown-menu label="Attended By" style="margin-top: 3%;">
             <paper-menu class="dropdown-content" on-iron-select="attendedby" id="idrmnames">
@@ -348,7 +372,6 @@
       this.$.preapps.getmothertongue();
       this.$.preapps.getprofession();
       this.$.sibname.hidden=true;
-      this.$.sibdetail.hidden=true;
       this.$.referrer.hidden=true;
       this.hideoccupation = true;
       this.dadoccupation = true;
@@ -543,17 +566,14 @@
       enquiysource=(e.target.selectedItem.textContent).trim();
       if(enquiysource=="Siblings"){
         this.$.sibname.hidden=false;
-        this.$.sibdetail.hidden=false;
         this.$.referrer.hidden=true;
         this.$.preapps.getreferrername();
       } else if(enquiysource=="Referrer") {
         this.$.referrer.hidden=false;
         this.$.sibname.hidden=true;
-        this.$.sibdetail.hidden=true;
         this.$.preapps.getreferrername();
       } else {
         this.$.sibname.hidden=true;
-        this.$.sibdetail.hidden=true;
         this.$.referrer.hidden=true;
       }
     },
@@ -889,10 +909,10 @@
       }
     },
     getsiblingdetails(siblingid){
-      alert(siblingid);
+      this.$.preapps.siblingdetails(siblingid);
     },
     getreferraldetails(referralstudentid){
-      alert(referralstudentid);
+      this.$.preapps.referraldetails(referralstudentid);
     },
     complete:function(){
       if(paga=="guardian"){
@@ -1056,7 +1076,6 @@
       this.motheroccupation = true;
       this.guardianinfo=true;
       this.$.sibname.hidden=true;
-      this.$.sibdetail.hidden=true;
       this.$.referrer.hidden=true;
       this.guardianoccupation = true;
       this.guardianworkinfo = true;

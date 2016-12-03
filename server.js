@@ -4250,7 +4250,40 @@ app.post('/getprofession',  urlencodedParser,function (req, res){
 });
 app.post('/getstudentsinlocation',  urlencodedParser,function (req, res){
   var qur = "SELECT COUNT(*)as total_students FROM student_point WHERE school_id = '"+req.query.schol+"' AND pickup_point = (SELECT id FROM point WHERE point_name ='"+req.query.point_name+"' and school_id = '"+req.query.schol+"' AND trip = '"+req.query.trip+"' )";
-  console.log(qur);
+  connection.query(qur,
+    function(err, rows){
+      if(!err){
+        if(rows.length>0){
+          res.status(200).json({'returnval': rows});
+        } else {
+          console.log(err);
+          res.status(200).json({'returnval':null});
+        }
+      } else {
+        console.log(err);
+      }
+    });
+});
+
+app.post('/siblingdetails',  urlencodedParser,function (req, res){
+  var qur = "SELECT p.parent_name, (SELECT class FROM class_details WHERE id = s.class_id AND school_id = '"+req.query.schol+"') as class, (SELECT section FROM class_details WHERE id = s.class_id AND school_id = '"+req.query.schol+"') as section FROM student_details s JOIN parent p ON s.id = p.student_id WHERE s.school_id = '"+req.query.schol+"' AND s.id = '"+req.query.student_id+"'";
+  connection.query(qur,
+    function(err, rows){
+      if(!err){
+        if(rows.length>0){
+          res.status(200).json({'returnval': rows});
+        } else {
+          console.log(err);
+          res.status(200).json({'returnval':null});
+        }
+      } else {
+        console.log(err);
+      }
+    });
+});
+
+app.post('/referraldetails',  urlencodedParser,function (req, res){
+  var qur = "SELECT student_name, (SELECT class FROM class_details WHERE id = class_id AND school_id = '"+req.query.schol+"') as class, (SELECT section FROM class_details WHERE id = class_id AND school_id = '"+req.query.schol+"') as section FROM student_details WHERE school_id = '"+req.query.schol+"' AND id = '"+req.query.student_id+"'";
   connection.query(qur,
     function(err, rows){
       if(!err){

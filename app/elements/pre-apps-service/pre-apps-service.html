@@ -163,6 +163,28 @@
         debounce-duration="300"
         >
   </iron-ajax>
+  <iron-ajax
+        method="post"
+        id="siblingdetailsajax"
+        url="{{siblingdetailsurl}}"
+        params="{{siblingdetailsparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="siblingdetailsResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <iron-ajax
+        method="post"
+        id="referraldetailsajax"
+        url="{{referraldetailsurl}}"
+        params="{{referraldetailsparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="referraldetailsResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
   </template>
   <script>
   (function() {
@@ -416,7 +438,31 @@
       getstudentsinlocationResponse:function(e){
         var result = e.detail.response.returnval[0].total_students;
         document.querySelector('pre-apps').opentotalstudentdialog(result);
-      }
+      },
+      siblingdetails:function(id){
+        this.siblingdetailsurl=sessionStorage.getItem("addrinfo")+"/siblingdetails";
+        var obj={"schol":"", "student_id":""};
+        obj.student_id = id;
+        obj.schol=localStorage.getItem("schoolid");
+        this.siblingdetailsparam=obj;
+        this.$.siblingdetailsajax.generateRequest();
+      },
+      siblingdetailsResponse:function(e){
+        var result=e.detail.response.returnval;
+        document.querySelector('pre-apps').siblingdetailsarr=result;
+      },
+      referraldetails:function(id){
+        this.referraldetailsurl=sessionStorage.getItem("addrinfo")+"/referraldetails";
+        var obj={"schol":"", "student_id":""};
+        obj.schol=localStorage.getItem("schoolid");
+        obj.student_id = id;
+        this.referraldetailsparam=obj;
+        this.$.referraldetailsajax.generateRequest();
+      },
+      referraldetailsResponse:function(e){
+        var result=e.detail.response.returnval;
+        document.querySelector('pre-apps').referraldetailsarr=result;
+      },
     });
   })();
   </script>
