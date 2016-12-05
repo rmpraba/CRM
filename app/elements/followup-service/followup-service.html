@@ -368,6 +368,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         debounce-duration="300"
         >
   </iron-ajax>
+
+   <iron-ajax
+        method="post"
+        id="scheduledatesajax"
+        url="{{scheduledatesurl}}"
+        params="{{scheduledatesparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="scheduledatesResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
   </template>
   <script>
   (function() {
@@ -766,14 +778,15 @@ newdate.setDate(newdate.getDate()+resultarr[0].no_of_days);
         obj.fid=followypid;
         obj.flag=schedule;
         this.getlistdetailsparam=obj;
-       alert(JSON.stringify(obj));
+       //alert(JSON.stringify(obj));
         this.$.getlistdetailsajax.generateRequest();
 
       },
       getlistdetailsResponse:function(e){
         var resultarrS=[];
+        var datearr=[];
         var result=e.detail.response.returnval;
-         alert(JSON.stringify(e.detail.response.returnval));
+         //alert(JSON.stringify(e.detail.response.returnval));
          
          for(var i=0;i<result.length;i++){
           var sche=new Date(result[i].schedule_date);
@@ -795,10 +808,23 @@ newdate.setDate(newdate.getDate()+resultarr[0].no_of_days);
             obj.followup_status=result[i].followup_status;
             resultarrS.push(obj);
          }
-         alert(JSON.stringify(resultarrS));
+         //alert(JSON.stringify(resultarrS));
         document.querySelector('followup-student-detail').followupdetailarr=resultarrS;
         //document.querySelector('followup-student-detail').Fncheck();
 
+
+        this.scheduledatesurl=sessionStorage.getItem("addrinfo")+"/scheduledates";
+        var obj2={"schol":"","folowid":""};
+        obj2.schol=localStorage.getItem("schoolid");
+        obj2.folowid=result[0].schedule_id;
+        this.scheduledatesparam=obj2;
+        this.$.scheduledatesajax.generateRequest();
+  
+
+      },
+      scheduledatesResponse:function(e){
+          var restultarrz=e.detail.response.returnval;
+          document.querySelector('followup-listitem-card').fndatez(restultarrz);
       },
       updatefolowup:function(fnfid,fnscheduledate,fnfollowupno,fncurrentdate,fnnextdate,fncomments,fncallstatus,fnconfidencelvl){
         upconfidencelvl=fnconfidencelvl;

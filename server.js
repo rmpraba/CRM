@@ -4265,6 +4265,33 @@ app.post('/getstudentsinlocation',  urlencodedParser,function (req, res){
       }
     });
 });
+
+
+ app.post('/scheduledates',  urlencodedParser,function (req, res){
+   connection.query("SELECT schedule_date FROM followupdetail WHERE `school_id` =  '"+req.query.schol+"' and schedule_id='"+req.query.folowid+"'",
+     function(err, rows)
+     {
+       if(!err)
+       {
+         if(rows.length>0)
+         {
+          console.log(rows);
+           res.status(200).json({'returnval': rows});
+         }
+         else
+         {
+           console.log(err);
+           res.status(200).json({'returnval':null});
+         }
+       }
+       else{
+         console.log(err);
+       }
+     });
+ });
+
+
+
 function setvalue(){
   console.log("calling setvalue.....");
 }

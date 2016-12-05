@@ -17,7 +17,7 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
         display: block;
       }
       #dialog2{
-            margin-left: -25%;
+            margin-left: -50%;
                 top: 30%;
       }
       #dialog3{
@@ -51,7 +51,7 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
        
           <div class="col-sm-12">
           <!-- <followup-datepicker-card id="dates" showdate="{{nextdate}}"></followup-datepicker-card> -->
-          <paper-input id="dates" label="Date" error-message="needs next followup date!" required value="{{nextdate}}"></paper-input>
+          <paper-input id="dates" label="Date" error-message="needs next followup date!" readonly required value="{{nextdate}}"></paper-input>
           <div id="reschedule" style=" padding-top: 16%; padding-left: 33%;  margin-left: -28%;">
           <paper-button  class="buttons" on-click="Rescheduling" >Reschedule</paper-button></div>
           </div>
@@ -127,7 +127,7 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
         </div>
       </paper-dialog>
       
-     
+     <div hidden>{{scheduledate}}</div>
       <followup-service id="followupservice"></followup-service>
   </template>
   <script>
@@ -138,6 +138,8 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
     var vnextdate;
     var currentdate;
     var callpickstatus;
+    var checkdates=[];
+    var flwno;
 
     Polymer({
       is: 'followup-listitem-card',
@@ -145,8 +147,7 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
       ready:function(){
         confidencelvl="TBD";
         currentdate=sessionStorage.getItem("todaydate");
-        
-        //this.$.confidencelabel.hidden=false;
+
         //this.$.followdrop.hidden=false;
         
         /*if(this.comments!=""||this.comments!=null){
@@ -216,6 +217,7 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
       yescallstatusHandler:function(){
         if(document.getElementById('callyes'+this.followupno).checked==true){
           callstatus="Yes";
+           flwno=this.followupno;
           //alert(callstatus);
           //this.$.followdisk.disabled=false;
           document.getElementById('callno'+this.followupno).checked=false;
@@ -229,6 +231,7 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
       nocallstatusHandler:function(){
           if(document.getElementById('callno'+this.followupno).checked==true){
           callstatus="No";
+           flwno=this.followupno;
           //alert(callstatus);
           //this.$.followdisk.disabled=false;
           document.getElementById('callyes'+this.followupno).checked=false;
@@ -246,10 +249,45 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
         alert('You are allowed to select only future date..!');
         vnextdate=null;
       },
+      fndatez:function(datesxas){
+        checkdates=datesxas;
+      },
       getdate:function(nextdatez){
         vnextdate=nextdatez;
         this.nextdate=nextdatez;
         //alert(vnextdate);
+          //alert(checkdates);
+        //this.$.confidencelabel.hidden=false
+          for(var j=0;j<checkdates.length;j++){
+            var asdf=checkdates[j].schedule_date;
+           // alert(JSON.stringify(asdf));
+          }
+          var fno=parseInt(flwno)-1;
+          alert(flwno+'    '+fno);
+        var dtarr=[];
+        var dt=new Date(vnextdate);
+        var ltdat=new Date(asdf);
+        //alert(ltdat);
+        if(dt<ltdat){
+            alert('the date is lessr than last date');
+            for(var l=fno;l<checkdates.length;l++){
+              var ckdt1=new Date(vnextdate);
+              var ckdt2=new Date(checkdates[l].schedule_date);
+              var res=ckdt1-ckdt2;
+              alert(ckdt1+'    '+ckdt2+'   '+res);
+
+              if(res<0){
+                  alert('Insert a new row');
+              }
+              else if(res>0){
+                alert('Deactivate the corresponding dates and insert new row');
+              }
+
+            }
+        }
+        else if(dt>ltdat){
+            alert('the date is greatr than last date');
+        }
       },
       FollowUp:function(){
         if(this.value==""||vnextdate==null||confidencelvl==null){
@@ -322,6 +360,7 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
          document.getElementById('callno'+this.followupno).checked=false;
           this.$.dialog3.close();
       }
+      
     });
   })();
   </script>
