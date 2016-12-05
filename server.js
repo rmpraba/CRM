@@ -2731,7 +2731,7 @@ app.post('/updatefollowdetail',  urlencodedParser,function (req, res)
 app.post('/getparentname',  urlencodedParser,function (req, res){
     var qur={"school_id":req.query.schol};
     //console.log('qur');
-    connection.query('SELECT parent_name FROM `parent` WHERE ?',[qur],
+    connection.query('SELECT parent_name, student_id FROM `parent` WHERE ?',[qur],
     function(err, rows)
     {
     if(!err)
@@ -2759,7 +2759,7 @@ app.post('/getparentname',  urlencodedParser,function (req, res){
 app.post('/getstudentnamelist',  urlencodedParser,function (req, res){
     var qur={"school_id":req.query.schol};
   //  console.log('qur');
-    connection.query('SELECT student_name FROM `student_details` WHERE ?',[qur],
+    connection.query('SELECT id, student_name FROM `student_details` WHERE ?',[qur],
     function(err, rows)
     {
     if(!err)
@@ -4209,8 +4209,6 @@ app.post('/submitenqdetails',  urlencodedParser,function (req, res){
       father_email:req.query.email,
       mother_email:req.query.motheremail,
       mother_tongue:req.query.mothertonguelanguage,
-      sibiling_name:req.query.siblingname,
-      sibling_detail:req.query.siblingdetails,
       enquiry_name:req.query.enquiryname,
       status:req.query.status,
       guardian_mail:req.query.guardianemail,
@@ -4222,7 +4220,6 @@ app.post('/submitenqdetails',  urlencodedParser,function (req, res){
       guardian_occup:req.query.guardianoccupationinfo,
       parent_or_guardian_work:req.query.parent_or_guardian_work
     };
-    console.log(response);
     connection.query('INSERT INTO student_enquiry_details SET ?',[response],function(err, rows){
       if(!err)
       res.status(200).json({'returnval': 'inserted'});
@@ -4250,7 +4247,6 @@ app.post('/getprofession',  urlencodedParser,function (req, res){
 });
 app.post('/getstudentsinlocation',  urlencodedParser,function (req, res){
   var qur = "SELECT COUNT(*)as total_students FROM student_point WHERE school_id = '"+req.query.schol+"' AND pickup_point = (SELECT id FROM point WHERE point_name ='"+req.query.point_name+"' and school_id = '"+req.query.schol+"' AND trip = '"+req.query.trip+"' )";
-  console.log(qur);
   connection.query(qur,
     function(err, rows){
       if(!err){
@@ -4289,6 +4285,64 @@ app.post('/getstudentsinlocation',  urlencodedParser,function (req, res){
        }
      });
  });
+
+
+
+app.post('/siblingdetails',  urlencodedParser,function (req, res){
+  var qur = "SELECT p.parent_name, (SELECT class FROM class_details WHERE id = s.class_id AND school_id = '"+req.query.schol+"') as class, (SELECT section FROM class_details WHERE id = s.class_id AND school_id = '"+req.query.schol+"') as section FROM student_details s JOIN parent p ON s.id = p.student_id WHERE s.school_id = '"+req.query.schol+"' AND s.id = '"+req.query.student_id+"'";
+  connection.query(qur,
+    function(err, rows){
+      if(!err){
+        if(rows.length>0){
+          res.status(200).json({'returnval': rows});
+        } else {
+          console.log(err);
+          res.status(200).json({'returnval':null});
+        }
+      } else {
+        console.log(err);
+      }
+    });
+});
+
+app.post('/referraldetails',  urlencodedParser,function (req, res){
+  var qur = "SELECT student_name, (SELECT class FROM class_details WHERE id = class_id AND school_id = '"+req.query.schol+"') as class, (SELECT section FROM class_details WHERE id = class_id AND school_id = '"+req.query.schol+"') as section FROM student_details WHERE school_id = '"+req.query.schol+"' AND id = '"+req.query.student_id+"'";
+  connection.query(qur,
+    function(err, rows){
+      if(!err){
+        if(rows.length>0){
+          res.status(200).json({'returnval': rows});
+        } else {
+          console.log(err);
+          res.status(200).json({'returnval':null});
+        }
+      } else {
+        console.log(err);
+      }
+    });
+});
+
+app.post('/savereferraldata',  urlencodedParser,function (req, res){
+    var response={
+      school_id:req.query.schol,
+      enquiry_no:req.query.enquiry_no,
+      referred_student_name:req.query.studentname,
+      referred_parent_name:req.query.parentname,
+      referred_student_grade:req.query.grade,
+      school_id:req.query.section,
+      referral_type:req.query.referral_type
+    };
+    connection.query('INSERT INTO tr_referrals SET ?',[response],function(err, rows){
+      if(!err)
+      res.status(200).json({'returnval': 'Inserted'});
+      else{
+      console.log(err);
+      res.status(200).json({'returnval': 'not inserted'});
+    }
+    });
+
+});
+
 
 
 

@@ -163,6 +163,39 @@
         debounce-duration="300"
         >
   </iron-ajax>
+  <iron-ajax
+        method="post"
+        id="siblingdetailsajax"
+        url="{{siblingdetailsurl}}"
+        params="{{siblingdetailsparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="siblingdetailsResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <iron-ajax
+        method="post"
+        id="referraldetailsajax"
+        url="{{referraldetailsurl}}"
+        params="{{referraldetailsparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="referraldetailsResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <iron-ajax
+        method="post"
+        id="savereferraldataajax"
+        url="{{savereferraldataurl}}"
+        params="{{savereferraldataparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="savereferraldataResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
   </template>
   <script>
   (function() {
@@ -173,6 +206,7 @@
     var parentarr=[];
     var studentarr=[];
     var namelistarr=[];
+    var sibnamelistarr = [];
     var seqno;
 
     Polymer({
@@ -251,10 +285,13 @@
       getparentnameResponse:function(e){
         parentarr=e.detail.response.returnval;
         for(var i=0;i<parentarr.length;i++){
-          var obj={"listname":""}
+          var obj={"listname":""};
           obj.listname=parentarr[i].parent_name;
+          obj.listid = parentarr[i].student_id;
           namelistarr.push(obj);
         }
+        document.querySelector('pre-apps').Fnlistboxz(namelistarr);
+
         this.getstudentnameurl=sessionStorage.getItem("addrinfo")+"/getstudentnamelist";
         var obj={"schol":""}
         obj.schol=localStorage.getItem("schoolid");
@@ -264,11 +301,12 @@
       getstudentnameResponse:function(e){
         studentarr=e.detail.response.returnval;
         for(var i=0;i<studentarr.length;i++){
-          var obj={"listname":""}
-          obj.listname=studentarr[i].student_name;
-          namelistarr.push(obj);
+          var obj={"siblistname":""};
+          obj.siblistname=studentarr[i].student_name;
+          obj.siblistid=studentarr[i].id;
+          sibnamelistarr.push(obj);
         }
-        document.querySelector('pre-apps').Fnlistboxz(namelistarr);
+        document.querySelector('pre-apps').SibFnlistboxz(sibnamelistarr);
       },
       getcounsellorattendedby:function(){
         this.getcounsellorattendedbyurl=sessionStorage.getItem("addrinfo")+"/getcounsellorattendedby";
@@ -317,9 +355,9 @@
         var result=e.detail.response.returnval;
         document.querySelector('pre-apps').professionarr=result;
       },
-      submitenqdetails:function(todate,enrolltype,academicyear,grade,firstname,middlename,lastname,gender,havesibling,ageofyr,dobdate,mothertonguelanguage,fathername,mothername,mob,mothermob,email,motheremail,guardianname,guardianmobile,guardianemail,dadoccupationinfo,motheroccupationinfo,textvalue,enquiysource,attenedcounsellorname,siblingname,siblingdetails,referrername,enqno,guardianoccupationinfo,parent_or_guardian_work){
+      submitenqdetails:function(todate,enrolltype,academicyear,grade,firstname,middlename,lastname,gender,havesibling,ageofyr,dobdate,mothertonguelanguage,fathername,mothername,mob,mothermob,email,motheremail,guardianname,guardianmobile,guardianemail,dadoccupationinfo,motheroccupationinfo,textvalue,enquiysource,attenedcounsellorname,enqno,guardianoccupationinfo,parent_or_guardian_work){
         this.submitenqdetailsurl=sessionStorage.getItem("addrinfo")+"/submitenqdetails";
-        var obj={"schol":"","createdon":"","enrolltype":"","academicyear":"","grade":"","firstname":"","middlename":"","lastname":"","gender":"","havesibling":"","ageofyr":"","dobdate":"","mothertonguelanguage":"","fathername":"","mothername":"","mob":"","mothermob":"","email":"","motheremail":"","guardianname":"","guardianmobile":"","guardianemail":"","dadoccupationinfo":"","motheroccupationinfo":"","location":"","enquiysource":"","attenedcounsellorname":"","siblingname":"","siblingdetails":"","referrername":"","status":"","enquiryname":"","enquiry_no":"","parent_or_guardian_work":"","guardianoccupationinfo":""};
+        var obj={"schol":"","createdon":"","enrolltype":"","academicyear":"","grade":"","firstname":"","middlename":"","lastname":"","gender":"","havesibling":"","ageofyr":"","dobdate":"","mothertonguelanguage":"","fathername":"","mothername":"","mob":"","mothermob":"","email":"","motheremail":"","guardianname":"","guardianmobile":"","guardianemail":"","dadoccupationinfo":"","motheroccupationinfo":"","location":"","enquiysource":"","attenedcounsellorname":"","status":"","enquiryname":"","enquiry_no":"","parent_or_guardian_work":"","guardianoccupationinfo":""};
         obj.schol=localStorage.getItem("schoolid");
         obj.createdon = todate;
         obj.enrolltype = enrolltype;
@@ -347,9 +385,6 @@
         obj.location = textvalue;
         obj.enquiysource = enquiysource;
         obj.attenedcounsellorname = attenedcounsellorname;
-        obj.siblingname =siblingname;
-        obj.siblingdetails = siblingdetails;
-        obj.referrername =referrername;
         obj.enquiryname = firstname + middlename +lastname;
         obj.status = "open";
         obj.enquiry_no = enqno;
@@ -411,7 +446,55 @@
       getstudentsinlocationResponse:function(e){
         var result = e.detail.response.returnval[0].total_students;
         document.querySelector('pre-apps').opentotalstudentdialog(result);
-      }
+      },
+      siblingdetails:function(id){
+        this.siblingdetailsurl=sessionStorage.getItem("addrinfo")+"/siblingdetails";
+        var obj={"schol":"", "student_id":""};
+        obj.student_id = id;
+        obj.schol=localStorage.getItem("schoolid");
+        this.siblingdetailsparam=obj;
+        this.$.siblingdetailsajax.generateRequest();
+      },
+      siblingdetailsResponse:function(e){
+        var result=e.detail.response.returnval;
+        var parent = e.detail.response.returnval[0].parent_name;
+        var grade =  e.detail.response.returnval[0].class;
+        var section = e.detail.response.returnval[0].section;
+        document.querySelector('pre-apps').siblingdetailsarr=result;
+        document.querySelector('pre-apps').Fnselectedsiblingdetail(parent,grade,section);
+      },
+      referraldetails:function(id){
+        this.referraldetailsurl=sessionStorage.getItem("addrinfo")+"/referraldetails";
+        var obj={"schol":"", "student_id":""};
+        obj.schol=localStorage.getItem("schoolid");
+        obj.student_id = id;
+        this.referraldetailsparam=obj;
+        this.$.referraldetailsajax.generateRequest();
+      },
+      referraldetailsResponse:function(e){
+        var result=e.detail.response.returnval;
+        var student = e.detail.response.returnval[0].student_name;
+        var grade =  e.detail.response.returnval[0].class;
+        var section = e.detail.response.returnval[0].section;
+        document.querySelector('pre-apps').referraldetailsarr=result;
+        document.querySelector('pre-apps').Fnselectedreferraldetail(student,grade,section);
+      },
+      savereferraldata:function(enqno, studentname, parentname, grade, section, type){
+        this.savereferraldataurl=sessionStorage.getItem("addrinfo")+"/savereferraldata";
+        var obj={"schol":"", "enquiry_no":"", "studentname":"","parentname":"","grade":"","section":"","referral_type":""};
+        obj.schol=localStorage.getItem("schoolid");
+        obj.enquiry_no = enqno;
+        obj.studentname = studentname;
+        obj.parentname = parentname;
+        obj.grade = grade;
+        obj.section = section;
+        obj.referral_type = type;
+        this.savereferraldataparam=obj;
+        this.$.savereferraldataajax.generateRequest();
+      },
+      savereferraldataResponse:function(e){
+        var result=e.detail.response.returnval;
+      },
     });
   })();
   </script>
