@@ -376,7 +376,7 @@
       this.referral = true;
       professionanyoneselected = "";
       var dt=new Date();
-      todaydat=dt.getDate()+"/"+(dt.getMonth()+1)+"/"+dt.getFullYear();
+      todaydat=sessionStorage.getItem("todaydate")
       sessionStorage.setItem("todaydate",todaydat);
       this.todaydate=todaydat;
       currentdate=dt.getFullYear()+"-"+(dt.getMonth()+1)+"-"+dt.getDate();

@@ -64,7 +64,7 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
           <div id="notcompleted">Still not completed</div></td>
         </tr>
         </tbody>
-        <div hidden>{{callstatus}}/{{confidencelvl}}/{{followupno}}/{{fid}}/{{nextdate}}</div>
+        <div hidden>{{callstatus}}/{{confidencelvl}}/{{followupno}}/{{fid}}/{{nextdate}}/{{scheid}}</div>
       </table>
       </div>
        <paper-dialog id="dialog1" class="paper-date-picker-dialog">
@@ -139,7 +139,10 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
     var currentdate;
     var callpickstatus;
     var checkdates=[];
-    var flwno;
+    var folwno;
+    var ckdt1;
+    var ckdt2;
+    var sum;
 
     Polymer({
       is: 'followup-listitem-card',
@@ -160,7 +163,6 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
         else{
           this.$.followbox.hidden=true;
         }*/
-
         //vnextdate=this.nextdate;
         
         if(this.callstatus=="Yes"){
@@ -253,41 +255,62 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
         checkdates=datesxas;
       },
       getdate:function(nextdatez){
-        vnextdate=nextdatez;
+        vnextdate=new Date(nextdatez);
         this.nextdate=nextdatez;
         //alert(vnextdate);
           //alert(checkdates);
         //this.$.confidencelabel.hidden=false
           for(var j=0;j<checkdates.length;j++){
-            var asdf=checkdates[j].schedule_date;
+           
+            var et=checkdates[j].schedule_date;
+            var  asdf=new Date(et);
+             asdf.setTime(asdf.getTime() +(asdf.getTimezoneOffset()+330)*60*1000);
            // alert(JSON.stringify(asdf));
           }
           var fno=parseInt(flwno)-1;
-          alert(flwno+'    '+fno);
-        var dtarr=[];
-        var dt=new Date(vnextdate);
-        var ltdat=new Date(asdf);
-        //alert(ltdat);
-        if(dt<ltdat){
-            alert('the date is lessr than last date');
-            for(var l=fno;l<checkdates.length;l++){
-              var ckdt1=new Date(vnextdate);
-              var ckdt2=new Date(checkdates[l].schedule_date);
-              var res=ckdt1-ckdt2;
-              alert(ckdt1+'    '+ckdt2+'   '+res);
+          //alert(flwno+'    '+fno);
+        var flag=0;
+        var flag2=0;
+        var dt=new Date(vnextdate.getFullYear()+'-'+(vnextdate.getMonth()+1)+'-'+vnextdate.getDate());
+        var ltdat=new Date(asdf.getFullYear()+'-'+(asdf.getMonth()+1)+'-'+asdf.getDate());
+         dt.setTime(dt.getTime() +(dt.getTimezoneOffset()+330)*60*1000);
+          ltdat.setTime(ltdat.getTime() +(ltdat.getTimezoneOffset()+330)*60*1000);
+        //alert(dt+'    '+ltdat+'    '+this.sno);
+            if(dt<ltdat){
+                    //alert('the date is lessr than last date');
+                    for(var l=flwno;l<checkdates.length;l++){
+              ckdt1=new Date(vnextdate.getFullYear()+'-'+(vnextdate.getMonth()+1)+'-'+vnextdate.getDate());
+                      var et2=checkdates[l].schedule_date;
+                      var temp=new Date(et2);
+            ckdt2=new Date(temp.getFullYear()+'-'+(temp.getMonth()+1)+'-'+temp.getDate());
+                      ckdt1.setTime(ckdt1.getTime() +(ckdt1.getTimezoneOffset()+330)*60*1000);
+                      ckdt2.setTime(ckdt2.getTime() +(ckdt2.getTimezoneOffset()+330)*60*1000);
+                      var res=ckdt1-ckdt2;
+                      //alert(ckdt1+'    '+ckdt2+'   '+res);
 
-              if(res<0){
-                  alert('Insert a new row');
-              }
-              else if(res>0){
-                alert('Deactivate the corresponding dates and insert new row');
-              }
+                      if((res<0)&&(flag==0)&&(flag2==0)){
+                        flag=1;
+                          //alert('Insert a new row');
+                          sum=parseInt(checkdates.length)+1;
+                          //alert(sum+'   '+this.scheid+'   '+this.fid+'   '+ckdt1+'   '+ckdt2);
+                          this.$.followupservice.insertnewfollowup(sum,this.scheid,this.fid,ckdt1,ckdt2);
+                      }
+                      else if((res>0)&&(flag2==0)){
+                        folwno=(parseInt(l)+1);
+                        //alert('Deactivate the corresponding dates and insert new row');
+                        //alert(this.scheid+'   '+this.fid+'  '+folwno+'   '+ckdt2);
+                        this.$.followupservice.deactivatefollowup(this.scheid,this.fid,folwno,ckdt2);
+                      }
+                      else if(res==0){
 
+                          flag2=1;
+                      }
+
+                    }
             }
-        }
-        else if(dt>ltdat){
-            alert('the date is greatr than last date');
-        }
+            else if(dt>ltdat){
+                alert('the date is greatr than last date');
+            }
       },
       FollowUp:function(){
         if(this.value==""||vnextdate==null||confidencelvl==null){
@@ -302,7 +325,7 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
           }
         }
         else{
-          alert(this.fid+this.scheduledate+this.followupno+currentdate+vnextdate+this.value+callstatus+confidencelvl);
+          //alert(this.fid+this.scheduledate+this.followupno+currentdate+vnextdate+this.value+callstatus+confidencelvl);
             this.$.followupservice.updatefolowup(this.fid,this.scheduledate,this.followupno,currentdate,vnextdate,this.value,callstatus,confidencelvl);  
             this.$.dialog2.close();
              this.$.dialog3.close();

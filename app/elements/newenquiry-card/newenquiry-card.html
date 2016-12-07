@@ -301,12 +301,11 @@ ready:function () {
         this.$.sibname.hidden=true;
           this.$.sibdetail.hidden=true;
           this.$.referrer.hidden=true;
-        var dt=new Date();
-        todaydat=dt.getDate()+"/"+(dt.getMonth()+1)+"/"+dt.getFullYear();
-        sessionStorage.setItem("todaydate",todaydat);
-        this.todaydate=todaydat;
+       
+        
+        this.todaydate=sessionStorage.getItem("todaydate");
         this.$.itemlist.hidden=true;
-        this.showdate=(dt.getMonth()+1)+"/"+dt.getDate()+"/"+dt.getFullYear();
+        this.showdate=sessionStorage.getItem("todaydate");
       },
       fnxyz:function(){
         this.getclasses();

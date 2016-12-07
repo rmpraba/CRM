@@ -2856,7 +2856,7 @@ app.post('/getfollowupcount',  urlencodedParser,function (req, res){
      {
        if(!err)
        {
-         console.log(rows);
+         //console.log(rows);
          res.status(200).json({'returnval': rows});
        }
        else
@@ -3436,7 +3436,7 @@ app.post('/getlistdetails',  urlencodedParser,function (req, res){
     var school={"school_id":req.query.schol};
     var flwpid={"schedule_id":req.query.fid};
     var scheduleno={"schedule":req.query.flag};
-    var qur="SELECT * FROM followupdetail WHERE school_id='"+req.query.schol+"' and schedule_id='"+req.query.fid+"' and schedule='"+req.query.flag+"' ORDER BY (schedule_date)";
+    var qur="SELECT * FROM followupdetail WHERE school_id='"+req.query.schol+"' and schedule_id='"+req.query.fid+"' and schedule='"+req.query.flag+"' and followup_status!='Cancelled' ORDER BY(schedule_date)";
   //  console.log('qur');
 
     connection.query(qur,
@@ -3688,7 +3688,7 @@ app.post('/updateschedulestatus',  urlencodedParser,function (req, res)
 
 /*this fucntion fetches the all corresponding detail of the current followup*/
 app.post('/fetchfollowupmaster',  urlencodedParser,function (req, res){
-   var qur = "SELECT * FROM mlzscrm.followup where school_id='"+req.query.schol+"' and id='"+req.query.fid+"' and enquiry_id='"+req.query.enquiry+"'";
+   var qur = "SELECT * FROM mlzscrm.followup where school_id='"+req.query.schol+"' and id='"+req.query.fid+"'";
  //  console.log(qur);
    connection.query(qur,
      function(err, rows){
@@ -4267,14 +4267,14 @@ app.post('/getstudentsinlocation',  urlencodedParser,function (req, res){
 
 
  app.post('/scheduledates',  urlencodedParser,function (req, res){
-   connection.query("SELECT schedule_date FROM followupdetail WHERE `school_id` =  '"+req.query.schol+"' and schedule_id='"+req.query.folowid+"'",
+   connection.query("SELECT schedule_date FROM followupdetail WHERE `school_id` =  '"+req.query.schol+"' and schedule_id='"+req.query.folowid+"' and followup_status!='Cancelled' order by(schedule_date)",
      function(err, rows)
      {
        if(!err)
        {
          if(rows.length>0)
          {
-          console.log(rows);
+          //console.log(rows);
            res.status(200).json({'returnval': rows});
          }
          else
@@ -4343,6 +4343,80 @@ app.post('/savereferraldata',  urlencodedParser,function (req, res){
       res.status(200).json({'returnval': 'not inserted'});
     }
     });
+
+});
+
+
+
+app.post('/deleterowfollowup',  urlencodedParser,function (req, res)
+{
+   var collection={"followup_status":req.query.status,"created_on":req.query.today,"created_by":req.query.user};
+
+    var school={"school_id":req.query.schol};
+    var enquiry={"schedule_id":req.query.followupid};
+    var enquiry1={"schedule":req.query.scheduleid};
+    var enquiry2={"followup_no":req.query.followupnoz};
+
+       connection.query("update followupdetail set ? where ? and ? and ? and ? and followup_status!='Cancelled'",[collection,enquiry,school,enquiry2,enquiry1],
+    function(err, rows)
+    {
+    if(!err)
+    {
+        console.log('inserted');
+          res.status(200).json({'returnval': 'success'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+
+});
+  });
+
+
+app.post('/insertfollowuprow',  urlencodedParser,function (req, res){
+     connection.query("SELECT count(*) as total FROM followupdetail WHERE `school_id` =  '"+req.query.schoolid+"' and schedule_id='"+req.query.scheduleid+"'",
+     function(err, rows)
+     {
+       if(!err)
+       {
+         if(rows.length>0)
+         {
+          var l=rows.length;
+          var followupnoqwe=parseInt(rows[0].total)+1;
+          console.log((rows[0].total)+'   '+followupnoqwe);
+            var response={
+            school_id:req.query.schoolid,
+            schedule_id:req.query.scheduleid,
+            followup_no:followupnoqwe,
+            schedule_date:req.query.scheduledate,
+            confidence_level:req.query.confidencelevel,
+            created_by:req.query.createdby,
+            created_on:req.query.createdon,
+            next_followup_date:req.query.nextfollowupdate,
+            schedule:req.query.schedule,
+            followup_status:req.query.followupstatus
+          };
+                  connection.query('INSERT INTO followupdetail SET ?',[response],function(err, rows){
+                    if(!err)
+                      console.log('inserted');
+                    else{
+                    console.log(err);
+                  }
+                  });
+           res.status(200).json({'returnval': 'Inserted'});
+         }
+         else
+         {
+           console.log(err);
+           res.status(200).json({'returnval':'cancelled'});
+         }
+       }
+       else{
+         console.log(err);
+       }
+     });
 
 });
 

@@ -24,6 +24,10 @@
       is: 'login-card',
     ready:function(){
       this.$.login.addinfoconfig();
+      var dt=new Date();
+      dt.setTime(dt.getTime() +(dt.getTimezoneOffset()+330)*60*1000);
+      var today=dt.getFullYear()+'-'+(dt.getMonth()+1)+'-'+dt.getDate();
+      sessionStorage.setItem("todaydate",today);
     },
       login:function(){
         this.$.login.Fn_login_userlogin(this.username,this.password);

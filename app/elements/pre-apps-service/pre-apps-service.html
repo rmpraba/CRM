@@ -196,6 +196,9 @@
         debounce-duration="300"
         >
   </iron-ajax>
+
+
+      <followup-service id="followupservice"></followup-service>
   </template>
   <script>
   (function() {
@@ -208,6 +211,7 @@
     var namelistarr=[];
     var sibnamelistarr = [];
     var seqno;
+    var enquiryiddz,attendantname;
 
     Polymer({
       is: 'pre-apps-service',
@@ -392,6 +396,9 @@
         obj.parent_or_guardian_work = parent_or_guardian_work;
         this.submitenqdetailsparam=obj;
         this.$.submitenqdetailsajax.generateRequest();
+
+        enquiryiddz=enqno;
+        attendantname=attenedcounsellorname;
       },
       submitenqdetailsResponse:function(e){
         var result=e.detail.response.returnval;
@@ -430,6 +437,7 @@
         if(result == 'success'){
           alert('Submitted!');
           document.querySelector('pre-apps').FnClear();
+            this.$.followupservice.GenerateFollowups(enquiryiddz,attendantname);
         } else {
           alert('Form Submission intertupted!');
         }
