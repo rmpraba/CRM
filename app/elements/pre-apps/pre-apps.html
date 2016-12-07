@@ -1004,7 +1004,10 @@
             if( dadoccupationinfo ==null && motheroccupationinfo == null){
               alert("Select Parent's Profession");
             } else {
-              if(enquiysource=="Sibling" || enquiysource=="Referral"){
+              if(dadoccupationinfo ==null || motheroccupationinfo == null){
+                alert("Please Select working details for both the parents");
+              } else {
+                if(enquiysource=="Sibling" || enquiysource=="Referral"){
                     if(enquiysource=="Sibling"){
                       if(selectedsiblingparentname == ""|| selectedsiblingclass == "" || selectedsiblingsection == ""){
                         alert("Sibling Name Required");
@@ -1024,6 +1027,7 @@
                   } else {
                     this.getvalues();
                   }
+              }
             }
           } else {
             if(professionanyoneselected == false){
