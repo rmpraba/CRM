@@ -3234,7 +3234,7 @@ app.post('/updatetestdetails', urlencodedParser,function (req, res){
 
 /*this function is used to get the data count of the enquiry came up by that specific academic year*/
  app.post('/getcountyearwise',  urlencodedParser,function (req, res){
-   connection.query("SELECT class as classes, COUNT( * ) AS total,COUNT( prospectus_no ) AS prospectus FROM  student_enquiry_details WHERE `school_id` =  '"+req.query.schoolid+"' AND academic_year='"+req.query.academicyr+"' GROUP BY class ORDER BY (`class`)",
+   connection.query("SELECT class as classes, COUNT( * ) AS total FROM  student_enquiry_details WHERE `school_id` =  '"+req.query.schoolid+"' AND academic_year='"+req.query.academicyr+"' GROUP BY class ORDER BY (`class`)",
      function(err, rows)
      {
        if(!err)
