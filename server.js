@@ -3211,6 +3211,7 @@ app.post('/updatetestdetails', urlencodedParser,function (req, res){
 
  app.post('/walkinanalysisyear',  urlencodedParser,function (req, res){
    var qur = "SELECT count(*) as totalenq, enquiry_source FROM `student_enquiry_details` WHERE created_on like'"+req.query.current_year+"' and school_id = '"+req.query.schol+"' GROUP BY enquiry_source";
+
    connection.query(qur,
      function(err, rows)
      {
@@ -3258,8 +3259,8 @@ app.post('/updatetestdetails', urlencodedParser,function (req, res){
 
  app.post('/walkinanalysismonth',  urlencodedParser,function (req, res){
    var qur = "SELECT count(*) as totalenq, enquiry_source FROM `student_enquiry_details` WHERE created_on like'"+req.query.current_year+"' and school_id = '"+req.query.schol+"' GROUP BY enquiry_source";
-   //console.log(qur);
-   connection.query(qur,
+    //console.log(qur);
+    connection.query(qur,
      function(err, rows)
      {
        if(!err)
@@ -3360,7 +3361,8 @@ app.post('/masterfollowupinfo',  urlencodedParser,function (req, res){
 });
 
  app.post('/walkinanalysisday',  urlencodedParser,function (req, res){
-   var qur = "SELECT count(*) as totalenq, enquiry_source FROM `student_enquiry_details` WHERE created_on like'"+req.query.current_year+"' and school_id = '"+req.query.schol+"' GROUP BY enquiry_source";
+   var qur = "SELECT count(*) as totalenq, enquiry_source FROM `student_enquiry_details` WHERE created_on = CURDATE() and school_id = '"+req.query.schol+"' GROUP BY enquiry_source";
+   console.log(qur);
    connection.query(qur,
      function(err, rows)
      {
@@ -3368,6 +3370,7 @@ app.post('/masterfollowupinfo',  urlencodedParser,function (req, res){
        {
          if(rows.length>0)
          {
+            console.log(rows);
            res.status(200).json({'returnval': rows});
          }
          else

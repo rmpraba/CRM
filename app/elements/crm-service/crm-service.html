@@ -462,9 +462,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var testenqid;
     var testdate;
     var rte_number;
-    var walkinanalysisyear={};
-    var walkinanalysismonth={};
-    var walkinanalysisday={};
+    var walkinanalysisyear=[];
+    var walkinanalysismonth=[];
+    var walkinanalysisday=[];
     var walkinanasysisyaerandmontharr=[];
     var walkinanasysisarr=[];
     var attenderusername;
@@ -1252,8 +1252,8 @@ attenderusername=attendername;
         var today = new Date();
         var mm = today.getMonth()+1; //January is 0!
         var yyyy = today.getFullYear();
-        var current_month = '%/'+mm+'/'+yyyy;
-        obj.current_year='%/%/'+yyyy;
+        var current_month = '%-'+mm+'-'+yyyy;
+        obj.current_year=yyyy+'-%';
         obj.current_month=current_month;
         this.walkinanalysisyearparam=obj;
         this.$.walkinanalysisyearajax.generateRequest();
@@ -1269,8 +1269,8 @@ attenderusername=attendername;
         var today = new Date();
         var mm = today.getMonth()+1; //January is 0!
         var yyyy = today.getFullYear();
-        var current_month = '%/'+mm+'/'+yyyy;
-        obj.current_year='%/%/'+yyyy;
+        var current_month = yyyy+'-'+mm+'-'+'%';
+        obj.current_year=yyyy+'-%-%';
         obj.current_month=current_month;
         this.walkinanalysismonthparam=obj;
         this.$.walkinanalysismonthajax.generateRequest();
@@ -1286,12 +1286,13 @@ attenderusername=attendername;
         var mm = today.getMonth()+1; //January is 0!
         var yyyy = today.getFullYear();
         var current_date =today.getDate();
-        obj.current_year= current_date+'/'+mm+'/'+yyyy;
+        obj.current_year= yyyy+'-'+mm+'-'+current_date;
         this.walkinanalysisdayparam=obj;
         this.$.walkinanalysisdayajax.generateRequest();
       },
       walkinanalysisdayResponse:function(e){
         walkinanalysisday=e.detail.response.returnval;
+        alert(JSON.stringify(walkinanalysisday));
         this.walkinanasysisyaerandmonth();
       },
       walkinanasysisyaerandmonth:function(){
@@ -1323,7 +1324,7 @@ attenderusername=attendername;
       walkinanalysis:function(){
         if(walkinanalysisday){
           for(var i = 0; i <walkinanasysisyaerandmontharr.length; i++){
-            var obj = {"source":"","year":"","month":"",day:""};
+            var obj = {"source":"","year":"","month":"","day":""};
             for(var j = 0; j <walkinanalysisday.length; j++){
               if(walkinanasysisyaerandmontharr[i].source == walkinanalysisday[j].enquiry_source){
                 if(walkinanalysisday[j].totalenq==null||walkinanalysisday[j].totalenq==""){
@@ -1333,7 +1334,7 @@ attenderusername=attendername;
                 }
               }
               else{
-                walkinanasysisyaerandmontharr[i].day=0;
+                walkinanasysisyaerandmontharr[i].day=walkinanalysisday[j].totalenq;
               }
             }
           }
@@ -1361,10 +1362,10 @@ attenderusername=attendername;
         obj.schol=localStorage.getItem("schoolid");
         var fromdate = new Date(from_date);
         var month1 = fromdate.getMonth() + 1;
-        obj.from_date =  month1+'/'+fromdate.getDate()+'/'+ fromdate.getFullYear();
+        obj.from_date = fromdate.getFullYear()+'-'+month1+'-'+fromdate.getDate();
         var todate = new Date(to_date);
         var month2 = todate.getMonth() + 1;
-        obj.to_date = month2+ '/'+todate.getDate() + '/' + todate.getFullYear();
+        obj.to_date = todate.getFullYear()+'-'+month2+'-'+todate.getDate();
         this.getbetweendatereportparam=obj;
         this.$.getbetweendatereportajax.generateRequest();
       },
