@@ -955,7 +955,26 @@
         } else if(guardianwork == null){
           alert("Select Guardian Work");
         } else {
-          this.getvalues();
+          if(enquiysource=="Sibling" || enquiysource=="Referral"){
+            if(enquiysource=="Sibling"){
+              if(selectedsiblingparentname == ""|| selectedsiblingclass == "" || selectedsiblingsection == ""){
+                alert("Sibling Name Required");
+              } else {
+                this.$.preapps.savereferraldata(this.enquiry_number,this.siblingname, selectedsiblingparentname, selectedsiblingclass, selectedsiblingsection,enquiysource);
+                this.getvalues();
+              }
+            }
+            if(enquiysource=="Referral"){
+              if(selectedreferralstudentname == "" || selectedreferralclass == "" || selectedsiblingsection == ""){
+                alert("Referral Name Required");
+              } else {
+                this.$.preapps.savereferraldata(this.enquiry_number,selectedreferralstudentname,this.referrername, selectedreferralclass, selectedreferralsection,enquiysource);
+                this.getvalues();
+              }  
+            }
+          } else {
+            this.getvalues();
+          }
         }
       } else if(paga=="parent") {
         if(this.todaydate == ""|| this.firstname==""||this.textvalue==""||this.academicyear==""  || this.ageofyr ==""){
