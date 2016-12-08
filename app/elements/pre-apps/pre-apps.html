@@ -863,6 +863,7 @@
       motheroccupationinfo = (e.target.selectedItem.textContent).trim();
     },
     getenquirynumber:function(){
+      this.$.preapps.getenquiryno();
       if(guardianwork == "yes"){
           parent_or_guardian_work = "guardian";
       } else {
@@ -876,7 +877,6 @@
           }
         }
       }
-      this.$.preapps.getenquiryno();
     },
     guardianworkyes:function(){
       this.guardianoccupation = false;
@@ -925,7 +925,7 @@
           this.$.today.validate();
           this.$.idfname.validate();
           this.$.idlocality.validate();
-          this.$.guardianname.validate();
+          this.$.Guardianname.validate();
           this.$.gmobile.validate();
           this.$.guardianemail.validate();
           this.$.idacyr.validate();
@@ -978,7 +978,6 @@
         }
       } else if(paga=="parent") {
         if(this.todaydate == ""|| this.firstname==""||this.textvalue==""||this.academicyear==""  || this.ageofyr ==""){
-          alert("1");
           this.$.today.validate();
           this.$.idfname.validate();
           this.$.idlocality.validate();
