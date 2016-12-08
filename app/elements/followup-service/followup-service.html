@@ -973,13 +973,15 @@ newdate.setDate(newdate.getDate()+resultarray[0].no_of_days);
         this.$.insertfollowupmasterajax.generateRequest();
               
         }
+
     },insertfollowupmasterResponse:function(e){
         if(e.detail.response.returnval=='success'){
               this.updatefollowdetailurl=sessionStorage.getItem("addrinfo")+"/updatefollowdetail";
       for(var j=0;j<(resultarray[0].no_of_schedules);j++){
-        var obj={"schol":"","id":"","followupno":"","followupdate":"","nextfolowup":"","schedule":"","flag":"","createdon":"","createdby":""}
+        var obj={"schol":"","id":"","enquiryid":"","followupno":"","followupdate":"","nextfolowup":"","schedule":"","flag":"","createdon":"","createdby":""}
           obj.schol=localStorage.getItem("schoolid");
           obj.id=generateid;
+          obj.enquiryid=enquiryidzz;
           obj.followupno=j+1;
           obj.followupdate=datesarr[j].dates.getFullYear()+'-'+(datesarr[j].dates.getMonth()+1)+'-'+datesarr[j].dates.getDate();
           if(j<(resultarray[0].no_of_schedules-1)){

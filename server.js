@@ -2709,7 +2709,7 @@ app.post('/updatefollow',  urlencodedParser,function (req, res) {
 /*this below function is used to insert data in the follow up detail table */
 app.post('/updatefollowdetail',  urlencodedParser,function (req, res)
 {
-   var collection={"school_id":req.query.schol,"schedule_id":req.query.id,"followup_no":req.query.followupno,"schedule_date":req.query.followupdate,"next_followup_date":req.query.nextfolowup,"schedule":req.query.schedule,"followup_status":req.query.flag,"created_by":req.query.createdby,"created_on":req.query.createdon};
+   var collection={"school_id":req.query.schol,"schedule_id":req.query.id,"enquiry_id":req.query.enquiryid,"followup_no":req.query.followupno,"schedule_date":req.query.followupdate,"next_followup_date":req.query.nextfolowup,"schedule":req.query.schedule,"followup_status":req.query.flag,"created_by":req.query.createdby,"created_on":req.query.createdon};
        connection.query('insert into followupdetail set ? ',[collection],
         function(err, rows)
         {
