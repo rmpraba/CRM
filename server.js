@@ -2820,18 +2820,18 @@ app.post('/getfollowupcount',  urlencodedParser,function (req, res){
 
    var checkstatus=req.query.status;
    if((checkstatus=='Closed')||(checkstatus=='Exhausted')){
-        var qur = "SELECT f.enquiry_id,f.schedule_flag,s.enquiry_name,f.schedule_status,f.id,f.current_confidence_level,f.upcoming_date FROM followup f join student_enquiry_details s on f.enquiry_id=s.enquiry_no WHERE f.schedule_status='"+req.query.fnstatus+"' and s.class='"+req.query.fngrade+"' and s.school_id = '"+req.query.schol+"' and s.followed_By='"+req.query.user+"' ORDER BY (upcoming_date) DESC";
+        var qur = "SELECT f.enquiry_id,f.schedule_flag,s.enquiry_name,f.schedule_status,f.id,f.current_confidence_level,f.upcoming_date FROM followup f join student_enquiry_details s on f.enquiry_id=s.enquiry_no WHERE f.schedule_status='"+req.query.fnstatus+"' and s.class='"+req.query.fngrade+"' and s.school_id = '"+req.query.schol+"' and f.followed_by='"+req.query.user+"' ORDER BY (upcoming_date) DESC";
    }
    else{
-        var qur = "SELECT f.enquiry_id,f.schedule_flag,s.enquiry_name,f.schedule_status,f.id,f.current_confidence_level,f.upcoming_date FROM followup f join student_enquiry_details s on f.enquiry_id=s.enquiry_no WHERE f.schedule_status='"+req.query.fnstatus+"' and s.class='"+req.query.fngrade+"' and s.school_id = '"+req.query.schol+"' and s.followed_By='"+req.query.user+"' ORDER BY (upcoming_date)";
+        var qur = "SELECT f.enquiry_id,f.schedule_flag,s.enquiry_name,f.schedule_status,f.id,f.current_confidence_level,f.upcoming_date FROM followup f join student_enquiry_details s on f.enquiry_id=s.enquiry_no WHERE f.schedule_status='"+req.query.fnstatus+"' and s.class='"+req.query.fngrade+"' and s.school_id = '"+req.query.schol+"' and f.followed_by='"+req.query.user+"' ORDER BY (upcoming_date)";
    }
-   //console.log(qur);
+   console.log(qur);
    connection.query(qur,
      function(err, rows)
      {
        if(!err)
        {
-         //console.log(rows);
+         console.log(rows);
          res.status(200).json({'returnval': rows});
        }
        else
@@ -2848,7 +2848,7 @@ app.post('/getfollowupcount',  urlencodedParser,function (req, res){
  {
    var school={"school_id":req.query.schol};
    var id={"enquiry_no":req.query.id};
-   var qur = "select f.enquiry_id,f.id,f.schedule_no,f.last_schedule_date,f.schedule_Status,d.enquiry_no,d.enquiry_name,d.class,d.created_on,d.father_name,d.father_mob,d.gmob,d.guardianname,d.admission_test from followup as f Join student_enquiry_details d on d.enquiry_no=f.enquiry_id where f.id='"+req.query.fid+"' and f.enquiry_id='"+req.query.id+"' and f.school_id='"+req.query.schol+"' and f.schedule_status='"+req.query.fstatus+"'";
+   var qur = "select f.enquiry_id,f.id,f.schedule_no,f.last_schedule_date,f.schedule_Status,d.enquiry_no,d.enquiry_name,d.class,d.created_on,d.father_name,d.father_mob,d.guardian_mobile,d.guardian_name from followup as f Join student_enquiry_details d on d.enquiry_no=f.enquiry_id where f.id='"+req.query.fid+"' and f.enquiry_id='"+req.query.id+"' and f.school_id='"+req.query.schol+"' and f.schedule_status='"+req.query.fstatus+"'";
 //console.log(qur);
 
    connection.query(qur,

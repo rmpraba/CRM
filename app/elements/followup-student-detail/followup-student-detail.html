@@ -74,13 +74,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <div class="content">
             <div hidden="{{parentinfo}}" class="list-group col-sm-12 panel-body form-category">
                   <div class="col-sm-3">
-                    <paper-item>Parent Name :</paper-item>
+                    <paper-item style="width: 140px;">Parent Name :</paper-item>
                   </div>
                   <div class="col-sm-3">
                     <paper-item>{{parentname}}</paper-item>
                   </div>
                   <div class="col-sm-3">
-                    <paper-item>Mobile No :</paper-item>
+                    <paper-item style="width: 140px;">Mobile No :</paper-item>
                   </div>
                   <div class="col-sm-3">
                     <paper-item>{{mobno}}</paper-item>
@@ -88,19 +88,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </div>
             <div hidden="{{guardianinfo}}" class="list-group col-sm-12 panel-body form-category">
                   <div class="col-sm-3">
-                    <paper-item>Guardian Name :</paper-item>
+                    <paper-item style="width: 140px;">Guardian Name :</paper-item>
                   </div>
                   <div class="col-sm-3">
                     <paper-item>{{guardianname}}</paper-item>
                   </div>
                   <div class="col-sm-3">
-                    <paper-item>Mobile No :</paper-item>
+                    <paper-item style="width: 140px;">Mobile No :</paper-item>
                   </div>
                   <div class="col-sm-3">
                     <paper-item>{{gmobno}}</paper-item>
                   </div>
             </div>
-             <div hidden="{{admissiontestinfo}}" class="list-group col-sm-12 panel-body form-category">
+            <!--  <div hidden="{{admissiontestinfo}}" class="list-group col-sm-12 panel-body form-category">
                   <div class="col-sm-3">
                     <paper-item>Admission Test :</paper-item>
                   </div>
@@ -133,7 +133,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </div>
             <div hidden="{{subject}}">
               Admission Test Result : {{result}}
-            </div>
+            </div> -->
         </div>
         <div class="buttons">
           <paper-button on-click="detailclose">Close</paper-button>
@@ -183,8 +183,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       detailclose:function(){
         document.getElementById('detailsdialog').close();
       },
-      testdetails:function(enqno,admtest,Fnparent,Fnguardian){
-        if(admtest=='Yes'){
+      testdetails:function(enqno,Fnparent,Fnguardian){
+        /*if(admtest=='Yes'){
           this.subject=false;
             document.getElementById('testyes').checked=true;
             this.$.followupservice.getsubjectinfo(enqno,this.enquiredon);
@@ -192,16 +192,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }else{
           document.getElementById('testyes').checked=false;
           this.subject=true;
-        }
+        }*/
         this.parentinfo=Fnparent;
         this.guardianinfo=Fnguardian;
         this.$.followupservice.getlistdetails(this.enqno,this.followupid,this.schedule);
       },
-      Fnsetsubject:function(englsh,maths,evs){
+     /* Fnsetsubject:function(englsh,maths,evs){
           document.getElementById('cbenglsh').checked=englsh;
           document.getElementById('cbmaths').checked=maths;
           document.getElementById('cbevs').checked=evs;
-      },
+      },*/
       changestatus:function(){
         document.querySelector('#statusdialog').open();
       },
