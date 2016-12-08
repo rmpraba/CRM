@@ -415,7 +415,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var datesarr=[];
     var generateid;
     var resultarr=[];
-    var countresult;
+    var countresult=0;
     var upfollowupid;
     var upconfidencelvl;
     var upfollowno;
@@ -521,10 +521,10 @@ newdate.setDate(newdate.getDate()+resultarr[0].no_of_days);
           else{
             alert('Interrupted');
           }
-      
+      countresult=0;
       },
       updatefollowdetailResponse:function(e){
-        countresult=0;
+        
         if(e.detail.response.returnval=='success'){
           //alert(e.detail.response.returnval);
           countresult=countresult+1;
