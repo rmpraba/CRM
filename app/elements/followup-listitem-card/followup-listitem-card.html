@@ -60,7 +60,7 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
           </td>
             <!-- <div id="confidencelabel">{{confidencelvl}}</div> -->
           
-          <td class="col-sm-3" style="text-align:center; padding-top: 6%;"><div id="viewdetail"><a href="">view details</a></div>
+          <td class="col-sm-3" style="text-align:center; padding-top: 6%;"><div id="viewdetail"><a href="" on-click="viewdetails">view details</a></div>
           <div id="notcompleted">Still not completed</div></td>
         </tr>
         </tbody>
@@ -219,7 +219,7 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
       yescallstatusHandler:function(){
         if(document.getElementById('callyes'+this.followupno).checked==true){
           callstatus="Yes";
-           flwno=this.followupno;
+           flwno=this.sno;
           //alert(callstatus);
           //this.$.followdisk.disabled=false;
           document.getElementById('callno'+this.followupno).checked=false;
@@ -233,7 +233,7 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
       nocallstatusHandler:function(){
           if(document.getElementById('callno'+this.followupno).checked==true){
           callstatus="No";
-           flwno=this.followupno;
+           flwno=this.sno;
           //alert(callstatus);
           //this.$.followdisk.disabled=false;
           document.getElementById('callyes'+this.followupno).checked=false;
@@ -268,7 +268,7 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
            // alert(JSON.stringify(asdf));
           }
           var fno=parseInt(flwno)-1;
-          //alert(flwno+'    '+fno);
+          alert(flwno+'    '+fno);
         var flag=0;
         var flag2=0;
         var dt=new Date(vnextdate.getFullYear()+'-'+(vnextdate.getMonth()+1)+'-'+vnextdate.getDate());
@@ -279,10 +279,10 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
             if(dt<ltdat){
                     //alert('the date is lessr than last date');
                     for(var l=flwno;l<checkdates.length;l++){
-              ckdt1=new Date(vnextdate.getFullYear()+'-'+(vnextdate.getMonth()+1)+'-'+vnextdate.getDate());
+              ckdt1=new Date(vnextdate);
                       var et2=checkdates[l].schedule_date;
                       var temp=new Date(et2);
-            ckdt2=new Date(temp.getFullYear()+'-'+(temp.getMonth()+1)+'-'+temp.getDate());
+            ckdt2=new Date(temp);
                       ckdt1.setTime(ckdt1.getTime() +(ckdt1.getTimezoneOffset()+330)*60*1000);
                       ckdt2.setTime(ckdt2.getTime() +(ckdt2.getTimezoneOffset()+330)*60*1000);
                       var res=ckdt1-ckdt2;
@@ -302,7 +302,7 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
                         this.$.followupservice.deactivatefollowup(this.scheid,this.fid,folwno,ckdt2);
                       }
                       else if(res==0){
-
+//alert('same date');
                           flag2=1;
                       }
 
@@ -310,6 +310,7 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
             }
             else if(dt>ltdat){
                 alert('the date is greatr than last date');
+                this.$.followupservice.Fnreschedule(confidencelvl,this.fid);
             }
       },
       FollowUp:function(){
@@ -382,6 +383,10 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
         this.value="";
          document.getElementById('callno'+this.followupno).checked=false;
           this.$.dialog3.close();
+      },
+      viewdetails:function(){
+        alert(this.fid+'  '+this.followupno+'   '+this.callstatus);
+        //this.$.followupservice.viewdetails(this.fid,this.followupno,callstatus);
       }
       
     });
