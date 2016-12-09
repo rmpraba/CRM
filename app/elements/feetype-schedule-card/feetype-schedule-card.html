@@ -1,23 +1,26 @@
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 <link rel="import" href="../schedule-service/schedule-service.html">
+<link rel="import" href="../schooltype-to-grade-displaycard/schooltype-to-grade-displaycard.html">
 
 
 <dom-module id="feetype-schedule-card">
   <template>
     <div class="row enquiry-form">
+
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6 enquiry-input">
             <paper-input label="School Name" value="{{schoolname}}"></paper-input>
         </div>
-        <div class="col-sm-6 enquiry-input">
-          <paper-dropdown-menu label="Grade" >
-            <paper-menu id="schedulegrade" class="dropdown-content" required on-iron-select="FnSelectGrade" valueattr="value" >
-              <template  is="dom-repeat" items="{{gradearr}}" as="item">
-              <paper-item>{{item.grade_name}}</paper-item>
-              </template>
-            </paper-menu>
-          </paper-dropdown-menu>
+        <div class="col-sm-2 enquiry-input" style="margin-top:3%;">
+          <paper-checkbox id="stformall" class="checkbox" on-change="allHandler" checked>All Grades</paper-checkbox>
         </div>
+        <div class="col-sm-2 enquiry-input" style="margin-top:3%;">
+          <paper-checkbox id="stformspec" class="checkbox" on-change="specHandler">Specific Grades</paper-checkbox>
+        </div>       
+      </div>
+
+      <div class="list-group col-sm-12 panel-body form-category" hidden$="{{hidegradecard}}">
+      <schooltype-to-grade-displaycard hidegradecard="{{hidegradecard}}"></schooltype-to-grade-displaycard>
       </div>
 
       <div class="list-group col-sm-12 panel-body form-category">
@@ -54,8 +57,7 @@
           </div>
           <div class="col-sm-4 enquiry-input">
             <paper-input label="Total Fee" value="{{totalfees}}"></paper-input>
-          </div>   
-               
+          </div>     
         </div>
 
         <div class="col-md-12 form-button">
@@ -68,15 +70,32 @@
   <script>
   (function() {
     'use strict';
-    var grade,admissionyear,academicyear,feetype,feetypeinstallment;    
+    var grade,admissionyear,academicyear,feetype,feetypeinstallment,gradetype; 
+    var gradearr=[];   
     Polymer({
       is: 'feetype-schedule-card',
       ready:function(){
         this.schoolname=localStorage.getItem("schoolname");
-        // this.$.schedulefee.fetchgradeService();
-        // this.$.schedulefee.fetchacademicyearService();
-        // this.$.schedulefee.fetchadmissionyearService();
-        // this.$.schedulefee.fetchfeetypeService();
+        this.gradearr=[];
+        this.hidegradecard=true;
+      },
+      allHandler:function(){
+        if(document.querySelector("#stformall").checked==true)
+        {
+          this.hidegradecard=true;
+          document.querySelector("#stformspec").checked=false;
+          gradetype="All";
+          document.querySelector('schooltype-to-grade-displaycard').ready();
+          document.querySelector('schooltype-to-grade-displaycard').FnRefresh();
+        }
+      },
+      specHandler:function(){
+        if(document.querySelector("#stformspec").checked==true)
+        {
+          this.hidegradecard=false;
+          document.querySelector("#stformall").checked=false;
+          gradetype="Specific";
+        }
       },
       FnSelectGrade:function(e){
         grade=(e.target.selectedItem.textContent).trim();
@@ -89,6 +108,7 @@
       },
       FnSelectFeeType:function(e){
         feetype=(e.target.selectedItem.textContent).trim();
+        this.totalfees="";
       },
       FnSelectFeeTypeInstallment:function(e){
         feetypeinstallment=(e.target.selectedItem.textContent).trim();
@@ -100,15 +120,23 @@
         feetype="";
         this.totalfees="";
         feetypeinstallment="";
-        document.querySelector('#schedulegrade').selected=-1;
         document.querySelector('#scheduleacademicyear').selected=-1;
         document.querySelector('#scheduleadmissionyear').selected=-1;
         document.querySelector('#schedulefeetype').selected=-1;
-        // document.querySelector('#feetypeinstallment').selected=-1;
+        this.$.stformall.checked=true;
+        this.$.stformspec.checked=false;
+        this.hidegradecard=true;
+        document.querySelector('schooltype-to-grade-displaycard').ready();
+        document.querySelector('schooltype-to-grade-displaycard').FnRefresh();
       },
-      FnSubmit:function(){
-        // alert(this.schoolname+" "+grade+" "+academicyear+" "+admissionyear+" "+feetype+" "+this.totalfees);
-        this.$.schedulefee.setFeeTypeInfo(this.schoolname,grade,admissionyear,academicyear,feetype,this.totalfees,feetypeinstallment);
+      FnSetGrades:function(arr){
+        gradearr=arr;
+      },
+      FnSubmit:function()
+      {
+        // alert(JSON.stringify(gradearr));
+        this.$.schedulefee.setFeeTypeInfo(this.schoolname,gradearr,admissionyear,academicyear,feetype,this.totalfees,feetypeinstallment);
+        gradearr=[];
       },
       FnCancel:function(){
         grade="";
@@ -117,11 +145,9 @@
         feetype="";
         this.totalfees="";
         feetypeinstallment="";
-        document.querySelector('#schedulegrade').selected=-1;
         document.querySelector('#scheduleacademicyear').selected=-1;
         document.querySelector('#scheduleadmissionyear').selected=-1;
         document.querySelector('#schedulefeetype').selected=-1;
-        // document.querySelector('#feetypeinstallment').selected=-1;
       }
 
     });

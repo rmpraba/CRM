@@ -39,7 +39,7 @@
       <table class="table table-hover" id="realizationreport">
       <thead>
       <tr>
-        <th>Sno</th><th>Enr/Enq No</th><th>Student Name</th><th>Grade</th><th>Installment Type</th><th>Cheque No</th><th>Received Date</th><th>Amount</th><th>Cheque Status</th>
+        <th>Sno</th><th>Enr/Enq No</th><th>Student Name</th><th>Grade</th><th>Installment Type</th><th>Cheque No</th><th>Bank Name</th><th>Date</th><th>Amount</th><th>Cheque Status</th>
       </tr>
       <tr>
       <td colspan="10">
@@ -93,11 +93,15 @@
       },
       FnSubmit:function(){
         alert('If you press submit it will clear all the cheques...Please process all the cheques which is not cleared...');
-        alert(JSON.stringify(allchequesarr));
+        // alert(JSON.stringify(allchequesarr));
         if(allchequesarr.length>0) 
         this.$.processingservice.FnUpdateChequeStatus(allchequesarr);
         else
         alert('No cheques are exist to process!!!');         
+      },
+      FnRefresh:function(){
+        this.chequearr=[];
+        // this.$.processingservice.FnFetchprocessingchequeService();
       }
 
     });

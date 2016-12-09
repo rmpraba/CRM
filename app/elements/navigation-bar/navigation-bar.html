@@ -15,8 +15,16 @@
 <dom-module id="navigation-bar">
   <template>
     <style>
-      /*:host{
-        display: block;
+      #fee-dialog{
+        width: 90%;
+        height: 100%;
+        margin-left:5%;
+        margin-right:5%;
+        padding: 0;
+      }
+      #fee-content{
+        height: auto;
+        min-height: 100%;
       }
     </style>
     <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
@@ -239,8 +247,11 @@
                 <a href="" aria-hidden="true" data-toggle="modal" data-target="#discountschedule" on-click="FnDiscountschedule">Discount Schedule</a>
               </li>
               <li>
-                <a href="" aria-hidden="true" data-toggle="modal" data-target="#feestructureschedule" on-click="FnFeestructureschedule">Installment Schedule</a>
+                <a href="" aria-hidden="true" data-toggle="modal" data-target="#feesplitupschedule" on-click="FnFeesplitupschedule">Fee Splitup Schedule</a>
               </li>
+              <li>
+                <a href="" aria-hidden="true" data-toggle="modal" data-target="#feestructureschedule" on-click="FnFeestructureschedule">Installment Schedule</a>
+              </li>              
               </ul>
            </li>
 
@@ -309,6 +320,9 @@
             <li id="chequerealization">
             <a href="" aria-hidden="true" on-click="FnChequerealization">Cheque Realization</a>
            </li>
+           <li id="searchreceipt">
+            <a href="" aria-hidden="true" on-click="FnSearchReceipt">Search Receipt</a>
+           </li>
            </li>
             </ul>
             </li>
@@ -346,34 +360,8 @@
             <!-- /.nav-second-level -->
           </li>
           <li id="admapp">
-            <a href="#"><i class="fa fa-sitemap fa-fw"></i> Admission Approval<!-- <span class="fa arrow"></span></a>
-            <ul class="nav nav-second-level">
-              <li>
-                <a href="#">Second Level Item</a>
-              </li>
-              <li>
-                <a href="#">Second Level Item</a>
-              </li>
-              <li>
-                <a href="#">Third Level <span class="fa arrow"></span></a>
-                <ul class="nav nav-third-level">
-                  <li>
-                    <a href="#">Third Level Item</a>
-                  </li>
-                  <li>
-                    <a href="#">Third Level Item</a>
-                  </li>
-                  <li>
-                    <a href="#">Third Level Item</a>
-                  </li>
-                  <li>
-                    <a href="#">Third Level Item</a>
-                  </li>
-                </ul>-->
-                <!-- /.nav-third-level -->
-             <!--  </li>
-            </ul> -->
-            <!-- /.nav-second-level -->
+            <a href="#"><i class="fa fa-sitemap fa-fw"></i> Admission Approval
+                        <!-- /.nav-second-level -->
           </li>
 
         </ul>
@@ -452,27 +440,11 @@
         </div>
       </div>
     </div>
-<!--    <div class="modal fade bd-example-modal-lg" id="followUp" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-            <h4 class="center-block event-title" id="">
-              Follow Up
-            </h4>
-          </div>
-          <div class="modal-body">
-            <followup-card></followup-card>
-          </div>
-        </div>
-      </div>
-    </div>-->
+
 
     <div class="modal fade bd-example-modal-lg" id="feepayment" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
+      <div class="modal-dialog modal-lg" id ="fee-dialog">
+        <div class="modal-content" id="fee-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
@@ -489,8 +461,8 @@
     </div>
 
     <div class="modal fade bd-example-modal-lg" id="registerationfee" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
+      <div class="modal-dialog modal-lg" id ="fee-dialog">
+        <div class="modal-content" id="fee-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
@@ -507,8 +479,8 @@
     </div>
 
     <div class="modal fade bd-example-modal-lg" id="prospectousfee" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
+      <div class="modal-dialog modal-lg" id ="fee-dialog">
+        <div class="modal-content" id="fee-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
@@ -524,97 +496,7 @@
       </div>
     </div>
 
-   <!--  <div class="modal fade bd-example-modal-lg" id="registerationfee" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-            <h4 class="center-block event-title" id="">
-             Registeration Fee
-            </h4>
-          </div>
-          <div class="modal-body">
-            <fees-card></fees-card>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="modal fade bd-example-modal-lg" id="kitfee" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-            <h4 class="center-block event-title" id="">
-              School Kit Fee
-            </h4>
-          </div>
-          <div class="modal-body">
-            <fees-card></fees-card>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="modal fade bd-example-modal-lg" id="annualfee" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-            <h4 class="center-block event-title" id="">
-              Tuition & Annual Fee
-            </h4>
-          </div>
-          <div class="modal-body">
-            <fees-card></fees-card>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="modal fade bd-example-modal-lg" id="miscellaneousfee" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-            <h4 class="center-block event-title" id="">
-              Miscellaneous Fee
-            </h4>
-          </div>
-          <div class="modal-body">
-            <fees-card></fees-card>
-          </div>
-        </div>
-      </div>
-    </div> -->
-
-
-    <!-- <div class="modal fade bd-example-modal-lg" id="schedulefee" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-            <h4 class="center-block event-title" id="">
-              Schedule Fees
-            </h4>
-          </div>
-          <div class="modal-body">
-            <schedulefee-card></schedulefee-card>
-          </div>
-        </div>
-      </div>
-    </div> -->
-
+  
      <div class="modal fade bd-example-modal-lg" id="feetypeschedule" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -665,6 +547,24 @@
           </div>
           <div class="modal-body">
             <discount-master-card></discount-master-card>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade bd-example-modal-lg" id="feesplitupschedule" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="center-block event-title" id="">
+              Fee Splitup Schedule
+            </h4>
+          </div>
+          <div class="modal-body">
+            <fee-splitup-card></fee-splitup-card>
           </div>
         </div>
       </div>
@@ -861,7 +761,17 @@
       gettodayfollowups:function(){
         alert("hi");
         alert(localStorage.getItem("employeename"));
-      }
+      }, 
+      FnFeesplitupschedule:function(){
+        this.$.scheduleservice.fetchgradeService();
+        this.$.scheduleservice.fetchacademicyearService();
+        this.$.scheduleservice.fetchadmissionyearService();
+      },
+      FnSearchReceipt:function(){
+        this.$.scheduleservice.fetchacademicyearService();
+        document.querySelector('app-list').setPage("searchreceipt","Search Receipt");
+        document.querySelector('searchreceipt-card').ready();
+      } 
     });
   })();
   </script>

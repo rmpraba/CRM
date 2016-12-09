@@ -31,21 +31,24 @@
           <paper-input label="{{enqenrlabel}}" id="enqenrno" readonly value="{{enqenrno}}"></paper-input>
           </div>         
       </div>
-    <!-- </div>
-   <div class="row enquiry-form"> -->
-      <div class="list-group col-sm-12 panel-body form-category">
+      <!-- </div>
+      <div class="row enquiry-form"> -->
+      <!-- <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6 enquiry-input">
           <paper-input label="Application Number" id="applicationno" readonly value="{{applicationno}}"></paper-input>
         </div>
         <div class="col-sm-6">
           <paper-textarea label="School" readonly value="{{schoolname}}"></paper-textarea>
         </div>
-      </div>
+      </div> -->
       <div class="list-group col-sm-12 panel-body form-category">
-        <div class="col-sm-6 enquiry-input">
+        <div class="col-sm-4">
+          <paper-textarea label="School" readonly value="{{schoolname}}"></paper-textarea>
+        </div>
+        <div class="col-sm-4 enquiry-input">
           <paper-input label="Enquired Year" value="{{enquiredyear}}"></paper-input>
         </div>
-        <div class="col-sm-6 enquiry-input">
+        <div class="col-sm-4 enquiry-input">
           <paper-dropdown-menu id="inputlabel" label="Admission Year" on-iron-select="FnSelectAdmissionYear">
               <paper-listbox class="dropdown-content" selected="{{selectedadmnyear}}" id="admnformadmnyear" attr-for-selected="value">
               <template  is="dom-repeat" items="{{academicarr}}" as="item">

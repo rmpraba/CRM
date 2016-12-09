@@ -1,5 +1,6 @@
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="../fee-structure-display-card/fee-structure-display-card.html">
 
 <dom-module id="fee-structure-schedulecard">
 <style>
@@ -21,40 +22,11 @@
           <paper-dropdown-menu label="Grade" >
             <paper-menu id="structuregrade" class="dropdown-content" required on-iron-select="FnSelectGrade" valueattr="value" >
               <template  is="dom-repeat" items="{{gradearr}}" as="item">
-              <paper-item>{{item.grade_name}}</paper-item>
+              <paper-item value="{{item.grade_id}}">{{item.grade_name}}</paper-item>
               </template>
             </paper-menu>
           </paper-dropdown-menu>
-        </div>
-        
-      </div>
-
-      <div class="list-group col-sm-12 panel-body form-category">
-        <div class="col-sm-6 enquiry-input">
-          <paper-dropdown-menu label="Select Category" >
-            <paper-menu id="structurediscount" class="dropdown-content" required on-iron-select="FnSelectDiscountType" valueattr="value" >
-              <template  is="dom-repeat" items="{{discountarr}}" as="item">
-              <paper-item value="{{item.discount_type_id}}">{{item.discount_type}}</paper-item>
-              </template>
-            </paper-menu>
-          </paper-dropdown-menu>
-        </div>
-        <div class="col-sm-6 enquiry-input" hidden$="{{hideadmissiontype}}">
-            <span class="col-sm-12"><h5>Spot Admission?</h5></span>
-            <span><paper-checkbox class="col-sm-6" id="structurespotyes" readonly class="checkbox" on-change="spotyesHandler">Yes</paper-checkbox></span>
-            <span><paper-checkbox class="col-sm-6" id="structurespotno" readonly class="checkbox" on-change="spotnoHandler">No</paper-checkbox></span>
-        </div>
-
-      </div>
-
-      <div class="list-group col-sm-12 panel-body form-category">
-            <div class="col-sm-12 enquiry-input" hidden$="{{hideinstallmentpattern}}">
-            <span class="col-sm-12"><h5>Installment Pattern</h5></span>
-            <span><paper-checkbox class="col-sm-3" id="structuregeneral" readonly class="checkbox" on-change="generalHandler" checked>Standard Pattern</paper-checkbox></span>
-            <span><paper-checkbox class="col-sm-3" id="structureinstallmentt" readonly class="checkbox" on-change="installmentHandler">Custom Pattern</paper-checkbox></span>
-            <span><paper-checkbox class="col-sm-3" id="structurelumpsum" readonly class="checkbox" on-change="lumpsumHandler">Lumpsum</paper-checkbox></span>
-            <!-- <span><paper-checkbox class="col-sm-3" id="structurethirdparty" readonly class="checkbox" on-change="thirdpartyHandler">Thirdparty</paper-checkbox></span> -->
-            </div>
+        </div>        
       </div>
 
       <div class="list-group col-sm-12 panel-body form-category">
@@ -82,24 +54,40 @@
         <div class="col-sm-4" hidden$="{{hidenoofinstallment}}">
           <paper-dropdown-menu label="No Of Installment" attr-for-selected="value">
             <paper-menu id="structureinstallment" class="dropdown-content" required on-iron-select="FnSelectInsatllmentNo" valueattr="value" >
-              <!-- <template  is="dom-repeat" items="{{academicarr}}" as="item"> -->
-              <!-- <paper-item>1</paper-item>
-              <paper-item>2</paper-item>
-              <paper-item>3</paper-item>
-              <paper-item>4</paper-item> -->
               <paper-item>5</paper-item>
               <paper-item>6</paper-item>
               <paper-item>7</paper-item>
               <paper-item>8</paper-item>
               <paper-item>9</paper-item>
               <paper-item>10</paper-item>
-              <!-- </template> -->
             </paper-menu>
           </paper-dropdown-menu>
         </div>
         </div>
 
+      <div class="list-group col-sm-12 panel-body form-category">
+            <div class="col-sm-12 enquiry-input" hidden$="{{hideinstallmentpattern}}">
+            <span class="col-sm-12"><h5>Installment Pattern</h5></span>
+            <span><paper-checkbox class="col-sm-3" id="structuregeneral" readonly class="checkbox" on-change="generalHandler" checked>Standard Pattern</paper-checkbox></span>
+            <span><paper-checkbox class="col-sm-3" id="structureinstallmentt" readonly class="checkbox" on-change="installmentHandler">Custom Pattern</paper-checkbox></span>
+            <span><paper-checkbox class="col-sm-3" id="structurelumpsum" readonly class="checkbox" on-change="lumpsumHandler">Lumpsum</paper-checkbox></span>
+            <!-- <span><paper-checkbox class="col-sm-3" id="structurethirdparty" readonly class="checkbox" on-change="thirdpartyHandler">Thirdparty</paper-checkbox></span> -->
+            </div>
+      </div>
+
+      <div class="list-group col-sm-12 panel-body form-category" hidden$="{{hidefeecomponentcard}}">
+        <div class="col-sm-4 enquiry-input">
+        <paper-input value="{{payableamount}}" label="Total Amount"></paper-input>
+        </div>
+      </div>
+
         <div class="list-group col-sm-12 panel-body form-category" hidden$="{{hidefeecomponentcard}}">
+          <template  is="dom-repeat" items="{{installmentarr}}" as="item">
+            <fee-structure-display-card type="{{item.type}}" feesplitarr="{{item.fees}}"></fee-structure-display-card> 
+          </template>       
+        </div>
+
+        <!-- <div class="list-group col-sm-12 panel-body form-category" hidden$="{{hidefeecomponentcard}}">
           <template  is="dom-repeat" items="{{installmentarr}}" as="item">
             <fee-component-card installment="{{item.val}}" no="{{item.no}}" actualamount="{{item.actualamount}}" discount="{{item.discount}}" payableamount="{{item.payableamount}}"></fee-component-card> 
           </template>       
@@ -115,7 +103,7 @@
           <template  is="dom-repeat" items="{{installmentarr}}" as="item">
             <lumpsum-fee-component-card installment="{{item.val}}" no="{{item.no}}" actualamount="{{item.actualamount}}" discount="{{item.discount}}" payableamount="{{item.payableamount}}"></lumpsum-fee-component-card> 
           </template>       
-        </div>
+        </div> -->
 
         <div class="col-md-12 form-button" hidden$="{{hidegenerateinstallment}}">
           <paper-button class="btn btn-primary" on-click="FnGenerate">Generate</paper-button>          
@@ -145,15 +133,17 @@
   <script>
   (function() {
     'use strict';
-    var grade,admissionyear,academicyear,noofinstallment,feetype,discountcode,discounttype,installmenttype,admissiontype;   
+    var grade,admissionyear,academicyear,noofinstallment,feetype,discountcode,discounttype,installmenttype,admissiontype,gradetype;   
     var feecomponentarr=[];
     var installmentarr=[];
     var installmentsubarr=[];
     var installmentpattern="1";
-
+    var gradearr=[];
     Polymer({
       is: 'fee-structure-schedulecard',
       ready:function(){
+        this.gradearr=[];
+        this.hidegradecard=true;
         this.schoolname=localStorage.getItem("schoolname");
         this.hidefeecomponentcard=true;
         this.hideadmissiontype=false;
@@ -173,7 +163,7 @@
         localStorage.setItem("curr_sess_noofinstallment",noofinstallment);
       },
       FnSelectGrade:function(e){
-        grade=(e.target.selectedItem.textContent).trim();
+        grade=(e.target.selectedItem.value).trim();
         localStorage.setItem("curr_sess_grade",grade);
       },
       FnSelectAdmissionYear:function(e){
@@ -185,59 +175,68 @@
         localStorage.setItem("curr_sess_academicyear",academicyear);
       },
       FnGenerate:function(){
-
-        if(grade==""||grade==null||admissionyear==""||admissionyear==null||academicyear==""||academicyear==null||noofinstallment==""||noofinstallment==null|admissiontype==""||admissiontype==null||discountcode==null||discountcode==""){
+        if(grade==""||grade==null||admissionyear==""||admissionyear==null||academicyear==""||academicyear==null||noofinstallment==""||noofinstallment==null){
           alert("Please Select all the fields for generating schedule!!");
         }      
         else
         {
-        this.$.schedulefee.fetchtotalinstallmentfeecode(discountcode,discounttype,admissiontype);
-        var ins=[];
-        noofinstallment=noofinstallment;
-        for(var i=0;i<noofinstallment;i++)
-        {
-          var obj={"val":"","no":""};
-          obj.no=i+1;
-          obj.val="Installment"+(i+1);
-          ins.push(obj);
-        }        
-        this.installmentarr=ins;
-        if(installmentpattern=="2")
-          this.hideinstallmentfeecomponentcard=false;
-        else if(installmentpattern=="3")
-          this.hidelumpsumfeecomponentcard=false;
-        else
-          this.hidefeecomponentcard=false;
-        }
+        this.$.schedulefee.fetchtotalsplitupamountService();
+        // this.$.schedulefee.fetchtotalinstallmentfeecode(discountcode,discounttype,admissiontype);
+        // var ins=[];
+        // noofinstallment=noofinstallment;
+        // for(var i=0;i<noofinstallment;i++)
+        // {
+        //   var obj={"val":"","no":""};
+        //   obj.no=i+1;
+        //   obj.val="Installment"+(i+1);
+        //   ins.push(obj);
+        // }        
+        // this.installmentarr=ins;
+        // if(installmentpattern=="2")
+        //   this.hideinstallmentfeecomponentcard=false;
+        // else if(installmentpattern=="3")
+        //   this.hidelumpsumfeecomponentcard=false;
+        // else
+        //   this.hidefeecomponentcard=false;
+        // }
         this.hidesubmitinstallment=false;
         this.hidegenerateinstallment=true;
+        }
       },
       FnSelectInsatllmentNo:function(e){
         noofinstallment=(e.target.selectedItem.textContent).trim();  
         localStorage.setItem("curr_sess_noofinstallment",noofinstallment);
       },
-      FnMakeVisbleInstallmentCard:function(insno){
-        var ins=[];
-        noofinstallment=noofinstallment+insno;
-        for(var i=0;i<noofinstallment;i++)
-        {
-          var obj={"val":"","no":""};
-          obj.no=i+1;
-          obj.val="Installment"+(i+1);
-          ins.push(obj);
-        }        
-        this.installmentarr=ins;
+      FnMakeVisbleInstallmentCard:function(){
+        // var ins=[];
+        // noofinstallment=noofinstallment+insno;
+        // for(var i=0;i<noofinstallment;i++)
+        // {
+        //   var obj={"val":"","no":""};
+        //   obj.no=i+1;
+        //   obj.val="Installment"+(i+1);
+        //   ins.push(obj);
+        // }        
+        // this.installmentarr=ins;
         this.hidefeecomponentcard=false;
       },
+      FnSetInstallment:function(arr){
+        installmentarr=arr;
+      },
       FnSubmit:function(){
-        if((this.installmentarr).length==installmentarr.length)
-        this.$.schedulefee.setInstallmentFeecomponent(this.schoolname,grade,admissionyear,academicyear,noofinstallment,discountcode,discounttype,installmentarr,installmentsubarr,admissiontype);
-        else
-          alert('Please schedule all the installments!!');
+        // if((this.installmentarr).length==installmentarr.length)
+        // this.$.schedulefee.setInstallmentFeecomponent(this.schoolname,grade,admissionyear,academicyear,noofinstallment,discountcode,discounttype,installmentarr,installmentsubarr,admissiontype);
+        // else
+        //   alert('Please schedule all the installments!!');
+        if((installmentarr).length>0){
+          this.$.schedulefee.setInstallmentFeecomponent(grade,academicyear,admissionyear,noofinstallment,installmentpattern,installmentarr);
+        }
+        installmentarr=[];
+
       },
-      FnViewFeeComponent:function(){
-        this.hidefeecomponent=false;
-      },
+      // FnViewFeeComponent:function(){
+      //   this.hidefeecomponent=false;
+      // },
       FnRefresh:function(){
         grade="";
         admissionyear="";
@@ -252,16 +251,21 @@
         document.querySelector('#structureacademicyear').selected=-1;
         document.querySelector('#structureadmissionyear').selected=-1;
         document.querySelector('#structureinstallment').selected=-1;
-        document.querySelector('#structurediscount').selected=-1;
+        // document.querySelector('#structurediscount').selected=-1;
         document.querySelector('#structuregeneral').selected=-1;
         document.querySelector('#structureinstallmentt').selected=-1;
-        document.querySelector('#structurespotyes').selected=-1;
-        document.querySelector('#structurespotno').selected=-1;
+        // document.querySelector('#structurespotyes').selected=-1;
+        // document.querySelector('#structurespotno').selected=-1;
         localStorage.setItem("curr_sess_installmentpattern",installmentpattern);
         feecomponentarr=[];
         installmentarr=[];
         installmentsubarr=[];
         // var installmentpattern="";
+        // this.$.structureformall.checked=true;
+        // this.$.structureformspec.checked=false;
+        // this.hidegradecard=true;
+        // document.querySelector('schooltype-to-grade-displaycard').ready();
+        // document.querySelector('schooltype-to-grade-displaycard').FnRefresh();
       },
       FnRefresh1:function(){
         grade="";
@@ -277,12 +281,17 @@
         document.querySelector('#structureacademicyear').selected=-1;
         document.querySelector('#structureadmissionyear').selected=-1;
         document.querySelector('#structureinstallment').selected=-1;
-        document.querySelector('#structurediscount').selected=-1;
+        // document.querySelector('#structurediscount').selected=-1;
         document.querySelector('#structuregeneral').selected=-1;
         document.querySelector('#structureinstallmentt').selected=-1;
-        document.querySelector('#structurespotyes').selected=-1;
-        document.querySelector('#structurespotno').selected=-1;
+        // document.querySelector('#structurespotyes').selected=-1;
+        // document.querySelector('#structurespotno').selected=-1;
         localStorage.setItem("curr_sess_installmentpattern",installmentpattern);
+        // this.$.structureformall.checked=true;
+        // this.$.structureformspec.checked=false;
+        // this.hidegradecard=true;
+        // document.querySelector('schooltype-to-grade-displaycard').ready();
+        // document.querySelector('schooltype-to-grade-displaycard').FnRefresh();
       },
       FnCancel:function(){
         grade="";
@@ -299,61 +308,66 @@
         document.querySelector('#structureacademicyear').selected=-1;
         document.querySelector('#structureadmissionyear').selected=-1;
         document.querySelector('#structureinstallment').selected=-1;
-        document.querySelector('#structurediscount').selected=-1;
+        // document.querySelector('#structurediscount').selected=-1;
         document.querySelector('#structuregeneral').selected=-1;
         document.querySelector('#structureinstallmentt').selected=-1;
-        document.querySelector('#structurespotyes').selected=-1;
-        document.querySelector('#structurespotno').selected=-1;
+        // document.querySelector('#structurespotyes').selected=-1;
+        // document.querySelector('#structurespotno').selected=-1;
         localStorage.setItem("curr_sess_installmentpattern",installmentpattern);
+        // this.$.structureformall.checked=true;
+        // this.$.structureformspec.checked=false;
+        // this.hidegradecard=true;
+        // document.querySelector('schooltype-to-grade-displaycard').ready();
+        // document.querySelector('schooltype-to-grade-displaycard').FnRefresh();
         feecomponentarr=[];
         installmentarr=[];
         installmentsubarr=[];
         // var installmentpattern="";
       },
-      FnSetFeeComponent:function(arr){
-        feecomponentarr=[];
-        for(var i=0;i<arr.length;i++){          
-          feecomponentarr.push(arr[i]);
-        }
-      },
-      FnSetInsatllment:function(insarr,inssubarr)
-      {
-        installmentarr=insarr;
-        installmentsubarr=inssubarr;
-        // alert(JSON.stringify(installmentarr));
-        // alert(JSON.stringify(installmentsubarr));
-      },
-      FnSelectDiscountType:function(e){
-        discountcode=(e.target.selectedItem.value).trim();
-        discounttype=(e.target.selectedItem.textContent).trim();
-        if(discountcode==2){
-          this.hideadmissiontype=true;
-          // this.hideinstallmentpattern=false;
-          admissiontype="0";
-        }
-        else{
-          this.hideadmissiontype=false;
-          // this.hideinstallmentpattern=true;
-        }
-        localStorage.setItem("curr_sess_discounttypecode",discountcode);
-        localStorage.setItem("curr_sess_discounttype",discounttype);
-      },
-      spotyesHandler:function(e){
-        if(document.querySelector("#structurespotyes").checked==true)
-        {
-         document.querySelector("#structurespotno").checked=false;
-         admissiontype="1";
-         localStorage.setItem("curr_sess_admissiontype",admissiontype);
-        }
-      },
-      spotnoHandler:function(e){
-        document.querySelector("#structurespotno").checked=true;
-        {
-         document.querySelector("#structurespotyes").checked=false;
-         admissiontype="0";
-         localStorage.setItem("curr_sess_admissiontype",admissiontype);
-        }
-      },
+      // FnSetFeeComponent:function(arr){
+      //   feecomponentarr=[];
+      //   for(var i=0;i<arr.length;i++){          
+      //     feecomponentarr.push(arr[i]);
+      //   }
+      // },
+      // FnSetInsatllment:function(insarr,inssubarr)
+      // {
+      //   installmentarr=insarr;
+      //   installmentsubarr=inssubarr;
+      //   // alert(JSON.stringify(installmentarr));
+      //   // alert(JSON.stringify(installmentsubarr));
+      // },
+      // FnSelectDiscountType:function(e){
+      //   discountcode=(e.target.selectedItem.value).trim();
+      //   discounttype=(e.target.selectedItem.textContent).trim();
+      //   if(discountcode==2){
+      //     this.hideadmissiontype=true;
+      //     // this.hideinstallmentpattern=false;
+      //     admissiontype="0";
+      //   }
+      //   else{
+      //     this.hideadmissiontype=false;
+      //     // this.hideinstallmentpattern=true;
+      //   }
+      //   localStorage.setItem("curr_sess_discounttypecode",discountcode);
+      //   localStorage.setItem("curr_sess_discounttype",discounttype);
+      // },
+      // spotyesHandler:function(e){
+      //   if(document.querySelector("#structurespotyes").checked==true)
+      //   {
+      //    document.querySelector("#structurespotno").checked=false;
+      //    admissiontype="1";
+      //    localStorage.setItem("curr_sess_admissiontype",admissiontype);
+      //   }
+      // },
+      // spotnoHandler:function(e){
+      //   document.querySelector("#structurespotno").checked=true;
+      //   {
+      //    document.querySelector("#structurespotyes").checked=false;
+      //    admissiontype="0";
+      //    localStorage.setItem("curr_sess_admissiontype",admissiontype);
+      //   }
+      // },
       generalHandler:function(e){
         if(document.querySelector("#structuregeneral").checked==true)
         {
@@ -363,6 +377,9 @@
          this.hidenoofinstallment=true;
          installmentpattern="1";
          localStorage.setItem("curr_sess_installmentpattern",installmentpattern);
+         this.hidesubmitinstallment=true;
+         this.hidegenerateinstallment=false;
+         this.installmentarr=[];
         }
       },
       installmentHandler:function(e){
@@ -375,22 +392,26 @@
          this.hidenoofinstallment=false;
          installmentpattern="2";
          localStorage.setItem("curr_sess_installmentpattern",installmentpattern);
+         this.hidesubmitinstallment=true;
+         this.hidegenerateinstallment=false;
+         this.installmentarr=[];
         }
       },
       lumpsumHandler:function(e){
         
         if(document.querySelector("#structurelumpsum").checked==true)
-        {
-          
+        {          
          document.querySelector("#structuregeneral").checked=false;
          document.querySelector("#structureinstallmentt").checked=false;
          // document.querySelector("#structurethirdparty").checked=false;
          this.hidenoofinstallment=true;
          installmentpattern="3";
          noofinstallment=1;
-         localStorage.setItem("curr_sess_noofinstallment",noofinstallment);
-         
+         localStorage.setItem("curr_sess_noofinstallment",noofinstallment);         
          localStorage.setItem("curr_sess_installmentpattern",installmentpattern);
+         this.hidesubmitinstallment=true;
+         this.hidegenerateinstallment=false;
+         this.installmentarr=[];
         }
        }
        // ,
