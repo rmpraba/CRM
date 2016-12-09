@@ -406,7 +406,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         debounce-duration="300"
         >
   </iron-ajax>
-
+  <iron-ajax
+        method="post"
+        id="gettotalfollowupcounttodayajax"
+        url="{{gettotalfollowupcounttodayurl}}"
+        params="{{gettotalfollowupcounttodayparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="gettotalfollowupcounttodayResponse"
+        debounce-duration="300"
+      >  
+  </iron-ajax>
+  <iron-ajax
+        method="post"
+        id="getfollowupdetailstodayajax"
+        url="{{getfollowupdetailstodayurl}}"
+        params="{{getfollowupdetailstodayparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getfollowupdetailstodayResponse"
+        debounce-duration="300"
+      >  
+  </iron-ajax>
   </template>
   <script>
   (function() {
@@ -1153,8 +1174,37 @@ newdate.setDate(newdate.getDate()+resultarray[0].no_of_days);
           if(e.detail.response.returnval=='success'){
             alert('Followup is deleted');
           }
+      },
+      gettotalfollowupcounttoday:function(){
+        this.gettotalfollowupcounttodayurl=sessionStorage.getItem("addrinfo")+"/gettotalfollowuptoday";
+        var obj={"schol":"","status":"","counsellor":""}
+        obj.status="Open";
+        obj.schol=localStorage.getItem("schoolid");
+        obj.counsellor = localStorage.getItem("employeename");
+        this.gettotalfollowupcounttodayparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.gettotalfollowupcounttodayajax.generateRequest();
+      },
+      gettotalfollowupcounttodayResponse:function(e){
+        var result = e.detail.response.returnval[0].total;
+        alert(document.querySelector('navigation-bar'));
+        document.querySelector('navigation-bar').totalfollowupstoday();
+      },
+      getfollowupdetailstoday:function(){
+        this.getfollowupdetailstodayurl=sessionStorage.getItem("addrinfo")+"/gettodayfollowupdetails";
+        var obj={"schol":"","status":"","counsellor":""}
+        obj.status="Open";
+        obj.schol=localStorage.getItem("schoolid");
+        obj.counsellor = localStorage.getItem("employeename");
+        this.getfollowupdetailstodayparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.getfollowupdetailstodayajax.generateRequest();
+      },
+      getfollowupdetailstodayResponse:function(e){
+        var result = e.detail.response.returnval;
+        //alert(JSON.stringify(result));
+        document.querySelector('followup-today-report').getarray(result);
       }
-
     });
   })();
   </script>

@@ -4227,7 +4227,7 @@ app.post('/getenquirysource',  urlencodedParser,function (req, res){
  });
 
   app.post('/getcounsellorattendedby',  urlencodedParser,function (req, res){
-   connection.query("SELECT * FROM `md_counsellor` WHERE `school_id` =  '"+req.query.schol+"'",
+   connection.query("SELECT e.employee_id, e.employee_name FROM md_employee as e JOIN md_role as r ON e.role_id = r.role_id WHERE role_name = 'COUNSELLOR' AND e.school_id = '"+req.query.schol+"'",
      function(err, rows)
      {
        if(!err)
@@ -4801,6 +4801,33 @@ console.log(req.query.schoolid);
   console.log('-----------------------------------------------');
   console.log(qur);
   console.log('-----------------------------------------------');
+    connection.query(qur,function(err, rows)
+     {
+       if(!err)
+       {        
+        res.status(200).json({'returnval': rows});
+       }
+       else
+        res.status(200).json({'returnval': 'no rows'});
+     });
+});
+
+app.post('/gettodayfollowupdetails',  urlencodedParser,function (req, res){
+  var qur="SELECT s.enquiry_no, s.first_name, s.last_name, s.class, s.father_mob, s.mother_mob FROM student_enquiry_details as s join followup as f ON f.enquiry_id = s.enquiry_no WHERE s.school_id = '"+req.query.schol+"' and f.followed_by = '"+req.query.counsellor+"' AND f.upcoming_date = CURDATE() AND f.schedule_status = '"+req.query.status+"'";
+  console.log(qur);
+    connection.query(qur,function(err, rows)
+     {
+       if(!err)
+       {        
+        res.status(200).json({'returnval': rows});
+       }
+       else
+        res.status(200).json({'returnval': 'no rows'});
+     });
+});
+
+app.post('/gettotalfollowuptoday',  urlencodedParser,function (req, res){
+  var qur="SELECT COUNT(*) as total FROM student_enquiry_details as s join followup as f ON f.enquiry_id = s.enquiry_no WHERE s.school_id = '"+req.query.schol+"' and f.followed_by = '"+req.query.counsellor+"' AND f.upcoming_date = CURDATE() AND f.schedule_status = '"+req.query.status+"'";
     connection.query(qur,function(err, rows)
      {
        if(!err)

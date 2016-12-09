@@ -172,7 +172,7 @@
       </li>
       <!-- /.dropdown -->
       <li class="dropdown">
-        <paper-badge for="number" label="4"></paper-badge>
+        <paper-badge for="number" label="{{totalfollowupstoday}}"></paper-badge>
         <a class="dropdown-toggle" data-toggle="dropdown" href="#" on-click="gettodayfollowups">
           <i class="fa fa-bell fa-fw"></i>
         </a>
@@ -759,9 +759,12 @@
         document.querySelector('exchange-followup').ready();
       },  
       gettodayfollowups:function(){
-        alert("hi");
-        alert(localStorage.getItem("employeename"));
+        document.querySelector('app-list').setPage("followup-today-report","Today's Follow Up");
+        this.$.followupservice.getfollowupdetailstoday();
       }, 
+      totalfollowupstoday:function(){
+        alert('hi');
+      },
       FnFeesplitupschedule:function(){
         this.$.scheduleservice.fetchgradeService();
         this.$.scheduleservice.fetchacademicyearService();
