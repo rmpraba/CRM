@@ -5,6 +5,18 @@
 <link rel="import" href="..\..\bower_components/paper-dialog/paper-dialog.html">
 <dom-module id="newenquiry-card">
   <template>
+<!-- this ajax is to fetch the available classes with repect to the school -->
+   <iron-ajax
+        method="post"
+        id="getclassesajax"
+        url="{{getclassesurl}}"
+        params="{{getclassesparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getclassesResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
   <style type="text/css">
       .horizontalframe{
         display: flex;
@@ -35,6 +47,7 @@
       <div class="form-group-heading">
         <h4>Enquiry Detail</h4>
       </div>
+      <paper-button class="btn btn-primary" on-click="fnxyz">get</paper-button>
       <div class="list-group col-sm-12 panel-body form-category">
 
         <div class="col-sm-4">
@@ -54,8 +67,8 @@
         <div class="col-sm-4">
           <paper-dropdown-menu label="Grade" id="gradeclass">
             <paper-menu  class="dropdown-content" id="newenqcardgrade" required on-iron-select="classes" valueattr="value" >
-              <template  is="dom-repeat" items="{{itemarr}}" as="view">
-                <paper-item value="{{view.class}}">{{view.class}}</paper-item>
+              <template  is="dom-repeat" items="{{itemarr}}" as="itemz">
+                <paper-item value="{{itemz.class}}">{{itemz.class}}</paper-item>
               </template>
             </paper-menu>
           </paper-dropdown-menu>
@@ -86,10 +99,10 @@
             <span class="col-sm-4"><paper-checkbox  id="female" class="checkbox" on-change="femaleHandler">Girl</paper-checkbox></span>
           </div>
         </div>
-        <!-- <label>Category</label> -->
         <div class="lbl"><label>Category </label><p id="mangender">&nbsp; *</p> </div>
         <div class="col-sm-9 enquiry-input" style='margin-top: 0.5%;'>
           <template  is="dom-repeat" items="{{discountarr}}" as="view">
+          {{view.discount_type_name}}
             <special-discount-card code="{{view.id}}" discountname="{{view.discount_type_name}}"></special-discount-card>
           </template>
         </div>
@@ -100,6 +113,15 @@
         </div>
         <div class="col-sm-6">
           <paper-input readonly label="Age(In Years)" value="{{ageofyr}}"></paper-input>
+        </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <label>Sibling</label>
+          <paper-radio-group>
+            <paper-radio-button name="yes">Yes</paper-radio-button>
+            <paper-radio-button name="no">No</paper-radio-button>
+          </paper-radio-group>
         </div>
       </div>
     <div class="form-group-heading">
@@ -115,34 +137,43 @@
            </div>
         </div>
       </div>
-     <div  class="list-group col-sm-12 panel-body form-category" id="fathersdetails">
+     <div  class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
           <paper-input label="Father's Name" id="dadname" required error-message="needs father's name!" allowed-pattern="[a-zA-Z ]" value="{{fathername}}"></paper-input>
         </div>
         <div class="col-sm-6">
           <paper-input label="Mother's Name" id="momname" required error-message="needs mother's name!" allowed-pattern="[a-zA-Z ]" value="{{mothername}}"></paper-input>
         </div>
-        <div>
-         <div class="col-sm-6">
-          <paper-input id="mobile" required error-message="enter proper mobile no!" label="Mobile Number" allowed-pattern="[0-9]" maxlength="10" value="{{mob}}" on-change="verifymob"></paper-input>
-         </div>
-         <div class="col-sm-6">
-          <gold-email-input id="email" auto-validate required error-message="needs email ID!" label="Email" value="{{email}}"></gold-email-input>
-         </div>
+      </div>  
+      <div class="list-group col-sm-12 panel-body form-category" >
+        <div class="col-sm-6">
+          <paper-input id="mobile" error-message="enter proper mobile no!" label="Father Mobile Number" allowed-pattern="[0-9]" maxlength="10" value="{{mob}}" on-change="verifymob"></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <paper-input id="mobile" error-message="enter proper mobile no!" label="Mother Mobile Number" allowed-pattern="[0-9]" maxlength="10" value="{{mothermob}}" on-change="verifymob"></paper-input>
+        </div>
       </div>
-    </div>
-
-     <div class="list-group col-sm-12 panel-body form-category"  id="Guardiandetails">
-          <div class="col-sm-6">
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <gold-email-input id="email" error-message="needs email ID!" label="Father Email" value="{{email}}"></gold-email-input>
+        </div>
+        <div class="col-sm-6">
+          <gold-email-input id="email" error-message="needs email ID!" label="Mother Email" value="{{motheremail}}"></gold-email-input>
+        </div>
+      </div>
+     <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
           <paper-input label="Guardian's Name" id="Guardianname" required error-message="needs Guardian's Name!" allowed-pattern="[a-zA-Z ]" value="{{Guardianname}}"></paper-input>
-          </div>
-          <div class="col-sm-6">
+        </div>
+        <div class="col-sm-6">
           <paper-input id="gmobile" required error-message="enter proper mobile no!" label="Mobile Number" allowed-pattern="[0-9]" maxlength="10" value="{{gmob}}" on-change="gverifymob"></paper-input>
-          </div>
-          <div class="col-sm-6">
-                <gold-email-input id="gemail" auto-validate required error-message="needs email ID!" label="Email" value="{{gemail}}"></gold-email-input>
-          </div>
+        </div>
      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <gold-email-input id="gemail" auto-validate required error-message="needs email ID!" label="Guardian Email" value="{{gemail}}"></gold-email-input>
+        </div>
+      </div>  
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-4">
           <paper-input  id="locality" required error-message="needs locality!" label="Enter location/Landmark" is="" value="{{textvalue}}" on-keydown="FnInputChanged"></paper-input>
@@ -153,8 +184,8 @@
           </paper-listbox>
         </div>
         <div class="col-sm-4" style='margin-top: -1%;'>
-           <paper-dropdown-menu label="Enquiry Source" on-iron-select="source" attr-for-selected="value"  style="margin-top: 3%;">
-            <paper-menu class="dropdown-content" id="source"  class="dropdown-content">
+          <paper-dropdown-menu label="Enquiry Source" style="margin-top: 3%;">
+            <paper-menu class="dropdown-content"  class="dropdown-content" id="source" on-iron-select="source" >
               <template  is="dom-repeat" items="{{sourcearr}}" as="item">
                 <paper-item>{{item.source}}</paper-item>
               </template>
@@ -266,23 +297,24 @@
     Polymer({
       is: 'newenquiry-card',
 ready:function () {
-        this.$.service.getclasses();
+  // this.itemarr=[{"class":"class1"},{"class":"class2"}];
+        this.$.sibname.hidden=true;
+          this.$.sibdetail.hidden=true;
+          this.$.referrer.hidden=true;
+       
+        
+        this.todaydate=sessionStorage.getItem("todaydate");
+        this.$.itemlist.hidden=true;
+        this.showdate=sessionStorage.getItem("todaydate");
+      },
+      fnxyz:function(){
+        this.getclasses();
         this.$.service.getlocation();
         this.$.service.getdiscounts();
         this.$.service.getrmnamelist();
         this.$.service.getenquirysource();
-        this.$.fathersdetails.hidden=true;
-        this.$.Guardiandetails.hidden=true;
-        this.$.sibname.hidden=true;
-          this.$.sibdetail.hidden=true;
-          this.$.referrer.hidden=true;
-        var dt=new Date();
-        todaydat=dt.getDate()+"/"+(dt.getMonth()+1)+"/"+dt.getFullYear();
-        sessionStorage.setItem("todaydate",todaydat);
-        this.todaydate=todaydat;
-        this.$.itemlist.hidden=true;
-        this.showdate=(dt.getMonth()+1)+"/"+dt.getDate()+"/"+dt.getFullYear();
-      },Fnclear:function(){
+      }
+      ,Fnclear:function(){
           this.ready();
           //this.$.academics.selected=-1;
           this.$.class.selected=-1;
@@ -372,8 +404,6 @@ if(enquiysource=="Siblings"){
         {
          document.querySelector("#parents").checked=false;
          paga="Gurdians";
-         this.$.fathersdetails.hidden=true;
-         this.$.Guardiandetails.hidden=false;
          //alert(gender);
          this.fathername="";
          this.mothername="";
@@ -381,8 +411,6 @@ if(enquiysource=="Siblings"){
          this.email="";
        }
        else{
-         this.$.fathersdetails.hidden=false;
-         this.$.Guardiandetails.hidden=true;
          paga=null;
          this.Guardianname="";
          this.gmob="";
@@ -394,16 +422,12 @@ if(enquiysource=="Siblings"){
         {
          document.querySelector("#Gurdians").checked=false;
          paga="parents";
-          this.$.Guardiandetails.hidden=true;
-          this.$.fathersdetails.hidden=false;
           this.Guardianname="";
          this.gmob="";
          this.gemail="";
          //alert(gender);
        }
        else{
-        this.$.fathersdetails.hidden=true;
-         this.$.Guardiandetails.hidden=false;
          paga=null;
          this.fathername="";
          this.mothername="";
@@ -806,7 +830,22 @@ if(enquiysource=="Siblings"){
           this.itemArrayz=[];
           document.querySelector('#itemlist').selected=-1;
           this.$.itemlistz.hidden=true;
-        }
+        },
+      getclasses:function(){
+      this.getclassesurl=sessionStorage.getItem("addrinfo")+"/getclasses";
+        var obj={"schol":""};
+        obj.schol=localStorage.getItem("schoolid");
+        this.getclassesparam=obj;
+       alert(JSON.stringify(obj));
+        this.$.getclassesajax.generateRequest();
+     },
+     getclassesResponse:function(e){
+        var result=e.detail.response.returnval;
+        alert(JSON.stringify(result));
+       this.itemarr=result;
+       //document.querySelector('detailed-enquiry-form').itemarr=result;
+       // document.querySelector('admission-approval-card').itemarr=result;
+     },
     });
   })();
   </script>

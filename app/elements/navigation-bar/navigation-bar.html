@@ -273,7 +273,7 @@
             <a href="" aria-hidden="true" on-click="enquiry"><i class="fa fa-phone-square fa-fw"></i> Enquiry<span class="fa arrow"></span></a>
             <ul class="nav nav-second-level">
               <li>
-              <a href="" on-click="Fnpreapp" aria-hidden="true" data-toggle="modal" data-target="#addEnquiry">Pre Apps</a>
+              <a href="" on-click="Fnpreapp">Pre Apps</a>
                 <!-- <a href="flot.html"></a> -->
               </li>
               <li>
@@ -773,8 +773,12 @@
       },
 
       Fnpreapp:function(){
-          document.querySelector('newenquiry-card').Fnclear();
-          document.querySelector('special-discount-card').ready();
+        document.querySelector('app-list').setPage("pre-apps","Pre Apps");
+        document.querySelector('pre-apps').ready();
+        document.querySelector('pre-apps').callnextyearhandler();
+          // document.querySelector('newenquiry-card').Fnclear();
+          // document.querySelector('special-discount-card').ready();
+          
       },
       Fnenqform:function(){
           document.querySelector('detailed-enquiry-form').Fnclear();

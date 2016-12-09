@@ -71,18 +71,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       debounce-duration="300"
     >
     </iron-ajax>
-<!-- this ajax is to fetch the available classes with repect to the school -->
-   <iron-ajax
-        method="post"
-        id="getclassesajax"
-        url="{{getclassesurl}}"
-        params="{{getclassesparam}}"
-        handle-as="json"
-        content-type="application/json"
-        on-response="getclassesResponse"
-        debounce-duration="300"
-        >
-  </iron-ajax>
   <!-- this ajax fetched the list of locations available with respect to school -->
   <iron-ajax
         method="post"
@@ -474,9 +462,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var testenqid;
     var testdate;
     var rte_number;
-    var walkinanalysisyear={};
-    var walkinanalysismonth={};
-    var walkinanalysisday={};
+    var walkinanalysisyear=[];
+    var walkinanalysismonth=[];
+    var walkinanalysisday=[];
     var walkinanasysisyaerandmontharr=[];
     var walkinanasysisarr=[];
     var attenderusername;
@@ -989,20 +977,6 @@ attenderusername=attendername;
         document.querySelector('detailed-enquiry-form').setenqno(enquiryif);
         document.querySelector('detailed-enquiry-form').complete();
       },
-      getclasses:function(){
-      this.getclassesurl=sessionStorage.getItem("addrinfo")+"/getclasses";
-        var obj={"schol":""};
-        obj.schol=localStorage.getItem("schoolid");
-        this.getclassesparam=obj;
-       //alert(JSON.stringify(obj));
-        this.$.getclassesajax.generateRequest();
-     },
-     getclassesResponse:function(e){
-        var result=e.detail.response.returnval;
-       document.querySelector('newenquiry-card').itemarr=result;
-       document.querySelector('detailed-enquiry-form').itemarr=result;
-       // document.querySelector('admission-approval-card').itemarr=result;
-     },
      getlocation:function(){
       this.getlocationurl=sessionStorage.getItem("addrinfo")+"/getlocation";
         var obj={"schol":""};
@@ -1139,7 +1113,6 @@ attenderusername=attendername;
         obj.listname=parentarr[i].parent_name;
         namelistarr.push(obj);
       }
-
       this.getstudentnameurl=sessionStorage.getItem("addrinfo")+"/getstudentnamelist";
       var obj={"schol":""}
       obj.schol=localStorage.getItem("schoolid");
@@ -1148,17 +1121,16 @@ attenderusername=attendername;
       this.$.getstudentnameajax.generateRequest();
 
      },
-     getstudentnameResponse:function(e){
+      getstudentnameResponse:function(e){
         studentarr=e.detail.response.returnval;
         //alert(JSON.stringify(studentarr));
         for(var i=0;i<studentarr.length;i++){
-        var obj={"listname":""}
-        obj.listname=studentarr[i].student_name;
-        namelistarr.push(obj);
-         }
-
-     //document.querySelector('detailed-enquiry-form').Fnlistbox(namelistarr);
-     document.querySelector('newenquiry-card').Fnlistboxz(namelistarr);
+          var obj={"listname":""}
+          obj.listname=studentarr[i].student_name;
+          namelistarr.push(obj);
+        }
+        //document.querySelector('detailed-enquiry-form').Fnlistbox(namelistarr);
+        document.querySelector('newenquiry-card').Fnlistboxz(namelistarr);
      },
 
 
@@ -1280,8 +1252,8 @@ attenderusername=attendername;
         var today = new Date();
         var mm = today.getMonth()+1; //January is 0!
         var yyyy = today.getFullYear();
-        var current_month = '%/'+mm+'/'+yyyy;
-        obj.current_year='%/%/'+yyyy;
+        var current_month = '%-'+mm+'-'+yyyy;
+        obj.current_year=yyyy+'-%';
         obj.current_month=current_month;
         this.walkinanalysisyearparam=obj;
         this.$.walkinanalysisyearajax.generateRequest();
@@ -1297,8 +1269,8 @@ attenderusername=attendername;
         var today = new Date();
         var mm = today.getMonth()+1; //January is 0!
         var yyyy = today.getFullYear();
-        var current_month = '%/'+mm+'/'+yyyy;
-        obj.current_year='%/%/'+yyyy;
+        var current_month = yyyy+'-'+mm+'-'+'%';
+        obj.current_year=yyyy+'-%-%';
         obj.current_month=current_month;
         this.walkinanalysismonthparam=obj;
         this.$.walkinanalysismonthajax.generateRequest();
@@ -1314,12 +1286,13 @@ attenderusername=attendername;
         var mm = today.getMonth()+1; //January is 0!
         var yyyy = today.getFullYear();
         var current_date =today.getDate();
-        obj.current_year= current_date+'/'+mm+'/'+yyyy;
+        obj.current_year= yyyy+'-'+mm+'-'+current_date;
         this.walkinanalysisdayparam=obj;
         this.$.walkinanalysisdayajax.generateRequest();
       },
       walkinanalysisdayResponse:function(e){
         walkinanalysisday=e.detail.response.returnval;
+        alert(JSON.stringify(walkinanalysisday));
         this.walkinanasysisyaerandmonth();
       },
       walkinanasysisyaerandmonth:function(){
@@ -1351,7 +1324,7 @@ attenderusername=attendername;
       walkinanalysis:function(){
         if(walkinanalysisday){
           for(var i = 0; i <walkinanasysisyaerandmontharr.length; i++){
-            var obj = {"source":"","year":"","month":"",day:""};
+            var obj = {"source":"","year":"","month":"","day":""};
             for(var j = 0; j <walkinanalysisday.length; j++){
               if(walkinanasysisyaerandmontharr[i].source == walkinanalysisday[j].enquiry_source){
                 if(walkinanalysisday[j].totalenq==null||walkinanalysisday[j].totalenq==""){
@@ -1361,7 +1334,7 @@ attenderusername=attendername;
                 }
               }
               else{
-                walkinanasysisyaerandmontharr[i].day=0;
+                walkinanasysisyaerandmontharr[i].day=walkinanalysisday[j].totalenq;
               }
             }
           }
@@ -1389,10 +1362,10 @@ attenderusername=attendername;
         obj.schol=localStorage.getItem("schoolid");
         var fromdate = new Date(from_date);
         var month1 = fromdate.getMonth() + 1;
-        obj.from_date =  month1+'/'+fromdate.getDate()+'/'+ fromdate.getFullYear();
+        obj.from_date = fromdate.getFullYear()+'-'+month1+'-'+fromdate.getDate();
         var todate = new Date(to_date);
         var month2 = todate.getMonth() + 1;
-        obj.to_date = month2+ '/'+todate.getDate() + '/' + todate.getFullYear();
+        obj.to_date = todate.getFullYear()+'-'+month2+'-'+todate.getDate();
         this.getbetweendatereportparam=obj;
         this.$.getbetweendatereportajax.generateRequest();
       },
@@ -1426,8 +1399,8 @@ attenderusername=attendername;
       },
       getenquirysourceResponse:function(e){
           var result=e.detail.response.returnval;
-           document.querySelector('detailed-enquiry-form').sourcearr=result;
            document.querySelector('newenquiry-card').sourcearr=result;
+           document.querySelector('detailed-enquiry-form').sourcearr=result;
       },
 
      getcounsellor:function(){

@@ -545,7 +545,7 @@
           this.$.itemlist.hidden=true;
           this.$.itemlists.hidden=true;
           var dt=new Date();
-          this.todaydate=dt.getDate()+"/"+(dt.getMonth()+1)+"/"+dt.getFullYear();
+          this.todaydate=sessionStorage.getItem("todaydate");
           this.hidedadothers=true;
           this.hidemotherothers=true;
           this.hideguardianothers=true;
