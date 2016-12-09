@@ -9,19 +9,11 @@
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 
 
-
-<dom-module id="installment-date-picker">
-<style>
-  paper-input{
-    width: 120%;
-    margin-top: -3%;
-    margin-left: -5%;
-  }
-</style>
+<dom-module id="editreceipt-datepicker">
   <template>
     <!--component which invokes the predefined date picker control-->
     <div class="datepicker">
-      <paper-input class="btn" on-click="FnShowDialog" label="Installment Date" raised value="{{showdate}}"></paper-input>
+      <paper-button  class="btn" on-click="FnShowDialog" raised value="{{showdate}}">{{showdate}}</paper-button>
       <paper-dialog id="dialog" class="paper-date-picker-dialog" modal on-iron-overlay-closed="FnDismissDialog" style="left: 0 !important;">
         <paper-date-picker id="picker" date="{{date}}"></paper-date-picker>
         <div class="buttons">
@@ -31,16 +23,20 @@
       </paper-dialog>
     </div>
     <dialog-page id="ID_Show_Dialog"></dialog-page>
-    <transport-service id="service"></transport-service>
+    <!-- <transport-service id="service"></transport-service> -->
   </template>
+  <!--Calling dialog control-->
+
+  <!--JS file import-->
   <script>
     Polymer({
-      is: 'installment-date-picker',
+      is: 'editreceipt-datepicker',
 
       ready:function()
       {
         this.showdate=moment(new Date()).format('L');
-        localStorage.setItem("curr_sess_installmentdate",this.showdate);
+        localStorage.setItem("curr_sess_receiptdate",this.showdate);
+        //this.$.service.feereport(this.showdate);
       },
       FnShowDialog:function(){
         this.date=new Date();
@@ -55,15 +51,17 @@
           var dd2=new Date(pickdate);
           var days=parseInt((dd1 - dd2) / (1000 * 60 * 60 * 24));
           this.showdate = moment(this.$.picker.date).format('L');
-          localStorage.setItem("curr_sess_installmentdate",this.showdate);
+          localStorage.setItem("curr_sess_chequedate",this.showdate);          
         }
       },
       FnClear:function(){
         this.showdate = moment(new Date()).format('L');
       },
-      FnSetDate:function(value){
-        this.showdate=moment(new Date(value)).format('L');
-        localStorage.setItem("curr_sess_installmentdate",this.showdate);
+      setinstalldate:function(installmentdate)
+      {
+      var d1=installmentdate;
+      this.showdate=d1;
+      localStorage.setItem("curr_sess_chequedate",this.showdate);
       }
     });
   </script>

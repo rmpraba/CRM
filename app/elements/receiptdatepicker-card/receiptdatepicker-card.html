@@ -13,9 +13,9 @@
   <template>
     <!--component which invokes the predefined date picker control-->
     <div class="datepicker">
-      <paper-input  class="btn" on-click="FnShowDialog" raised value="{{showdate}}"></paper-input>
+      <paper-input  class="btn" label="Receipt Date" on-click="FnShowDialog" raised value="{{showdate}}"></paper-input>
       <paper-dialog id="dialog" class="paper-date-picker-dialog" modal on-iron-overlay-closed="FnDismissDialog" style="left: 0 !important;">
-        <paper-date-picker id="picker" date="{{date}}"></paper-date-picker>
+        <paper-date-picker id="receiptpicker" date="{{date}}"></paper-date-picker>
         <div class="buttons">
           <paper-button dialog-dismiss>Cancel</paper-button>
           <paper-button dialog-confirm>OK</paper-button>
@@ -35,7 +35,8 @@
       ready:function()
       {
         this.showdate=moment(new Date()).format('L');
-        localStorage.setItem("curr_sess_chequedate",this.showdate);
+        localStorage.setItem("curr_sess_receiptdate",this.showdate);
+        // alert(localStorage.getItem("curr_sess_receiptdate"));
         //this.$.service.feereport(this.showdate);
       },
       FnShowDialog:function(){
@@ -46,12 +47,12 @@
       {
         if (e.detail.confirmed)
         {
-          var pickdate=moment(this.$.picker.date).format('L');
+          var pickdate=moment(this.$.receiptpicker.date).format('L');
           var dd1=new Date();
           var dd2=new Date(pickdate);
           var days=parseInt((dd1 - dd2) / (1000 * 60 * 60 * 24));
-          this.showdate = moment(this.$.picker.date).format('L');
-          localStorage.setItem("curr_sess_chequedate",this.showdate);          
+          this.showdate = moment(this.$.receiptpicker.date).format('L');
+          localStorage.setItem("curr_sess_receiptdate",this.showdate);          
         }
       },
       FnClear:function(){
@@ -61,7 +62,7 @@
       {
       var d1=installmentdate;
       this.showdate=d1;
-      localStorage.setItem("curr_sess_chequedate",this.showdate);
+      localStorage.setItem("curr_sess_receiptdate",this.showdate);
       }
     });
   </script>
