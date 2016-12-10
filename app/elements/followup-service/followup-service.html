@@ -1187,8 +1187,7 @@ newdate.setDate(newdate.getDate()+resultarray[0].no_of_days);
       },
       gettotalfollowupcounttodayResponse:function(e){
         var result = e.detail.response.returnval[0].total;
-        alert(document.querySelector('navigation-bar'));
-        document.querySelector('navigation-bar').totalfollowupstoday();
+        document.querySelector('navigation-bar').Fntotalfollowupstoday(result);
       },
       getfollowupdetailstoday:function(){
         this.getfollowupdetailstodayurl=sessionStorage.getItem("addrinfo")+"/gettodayfollowupdetails";

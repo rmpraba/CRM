@@ -4814,7 +4814,6 @@ console.log(req.query.schoolid);
 
 app.post('/gettodayfollowupdetails',  urlencodedParser,function (req, res){
   var qur="SELECT s.enquiry_no, s.first_name, s.last_name, s.class, s.father_mob, s.mother_mob FROM student_enquiry_details as s join followup as f ON f.enquiry_id = s.enquiry_no WHERE s.school_id = '"+req.query.schol+"' and f.followed_by = '"+req.query.counsellor+"' AND f.upcoming_date = CURDATE() AND f.schedule_status = '"+req.query.status+"'";
-  console.log(qur);
     connection.query(qur,function(err, rows)
      {
        if(!err)
