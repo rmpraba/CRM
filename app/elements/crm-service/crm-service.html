@@ -428,6 +428,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         on-response="getclassesResponse"
         debounce-duration="300"
         >
+    <iron-ajax
+      method="post"
+      id="discountajax"
+      url="{{discounturl}}"
+      params="{{discountparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="getdiscountsResponse"
+      debounce-duration="300"
+    >
   </template>
   <script>
   (function() {
@@ -495,6 +505,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        document.querySelector('detailed-enquiry-form').itemarr=result;
        // document.querySelector('admission-approval-card').itemarr=result;
      },
+     getdiscounts:function(){
+        this.discounturl=sessionStorage.getItem("addrinfo")+"/discount";
+        var obj={"schol":""};
+        obj.schol=localStorage.getItem("schoolid");
+        this.discountparam=obj;
+        this.$.discountajax.generateRequest();
+      },
+      getdiscountsResponse:function(e){
+        var res=e.detail.response.returnval;
+        //alert(JSON.stringify(res));
+        document.querySelector('special-discount-card').discountarr=res;
+        
+      },
       followupResponse:function(e){
          firstfollowup=e.detail.response.firstfollowup;
          secondfollowup=e.detail.response.secondfollowup;

@@ -2,6 +2,7 @@
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 <link rel="import" href="../dateofbirth-datepicker/dateofbirth-datepicker.html">
+<link rel="import" href="../special-discount-card/special-discount-card.html">
 
 <dom-module id="admission-form">
   <template>
@@ -60,13 +61,13 @@
       </div>
 
       <div class="list-group col-sm-12 panel-body form-category">
-        <div class="col-sm-4">
+        <!-- <div class="col-sm-4">
           <span class="col-sm-12"><h5>Admission Type</h5></span>
           <span><paper-checkbox  checked class="col-sm-6" id="general" class="checkbox" on-change="generalHandler">General</paper-checkbox></span>
           <span><paper-checkbox class="col-sm-6" id="spot" class="checkbox" on-change="spotHandler">Spot</paper-checkbox></span>          
-        </div>
+        </div> -->
         <label>Category</label>
-        <div class="col-sm-8 enquiry-input">
+        <div class="col-sm-12 enquiry-input">
           <template  is="dom-repeat" items="{{discountarr}}" as="view">
             <special-discount-card code="{{view.id}}" discountname="{{view.discount_type_name}}"></special-discount-card>
           </template>
@@ -114,8 +115,8 @@
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-8 enquiry-input">
           <span class="col-sm-2"><h5>Gender</h5></span>
-          <span class="col-sm-2"><paper-checkbox id="Male" readonly class="checkbox" on-change="maleHandler">Boy</paper-checkbox></span>
-           <span class="col-sm-2"><paper-checkbox  id="Female" readonly class="checkbox" on-change="femaleHandler">Girl</paper-checkbox></span>
+          <span class="col-sm-2"><paper-checkbox id="admnboy" readonly class="checkbox" on-change="maleHandler">Boy</paper-checkbox></span>
+           <span class="col-sm-2"><paper-checkbox  id="admngirl" readonly class="checkbox" on-change="femaleHandler">Girl</paper-checkbox></span>
         </div>
       </div>
       <div class="form-group-heading">
@@ -195,7 +196,16 @@
       <div class="form-group-heading">
         <h4>Sibling Information</h4>
       </div>
-      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="list-group col-sm-12 panel-body form-category" >
+       <div class="col-sm-3">Do you have Sibling ?</div>
+       <div class="col-sm-2">
+          <span><paper-checkbox id="sibyes" class="checkbox" on-change="siblingyesHandler">Yes</paper-checkbox></span>
+       </div>
+       <div class="col-sm-2">
+          <span><paper-checkbox id="sibno" class="checkbox" on-change="siblingnoHandler">No</paper-checkbox></span>
+       </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category" id="divsiblinghandler">
         <div class="col-sm-6">
           <paper-input label="Sibling Name" value="{{siblingname}}"></paper-input>
         </div>
@@ -206,7 +216,18 @@
       <div class="form-group-heading">
         <h4>Record of Previous Class Attended</h4>
       </div>
-      <div class="list-group col-sm-12 panel-body form-category">
+      <div class="list-group col-sm-12 panel-body form-category" >
+      
+       <div class="col-sm-3">Previously studied in any school ?</div>
+       <div class="col-sm-2">
+          <span><paper-checkbox id="hisyes" class="checkbox" on-change="historyyesHandler">Yes</paper-checkbox></span>
+       </div>
+       <div class="col-sm-2">
+          <span><paper-checkbox id="hisno" class="checkbox" on-change="historynoHandler">No</paper-checkbox></span>
+       </div>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category" id="divhistoryhandler">
+      <div class="list-group col-sm-12 panel-body form-category" >
         <div class="col-sm-6">
           <paper-input label="Name of School" value="{{prevschoolname}}"></paper-input>
         </div>
@@ -260,6 +281,7 @@
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <paper-textarea label="Reason for Leaving" value="{{reasonforleaving}}"></paper-textarea>
+      </div>
       </div>
       <div class="form-group-heading">
         <h4>Physical/Mental Disability and Mental History(if any)</h4>
@@ -392,16 +414,16 @@
           <paper-input label="Mother's Name" value="{{mothername}}"></paper-input>
         </div>
       </div>
-      <div class="list-group col-sm-12 panel-body form-category">
+      <!-- <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
-          <!-- <paper-input label="Father's Date of Birth" value="{{fatherdob}}"></paper-input> -->
-          <dateofbirth-datepicker doblabel="Father's Date Of Birth"></dateofbirth-datepicker>
+           <paper-input label="Father's Date of Birth" value="{{fatherdob}}"></paper-input> -->
+          <!-- <dateofbirth-datepicker doblabel="Father's Date Of Birth"></dateofbirth-datepicker>
         </div>
         <div class="col-sm-6">
-          <!-- <paper-input label="Mother's Date of Birth" value="{{motherdob}}"></paper-input> -->
+          <paper-input label="Mother's Date of Birth" value="{{motherdob}}"></paper-input>
           <dateofbirth-datepicker doblabel="Mother's Date Of Birth"></dateofbirth-datepicker>
         </div>
-      </div>
+      </div> -->
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-6">
           <paper-input label="Father's Edn. Professional Qualification" value="{{fatherqualification}}"></paper-input>
@@ -609,6 +631,8 @@
     var admissiontransport;
     var admissioncanteen;
     var admissiondisabled;
+    var admissionsibling;
+    var admissionhistory;
     var FnBlood;
     var FnBo;
     var relegions;
@@ -626,6 +650,8 @@
     var admissiontype="0";
     var discounttype="";
     var discountname="";
+    var schoolhistory;
+    var sibling;
     Polymer({
       is: 'admission-form',
         ready:function(){
@@ -633,6 +659,8 @@
         this.hidethirdlanguage=true;
         this.$.physicdetailhandler.hidden=true;
         this.$.acheivehandlerdiv.hidden=true;
+        this.$.divsiblinghandler.hidden=true;
+        this.$.divhistoryhandler.hidden=true;
         this.$.scheduleservice.fetchgradeService();
         this.$.scheduleservice.fetchacademicyearService();
         this.$.scheduleservice.fetchadmissionyearService();
@@ -655,17 +683,17 @@
         this.$.admissionservice.callFetchenquiryinfoService();
       },
       maleHandler:function(){
-        if(document.querySelector("#Male").checked==true)
+        if(document.querySelector("#admnboy").checked==true)
         {
-         document.querySelector("#Female").checked=false;
-         gender="Male";
+         document.querySelector("#admngirl").checked=false;
+         gender="boy";
        }
       },
       femaleHandler:function(){
-        if(document.querySelector("#Female").checked==true)
+        if(document.querySelector("#admngirl").checked==true)
         {
-         document.querySelector("#Male").checked=false;
-         gender="Female";
+         document.querySelector("#admnboy").checked=false;
+         gender="girl";
         }
       },
       FnHideThirdLanguage:function(flag){
@@ -784,6 +812,48 @@
          paddress="No";
         }
     },
+    siblingyesHandler:function(e){
+        admissionsibling=e.target.id;        
+        admissionsibling=admissionsibling.substring(3);
+        // alert(admissionsibling);
+        if(document.querySelector("#sibyes").checked==true){
+           sibling="yes";
+           this.$.divsiblinghandler.hidden=false;
+            document.querySelector("#sibno").checked=false;
+          }
+          else{sibling=null;}
+    },
+    siblingnoHandler:function(e){
+        // admissionsibling=e.target.id;
+        // admissionsibling=admissionsibling.substring(3);
+        if(document.querySelector("#sibno").checked==true){
+             sibling="no";
+             document.querySelector("#sibyes").checked=false;
+             this.$.divsiblinghandler.hidden=true;
+          }
+             else{sibling=null;}
+    },
+    historyyesHandler:function(e){
+        admissionhistory=e.target.id;
+        admissionhistory=admissionhistory.substring(3);
+        // alert(admissionhistory);
+        if(document.querySelector("#hisyes").checked==true){
+           schoolhistory="yes";
+           this.$.divhistoryhandler.hidden=false;
+            document.querySelector("#hisno").checked=false;
+          }
+          else{schoolhistory=null;}
+    },
+    historynoHandler:function(e){
+        // admissionsibling=e.target.id;
+        // admissionsibling=admissionsibling.substring(3);
+        if(document.querySelector("#hisno").checked==true){
+             schoolhistory="no";
+             document.querySelector("#hisyes").checked=false;
+             this.$.divhistoryhandler.hidden=true;
+          }
+             else{schoolhistory=null;}
+    },
     disabledyesHandler:function(e){
         admissiondisabled=e.target.id;
         admissiondisabled=admissiondisabled.substring(1);
@@ -806,7 +876,7 @@
         acheivements=e.target.id;
         acheivements=acheivements.substring(2);
         if(document.querySelector("#Acyes").checked==true){
-           acheivehandler="yes";
+           acheivehandler="Yes";
            this.$.acheivehandlerdiv.hidden=false;
             document.querySelector("#Acno").checked=false;
           }
@@ -854,20 +924,20 @@
     FnSelectToGrade:function(e){
       tograde=(e.target.selectedItem.textContent).trim();
     },
-    spotHandler:function(){
-        if(document.querySelector("#spot").checked==true)
-        {
-         document.querySelector("#general").checked=false;
-         admissiontype="1";
-       }
-      },
-      generalHandler:function(){
-        if(document.querySelector("#general").checked==true)
-        {
-         document.querySelector("#spot").checked=false;
-         admissiontype="0";
-       }
-      },
+    // spotHandler:function(){
+    //     if(document.querySelector("#spot").checked==true)
+    //     {
+    //      document.querySelector("#general").checked=false;
+    //      admissiontype="1";
+    //    }
+    //   },
+    //   generalHandler:function(){
+    //     if(document.querySelector("#general").checked==true)
+    //     {
+    //      document.querySelector("#spot").checked=false;
+    //      admissiontype="0";
+    //    }
+    //   },
       prime:function(){
         if(this.gradeselection=="Nursery"||this.gradeselection=="LKG"||this.gradeselection=="UKG"||this.gradeselection=="Grade-1"||this.gradeselection=="Grade-2"||this.gradeselection=="Grade-3"|| this.gradeselection=="Grade-4"){
           this.$.lang3Handler.hidden=true;
@@ -906,7 +976,7 @@
         if(value=="Yes")
         document.querySelector("#T"+value).checked=true;
         if(value=="No")
-        document.querySelector("#T"+value).checked=false;
+        document.querySelector("#T"+value).checked=true;
       },
       FnSetCanteen:function(value){
         // alert('canteen'+value);
@@ -914,11 +984,20 @@
         if(value=="Yes")
         document.querySelector("#C"+value).checked=true;
         if(value=="No")
-        document.querySelector("#C"+value).checked=false;
+        document.querySelector("#C"+value).checked=true;
       },
       FnSetGender:function(value){
         gender=value;
-        document.querySelector("#"+value).checked=true;
+        document.querySelector("#admn"+value).checked=true;
+      },
+      FnSetSibling:function(value){
+        admissionsibling=value;
+        if(value=="yes"){
+          this.$.divsiblinghandler.hidden=false;
+        document.querySelector("#sib"+value).checked=true;
+        }
+        if(value=="no")
+        document.querySelector("#sib"+value).checked=true;
       },
       FnSetDisabled:function(value){
         handler=value;
@@ -927,7 +1006,7 @@
         document.querySelector("#D"+value).checked=true;
         }
         if(value=="no")
-        document.querySelector("#D"+value).checked=false;
+        document.querySelector("#D"+value).checked=true;
       },
       FnSetAcheivement:function(value){
         acheivehandler=value;
@@ -936,7 +1015,7 @@
         document.querySelector("#Ac"+value).checked=true;
         }
         if(value=="no")
-        document.querySelector("#Ac"+value).checked=false;
+        document.querySelector("#Ac"+value).checked=true;
       },
       FnSetCaste:function(value){
         relegions=value;
@@ -1073,11 +1152,11 @@
           if(localStorage.getItem("curr_sess_insertflag")=="1")
 
           this.$.admissionservice.callInsertAdmissionService(localStorage.getItem("curr_sess_enquiryno"),localStorage.getItem("curr_sess_enquiryname"),this.applicationno,this.schoolname,this.enquiredyear,admissionyear,this.firstname,this.middlename,this.lastname,this.gradeselection,secondlanguage,thirdlanguage,this.dob,this.age,gender,this.flatno,
-            this.bulidingname,this.street,this.city,this.town,this.state,this.pincode,this.height,this.weight,FnBlood,relegions,this.relegion,this.nationality,this.mothertongue,this.siblingname,this.siblingclass,this.prevschoolname,fromgrade,tograde,FnBo,this.yearfrom,this.yearto,this.medium,this.lastclassmark,this.reasonforleaving,handler,this.physicdetail,this.physicstatus,this.mentaldetail,this.mentalstatus,this.illnessdetail,this.illnessstatus,this.allergydetail,this.allergystatus,this.chronicdetail,this.chronicstatus,acheivehandler,this.fathername,this.mothername,this.fatherqualification,this.motherqualification,this.fatheroccupation,this.motheroccupation,this.fatherincome,this.motherincome,this.fathertelno,this.mothertelno,this.fathermobile,this.mothermobile,this.fatheremail,this.motheremail,this.fatherdob,this.motherdob,this.pflatno,this.pbuildingname,this.pstreet,this.pdistrict,this.ptown,this.pstate,this.ppincode,this.guardianname1,this.guardianname2,this.relationship1,this.relationship2,this.gflatno,this.gbulidingname,this.gstreet,this.gcity,this.gtown,this.gstate,this.gpincode,this.gresidentialcontact,this.gofficecontact,this.gmobileno,this.gfax,admissiontransport,admissioncanteen,this.field1,this.year1,this.event1,this.prizedetail1,this.field2,this.year2,this.event2,this.prizedetail2,this.field3,this.year3,this.event3,this.prizedetail3,admissiontype,discounttype);
+            this.bulidingname,this.street,this.city,this.town,this.state,this.pincode,this.height,this.weight,FnBlood,relegions,this.relegion,this.nationality,this.mothertongue,this.siblingname,this.siblingclass,this.prevschoolname,fromgrade,tograde,FnBo,this.yearfrom,this.yearto,this.medium,this.lastclassmark,this.reasonforleaving,handler,this.physicdetail,this.physicstatus,this.mentaldetail,this.mentalstatus,this.illnessdetail,this.illnessstatus,this.allergydetail,this.allergystatus,this.chronicdetail,this.chronicstatus,acheivehandler,this.fathername,this.mothername,this.fatherqualification,this.motherqualification,this.fatheroccupation,this.motheroccupation,this.fatherincome,this.motherincome,this.fathertelno,this.mothertelno,this.fathermobile,this.mothermobile,this.fatheremail,this.motheremail,this.fatherdob,this.motherdob,this.pflatno,this.pbuildingname,this.pstreet,this.pdistrict,this.ptown,this.pstate,this.ppincode,this.guardianname1,this.guardianname2,this.relationship1,this.relationship2,this.gflatno,this.gbulidingname,this.gstreet,this.gcity,this.gtown,this.gstate,this.gpincode,this.gresidentialcontact,this.gofficecontact,this.gmobileno,this.gfax,admissiontransport,admissioncanteen,this.field1,this.year1,this.event1,this.prizedetail1,this.field2,this.year2,this.event2,this.prizedetail2,this.field3,this.year3,this.event3,this.prizedetail3,admissiontype,discounttype,admissionsibling,admissionhistory);
           if(localStorage.getItem("curr_sess_insertflag")=="2")
 
           this.$.admissionservice.callInsertAdmissionService(localStorage.getItem("curr_sess_admnenquiryno"),localStorage.getItem("curr_sess_enquiryname"),this.applicationno,this.schoolname,this.enquiredyear,admissionyear,this.firstname,this.middlename,this.lastname,this.gradeselection,secondlanguage,thirdlanguage,this.dob,this.age,gender,this.flatno,
-            this.bulidingname,this.street,this.city,this.town,this.state,this.pincode,this.height,this.weight,FnBlood,relegions,this.relegion,this.nationality,this.mothertongue,this.siblingname,this.siblingclass,this.prevschoolname,fromgrade,tograde,FnBo,this.yearfrom,this.yearto,this.medium,this.lastclassmark,this.reasonforleaving,handler,this.physicdetail,this.physicstatus,this.mentaldetail,this.mentalstatus,this.illnessdetail,this.illnessstatus,this.allergydetail,this.allergystatus,this.chronicdetail,this.chronicstatus,acheivehandler,this.fathername,this.mothername,this.fatherqualification,this.motherqualification,this.fatheroccupation,this.motheroccupation,this.fatherincome,this.motherincome,this.fathertelno,this.mothertelno,this.fathermobile,this.mothermobile,this.fatheremail,this.motheremail,this.fatherdob,this.motherdob,this.pflatno,this.pbuildingname,this.pstreet,this.pdistrict,this.ptown,this.pstate,this.ppincode,this.guardianname1,this.guardianname2,this.relationship1,this.relationship2,this.gflatno,this.gbulidingname,this.gstreet,this.gcity,this.gtown,this.gstate,this.gpincode,this.gresidentialcontact,this.gofficecontact,this.gmobileno,this.gfax,admissiontransport,admissioncanteen,this.field1,this.year1,this.event1,this.prizedetail1,this.field2,this.year2,this.event2,this.prizedetail2,this.field3,this.year3,this.event3,this.prizedetail3,admissiontype,discounttype);
+            this.bulidingname,this.street,this.city,this.town,this.state,this.pincode,this.height,this.weight,FnBlood,relegions,this.relegion,this.nationality,this.mothertongue,this.siblingname,this.siblingclass,this.prevschoolname,fromgrade,tograde,FnBo,this.yearfrom,this.yearto,this.medium,this.lastclassmark,this.reasonforleaving,handler,this.physicdetail,this.physicstatus,this.mentaldetail,this.mentalstatus,this.illnessdetail,this.illnessstatus,this.allergydetail,this.allergystatus,this.chronicdetail,this.chronicstatus,acheivehandler,this.fathername,this.mothername,this.fatherqualification,this.motherqualification,this.fatheroccupation,this.motheroccupation,this.fatherincome,this.motherincome,this.fathertelno,this.mothertelno,this.fathermobile,this.mothermobile,this.fatheremail,this.motheremail,this.fatherdob,this.motherdob,this.pflatno,this.pbuildingname,this.pstreet,this.pdistrict,this.ptown,this.pstate,this.ppincode,this.guardianname1,this.guardianname2,this.relationship1,this.relationship2,this.gflatno,this.gbulidingname,this.gstreet,this.gcity,this.gtown,this.gstate,this.gpincode,this.gresidentialcontact,this.gofficecontact,this.gmobileno,this.gfax,admissiontransport,admissioncanteen,this.field1,this.year1,this.event1,this.prizedetail1,this.field2,this.year2,this.event2,this.prizedetail2,this.field3,this.year3,this.event3,this.prizedetail3,admissiontype,discounttype,admissionsibling,admissionhistory);
         }
         },
        FnRefresh:function(){
@@ -1124,8 +1203,8 @@
         this.$.ThirdHindi.checked=false;
         this.dob=new Date();
         this.age="";
-        this.$.Male.checked=false;
-        this.$.Female.checked=false;
+        this.$.admnboy.checked=false;
+        this.$.admngirl.checked=false;
         this.flatno="";
         this.bulidingname="";
         this.street="";
@@ -1235,8 +1314,14 @@
         admissiontype="0";
         discounttype="";
         discountname="";
-        this.$.spot.checked=false;
-        this.$.general.checked=true;  
+        // this.$.spot.checked=false;
+        // this.$.general.checked=true;  
+        this.$.divsiblinghandler.hidden=true;
+        this.$.divhistoryhandler.hidden=true;
+        document.querySelector('#sibyes').checked=false;
+        document.querySelector('#sibno').checked=false;
+        document.querySelector('#hisyes').checked=false;
+        document.querySelector('#hisno').checked=false;
       },
       FnRefresh1:function(){
         admissionyear="";
@@ -1282,8 +1367,8 @@
         this.$.ThirdHindi.checked=false;
         this.dob=new Date();
         this.age="";
-        this.$.Male.checked=false;
-        this.$.Female.checked=false;
+        this.$.admnboy.checked=false;
+        this.$.admngirl.checked=false;
         this.flatno="";
         this.bulidingname="";
         this.street="";
@@ -1300,7 +1385,7 @@
         this.$.OBC.checked=false;
         this.$.Others.checked=false;
         this.relegion="";
-        this.nationality="";
+        this.nationality="Indian";
         this.mothertongue="";
         this.siblingname="";
         this.siblingclass="";
@@ -1391,12 +1476,19 @@
         this.$.CYes.checked=false;
         this.$.CNo.checked=false;
         admissiontype="0";
-        this.$.spot.checked=false;
-        this.$.general.checked=true;   
+        // this.$.spot.checked=false;
+        // this.$.general.checked=true;   
         discounttype="";
         discountname="";
+        this.$.divsiblinghandler.hidden=true;
+        this.$.divhistoryhandler.hidden=true;
+        document.querySelector('#sibyes').checked=false;
+        document.querySelector('#sibno').checked=false;
+        document.querySelector('#hisyes').checked=false;
+        document.querySelector('#hisno').checked=false;
       },
       setDiscountType:function(dtype){
+        // alert(dtype);
         discounttype=dtype;
         // discountname=dname;
       }

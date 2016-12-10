@@ -715,6 +715,7 @@
       },
 
       FnAdmission:function(){
+        this.$.service.getdiscounts();
         document.querySelector('admission-form').FnRefresh();
         document.querySelector('special-discount-card').ready();
       },

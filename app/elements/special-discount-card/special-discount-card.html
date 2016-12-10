@@ -8,7 +8,7 @@
         display: block;
       }
     </style>
-    <span class="col-sm-4"><paper-checkbox id="check{{code}}" value="code" on-change="discountHandler">{{discountname}}</paper-checkbox></span>
+    <span class="col-sm-3"><paper-checkbox id="checkk{{code}}" value="{{code}}" on-change="discountHandler">{{discountname}}</paper-checkbox></span>
   </template>
   <script>
   (function() {
@@ -20,25 +20,27 @@
         if(checkedbox=="")
         {}
         else{        
-        document.querySelector('#check'+checkedbox).checked=false;   
+        // document.querySelector('#checkk'+checkedbox).checked=false;   
         }
       },
       discountHandler:function(e){ 
+        // alert(e.target.id);
+        document.querySelector('admission-form').setDiscountType(this.code);
         if(checkedbox=="")
           checkedbox=this.code;
         else{
         if(checkedbox!=this.code)
-        document.querySelector('#check'+checkedbox).checked=false;   
+        document.querySelector('#checkk'+checkedbox).checked=false;   
         }
-        if(document.querySelector('#check'+this.code).checked==true){        
+        if(document.querySelector('#checkk'+this.code).checked==true){        
         checkedbox=this.code;
-        document.querySelector('newenquiry-card').setDiscountType(this.code);
+        // document.querySelector('newenquiry-card').setDiscountType(this.code);
         document.querySelector('admission-form').setDiscountType(this.code);
       }
       },
       setCheckedHandler:function(dcode){
         this.code=(dcode).trim();
-        document.querySelector('#check'+this.code).checked=true;
+        document.querySelector('#checkk'+this.code).checked=true;
         document.querySelector('admission-form').setDiscountType(this.code);
       }
     });

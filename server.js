@@ -1680,8 +1680,10 @@ app.post('/insertadmission',  urlencodedParser,function (req, res){
         father_name:req.query.fathername,
         mother_name:req.query.mothername,
         admission_year:req.query.admissionyear,
-        admission_type:req.query.admissiontype,
-        discount_type:req.query.discounttype
+        // admission_type:req.query.admissiontype,
+        discount_type:req.query.discounttype,
+        previous_history:req.query.admissionhistory,
+        having_sibling:req.query.admissionsibling
     }
 
     var qur="SELECT * FROM auto_admission_no";
@@ -3705,9 +3707,9 @@ app.post('/getlistdetails',  urlencodedParser,function (req, res){
 app.post('/fetchfeecollectionreport-service',  urlencodedParser,function (req, res){
    var qur = "SELECT * FROM mlzscrm.md_student_paidfee where paid_date>='"+req.query.fromdate+"' "+
              "and paid_date<='"+req.query.todate+"' and school_id='"+req.query.schoolid+"' and paid_status in('paid','inprogress')";
- // console.log('-----------------------collection report--------------------------');
- // console.log(qur);
-//  console.log('-------------------------------------------------');
+ console.log('-----------------------collection report--------------------------');
+ console.log(qur);
+ console.log('-------------------------------------------------');
    connection.query(qur,
      function(err, rows){
        if(!err){
@@ -3743,11 +3745,9 @@ app.post('/fetchfilterreport-service',  urlencodedParser,function (req, res){
     var qur = "SELECT * FROM mlzscrm.md_student_paidfee where paid_date>='"+req.query.fromdate+"' "+
              "and paid_date<='"+req.query.todate+"' and school_id='"+req.query.schoolid+"' and paid_status in('paid','inprogress') order by installment_type";
   
-
-
-  //console.log('-----------------------collection report--------------------------');
- // console.log(qur);
-  //console.log('-------------------------------------------------');
+  console.log('-----------------------Filter report--------------------------');
+  console.log(qur);
+  console.log('-------------------------------------------------');
    connection.query(qur,
      function(err, rows){
        if(!err){
