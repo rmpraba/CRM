@@ -91,9 +91,7 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
             </paper-dropdown-menu>
 </div>
             <iron-autogrow-textarea id="followbox1" placeholder="Please type your comments here..." error-message="needs comments!" required value="{{value}}"></iron-autogrow-textarea>
-             <div>
               <followup-datepicker-card showdate="{{nextdate}}"></followup-datepicker-card>
-            </div>
       </div>
         <div class="buttons">
           <paper-button id="followdisk2" style="background-color: silver;" class="btn glyphicon glyphicon-floppy-disk" raised on-click="FollowUp">Save</paper-button>
@@ -128,6 +126,26 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
       </paper-dialog>
       
      <div hidden>{{scheduledate}}</div>
+
+
+     <paper-dialog id="dialog4" class="paper-date-picker-dialog">
+      <div class="content">
+            <h2>Select your option..</h2>
+            <paper-radio-group>
+              <paper-radio-button id="todaydate" on-click="Fntodaydate">Today.</paper-radio-button>
+              <paper-radio-button id="customdate" on-click="Fncustomdate">Custom Date.</paper-radio-button>
+            </paper-radio-group>
+              
+                  <custom-datepicker-card id="custdate"></custom-datepicker-card>
+      </div>
+        <div class="buttons">
+          <paper-button id="followdisk4" style="background-color: silver;" class="btn glyphicon glyphicon-floppy-disk" raised on-click="savecustomdate">Save</paper-button>
+          <paper-button raised style="background-color: silver;" on-click="FnDismissDialog4">Cancel</paper-button>
+        </div>
+      </paper-dialog>
+
+
+
       <followup-service id="followupservice"></followup-service>
   </template>
   <script>
@@ -143,6 +161,7 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
     var ckdt1;
     var ckdt2;
     var sum;
+    var takedate;
 
     Polymer({
       is: 'followup-listitem-card',
@@ -309,8 +328,10 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
                     }
             }
             else if(dt>ltdat){
-                alert('the date is greatr than last date');
-                this.$.followupservice.Fnreschedule(confidencelvl,this.fid);
+                alert('The given date is greater than last date. \n So, please Re-schedule it..');
+                //this.$.followupservice.Fnreschedule(confidencelvl,this.fid);
+                this.$.dialog4.open();
+                this.$.custdate.hidden=true;
             }
       },
       FollowUp:function(){
@@ -360,7 +381,8 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
         document.getElementById('dialog1').close();
       },
       Rescheduling:function(){
-        this.$.followupservice.Fnreschedule(this.confidencelvl,this.fid);
+        this.$.dialog4.open();
+        this.$.custdate.hidden=true;
       },
       
       FnDismissDialog2:function(){
@@ -385,8 +407,34 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
           this.$.dialog3.close();
       },
       viewdetails:function(){
-        alert(this.fid+'  '+this.followupno+'   '+this.callstatus);
-        //this.$.followupservice.viewdetails(this.fid,this.followupno,callstatus);
+        //alert(this.fid+'  '+this.followupno+'   '+this.callstatus);
+        this.$.followupservice.viewdetails(this.fid,this.followupno,callstatus);
+      },
+      Fntodaydate:function(){
+            takedate="todaydate";
+            alert(takedate);
+            this.$.custdate.hidden=true;
+      },
+      Fncustomdate:function(){
+            this.$.custdate.hidden=false;
+      },
+      customdateclear:function(){
+          takedate=null;
+      },
+      customgetdate:function(datzxc){
+        alert(datzxc);
+          takedate=datzxc;
+          //this.$.followupservice.Fnreschedule(this.confidencelvl,this.fid,takedate);
+      },
+      savecustomdate:function(){
+        alert(this.confidencelvl+'  '+this.fid+'  '+takedate);
+         this.$.followupservice.Fnreschedule(this.confidencelvl,this.fid,takedate);
+         this.$.dialog4.close();
+      },
+      FnDismissDialog4:function(){
+        todaydate=null;
+        this.$.custdate.hidden=true;
+        this.$.dialog4.close();
       }
       
     });
