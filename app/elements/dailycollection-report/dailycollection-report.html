@@ -1,0 +1,104 @@
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+
+<dom-module id="dailycollection-report">
+  <template>
+    <style>
+      .datecard {
+        @apply(--layout-horizontal);
+      }
+    </style>
+    <div class="row">
+        <div class="well well-sm">
+          <div class="row">
+            <div class="col-md-12">
+              <!-- <div class="col-md-6"> -->
+                <div class="col-md-3" style="margin-top: -1%;">
+                  <fromdate-pickercard></fromdate-pickercard>
+                </div>
+                <div class="col-md-3" style="margin-top: -1%;">
+                  <todate-pickercard></todate-pickercard>
+                </div>
+                <div class="col-md-2" style="margin-top: 1%;">
+                  <paper-button on-click="FnView" class="btn btn-primary">View</paper-button>
+                </div>
+
+                <div class="col-md-2" style="margin-top: 1%;">
+                  <input type="button" id="btn2" onclick="tableToExcel('dailycollectionreport', 'DailyFee Collection Report')" value="Export to Excel">
+                </div>   
+              <!-- </div> -->
+            </div>
+          </div>
+        </div>
+    </div>
+    <template is="dom-repeat" items="{{dailycollectionarr}}" as="item">
+    
+    <template is="dom-repeat" items="{{item.feearr}}" as="f">
+    <h4>{{item.installment}}: {{f.collectiontype}}</h4>
+     <table class="table table-hover" id="dailycollectionreport">
+      <thead>
+      <tr>
+        <th>Sno</th><th>Enr/Enq No</th><th>Student Name</th><th>Grade</th><th hidden$="{{f.hidecheque}}">Cheque No</th><th hidden$="{{f.hidecheque}}">Bank Name</th><th hidden$="{{f.hidecheque}}">Cheque Date</th><th>Receipt/Ack No</th><th>Amount</th>
+      </tr>
+      </thead>
+      <tbody>
+      <template  is="dom-repeat" items="{{f.Cash}}" as="cash">
+        <tr><td>{{cash.sno}}</td><td>{{cash.admissionno}}</td><td>{{cash.studentname}}</td><td>{{cash.grade}}</td><td hidden$="{{f.hidecheque}}">{{cash.chequeno}}</td><td hidden$="{{f.hidecheque}}">{{cash.bankname}}</td><td hidden$="{{f.hidecheque}}">{{cash.chequedate}}</td>
+        <td>{{cash.receiptno}}</td><td>{{cash.installmentamount}}</td></tr>
+      </template>
+      <tr><th colspan="9" style="text-align: right;right:10%;">Total Amount: &nbsp;&nbsp;{{f.total}}</th></tr>
+      </tbody>
+    </table> 
+    <!-- <h2>{{item.installment}}: {{f.collectiontype}}</h2>
+     <table class="table table-hover" id="dailycollectionreport">
+      <thead>
+      <tr>
+        <th>Sno</th><th>Enr/Enq No</th><th>Student Name</th><th>Grade</th><th hidden$="{{f.hidecheque}}">Cheque No</th><th hidden$="{{f.hidecheque}}">Bank Name</th><th hidden$="{{f.hidecheque}}">Cheque Date</th><th>Receipt/Ack No</th><th>Amount</th>
+      </tr>
+      </thead>
+      <tbody>
+      <template  is="dom-repeat" items="{{f.Cheque}}" as="cheque">
+        <tr><td>{{cheque.sno}}</td><td>{{chque.admission_no}}</td><td>{{cheque.student_name}}</td><td>{{cheque.grade}}</td><td hidden$="{{f.hidecheque}}">{{cheque.cheque_no}}</td><td hidden$="{{f.hidecheque}}">{{cheque.bank_name}}</td><td hidden$="{{f.hidecheque}}">{{cheque.installment_date}}</td><td>{{cheque.receipt_no}}</td><td>{{cheque.installment_amount}}</td></tr>
+      </template>
+      <tr><th colspan="11" style="text-align: right;">Total Amount: &nbsp;&nbsp;{{totalamount}}</th></tr> -->
+     <!--  </tbody>
+    </table>  --> 
+    </template>   
+    </template>
+    <div style='margin-left: 70%;'>
+    <table>
+    <th>Collection By Cash: </th><th>{{collectionbycash}}</th>
+    <th>Collection By Cheque: </th><th>{{collectionbycheque}}</th>
+    <th>Total Collection : </th><th>{{totalcollection}}</th>
+    </table>
+    </div>
+    <fee-report-service id="feereportservice"></fee-report-service>
+  </template>
+  <script type="text/javascript">
+      var tableToExcel = (function() {
+      var uri = 'data:application/vnd.ms-excel;base64,'
+      , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
+     , base64 = function(s) { return window.btoa(unescape(encodeURIComponent(s))) }
+     , format = function(s, c) { return s.replace(/{(\w+)}/g, function(m, p) { return c[p]; }) }
+     return function(table, name) {
+     if (!table.nodeType) table = document.getElementById(table)
+     var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}
+     window.location.href = uri + base64(format(template, ctx))
+     }
+     })()
+  </script>
+  <script>
+  (function() {
+    'use strict';
+    Polymer({
+      is: 'dailycollection-report',
+      FnCallService:function(){        
+        this.$.feereportservice.FnFetchDailyFeeReportService();
+      },
+      FnView:function(){
+        this.$.feereportservice.FnFetchDailyFeeReportService();
+      }
+    });
+  })();
+  </script>
+</dom-module>

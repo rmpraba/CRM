@@ -276,9 +276,10 @@
       FnUpdateChequeStatus:function(cheque){
         count1=cheque.length;
         this.updatechequestatusurl=sessionStorage.getItem("addrinfo")+"/updatechequestatus-service";
-
         for(var i=0;i<cheque.length;i++){ 
           var obj={"schoolid":""};
+          var d=new Date();
+        
         obj.schoolid=cheque[i].school_id; 
         obj.academicyear=cheque[i].academic_year; 
         obj.admissionno=cheque[i].admission_no; 
@@ -291,6 +292,7 @@
         obj.chequeno=(cheque[i].cheque_no);        
         obj.bankname=cheque[i].bank_name; 
         obj.chequestatus=cheque[i].status; 
+        obj.realiseddate=(d.getMonth()+1)+"/"+d.getDate()+"/"+d.getFullYear();
         obj.createdby=localStorage.getItem("employeeid");     
         this.updatechequestatusparam=obj;     
         this.$.updatechequestatusajax.generateRequest();

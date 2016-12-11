@@ -1,7 +1,7 @@
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 
-<dom-module id="fee-collection-report-card">
+<dom-module id="pendingcheques-report">
   <template>
     <style>
       .datecard {
@@ -12,47 +12,30 @@
         <div class="well well-sm">
           <div class="row">
             <div class="col-md-12">
-              <!-- <div class="col-md-6"> -->
                 <div class="col-md-3" style="margin-top: -1%;">
                   <fromdate-pickercard></fromdate-pickercard>
                 </div>
                 <div class="col-md-3" style="margin-top: -1%;">
                   <todate-pickercard></todate-pickercard>
-                </div>
-                <div class="col-md-2" style="margin-top: -1%;">
-                <paper-dropdown-menu label="Select Category" attr-for-selected="value">
-                <paper-menu id="reportfiltertype" class="dropdown-content" required on-iron-select="FnSelectFilterType" valueattr="value" >
-                  <!-- <template  is="dom-repeat" items="{{discountarr}}" as="item"> -->
-                  <paper-item value="General">General</paper-item>
-                  <paper-item value="Cheque Collection">Cheque Collection</paper-item>
-                  <paper-item value="Fee Collection">Cash Collection</paper-item>
-                  <paper-item value="FeeTypewise Collection">FeeTypewise Collection</paper-item>
-                  <!-- <paper-item value="Overall Collection">Overall Collection</paper-item> -->
-                  <!-- </template> -->
-                </paper-menu>
-                </paper-dropdown-menu> 
-                </div>
+                </div>                
                 <div class="col-md-2" style="margin-top: 1%;">
                   <paper-button on-click="FnView" class="btn btn-primary">View</paper-button>
                 </div>
-
                 <div class="col-md-2" style="margin-top: 1%;">
-                  <input type="button" id="btn2" onclick="tableToExcel('collectionreport', 'Fee Collection Report')" value="Export to Excel">
+                  <input type="button" id="btn2" onclick="tableToExcel('pendingreport', 'Fee Pending Report')" value="Export to Excel">
                 </div>
-                
-              <!-- </div> -->
             </div>
           </div>
         </div>
     </div>
-     <table class="table table-hover" id="collectionreport">
+     <table class="table table-hover" id="pendingreport">
       <thead>
       <tr>
         <th>Sno</th><th>Enr/Enq No</th><th>Student Name</th><th>Grade</th><th>Installment Type</th><th>Mode Of Payment</th><th>Cheque No</th><th>Bank Name</th><th>Received Date</th><th>Receipt/Ack No</th><th>Amount</th><th>Fine Amount</th>
       </tr>
       </thead>
       <tbody>
-      <template  is="dom-repeat" items="{{collectionarr}}" as="item">
+      <template  is="dom-repeat" items="{{pendingarr}}" as="item">
         <tr><td>{{item.sno}}</td><td>{{item.admission_no}}</td><td>{{item.student_name}}</td><td>{{item.grade}}</td>
         <td>{{item.installment_type}}</td><td>{{item.mode_of_payment}}</td><td>{{item.cheque_no}}</td><td>{{item.bank_name}}</td><td>{{item.paid_date}}</td>
         <td>{{item.receipt_no}}</td><td>{{item.installment_amount}}</td><td>{{item.fine_amount}}</td></tr>
@@ -79,19 +62,17 @@
   <script>
   (function() {
     'use strict';
-    var filtertype="1";
+
     Polymer({
-      is: 'fee-collection-report-card',
+      is: 'pendingcheques-report',
       FnCallService:function(){        
-        this.$.feereportservice.FnFetchFeeReportService();
+        this.$.feereportservice.FnFetchPendingFeeReportService();
       },
       FnView:function(){
-        this.$.feereportservice.FnFetchFeeReportService();
+        this.$.feereportservice.FnFetchPendingFeeReportService();
       },
-      FnSelectFilterType:function(e){
-        // alert(e.target.selectedItem.textContent);
-        filtertype=(e.target.selectedItem.textContent).trim();
-        this.$.feereportservice.FnFilterReportService(filtertype);
+      FnRefresh:function(){
+        this.pendingarr=[];
       }
     });
   })();

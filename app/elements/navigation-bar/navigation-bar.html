@@ -313,18 +313,35 @@
             </ul>
             </li>
             <li id="collectionreports">
-            <a href="" aria-hidden="true">Fee Collection Report<span class="fa arrow"></span></a>
+            <a href="" aria-hidden="true">Fee Collection<span class="fa arrow"></span></a>
             <ul class="nav nav-third-level">
-              <li id="feecollectionreport">
+            <li id="dailycollectionreport">
+            <a href="" aria-hidden="true" on-click="FnDailyCollectionReport">Daily Fee Collection Report</a>
+            </li>
+            <li id="feecollectionreport">
             <a href="" aria-hidden="true" on-click="FnFeeCollectionReport">Fee Collection Report</a>
+            </li>
             <li id="chequerealization">
             <a href="" aria-hidden="true" on-click="FnChequerealization">Cheque Realization</a>
            </li>
+           <li id="bouncecheques">
+            <a href="" aria-hidden="true" on-click="FnShowBounceCheques">Bounce Cheques</a>
+           </li>
            <li id="searchreceipt">
             <a href="" aria-hidden="true" on-click="FnSearchReceipt">Search Receipt</a>
-           </li>
-           </li>
+           </li>           
             </ul>
+            </li>
+            <li id="pendingreport">
+            <a href="" aria-hidden="true">Pending Collection report<span class="fa arrow"></span></a>
+             <ul class="nav nav-third-level">
+            <li id="pendingcollectionreport">
+            <a href="" aria-hidden="true" on-click="FnPendingFeeReport">Pending Collection Report</a>
+            </li>
+            <li id="pendingcheques">
+            <a href="" aria-hidden="true" on-click="FnPendingCheques">Pending Cheques</a>
+           </li>
+           </ul>
             </li>
             </ul>
           </li> 
@@ -775,7 +792,29 @@
         this.$.scheduleservice.fetchacademicyearService();
         document.querySelector('app-list').setPage("searchreceipt","Search Receipt");
         document.querySelector('searchreceipt-card').ready();
-      } 
+      },
+      FnPendingCheques:function(){
+        document.querySelector('app-list').setPage("pendingcheques-report","Pending Cheques Report");
+        document.querySelector('pendingcheques-report').ready();
+        document.querySelector('pendingcheques-report').FnRefresh();
+        document.querySelector('pendingcheques-report').FnCallService();
+      },
+      FnPendingFeeReport:function(){
+        document.querySelector('app-list').setPage("pendingfee-report","Pending Fee Report");
+        document.querySelector('pendingfee-report').ready();
+        document.querySelector('pendingfee-report').FnRefresh();
+        document.querySelector('pendingfee-report').FnCallService();
+      },
+      FnDailyCollectionReport:function(){
+        document.querySelector('app-list').setPage("dailycollection-report","Daily Collection Report");
+        // document.querySelector('dailycollection-report').ready();
+        // document.querySelector('dailycollection-report').FnRefresh();
+        document.querySelector('dailycollection-report').FnCallService();
+      },
+      FnShowBounceCheques:function(){
+        document.querySelector('app-list').setPage("bouncecheque-displaycard","Bounce Cheques");
+        document.querySelector('bouncecheque-displaycard').FnCallService();
+      }
     });
   })();
   </script>

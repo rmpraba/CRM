@@ -36,6 +36,50 @@
         on-response="fetchfilterreportResponse"
         debounce-duration="300"
         >
+        <!-- It would fetch the pending fee info -->
+     <iron-ajax
+        method="post"
+        id="pendingfeereportajax"
+        url="{{pendingfeereporturl}}"
+        params="{{pendingfeereportparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="pendingfeereportResponse"
+        debounce-duration="300"
+        >
+        <!-- It would fetch the pending fee collection info-->
+     <iron-ajax
+        method="post"
+        id="pendingfeecollectionreportajax"
+        url="{{pendingfeecollectionreporturl}}"
+        params="{{pendingfeecollectionreportparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="pendingfeecollectionreportResponse"
+        debounce-duration="300"
+        >
+        <!-- It would fetch daily collection-->
+     <iron-ajax
+        method="post"
+        id="dailycollectionreportajax"
+        url="{{dailycollectionreporturl}}"
+        params="{{dailycollectionreportparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="dailycollectionreportResponse"
+        debounce-duration="300"
+        >
+           <!-- It would fetch bounce cheques-->
+     <iron-ajax
+        method="post"
+        id="fetchbouncechequesajax"
+        url="{{fetchbouncechequesurl}}"
+        params="{{fetchbouncechequesparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchbouncechequesResponse"
+        debounce-duration="300"
+        >
   </template>
   <script>
   (function() {
@@ -57,10 +101,15 @@
         // alert(JSON.stringify(e.detail.response.returnval));
         var totalamount=0;
         var arr=e.detail.response.returnval;
+        if(arr!='no rows'){
         for(var i=0;i<arr.length;i++){
           arr[i].sno=i+1;
           arr[i].fine_amount=0;
           totalamount=parseFloat(parseFloat(totalamount)+parseFloat(arr[i].installment_amount)).toFixed(2);
+        }
+        }
+        else{
+          arr=[];
         }
         document.querySelector('fee-collection-report-card').totalamount=totalamount;
         document.querySelector('fee-collection-report-card').collectionarr=arr;
@@ -76,12 +125,19 @@
         this.$.fetchfilterreportajax.generateRequest();
       },
       fetchfilterreportResponse:function(e){
+        // alert(JSON.stringify(e.detail.response.returnval));
         var totalamount=0;
         var arr=e.detail.response.returnval;
+        if(arr!='no rows'){
         for(var i=0;i<arr.length;i++){
           arr[i].sno=i+1;
           arr[i].fine_amount=0;
           totalamount=parseFloat(parseFloat(totalamount)+parseFloat(arr[i].installment_amount)).toFixed(2);
+        }
+        }
+        else
+        {
+          arr=[];
         }
         document.querySelector('fee-collection-report-card').totalamount=totalamount;
         document.querySelector('fee-collection-report-card').collectionarr=arr;
@@ -97,8 +153,244 @@
       },
       fetchoverallcollectionreportResponse:function(e){
         // alert(JSON.stringify(e.detail.response.returnval));
-      }
+      },
+      FnFetchPendingFeeReportService:function(){
+        this.pendingfeereporturl=sessionStorage.getItem("addrinfo")+"/pendingfeereport-service";
+        var obj={"schoolid":"","fromdate":"","todate":""};
+        obj.schoolid=localStorage.getItem("schoolid");
+        obj.fromdate=localStorage.getItem("localsess_from_date");
+        obj.todate=localStorage.getItem("localsess_to_date");
+        this.pendingfeereportparam=obj;
+        this.$.pendingfeereportajax.generateRequest();
+      },
+      pendingfeereportResponse:function(e){
+        // alert(JSON.stringify(e.detail.response.returnval));
+        var totalamount=0;
+        var arr=e.detail.response.returnval;
+        if(arr!='no rows'){
+        for(var i=0;i<arr.length;i++){
+          arr[i].sno=i+1;
+          arr[i].fine_amount=0;
+          totalamount=parseFloat(parseFloat(totalamount)+parseFloat(arr[i].installment_amount)).toFixed(2);
+        }
+        }
+        else{
+          arr=[]
+        }
+        document.querySelector('pendingcheques-report').totalamount=totalamount;
+        document.querySelector('pendingcheques-report').pendingarr=arr;
+      },
+      FnFetchPendingCollectionReportService:function(){
+        this.pendingfeecollectionreporturl=sessionStorage.getItem("addrinfo")+"/pendingfeecollectionreport-service";
+        var obj={"schoolid":""};
+        obj.schoolid=localStorage.getItem("schoolid");
+        this.pendingfeecollectionreportparam=obj;
+        this.$.pendingfeecollectionreportajax.generateRequest();
+      },
+      pendingfeecollectionreportResponse:function(e){
+        var totalarr=e.detail.response.totalarr;
+        var paidarr=e.detail.response.paidarr;
+        var pendingarr=e.detail.response.pendingarr;
+        if(totalarr.length>0){
+        for(var i=0;i<totalarr.length;i++)
+        {
+          totalarr[i].sno=(i+1);
+          var paidamount=0;
+          var paidflag=0;
+          var pendingamount=0;
+          var pendingflag=0;
+          if(paidarr.length){
+          for(var j=0;j<paidarr.length;j++){
+            if(totalarr[i].admission_no==paidarr[j].admission_no)
+            {
+              paidflag=1;
+              paidamount=parseFloat(paidamount)+parseFloat(paidarr[j].paidamount);
+              totalarr[i].paid_amount=paidamount;
+            }
+          }
+          if(paidflag==0)
+            {
+            paidamount=parseFloat(paidamount)+parseFloat(0);
+            totalarr[i].paid_amount=paidamount;
+            }
+          paidamount=0;
+          paidflag=0;
+          }
+          if(pendingarr.length){
+          for(var j=0;j<pendingarr.length;j++){
+            if(totalarr[i].admission_no==pendingarr[j].admission_no)
+            {
+              pendingflag=1;
+              pendingamount=parseFloat(pendingamount)+parseFloat(pendingarr[j].pendingamount);
+              totalarr[i].pending_amount=pendingamount;
+            }
+          }
+          if(pendingflag==0)
+            {
+            pendingamount=parseFloat(pendingamount)+parseFloat(0);
+            totalarr[i].pending_amount=pendingamount;
+            }
+          pendingamount=0;
+          pendingflag=0;
+          }
+        }
+        }
+        // alert(JSON.stringify(totalarr));
+        if(totalarr.length>0)
+        {
+          document.querySelector('pendingfee-report').pendingfeearr=totalarr;
+        }
+        else
+        {
+          totalarr=[];
+          document.querySelector('pendingfee-report').pendingfeearr=totalarr;
+        }
+      },
+      FnFetchDailyFeeReportService:function(){
+        this.dailycollectionreporturl=sessionStorage.getItem("addrinfo")+"/dailycollectionreport-service";
+        var obj={"schoolid":"","fromdate":"","todate":""};
+        obj.schoolid=localStorage.getItem("schoolid");
+        obj.fromdate=localStorage.getItem("localsess_from_date");
+        obj.todate=localStorage.getItem("localsess_to_date");
+        this.dailycollectionreportparam=obj;
+        this.$.dailycollectionreportajax.generateRequest();
+      },
+      dailycollectionreportResponse:function(e){
+        var arr=e.detail.response.returnval;
+        var a=[];
+        var b=[];
+        var c=[];
+        var overall=[];
+        var cashtotal=0;
+        var chequetotal=0;
+        var collectionbycash=0;
+        var collectionbycheque=0;
+        var totalcollection=0;
+       for(var i=0;i<arr.length;i++)
+       {       
+        var nameobj={"installment":""};
+        nameobj.installment=arr[i].installment; 
+        var obj={"admissionno":"","studentname":"","grade":"","installment":"","modeofpayment":"","chequeno":"","bankname":"","installmentamount":"","receiptno":""};
+        var objj={"admissionno":"","studentname":"","grade":"","installment":"","modeofpayment":"","chequeno":"","bankname":"","installmentamount":"","receiptno":""};
+        if(arr[i].mode_of_payment=="Cash"){
+        // obj.sno=i+1;
+        obj.admissionno=arr[i].admission_no;
+        obj.studentname=arr[i].student_name;
+        obj.grade=arr[i].grade;
+        obj.installment=arr[i].installment;
+        obj.modeofpayment=arr[i].mode_of_payment;
+        obj.chequeno=arr[i].cheque_no;
+        obj.bankname=arr[i].bank_name;
+        obj.chequedate=arr[i].installment_date;
+        obj.installmentamount=arr[i].installment_amount;
+        obj.receiptno=arr[i].receipt_no;
+        obj.hidecheque=true;
+        cashtotal=parseFloat(cashtotal)+parseFloat(arr[i].installment_amount);
+        collectionbycash=parseFloat(collectionbycash)+parseFloat(arr[i].installment_amount);
+        a.push(obj);
+        }
+        if(arr[i].mode_of_payment=="Cheque"||arr[i].mode_of_payment=="Tranfer"){
+        // objj.sno=i+1;
+        objj.admissionno=arr[i].admission_no;
+        objj.studentname=arr[i].student_name;
+        objj.grade=arr[i].grade;
+        objj.installment=arr[i].installment;
+        objj.modeofpayment=arr[i].mode_of_payment;
+        objj.chequeno=arr[i].cheque_no;
+        objj.bankname=arr[i].bank_name;
+        objj.chequedate=arr[i].installment_date;
+        objj.installmentamount=arr[i].installment_amount;
+        objj.receiptno=arr[i].receipt_no;
+        objj.hidecheque=false;
+        chequetotal=parseFloat(chequetotal)+parseFloat(arr[i].installment_amount);
+        collectionbycheque=parseFloat(collectionbycheque)+parseFloat(arr[i].installment_amount);
+        b.push(objj);
+        }
+        
+        for(var j=i+1;j<arr.length;j++)
+        {
+           if(arr[i].installment==arr[j].installment)
+           {
+              var obj1={"admissionno":"","studentname":"","grade":"","installment":"","modeofpayment":"","chequeno":"","bankname":"","installmentamount":"","receiptno":""};
+              var obj2={"admissionno":"","studentname":"","grade":"","installment":"","modeofpayment":"","chequeno":"","bankname":"","installmentamount":"","receiptno":""};
+              if(arr[j].mode_of_payment=="Cash"){
+               // obj1.sno=j;
+               obj1.admissionno=arr[j].admission_no;
+               obj1.studentname=arr[j].student_name;
+               obj1.grade=arr[j].grade;
+               obj1.installment=arr[j].installment;
+               obj1.modeofpayment=arr[j].mode_of_payment;
+               obj1.chequeno=arr[j].cheque_no;
+               obj1.bankname=arr[j].bank_name;
+               obj1.chequedate=arr[i].installment_date;
+               obj1.installmentamount=arr[j].installment_amount;
+               obj1.receiptno=arr[j].receipt_no;
+               cashtotal=parseFloat(cashtotal)+parseFloat(arr[i].installment_amount);
+               collectionbycash=parseFloat(collectionbycash)+parseFloat(arr[i].installment_amount);
+               obj1.hidecheque=true;
+               a.push(obj1);
+               }
+               if(arr[j].mode_of_payment=="Transfer"||arr[j].mode_of_payment=="Cheque"){
+               // obj2.sno=j;
+               obj2.admissionno=arr[j].admission_no;
+               obj2.studentname=arr[j].student_name;
+               obj2.grade=arr[j].grade;
+               obj2.installment=arr[j].installment;
+               obj2.modeofpayment=arr[j].mode_of_payment;
+               obj2.chequeno=arr[j].cheque_no;
+               obj2.bankname=arr[j].bank_name;
+               obj2.chequedate=arr[i].installment_date;
+               obj2.installmentamount=arr[j].installment_amount;
+               obj2.receiptno=arr[j].receipt_no;
+               obj2.hidecheque=false;
+               chequetotal=parseFloat(chequetotal)+parseFloat(arr[i].installment_amount);
+               collectionbycheque=parseFloat(collectionbycheque)+parseFloat(arr[i].installment_amount);
+               b.push(obj2);
+               }
+               arr.splice(j,1);
+               j--;
+           }
+        } 
+        totalcollection=parseFloat(collectionbycash)+parseFloat(collectionbycheque); 
+        c.push({"collectiontype":"Cash","Cash":a,"hidecheque":true,"total":cashtotal});  
+        c.push({"collectiontype":"Cheque/Transfer","Cash":b,"hidecheque":false,"total":chequetotal});    
+        nameobj.feearr=c;
 
+        overall.push(nameobj);
+        cashtotal=0;
+        chequetotal=0;
+        a=[];
+        b=[]; 
+        c=[];       
+       }
+       // alert(JSON.stringify(overall));
+       document.querySelector('dailycollection-report').dailycollectionarr=overall;
+       document.querySelector('dailycollection-report').collectionbycash=collectionbycash;
+       document.querySelector('dailycollection-report').collectionbycheque=collectionbycheque;
+       document.querySelector('dailycollection-report').totalcollection=totalcollection;
+      },
+      FnFetchBounceChequesService:function(){
+        this.fetchbouncechequesurl=sessionStorage.getItem("addrinfo")+"/fetchbouncecheques-service";
+        var obj={"schoolid":"","fromdate":"","todate":""};
+        obj.schoolid=localStorage.getItem("schoolid");
+        obj.fromdate=localStorage.getItem("localsess_from_date");
+        obj.todate=localStorage.getItem("localsess_to_date");
+        this.fetchbouncechequesparam=obj;
+        this.$.fetchbouncechequesajax.generateRequest();
+      },
+      fetchbouncechequesResponse:function(e){
+        var arr=e.detail.response.returnval;
+        if(arr!='no rows'){
+        for(var i=0;i<arr.length;i++)
+          arr[i].sno=i+1;
+        document.querySelector('bouncecheque-displaycard').bouncechequearr=arr;
+        }
+        else
+        {
+          arr=[];
+          document.querySelector('bouncecheque-displaycard').bouncechequearr=arr;
+        }
+      }      
     });
   })();
   </script>
