@@ -731,7 +731,7 @@ countresult=0;
         document.querySelector('app-list').setPage("followup-details","Followup Student List");
 
       },
-      viewdetail:function(id,status,followid){
+      viewdetails:function(id,status,followid){
         followenqid=id;
         this.viewdetailurl=sessionStorage.getItem("addrinfo")+"/viewdetail";
         var obj={"schol":"","id":"","fid":"","fstatus":""};
@@ -877,11 +877,12 @@ countresult=0;
           var restultarrz=e.detail.response.returnval;
           document.querySelector('followup-listitem-card').fndatez(restultarrz);
       },
-      updatefolowup:function(fnfid,fnscheduledate,fnfollowupno,fncurrentdate,fnnextdate,fncomments,fncallstatus,fnconfidencelvl){
+      updatefolowup:function(fnfid,fnscheduledate,fnfollowupno,fncurrentdate,fnnextdate,fncomments,fncallstatus,fnconfidencelvl,slno){
+        var dts=new Date(fnnextdate);
         upconfidencelvl=fnconfidencelvl;
         upfollowupid=fnfid;
         upfollowno=fnfollowupno;
-        upnextdate=fnnextdate;
+        upnextdate=dts.getFullYear()+'-'+(dts.getMonth()+1)+'-'+dts.getDate();
             this.updatefollowupdetailsurl=sessionStorage.getItem("addrinfo")+"/updatefollowupdetails";
         var obj={"schol":"","fid":"","scheduledate":"","followupno":"","currentdate":"","nextdate":"","comments":"","callstatus":"","confidencelvl":""}
         obj.schol=localStorage.getItem("schoolid");
@@ -889,7 +890,7 @@ countresult=0;
         obj.scheduledate=fnscheduledate;
         obj.followupno=fnfollowupno;
         obj.currentdate=fncurrentdate;
-        obj.nextdate=fnnextdate;
+        obj.nextdate=upnextdate;
         obj.comments=fncomments;
         obj.callstatus=fncallstatus;
         obj.confidencelvl=fnconfidencelvl;
@@ -920,6 +921,7 @@ countresult=0;
           if(e.detail.response.returnval=='success'){
             alert('Current followup detail is submitted');
             this.getlistdetails(localStorage.getItem("curr_enquiry_id"),localStorage.getItem("curr_followup_id"),localStorage.getItem("curr_schedule_no"));
+            document.querySelector('followup-listitem-card').ready();
       }
       else{
           alert('Submission Failed');
@@ -1153,8 +1155,9 @@ alert(newdate+'   '+lastdate);
       },
       insertnewfollowup:function(fnsum,fnscheid,fnfid,fnnewdate,fnnextdate){
              this.insertfollowuprowurl=sessionStorage.getItem("addrinfo")+"/insertfollowuprow";
-              var obj={"schoolid":"","scheduleid":"","followupno":"","scheduledate":"","confidencelevel":"","createdby":"","createdon":"","nextfollowupdate":"","schedule":"","followupstatus":""}
+              var obj={"schoolid":"","scheduleid":"","followupno":"","scheduledate":"","confidencelevel":"","createdby":"","createdon":"","nextfollowupdate":"","schedule":"","followupstatus":"","enquiryidb":""}
               obj.schoolid=localStorage.getItem("schoolid");
+              obj.enquiryidb=localStorage.getItem("curr_enquiry_id");
               obj.scheduleid=fnfid;
               obj.followupno=fnsum;
               obj.scheduledate=fnnewdate.getFullYear()+'-'+(fnnewdate.getMonth()+1)+'-'+fnnewdate.getDate();

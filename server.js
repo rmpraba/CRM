@@ -4584,7 +4584,8 @@ app.post('/insertfollowuprow',  urlencodedParser,function (req, res){
             created_on:req.query.createdon,
             next_followup_date:req.query.nextfollowupdate,
             schedule:req.query.schedule,
-            followup_status:req.query.followupstatus
+            followup_status:req.query.followupstatus,
+            enquiry_id:req.query.enquiryidb
           };
                   connection.query('INSERT INTO followupdetail SET ?',[response],function(err, rows){
                     if(!err)

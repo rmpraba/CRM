@@ -60,8 +60,8 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
           </td>
             <!-- <div id="confidencelabel">{{confidencelvl}}</div> -->
           
-          <td class="col-sm-3" style="text-align:center; padding-top: 6%;"><div id="viewdetail"><a href="" on-click="viewdetails">view details</a></div>
-          <div id="notcompleted">Still not completed</div></td>
+          <td class="col-sm-3" style="text-align:center; padding-top: 6%;"><div hidden="{{viewdetail}}"><a href="" on-click="viewdetails">view details</a></div>
+          <div hidden="{{notcompleted">Still not completed</div></td>
         </tr>
         </tbody>
         <div hidden>{{callstatus}}/{{confidencelvl}}/{{followupno}}/{{fid}}/{{nextdate}}/{{scheid}}</div>
@@ -125,7 +125,7 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
         </div>
       </paper-dialog>
       
-     <div hidden>{{scheduledate}}</div>
+     <div hidden>{{scheduledate}}/{{nextdate}}</div>
 
 
      <paper-dialog id="dialog4" class="paper-date-picker-dialog">
@@ -185,18 +185,22 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
         //vnextdate=this.nextdate;
         
         if(this.callstatus=="Yes"){
+          this.disableyes=true;
+          this.disableno=true;
               this.yesbox=true;
-              this.$.notcompleted.hidden=true;
-            this.$.viewdetail.hidden=false;
+              this.notcompleted=true;
+            this.viewdetail=false;
         }
         else if(this.callstatus=="No"){
+          this.disableyes=true;
+          this.disableno=true;
               this.nobox=true;
-              this.$.notcompleted.hidden=true;
-            this.$.viewdetail.hidden=false;
+              this.notcompleted=true;
+            this.viewdetail=false;
         }
         else{
-            this.$.notcompleted.hidden=false;
-            this.$.viewdetail.hidden=true;
+            this.notcompleted=false;
+            this.viewdetail=true;
         }
         if(this.confidencelvl==''||this.confidencelvl==null){
           this.$.confidencelevel.selected=0;
@@ -265,10 +269,11 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
       },
       FnConfidenceLevel:function(e){
         confidencelvl=(e.target.selectedItem.textContent).trim();
+        ckdt1=this.nextdate;
       },
       dateclear:function(){
         alert('You are allowed to select only future date..!');
-        vnextdate=null;
+        ckdt1=null;
       },
       fndatez:function(datesxas){
         checkdates=datesxas;
@@ -294,7 +299,7 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
         var ltdat=new Date(asdf.getFullYear()+'-'+(asdf.getMonth()+1)+'-'+asdf.getDate());
          dt.setTime(dt.getTime() +(dt.getTimezoneOffset()+330)*60*1000);
           ltdat.setTime(ltdat.getTime() +(ltdat.getTimezoneOffset()+330)*60*1000);
-        //alert(dt+'    '+ltdat+'    '+this.sno);
+  alert(dt+'    '+ltdat+'    '+this.sno);
             if(dt<ltdat){
                     //alert('the date is lessr than last date');
                     for(var l=flwno;l<checkdates.length;l++){
@@ -302,10 +307,9 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
                       var et2=checkdates[l].schedule_date;
                       var temp=new Date(et2);
             ckdt2=new Date(temp);
-                      ckdt1.setTime(ckdt1.getTime() +(ckdt1.getTimezoneOffset()+330)*60*1000);
                       ckdt2.setTime(ckdt2.getTime() +(ckdt2.getTimezoneOffset()+330)*60*1000);
                       var res=ckdt1-ckdt2;
-                      //alert(ckdt1+'    '+ckdt2+'   '+res);
+      alert(ckdt1+'    '+ckdt2+'   '+res);
 
                       if((res<0)&&(flag==0)&&(flag2==0)){
                         flag=1;
@@ -321,7 +325,7 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
                         this.$.followupservice.deactivatefollowup(this.scheid,this.fid,folwno,ckdt2);
                       }
                       else if(res==0){
-//alert('same date');
+alert('same date');
                           flag2=1;
                       }
 
@@ -347,8 +351,8 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
           }
         }
         else{
-          //alert(this.fid+this.scheduledate+this.followupno+currentdate+vnextdate+this.value+callstatus+confidencelvl);
-            this.$.followupservice.updatefolowup(this.fid,this.scheduledate,this.followupno,currentdate,vnextdate,this.value,callstatus,confidencelvl);  
+          alert(this.fid+this.scheduledate+this.followupno+currentdate+ckdt1+this.value+callstatus+confidencelvl);
+            this.$.followupservice.updatefolowup(this.fid,this.scheduledate,this.followupno,currentdate,ckdt1,this.value,callstatus,confidencelvl,this.sno);  
             this.$.dialog2.close();
              this.$.dialog3.close();
              document.getElementById('followbox1').value="";
@@ -408,7 +412,7 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
       },
       viewdetails:function(){
         //alert(this.fid+'  '+this.followupno+'   '+this.callstatus);
-        this.$.followupservice.viewdetails(this.fid,this.followupno,callstatus);
+        this.$.followupservice.viewdetailshow(this.fid,this.followupno,callstatus);
       },
       Fntodaydate:function(){
             takedate="todaydate";
