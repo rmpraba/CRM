@@ -130,10 +130,10 @@
       </div>  
       <div class="list-group col-sm-12 panel-body form-category" hidden$="{{parentinfo}}">
         <div class="col-sm-6">
-          <paper-input id="dadmobile" error-message="enter proper mobile no!" label="Father Mobile Number" allowed-pattern="[0-9]" maxlength="10" value="{{mob}}" on-change="verifymob"></paper-input>
+          <paper-input id="dadmobile" required error-message="enter proper mobile no!" label="Father Mobile Number" allowed-pattern="[0-9]" maxlength="10" value="{{mob}}" on-change="verifymob"></paper-input>
         </div>
         <div class="col-sm-6">
-          <paper-input id="mommobile" error-message="enter proper mobile no!" label="Mother Mobile Number" allowed-pattern="[0-9]" maxlength="10" value="{{mothermob}}" on-change="verifymob"></paper-input>
+          <paper-input id="mommobile" error-message="enter proper mobile no!" label="Mother Mobile Number" allowed-pattern="[0-9]" maxlength="10" value="{{mothermob}}" on-change="verifymommob"></paper-input>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category" hidden$="{{parentinfo}}">
@@ -350,6 +350,9 @@
     var selectedreferralstudentname;
     var selectedreferralclass;
     var selectedreferralsection;
+    var fathermobileno = true;
+    var mothermobileno = true;
+    var guardianmobileno = true;    
     Polymer({
       is: 'pre-apps',
 
@@ -920,7 +923,7 @@
     },
     complete:function(){
       if(paga=="guardian"){
-        if(this.todaydate == ""|| this.firstname==""||this.textvalue==""||this.guardianname==""||this.guardianemail==""||this.guardianmobile==""||this.academicyear=='' || this.ageofyr ==""){
+        if(this.todaydate == ""|| this.firstname==""||this.textvalue==""||this.guardianname==""||this.guardianemail==""||this.guardianmobile==""||this.academicyear=='' || this.ageofyr =="" || guardianmobileno == false){
           // alert('1');
           this.$.today.validate();
           this.$.idfname.validate();
@@ -988,8 +991,6 @@
             this.$.momname.validate();
             alert("Needs Parent's name atleast one of them!");
         } else if(this.mob=="" && this.mothermob==""){
-            alert(this.mothermob);
-            alert(this.mob);
             this.$.dadmobile.validate();
             this.$.mommobile.validate();
             alert("Needs Parent's mobile number atleast one of them!");
@@ -1017,7 +1018,16 @@
             alert("Select Mother Tongue");
         } else if(havesibling == null){
             alert("Select the student having sibling or not");
-        } else{
+        } else if(fathermobileno == false || mothermobileno == false){
+          if(fathermobileno == false){
+            this.$.dadmobile.validate();
+            alert('Please check the Father mobile number properly');
+          }
+          if(mothermobileno == false){
+            this.$.mothermob.validate();
+            alert('Please check the Mother mobile number properly');
+          }
+        }else{
           if(bothparentswork == "yes"){
             if( dadoccupationinfo ==null && motheroccupationinfo == null){
               alert("Select Parent's Profession");
@@ -1179,6 +1189,33 @@
       selectedreferralclass = grade;
       selectedreferralsection = section;
     },
+    verifymob:function(){
+      if(this.mob.length==10){
+        fathermobileno = true;
+      }else{
+        alert('Please check the mobile number properly');
+        this.$.dadmobile.validate();
+        fathermobileno = false;
+      }
+    },
+    verifymommob:function(){
+      if(this.mothermob.length==10){
+        mothermobileno = true;
+      }else{
+        alert('Please check the mobile number properly');
+        this.$.mommobile.validate();
+        mothermobileno = false;
+      }
+    },
+    gverifymob:function(){
+      if(this.guardianmobile.length==10){
+        guardianmobileno = true;
+      }else{
+        alert('Please check the mobile number properly');
+        this.$.gmobile.validate();
+        guardianmobileno = false;
+      }
+    }
     });
   })();
   </script>

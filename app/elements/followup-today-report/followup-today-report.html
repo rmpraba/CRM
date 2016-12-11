@@ -12,28 +12,33 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <dom-module id="followup-today-report">
   <template>
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th>Enquiry No</th>
-          <th>Name</th>
-          <th>Seeking Grade</th>
-          <th>Father's Mobile</th>
-          <th>Mother's Mobile</th>
-        </tr>
-      </thead>
-      <tbody>
-        <template  is="dom-repeat" items="{{collection}}" as="view">
+    <template is="dom-if" if="{{tableShow}}">
+      <table class="table table-hover">
+        <thead>
           <tr>
-            <td style="width:10%;">{{view.enquiryno}}</td>
-            <td>{{view.name}}</td>
-            <td>{{view.grade}}</td>
-            <td>{{view.fathermob}}</td>
-            <td>{{view.mothermob}}</td>
+            <th>Enquiry No</th>
+            <th>Name</th>
+            <th>Seeking Grade</th>
+            <th>Father's Mobile</th>
+            <th>Mother's Mobile</th>
           </tr>
-        </template>
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          <template  is="dom-repeat" items="{{collection}}" as="view">
+            <tr>
+              <td style="width:10%;">{{view.enquiryno}}</td>
+              <td>{{view.name}}</td>
+              <td>{{view.grade}}</td>
+              <td>{{view.fathermob}}</td>
+              <td>{{view.mothermob}}</td>
+            </tr>
+          </template>
+        </tbody>
+      </table>
+    </template>
+    <template is="dom-if" if="{{tableHide}}">
+        <h3 class="text-center">No Follow Up Scheduled Today</h3>
+    </template>
   </template>
   <script>
   (function() {
@@ -45,25 +50,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       },
       getarray:function(result){
-        for(var i = 0; i < result.length; i++){
-          var obj = {"name":"","enquiryno":"","grade":"","fathermob":"","mothermob":""};
-          obj.enquiryno = result[i].enquiry_no;
-          obj.name  = result[i].first_name+" "+result[i].last_name ;
-          obj.grade  = result[i].class;
-          if( result[i].father_mob){
-            obj.fathermob  = result[i].father_mob;
-          } else {
-            obj.fathermob = " - ";
+        if(result.length === 0){
+          this.tableShow = false;
+          this.tableHide = true;
+        } else {
+          this.tableShow = true;
+          this.tableHide = false;
+          for(var i = 0; i < result.length; i++){
+            var obj = {"name":"","enquiryno":"","grade":"","fathermob":"","mothermob":""};
+            obj.enquiryno = result[i].enquiry_no;
+            obj.name  = result[i].first_name+" "+result[i].last_name ;
+            obj.grade  = result[i].class;
+            if( result[i].father_mob){
+              obj.fathermob  = result[i].father_mob;
+            } else {
+              obj.fathermob = " - ";
+            }
+            if( result[i].mother_mob){
+              obj.mothermob  = result[i].mother_mob;
+            } else {
+              obj.mothermob = " - ";
+            }
+            reportarr.push(obj);
           }
-          alert(result[i].mother_mob);
-          if( result[i].mother_mob){
-            obj.mothermob  = result[i].mother_mob;
-          } else {
-            obj.mothermob = " - ";
-          }
-          reportarr.push(obj);
-        }
-          this.collection = reportarr;
+            this.collection = reportarr;
+        }  
       }
     });
   })();

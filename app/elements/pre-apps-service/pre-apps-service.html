@@ -438,7 +438,8 @@
         if(result == 'success'){
           alert('Submitted!');
           document.querySelector('pre-apps').FnClear();
-            this.$.followupservice.GenerateFollowups(enquiryiddz,attendantname);
+          document.querySelector('pre-apps').ready();  
+          this.$.followupservice.GenerateFollowups(enquiryiddz,attendantname);
         } else {
           alert('Form Submission intertupted!');
         }

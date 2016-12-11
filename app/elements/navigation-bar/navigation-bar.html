@@ -172,7 +172,9 @@
       </li>
       <!-- /.dropdown -->
       <li class="dropdown">
-        <paper-badge for="number" label="{{totalfollowupstoday}}"></paper-badge>
+        <template is="dom-if" if="{{badgeShow}}">
+          <paper-badge for="number" label="{{totalfollowupstodaycount}}"></paper-badge>
+        </template>
         <a class="dropdown-toggle" data-toggle="dropdown" href="#" on-click="gettodayfollowups">
           <i class="fa fa-bell fa-fw"></i>
         </a>
@@ -780,8 +782,13 @@
         document.querySelector('app-list').setPage("followup-today-report","Today's Follow Up");
         this.$.followupservice.getfollowupdetailstoday();
       }, 
-      totalfollowupstoday:function(){
-        alert('hi');
+      Fntotalfollowupstoday:function(count){
+        if( count === 0 ){
+          this.badgeShow = false;
+        } else {
+          this.badgeShow = true;
+        }
+        this.totalfollowupstodaycount = count;
       },
       FnFeesplitupschedule:function(){
         this.$.scheduleservice.fetchgradeService();
@@ -793,6 +800,7 @@
         document.querySelector('app-list').setPage("searchreceipt","Search Receipt");
         document.querySelector('searchreceipt-card').ready();
       },
+
       FnPendingCheques:function(){
         document.querySelector('app-list').setPage("pendingcheques-report","Pending Cheques Report");
         document.querySelector('pendingcheques-report').ready();
@@ -815,6 +823,7 @@
         document.querySelector('app-list').setPage("bouncecheque-displaycard","Bounce Cheques");
         document.querySelector('bouncecheque-displaycard').FnCallService();
       }
+
     });
   })();
   </script>
