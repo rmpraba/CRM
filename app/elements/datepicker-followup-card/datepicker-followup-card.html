@@ -10,7 +10,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 
-<dom-module id="followup-datepicker-card">
+<dom-module id="datepicker-followup-card">
   <template>
     <style>
       :host {
@@ -20,7 +20,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         background-color: silver;
       }
     </style>
-    <div class="datepicker">
+     <div class="datepicker">
     <div>
     <div>Next Follow-Up Date :</div> <paper-input style="width:65%; margin-left: 20%;" class="btn" on-click="FnShowDialog" raised value="{{showdate}}"></paper-input>
     <div>( Please select next followup date..! )</div>
@@ -39,15 +39,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     'use strict';
 
     Polymer({
-      is: 'followup-datepicker-card',
+      is: 'datepicker-followup-card',
 
       ready:function()
       {
-
         this.showdate=moment(new Date(this.showdate)).format('L');
-      
          // document.querySelector('followup-listitem-card').showbutton(this.showdate);
-        
       },
       FnShowDialog:function(){
         this.date=new Date();
@@ -81,6 +78,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       FnSetDate:function(value){
         this.showdate=moment(new Date(value)).format('L');
       }
+      
     });
   })();
   </script>
