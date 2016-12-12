@@ -117,7 +117,7 @@
             </div>
             <div style="margin-left:12%;" hidden$="{{hiddeninstallment}}"> 
               <template  is="dom-repeat" items="{{feearr}}" as="view">
-                <installment-card  hiddenpayflag="{{view.hiddenpayflag}}" modeofpayment="{{view.modeofpayment}}" paidflag="{{view.paidflag}}" readonlyflag="{{view.readonlyflag}}" hiddenflag="{{view.hiddenflag}}" installment="{{view.installment}}" installmenttype="{{view.installment}}" actualamount="{{view.actualamount}}" amount="{{view.installmentamount}}" discountamount="{{view.discountamount}}" installmentdate="{{view.installmentdate}}" chequeno="{{view.chequeno}}" paiddate="{{view.paiddate}}"></installment-card>
+                <installment-card  hiddenpayflag="{{view.hiddenpayflag}}" modeofpayment="{{view.modeofpayment}}" paidflag="{{view.paidflag}}" readonlyflag="{{view.readonlyflag}}" hiddenflag="{{view.hiddenflag}}" installment="{{view.installment}}" installmenttype="{{view.installment}}" actualamount="{{view.actualamount}}" amount="{{view.installmentamount}}" discountamount="{{view.discountamount}}" installmentdate="{{view.installmentdate}}" chequeno="{{view.chequeno}}" paiddate="{{view.paiddate}}" bankname="{{view.bankname}}" chequedate="{{view.chequedate}}" receiptdate="{{view.installmentdate}}" ></installment-card>
               </template>
             </div>
             <div>
@@ -179,8 +179,10 @@
       fetchnoofinstallmentResponse:function(e){
         noofinstallment=e.detail.response.returnval;
         localStorage.setItem("curr_sess_noofinstallment",noofinstallment);
-         // this.$.admissionservice.searchfeeadmissionpaidinfoService(localStorage.getItem("curr_sess_enquiryno"));
-         // this.$.admissionservice.searchfeeadmissioninfoService(localStorage.getItem("curr_sess_enquiryno"));
+        if(this.flag==1){
+         this.$.admissionservice.searchfeeadmissionpaidinfoService(localStorage.getItem("curr_sess_enquiryno"));
+         this.$.admissionservice.searchfeeadmissioninfoService(localStorage.getItem("curr_sess_enquiryno"));
+         }
       },
       FnSelectFeeType:function(e){
         var feetype=(e.target.selectedItem.textContent).trim();
@@ -321,6 +323,7 @@
       generalHandler:function(e){
         if(document.querySelector("#structuregeneral1").checked==true)
         {
+         this.flag=1;
          document.querySelector("#structureinstallment1").checked=false;
          document.querySelector("#structurelumpsum1").checked=false;
          this.totalfees="";

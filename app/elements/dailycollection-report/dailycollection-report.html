@@ -46,7 +46,7 @@
         <tr><td>{{cash.sno}}</td><td>{{cash.admissionno}}</td><td>{{cash.studentname}}</td><td>{{cash.grade}}</td><td hidden$="{{f.hidecheque}}">{{cash.chequeno}}</td><td hidden$="{{f.hidecheque}}">{{cash.bankname}}</td><td hidden$="{{f.hidecheque}}">{{cash.chequedate}}</td>
         <td>{{cash.receiptno}}</td><td>{{cash.installmentamount}}</td></tr>
       </template>
-      <tr><th colspan="9" style="text-align: right;right:10%;">Total Amount: &nbsp;&nbsp;{{f.total}}</th></tr>
+      <tr><th colspan="8"></th> <th style="text-align: right;right:5%;position: absolute;">Total Amount: &nbsp;&nbsp;{{f.total}}</th></tr>
       </tbody>
     </table> 
     <!-- <h2>{{item.installment}}: {{f.collectiontype}}</h2>
@@ -65,11 +65,17 @@
     </table>  --> 
     </template>   
     </template>
-    <div style='margin-left: 70%;'>
+    <div style='margin-left: 30%;'>
     <table>
-    <th>Collection By Cash: </th><th>{{collectionbycash}}</th>
-    <th>Collection By Cheque: </th><th>{{collectionbycheque}}</th>
-    <th>Total Collection : </th><th>{{totalcollection}}</th>
+    <tr>
+    <th>Collection By Cash: </th><th style="width: 3%;"></th><th>{{collectionbycash}}</th>
+    </tr>
+    <tr>
+    <th>Collection By Cheque: </th><th style="width: 3%;"></th><th>{{collectionbycheque}}</th>
+    </tr>
+    <tr>
+    <th>Total Collection : </th><th style="width: 3%;"></th><th>{{totalcollection}}</th>
+    </tr>
     </table>
     </div>
     <fee-report-service id="feereportservice"></fee-report-service>

@@ -422,13 +422,16 @@
       },
       searchexistingadmissionResponse:function(e){
         var admnarr=e.detail.response.returnval;
-        var arr=[];
-        var obj={"enquiry_no":"","enquiry_name":""};
+        // alert(JSON.stringify(admnarr));
+        var arr=[];        
         // alert(admnarr[0].enquiry_no);
-        localStorage.setItem("curr_sess_admnenquiryno",admnarr[0].enquiry_no);
-        obj.enquiry_no=admnarr[0].admission_no; 
-        obj.enquiry_name=admnarr[0].student_name;  
+        // localStorage.setItem("curr_sess_admnenquiryno",admnarr[0].enquiry_no);
+        for(var i=0;i<admnarr.length;i++){
+        var obj={"enquiry_no":"","enquiry_name":""};
+        obj.enquiry_no=admnarr[i].admission_no; 
+        obj.enquiry_name=admnarr[i].student_name;  
         arr.push(obj); 
+        }
         document.querySelector('admission-form').enquiryarr=arr;
         document.querySelector('searchreceipt-card').enquiryarr=arr;
       },
@@ -1131,11 +1134,11 @@ insertstudenthistoryResponse:function(e){
         // }
         // else{   
         if(localStorage.getItem("curr_sess_installmentpattern")=='3'){            
-            alert(discountpercent+"  "+discountamt);             
+            // alert(discountpercent+"  "+discountamt);             
             var amount=parseFloat(localStorage.getItem("curr_sess_totalfees"))-discountamt; 
-            alert(amount);                    
+            // alert(amount);                    
             discountamt=parseFloat(discountamt)+(parseFloat(amount)*(parseFloat(discountpercent)/100));
-            alert(discountamt);
+            // alert(discountamt);
         // }
         }
         }
@@ -1399,20 +1402,44 @@ insertstudenthistoryResponse:function(e){
         this.FnPrepareInstallment(arr);
       },
       FnPrepareInstallment:function(arr){
+        // alert(JSON.stringify(arr));
         if(paidfeearr!='no rows'){
             document.querySelector('fees-card').hiddentitleflag=false;
             for(var i=0;i<arr.length;i++){
                 var f=0;
                 for(var j=0;j<paidfeearr.length;j++){
-                    if(arr[i].installment==paidfeearr[j].installment){
+                    if(arr[i].installment==paidfeearr[j].installment&&paidfeearr[j].cheque_status!='bounced'){
+
                         f=1;
                         arr[i].paidflag=true;
                         arr[i].hiddenflag=false;
                         arr[i].readonlyflag=true;
                         arr[i].hiddenpayflag=true;
                         arr[i].chequeno=paidfeearr[j].cheque_no;
+                        arr[i].chequedate=paidfeearr[j].installment_date;
+                        arr[i].bankname=paidfeearr[j].bank_name;
+                        arr[i].installmentdate=paidfeearr[j].receipt_date;
                         arr[i].paiddate=paidfeearr[j].paid_date;
                         arr[i].modeofpayment=paidfeearr[j].mode_of_payment;
+                    }
+                    if(arr[i].installment==paidfeearr[j].installment&&paidfeearr[j].cheque_status=='bounced'){
+
+                        f=1;
+                        arr[i].installmentamount=parseFloat(arr[i].installmentamount)+parseFloat(paidfeearr[j].fine_amount);
+                        // arr[i].paidflag=true;
+                        // arr[i].hiddenflag=false;
+                        // arr[i].readonlyflag=true;
+                        // arr[i].hiddenpayflag=true;
+                        // arr[i].chequeno=paidfeearr[j].cheque_no;
+                        // arr[i].paiddate=paidfeearr[j].paid_date;
+                        // arr[i].modeofpayment=paidfeearr[j].mode_of_payment;
+                       arr[i].paidflag=false;
+                       arr[i].hiddenflag=true;
+                       arr[i].readonlyflag=false;
+                       arr[i].hiddenpayflag=false;
+                       arr[i].chequeno='       ';
+                       arr[i].paiddate=''; 
+                       arr[i].modeofpayment='';
                     }
                 }
                 if(f==0)

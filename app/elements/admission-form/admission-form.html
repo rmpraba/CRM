@@ -1125,8 +1125,8 @@
       },
       FnSubmitAdmission:function(){     
 
-        if (admissionyear==null) {
-          alert("selected the Academic year");
+        if (admissionyear==null||admissionyear==""||relegion==null||relegion==""||relegions==null||relegions==""||nationality==null||nationality=="") {
+          alert("Please fill the mandatory fields");
         }          
         else{
           // alert(localStorage.getItem("curr_sess_enquiryno")+" "+localStorage.getItem("curr_sess_enquiryname")+" "+this.applicationno+" "+this.schoolname+" "+this.enquiredyear+" "+admissionyear);
