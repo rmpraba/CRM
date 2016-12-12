@@ -60,7 +60,7 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
           </td>
             <!-- <div id="confidencelabel">{{confidencelvl}}</div> -->
           
-          <td class="col-sm-3" style="text-align:center; padding-top: 6%;"><div hidden="{{viewdetail}}"><a href="" on-click="viewdetails">view details</a></div>
+          <td class="col-sm-3" style="text-align:center; padding-top: 6%;"><div hidden="{{viewdetail}}"><a href="" on-click="fnviewdetailshow">view details</a></div>
           <div hidden="{{notcompleted">Still not completed</div></td>
         </tr>
         </tbody>
@@ -144,6 +144,32 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
         </div>
       </paper-dialog>
 
+
+
+      <paper-dialog id="dialogdetailshow" class="paper-date-picker-dialog">
+      <div class="content">
+          <table>
+            <tr>
+              <td style=" padding: 3%;">Enquiry done on</td>
+              <td style=" padding: 3%;">:</td>
+              <td style=" padding: 3%;">{{actualdate}}</td>
+            </tr>
+            <tr>
+              <td style=" padding: 3%;">Confidence Level</td>
+              <td style=" padding: 3%;">:</td>
+              <td style=" padding: 3%;">{{confidencegiven}}</td>
+            </tr>
+            <tr>
+              <td style=" padding: 3%;">Comments</td>
+              <td style=" padding: 3%;">:</td>
+              <td style=" padding: 3%;">{{comments}}</td>
+            </tr>
+          </table>
+      </div>
+        <div class="buttons">
+          <paper-button raised style="background-color: silver;" on-click="closedetaildialog">Close</paper-button>
+        </div>
+      </paper-dialog>
 
 
       <followup-service id="followupservice"></followup-service>
@@ -288,16 +314,14 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
         
       },
       FollowUp:function(){
-        if(this.value==""||vnextdate==null||confidencelvl==null){
+        if(this.value==""||confidencelvl==null){
           //this.$.dates.validate();
           this.$.followbox1.validate();
           this.$.followbox2.validate();
           if(confidencelvl==null){
             alert('Please select the Confidence level of this followup');
           }
-          else if(vnextdate==null){
-            alert('Please select the proper date for next followup');
-          }
+          
         }
         else{
           this.datesdiff();
@@ -360,9 +384,9 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
          document.getElementById('callno'+this.followupno).checked=false;
           this.$.dialog3.close();
       },
-      viewdetails:function(){
+      fnviewdetailshow:function(){
         //alert(this.fid+'  '+this.followupno+'   '+this.callstatus);
-        this.$.followupservice.viewdetailshow(this.fid,this.followupno,callstatus);
+        this.$.followupservice.viewdetailshow(this.fid,this.followupno,this.callstatus);
       },
       Fntodaydate:function(){
             takedate="todaydate";
@@ -517,6 +541,16 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
            this.$.dates.hidden=false;
           this.$.reschedule.hidden=true; 
         }
+      },
+      showdetaildialog:function(detailarr){
+            this.actualdate=detailarr[0].actual_date;
+            this.confidencegiven=detailarr[0].confidence_level;
+            this.comments=detailarr[0].followup_comments;
+
+            this.$.dialogdetailshow.open();
+      },
+      closedetaildialog:function(){
+             this.$.dialogdetailshow.close();
       }
       
     });

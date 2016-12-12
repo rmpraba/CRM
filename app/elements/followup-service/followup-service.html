@@ -428,6 +428,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         debounce-duration="300"
       >  
   </iron-ajax>
+  <!-- this below ajax is used to call the function that invoke the function to view details -->
+  <iron-ajax
+        method="post"
+        id="detailshowajax"
+        url="{{detailshowurl}}"
+        params="{{detailshowparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="detailshowResponse"
+        debounce-duration="300"
+      >  
+  </iron-ajax>
   </template>
   <script>
   (function() {
@@ -1224,6 +1236,22 @@ newdate.setDate(newdate.getDate()+resultarray[0].no_of_days);
         var result = e.detail.response.returnval;
         //alert(JSON.stringify(result));
         document.querySelector('followup-today-report').getarray(result);
+      },
+      viewdetailshow:function(fnfid,fnfno,fncall){
+          this.detailshowurl=sessionStorage.getItem("addrinfo")+"/detailshow";
+        var obj={"schol":"","call":"","fno":"","fid":""}
+        obj.schol=localStorage.getItem("schoolid");
+        obj.call=fncall;
+        obj.fno=fnfno;
+        obj.fid=fnfid;
+        this.detailshowparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.detailshowajax.generateRequest();
+      },
+      detailshowResponse:function(e){
+        var res=e.detail.response.returnval;
+        //alert(JSON.stringify(res));
+        document.querySelector('followup-listitem-card').showdetaildialog(res);
       }
     });
   })();

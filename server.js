@@ -4973,6 +4973,28 @@ app.post('/fetchbouncecheques-service',  urlencodedParser,function (req, res){
      });
  });
 
+
+
+/*this function is used to fetch the detail of the follow up detail of the specific followup no and by its id*/
+app.post('/detailshow',  urlencodedParser,function (req, res){
+
+var queeyy="SELECT * FROM followupdetail where school_id='"+req.query.schol+"' and schedule_id='"+req.query.fid+"' and followup_no='"+req.query.fno+"' and followup_status='"+req.query.call+"'";
+console.log(queeyy);
+  connection.query(queeyy,
+    function(err, rows){
+      if(!err){
+        if(rows.length>0){
+          res.status(200).json({'returnval': rows});
+        } else {
+          console.log(err);
+          res.status(200).json({'returnval':null});
+        }
+      } else {
+        console.log(err);
+      }
+    });
+});
+
 function setvalue(){
   console.log("calling setvalue.....");
 }
