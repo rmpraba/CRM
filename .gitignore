@@ -3,3 +3,5 @@ dist
 bower_components
 .tmp
 .publish/
+
+app/elements/followup-datepickercard/followup-datepickercard.html

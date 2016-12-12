@@ -304,12 +304,22 @@
       },
       fetchfeediscountResponse:function(e){
         var discountarr=e.detail.response.returnval;
+        if(discountarr.length>0){
         document.querySelector('registerationfee-card').totaldiscount=discountarr[0].amount;
         document.querySelector('registerationfee-card').payableamount=parseFloat(parseFloat(localStorage.getItem('curr_sess_totalamount'))-parseFloat(discountarr[0].amount)).toFixed(2);
         var arr=[];
         var obj={"installment":"","installmenttype":"","amount":"","installmentdate":""};
         obj.installment=localStorage.getItem("curr_sess_feetypepayment");
         obj.payable_amount=parseFloat(parseFloat(localStorage.getItem('curr_sess_totalamount'))-parseFloat(discountarr[0].amount)).toFixed(2);
+        }
+        else{
+        document.querySelector('registerationfee-card').totaldiscount=0;
+        document.querySelector('registerationfee-card').payableamount=parseFloat(parseFloat(localStorage.getItem('curr_sess_totalamount'))-parseFloat(0)).toFixed(2);
+        var arr=[];
+        var obj={"installment":"","installmenttype":"","amount":"","installmentdate":""};
+        obj.installment=localStorage.getItem("curr_sess_feetypepayment");
+        obj.payable_amount=parseFloat(parseFloat(localStorage.getItem('curr_sess_totalamount'))-parseFloat(0)).toFixed(2);
+        }
         var d=new Date();        
         obj.installment_date=(d.getMonth()+1)+"/"+d.getDate()+"/"+d.getFullYear();
         obj.installment_type=localStorage.getItem("curr_sess_feetypepayment");
