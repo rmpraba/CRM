@@ -921,7 +921,7 @@ countresult=0;
           if(e.detail.response.returnval=='success'){
             alert('Current followup detail is submitted');
             this.getlistdetails(localStorage.getItem("curr_enquiry_id"),localStorage.getItem("curr_followup_id"),localStorage.getItem("curr_schedule_no"));
-            document.querySelector('followup-listitem-card').ready();
+            document.querySelector('followup-listitem-card').Fnrefresh();
       }
       else{
           alert('Submission Failed');
