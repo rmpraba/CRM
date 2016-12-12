@@ -9,7 +9,7 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
 -->
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
-<link rel="import" href="..\followup-datepicker-card/followup-datepicker-card.html">
+<link rel="import" href="..\datepicker-followup-card\datepicker-followup-card.html">
 <dom-module id="followup-listitem-card">
   <template>
     <style>
@@ -24,7 +24,7 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
             margin-left: -25%;
                 top: 30%;
       }
-      
+     
     </style>
     <div>
     <table class="table table-stdiped" style="    margin-bottom: -2%;" >
@@ -91,7 +91,7 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
             </paper-dropdown-menu>
 </div>
             <iron-autogrow-textarea id="followbox1" placeholder="Please type your comments here..." error-message="needs comments!" required value="{{value}}"></iron-autogrow-textarea>
-              <followup-datepicker-card showdate="{{nextdate}}"></followup-datepicker-card>
+              <datepicker-followup-card showdate="{{nextdate}}"></datepicker-followup-card>
       </div>
         <div class="buttons">
           <paper-button id="followdisk2" style="background-color: silver;" class="btn glyphicon glyphicon-floppy-disk" raised on-click="FollowUp">Save</paper-button>
@@ -162,6 +162,7 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
     var ckdt2;
     var sum;
     var takedate;
+    var nextdatsd;
 
     Polymer({
       is: 'followup-listitem-card',
@@ -269,11 +270,11 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
       },
       FnConfidenceLevel:function(e){
         confidencelvl=(e.target.selectedItem.textContent).trim();
-        ckdt1=this.nextdate;
+        nextdatsd=this.nextdate;
       },
       dateclear:function(){
         alert('You are allowed to select only future date..!');
-        ckdt1=null;
+        nextdatsd=null;
       },
       fndatez:function(datesxas){
         checkdates=datesxas;
@@ -284,59 +285,7 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
         //alert(vnextdate);
           //alert(checkdates);
         //this.$.confidencelabel.hidden=false
-          for(var j=0;j<checkdates.length;j++){
-           
-            var et=checkdates[j].schedule_date;
-            var  asdf=new Date(et);
-             asdf.setTime(asdf.getTime() +(asdf.getTimezoneOffset()+330)*60*1000);
-           // alert(JSON.stringify(asdf));
-          }
-          var fno=parseInt(flwno)-1;
-          alert(flwno+'    '+fno);
-        var flag=0;
-        var flag2=0;
-        var dt=new Date(vnextdate.getFullYear()+'-'+(vnextdate.getMonth()+1)+'-'+vnextdate.getDate());
-        var ltdat=new Date(asdf.getFullYear()+'-'+(asdf.getMonth()+1)+'-'+asdf.getDate());
-         dt.setTime(dt.getTime() +(dt.getTimezoneOffset()+330)*60*1000);
-          ltdat.setTime(ltdat.getTime() +(ltdat.getTimezoneOffset()+330)*60*1000);
-  alert(dt+'    '+ltdat+'    '+this.sno);
-            if(dt<ltdat){
-                    //alert('the date is lessr than last date');
-                    for(var l=flwno;l<checkdates.length;l++){
-              ckdt1=new Date(vnextdate);
-                      var et2=checkdates[l].schedule_date;
-                      var temp=new Date(et2);
-            ckdt2=new Date(temp);
-                      ckdt2.setTime(ckdt2.getTime() +(ckdt2.getTimezoneOffset()+330)*60*1000);
-                      var res=ckdt1-ckdt2;
-      alert(ckdt1+'    '+ckdt2+'   '+res);
-
-                      if((res<0)&&(flag==0)&&(flag2==0)){
-                        flag=1;
-                          //alert('Insert a new row');
-                          sum=parseInt(checkdates.length)+1;
-                          //alert(sum+'   '+this.scheid+'   '+this.fid+'   '+ckdt1+'   '+ckdt2);
-                          this.$.followupservice.insertnewfollowup(sum,this.scheid,this.fid,ckdt1,ckdt2);
-                      }
-                      else if((res>0)&&(flag2==0)){
-                        folwno=(parseInt(l)+1);
-                        //alert('Deactivate the corresponding dates and insert new row');
-                        //alert(this.scheid+'   '+this.fid+'  '+folwno+'   '+ckdt2);
-                        this.$.followupservice.deactivatefollowup(this.scheid,this.fid,folwno,ckdt2);
-                      }
-                      else if(res==0){
-alert('same date');
-                          flag2=1;
-                      }
-
-                    }
-            }
-            else if(dt>ltdat){
-                alert('The given date is greater than last date. \n So, please Re-schedule it..');
-                //this.$.followupservice.Fnreschedule(confidencelvl,this.fid);
-                this.$.dialog4.open();
-                this.$.custdate.hidden=true;
-            }
+        
       },
       FollowUp:function(){
         if(this.value==""||vnextdate==null||confidencelvl==null){
@@ -351,8 +300,9 @@ alert('same date');
           }
         }
         else{
-          alert(this.fid+this.scheduledate+this.followupno+currentdate+ckdt1+this.value+callstatus+confidencelvl);
-            this.$.followupservice.updatefolowup(this.fid,this.scheduledate,this.followupno,currentdate,ckdt1,this.value,callstatus,confidencelvl,this.sno);  
+          this.datesdiff();
+          //alert(this.fid+this.scheduledate+this.followupno+currentdate+ckdt1+this.value+callstatus+confidencelvl);
+            this.$.followupservice.updatefolowup(this.fid,this.scheduledate,this.followupno,currentdate,nextdatsd,this.value,callstatus,confidencelvl,this.sno);  
             this.$.dialog2.close();
              this.$.dialog3.close();
              document.getElementById('followbox1').value="";
@@ -399,7 +349,7 @@ alert('same date');
       },
        Fncallstatusdrop:function(e){
         callpickstatus=(e.target.selectedItem.textContent).trim();
-        alert(callpickstatus);
+        //alert(callpickstatus);
         //document.getElementById('followbox2').value=(e.target.selectedItem.textContent).trim();
         this.value=(e.target.selectedItem.textContent).trim();
       },
@@ -416,7 +366,7 @@ alert('same date');
       },
       Fntodaydate:function(){
             takedate="todaydate";
-            alert(takedate);
+            //alert(takedate);
             this.$.custdate.hidden=true;
       },
       Fncustomdate:function(){
@@ -426,12 +376,12 @@ alert('same date');
           takedate=null;
       },
       customgetdate:function(datzxc){
-        alert(datzxc);
+        //alert(datzxc);
           takedate=datzxc;
           //this.$.followupservice.Fnreschedule(this.confidencelvl,this.fid,takedate);
       },
       savecustomdate:function(){
-        alert(this.confidencelvl+'  '+this.fid+'  '+takedate);
+        //alert(this.confidencelvl+'  '+this.fid+'  '+takedate);
          this.$.followupservice.Fnreschedule(this.confidencelvl,this.fid,takedate);
          this.$.dialog4.close();
       },
@@ -439,6 +389,134 @@ alert('same date');
         todaydate=null;
         this.$.custdate.hidden=true;
         this.$.dialog4.close();
+      },
+      datesdiff:function(){
+          for(var j=0;j<checkdates.length;j++){
+           
+            var et=checkdates[j].schedule_date;
+            var  asdf=new Date(et);
+             asdf.setTime(asdf.getTime() +(asdf.getTimezoneOffset()+330)*60*1000);
+           //alert(JSON.stringify(asdf));
+          }
+          var fno=parseInt(flwno)-1;
+        //alert(flwno+'    '+fno);
+        var flag=0;
+        var flag2=0;
+        var dt=new Date(vnextdate.getFullYear()+'-'+(vnextdate.getMonth()+1)+'-'+vnextdate.getDate());
+        var ltdat=new Date(asdf.getFullYear()+'-'+(asdf.getMonth()+1)+'-'+asdf.getDate());
+         dt.setTime(dt.getTime() +(dt.getTimezoneOffset()+330)*60*1000);
+          ltdat.setTime(ltdat.getTime() +(ltdat.getTimezoneOffset()+330)*60*1000);
+ //alert(dt+'    '+ltdat+'    '+this.sno);
+            if(dt<ltdat){
+                    //alert('the date is lessr than last date');
+                    for(var l=flwno;l<checkdates.length;l++){
+              ckdt1=new Date(vnextdate);
+                      var et2=checkdates[l].schedule_date;
+                      var temp=new Date(et2);
+            ckdt2=new Date(temp);
+                      ckdt2.setTime(ckdt2.getTime() +(ckdt2.getTimezoneOffset()+330)*60*1000);
+                      var res=ckdt1-ckdt2;
+     //alert(ckdt1+'    '+ckdt2+'   '+res);
+
+                      if((res<0)&&(flag==0)&&(flag2==0)){
+                        flag=1;
+                          //alert('Insert a new row');
+                          sum=parseInt(checkdates.length)+1;
+                          nextdatsd=ckdt1;
+                          //alert(sum+'   '+this.scheid+'   '+this.fid+'   '+ckdt1+'   '+ckdt2);
+                          this.$.followupservice.insertnewfollowup(sum,this.scheid,this.fid,ckdt1,ckdt2);
+                      }
+                      else if((res>0)&&(flag2==0)){
+                        folwno=(parseInt(l)+1);
+                        //alert('Deactivate the corresponding dates and insert new row');
+                        //alert(this.scheid+'   '+this.fid+'  '+folwno+'   '+ckdt2);
+                        this.$.followupservice.deactivatefollowup(this.scheid,this.fid,folwno,ckdt2);
+                      }
+                      else if(res==0){
+//alert('same date');
+                          flag2=1;
+                      }
+
+                    }
+            }
+            else if(dt>ltdat){
+                alert('The given date is greater than last date. \n So, please Re-schedule it..');
+                //this.$.followupservice.Fnreschedule(confidencelvl,this.fid);
+                this.$.dialog4.open();
+                this.$.custdate.hidden=true;
+            }
+      },
+      Fnrefresh:function(){
+          confidencelvl="TBD";
+        currentdate=sessionStorage.getItem("todaydate");
+
+        //this.$.followdrop.hidden=false;
+        
+        /*if(this.comments!=""||this.comments!=null){
+          this.$.followupcmnts.hidden=true;
+            //this.disableyes=true;
+            //this.disableno=true;
+            //this.disabledrop=true;
+            this.disabledate=true;
+        }
+        else{
+          this.$.followbox.hidden=true;
+        }*/
+        //vnextdate=this.nextdate;
+        
+        if(this.callstatus=="Yes"){
+          this.disableyes=true;
+          this.disableno=true;
+              this.yesbox=true;
+              this.notcompleted=true;
+            this.viewdetail=false;
+        }
+        else if(this.callstatus=="No"){
+          this.disableyes=true;
+          this.disableno=true;
+              this.nobox=true;
+              this.notcompleted=true;
+            this.viewdetail=false;
+        }
+        else{
+            this.notcompleted=false;
+            this.viewdetail=true;
+        }
+        if(this.confidencelvl==''||this.confidencelvl==null){
+          this.$.confidencelevel.selected=0;
+          //this.$.confidencelabel.hidden=true;
+        }
+        else{
+          //this.$.followdrop.hidden=true;
+              if(this.confidencelvl=='>90%'){
+                this.$.confidencelevel.selected=1;
+              }
+              else if(this.confidencelvl=='>75%'){
+                this.$.confidencelevel.selected=2;
+              }
+              else if(this.confidencelvl=='>50%'){
+                this.$.confidencelevel.selected=3;
+              }
+              else if(this.confidencelvl=='<50%'){
+                this.$.confidencelevel.selected=4;
+              }
+              else if(this.confidencelvl=='<35%'){
+                this.$.confidencelevel.selected=5;
+              }
+              else if(this.confidencelvl=='<10%'){
+                this.$.confidencelevel.selected=6;
+              }
+        }
+        
+
+         if((this.nextdate=='NaN-NaN-NaN')||(this.nextdate=='0000-00-00 00:00:00')){
+           this.$.dates.hidden=true;
+          this.$.reschedule.hidden=false;
+        }
+        else{
+           this.$.dates.hidden=false;
+          this.$.reschedule.hidden=true; 
+        }
       }
       
     });

@@ -459,7 +459,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       GenerateFollowups:function(enquiryidd,attndusername){
           enquiryidzz=enquiryidd;
           usernameattend=attndusername;
-          // alert(enquiryidzz);
+          //alert(enquiryidzz);
         this.masterfollowupinfourl=sessionStorage.getItem("addrinfo")+"/masterfollowupinfo";
         var obj={"schol":""}
         obj.schol=localStorage.getItem("schoolid");
@@ -469,7 +469,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     
       },
       masterfollowupinfoResponse:function(e){
-        // alert(JSON.stringify(e.detail.response.returnval));
+        //alert(JSON.stringify(e.detail.response.returnval));
         newscheduleno=0;
        var newdate=new Date();
           resultarr=e.detail.response.returnval;
@@ -731,7 +731,7 @@ countresult=0;
         document.querySelector('app-list').setPage("followup-details","Followup Student List");
 
       },
-      viewdetails:function(id,status,followid){
+      viewdetail:function(id,status,followid){
         followenqid=id;
         this.viewdetailurl=sessionStorage.getItem("addrinfo")+"/viewdetail";
         var obj={"schol":"","id":"","fid":"","fstatus":""};
@@ -921,7 +921,7 @@ countresult=0;
           if(e.detail.response.returnval=='success'){
             alert('Current followup detail is submitted');
             this.getlistdetails(localStorage.getItem("curr_enquiry_id"),localStorage.getItem("curr_followup_id"),localStorage.getItem("curr_schedule_no"));
-            document.querySelector('followup-listitem-card').ready();
+            document.querySelector('followup-listitem-card').Fnrefresh();
       }
       else{
           alert('Submission Failed');
@@ -937,12 +937,12 @@ countresult=0;
         obj.user=localStorage.getItem("employeeid");
         obj.today=sessionStorage.getItem("todaydate");
         this.updateschedulestatusparam=obj;
-      // alert(JSON.stringify(obj));
+      //alert(JSON.stringify(obj));
         this.$.updateschedulestatusajax.generateRequest();
     },
     updateschedulestatusResponse:function(e){
         if(e.detail.response.returnval=='success'){
-         // alert(e.detail.response.returnval);
+         //alert(e.detail.response.returnval);
               this.fetchfollowupmasterurl=sessionStorage.getItem("addrinfo")+"/fetchfollowupmaster";
               var obj={"schol":"","fid":"","enquiry":""}
               obj.schol=localStorage.getItem("schoolid");
@@ -955,7 +955,7 @@ countresult=0;
     },
     fetchfollowupmasterResponse:function(e){
         if((e.detail.response.returnval).length>0){
-          // alert(JSON.stringify(e.detail.response.returnval));
+          //alert(JSON.stringify(e.detail.response.returnval));
           newscheduleno=e.detail.response.returnval[0].schedule_no;
           enquiryidzz=e.detail.response.returnval[0].enquiry_id;
 
@@ -973,7 +973,7 @@ countresult=0;
           
              var newdate=new Date(checkdate);
             var lastdate=new Date(checkdate);
-             var temp=resultarray[0].no_of_days;
+             var temp=0;
           //for(var i=0;i<resultarray[0].no_of_schedules;i++){
             var i=0;
             do{
@@ -988,11 +988,11 @@ countresult=0;
               i++;
           }while(i<resultarray[0].no_of_schedules);
 
-alert(JSON.stringify(datesarr));
+//alert(JSON.stringify(datesarr));
           generateid=Math.floor(100000 + Math.random() * 900000);
 
 newdate.setDate(newdate.getDate()+resultarray[0].no_of_days);
-alert(newdate+'   '+lastdate);
+//alert(newdate+'   '+lastdate);
          this.insertfollowupmasterurl=sessionStorage.getItem("addrinfo")+"/updatefollow";
         var obj={"schol":"","id":"","enquiryno":"","schedule":"","currconfidence":"","schedulestatus":"","scheduleflag":"","noofdays":"","noofschedule":"","upcomingdate":"","lastscheduleon":"","createdby":"","createdon":"","followername":""}
         obj.schol=localStorage.getItem("schoolid");
@@ -1010,7 +1010,7 @@ alert(newdate+'   '+lastdate);
         obj.createdon=sessionStorage.getItem("todaydate");
         obj.followername=localStorage.getItem("employeeid");
         this.insertfollowupmasterparam=obj;
-       // alert(JSON.stringify(obj));
+       //alert(JSON.stringify(obj));
         this.$.insertfollowupmasterajax.generateRequest();
               
         }
@@ -1074,7 +1074,7 @@ alert(newdate+'   '+lastdate);
     } ,getcurrentmnthdetailsResponse:function(e){
       fncurrmnth=e.detail.response.returnval;
       var dt=new Date();
-       //  alert(JSON.stringify(fncurrmnth));
+       //alert(JSON.stringify(fncurrmnth));
               this.getcurrentdaydetailsurl=sessionStorage.getItem("addrinfo")+"/getcurrentdaydetails";
               var obj={"schol":"","followed_by":"","today":""}
               obj.schol=localStorage.getItem("schoolid");
@@ -1133,7 +1133,7 @@ alert(newdate+'   '+lastdate);
             }
           }
           document.querySelector('callanalysis-report-card').callinanasysisyaerandmontharr=callinanasysisyaerandmontharr;
-         // alert(JSON.stringify(callinanasysisyaerandmontharr));
+         //alert(JSON.stringify(callinanasysisyaerandmontharr));
         } else {
           document.querySelector('callanalysis-report-card').callinanasysisyaerandmontharr=callinanasysisyaerandmontharr;
           //alert(JSON.stringify(callinanasysisyaerandmontharr));
