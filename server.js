@@ -2962,7 +2962,7 @@ app.post('/getfollowupcount',  urlencodedParser,function (req, res){
      {
        if(!err)
        {
-         console.log(rows);
+         //console.log(rows);
          res.status(200).json({'returnval': rows});
        }
        else
@@ -3501,7 +3501,7 @@ app.post('/masterfollowupinfo',  urlencodedParser,function (req, res){
        {
          if(rows.length>0)
          {
-            console.log(rows);
+            //console.log(rows);
            res.status(200).json({'returnval': rows});
          }
          else
@@ -3619,7 +3619,7 @@ app.post('/getlistdetails',  urlencodedParser,function (req, res){
        {
          if(rows.length>0)
          {
-           console.log(rows);
+           //console.log(rows);
            res.status(200).json({'returnval': rows});
          }
          else
