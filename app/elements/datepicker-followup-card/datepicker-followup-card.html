@@ -22,6 +22,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
      <div class="content">
     <div>
+    <div hidden>{{scheduledon}}</div>
     <div>Next Follow-Up Date :</div> <paper-input style="width:65%; margin-left: 20%;" class="btn" on-click="FnShowDialog" raised value="{{showdate}}"></paper-input>
     <div>( Please select next followup date..! )</div>
     </div>
@@ -37,7 +38,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
   (function() {
     'use strict';
-
+var sdat;
     Polymer({
       is: 'datepicker-followup-card',
 
@@ -48,10 +49,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       FnShowDialog:function(){
         this.date=new Date();
+        
         this.$.dialog.toggle();
       },
       FnDismissDialog:function(e)
       {
+       
         if (e.detail.confirmed)
         {
           var pickdate=moment(this.$.picker.date).format('L');
@@ -77,6 +80,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           document.querySelector('followup-listitem-card').getdate(this.showdate);
           }
         }
+      
       },
       FnClear:function(){
         this.showdate = "";

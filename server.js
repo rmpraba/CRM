@@ -233,7 +233,7 @@ app.post('/fetchnoofinstallment-service',  urlencodedParser,function (req, res){
 
 connection.query("SELECT * FROM md_total_installment",function(err, rows){
 if(rows.length>0)
-res.status(200).json({'returnval': rows[0].no_of_installment});
+res.status(200).json({'returnval': rows[0].no_of_installment,'discount':rows[0].discount_percentage});
 else
 res.status(200).json({'returnval': '0'});
 });
@@ -2950,10 +2950,10 @@ app.post('/getfollowupcount',  urlencodedParser,function (req, res){
 
    var checkstatus=req.query.status;
    if((checkstatus=='Closed')||(checkstatus=='Exhausted')){
-        var qur = "SELECT f.enquiry_id,f.schedule_flag,s.enquiry_name,f.schedule_status,f.id,f.current_confidence_level,f.upcoming_date FROM followup f join student_enquiry_details s on f.enquiry_id=s.enquiry_no WHERE f.schedule_status='"+req.query.fnstatus+"' and s.class='"+req.query.fngrade+"' and s.school_id = '"+req.query.schol+"' and f.followed_by='"+req.query.user+"' ORDER BY (upcoming_date) DESC";
+        var qur = "SELECT f.enquiry_id,f.schedule_flag,s.enquiry_name,f.schedule_status,f.id,f.current_confidence_level,f.upcoming_date FROM followup f join student_enquiry_details s on f.enquiry_id=s.enquiry_no WHERE f.schedule_status='"+req.query.fnstatus+"' and s.class='"+req.query.fngrade+"' and s.school_id = '"+req.query.schol+"' and f.followed_by='"+req.query.user+"' and s.status='Enquired' ORDER BY (upcoming_date) DESC";
    }
    else{
-        var qur = "SELECT f.enquiry_id,f.schedule_flag,s.enquiry_name,f.schedule_status,f.id,f.current_confidence_level,f.upcoming_date FROM followup f join student_enquiry_details s on f.enquiry_id=s.enquiry_no WHERE f.schedule_status='"+req.query.fnstatus+"' and s.class='"+req.query.fngrade+"' and s.school_id = '"+req.query.schol+"' and f.followed_by='"+req.query.user+"' ORDER BY (upcoming_date)";
+        var qur = "SELECT f.enquiry_id,f.schedule_flag,s.enquiry_name,f.schedule_status,f.id,f.current_confidence_level,f.upcoming_date FROM followup f join student_enquiry_details s on f.enquiry_id=s.enquiry_no WHERE f.schedule_status='"+req.query.fnstatus+"' and s.class='"+req.query.fngrade+"' and s.school_id = '"+req.query.schol+"' and f.followed_by='"+req.query.user+"' and s.status='Enquired'  ORDER BY (upcoming_date)";
    }
    console.log(qur);
    connection.query(qur,
@@ -4555,7 +4555,7 @@ app.post('/deleterowfollowup',  urlencodedParser,function (req, res)
     {
     if(!err)
     {
-        console.log('inserted');
+        console.log('deleted');
           res.status(200).json({'returnval': 'success'});
     }
     else
@@ -4666,7 +4666,7 @@ app.post('/fetchschooltypegrade-service',  urlencodedParser,function (req, res){
 
 
 app.post('/fetchfeecodeforsplitup-service',  urlencodedParser,function (req, res){
-   connection.query("SELECT * FROM fee_master WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and admission_year='"+req.query.admissionyear+"' and grade_id='"+req.query.grade+"'",
+   connection.query("SELECT * FROM fee_master WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and admission_year='"+req.query.admissionyear+"' and grade_id='"+req.query.grade+"' ",
      function(err, rows)
      {
        if(!err)
@@ -4690,7 +4690,7 @@ app.post('/fetchfeecodeforsplitup-service',  urlencodedParser,function (req, res
 
 
 app.post('/fetchfeesplitup-service',  urlencodedParser,function (req, res){
-   connection.query("SELECT * FROM fee_splitup WHERE school_id='"+req.query.schoolid+"' and fee_code='"+req.query.feecode+"'",
+   connection.query("SELECT * FROM fee_splitup WHERE school_id='"+req.query.schoolid+"' and fee_code='"+req.query.feecode+"' and fee_type not in('Registration fee')",
      function(err, rows)
      {
        if(!err)
@@ -4752,7 +4752,10 @@ app.post('/insertmasterfeesplitup-service',  urlencodedParser,function (req, res
     fee_type:req.query.feetype,
     amount:req.query.amount,
     created_by:req.query.createdby,
-    split_schedule_code:req.query.splitupcode
+    split_schedule_code:req.query.splitupcode,
+    no_of_installment:req.query.noofinstallment,
+    installment_pattern:req.query.installmentpattern,
+    installment_no:req.query.insno
    } 
    
     connection.query("INSERT INTO md_fee_splitup_master SET ?",[response],function(err, rows)

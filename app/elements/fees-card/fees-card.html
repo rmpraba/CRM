@@ -62,16 +62,31 @@
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
-        <div class="col-sm-4 enquiry-input">
-          <paper-input  readonly label="Actual Fees" value="{{totalfees}}"></paper-input>
+        <div class="col-sm-2 enquiry-input">
+          <paper-input  readonly label="Total Fees" value="{{totalfees}}"></paper-input>
         </div>
-        <div class="col-sm-4 enquiry-input">          
-          <paper-input readonly label="Total Discount" value="{{totaldiscount}}"></paper-input>
+        <div class="col-sm-2 enquiry-input">          
+          <paper-input readonly label="Standard Discount" value="{{totaldiscount}}"></paper-input>
+        </div>
+        <div class="col-sm-3 enquiry-input">          
+          <paper-input readonly label="Total Payable Amount" value="{{totalpayableamount}}"></paper-input>
+        </div>
+        <div class="col-sm-2 enquiry-input">
+          <paper-input  readonly label="Discount Percentage" value="{{discountpercent}}"></paper-input>
+        </div>
+        <div class="col-sm-3 enquiry-input">          
+          <paper-input readonly label="Payable Amount" value="{{payableamount}}"></paper-input>
+        </div>
+      </div>
+
+      <!-- <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-4 enquiry-input">
+          <paper-input  readonly label="Discount Percentage" value="{{discountpercent}}"></paper-input>
         </div>
         <div class="col-sm-4 enquiry-input">          
           <paper-input readonly label="Payable Amount" value="{{payableamount}}"></paper-input>
         </div>
-      </div>
+      </div> -->
 
       <div class="form-group-heading">
         <h4>Installment Pattern</h4>
@@ -117,7 +132,7 @@
             </div>
             <div style="margin-left:12%;" hidden$="{{hiddeninstallment}}"> 
               <template  is="dom-repeat" items="{{feearr}}" as="view">
-                <installment-card  hiddenpayflag="{{view.hiddenpayflag}}" modeofpayment="{{view.modeofpayment}}" paidflag="{{view.paidflag}}" readonlyflag="{{view.readonlyflag}}" hiddenflag="{{view.hiddenflag}}" installment="{{view.installment}}" installmenttype="{{view.installment}}" actualamount="{{view.actualamount}}" amount="{{view.installmentamount}}" discountamount="{{view.discountamount}}" installmentdate="{{view.installmentdate}}" chequeno="{{view.chequeno}}" paiddate="{{view.paiddate}}" bankname="{{view.bankname}}" chequedate="{{view.chequedate}}" receiptdate="{{view.installmentdate}}" ></installment-card>
+                <installment-card  installmentid="{{view.installmentid}}" hiddenpayflag="{{view.hiddenpayflag}}" modeofpayment="{{view.modeofpayment}}" paidflag="{{view.paidflag}}" readonlyflag="{{view.readonlyflag}}" hiddenflag="{{view.hiddenflag}}" installment="{{view.installment}}" installmenttype="{{view.installment}}" actualamount="{{view.actualamount}}" amount="{{view.installmentamount}}" discountamount="{{view.discountamount}}" installmentdate="{{view.installmentdate}}" chequeno="{{view.chequeno}}" paiddate="{{view.paiddate}}" bankname="{{view.bankname}}" chequedate="{{view.chequedate}}" receiptdate="{{view.installmentdate}}" ></installment-card>
               </template>
             </div>
             <div>
@@ -179,6 +194,7 @@
       fetchnoofinstallmentResponse:function(e){
         noofinstallment=e.detail.response.returnval;
         localStorage.setItem("curr_sess_noofinstallment",noofinstallment);
+        localStorage.setItem("curr_sess_discountpercent",e.detail.response.discount);
         if(this.flag==1){
          this.$.admissionservice.searchfeeadmissionpaidinfoService(localStorage.getItem("curr_sess_enquiryno"));
          this.$.admissionservice.searchfeeadmissioninfoService(localStorage.getItem("curr_sess_enquiryno"));
