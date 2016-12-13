@@ -463,7 +463,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var fntodayarr;
     var callinanasysisyaerandmontharr=[];
     var reportname;
-    var customdate
+    var customdate;
+    var calls=0;
+    var schedule=0;
+
  var dt=new Date();
 
     Polymer({
@@ -561,8 +564,16 @@ countresult=0;
         
         if(e.detail.response.returnval=='success'){
           //alert(e.detail.response.returnval);
+          if(resultarr.length>0){
+            calls=resultarr[0].no_of_calls;
+          }
+          if(resultarray.length>0){
+            schedule=resultarray[0].no_of_schedules;
+          }
+
+//alert(calls+'   '+schedule);
           countresult=countresult+1;
-          if((countresult==resultarr[0].no_of_calls)||(countresult==resultarray[0].no_of_schedules)){
+          if((countresult==calls)||(countresult==schedule)){
             this.getfollowupcount();
           alert('The follwup schedule is updated successfully');
           }
@@ -771,6 +782,9 @@ countresult=0;
         document.querySelector('followup-student-detail').lastdate=res[0].last_schedule_date;
         document.querySelector('followup-student-detail').schedule=res[0].schedule_no;
         document.querySelector('followup-student-detail').fnstatus=res[0].schedule_Status;
+
+document.querySelector('followup-student-detail').currconfidence=res[0].current_confidence_level;
+document.querySelector('followup-student-detail').followid=res[0].id;
         if((res[0].father_name=="")||(res[0].father_name==null)){
           parentid=true;
         }else{
@@ -876,6 +890,7 @@ countresult=0;
         //document.querySelector('followup-student-detail').Fncheck();
 
 
+
         this.scheduledatesurl=sessionStorage.getItem("addrinfo")+"/scheduledates";
         var obj2={"schol":"","folowid":""};
         obj2.schol=localStorage.getItem("schoolid");
@@ -887,7 +902,10 @@ countresult=0;
       },
       scheduledatesResponse:function(e){
           var restultarrz=e.detail.response.returnval;
+          //alert(JSON.stringify(restultarrz));
+          if(restultarrz.length>0){
           document.querySelector('followup-listitem-card').fndatez(restultarrz);
+        }
       },
       updatefolowup:function(fnfid,fnscheduledate,fnfollowupno,fncurrentdate,fnnextdate,fncomments,fncallstatus,fnconfidencelvl,slno){
         var dts=new Date(fnnextdate);
@@ -933,7 +951,7 @@ countresult=0;
           if(e.detail.response.returnval=='success'){
             alert('Current followup detail is submitted');
             this.getlistdetails(localStorage.getItem("curr_enquiry_id"),localStorage.getItem("curr_followup_id"),localStorage.getItem("curr_schedule_no"));
-            document.querySelector('followup-listitem-card').Fnrefresh();
+            
       }
       else{
           alert('Submission Failed');
@@ -975,7 +993,8 @@ countresult=0;
 
           if(customdate=='todaydate'){
             var dt=new Date();
-        var todat=dt.getFullYear()+'-'+(dt.getMonth()+1)+'-'+dt.getDate();
+        var todat=new Date();
+        //alert(resultarray[0].no_of_days);
         todat.setDate(todat.getDate()+resultarray[0].no_of_days);
               var checkdate=todat;
           }
