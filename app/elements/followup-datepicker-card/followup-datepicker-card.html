@@ -22,6 +22,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
     <div class="content">
     <div>
+    <div hidden>{{scheduledon}}</div>
     <div>Next Follow-Up Date :</div> <paper-input style="width:65%; margin-left: 20%;" class="btn" on-click="FnShowDialog" raised value="{{showdate}}"></paper-input>
     <div>( Please select next followup date..! )</div>
     </div>
@@ -37,7 +38,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
   (function() {
     'use strict';
-
+    var sdat;
     Polymer({
       is: 'followup-datepicker-card',
 
@@ -45,7 +46,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       {
 
         this.showdate=moment(new Date(this.showdate)).format('L');
-      
          // document.querySelector('followup-listitem-card').showbutton(this.showdate);
         
       },
@@ -55,14 +55,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       FnDismissDialog:function(e)
       {
-        if (e.detail.confirmed)
+              if (e.detail.confirmed)
         {
-          var pickdate=moment(this.$.picker.date).format('L');
+         var pickdate=moment(this.$.picker.date).format('L');
           var dd1=new Date();
-          dd1.setTime(dd1.getTime() +(dd1.getTimezoneOffset()+330)*60*1000);
           var dd2=new Date(pickdate);
+          /*alert(dd1+'  '+dd2);
+          dd1.setTime(dd1.getTime() +(dd1.getTimezoneOffset()+330)*60*1000);
           dd2.setTime(dd2.getTime() +(dd2.getTimezoneOffset()+330)*60*1000);
-          var days=parseInt((dd1 - dd2) / (1000 * 60 * 60 * 24));
+          alert(dd1+'  '+dd2);
+          var days=parseInt((dd1 - dd2) / (1000 * 60 * 60 * 24));*/
+          var days=(dd1 - dd2);
+          //alert(days);
           if(days>=0){
           document.querySelector('followup-listitem-card').dateclear();
           }
@@ -79,7 +83,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.showdate = "";
       },
       FnSetDate:function(value){
-        this.showdate=moment(new Date(value)).format('L');
+        
+          this.showdate=moment(new Date(value)).format('L');  
+        
       }
     });
   })();

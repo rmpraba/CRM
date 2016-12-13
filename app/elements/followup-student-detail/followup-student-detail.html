@@ -70,6 +70,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </template>
     </div>
 </div>
+<div hidden>{{currconfidence}}/{{followid}}</div>
      <paper-dialog id="detailsdialog" class="paper-date-picker-dialog">
         <div class="content">
             <div hidden="{{parentinfo}}" class="list-group col-sm-12 panel-body form-category">
@@ -152,6 +153,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <paper-item hidden>{{lastdate}}</paper-item>
     <!-- Modal -->
+     <paper-dialog id="dialog4" class="paper-date-picker-dialog">
+      <div class="content">
+            <h2>Select your option..</h2>
+            <paper-radio-group>
+              <paper-radio-button id="todaydate" on-click="Fntodaydate">Today.</paper-radio-button>
+              <paper-radio-button id="customdate" on-click="Fncustomdate">Custom Date.</paper-radio-button>
+            </paper-radio-group>
+              
+                  <custom-datepicker-card id="custdate"></custom-datepicker-card>
+      </div>
+        <div class="buttons">
+          <paper-button id="followdisk4" style="background-color: silver;" class="btn glyphicon glyphicon-floppy-disk" raised on-click="savecustomdate">Save</paper-button>
+          <paper-button raised style="background-color: silver;" on-click="FnDismissDialog4">Cancel</paper-button>
+        </div>
+      </paper-dialog>
 
         <followup-service id="followupservice"></followup-service>
   </template>
@@ -168,6 +184,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var callpickstatus;
     var followupno;
     var today;
+    var takedate;
 
     Polymer({
       is: 'followup-student-detail',
@@ -207,16 +224,43 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       Fnchangestatus:function(e){
         var statuszx=(e.target.selectedItem.textContent).trim();
-        alert(statuszx);
+        //alert(statuszx);
         if(statuszx=='Re-Schedule'){
-            this.$.followupservice.Fnreschedule('>75%',this.followupid);
+            this.$.dialog4.open();
+        this.$.custdate.hidden=true;
         }
         else{
           this.$.followupservice.FnChangestatus(this.followupid,statuszx,this.enqno);
         }
       document.querySelector('#statusdialog').close();
+      },
+
+      Fntodaydate:function(){
+            takedate="todaydate";
+            //alert(takedate);
+            this.$.custdate.hidden=true;
+      },
+      Fncustomdate:function(){
+            this.$.custdate.hidden=false;
+      },
+      customdateclear:function(){
+          takedate=null;
+      },
+      customgetdate:function(datzxc){
+        //alert(datzxc);
+          takedate=datzxc;
+          //this.$.followupservice.Fnreschedule(this.confidencelvl,this.fid,takedate);
+      },
+      savecustomdate:function(){
+        //alert(this.confidencelvl+'  '+this.fid+'  '+takedate);
+         this.$.followupservice.Fnreschedule(this.currconfidence,this.followid,takedate);
+         this.$.dialog4.close();
+      },
+      FnDismissDialog4:function(){
+        todaydate=null;
+        this.$.custdate.hidden=true;
+        this.$.dialog4.close();
       }
-    
     });
   })();
   </script>
