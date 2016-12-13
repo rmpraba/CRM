@@ -406,7 +406,8 @@
         document.querySelector('installment-master-card').gradearr=e.detail.response.returnval;
         document.querySelector('admission-form').fromgradearr=e.detail.response.returnval;
         document.querySelector('admission-form').togradearr=e.detail.response.returnval;
-        document.querySelector('fee-splitup-card').gradearr=e.detail.response.returnval;
+        // document.querySelector('fee-splitup-card').gradearr=e.detail.response.returnval;
+        document.querySelector('feesplitup-structure-card').gradearr=e.detail.response.returnval;
       },
       fetchacademicyearService:function(){        
         this.fetchacademicyearurl=sessionStorage.getItem("addrinfo")+"/fetchacademicyear-service"
@@ -418,7 +419,8 @@
         document.querySelector('fee-structure-schedulecard').academicarr=e.detail.response.returnval;
         document.querySelector('installment-master-card').academicarr=e.detail.response.returnval;
         document.querySelector('admission-form').academicarr=e.detail.response.returnval;
-        document.querySelector('fee-splitup-card').academicarr=e.detail.response.returnval;
+        // document.querySelector('fee-splitup-card').academicarr=e.detail.response.returnval;
+        document.querySelector('feesplitup-structure-card').academicarr=e.detail.response.returnval;
         document.querySelector('searchreceipt-card').academicarr=e.detail.response.returnval;
       },
       fetchadmissionyearService:function(){        
@@ -430,8 +432,8 @@
         document.querySelector('discount-master-card').admissionarr=e.detail.response.returnval;
         document.querySelector('fee-structure-schedulecard').admissionarr=e.detail.response.returnval;
         document.querySelector('installment-master-card').admissionarr=e.detail.response.returnval;
-        document.querySelector('fee-splitup-card').admissionarr=e.detail.response.returnval;
-
+        // document.querySelector('fee-splitup-card').admissionarr=e.detail.response.returnval;
+        document.querySelector('feesplitup-structure-card').admissionarr=e.detail.response.returnval;
       },
       fetchfeetypeService:function(){        
         this.fetchfeetypeurl=sessionStorage.getItem("addrinfo")+"/fetchfeetype-service"
@@ -554,7 +556,7 @@
         // }   
       },
       generatefeecodeResponse:function(e){
-        alert(e.detail.response.returnval);
+        // alert(e.detail.response.returnval);
         if(e.detail.response.returnval=="done"){
           this.createfeecodeService();
         }
@@ -1158,7 +1160,8 @@
       fetchfeesplitupResponse:function(e){
         var feesplitarr=e.detail.response.returnval;
         // alert(JSON.stringify(feesplitarr));
-        document.querySelector('fee-splitup-card').setSplitArray(feesplitarr);
+        // document.querySelector('fee-splitup-card').setSplitArray(feesplitarr);
+        document.querySelector('feesplitup-structure-card').setSplitArray(feesplitarr);
         feesplitarr=[];
         feemastersplitarr=[];
       },
@@ -1196,9 +1199,12 @@
         obj.grade=localStorage.getItem("curr_sess_grade");
         obj.academicyear=localStorage.getItem("curr_sess_academicyear");
         obj.admissionyear=localStorage.getItem("curr_sess_admissionyear");
-        obj.basefeetype=this.feearr[i].type;
+        obj.basefeetype=this.feearr[i].installment;
         obj.feetype=this.feearr[i].feetype;
-        obj.amount=this.feearr[i].amount;
+        obj.amount=this.feearr[i].installmentfee;
+        obj.installmentpattern=this.feearr[i].installmentpattern;
+        obj.noofinstallment=this.feearr[i].noofinstallment;
+        obj.insno=this.feearr[i].insno;
         obj.createdby=localStorage.getItem("employeeid");
         this.insertmasterfeesplitupparam=obj;
         // alert(JSON.stringify(obj));

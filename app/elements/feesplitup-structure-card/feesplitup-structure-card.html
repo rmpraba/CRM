@@ -1,0 +1,409 @@
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<!-- <link rel="import" href="../fee-splitup-feetype-card/fee-splitup-feetype-card.html"> -->
+<!-- <link rel="import" href="../fee-termsplitup-feetype-card/fee-termsplitup-feetype-card.html"> -->
+<link rel="import" href="../schedule-service/schedule-service.html">
+<link rel="import" href="../feesplitup-structure-feetypecard/feesplitup-structure-feetypecard.html">
+
+<dom-module id="feesplitup-structure-card">
+<style type="text/css">
+  .schooltype{
+      @apply(--layout-horizontal);
+    }
+    .incard{
+      @apply(--layout-horizontal);
+      margin-top: -2%;
+    }
+    .outcard{
+      @apply(--layout-vertical);
+    }
+</style>
+  <template>
+    <style>
+    </style>
+    <div class="row enquiry-form">
+      <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6 enquiry-input">
+            <paper-input label="School Name" value="{{schoolname}}"></paper-input>
+        </div>
+        <div class="col-sm-4 enquiry-input">
+          <paper-dropdown-menu label="Grade" >
+            <paper-menu id="splitupgrade" class="dropdown-content" required on-iron-select="FnSelectGrade" valueattr="value" >
+              <template  is="dom-repeat" items="{{gradearr}}" as="item">
+              <paper-item value="{{item.grade_id}}">{{item.grade_name}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
+        </div>        
+      </div>
+
+       <div class="list-group col-sm-12 panel-body form-category">
+        <div class="col-sm-6">
+          <paper-dropdown-menu label="Academic Year" attr-for-selected="value">
+            <paper-menu id="splitupacademicyear" class="dropdown-content" required on-iron-select="FnSelectAcademicYear" valueattr="value" >
+              <template  is="dom-repeat" items="{{academicarr}}" as="item">
+              <paper-item>{{item.academic_year}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
+        </div>
+
+        <div class="col-sm-6 enquiry-input">
+          <paper-dropdown-menu label="Admission Year" attr-for-selected="value">
+            <paper-menu id="splitupadmissionyear" class="dropdown-content" required on-iron-select="FnSelectAdmissionYear" valueattr="value" >
+              <template  is="dom-repeat" items="{{admissionarr}}" as="item">
+              <paper-item>{{item.admission_year}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
+        </div>
+      </div>
+
+      <div class="form-group-heading">
+        <h4>Installment Pattern</h4>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category" >
+            <div class="col-sm-9 enquiry-input" hidden$="{{hideinstallmentpattern}}" style="margin-top: 4%;">
+            <span><paper-checkbox class="col-sm-3" id="splitstructuregeneral" readonly class="checkbox" on-change="generalHandler" checked>Standard Pattern</paper-checkbox></span>
+            <span><paper-checkbox class="col-sm-3" id="splitstructureinstallment" readonly class="checkbox" on-change="installmentHandler">Custom Pattern</paper-checkbox></span>
+            <span><paper-checkbox class="col-sm-3" id="splitstructurelumpsum" readonly class="checkbox" on-change="lumpsumHandler">Lumpsum</paper-checkbox></span>
+            <!-- <span><paper-checkbox class="col-sm-3" id="splitstructurethirdparty" readonly class="checkbox" on-change="thirdpartyHandler">Thirdparty</paper-checkbox></span> -->
+            </div>
+            <div class="col-sm-3" hidden$="{{hideinstallment}}" style="margin-left: -15%;">
+            <paper-dropdown-menu label="No Of Installment" attr-for-selected="value">
+            <paper-menu id="feesinstallment" class="dropdown-content" required on-iron-select="FnSelectInsatllmentNo" valueattr="value" >
+              <paper-item>6</paper-item>
+              <paper-item>9</paper-item>
+            </paper-menu>
+           </paper-dropdown-menu>
+           </div>    
+      </div>
+
+      <div class="list-group col-sm-12 panel-body form-category" hidden$="{{hidefeestructure}}">
+      <div>
+      <table style="width:100%;">
+        <tr><th>Fee Type</th><th>Total Fee</th>
+          <template  is="dom-repeat" items="{{feesinstallmentarr}}" as="ins">
+            <th>{{ins.installment}}</th>
+          </template>
+        </tr>
+      </table>
+      </div>
+
+      <table style="width:100%;">
+      <template  is="dom-repeat" items="{{feesplitarr}}" as="item">
+      <tr style="width:100%;"><td style="width:12%;">{{item.fee_type}}</td><td style="width:12%;">{{item.total_fee}}</td>
+      <td style="width:70%;">
+      <div class="incard">
+      <template  is="dom-repeat" items="{{insarr}}" as="f">
+      <feesplitup-structure-feetypecard feetype="{{item.fee_type}}" totalfee="{{item.total_fee}}" noofinstallment="{{noofinstallment}}" basefeetype="{{f.installment}}" splitarr="{{feesplitarr}}" insno="{{f.insno}}"></feesplitup-structure-feetypecard>
+      </template>
+      </div>
+      </td>
+      </tr>
+      </template>
+      </table>
+      </div>
+
+      <!-- <div class="list-group col-sm-12 panel-body form-category">
+      <div class="col-sm-6">
+        <label>Commitment Fee:</label>
+        <template  is="dom-repeat" items="{{feetypearr}}" as="item">
+        <fee-splitup-feetype-card type="Commitmentfee" feetypecode="{{item.fee_type_code}}" feetype="{{item.fee_type}}"></fee-splitup-feetype-card>
+        </template>  
+      </div>
+      <div class="col-sm-6">
+        <label>Term Fee:</label>
+        <template  is="dom-repeat" items="{{feetypearr}}" as="item">
+        <fee-termsplitup-feetype-card type="Termfee" feetypecode="{{item.fee_type_code}}" feetype="{{item.fee_type}}"></fee-termsplitup-feetype-card>
+        </template>
+      </div>
+      </div>
+      
+      <div class="list-group col-sm-12 panel-body form-category"  hidden$="{{hidefeedisplaycard}}">
+        <div class='schooltype'>   
+        <template  is="dom-repeat" items="{{feesplitarr}}" as="item">
+        <div class="outcard" style="width: 80%;">
+         <label>{{item.type}}</label>         
+         <table style="width: 50%;margin-left: 5%;">         
+          <template  is="dom-repeat" items="{{item.fees}}" as="feeitem">
+          <tr>
+           <td>{{feeitem.feetype}}</td><td>{{feeitem.amount}}</td>
+          </tr>
+          </template>
+         <tr><td colspan="2">-------------------------------------------</td></tr>
+         <tr><th>Total</th><th>{{item.total}}</th>
+         </tr> 
+         </table> 
+         </div>
+        </template>     
+        </div>  
+      </div> -->
+
+      <div class="list-group col-sm-12 panel-body form-category">
+        <paper-button id="splitupgenerate" hidden$="{{hidegenerate}}" on-click="FnGenerate" class="btn btn-primary center">Generate</paper-button>
+        <paper-button id="splitupsubmit" hidden$="{{hidesubmit}}" on-click="FnSubmit" class="btn btn-primary center">Submit</paper-button>
+        <paper-button id="splitupcancel" hidden$="{{hidecancel}}" on-click="FnCancel" class="btn btn-primary center">Cancel</paper-button>
+      </div>
+
+      <!-- It would fetch fee type -->
+      <iron-ajax
+        method="post"
+        id="fetchfeetypeajax"
+        url="{{fetchfeetypeurl}}"
+        params="{{fetchfeetypeparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchfeetypeResponse"
+        debounce-duration="300"
+      >
+
+      <iron-ajax
+        method="post"
+        id="fetchnoofinstallmentajax"
+        url="{{fetchnoofinstallmenturl}}"
+        params="{{fetchnoofinstallmentparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchnoofinstallmentResponse"
+        debounce-duration="300"
+        >
+
+    </div>
+    <schedule-service id="service"></schedule-service>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+    var grade,academicyear,admissionyear;
+    var feetypearr=[];
+    var splitarr=[];
+    var overall=[];
+    var installmentpattern="1";
+    var installmentarr=[];
+    var noofinstallment=0;
+    var installmentsplituparr=[];
+    Polymer({
+      is: 'feesplitup-structure-card',
+      ready:function(){
+        this.hidegenerate=false;
+        this.hidesubmit=true;
+        this.hideinstallment=true;
+        this.hidefeestructure=true;
+        this.schoolname=localStorage.getItem("schoolname");
+        this.fetchfeetypeService();
+        this.fetchnoofinstallmenturl=sessionStorage.getItem("addrinfo")+"/fetchnoofinstallment-service";
+        this.$.fetchnoofinstallmentajax.generateRequest();
+        localStorage.setItem("curr_sess_installmentpattern",installmentpattern);
+        this.flag=0;
+      },
+      fetchnoofinstallmentResponse:function(e){
+        noofinstallment=e.detail.response.returnval;
+        this.noofinstallment=noofinstallment;
+        localStorage.setItem("curr_sess_noofinstallment",noofinstallment);
+        if(this.flag==1){
+
+         }
+      },
+      FnSelectInsatllmentNo:function(e){
+        noofinstallment=(e.target.selectedItem.textContent).trim();  
+        this.noofinstallment=noofinstallment;
+        localStorage.setItem("curr_sess_noofinstallment",noofinstallment);
+      } ,
+      generalHandler:function(e){
+        if(document.querySelector("#splitstructuregeneral").checked==true)
+        {
+         this.flag=1;
+         document.querySelector("#splitstructureinstallment").checked=false;
+         document.querySelector("#splitstructurelumpsum").checked=false;
+         this.hideinstallment=true;
+         installmentpattern="1";
+         localStorage.setItem("curr_sess_installmentpattern",installmentpattern);
+         this.fetchnoofinstallmenturl=sessionStorage.getItem("addrinfo")+"/fetchnoofinstallment-service";
+         this.$.fetchnoofinstallmentajax.generateRequest();
+        }
+      },
+      installmentHandler:function(e){
+        if(document.querySelector("#splitstructureinstallment").checked==true)
+        {
+         document.querySelector("#splitstructuregeneral").checked=false;
+         document.querySelector("#splitstructurelumpsum").checked=false;
+         this.hideinstallment=false;
+         installmentpattern="2";
+         localStorage.setItem("curr_sess_installmentpattern",installmentpattern);
+        }
+      },
+      lumpsumHandler:function(e){
+        if(document.querySelector("#splitstructurelumpsum").checked==true)
+        {
+         document.querySelector("#splitstructuregeneral").checked=false;
+         document.querySelector("#splitstructureinstallment").checked=false;
+         this.hideinstallment=true;
+         installmentpattern="3";
+         noofinstallment=1;
+         this.noofinstallment=noofinstallment;
+         localStorage.setItem("curr_sess_noofinstallment",1);
+         localStorage.setItem("curr_sess_installmentpattern",installmentpattern);
+        }
+      },
+      FnAdd:function(){        
+      },
+      fetchfeetypeService:function(){        
+        this.fetchfeetypeurl=sessionStorage.getItem("addrinfo")+"/fetchfeetype-service"
+        this.$.fetchfeetypeajax.generateRequest();
+      },
+      fetchfeetypeResponse:function(e){
+        var arr=e.detail.response.returnval;
+        for(var i=0;i<arr.length;i++){
+          arr[i].fee_type_code=(arr[i].fee_type_code).replace(' ','');
+        }
+        this.feetypearr=arr;
+      },
+      FnSetFeeType:function(obj,flag){
+        if(feetypearr.length==0)
+          feetypearr.push(obj);
+        else{
+        if(flag==true){  
+        for(var i=0;i<feetypearr.length;i++){
+          if(feetypearr[i].type==obj.type&&feetypearr[i].feetype==obj.feetype)
+            feetypearr.splice(i,1);
+        }
+        feetypearr.push(obj);
+        }
+        else
+        {
+          for(var i=0;i<feetypearr.length;i++){
+          if(feetypearr[i].type==obj.type&&feetypearr[i].feetype==obj.feetype)
+            feetypearr.splice(i,1);
+           }
+        }
+        }       
+
+      },
+      FnGenerate:function(){
+        this.hidegenerate=true;
+        this.hidesubmit=false;
+        this.$.service.fetchfeecodeforsplitupService(grade,academicyear,admissionyear);
+      },
+      FnSelectGrade:function(e){
+        grade=(e.target.selectedItem.value).trim();
+        localStorage.setItem("curr_sess_grade",grade);
+      },
+      FnSelectAdmissionYear:function(e){
+        admissionyear=(e.target.selectedItem.textContent).trim();
+        localStorage.setItem("curr_sess_admissionyear",admissionyear);
+      },
+      FnSelectAcademicYear:function(e){
+        academicyear=(e.target.selectedItem.textContent).trim();
+        localStorage.setItem("curr_sess_academicyear",academicyear);
+      },
+      setSplitArray:function(arr){
+        splitarr=arr;
+        // alert(JSON.stringify(splitarr));
+        if(arr!='no rows'){        
+        for(var i=0;i<noofinstallment;i++){
+          var obj={"installment":"","insno":""};
+          obj.insno=i;
+          if(i==0&&installmentpattern!='3'){
+            obj.installment="Commitment Fee";
+
+          }
+          else if(i==0&&installmentpattern=='3'){
+            obj.installment="Lumpsum";
+          }
+          else{
+            obj.installment="Installment"+i;
+          }
+          installmentarr.push(obj);
+        }
+        // alert(JSON.stringify(installmentarr));
+        // alert(JSON.stringify(splitarr));
+        this.hidefeestructure=false;
+        this.feesinstallmentarr=installmentarr;
+        this.insarr=installmentarr;
+        this.feesplitarr=splitarr;
+        // document.querySelector('feesplitup-structure-feetypecard').setSplitFee(splitarr);
+        installmentarr=[];
+        splitarr=[];
+        }
+        else{
+          alert('Fees not found!!!');
+        }
+       //  for(var i=0;i<splitarr.length;i++){
+       //    for(var j=0;j<feetypearr.length;j++){
+       //      if(splitarr[i].fee_type==feetypearr[j].feetype){
+       //        if(feetypearr[j].type=="Commitmentfee"&&feetypearr[j].feetype!='Kit fee'){
+       //        feetypearr[j].amount=parseFloat(feetypearr[j].amount);
+       //        splitarr[j].total_fee=parseFloat(splitarr[i].total_fee)-parseFloat(feetypearr[j].amount);
+       //        }
+       //        else{
+       //        feetypearr[j].amount=parseFloat(splitarr[i].total_fee)-parseFloat(feetypearr[j].amount); 
+       //        }
+       //      }
+       //    }
+       //  }
+       //  var totalcommitmentfee=0;
+       //  var totaltermfee=0;        
+       //  for(var i=0;i<feetypearr.length;i++){
+       //    if(feetypearr[i].type=='Commitmentfee')
+       //      totalcommitmentfee=parseFloat(totalcommitmentfee)+parseFloat(feetypearr[i].amount);
+       //    else
+       //      totaltermfee=parseFloat(totaltermfee)+parseFloat(feetypearr[i].amount);
+       //  }
+       //  for(var i=0;i<feetypearr.length;i++){
+       //    overall.push(feetypearr[i]);
+       //  }
+       //  var a=[];
+       //  var arr=[];
+       // for(var i=0;i<feetypearr.length;i++)
+       // {       
+       //  var nameobj={"type":"","total":""};
+       //  nameobj.type=feetypearr[i].type; 
+       //  if(feetypearr[i].type=="Commitmentfee")
+       //  nameobj.total=totalcommitmentfee;
+       //  else
+       //  nameobj.total=totaltermfee;
+       //  var obj={"feetype":"","amount":""};
+       //  obj.feetype=feetypearr[i].feetype;
+       //  obj.amount=feetypearr[i].amount;
+       //  a.push(obj);
+       //  for(var j=i+1;j<feetypearr.length;j++)
+       //  {
+       //     if(feetypearr[i].type==feetypearr[j].type)
+       //     {
+       //       var obj1={"feetype":"","amount":""}
+       //       obj1.feetype=feetypearr[j].feetype;
+       //       obj1.amount=feetypearr[j].amount;
+       //       a.push(obj1);
+       //       feetypearr.splice(j,1);
+       //       j--;
+       //     }
+       //  }
+       //  nameobj.fees=a;
+       //  arr.push(nameobj);
+       //  a=[];
+       // }
+       // this.hidefeedisplaycard=false;
+       // this.feesplitarr=arr;
+      },
+      FnSetInstallmentSplitup:function(obj){  
+        // alert(JSON.stringify(obj))
+        for(var i=0;i<installmentsplituparr.length;i++){
+          if(installmentsplituparr[i].installment==obj.installment&&installmentsplituparr[i].feetype==obj.feetype){
+            installmentsplituparr.splice(i,1);
+          }
+        }      
+        installmentsplituparr.push(obj);
+      },
+      FnSubmit:function(){
+        // alert(JSON.stringify(installmentsplituparr));
+        this.$.service.generatemasterfeesplitupcodeService(installmentsplituparr);
+        installmentsplituparr=[];
+        feetypearr=[];
+        splitarr=[];
+        overall=[];
+      }
+    });
+  })();
+  </script>
+</dom-module>

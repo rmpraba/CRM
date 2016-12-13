@@ -233,7 +233,7 @@ app.post('/fetchnoofinstallment-service',  urlencodedParser,function (req, res){
 
 connection.query("SELECT * FROM md_total_installment",function(err, rows){
 if(rows.length>0)
-res.status(200).json({'returnval': rows[0].no_of_installment});
+res.status(200).json({'returnval': rows[0].no_of_installment,'discount':rows[0].discount_percentage});
 else
 res.status(200).json({'returnval': '0'});
 });
@@ -4667,7 +4667,7 @@ app.post('/fetchschooltypegrade-service',  urlencodedParser,function (req, res){
 
 
 app.post('/fetchfeecodeforsplitup-service',  urlencodedParser,function (req, res){
-   connection.query("SELECT * FROM fee_master WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and admission_year='"+req.query.admissionyear+"' and grade_id='"+req.query.grade+"'",
+   connection.query("SELECT * FROM fee_master WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and admission_year='"+req.query.admissionyear+"' and grade_id='"+req.query.grade+"' ",
      function(err, rows)
      {
        if(!err)
@@ -4691,7 +4691,7 @@ app.post('/fetchfeecodeforsplitup-service',  urlencodedParser,function (req, res
 
 
 app.post('/fetchfeesplitup-service',  urlencodedParser,function (req, res){
-   connection.query("SELECT * FROM fee_splitup WHERE school_id='"+req.query.schoolid+"' and fee_code='"+req.query.feecode+"'",
+   connection.query("SELECT * FROM fee_splitup WHERE school_id='"+req.query.schoolid+"' and fee_code='"+req.query.feecode+"' and fee_type not in('Registration fee')",
      function(err, rows)
      {
        if(!err)
@@ -4753,7 +4753,10 @@ app.post('/insertmasterfeesplitup-service',  urlencodedParser,function (req, res
     fee_type:req.query.feetype,
     amount:req.query.amount,
     created_by:req.query.createdby,
-    split_schedule_code:req.query.splitupcode
+    split_schedule_code:req.query.splitupcode,
+    no_of_installment:req.query.noofinstallment,
+    installment_pattern:req.query.installmentpattern,
+    installment_no:req.query.insno
    } 
    
     connection.query("INSERT INTO md_fee_splitup_master SET ?",[response],function(err, rows)

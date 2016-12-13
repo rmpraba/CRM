@@ -209,7 +209,7 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
         else{
           this.$.followbox.hidden=true;
         }*/
-        //vnextdate=this.nextdate;
+        // vnextdate=this.nextdate;
         
         if(this.callstatus=="Yes"){
           this.disableyes=true;
@@ -306,7 +306,8 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
         checkdates=datesxas;
       },
       getdate:function(nextdatez){
-        vnextdate=new Date(nextdatez);
+        // vnextdate=new Date(nextdatez);
+        vnextdate=new Date(localStorage.getItem("localsess_start_date"));
         this.nextdate=nextdatez;
         //alert(vnextdate);
           //alert(checkdates);
