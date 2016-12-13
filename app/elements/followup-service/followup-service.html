@@ -221,6 +221,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       on-response="getfollowupstudentsResponse"
       debounce-duration="300"
     >
+    </iron-ajax> 
+    <!--this below ajax gets the student list those who are enquired and admitted with respect to their grade-->
+    <iron-ajax
+      method="post"
+      id="getenqdetailsajax"
+      url="{{getenqdetailsurl}}"
+      params="{{getenqdetailsparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="getenqdetailsResponse"
+      debounce-duration="300"
+    >
     </iron-ajax>
 
 <!-- this below ajax is used to cal the function that fetch the data of student whose detail does we want to view -->
@@ -756,6 +768,60 @@ countresult=0;
         document.querySelector('app-list').setPage("followup-details","Followup Student List");
 
       },
+      getenqdetails:function(grade,status){
+        this.getenqdetailsurl=sessionStorage.getItem("addrinfo")+"/getenqdetails";
+        var obj={"schol":"","fngrade":"","fnstatus":""};
+        obj.schol=localStorage.getItem("schoolid");
+        obj.fngrade=grade;
+        obj.fnstatus=status;
+        this.getenqdetailsparam=obj;
+        //alert(JSON.stringify(obj));
+        this.$.getenqdetailsajax.generateRequest();
+
+      },
+
+      getenqdetailsResponse:function(e){
+       var res=e.detail.response.returnval;
+       //alert(JSON.stringify(res));
+       var requery=[];
+              for(var i=0;i<res.length;i++)
+              {
+                    var obj={"enquiry_id":"","student_name":"","enquired_year":"","enquiry_grade":"","guardian_type":"","guardian_name":"","guardian_num":"","sl_no":""}
+                    obj.enquiry_id=res[i].enquiry_no;
+                    obj.student_name=res[i].enquiry_name;
+                    obj.enquired_year=res[i].academic_year;
+                    obj.enquiry_grade=res[i].class;
+                    obj.sl_no=i+1;
+                    var dadalen=res[i].father_name;
+                    var momlen=res[i].mother_name;
+                    var gurlen=res[i].guardian_name;
+                            if(dadalen.length>0)
+                            {
+                              obj.guardian_type='Parent';
+                              obj.guardian_name=res[i].father_name;
+                              obj.guardian_num=res[i].father_mob;
+                            }
+                            else if(momlen.length>0)
+                            {
+                              obj.guardian_type='Parent';
+                              obj.guardian_name=res[i].mother_name;
+                              obj.guardian_num=res[i].mother_mob;
+                            }
+                            else if(gurlen.length>0)
+                            {
+                              obj.guardian_type='Guardian';
+                              obj.guardian_name=res[i].guardian_name;
+                              obj.guardian_num=res[i].guardian_mobile;
+                            }
+          
+                    requery.push(obj);              
+              }
+              alert(JSON.stringify(requery));
+              document.querySelector('enquiry-details-card').listdetails=requery;
+              
+
+      },
+
       viewdetail:function(id,status,followid){
         followenqid=id;
         this.viewdetailurl=sessionStorage.getItem("addrinfo")+"/viewdetail";

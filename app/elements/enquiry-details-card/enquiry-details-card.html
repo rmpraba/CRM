@@ -6,20 +6,27 @@
       <thead>
       <tr>
         <th>#</th>
+        <th>Enquiry ID</th>
         <th>Student Name</th>
-        <th>Enquired On</th>
-        <th>Prospectus Status</th>
-        <th>Follow Up</th>
+        <th>Grade</th>
+        <th>Academic year</th>
+        <th>Parent/Guardian</th>
+        <th>Name</th>
+        <th>Mobile</th>
       </tr>
       </thead>
       <tbody>
       <template  is="dom-repeat" items="{{listdetails}}" as="view">
-
-        <tr><th scope="row">{{view.enquiry_no}}</th>
-        <td>{{view.enquiry_name}}</td>
-        <td>{{view.created_on}}</td>
-        <td>{{view.current_confidence_level}}</td>
-        <td>{{view.followup_flag}}</td>
+       <tr>
+        <td>{{view.sl_no}}</td>
+        <td>{{view.enquiry_id}}</td>
+        <td>{{view.student_name}}</td>
+        <td>{{view.enquiry_grade}}</td>
+        <td>{{view.enquired_year}}</td>
+        <td>{{view.guardian_type}}</td>
+        <td>{{view.guardian_name}}</td>
+        <td>{{view.guardian_num}}</td>
+     
       </tr>
       </template>
 

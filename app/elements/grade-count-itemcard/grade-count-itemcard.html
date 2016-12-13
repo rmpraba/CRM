@@ -8,6 +8,7 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 
+
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 
 <dom-module id="grade-count-itemcard">
@@ -20,14 +21,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        <div class="list-group list-group-item enquiry-list-item">
         <h5>{{grade}}</h5>
         <div class="col-sm-6">
-         <a href="" class="enquired" on-click="getdetails" aria-hidden="true" data-toggle="modal" data-target="#grade1enquired">{{enquirygrade}}</a>
+         <a href="" class="enquired" on-click="getenqdetails" aria-hidden="true" data-toggle="modal" data-target="#grade1enquired">{{enquirygrade}}</a>
         </div>
         <div class="col-sm-6">
-          <a href="" class="applied">{{admissiongrade}}</a>
+          <div hidden>{{gradestatus}}</div>
         </div>
       </div>
 
-        <crm-service id="service"></crm-service>
+        <followup-service id="service"></followup-service>
   </template>
   <script>
   (function() {
@@ -36,10 +37,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     Polymer({
       is: 'grade-count-itemcard',
 
-      getdetails:function(){
-        //alert('Hi');
-          this.$.service.getlistdetails(this.grade);
-      }
+      getenqdetails:function()
+      { 
+      //alert("hi");   
+          this.$.service.getenqdetails(this.grade,this.gradestatus);
+       }
+
+      
     });
   })();
   </script>
