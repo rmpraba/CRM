@@ -196,7 +196,18 @@
         debounce-duration="300"
         >
   </iron-ajax>
-
+<!-- this ajax is to verify with the database whether the specific number is existing in database or not -->
+  <iron-ajax
+        method="post"
+        id="verifymobilenoajax"
+        url="{{verifymobilenourl}}"
+        params="{{verifymobilenoparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="verifymobilenoResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
 
       <followup-service id="followupservice"></followup-service>
   </template>
@@ -505,6 +516,21 @@
       savereferraldataResponse:function(e){
         var result=e.detail.response.returnval;
       },
+     checkmobileno:function(mobile){
+          this.verifymobilenourl=sessionStorage.getItem("addrinfo")+"/verifymobileno";
+        var obj={"mobileno":"","schol":""}
+        obj.mobileno=mobile;
+        obj.schol=localStorage.getItem("schoolid");
+        this.verifymobilenoparam=obj;
+       //alert(JSON.stringify(obj));
+        this.$.verifymobilenoajax.generateRequest();
+     },
+     verifymobilenoResponse:function(e){
+        var result=e.detail.response.returnval;
+        if(result.length>0){
+          document.querySelector('pre-apps').showdialog(result[0].enquiry_no,result[0].first_name,result[0].middle_name,result[0].last_name);
+        }
+     },
     });
   })();
   </script>

@@ -1343,15 +1343,14 @@ app.post('/getenqirydetails',  urlencodedParser,function (req, res){
 
 app.post('/verifymobileno',  urlencodedParser,function (req, res)
 {
-
-       connection.query("SELECT * from student_enquiry_details where school_id='"+req.query.schol+"' and (father_mob='"+req.query.mobileno+"' or mother_mob='"+req.query.mobileno+"' or gmob='"+req.query.mobileno+"') ",
+  var qur = "SELECT * from student_enquiry_details where school_id='"+req.query.schol+"' and (father_mob='"+req.query.mobileno+"' or mother_mob='"+req.query.mobileno+"' or guardian_mobile='"+req.query.mobileno+"') ";
+       connection.query(qur,
   function(err, rows)
         {
     if(!err)
     {
     if(rows.length>0)
     {
-//console.log(rows);
       res.status(200).json({'returnval': rows});
     }
     else

@@ -25,14 +25,21 @@
       .lb2,#lb2{
         @apply(--layout-horizontal);
       }
+      .counsellor{
+        padding-top: 6px;
+        font-size: medium;
+      }
+      .dialog-paragraph{
+        font-size: medium;
+      }
     </style>
     <div class="row enquiry-form">
       <div class="form-group-heading">
         <h4>Enquiry Detail</h4>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
-        <div class="col-sm-4">
-          <paper-input label="Date of Enquiry" id="today" readonly value="{{todaydate}}"></paper-input>
+        <div class="col-sm-6">
+          <enquiry-datepicker></enquiry-datepicker>
         </div>
         <div class="col-sm-3" style='margin-top: 1%;'>
           <paper-checkbox id="nextacademicyear" class="checkbox" on-change="nextyearhandler"> Next Year</paper-checkbox>
@@ -83,7 +90,7 @@
           </div>
         </div>
         <div class="col-sm-6 enquiry-input">
-          <div class="lbl"><label>Sibling </label><p id="mangender">&nbsp; *</p> </div>
+          <div class="lbl"><label>Sibling </label></div>
           <div class="gender">
             <paper-radio-group>
               <paper-radio-button id="siblingyes" name="yes" on-click="siblingyes">Yes</paper-radio-button>
@@ -263,14 +270,15 @@
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">  
-        <div class="col-sm-4">
-          <paper-dropdown-menu label="Attended By" style="margin-top: 3%;">
-            <paper-menu class="dropdown-content" on-iron-select="attendedby" id="idrmnames">
-              <template  is="dom-repeat" items="{{counsellor}}" as="name">
-                <paper-item value="{{name.employee_name}}">{{name.employee_id}}</paper-item>
-              </template>
-            </paper-menu>
-          </paper-dropdown-menu>
+        <div class="col-sm-6">
+          <div class="col-sm-4">
+            <h5>
+              Attended By
+            </h5>
+          </div>
+          <div class="col-sm-6 counsellor">
+              {{attenedcounsellorname}}
+          </div>
         </div> 
       </div>   
       <!-- <div class="list-group col-sm-12 panel-body form-category">
@@ -308,6 +316,22 @@
           <paper-button class="col-sm-4 col-sm-offset-4"  dialog-dismiss>Cancel</paper-button>
         </div>
       </paper-dialog>
+      <paper-dialog id="confirmbox" modal>
+        <h2>Mobile Number matches with registered student</h2>
+          <p class="lead dialog-paragraph">This mobile number is already registered.</p>
+          <p class="lead dialog-paragraph">Do this student have siblings or already registered here ? </p>
+          <p class="lead dialog-paragraph">as - {{studentname}} - {{enquiryno}}</p>
+          <div class="buttons">
+            <paper-button class="btn btn-danger " on-click="cancel">No</paper-button>
+            <paper-button class="btn btn-success" on-click="Confirm">Yes</paper-button>
+          </div>
+      </paper-dialog>
+      <paper-dialog id="cancelbox" modal>
+        <h2 class="lead dialog-paragraph">If "No" Please change the mobile number</h2>
+        <div class="buttons" >
+          <paper-button class="btn btn-primary" on-click="closedialog">OK</paper-button>
+        </div>
+      </paper-dialog>
     <pre-apps-service id='preapps'></pre-apps-service>
   </template>
   <script>
@@ -330,7 +354,6 @@
     var havesibling;
     var gender;
     var mothertonguelanguage;
-    var attenedcounsellorname;
     var dadoccupationinfo;
     var motheroccupationinfo;
     var guardianoccupationinfo;
@@ -353,6 +376,7 @@
     var fathermobileno = true;
     var mothermobileno = true;
     var guardianmobileno = true;    
+    var enquiry_date;
     Polymer({
       is: 'pre-apps',
 
@@ -378,15 +402,24 @@
       this.sibling = true;
       this.referral = true;
       professionanyoneselected = "";
+      var todaysDate = new Date();
+      var yyyy = todaysDate.getFullYear().toString();
+      var mm = (todaysDate.getMonth()+1).toString();
+      var dd  = todaysDate.getDate().toString();
+
+      var mmChars = mm.split('');
+      var ddChars = dd.split('');
+      enquiry_date =  yyyy + '-' + (mmChars[1]?mm:"0"+mmChars[0]) + '-' + (ddChars[1]?dd:"0"+ddChars[0]);
+      /*
       var dt=new Date();
       todaydat=sessionStorage.getItem("todaydate")
       sessionStorage.setItem("todaydate",todaydat);
-      this.todaydate=todaydat;
-      currentdate=dt.getFullYear()+"-"+(dt.getMonth()+1)+"-"+dt.getDate();
+      this.todaydate=todaydat;*/
+      //currentdate=dt.getFullYear()+"-"+(dt.getMonth()+1)+"-"+dt.getDate();
       paga="parent";
       this.$.totalstudentnonzero.close();
       this.$.totalstudentzero.close();
-
+      this.attenedcounsellorname = localStorage.getItem("employeeid");
       /*this.$.service.getdiscounts();
       this.$.service.getrmnamelist();
       */
@@ -435,6 +468,19 @@
     dateclear:function(){
       alert("Select DOB properly, it cannot be future date");
     },
+    enquirydate:function(){
+      alert("Select Enquiry date properly, it cannot be future date");
+    },
+    getenquirydate:function(dates){
+      var dt1=new Date(dates);
+      var yyyy = dt1.getFullYear().toString();
+      var mm = (dt1.getMonth()+1).toString();
+      var dd  = dt1.getDate().toString();
+
+      var mmChars = mm.split('');
+      var ddChars = dd.split('');
+      enquiry_date =  yyyy + '-' + (mmChars[1]?mm:"0"+mmChars[0]) + '-' + (ddChars[1]?dd:"0"+ddChars[0]);
+    },
     getdate:function(dates){
       var dt1=new Date(dates);
       dobdate=dates;
@@ -447,7 +493,7 @@
       var diff=parseInt(pr_year-bt_year);
       var now = new Date();
       var today = new Date(now.getYear(),now.getMonth(),now.getDate());
-
+      
       var yearNow = now.getYear();
       var monthNow = now.getMonth();
       var dateNow = now.getDate();
@@ -663,7 +709,7 @@
       this.$.iditemlistz.hidden=true;
     },
     attendedby:function(e){
-      attenedcounsellorname = e.target.selectedItem.value;
+      
     },
     autocompletename(nameitem){
       namearr=nameitem;
@@ -923,9 +969,8 @@
     },
     complete:function(){
       if(paga=="guardian"){
-        if(this.todaydate == ""|| this.firstname==""||this.textvalue==""||this.guardianname==""||this.guardianemail==""||this.guardianmobile==""||this.academicyear=='' || this.ageofyr =="" || guardianmobileno == false){
+        if(/*this.todaydate == ""|| */this.firstname==""||this.textvalue==""||this.guardianname==""||this.guardianemail==""||this.guardianmobile==""||this.academicyear=='' || this.ageofyr =="" || guardianmobileno == false){
           // alert('1');
-          this.$.today.validate();
           this.$.idfname.validate();
           this.$.idlocality.validate();
           this.$.Guardianname.validate();
@@ -949,13 +994,11 @@
            alert('Select the Academics Year Type');
         } else if(enquiysource == null){
             alert("Select Enquiry Source");
-        } else if(attenedcounsellorname == null){
-            alert("Select Counsellor");
         }else if(mothertonguelanguage == null){
             alert("Select Mother Tongue");
-        } else if(havesibling == null){
-            alert("Select the student having sibling or not");
-        } else if(guardianwork == null){
+        }else if(todaydat == "" || todaydat == null){
+          alert("Select Enquiry Date");
+        }else if(guardianwork == null){
           alert("Select Guardian Work");
         } else {
           if(enquiysource=="Sibling" || enquiysource=="Referral"){
@@ -980,8 +1023,7 @@
           }
         }
       } else if(paga=="parent") {
-        if(this.todaydate == ""|| this.firstname==""||this.textvalue==""||this.academicyear==""  || this.ageofyr ==""){
-          this.$.today.validate();
+        if(/*this.todaydate == ""|| */this.firstname==""||this.textvalue==""||this.academicyear==""  || this.ageofyr ==""){
           this.$.idfname.validate();
           this.$.idlocality.validate();
           this.$.idacyr.validate();
@@ -998,7 +1040,7 @@
             this.$.dademail.validate();
             this.$.motheremail.validate();
             alert("Needs Parent's email id atleast one of them!");
-        }else if(grade==null) {
+        } else if(grade==null) {
           alert('Select the grade your seeking for admission');
         } else if(gender==null){
           alert('Select the gender of the student');
@@ -1010,14 +1052,10 @@
            alert('Select the Academic Year Type');
         }  else if(enquiysource == null){
             alert("Select Enquiry Source");
-        } else if(attenedcounsellorname == null){
-            alert("Select Counsellor");
         } else if(bothparentswork == null){
             alert("Check Both Parent are working or not");
         } else if(mothertonguelanguage == null){
             alert("Select Mother Tongue");
-        } else if(havesibling == null){
-            alert("Select the student having sibling or not");
         } else if(fathermobileno == false || mothermobileno == false){
           if(fathermobileno == false){
             this.$.dadmobile.validate();
@@ -1121,7 +1159,7 @@
       }
     },
     getvalues:function(){
-      this.$.preapps.submitenqdetails(currentdate,enrolltype,this.academicyear,grade,this.firstname,this.middlename,this.lastname,gender,havesibling,this.ageofyr,dobdate,mothertonguelanguage,this.fathername,this.mothername,this.mob,this.mothermob,this.email,this.motheremail,this.guardianname,this.guardianmobile,this.guardianemail,dadoccupationinfo,motheroccupationinfo,this.textvalue,enquiysource,attenedcounsellorname,this.enquiry_number,guardianoccupationinfo,parent_or_guardian_work);
+      this.$.preapps.submitenqdetails(enquiry_date,enrolltype,this.academicyear,grade,this.firstname,this.middlename,this.lastname,gender,havesibling,this.ageofyr,dobdate,mothertonguelanguage,this.fathername,this.mothername,this.mob,this.mothermob,this.email,this.motheremail,this.guardianname,this.guardianmobile,this.guardianemail,dadoccupationinfo,motheroccupationinfo,this.textvalue,enquiysource,this.attenedcounsellorname,this.enquiry_number,guardianoccupationinfo,parent_or_guardian_work);
     },
     FnClear:function(){
       this.callnextyearhandler();
@@ -1192,6 +1230,7 @@
     verifymob:function(){
       if(this.mob.length==10){
         fathermobileno = true;
+        this.$.preapps.checkmobileno(this.mob);
       }else{
         alert('Please check the mobile number properly');
         this.$.dadmobile.validate();
@@ -1201,6 +1240,7 @@
     verifymommob:function(){
       if(this.mothermob.length==10){
         mothermobileno = true;
+        this.$.preapps.checkmobileno(this.mothermob);
       }else{
         alert('Please check the mobile number properly');
         this.$.mommobile.validate();
@@ -1210,12 +1250,47 @@
     gverifymob:function(){
       if(this.guardianmobile.length==10){
         guardianmobileno = true;
+        this.$.preapps.checkmobileno(this.guardianmobile);
       }else{
         alert('Please check the mobile number properly');
         this.$.gmobile.validate();
         guardianmobileno = false;
       }
-    }
+    },
+    showdialog:function(enqno,fname,mname,lname){
+          this.studentname=fname+' '+mname+' '+lname;
+          this.enquiryno=enqno;
+          this.$.confirmbox.open();
+          /*var id = 'confirmbox';
+        var dialog = document.getElementById(id);
+        dialog.open();*/
+      },
+      Confirm:function(){
+        this.$.confirmbox.close();
+        /* var id = 'confirmbox';
+        var dialog = document.getElementById(id);
+        dialog.close();*/
+      },
+      cancel:function(){
+        this.$.confirmbox.close();
+        this.$.cancelbox.open();
+        /*var id = 'confirmbox';
+        var dialog = document.getElementById(id);
+        dialog.close();
+          var id = 'cancelbox';
+        var dialog = document.getElementById(id);
+        dialog.open();*/
+      },
+      closedialog:function(){
+        this.$.cancelbox.close();
+        this.mob = "";
+        this.mothermob = "";
+        this.guardianmobile = "";
+        /*  var id = 'cancelbox';
+        var dialog = document.getElementById(id);
+        dialog.close();*/
+
+      },
     });
   })();
   </script>
