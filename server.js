@@ -2951,10 +2951,10 @@ app.post('/getfollowupcount',  urlencodedParser,function (req, res){
 
    var checkstatus=req.query.status;
    if((checkstatus=='Closed')||(checkstatus=='Exhausted')){
-        var qur = "SELECT f.enquiry_id,f.schedule_flag,s.enquiry_name,f.schedule_status,f.id,f.current_confidence_level,f.upcoming_date FROM followup f join student_enquiry_details s on f.enquiry_id=s.enquiry_no WHERE f.schedule_status='"+req.query.fnstatus+"' and s.class='"+req.query.fngrade+"' and s.school_id = '"+req.query.schol+"' and f.followed_by='"+req.query.user+"' ORDER BY (upcoming_date) DESC";
+        var qur = "SELECT f.enquiry_id,f.schedule_flag,s.enquiry_name,f.schedule_status,f.id,f.current_confidence_level,f.upcoming_date FROM followup f join student_enquiry_details s on f.enquiry_id=s.enquiry_no WHERE f.schedule_status='"+req.query.fnstatus+"' and s.class='"+req.query.fngrade+"' and s.school_id = '"+req.query.schol+"' and f.followed_by='"+req.query.user+"' and s.status='Enquired' ORDER BY (upcoming_date) DESC";
    }
    else{
-        var qur = "SELECT f.enquiry_id,f.schedule_flag,s.enquiry_name,f.schedule_status,f.id,f.current_confidence_level,f.upcoming_date FROM followup f join student_enquiry_details s on f.enquiry_id=s.enquiry_no WHERE f.schedule_status='"+req.query.fnstatus+"' and s.class='"+req.query.fngrade+"' and s.school_id = '"+req.query.schol+"' and f.followed_by='"+req.query.user+"' ORDER BY (upcoming_date)";
+        var qur = "SELECT f.enquiry_id,f.schedule_flag,s.enquiry_name,f.schedule_status,f.id,f.current_confidence_level,f.upcoming_date FROM followup f join student_enquiry_details s on f.enquiry_id=s.enquiry_no WHERE f.schedule_status='"+req.query.fnstatus+"' and s.class='"+req.query.fngrade+"' and s.school_id = '"+req.query.schol+"' and f.followed_by='"+req.query.user+"' and s.status='Enquired'  ORDER BY (upcoming_date)";
    }
    console.log(qur);
    connection.query(qur,
@@ -4556,7 +4556,7 @@ app.post('/deleterowfollowup',  urlencodedParser,function (req, res)
     {
     if(!err)
     {
-        console.log('inserted');
+        console.log('deleted');
           res.status(200).json({'returnval': 'success'});
     }
     else

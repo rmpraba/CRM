@@ -91,7 +91,7 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
             </paper-dropdown-menu>
 </div>
             <iron-autogrow-textarea id="followbox1" placeholder="Please type your comments here..." error-message="needs comments!" required value="{{value}}"></iron-autogrow-textarea>
-              <datepicker-followup-card showdate="{{nextdate}}"></datepicker-followup-card>
+              <datepicker-followup-card scheduledon="{{scheduledate}}" showdate="{{nextdate}}"></datepicker-followup-card>
       </div>
         <div class="buttons">
           <paper-button id="followdisk2" style="background-color: silver;" class="btn glyphicon glyphicon-floppy-disk" raised on-click="FollowUp">Save</paper-button>
@@ -116,7 +116,7 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
 
             <iron-autogrow-textarea id="followbox2" placeholder="Please type your comments here..." error-message="needs comments!" required bind-value="{{value}}"></iron-autogrow-textarea>
             <div>
-              <followup-datepicker-card showdate="{{nextdate}}"></followup-datepicker-card>
+              <followup-datepicker-card scheduledon="{{scheduledate}}" showdate="{{nextdate}}"></followup-datepicker-card>
             </div>
       </div>
         <div class="buttons">
@@ -308,9 +308,19 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
         //this.ready();
       },
       getdate:function(nextdatez){
-        vnextdate=new Date(nextdatez);
+          var selected=new Date(this.scheduledate);
+          var sdat=new Date(nextdatez);
+        alert(sdat+'  '+selected);
+        var res=parseInt(sdat-selected);
+        alert(res);
+        if(res==0){
+          alert('Kindly, select different followup date than scheduled date.. ');
+          this.showdate='';
+        }else{
+          vnextdate=new Date(nextdatez);
         this.nextdate=nextdatez;
-        flagz=1;
+        flagz=1;  
+        }
         //alert(vnextdate);
           //alert(checkdates);
         //this.$.confidencelabel.hidden=false
@@ -458,8 +468,8 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
                       }
                       else if((res>0)&&(flag2==0)){
                         folwno=(parseInt(l)+1);
-                        //alert('Deactivate the corresponding dates and insert new row');
-                        //alert(this.scheid+'   '+this.fid+'  '+folwno+'   '+ckdt2);
+                        alert('Deactivate the corresponding dates and insert new row');
+                        alert(this.scheid+'   '+this.fid+'  '+folwno+'   '+ckdt2);
                         this.$.followupservice.deactivatefollowup(this.scheid,this.fid,folwno,ckdt2);
                       }
                       else if(res==0){
