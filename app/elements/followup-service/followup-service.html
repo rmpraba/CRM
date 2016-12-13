@@ -816,7 +816,7 @@ countresult=0;
           
                     requery.push(obj);              
               }
-              alert(JSON.stringify(requery));
+              //alert(JSON.stringify(requery));
               document.querySelector('enquiry-details-card').listdetails=requery;
               
 
@@ -1288,7 +1288,7 @@ newdate.setDate(newdate.getDate()+resultarray[0].no_of_days);
               obj.currdate=fncurrdate;
               obj.followupnoz=fnfolwno;
               this.deleterowfollowupparam=obj;
-             alert(JSON.stringify(obj));
+             //alert(JSON.stringify(obj));
               this.$.deleterowfollowupajax.generateRequest();
       },
       deleterowfollowupResponse:function(e) {
