@@ -2762,7 +2762,7 @@ app.post('/getenquirycount',  urlencodedParser,function (req, res){
     var qur={"school_id":req.query.schol};
     var state={"status":req.query.status};
     //console.log('qur');
-    connection.query('SELECT *,class,count(*) as total FROM `student_enquiry_details` WHERE ? and ? group by (class)',[qur,state],
+    connection.query('SELECT status,class,count(*) as total FROM `student_enquiry_details` WHERE ? and ? group by (class)',[qur,state],
     function(err, rows)
     {
     if(!err)
@@ -2972,6 +2972,35 @@ app.post('/getfollowupcount',  urlencodedParser,function (req, res){
 
      });
  });
+
+app.post('/getenqdetails',  urlencodedParser,function (req, res)
+{
+  
+
+   var qur="SELECT * FROM student_enquiry_details WHERE school_id='"+req.query.schol+"' and class='"+req.query.fngrade+"' and status='"+req.query.fnstatus+"'";
+   console.log(qur);
+   connection.query(qur,
+     function(err, rows)
+     {
+       if(!err)
+       {
+         console.log(rows);
+         res.status(200).json({'returnval': rows});
+       }
+       else
+       {
+         console.log(err);
+         res.status(200).json({'returnval': 'invalid'});
+       }
+
+     });
+ });
+
+
+
+
+
+
 
 
  app.post('/viewdetail',  urlencodedParser,function (req, res)
