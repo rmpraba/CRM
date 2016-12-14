@@ -2421,6 +2421,7 @@ app.post('/fetchinstallmentseperation',  urlencodedParser,function (req, res){
 app.post('/insertcashfees',  urlencodedParser,function (req, res){
     var qur="INSERT INTO tr_student_fees SET ?";
    // console.log(qur);
+   console.log(req.query.installment+" "+(req.query.installment).length);
 
     var response={
         school_id:req.query.schoolid,

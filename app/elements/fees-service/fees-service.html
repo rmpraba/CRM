@@ -68,7 +68,7 @@
       is: 'fees-service',
 
       callInsertCashfeesService:function(arr,len){
-        // alert(feecashcount);
+        // alert(len);
         paymentlength=len;
         cash.push(arr);
         
@@ -258,11 +258,21 @@
       },
       fetchInstallmentseperationService:function(){
         // arr=e.detail.response.returnval;
-        // alert(JSON.stringify(arr));
+        alert(JSON.stringify(arr));
+        alert(arr.length);
+        // alert(JSON.stringify(paymentarr));
         var splitarr=[];
         var feetype=[];
+        for(var i=0;i<arr.length;i++){
+            if(arr[i].amount=="0")
+                arr.splice(i,1);
+        }
+
+        alert(JSON.stringify(arr));
+        alert(arr.length);
         
         for(var i=0;i<arr.length;i++){
+            alert(arr.length);
             var flag=0;
             if(splitarr.length==0)
                 splitarr.push({"installtype":arr[i].insno,"feetype":arr[i].feetype});
@@ -270,6 +280,7 @@
             for(var j=0;j<splitarr.length;j++){
                 if(arr[i].insno==splitarr[j].installtype){
                     flag=1;
+                    // if(arr[i].amount>0)
                     splitarr[j].feetype=splitarr[j].feetype+","+arr[i].feetype;
                 }
             }
@@ -282,9 +293,22 @@
 
         for(var i=0;i<paymentarr.length;i++){
             for(var j=0;j<splitarr.length;j++){
+                if(localStorage.getItem("curr_sess_insrequirement")=="yes"){
+                    if((paymentarr[i].installment_type=="Commitment Fee (Ins1)"||paymentarr[i].installment_type=="Commitment Fee (Ins2)")&&splitarr[j].installtype=="Commitment Fee"){
+                        paymentarr[i].fee_type=splitarr[j].feetype;
+                    }
+                    else{
+                       if(paymentarr[i].installment_type==splitarr[j].installtype)
+                {
+                    paymentarr[i].fee_type=splitarr[j].feetype;
+                } 
+                    }
+                }
+                else{
                 if(paymentarr[i].installment_type==splitarr[j].installtype)
                 {
                     paymentarr[i].fee_type=splitarr[j].feetype;
+                }
                 }
             }
         }
@@ -402,7 +426,7 @@
                 transfercnt++;
             }
         }
-        // alert(JSON.stringify(paymentarr));
+        // alert(JSON.stringify(feereceiptarr));
         
         this.callFeeReceipt();
       },

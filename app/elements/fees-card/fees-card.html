@@ -100,6 +100,15 @@
             </div>
       </div>
 
+      <div class="list-group col-sm-12 panel-body form-category">
+            <div class="col-sm-4 enquiry-input">
+            <label>Installment required in commitment fee?</label>
+            </div>
+            <div class="col-sm-3enquiry-input">
+            <span><paper-checkbox class="col-sm-3" id="insrequirement" class="checkbox" on-change="insrequirementHandler">Yes</paper-checkbox></span>
+            </div>
+      </div>
+
     <div class="list-group col-sm-12 panel-body form-category" hidden$="{{hidenoofinstallment}}">
       <div class="col-sm-4" >
           <paper-dropdown-menu label="No Of Installment" attr-for-selected="value">
@@ -132,7 +141,7 @@
             </div>
             <div style="margin-left:12%;" hidden$="{{hiddeninstallment}}"> 
               <template  is="dom-repeat" items="{{feearr}}" as="view">
-                <installment-card  installmentid="{{view.installmentid}}" hiddenpayflag="{{view.hiddenpayflag}}" modeofpayment="{{view.modeofpayment}}" paidflag="{{view.paidflag}}" readonlyflag="{{view.readonlyflag}}" hiddenflag="{{view.hiddenflag}}" installment="{{view.installment}}" installmenttype="{{view.installment}}" actualamount="{{view.actualamount}}" amount="{{view.installmentamount}}" discountamount="{{view.discountamount}}" installmentdate="{{view.installmentdate}}" chequeno="{{view.chequeno}}" paiddate="{{view.paiddate}}" bankname="{{view.bankname}}" chequedate="{{view.chequedate}}" receiptdate="{{view.installmentdate}}" ></installment-card>
+                <installment-card  installmentid="{{view.installmentid}}" hiddenpayflag="{{view.hiddenpayflag}}" modeofpayment="{{view.modeofpayment}}" paidflag="{{view.paidflag}}" readonlyflag="{{view.readonlyflag}}" hiddenflag="{{view.hiddenflag}}" installment="{{view.installment}}" installmenttype="{{view.installment}}" actualamount="{{view.actualamount}}" amount="{{view.installmentamount}}" discountamount="{{view.discountamount}}" installmentdate="{{view.installmentdate}}" chequeno="{{view.chequeno}}" paiddate="{{view.paiddate}}" bankname="{{view.bankname}}" chequedate="{{view.chequedate}}" receiptdate="{{view.installmentdate}}" hiddencommitinput="{{view.hiddencommitinput}}" hiddencommititem="{{view.hiddencommititem}}"></installment-card>
               </template>
             </div>
             <div>
@@ -173,6 +182,8 @@
       var installmentpattern="1";
       var noofinstallment="4";
       var splitarr=[];
+      var installmentarr=[];
+      var installmenttemparr=[];
     Polymer({
       is: 'fees-card',
       ready:function(){
@@ -188,6 +199,7 @@
         this.fetchnoofinstallmenturl=sessionStorage.getItem("addrinfo")+"/fetchnoofinstallment-service";
         this.$.fetchnoofinstallmentajax.generateRequest();
         localStorage.setItem("curr_sess_installmentpattern",installmentpattern);
+        localStorage.setItem("curr_sess_insrequirement",'no');
         this.flag=0;
         // document.querySelector('#structuregeneral1').checked=true;
       },  
@@ -199,6 +211,61 @@
          this.$.admissionservice.searchfeeadmissionpaidinfoService(localStorage.getItem("curr_sess_enquiryno"));
          this.$.admissionservice.searchfeeadmissioninfoService(localStorage.getItem("curr_sess_enquiryno"));
          }
+      },
+      insrequirementHandler:function(e){
+        if(document.querySelector('#insrequirement').checked==true)
+        {
+          localStorage.setItem("curr_sess_insrequirement",'yes');
+          this.$.admissionservice.searchfeeadmissionpaidinfoService(localStorage.getItem("curr_sess_enquiryno"));
+         this.$.admissionservice.searchfeeadmissioninfoService(localStorage.getItem("curr_sess_enquiryno"));
+          // this.FnCreateCommitmentfeeInstallment();
+          // this.$.admissionservice.FnCreateCommitmentfeeInstallment();
+        }
+        else if(document.querySelector('#insrequirement').checked==false)
+        {
+          localStorage.setItem("curr_sess_insrequirement",'no');
+        }
+      },
+      Fnsetinstallmentarr:function(arr){
+        installmentarr=arr;
+        installmenttemparr=arr;
+      },
+      FnCreateCommitmentfeeInstallment:function(){
+        
+        var arr=[];
+        var arr1=[];
+
+        var row={};
+        row.installment="Commitment Fee2";
+        row.installmentamount=installmentarr[0].installmentamount;
+        row.installmentid="CommitmentFee2";
+        row.installmentdate=installmentarr[0].installmentdate;
+        row.actualamount="";
+        row.discountamount="";
+        row.fees=installmentarr[0].fees;
+      
+        for(var i=0;i<installmentarr.length;i++){
+        var obj={};
+        if(installmentarr[i].installment=="Commitment Fee"){
+            obj=installmentarr[i];
+            obj.installment=obj.installment+1;
+            obj.hiddencommitinput=false;
+            obj.hiddencommititem=true;
+            arr.push(obj);
+            arr.push(row);
+        }
+        else{
+            installmentarr[i].hiddencommitinput=true;
+            installmentarr[i].hiddencommititem=false;
+            arr.push(installmentarr[i]);
+        }
+       }
+       // alert(JSON.stringify(arr));
+        this.feearr=[];
+        document.querySelector('fees-card').feearr=arr;
+        // this.feearr=arr;
+        // alert(JSON.stringify(arr));
+        // alert(JSON.stringify(arr1));
       },
       FnSelectFeeType:function(e){
         var feetype=(e.target.selectedItem.textContent).trim();
@@ -253,7 +320,8 @@
         installment=installmentarr;       
       },
       FnPayfee:function(){  
-      // alert(JSON.stringify(installment));      
+      // alert(JSON.stringify(installment));  
+      // alert(JSON.stringify(installment.length));    
       for(var i=0;i<installment.length;i++){ 
       if(installment[i].paymenttype=="Cash")
         this.$.feeservice.callInsertCashfeesService(installment[i],installment.length);
