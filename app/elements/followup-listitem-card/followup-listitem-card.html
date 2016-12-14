@@ -53,7 +53,7 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
           <!-- <followup-datepicker-card id="dates" showdate="{{nextdate}}"></followup-datepicker-card> -->
           <paper-input id="dates" label="Date" error-message="needs next followup date!" readonly required value="{{nextdate}}"></paper-input>
           <div id="reschedule" style=" padding-top: 16%; padding-left: 33%;  margin-left: -28%;">
-          <paper-button  class="buttons" on-click="Rescheduling" >Reschedule</paper-button></div>
+          <paper-button raised style="background-color: silver;" class="button" on-click="Rescheduling" >Reschedule</paper-button></div>
           </div>
         
           
@@ -305,7 +305,7 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
       },
       fndatez:function(datesxas){
         checkdates=datesxas;
-        //this.ready();
+        this.ready();
       },
       getdate:function(nextdatez){
 
@@ -500,6 +500,41 @@ subject to an additional IP rights grant found at http://polymer.gitdub.io/PATEN
       },
       closedetaildialog:function(){
              this.$.dialogdetailshow.close();
+      },
+      Fnclear:function(){
+        this.sno="";
+        this.followupno="";
+        this.yesbox="";
+        this.disableyes="";
+        this.nobox="";
+        this.disableno="";
+        this.viewdetail="";
+        this.notcompleted="";
+        this.callstatus="";
+        this.confidencelvl="";
+        this.fid="";
+        this.scheid="";
+        this.disabledrop="";
+        this.scheduledate="";
+        this.disabledrop2="";
+        this.value="";
+        this.nextdate="";
+        this.actualdate="";
+        this.confidencegiven="";
+        this.comments="";
+        confidencelvl
+        callstatus=null;
+        vnextdate=null;
+        currentdate=null;
+        callpickstatus=null;
+        checkdates=[];
+        folwno=null;
+        ckdt1=null;
+        ckdt2=null;
+        sum=null;
+        takedate=null;
+        nextdatsd=null;
+        flagz=null;
       }
       
     });

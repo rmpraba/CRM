@@ -866,6 +866,7 @@ document.querySelector('followup-student-detail').followid=res[0].id;
 
 
          document.querySelector('followup-student-detail').testdetails(res[0].enquiry_no,parentid,guardianid);
+         this.getlistdetails(res[0].enquiry_no,res[0].id,res[0].schedule_no);
         //document.querySelector('followup-student-detail').Fncheck();
       },
       getsubjectinfo:function(enqno,enquiredon){
@@ -955,7 +956,7 @@ document.querySelector('followup-student-detail').followid=res[0].id;
          }
          //alert(JSON.stringify(resultarrS));
         document.querySelector('followup-student-detail').followupdetailarr=resultarrS;
-        //document.querySelector('followup-student-detail').Fncheck();
+        //document.querySelector('followup-listitem-card').ready();
 
 
 
@@ -973,6 +974,7 @@ document.querySelector('followup-student-detail').followid=res[0].id;
           //alert(JSON.stringify(restultarrz));
           if(restultarrz.length>0){
           document.querySelector('followup-listitem-card').fndatez(restultarrz);
+
         }
       },
       updatefolowup:function(fnfid,fnscheduledate,fnfollowupno,fncurrentdate,fnnextdate,fncomments,fncallstatus,fnconfidencelvl,slno){
@@ -1018,9 +1020,11 @@ document.querySelector('followup-student-detail').followid=res[0].id;
       updatefollowupconfidencelvlResponse:function(e){
           if(e.detail.response.returnval=='success'){
             alert('Current followup detail is submitted');
-      this.getlistdetails(localStorage.getItem("curr_enquiry_id"),localStorage.getItem("curr_followup_id"),localStorage.getItem("curr_schedule_no"));
-      this.getfollowupstudents(localStorage.getItem("grade_list"),localStorage.getItem("open_list"));
+            document.querySelector('followup-listitem-card').Fnclear();
       this.getfollowupcount();
+      this.getfollowupstudents(localStorage.getItem("grade_list"),localStorage.getItem("open_list"));
+      this.getlistdetails(localStorage.getItem("curr_enquiry_id"),localStorage.getItem("curr_followup_id"),localStorage.getItem("curr_schedule_no"));
+
       }
       else{
           alert('Submission Failed');
