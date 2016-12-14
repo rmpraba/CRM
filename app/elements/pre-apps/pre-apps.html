@@ -221,7 +221,7 @@
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
-        <div class="col-sm-6">
+        <div class="col-sm-4">
           <paper-input  id="idlocality" required error-message="needs locality!" label="Enter location/Landmark" is="" value="{{textvalue}}" on-keydown="FnInputChanged"></paper-input>
           <paper-listbox class="dropdown-content" id="iditemlist" on-iron-select="Fnselected" valueattr="value">
             <template is="dom-repeat" items="{{itemArray}}" as="item">
@@ -238,7 +238,24 @@
             </paper-menu>
           </paper-dropdown-menu>
         </div>
+        <div class="col-sm-4" style='margin-top: -1%;' hidden$="{{selectreferral}}">
+          <paper-dropdown-menu label="Referral" style="margin-top: 3%;">
+            <paper-menu class="dropdown-content"  class="dropdown-content" id="referral" on-iron-select="Fnreferral" >
+              <template  is="dom-repeat" items="{{referralarr}}" as="item">
+                <paper-item>{{item.referral}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
+        </div>
       </div>  
+      <div class="list-group col-sm-12 panel-body form-category" hidden$="{{schooldetail}}">
+        <div class="col-sm-6">
+          <paper-input label="School Name" id = "schoolname" value="{{schoolname}}"></paper-input>
+        </div>
+        <div class="col-sm-6">
+          <paper-input label="School Location / Area" id = "schoolarea" value="{{schoolarea}}"></paper-input>
+        </div>
+      </div>
       <div class="list-group col-sm-12 panel-body form-category" hidden$="{{sibling}}">
         <div class="col-sm-4" id="sibname">
           <paper-input  error-message="needs referrer!" label="Enter Sibling Name.." is="" value="{{siblingname}}" on-keydown="SibFnInputChanged"></paper-input>
@@ -377,6 +394,7 @@
     var mothermobileno = true;
     var guardianmobileno = true;    
     var enquiry_date;
+    var referralvalue;
     Polymer({
       is: 'pre-apps',
 
@@ -386,6 +404,7 @@
       this.$.preapps.getclasses();
       this.$.preapps.getdiscounts();
       this.$.preapps.getenquirysource();
+      this.$.preapps.getenquiryreferrals();
       this.$.preapps.getcounsellorattendedby();
       this.$.preapps.getlocation();
       this.$.preapps.getmothertongue();
@@ -398,9 +417,11 @@
       this.guardianoccupation = true;
       this.guardianworkinfo = true;
       this.sibdetail = true;
+      this.selectreferral = true;
       this.referraldetail =true;
       this.sibling = true;
       this.referral = true;
+      this.schooldetail = true;
       professionanyoneselected = "";
       var todaysDate = new Date();
       var yyyy = todaysDate.getFullYear().toString();
@@ -618,16 +639,35 @@
         this.referral = true;
         this.$.preapps.getreferrername();
       } else if(enquiysource=="Referral") {
-        this.$.referrer.hidden=false;
+        
         this.$.sibname.hidden=true;
+        this.selectreferral = false;
         this.sibdetail = true;
         this.sibling = true;
-        this.referraldetail =false;
+      } else {
+        this.$.sibname.hidden=true;
+        this.$.referrer.hidden=true;
+      }
+    },
+    Fnreferral:function(e){
+      referralvalue = (e.target.selectedItem.textContent).trim();
+      if(referralvalue == "Parent"){
+        this.$.referrer.hidden=false;
+        this.referraldetail =false; 
         this.referral = false;
         this.$.preapps.getreferrername();
       } else {
         this.$.sibname.hidden=true;
         this.$.referrer.hidden=true;
+      }
+      if(referralvalue == "Zee Kids School" || referralvalue == "Feeder School"){
+        this.schooldetail = false;
+        document.querySelector('referral-detail-card').FnClear();
+        this.referraldetail = true;
+        this.itemArrayz = [];
+        this.referraldetailsarr = [];
+      } else {
+        this.schooldetail = true;
       }
     },
     Fnlistboxz:function(nameitem){
@@ -996,7 +1036,7 @@
             alert("Select Enquiry Source");
         }else if(mothertonguelanguage == null){
             alert("Select Mother Tongue");
-        }else if(todaydat == "" || todaydat == null){
+        }else if(enquiry_date == "" || enquiry_date == null){
           alert("Select Enquiry Date");
         }else if(guardianwork == null){
           alert("Select Guardian Work");
@@ -1056,7 +1096,9 @@
             alert("Check Both Parent are working or not");
         } else if(mothertonguelanguage == null){
             alert("Select Mother Tongue");
-        } else if(fathermobileno == false || mothermobileno == false){
+        } else if(enquiry_date == "" || enquiry_date == null){
+          alert("Select Enquiry Date");
+        }else if(fathermobileno == false || mothermobileno == false){
           if(fathermobileno == false){
             this.$.dadmobile.validate();
             alert('Please check the Father mobile number properly');
@@ -1083,12 +1125,16 @@
                       }
                     }
                     if(enquiysource=="Referral"){
-                      if(selectedreferralstudentname == "" || selectedreferralclass == "" || selectedsiblingsection == ""){
-                        alert("Referral Name Required");
+                      if(referralvalue == "Parent"){
+                        if(selectedreferralstudentname == "" || selectedreferralclass == "" || selectedsiblingsection == ""){
+                          alert("Referral Name Required");
+                        } else {
+                          this.$.preapps.savereferraldata(this.enquiry_number,selectedreferralstudentname,this.referrername, selectedreferralclass, selectedreferralsection,enquiysource);
+                          this.getvalues();
+                        }  
                       } else {
-                        this.$.preapps.savereferraldata(this.enquiry_number,selectedreferralstudentname,this.referrername, selectedreferralclass, selectedreferralsection,enquiysource);
                         this.getvalues();
-                      }  
+                      }
                     }
                   } else {
                     this.getvalues();
@@ -1113,12 +1159,16 @@
                       }
                     }
                     if(enquiysource=="Referral"){
-                      if(selectedreferralstudentname == ""|| selectedreferralclass == "" || selectedsiblingsection == ""){
-                        alert("Referral Name Required");
+                      if(referralvalue == "Parent"){
+                        if(selectedreferralstudentname == ""|| selectedreferralclass == "" || selectedsiblingsection == ""){
+                          alert("Referral Name Required");
+                        } else {
+                          this.$.preapps.savereferraldata(this.enquiry_number,selectedreferralstudentname,this.referrername, selectedreferralclass, selectedreferralsection,enquiysource);
+                          this.getvalues();
+                        }
                       } else {
-                        this.$.preapps.savereferraldata(this.enquiry_number,selectedreferralstudentname,this.referrername, selectedreferralclass, selectedreferralsection,enquiysource);
                         this.getvalues();
-                      }  
+                      }
                     }
                   } else {
                     this.getvalues();
@@ -1139,12 +1189,16 @@
                       }
                     }
                     if(enquiysource=="Referral"){
-                      if(selectedreferralstudentname == "" || selectedreferralclass == ""||selectedsiblingsection == ""){
-                        alert("Referral Name Required");
-                      } else {
-                        this.$.preapps.savereferraldata(this.enquiry_number,selectedreferralstudentname,this.referrername, selectedreferralclass, selectedreferralsection,enquiysource);
+                      if(referralvalue == "Parent"){
+                        if(selectedreferralstudentname == "" || selectedreferralclass == ""||selectedsiblingsection == ""){
+                          alert("Referral Name Required");
+                        } else {
+                          this.$.preapps.savereferraldata(this.enquiry_number,selectedreferralstudentname,this.referrername, selectedreferralclass, selectedreferralsection,enquiysource);
+                          this.getvalues();
+                        }  
+                      }  else {
                         this.getvalues();
-                      }  
+                      }
                     }
                   } else {
                     this.getvalues();
@@ -1159,7 +1213,7 @@
       }
     },
     getvalues:function(){
-      this.$.preapps.submitenqdetails(enquiry_date,enrolltype,this.academicyear,grade,this.firstname,this.middlename,this.lastname,gender,havesibling,this.ageofyr,dobdate,mothertonguelanguage,this.fathername,this.mothername,this.mob,this.mothermob,this.email,this.motheremail,this.guardianname,this.guardianmobile,this.guardianemail,dadoccupationinfo,motheroccupationinfo,this.textvalue,enquiysource,this.attenedcounsellorname,this.enquiry_number,guardianoccupationinfo,parent_or_guardian_work);
+      this.$.preapps.submitenqdetails(enquiry_date,enrolltype,this.academicyear,grade,this.firstname,this.middlename,this.lastname,gender,havesibling,this.ageofyr,dobdate,mothertonguelanguage,this.fathername,this.mothername,this.mob,this.mothermob,this.email,this.motheremail,this.guardianname,this.guardianmobile,this.guardianemail,dadoccupationinfo,motheroccupationinfo,this.textvalue,enquiysource,this.attenedcounsellorname,this.enquiry_number,guardianoccupationinfo,parent_or_guardian_work, referralvalue, this.schoolname, this.schoolarea);
     },
     FnClear:function(){
       this.callnextyearhandler();
@@ -1176,8 +1230,8 @@
       document.querySelector('#iddadoccupation').selected=-1;
       document.querySelector('#idmotheroccupation').selected=-1;
       this.textvalue = "";
-      document.querySelector('#idrmnames').selected=-1;
       document.querySelector('#enquiry-source').selected=-1;
+      document.querySelector('#referral').selected=-1;
       document.getElementById("nextacademicyear").checked=false;
       document.getElementById("thismidyear").checked=false;
       this.academicyear = "";
@@ -1190,6 +1244,8 @@
       this.guardianname = "";
       this.guardianmobile ="";
       this.guardianemail = "";
+      this.schoolname = "";
+      this.schoolarea = "";
       this.$.parentworkyes.checked = false;
       this.$.parentworkno.checked = false;
       this.$.father.checked = false;
@@ -1207,11 +1263,13 @@
       this.guardianinfo=true;
       this.guardianoccupation = true;
       this.guardianworkinfo = true;
+      this.selectreferral = true;
       this.$.totalstudentnonzero.close();
       this.$.totalstudentzero.close();
       this.sibdetail = true;
       this.sibling = true;
       this.referraldetail = true;
+      this.schooldetail = true;
       this.referral =true;
       namearr=[];
       namearrz=[];
