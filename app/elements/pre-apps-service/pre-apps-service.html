@@ -208,7 +208,17 @@
         debounce-duration="300"
         >
   </iron-ajax>
-
+  <iron-ajax
+        method="post"
+        id="getenquiryreferralsajax"
+        url="{{getenquiryreferralsurl}}"
+        params="{{getenquiryreferralsparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getenquiryreferralsResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
       <followup-service id="followupservice"></followup-service>
   </template>
   <script>
@@ -371,9 +381,9 @@
         var result=e.detail.response.returnval;
         document.querySelector('pre-apps').professionarr=result;
       },
-      submitenqdetails:function(todate,enrolltype,academicyear,grade,firstname,middlename,lastname,gender,havesibling,ageofyr,dobdate,mothertonguelanguage,fathername,mothername,mob,mothermob,email,motheremail,guardianname,guardianmobile,guardianemail,dadoccupationinfo,motheroccupationinfo,textvalue,enquiysource,attenedcounsellorname,enqno,guardianoccupationinfo,parent_or_guardian_work){
+      submitenqdetails:function(todate,enrolltype,academicyear,grade,firstname,middlename,lastname,gender,havesibling,ageofyr,dobdate,mothertonguelanguage,fathername,mothername,mob,mothermob,email,motheremail,guardianname,guardianmobile,guardianemail,dadoccupationinfo,motheroccupationinfo,textvalue,enquiysource,attenedcounsellorname,enqno,guardianoccupationinfo,parent_or_guardian_work,referralvalue, schoolname,schoolarea){
         this.submitenqdetailsurl=sessionStorage.getItem("addrinfo")+"/submitenqdetails";
-        var obj={"schol":"","createdon":"","enrolltype":"","academicyear":"","grade":"","firstname":"","middlename":"","lastname":"","gender":"","havesibling":"","ageofyr":"","dobdate":"","mothertonguelanguage":"","fathername":"","mothername":"","mob":"","mothermob":"","email":"","motheremail":"","guardianname":"","guardianmobile":"","guardianemail":"","dadoccupationinfo":"","motheroccupationinfo":"","location":"","enquiysource":"","attenedcounsellorname":"","status":"","enquiryname":"","enquiry_no":"","parent_or_guardian_work":"","guardianoccupationinfo":""};
+        var obj={"schol":"","createdon":"","enrolltype":"","academicyear":"","grade":"","firstname":"","middlename":"","lastname":"","gender":"","havesibling":"","ageofyr":"","dobdate":"","mothertonguelanguage":"","fathername":"","mothername":"","mob":"","mothermob":"","email":"","motheremail":"","guardianname":"","guardianmobile":"","guardianemail":"","dadoccupationinfo":"","motheroccupationinfo":"","location":"","enquiysource":"","attenedcounsellorname":"","status":"","enquiryname":"","enquiry_no":"","parent_or_guardian_work":"","guardianoccupationinfo":"","referralvalue":"","school_name":"","school_area":""};
         obj.schol=localStorage.getItem("schoolid");
         obj.createdon = todate;
         obj.enrolltype = enrolltype;
@@ -406,6 +416,9 @@
         obj.enquiry_no = enqno;
         obj.guardianoccupationinfo = guardianoccupationinfo;
         obj.parent_or_guardian_work = parent_or_guardian_work;
+        obj.referralvalue = referralvalue;
+        obj.school_name = schoolname;
+        obj.school_area = schoolarea;
         this.submitenqdetailsparam=obj;
         this.$.submitenqdetailsajax.generateRequest();
 
@@ -516,21 +529,32 @@
       savereferraldataResponse:function(e){
         var result=e.detail.response.returnval;
       },
-     checkmobileno:function(mobile){
-          this.verifymobilenourl=sessionStorage.getItem("addrinfo")+"/verifymobileno";
+      checkmobileno:function(mobile){
+        this.verifymobilenourl=sessionStorage.getItem("addrinfo")+"/verifymobileno";
         var obj={"mobileno":"","schol":""}
         obj.mobileno=mobile;
         obj.schol=localStorage.getItem("schoolid");
         this.verifymobilenoparam=obj;
        //alert(JSON.stringify(obj));
         this.$.verifymobilenoajax.generateRequest();
-     },
-     verifymobilenoResponse:function(e){
+      },
+      verifymobilenoResponse:function(e){
         var result=e.detail.response.returnval;
         if(result.length>0){
           document.querySelector('pre-apps').showdialog(result[0].enquiry_no,result[0].first_name,result[0].middle_name,result[0].last_name);
         }
-     },
+      },
+      getenquiryreferrals:function(){
+        this.getenquiryreferralsurl=sessionStorage.getItem("addrinfo")+"/getenquiryreferrals";
+        var obj={"schol":""}
+        obj.schol=localStorage.getItem("schoolid");
+        this.getenquiryreferralsparam=obj;
+        this.$.getenquiryreferralsajax.generateRequest();
+      },
+        getenquiryreferralsResponse:function(e){
+        var result=e.detail.response.returnval;
+        document.querySelector('pre-apps').referralarr=result;
+      }
     });
   })();
   </script>

@@ -4443,7 +4443,10 @@ app.post('/submitenqdetails',  urlencodedParser,function (req, res){
       enquiry_no:req.query.enquiry_no,
       orginated_by:req.query.attenedcounsellorname,
       guardian_occup:req.query.guardianoccupationinfo,
-      parent_or_guardian_work:req.query.parent_or_guardian_work
+      parent_or_guardian_work:req.query.parent_or_guardian_work,
+      referral:req.query.referralvalue,
+      school_name:req.query.school_name,
+      school_area:req.query.school_area
     };
     connection.query('INSERT INTO student_enquiry_details SET ?',[response],function(err, rows){
       if(!err)
@@ -5025,6 +5028,23 @@ console.log(queeyy);
       }
     });
 });
+app.post('/getenquiryreferrals',  urlencodedParser,function (req, res){
+  var queeyy="SELECT * FROM md_referrals where school_id='"+req.query.schol+"'";
+  connection.query(queeyy,
+    function(err, rows){
+      if(!err){
+        if(rows.length>0){
+          res.status(200).json({'returnval': rows});
+        } else {
+          console.log(err);
+          res.status(200).json({'returnval':null});
+        }
+      } else {
+        console.log(err);
+      }
+    });
+});
+
 
 function setvalue(){
   console.log("calling setvalue.....");

@@ -52,7 +52,7 @@
           var dd1=new Date();
           var dd2=new Date(pickdate);
           var days=parseInt((dd1 - dd2) / (1000 * 60 * 60 * 24));
-          if(days<=0){
+          if(days<0){
           document.querySelector('pre-apps').enquirydate();
           this.showdate="";
           }
