@@ -1160,37 +1160,37 @@ newdate.setDate(newdate.getDate()+resultarray[0].no_of_days);
               obj.followed_by=rmnames;
               obj.academicsyr='AY-'+(dt.getFullYear()+1)+'-'+(dt.getFullYear()+2);
               this.getrmenquirydetailsparam=obj;
-             //alert(JSON.stringify(obj));
+             alert(JSON.stringify(obj));
               this.$.getrmenquirydetailsajax.generateRequest();
     },
     getrmenquirydetailsResponse:function(e){
       fnacademicyr=e.detail.response.returnval;
-        //alert(JSON.stringify('year   '+fnacademicyr));
+        alert(JSON.stringify('year   '+fnacademicyr));
           var dt=new Date();
         this.getcurrentmnthdetailsurl=sessionStorage.getItem("addrinfo")+"/getcurrentmnthdetails";
               var obj={"schol":"","followed_by":"","currmonth":""}
               obj.schol=localStorage.getItem("schoolid");
               obj.followed_by=reportname;
-              obj.currmonth='%/'+(dt.getMonth()+1)+'/'+dt.getFullYear();
+              obj.currmonth=dt.getFullYear()+'-'+(dt.getMonth()+1)+'-'+'%';
               this.getcurrentmnthdetailsparam=obj;
-             //alert(JSON.stringify(obj));
+             alert(JSON.stringify(obj));
               this.$.getcurrentmnthdetailsajax.generateRequest();
     } ,getcurrentmnthdetailsResponse:function(e){
       fncurrmnth=e.detail.response.returnval;
       var dt=new Date();
-       //alert(JSON.stringify(fncurrmnth));
+       alert(JSON.stringify(fncurrmnth));
               this.getcurrentdaydetailsurl=sessionStorage.getItem("addrinfo")+"/getcurrentdaydetails";
               var obj={"schol":"","followed_by":"","today":""}
               obj.schol=localStorage.getItem("schoolid");
               obj.followed_by=reportname;
               obj.today=sessionStorage.getItem("todaydate");
               this.getcurrentdaydetailsparam=obj;
-             //alert(JSON.stringify(obj));
+             alert(JSON.stringify(obj));
               this.$.getcurrentdaydetailsajax.generateRequest();
     },
     getcurrentdaydetailsResponse:function(e){
       fntodayarr=e.detail.response.returnval;
-      //alert(JSON.stringify('date  '+fncurrentdate));
+      alert(JSON.stringify('date  '+fntodayarr));
     this.callinanasysisyaerandmonth();
       },
       callinanasysisyaerandmonth:function(){

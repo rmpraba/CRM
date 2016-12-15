@@ -4134,7 +4134,7 @@ app.post('/getrmnamelist',  urlencodedParser,function (req, res){
 /*this function gets the count of student enquired for the current academic year follwed by respective RM officer*/
 app.post('/getrmenquirydetails',  urlencodedParser,function (req, res){
   var qurh="SELECT COUNT( * ) AS total, enquiry_source FROM  `student_enquiry_details` WHERE school_id='"+req.query.schol+"' AND followed_by='"+req.query.followed_by+"' AND academic_year='"+req.query.academicsyr+"' GROUP BY (enquiry_source)";
- // console.log(qurh);
+  //console.log(qurh);
     connection.query(qurh,
     function(err, rows)
     {
@@ -4161,7 +4161,7 @@ app.post('/getrmenquirydetails',  urlencodedParser,function (req, res){
 /*this function gets the count of student enquired for the current month follwed by respective RM officer*/
 app.post('/getcurrentmnthdetails',  urlencodedParser,function (req, res){
   var  qurr="SELECT COUNT( * ) AS total, enquiry_source FROM  `student_enquiry_details` WHERE school_id='"+req.query.schol+"' AND followed_by='"+req.query.followed_by+"' AND created_on like '"+req.query.currmonth+"' GROUP BY (enquiry_source)";
- // console.log(qurr);
+  //console.log(qurr);
     connection.query(qurr,
     function(err, rows)
     {
