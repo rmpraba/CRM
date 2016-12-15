@@ -4448,7 +4448,8 @@ app.post('/submitenqdetails',  urlencodedParser,function (req, res){
       parent_or_guardian_work:req.query.parent_or_guardian_work,
       referral:req.query.referralvalue,
       school_name:req.query.school_name,
-      school_area:req.query.school_area
+      school_area:req.query.school_area,
+      sibling_remark:req.query.sibling_remark
     };
     connection.query('INSERT INTO student_enquiry_details SET ?',[response],function(err, rows){
       if(!err)

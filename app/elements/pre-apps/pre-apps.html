@@ -80,7 +80,7 @@
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
-        <div class="col-sm-6 enquiry-input">
+        <div class="col-sm-4 enquiry-input">
           <div class="lbl"><label>Gender </label><p id="mangender">&nbsp; *</p> </div>
           <div class="gender">
             <paper-radio-group>
@@ -89,7 +89,7 @@
             </paper-radio-group>
           </div>
         </div>
-        <div class="col-sm-6 enquiry-input">
+        <div class="col-sm-4 enquiry-input">
           <div class="lbl"><label>Sibling </label></div>
           <div class="gender">
             <paper-radio-group>
@@ -97,6 +97,9 @@
               <paper-radio-button id="siblingno" name="no" on-click="siblingno">No</paper-radio-button>
             </paper-radio-group>
           </div>  
+        </div>
+        <div class="col-sm-4 enquiry-input">
+          <paper-input id="siblingremark" label="About Sibling" value={{siblingremark}}></paper-input>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
@@ -308,6 +311,7 @@
     </div>
       <div class="col-md-12 form-button">
         <paper-button class="btn btn-primary" on-click="getenquirynumber">SUBMIT</paper-button>
+        <paper-button class="btn btn-primary" on-click="FnClear">Clear</paper-button>
       </div>
       <paper-dialog id="totalstudentnonzero" modal>
         <paper-dialog-scrollable>
@@ -400,6 +404,7 @@
 
     ready:function(){
       this.$.idparenthandler.checked=true;
+      this.$.nextacademicyear.checked=true;
       this.guardianinfo=true;
       this.$.preapps.getclasses();
       this.$.preapps.getdiscounts();
@@ -422,6 +427,7 @@
       this.sibling = true;
       this.referral = true;
       this.schooldetail = true;
+      this.$.siblingremark.hidden = true;
       professionanyoneselected = "";
       var todaysDate = new Date();
       var yyyy = todaysDate.getFullYear().toString();
@@ -461,7 +467,6 @@
       } 
     },
     callnextyearhandler:function(e){
-      this.$.nextacademicyear.checked = true;
       enrolltype="fullyear";
       var dt=new Date();
       yr1=(dt.getFullYear()+1)-2000;
@@ -503,6 +508,7 @@
       enquiry_date =  yyyy + '-' + (mmChars[1]?mm:"0"+mmChars[0]) + '-' + (ddChars[1]?dd:"0"+ddChars[0]);
     },
     getdate:function(dates){
+      alert(dates);
       var dt1=new Date(dates);
       dobdate=dates;
       var dt=new Date();
@@ -584,6 +590,9 @@
       else ageString = "Oops! Could not calculate age!";
       this.ageofyr=ageString;
       this.$.preapps.verifyage(grade,age.years);
+    },
+    cleardob:function(date){
+      this.showdate = date;
     },
     gardiansHandler:function(e){
       if(e.target.checked==true){
@@ -905,9 +914,11 @@
     },
     siblingyes:function(){
       havesibling = "yes";
+      this.$.siblingremark.hidden = false;
     },
     siblingno:function(){
       havesibling = "no";
+      this.$.siblingremark.hidden = true;
     },
     parentworkyes:function(){
       bothparentswork = "yes";
@@ -1213,7 +1224,7 @@
       }
     },
     getvalues:function(){
-      this.$.preapps.submitenqdetails(enquiry_date,enrolltype,this.academicyear,grade,this.firstname,this.middlename,this.lastname,gender,havesibling,this.ageofyr,dobdate,mothertonguelanguage,this.fathername,this.mothername,this.mob,this.mothermob,this.email,this.motheremail,this.guardianname,this.guardianmobile,this.guardianemail,dadoccupationinfo,motheroccupationinfo,this.textvalue,enquiysource,this.attenedcounsellorname,this.enquiry_number,guardianoccupationinfo,parent_or_guardian_work, referralvalue, this.schoolname, this.schoolarea);
+      this.$.preapps.submitenqdetails(enquiry_date,enrolltype,this.academicyear,grade,this.firstname,this.middlename,this.lastname,gender,havesibling,this.ageofyr,dobdate,mothertonguelanguage,this.fathername,this.mothername,this.mob,this.mothermob,this.email,this.motheremail,this.guardianname,this.guardianmobile,this.guardianemail,dadoccupationinfo,motheroccupationinfo,this.textvalue,enquiysource,this.attenedcounsellorname,this.enquiry_number,guardianoccupationinfo,parent_or_guardian_work, referralvalue, this.schoolname, this.schoolarea,this.siblingremark);
     },
     FnClear:function(){
       this.callnextyearhandler();
@@ -1246,6 +1257,7 @@
       this.guardianemail = "";
       this.schoolname = "";
       this.schoolarea = "";
+      this.siblingremark = "";
       this.$.parentworkyes.checked = false;
       this.$.parentworkno.checked = false;
       this.$.father.checked = false;
@@ -1274,6 +1286,32 @@
       namearr=[];
       namearrz=[];
       sibnamearr=[];
+      this.$.siblingremark.hidden = true;
+      this.$.nextacademicyear.checked = true;
+
+
+
+      enrolltype="fullyear";
+      var dt=new Date();
+      yr1=(dt.getFullYear()+1)-2000;
+      yr2=(dt.getFullYear()+2)-2000;
+      yearsxz='AY-'+(dt.getFullYear()+1)+'-'+(dt.getFullYear()+2);
+      this.academicyear=yearsxz;
+      document.querySelector('enquiry-datepicker').ready();
+      document.querySelector('dateofbirth-datepicker').ready();
+      var cleartoday = new Date();
+      var dd = cleartoday.getDate();
+      var mm = cleartoday.getMonth()+1; //January is 0!
+      var yyyy = cleartoday.getFullYear();
+      if(dd<10){
+          dd='0'+dd
+      } 
+      if(mm<10){
+          mm='0'+mm
+      } 
+      var fncleardate = mm+'/'+dd+'/'+yyyy;
+      this.getenquirydate(fncleardate);
+      this.cleardob(fncleardate);
     },
     Fnselectedsiblingdetail:function(parent,grade,section){
       selectedsiblingparentname=parent;
