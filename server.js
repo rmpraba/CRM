@@ -4443,6 +4443,7 @@ app.post('/submitenqdetails',  urlencodedParser,function (req, res){
       year_type:req.query.enrolltype,
       enquiry_no:req.query.enquiry_no,
       orginated_by:req.query.attenedcounsellorname,
+      followed_by:req.query.attenedcounsellorname,
       guardian_occup:req.query.guardianoccupationinfo,
       parent_or_guardian_work:req.query.parent_or_guardian_work,
       referral:req.query.referralvalue,
