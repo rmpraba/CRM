@@ -742,7 +742,7 @@ countresult=0;
         obj.schol=localStorage.getItem("schoolid");
         obj.fngrade=grade;
         obj.fnstatus=status;
-        obj.user=localStorage.getItem("employeename");
+        obj.user=localStorage.getItem("employeeid");
         this.getfollowupstudentsparam=obj;
         //alert(JSON.stringify(obj));
         this.$.getfollowupstudentsajax.generateRequest();
@@ -750,7 +750,7 @@ countresult=0;
       },
       getfollowupstudentsResponse:function(e){
        var res=e.detail.response.returnval;
-       //alert(JSON.stringify(res));
+       // alert(JSON.stringify(res));
        var requery=[];
               for(var i=0;i<res.length;i++){
                 var dsta=new Date(res[i].upcoming_date);
@@ -1305,7 +1305,7 @@ newdate.setDate(newdate.getDate()+resultarray[0].no_of_days);
         var obj={"schol":"","status":"","counsellor":""}
         obj.status="Open";
         obj.schol=localStorage.getItem("schoolid");
-        obj.counsellor = localStorage.getItem("employeename");
+        obj.counsellor = localStorage.getItem("employeeid");
         this.gettotalfollowupcounttodayparam=obj;
        //alert(JSON.stringify(obj));
         this.$.gettotalfollowupcounttodayajax.generateRequest();
@@ -1319,7 +1319,7 @@ newdate.setDate(newdate.getDate()+resultarray[0].no_of_days);
         var obj={"schol":"","status":"","counsellor":""}
         obj.status="Open";
         obj.schol=localStorage.getItem("schoolid");
-        obj.counsellor = localStorage.getItem("employeename");
+        obj.counsellor = localStorage.getItem("employeeid");
         this.getfollowupdetailstodayparam=obj;
        //alert(JSON.stringify(obj));
         this.$.getfollowupdetailstodayajax.generateRequest();
