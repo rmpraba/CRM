@@ -60,6 +60,17 @@
         </div>
       </div>
 
+     <!--  <div class="list-group col-sm-12 panel-body form-category">
+        
+        <label>Admission Type</label>
+        
+        <div class="col-sm-12">          
+          <span><paper-checkbox class="col-sm-3" id="generaladmn" readonly class="checkbox" on-change="generaladmnHandler" checked>General</paper-checkbox></span>
+          <span><paper-checkbox class="col-sm-3" id="provisionaladmn" readonly class="checkbox" on-change="provisionaladmnHandler">Provisional</paper-checkbox></span>
+          <span><paper-checkbox class="col-sm-3" id="spotadmn" readonly class="checkbox" on-change="spotadmnHandler">Spot</paper-checkbox></span>
+        </div>
+      </div> -->
+
       <div class="list-group col-sm-12 panel-body form-category">
         <!-- <div class="col-sm-4">
           <span class="col-sm-12"><h5>Admission Type</h5></span>
@@ -696,6 +707,30 @@
          gender="girl";
         }
       },
+      // generaladmnHandler:function(e){
+      //   if(document.querySelector("#generaladmn").checked==true)
+      //   {
+      //    document.querySelector("#provisionaladmn").checked=false;
+      //    document.querySelector("#spotadmn").checked=false;
+      //    admissiontype="0";
+      //  }
+      // },
+      // provisionaladmnHandler:function(e){
+      //   if(document.querySelector("#provisionaladmn").checked==true)
+      //   {
+      //    document.querySelector("#generaladmn").checked=false;
+      //    document.querySelector("#spotadmn").checked=false;
+      //    admissiontype="1";
+      //   }
+      // },
+      // spotadmnHandler:function(e){
+      //   if(document.querySelector("#spotadmn").checked==true)
+      //   {
+      //    document.querySelector("#provisionaladmn").checked=false;
+      //    document.querySelector("#generaladmn").checked=false;
+      //    admissiontype="2";
+      //   }
+      // },
       FnHideThirdLanguage:function(flag){
          this.hidethirdlanguage=flag;
       },

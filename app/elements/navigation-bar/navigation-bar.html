@@ -222,12 +222,12 @@
             <a href="" aria-hidden="true" on-click="enquiry"><i class="fa fa-phone-square fa-fw"></i> Enquiry<span class="fa arrow"></span></a>
             <ul class="nav nav-second-level">
               <li>
-              <a href="" on-click="Fnpreapp">Pre Apps</a>
+              <a href="" on-click="Fnpreapp">Enquiry Form</a>
                 <!-- <a href="flot.html"></a> -->
               </li>
-              <li>
+              <!-- <li>
                 <a href="" on-click="Fnenqform" aria-hidden="true" data-toggle="modal" data-target="#addDetailedEnquiry">Enquiry Form</a>
-              </li>
+              </li> -->
                <li id="">
             <a href="" aria-hidden="true" on-click="followupdashboard" data-toggle="modal"> Follow Up</a>
           </li>
@@ -285,8 +285,11 @@
                 <a href="" aria-hidden="true" data-toggle="modal" data-target="#registerationfee" on-click="FnRegister">Registration fee</a>
               </li>
               <li>
-                <a href="" aria-hidden="true" data-toggle="modal" data-target="#feepayment"  on-click="FnKit">Term fee</a>
-              </li>             
+                <a href="" aria-hidden="true" data-toggle="modal" data-target="#feepayment"  on-click="FnKit">School fee</a>
+              </li>     
+              <li>
+                <a href="" aria-hidden="true" data-toggle="modal" data-target="#provisionalfee"  on-click="FnProvisional">Provisional fee</a>
+              </li>                     
             </ul>
             </nav-second-level>
           </li>
@@ -397,7 +400,7 @@
                 <span aria-hidden="true">&times;</span>
               </button>
               <h4 class="center-block event-title" id="eventTitle">
-                Pre Apps
+                Enquiry Form
               </h4>
             </div>
             <div class="modal-body">
@@ -469,7 +472,7 @@
               <span aria-hidden="true">&times;</span>
             </button>
             <h4 class="center-block event-title" id="">
-              Term Fee 
+              School Fee 
             </h4>
           </div>
           <div class="modal-body">
@@ -510,6 +513,24 @@
           </div>
           <div class="modal-body">
             <prospectousfee-card></prospectousfee-card>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade bd-example-modal-lg" id="provisionalfee" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg" id ="fee-dialog">
+        <div class="modal-content" id="fee-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="center-block event-title" id="">
+             Provisional Fee
+            </h4>
+          </div>
+          <div class="modal-body">
+            <registerationfee-card></registerationfee-card>
           </div>
         </div>
       </div>
@@ -741,7 +762,7 @@
       },
 
       Fnpreapp:function(){
-        document.querySelector('app-list').setPage("pre-apps","Pre Apps");
+        document.querySelector('app-list').setPage("pre-apps","Enquiry Form");
         document.querySelector('pre-apps').ready();
         document.querySelector('pre-apps').callnextyearhandler();
           // document.querySelector('newenquiry-card').Fnclear();

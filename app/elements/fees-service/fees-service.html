@@ -258,8 +258,8 @@
       },
       fetchInstallmentseperationService:function(){
         // arr=e.detail.response.returnval;
-        alert(JSON.stringify(arr));
-        alert(arr.length);
+        // alert(JSON.stringify(arr));
+        // alert(arr.length);
         // alert(JSON.stringify(paymentarr));
         var splitarr=[];
         var feetype=[];
@@ -268,11 +268,11 @@
                 arr.splice(i,1);
         }
 
-        alert(JSON.stringify(arr));
-        alert(arr.length);
+        // alert(JSON.stringify(arr));
+        // alert(arr.length);
         
         for(var i=0;i<arr.length;i++){
-            alert(arr.length);
+            // alert(arr.length);
             var flag=0;
             if(splitarr.length==0)
                 splitarr.push({"installtype":arr[i].insno,"feetype":arr[i].feetype});

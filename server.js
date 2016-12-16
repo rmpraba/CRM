@@ -1368,7 +1368,7 @@ app.post('/verifymobileno',  urlencodedParser,function (req, res)
 // Searching enquiry no for admission
 app.post('/searchenquiry',  urlencodedParser,function (req, res){
 
-    var qur="SELECT * FROM student_enquiry_details WHERE school_id='"+req.query.schoolid+"' and enquiry_no like '%"+req.query.enquiryno+"%' or enquiry_name like '%"+req.query.enquiryno+"%' and status='Enquired'";
+    var qur="SELECT * FROM student_enquiry_details WHERE school_id='"+req.query.schoolid+"' and (enquiry_no like '%"+req.query.enquiryno+"%' or enquiry_name like '%"+req.query.enquiryno+"%') and status='Enquired' ";
 
     var checkqur="SELECT * FROM student_enquiry_details WHERE school_id='"+req.query.schoolid+"' and (enquiry_no like '%"+req.query.enquiryno+"%' or enquiry_name like '%"+req.query.enquiryno+"%') and status='Admitted'";
    console.log(qur);
@@ -1468,7 +1468,7 @@ app.post('/searchfeeadmission',  urlencodedParser,function (req, res){
     else
     {
       console.log(err);
-      res.status(200).json({'returnval': 'no enquiry'});
+      res.status(200).json({'returnval': 'no rows'});
     }
   }
   else{
@@ -1477,9 +1477,53 @@ app.post('/searchfeeadmission',  urlencodedParser,function (req, res){
 });
 });
 
+// Searching admitted student info for fee payment
+app.post('/checkregfeepaidstatus-service',  urlencodedParser,function (req, res){
+    var qur1="SELECT * FROM fee_master WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' "+
+    " and admission_year='"+req.query.admissionyear+"' and grade_id=(SELECT grade_id FROM grade_master WHERE grade_name='"+req.query.grade+"')";
+
+    var qur2="";
+    var qur3="";
+    console.log(qur1);
+    connection.query(qur1,function(err, rows){
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      connection.query("SELECT * FROM fee_splitup WHERE fee_code='"+rows[0].fee_code+"' and school_id='"+req.query.schoolid+"' and fee_type='Registration fee'",function(err, rows){
+        if(rows.length>0){
+          connection.query("SELECT * FROM md_student_paidfee WHERE fee_code='"+rows[0].fee_code+"' and school_id='"+req.query.schoolid+"' and installment='Registration fee' and admission_no='"+req.query.admissionno+"' and paid_status in('inprogress','cleared','paid')",function(err, rows){
+            if(rows.length>0){
+              res.status(200).json({'returnval': 'paid'});
+            }
+            else{
+              res.status(200).json({'returnval': 'not paid'});
+            }
+          });
+        }
+        else
+        {
+          res.status(200).json({'returnval': 'no regfee'});
+        }
+      });
+      // res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'no feecode'});
+    }
+  }
+  else{
+     console.log(err);
+  }
+});
+});
+
+
 // Fetching enquiry no for admission
 app.post('/fetchenquiryinfo',  urlencodedParser,function (req, res){
-    var qur="SELECT * FROM student_enquiry_details WHERE school_id='"+req.query.schoolid+"' and enquiry_no = '"+req.query.enquiryno+"' and status='Enquired' ";
+    var qur="SELECT * FROM student_enquiry_details WHERE school_id='"+req.query.schoolid+"' and enquiry_no = '"+req.query.enquiryno+"' and status='Enquired' and prospectus_status='yes'";
    // console.log(qur);
     connection.query(qur,
     function(err, rows)
@@ -1695,13 +1739,20 @@ app.post('/insertadmission',  urlencodedParser,function (req, res){
     {
       response.admission_no="ENR"+rows[0].Admission_No;
       new_admission_no=parseInt(rows[0].Admission_No)+1;
+      var status="";
+      if(req.query.discounttype=='7')
+      status='Provision';
+      else
+      status='Admitted';
+      
+     
       connection.query("SELECT * FROM md_admission WHERE enquiry_no='"+req.query.enquiryno+"'",function(err, rows){
         if(rows.length==0){
       connection.query("INSERT INTO md_admission SET ?",[response],function(err, rows){
        if(!err){
         connection.query("UPDATE auto_admission_no SET Admission_No='"+new_admission_no+"'",function(err, result){
           if(result.affectedRows>0){
-            connection.query("UPDATE student_enquiry_details SET status='Admitted' where enquiry_no='"+req.query.enquiryno+"'",function(err, result){
+            connection.query("UPDATE student_enquiry_details SET status='"+status+"' where enquiry_no='"+req.query.enquiryno+"'",function(err, result){
               if(result.affectedRows>0){
               res.status(200).json({'returnval': response.admission_no});
               }
@@ -2208,7 +2259,7 @@ app.post('/fetchdiscount-service',  urlencodedParser,function (req, res){
     " AND grade=(SELECT grade_id FROM grade_master WHERE grade_name='"+req.query.grade+"') "+
     " and from_date<='"+req.query.currdate+"' and to_date>='"+req.query.currdate+"' and fee_type not in ('Registration fee','Lumpsum')";
     else
-      var qur="SELECT * FROM md_discount_master WHERE school_id='"+req.query.schoolid+"' AND academic_year='"+req.query.academicyear+"' AND admission_year='"+req.query.admissionyear+"' "+
+    var qur="SELECT * FROM md_discount_master WHERE school_id='"+req.query.schoolid+"' AND academic_year='"+req.query.academicyear+"' AND admission_year='"+req.query.admissionyear+"' "+
     " AND grade=(SELECT grade_id FROM grade_master WHERE grade_name='"+req.query.grade+"') "+
     " and from_date<='"+req.query.currdate+"' and to_date>='"+req.query.currdate+"' and fee_type not in ('Registration fee')";
     
@@ -2313,8 +2364,8 @@ app.post('/fetchregfeesinfo-service',  urlencodedParser,function (req, res){
 // Fetching registeration fees info for admission
 app.post('/fetchregfeediscount-service',  urlencodedParser,function (req, res){
 
-    var qur="SELECT * FROM md_discount_master WHERE school_id='"+req.query.schoolid+"' and admission_year = '"+req.query.admissionyear+"' and academic_year='"+req.query.academicyear+"' and grade='"+req.query.grade+"' and discount_type_code='"+req.query.discounttype+"' and admission_type='"+req.query.admissiontype+"' and fee_type='Registration fee'";
-  //  console.log(qur);
+    var qur="SELECT * FROM md_discount_master WHERE school_id='"+req.query.schoolid+"' and admission_year = '"+req.query.admissionyear+"' and academic_year='"+req.query.academicyear+"' and grade=(SELECT grade_id FROM grade_master WHERE grade_name='"+req.query.grade+"') and discount_type_code='"+req.query.discounttype+"' and from_date<='"+req.query.currdate+"' and to_date>='"+req.query.currdate+"' and fee_type='Registration fee'";
+   console.log(qur);
     connection.query(qur,
     function(err, rows)
     {
@@ -2421,7 +2472,7 @@ app.post('/fetchinstallmentseperation',  urlencodedParser,function (req, res){
 app.post('/insertcashfees',  urlencodedParser,function (req, res){
     var qur="INSERT INTO tr_student_fees SET ?";
    // console.log(qur);
-   console.log(req.query.installment+" "+(req.query.installment).length);
+   // console.log(req.query.installment+" "+(req.query.installment).length);
 
     var response={
         school_id:req.query.schoolid,
@@ -2454,7 +2505,7 @@ app.post('/insertcashfees',  urlencodedParser,function (req, res){
         admission_no:req.query.admissionno,
         student_name:req.query.studentname,
         grade:req.query.grade,
-        // fee_type:req.query.feetype,
+        waiveoff_amount:req.query.waiveoffamount,
         installment_date:req.query.installmentdate,
         fee_code:req.query.feecode,
         discount_code:req.query.discountcode,
@@ -2490,8 +2541,14 @@ app.post('/insertcashfees',  urlencodedParser,function (req, res){
       if(req.query.feecashcount=='0'){
         console.log('in'+req.query.feecashcount);
       connection.query("UPDATE receipt_sequence SET receipt_seq='"+new_receipt_no+"'",function(err, result){
-        if(result.affectedRows>0)
+        if(result.affectedRows>0){
+          if(req.query.installment=="Application fee")
+          connection.query("UPDATE student_enquiry_details SET prospectus_status='yes' where school_id='"+req.query.schoolid+"' and enquiry_no='"+req.query.admissionno+"'",function(err, result){
           res.status(200).json({'returnval': 'Fee paid!','info':response,'receiptno':response.receipt_no,'receiptdate':response1.receipt_date});
+          });
+          else
+          res.status(200).json({'returnval': 'Fee paid!','info':response,'receiptno':response.receipt_no,'receiptdate':response1.receipt_date});          
+        }
         else
           res.status(200).json({'returnval': 'Seq not updated!'});
       });
@@ -2556,6 +2613,7 @@ app.post('/insertchequefees',  urlencodedParser,function (req, res){
         student_name:req.query.studentname,
         grade:req.query.grade,
         // fee_type:req.query.feetype,
+        waiveoff_amount:req.query.waiveoffamount,
         installment_date:req.query.installmentdate,
         fee_code:req.query.feecode,
         discount_code:req.query.discountcode,
@@ -2590,8 +2648,15 @@ app.post('/insertchequefees',  urlencodedParser,function (req, res){
     {
       if(req.query.feechequecount=='0'){
       connection.query("UPDATE receipt_sequence SET acknowledge_seq='"+new_ack_no+"'",function(err, result){
-        if(result.affectedRows>0)
+        if(result.affectedRows>0){
+          if(req.query.installment=="Application fee")
+          connection.query("UPDATE student_enquiry_details SET prospectus_status='yes' where school_id='"+req.query.schoolid+"' and enquiry_no='"+req.query.admissionno+"'",function(err, result){
+         
           res.status(200).json({'returnval': 'Fee paid!','info':response,'receiptno':response.ack_no,'receiptdate':response1.receipt_date});
+        });
+        else
+          res.status(200).json({'returnval': 'Fee paid!','info':response,'receiptno':response.ack_no,'receiptdate':response1.receipt_date});
+        }
         else
           res.status(200).json({'returnval': 'Seq not updated!'});
       });
@@ -2650,6 +2715,7 @@ app.post('/inserttransferfees',  urlencodedParser,function (req, res){
         student_name:req.query.studentname,
         grade:req.query.grade,
         // fee_type:req.query.feetype,
+        waiveoff_amount:req.query.waiveoffamount,
         installment_date:req.query.installmentdate,
         fee_code:req.query.feecode,
         discount_code:req.query.discountcode,
@@ -2685,8 +2751,15 @@ app.post('/inserttransferfees',  urlencodedParser,function (req, res){
     {
       if(req.query.feetransfercount=='0'){
       connection.query("UPDATE receipt_sequence SET transfer_seq='"+new_receipt_no+"'",function(err, result){
-        if(result.affectedRows>0)
+        if(result.affectedRows>0){
+            if(req.query.installment=="Application fee")
+          connection.query("UPDATE student_enquiry_details SET prospectus_status='yes' where school_id='"+req.query.schoolid+"' and enquiry_no='"+req.query.admissionno+"'",function(err, result){
+         
           res.status(200).json({'returnval': 'Fee paid!','info':response,'receiptno':response.receipt_no,'receiptdate':response1.receipt_date});
+        });
+        else
+         res.status(200).json({'returnval': 'Fee paid!','info':response,'receiptno':response.receipt_no,'receiptdate':response1.receipt_date}); 
+        }
         else
           res.status(200).json({'returnval': 'Seq not updated!'});
       });

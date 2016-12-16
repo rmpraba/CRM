@@ -36,6 +36,8 @@
   <div class="layout">
    <paper-checkbox style="margin-top: 2.5%;margin-left: -10%;" id="{{installment}}"  value="{{studname}}" class="checkbox" disabled$="{{paidflag}}" checked on-change="payinstall"></paper-checkbox>
    <paper-item hidden>{{installment}}</paper-item>
+   <paper-item hidden>{{actualamount}}</paper-item>
+   <paper-item hidden>{{discountamount}}</paper-item>
    <paper-item id="ins">{{installmenttype}}</paper-item>
    <paper-item id="amt">{{amount}}</paper-item>
    <paper-item id="paymentmode" hidden$="{{hiddenflag}}">{{modeofpayment}}</paper-item>
@@ -116,6 +118,8 @@
           // var installmentarr=[];
             obj.paymenttype=paymenttype;
             // obj.installmenttype=localStorage.getItem("curr_sess_feetype");
+            obj.actualamount=this.actualamount;
+            obj.discountamount=this.discountamount;
             obj.installment=this.installment;
             obj.installmenttype=this.installmenttype;
             obj.amount=this.amount;
@@ -123,7 +127,7 @@
             obj.paymentmode=paymenttype;
             obj.installmentdate=this.installmentdate;            
             obj.paiddate=current_date;
-            obj.receiptdate=current_date;
+            obj.receiptdate=localStorage.getItem("curr_sess_receiptdate");
             obj.paidstatus="paid";
             installmentarr.push(obj);
             if(localStorage.getItem("curr_sess_feetypepayment")=="Registration fee")
@@ -154,6 +158,8 @@
         var current_date=m+"/"+d+"/"+y; 
             obj.paymenttype=paymenttype;
             // obj.installmenttype=localStorage.getItem("curr_sess_feetype");
+            obj.actualamount=this.actualamount;
+            obj.discountamount=this.discountamount;
             obj.installment=this.installment;
             obj.installmenttype=this.installmenttype;
             obj.amount=this.amount;
@@ -165,7 +171,8 @@
             obj.chequedate=localStorage.getItem("curr_sess_chequedate");
             obj.receiveddate=current_date;            
             obj.chequestatus="inprogress";          
-            obj.paidstatus="paid";            
+            obj.paidstatus="paid";
+            obj.receiptdate=localStorage.getItem("curr_sess_receiptdate");           
             installmentarr.push(obj);
             // alert(JSON.stringify(installmentarr));
             if(localStorage.getItem("curr_sess_feetypepayment")=="Registration fee")
@@ -193,6 +200,8 @@
         var current_date=m+"/"+d+"/"+y; 
             obj.paymenttype=paymenttype;       
             // obj.installmenttype=localStorage.getItem("curr_sess_feetype");
+            obj.actualamount=this.actualamount;
+            obj.discountamount=this.discountamount;
             obj.installment=this.installment;
             obj.installmenttype=this.installmenttype;
             obj.amount=this.amount;
@@ -203,7 +212,8 @@
             obj.bankname=this.refbankname;            
             obj.receiveddate=localStorage.getItem("curr_sess_chequedate");   
             obj.paiddate=localStorage.getItem("curr_sess_chequedate");            
-            obj.paidstatus="paid";            
+            obj.paidstatus="paid";  
+            obj.receiptdate=localStorage.getItem("curr_sess_receiptdate");        
             installmentarr.push(obj);
             // alert(JSON.stringify(installmentarr));
             if(localStorage.getItem("curr_sess_feetypepayment")=="Registration fee")

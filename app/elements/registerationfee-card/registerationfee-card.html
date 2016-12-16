@@ -81,8 +81,9 @@
       </div>
     
       <div class="form-group-heading">
-        <h4>Payment</h4>
+        <span><h4 class="col-sm-3">Payment</h4><paper-checkbox class="col-sm-6" id="regwaiveoffhandler" class="checkbox" on-change="waiveoffHandler">Waiveoff</paper-checkbox></span>
       </div>
+      
       <div class="list-group col-sm-12 panel-body form-category" hidden$="{{hiddenpayment}}">
        
             <!-- <div><paper-checkbox id="waiveoff" class="checkbox" on-change="waiveoffHandler">Waiveoff</paper-checkbox></div> -->
@@ -95,11 +96,13 @@
             </div>
             <div style="margin-left:12%;" hidden$="{{hiddeninstallment}}"> 
               <template  is="dom-repeat" items="{{feearr}}" as="view">
-                <appregfee-installment-card  hiddenpayflag="{{view.hiddenpayflag}}" modeofpayment="{{view.modeofpayment}}" paidflag="{{view.paidflag}}" readonlyflag="{{view.readonlyflag}}" hiddenflag="{{view.hiddenflag}}" installment="{{view.installment}}" installmenttype="{{view.installment_type}}" amount="{{view.payable_amount}}" installmentdate="{{view.installment_date}}" chequeno="{{view.chequeno}}" paiddate="{{view.paiddate}}"></appregfee-installment-card>
+                <appregfee-installment-card  hiddenpayflag="{{view.hiddenpayflag}}" modeofpayment="{{view.modeofpayment}}" paidflag="{{view.paidflag}}" readonlyflag="{{view.readonlyflag}}" hiddenflag="{{view.hiddenflag}}" installment="{{view.installment}}" installmenttype="{{view.installment_type}}" amount="{{view.payableamount}}" actualamount="{{view.actualamount}}"
+                discountamount="{{view.discountamount}}" installmentdate="{{view.installment_date}}" chequeno="{{view.chequeno}}" paiddate="{{view.paiddate}}"></appregfee-installment-card>
               </template>
             </div>
             <div >
               <paper-button  id="paybtn" on-click="FnPayfee"  style="width: 10%;margin-left:0%;position: absolute; left: 45%;margin-top: 1%;" hidden$="{{hiddenaddbtn}}" data-dismiss="modal" class="btn btn-primary center">PAY</paper-button>
+              <paper-button  id="paybtn" on-click="FnProcessfee"  style="width: 10%;margin-left:0%;position: absolute; left: 45%;margin-top: 1%;" hidden$="{{hiddenprocessbtn}}" data-dismiss="modal" class="btn btn-primary center">PROCESS</paper-button>
             </div>
       </div>     
     
@@ -129,9 +132,27 @@
         this.receiptdate=true;
         this.hiddeninstallment=false;
         this.hiddenaddbtn=false;
+        this.hiddenprocessbtn=true;
         localStorage.setItem("curr_sess_waiveoff",0);
         localStorage.setItem("curr_sess_fees",0); 
-      },   
+      },  
+      waiveoffHandler:function(){
+        if(document.querySelector('#regwaiveoffhandler').checked==true){
+          localStorage.setItem("curr_sess_waiveoff",1);
+          this.hiddeninstallment=true;
+          this.hiddenaddbtn=true;
+          this.hiddenprocessbtn=false;
+        }
+        if(document.querySelector('#regwaiveoffhandler').checked==false){
+          localStorage.setItem("curr_sess_waiveoff",0);
+          this.hiddeninstallment=false;
+          this.hiddenaddbtn=false;
+          this.hiddenprocessbtn=true;
+        }
+      }, 
+      FnProcessfee:function(){
+        this.$.appregfeeservice.callInsertCashfeesService(this.feearr);
+      }, 
       FnSearchEnquiry:function(){
         document.querySelector('#regenradmnsearch').selected="-1";
         this.$.appregfeeservice.searchfeeadmissionService(this.enquiryno);        
@@ -149,19 +170,6 @@
       },
       FnHiddenPayment:function(){
         this.hiddenpayment=false;
-      },
-      waiveoffHandler:function(){
-        if(document.querySelector('#waiveoff').checked==true){          
-          this.$.waiveoffdialog.toggle();          
-          localStorage.setItem("curr_sess_fees",this.fees);
-          this.hiddeninstallment=true;
-          this.hiddenaddbtn=true;          
-        }
-        if(document.querySelector('#waiveoff').checked==false){          
-          this.fees=localStorage.getItem("curr_sess_fees");
-          this.hiddeninstallment=false;
-          this.hiddenaddbtn=false;          
-        }
       },
       FnSetfee:function(installmentarr){
         installment=installmentarr;

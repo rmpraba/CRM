@@ -99,7 +99,17 @@
         on-response="searchprospectenquiryinfoResponse"
         debounce-duration="300"
         >
-
+<!-- It would insert the cash fee -->
+     <iron-ajax
+        method="post"
+        id="insertcashfeesajax"
+        url="{{insertcashfeesurl}}"
+        params="{{insertcashfeesparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="insertcashfeesResponse"
+        debounce-duration="300"
+        >
   </template>
   <script>
   (function() {
@@ -117,6 +127,7 @@
        },
        searchprospectenquiryResponse:function(e){
         var arr=e.detail.response.returnval;
+        if(arr!='no rows')
         document.querySelector('prospectousfee-card').enquiryarr=arr;
        },
        searchprospectenquiryinfo:function(enquiryno){
@@ -134,10 +145,18 @@
         document.querySelector('prospectousfee-card').enquiredclass=enqarr[0].class;
         document.querySelector('prospectousfee-card').studentname=enqarr[0].enquiry_name;
         document.querySelector('prospectousfee-card').parentname=enqarr[0].father_name;
+
+        localStorage.setItem("curr_sess_academicyear",enqarr[0].academic_year);
+        localStorage.setItem("curr_sess_grade",enqarr[0].class);
+        localStorage.setItem("curr_sess_studentname",enqarr[0].enquiry_name);
+        localStorage.setItem("curr_sess_feecode",""); 
+
         var arr=[];
         var obj={"installment":"","installmenttype":"","amount":"","installmentdate":""};
         obj.installment=localStorage.getItem("curr_sess_feetypepayment");
-        obj.payable_amount='500';
+        obj.actualamount='500';
+        obj.discountamount='0';
+        obj.payableamount='500';
         var d=new Date();        
         obj.installment_date=(d.getMonth()+1)+"/"+d.getDate()+"/"+d.getFullYear();
         obj.installment_type=localStorage.getItem("curr_sess_feetypepayment");
@@ -202,6 +221,7 @@
      },
       searchfeeadmissionResponse:function(e){
         var admnarr=e.detail.response.returnval;
+        if(admnarr!='no rows'){
         var arr=[];        
         for(var i=0;i<admnarr.length;i++){
         var obj={"enquiry_no":"","enquiry_name":""};
@@ -211,6 +231,7 @@
         }
         // alert(JSON.stringify(arr));
         document.querySelector('registerationfee-card').enquiryarr=arr;
+        }
       },
       searchfeeadmissionpaidinfoService:function(admissionno){
         this.searchfeeadmissionpaidinfourl=sessionStorage.getItem("addrinfo")+"/fetchexistingadmissionregpaidinfo";
@@ -287,6 +308,7 @@
       },
       fetchfeesinfoResponse:function(e){        
         var arr=e.detail.response.returnval; 
+        // alert(JSON.stringify(arr));
         document.querySelector('registerationfee-card').totalfees=arr[0].total_fee;         
         localStorage.setItem('curr_sess_totalamount',arr[0].total_fee);    
       },
@@ -298,19 +320,31 @@
         obj.grade=grade; 
         obj.admissiontype=admissiontype; 
         obj.discounttype=discounttype; 
+        var dt=new Date();
+        var d=dt.getDate();
+        var m=(dt.getMonth()+1);
+        var y=dt.getFullYear();
+        if(d<10)
+          d="0"+d;
+        if(m<10)
+          m="0"+m;
+        obj.currdate=m+"/"+d+"/"+y;
         obj.schoolid=localStorage.getItem("schoolid");    
         this.fetchfeediscountparam=obj;       
         this.$.fetchfeediscountajax.generateRequest();
       },
       fetchfeediscountResponse:function(e){
         var discountarr=e.detail.response.returnval;
+        // alert(JSON.stringify(discountarr));
         if(discountarr.length>0){
         document.querySelector('registerationfee-card').totaldiscount=discountarr[0].amount;
         document.querySelector('registerationfee-card').payableamount=parseFloat(parseFloat(localStorage.getItem('curr_sess_totalamount'))-parseFloat(discountarr[0].amount)).toFixed(2);
         var arr=[];
         var obj={"installment":"","installmenttype":"","amount":"","installmentdate":""};
         obj.installment=localStorage.getItem("curr_sess_feetypepayment");
-        obj.payable_amount=parseFloat(parseFloat(localStorage.getItem('curr_sess_totalamount'))-parseFloat(discountarr[0].amount)).toFixed(2);
+        obj.actualamount=localStorage.getItem('curr_sess_totalamount');
+        obj.discountamount=discountarr[0].amount;
+        obj.payableamount=parseFloat(parseFloat(localStorage.getItem('curr_sess_totalamount'))-parseFloat(discountarr[0].amount)).toFixed(2);
         }
         else{
         document.querySelector('registerationfee-card').totaldiscount=0;
@@ -318,7 +352,9 @@
         var arr=[];
         var obj={"installment":"","installmenttype":"","amount":"","installmentdate":""};
         obj.installment=localStorage.getItem("curr_sess_feetypepayment");
-        obj.payable_amount=parseFloat(parseFloat(localStorage.getItem('curr_sess_totalamount'))-parseFloat(0)).toFixed(2);
+        obj.actualamount=localStorage.getItem('curr_sess_totalamount');
+        obj.discountamount=0;
+        obj.payableamount=parseFloat(parseFloat(localStorage.getItem('curr_sess_totalamount'))-parseFloat(0)).toFixed(2);
         }
         var d=new Date();        
         obj.installment_date=(d.getMonth()+1)+"/"+d.getDate()+"/"+d.getFullYear();
@@ -370,8 +406,50 @@
         document.querySelector('registerationfee-card').FnHiddenPayment();  
         paidfeearr=[];
         arr=[]; 
-      }
+      },
+      callInsertCashfeesService:function(arr){
+    
+        var cash=arr;       
+        this.insertcashfeesurl=sessionStorage.getItem("addrinfo")+"/insertcashfees";
 
+        var obj={"schoolid":"","academicyear":"","enquiryno":"","admissionno":"","studentname":"","garde":"","feetype":"","feecode":"","installmenttype":"","installment":"","installmentdate":"","installmentamount":"","waiveoffamount":"","modeofpayment":"","receiptdate":"","paiddate":"","paidstatus":"","cratedon":"","createdby":"","updatedon":"","updatedby":""}        
+        // alert(JSON.stringify(arr));        
+
+        obj.schoolid=localStorage.getItem("schoolid"); 
+        obj.academicyear=localStorage.getItem("curr_sess_academicyear"); 
+        // obj.enquiryno=localStorage.getItem("curr_sess_enquiryno"); 
+        obj.admissionno=localStorage.getItem("curr_sess_enquiryno"); 
+        obj.studentname=localStorage.getItem("curr_sess_studentname"); 
+        obj.grade=localStorage.getItem("curr_sess_grade"); 
+        // obj.feetype=localStorage.getItem("curr_sess_feetype"); 
+        obj.feecode=localStorage.getItem("curr_sess_feecode");
+        var d=new Date();
+         
+        for(var i=0;i<cash.length;i++){
+        obj.installmenttype=cash[i].installment; 
+        obj.installment=cash[i].installment; 
+        obj.installmentdate==(d.getMonth()+1)+"/"+d.getDate()+"/"+d.getFullYear(); 
+        obj.installmentamount=0;
+        obj.actualamount=cash[i].actualamount;
+        obj.discountamount=cash[i].discountamount; 
+        obj.waiveoffamount=cash[i].payableamount; 
+        obj.modeofpayment="waiveoff"; 
+        obj.receiptdate==(d.getMonth()+1)+"/"+d.getDate()+"/"+d.getFullYear();; 
+        obj.paiddate==(d.getMonth()+1)+"/"+d.getDate()+"/"+d.getFullYear();; 
+        obj.paidstatus="waiveoff";   
+        obj.fineamount=0;  
+        obj.feecashcount=0;   
+        obj.createdby=localStorage.getItem("employeeid");     
+        this.insertcashfeesparam=obj;    
+        this.$.insertcashfeesajax.generateRequest();
+        cash=[];
+        } 
+      },
+      insertcashfeesResponse:function(e){
+          if(e.detail.response.returnval=="Fee paid!"){
+            alert('Fee waived off!!');
+          }
+      }
     });
   })();
   </script>
