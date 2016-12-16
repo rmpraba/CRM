@@ -315,6 +315,9 @@
               <li>
                 <a href="" on-click="Fnmasteranalysis" aria-hidden="true">Master Enquiry Analysis</a>
               </li>
+              <li>
+                <a href="" on-click="Fncounsellorreport" aria-hidden="true">Counsellor Report</a>
+              </li>
             </ul>
             </li>
             <li id="collectionreports">
@@ -844,6 +847,9 @@
       FnShowBounceCheques:function(){
         document.querySelector('app-list').setPage("bouncecheque-displaycard","Bounce Cheques");
         document.querySelector('bouncecheque-displaycard').FnCallService();
+      },
+      Fncounsellorreport:function(){
+        document.querySelector('app-list').setPage("counsellor-report","Counsellor Report");
       }
 
     });
