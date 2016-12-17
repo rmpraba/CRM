@@ -5119,7 +5119,6 @@ app.post('/getenquiryreferrals',  urlencodedParser,function (req, res){
     });
 });
 
-<<<<<<< HEAD
 /*this function is used to create the discount type master*/
 
 app.post('/discountcreation' ,  urlencodedParser,function (req, res)
@@ -5246,7 +5245,8 @@ app.post('/updatediscount' ,  urlencodedParser,function (req, res)
     }
     });
     
-=======
+});
+  
 app.post('/counsellorreport',  urlencodedParser,function (req, res){
   var queeyy="SELECT e.enquiry_name,e.enquiry_no,e.class,e.father_name,e.mother_name,e.father_mob,e.mother_mob, DATE_FORMAT(f.schedule_date,'%d/%m/%Y') AS schedule_date, f.followup_comments FROM student_enquiry_details as e JOIN followupdetail as f ON e.enquiry_no = f.enquiry_id  WHERE e.orginated_by = '"+req.query.counsellor+"' AND e.school_id = '"+req.query.schoolid+"'";
   connection.query(queeyy,
@@ -5262,7 +5262,6 @@ app.post('/counsellorreport',  urlencodedParser,function (req, res){
         console.log(err);
       }
     });
->>>>>>> origin/crmproductionversion
 });
 
 

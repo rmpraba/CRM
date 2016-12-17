@@ -6,7 +6,6 @@
   <template>
      <style>
       :host{
-         margin-left: 10%;
          display: block;
          @apply(--layout-left);
         /*width: 50%;*/
@@ -57,10 +56,6 @@
 
        #discountdialog
       {
-        @apply(--layout-center);
-        width: 40%;
-        margin: 0 auto;
-        box-shadow: 0px 0px 14px -1px rgba(0,0,0,0.75);
       }
 
       .popup-but
@@ -74,6 +69,11 @@
         top: 20px;
         right: 20px;
       }
+      .add-button{
+        position: absolute;
+        top: -60px;
+        right: 274px;
+      }
     </style>
     <div class="col-sm-12">
       <span class="col-sm-10">
@@ -82,11 +82,12 @@
         </template>
       </span>
       <span class="col-sm-2">
-        <paper-button class="btn btn-primary" on-click="Fncreate">Create</paper-button>
+        <!-- <paper-button class="btn btn-primary" on-click="Fncreate">Create</paper-button> -->
+        <paper-icon-button icon="add" class="btn btn-primary add-button">Create</paper-icon-button>
       </span>  
     </div>
     <paper-dialog id="discountdialog" modal>
-      <div class="card">
+      <div class="">
         <iron-icon dialog-dismiss class="iron-close" icon="icons:close"></iron-icon>
         <paper-input value="{{discounttypename}}" label="Discount Type Name"></paper-input>
         <paper-input hidden value="{{disid}}"></paper-input>

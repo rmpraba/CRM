@@ -118,3 +118,8 @@
   height: 35px;
   width:103px;
 }
+.discount:nth-child(even) {background: #F2F3F4}
+.discount:nth-child(odd) {background: #EDEDED}
+.discount{
+  margin: 5px 0 5px 0;
+}

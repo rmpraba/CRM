@@ -30,15 +30,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         margin: 10px 0 0 0;
       }
     </style>
-      <div class="col-sm-12" id="card{{discountid}}">
+      <div class="col-sm-12 discount" id="card{{discountid}}">
         <input type="hidden" name="" value="{{discounttypeid}}">
-        <span class="col-sm-8 discount-display">
+        <span class="col-sm-10 discount-display">
              <span class="" hidden$="{{hidediscounttypeuiitem}}">{{discounttypename}}</span>
              <span class="" hidden$="{{hidediscounttypeuiinput}}">
                  <paper-input value="{{discounttypename}}"></paper-input>
              </span>
         </span>
-        <span class="col-sm-2">
+        <span class="col-sm-1">
             <span class="" hidden$="{{hidediscounttypeuiitem}}">
             <paper-icon-button icon='create' on-click='FnEdit'></paper-icon-button>
             </span>
@@ -46,7 +46,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <paper-icon-button icon='save' on-click='FnSave'></paper-icon-button>
             </span>
         </span>
-        <span class="col-sm-2">
+        <span class="col-sm-1">
             <paper-icon-button icon='close' on-click='FnDelete'></paper-icon-button>
         </span>
       </div>
