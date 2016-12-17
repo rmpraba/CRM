@@ -159,9 +159,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         debounce-duration="300"
     ></iron-ajax>
 
+        <iron-ajax
+        method="post"
+        id="counsellorreportajax"
+        url="{{counsellorreporturl}}"
+        params="{{counsellorreportparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="counsellorreportResponse"
+        debounce-duration="300"
+        ></iron-ajax>
 
-        
-  
   </template>
   <script>
   (function() {
@@ -178,6 +186,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       var montharrlength ="";
       var academicarrlength = "";
       var admissioncountarrlength ="";
+      var counsellorarr =[];
     Polymer({
       is: 'reporting-service',
       masterReportService:function(){
@@ -396,7 +405,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
         document.querySelector('master-report-card').reportarr=report;
       },
-
 
       getinstallmentdetails:function()
       {
@@ -639,9 +647,51 @@ var i;
             alert("Updated");
           this.FnFetchDiscount();
         }
-      }
+      },  
 
-       });
+      counsellorreport:function(){
+        this.counsellorreporturl=sessionStorage.getItem("addrinfo")+"/counsellorreport";
+        var obj={"schoolid":"","counsellor":""};
+        obj.schoolid = localStorage.getItem("schoolid");
+        obj.counsellor = localStorage.getItem("employeeid");
+        this.counsellorreportparam=obj;
+        this.$.counsellorreportajax.generateRequest();
+      },
+      counsellorreportResponse:function(e){
+        var result = e.detail.response.returnval;
+        alert(JSON.stringify(result));
+        for(var i = 0; i<result.length; i++){
+          var obj = {"id":"","name":"","grade":"","parent_name":"","mobile_no":"","followup":""};
+          obj.id = result[i].enquiry_no;
+          obj.name = result[i].enquiry_name;
+          obj.grade = result[i].class;
+          if(result[i].father_name == ""){
+            obj.parent_name = result[i].mother_name;
+          } else {
+            obj.parent_name = result[i].father_name;
+          }
+          if(result[i].father_mob == ""){
+            obj.mobile_no = result[i].mother_mob;
+          } else {
+            obj.mobile_no = result[i].father_mob;
+          }
+          counsellorarr.push(obj);
+          var followup='';
+          for(var j=i+1; j<result.length; j++){
+            if(result[i].enquiry_no == result[j].enquiry_no){
+              var obj1 = {"followup":""};
+              followup = followup+'\n'+(result[j].schedule_date+" - "+result[j].followup_comments);
+              
+              result.splice(j,1);
+              j--;
+            }
+          }
+          obj.followup=followup;
+        }
+        alert(JSON.stringify(counsellorarr));
+        document.querySelector('counsellor-report').counsellorarr=counsellorarr;
+      }
+    });
   })();
   </script>
 </dom-module>

@@ -332,6 +332,9 @@
               <li>
                 <a href="" on-click="Fnmasteranalysis" aria-hidden="true">Master Enquiry Analysis</a>
               </li>
+              <li>
+                <a href="" on-click="Fncounsellorreport" aria-hidden="true">Counsellor Report</a>
+              </li>
             </ul>
             </li>
             <li id="collectionreports">
@@ -535,6 +538,23 @@
       </div>
     </div>
 
+    <div class="modal fade bd-example-modal-lg" id="provisionalfee" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg" id ="fee-dialog">
+        <div class="modal-content" id="fee-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="center-block event-title" id="">
+             Provisional Fee
+            </h4>
+          </div>
+          <div class="modal-body">
+            <provisionalfee-card></provisionalfee-card>
+          </div>
+        </div>
+      </div>
+    </div>
   
      <div class="modal fade bd-example-modal-lg" id="feetypeschedule" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg">
@@ -877,8 +897,11 @@
       FnShowBounceCheques:function(){
         document.querySelector('app-list').setPage("bouncecheque-displaycard","Bounce Cheques");
         document.querySelector('bouncecheque-displaycard').FnCallService();
-      }
-
+      },
+      Fncounsellorreport:function(){
+        document.querySelector('app-list').setPage("counsellor-report","Counsellor Report");
+        document.querySelector('reporting-service').counsellorreport();
+      },
     });
   })();
   </script>

@@ -59,13 +59,11 @@
         this.$.loginpageajax.generateRequest();
       },
       loginpageResponse:function(e){
-
         var result=e.detail.response.returnval;
         //alert(JSON.stringify(result));
         if(result.length<=0){
           alert("Username and Password is incorrect..!");
-        }
-        else{
+        } else {
           var shortname= result[0].shortname;
           var school= result[0].schoolname;
           var role=result[0].role_name;

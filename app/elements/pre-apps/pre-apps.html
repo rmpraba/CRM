@@ -1,4 +1,5 @@
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-icons/maps-icons.html">
 
 <dom-module id="pre-apps">
   <template>
@@ -231,6 +232,9 @@
               <paper-item value="{{item.itemid}}">{{item.itemdes}}</paper-item>
             </template>
           </paper-listbox>
+        </div>
+        <div class="col-sm-4" style="margin-top: 2%;">
+        <paper-icon-button icon="maps:place" on-click="FnToggleMap"></paper-icon-button>
         </div>
         <div class="col-sm-4" style='margin-top: -1%;'>
           <paper-dropdown-menu label="Enquiry Source" style="margin-top: 3%;">
@@ -1356,36 +1360,23 @@
           this.studentname=fname+' '+mname+' '+lname;
           this.enquiryno=enqno;
           this.$.confirmbox.open();
-          /*var id = 'confirmbox';
-        var dialog = document.getElementById(id);
-        dialog.open();*/
       },
       Confirm:function(){
         this.$.confirmbox.close();
-        /* var id = 'confirmbox';
-        var dialog = document.getElementById(id);
-        dialog.close();*/
       },
       cancel:function(){
         this.$.confirmbox.close();
         this.$.cancelbox.open();
-        /*var id = 'confirmbox';
-        var dialog = document.getElementById(id);
-        dialog.close();
-          var id = 'cancelbox';
-        var dialog = document.getElementById(id);
-        dialog.open();*/
       },
       closedialog:function(){
         this.$.cancelbox.close();
         this.mob = "";
         this.mothermob = "";
         this.guardianmobile = "";
-        /*  var id = 'cancelbox';
-        var dialog = document.getElementById(id);
-        dialog.close();*/
-
       },
+      FnToggleMap:function(){
+        window.open('../elements/showgmap-card.html', '_blank');
+      }
     });
   })();
   </script>
