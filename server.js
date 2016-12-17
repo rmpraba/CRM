@@ -3219,9 +3219,7 @@ app.post('/getadmissioncount',  urlencodedParser,function (req, res){
      });
  });
 
-
   
-
 
  app.post('/discountenq',  urlencodedParser,function (req, res){
    var response={
@@ -5119,6 +5117,134 @@ app.post('/getenquiryreferrals',  urlencodedParser,function (req, res){
         console.log(err);
       }
     });
+});
+
+/*this function is used to create the discount type master*/
+
+app.post('/discountcreation' ,  urlencodedParser,function (req, res)
+{  
+    var response={"discount_type_name":req.query.discountname,
+    "discount_type":req.query.discountid,
+    "id":req.query.discountseqid}; 
+    
+    console.log(response);
+    connection.query("SELECT * FROM md_discounts WHERE  discount_type_name='"+req.query.discountname+"' or discount_type='"+req.query.discountid+"' and id='"+req.query.discountseqid+"'",
+      function(err, rows)
+    {
+      console.log(rows);
+    if(rows.length==0)
+    {
+    connection.query("INSERT INTO md_discounts SET ?",[response],
+    function(err, rows)
+    {
+     if(!err)
+            {
+              var tempseq=parseInt((req.query.discountseqid).substring(0))+1;
+                      connection.query("UPDATE sequence SET discount_seq='"+tempseq+"'", function (err,result){
+                        if(result.affectedRows>0)
+                      res.status(200).json({'returnval': 'Inserted!'});
+                    });
+            }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'Not Inserted!'});
+    }
+    });
+    }
+    else
+    {
+      res.status(200).json({'returnval': 'failed'});
+    }
+  });
+});
+
+
+/*this function is used to fetch the discount types*/
+
+app.post('/fetchdiscount',  urlencodedParser,function (req,res)
+{  
+  var qur="SELECT * FROM md_discounts";
+  connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    { 
+      //console.log(JSON.stringify(rows));   
+      res.status(200).json({'returnval': rows});
+    }
+    else
+      res.status(200).json({'returnval': ''});
+  });
+});
+
+/*this function is used to generate discount sequence*/
+app.post('/fetchdiscountseq',  urlencodedParser,function (req,res)
+{  
+  
+  var qur="SELECT * FROM sequence";
+  connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    { 
+      //console.log(JSON.stringify(rows));   
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      //console.log(err);
+      res.status(200).json({'returnval': 'fail'});
+    }  
+
+  });
+});
+
+
+/*these functions are used to update and delete the discount types*/
+
+app.post('/deletediscount' ,  urlencodedParser,function (req, res)
+{  
+   
+    var qur="DELETE FROM  md_discounts where  discount_type='"+req.query.discountid+"'";
+    console.log(qur);
+    connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {
+      res.status(200).json({'returnval': 'Deleted!'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'Not Deleted!'});
+    }
+    });
+    
+});
+
+
+app.post('/updatediscount' ,  urlencodedParser,function (req, res)
+{  
+   
+   var val=(req.query.discountname).toLowerCase();
+   var qur="UPDATE  md_discounts SET discount_type_name='"+req.query.discountname+"', discount_type='"+val+"' where  discount_type='"+req.query.discountid+"'";
+   //console.log(qur);
+   connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {
+      res.status(200).json({'returnval': 'Updated!'});
+    }
+    else
+    {
+    //  console.log(err);
+      res.status(200).json({'returnval': 'Not Updated!'});
+    }
+    });
+    
 });
 
 
