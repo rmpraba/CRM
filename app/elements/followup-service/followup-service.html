@@ -1,3 +1,4 @@
+
 <!--
 @license
 Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
@@ -795,24 +796,38 @@ countresult=0;
                     var dadalen=res[i].father_name;
                     var momlen=res[i].mother_name;
                     var gurlen=res[i].guardian_name;
+                    var dadnum=res[i].father_mob;
+                    var momnum=res[i].mother_mob;
+                    var gurnum=res[i].guardian_mobile;
+                    
+
                             if(dadalen.length>0)
                             {
                               obj.guardian_type='Parent';
-                              obj.guardian_name=res[i].father_name;
-                              obj.guardian_num=res[i].father_mob;
+                              obj.guardian_name=res[i].father_name;    
                             }
                             else if(momlen.length>0)
                             {
                               obj.guardian_type='Parent';
                               obj.guardian_name=res[i].mother_name;
-                              obj.guardian_num=res[i].mother_mob;
                             }
                             else if(gurlen.length>0)
                             {
                               obj.guardian_type='Guardian';
                               obj.guardian_name=res[i].guardian_name;
-                              obj.guardian_num=res[i].guardian_mobile;
                             }
+                            if(dadnum.length>0)
+                            {
+                              obj.guardian_num=res[i].father_mob;
+                            }
+                            else if(momnum.length>0)
+                            {
+                              obj.guardian_num=res[i].mother_mob;
+                            }  
+                            else if(gurnum.length>0)
+                            {
+                              obj.guardian_num=res[i].guardian_mobile;
+                            }  
           
                     requery.push(obj);              
               }
