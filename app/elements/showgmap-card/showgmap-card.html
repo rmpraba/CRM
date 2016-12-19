@@ -1,9 +1,10 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Place Autocomplete</title>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <meta charset="utf-8">
+
+<link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-icons/maps-icons.html">
+
+<dom-module id="showgmap-card">
+  <template>
+   
     <style>
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
@@ -56,10 +57,7 @@
         font-size: 13px;
         font-weight: 300;
       }
-
     </style>
-  </head>
-  <body>
     <input id="origin-input" class="controls" type="text"
         placeholder="Enter an origin location">
 
@@ -78,12 +76,11 @@
     </div>
 
     <div id="map"></div>
-
-    <script>
+    </template>
+     <script type="text/javascript">
       // This example requires the Places library. Include the libraries=places
       // parameter when you first load the API. For example:
       // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
-
       function initMap() {
         var origin_place_id = null;
         var destination_place_id = null;
@@ -183,5 +180,19 @@
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAfuqTTZDNBagUjGe7gQxDpsETObEvxRgw&libraries=places&callback=initMap"
         async defer></script>
-  </body>
-</html>
+    </script>
+    <script>
+      (function() {
+        'use strict';
+
+        Polymer({
+          is: 'showgmap-card',
+
+        ready:function(){
+
+        },
+        });
+      })();
+    </script>
+
+</dom-module>
