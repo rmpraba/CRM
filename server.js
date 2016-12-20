@@ -4548,7 +4548,7 @@ app.post('/getprofession',  urlencodedParser,function (req, res){
     });
 });
 app.post('/getstudentsinlocation',  urlencodedParser,function (req, res){
-  var qur = "SELECT COUNT(*)as total_students FROM student_point WHERE school_id = '"+req.query.schol+"' AND pickup_point = (SELECT id FROM point WHERE point_name ='"+req.query.point_name+"' and school_id = '"+req.query.schol+"' AND trip = '"+req.query.trip+"' )";
+  var qur = "SELECT COUNT(*) as total_enquired_students FROM `student_enquiry_details` WHERE `locality` = '"+req.query.location+"' AND `status` = 'Enquired' AND `school_id` = '"+req.query.schol+"'";
   connection.query(qur,
     function(err, rows){
       if(!err){
@@ -4564,6 +4564,39 @@ app.post('/getstudentsinlocation',  urlencodedParser,function (req, res){
     });
 });
 
+app.post('/getadmittedstudentsinlocation',  urlencodedParser,function (req, res){
+  var qur = "SELECT COUNT(*) as total_enquired_students FROM `student_enquiry_details` WHERE `locality` = '"+req.query.location+"' AND `status` = 'Admitted' AND `school_id` = '"+req.query.schol+"'";
+  connection.query(qur,
+    function(err, rows){
+      if(!err){
+        if(rows.length>0){
+          res.status(200).json({'returnval': rows});
+        } else {
+          console.log(err);
+          res.status(200).json({'returnval':null});
+        }
+      } else {
+        console.log(err);
+      }
+    });
+});
+
+app.post('/getprovisionallyadmittedstudentsinlocation',  urlencodedParser,function (req, res){
+  var qur = "SELECT COUNT(*) as total_enquired_students FROM `student_enquiry_details` WHERE `locality` = '"+req.query.location+"' AND `status` = 'Provision' AND `school_id` = '"+req.query.schol+"'";
+  connection.query(qur,
+    function(err, rows){
+      if(!err){
+        if(rows.length>0){
+          res.status(200).json({'returnval': rows});
+        } else {
+          console.log(err);
+          res.status(200).json({'returnval':null});
+        }
+      } else {
+        console.log(err);
+      }
+    });
+});
 
  app.post('/scheduledates',  urlencodedParser,function (req, res){
    connection.query("SELECT schedule_date FROM followupdetail WHERE `school_id` =  '"+req.query.schol+"' and schedule_id='"+req.query.folowid+"' and followup_status!='Cancelled' order by(schedule_date)",

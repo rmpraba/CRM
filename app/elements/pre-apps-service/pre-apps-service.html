@@ -219,6 +219,28 @@
         debounce-duration="300"
         >
   </iron-ajax>
+  <iron-ajax
+        method="post"
+        id="getadmittedstudentsinlocationajax"
+        url="{{getadmittedstudentsinlocationurl}}"
+        params="{{getadmittedstudentsinlocationparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getadmittedstudentsinlocationResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+  <iron-ajax
+        method="post"
+        id="getprovisionallyadmittedstudentsinlocationajax"
+        url="{{getprovisionallyadmittedstudentsinlocationurl}}"
+        params="{{getprovisionallyadmittedstudentsinlocationparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="getprovisionallyadmittedstudentsinlocationResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
       <followup-service id="followupservice"></followup-service>
   </template>
   <script>
@@ -233,6 +255,7 @@
     var sibnamelistarr = [];
     var seqno;
     var enquiryiddz,attendantname;
+    var enquired_location,enquired_students,admitted_students,provisionally_admitted_students;
 
     Polymer({
       is: 'pre-apps-service',
@@ -469,18 +492,42 @@
           alert('Form Submission intertupted!');
         }
       },
-      getstudentsinlocation:function(location,trip){
+      getstudentsinlocation:function(location){
+        enquired_location = location;
         this.getstudentsinlocationurl=sessionStorage.getItem("addrinfo")+"/getstudentsinlocation";
-        var obj={"point_name":"","schol":"", "trip":""}; 
+        var obj={"location":"","schol":""}; 
         obj.schol=localStorage.getItem("schoolid");
-        obj.point_name=location;
-        obj.trip = trip;
+        obj.location=enquired_location;
         this.getstudentsinlocationparam=obj;
         this.$.getstudentsinlocationajax.generateRequest();
       },
       getstudentsinlocationResponse:function(e){
-        var result = e.detail.response.returnval[0].total_students;
-        document.querySelector('pre-apps').opentotalstudentdialog(result);
+        enquired_students = e.detail.response.returnval[0].total_enquired_students;
+        this.getadmittedstudentsinlocation();
+      },
+      getadmittedstudentsinlocation:function(){
+        this.getadmittedstudentsinlocationurl=sessionStorage.getItem("addrinfo")+"/getadmittedstudentsinlocation";
+        var obj={"location":"","schol":""}; 
+        obj.schol=localStorage.getItem("schoolid");
+        obj.location=enquired_location;
+        this.getadmittedstudentsinlocationparam=obj;
+        this.$.getadmittedstudentsinlocationajax.generateRequest();
+      },
+      getadmittedstudentsinlocationResponse:function(e){
+        admitted_students = e.detail.response.returnval[0].total_enquired_students;
+        this.getprovisionallyadmittedstudentsinlocation();
+      },
+      getprovisionallyadmittedstudentsinlocation:function(){
+        this.getprovisionallyadmittedstudentsinlocationurl=sessionStorage.getItem("addrinfo")+"/getprovisionallyadmittedstudentsinlocation";
+        var obj={"location":"","schol":""}; 
+        obj.schol=localStorage.getItem("schoolid");
+        obj.location=enquired_location;
+        this.getprovisionallyadmittedstudentsinlocationparam=obj;
+        this.$.getprovisionallyadmittedstudentsinlocationajax.generateRequest();
+      },
+      getprovisionallyadmittedstudentsinlocationResponse:function(e){
+        provisionally_admitted_students = e.detail.response.returnval[0].total_enquired_students;
+        document.querySelector('pre-apps').opentotalstudentdialog(enquired_students,admitted_students,provisionally_admitted_students);
       },
       siblingdetails:function(id){
         this.siblingdetailsurl=sessionStorage.getItem("addrinfo")+"/siblingdetails";

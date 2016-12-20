@@ -34,6 +34,9 @@
       .dialog-paragraph{
         font-size: medium;
       }
+      #totalstudentnonzero{
+        width: 50%;
+      }
     </style>
     <div class="row enquiry-form">
       <div class="form-group-heading">
@@ -328,7 +331,10 @@
         <paper-dialog-scrollable>
           <div class="row">
             <div class="col-sm-8 col-sm-offset-2">
-              <h4>There are <strong>{{total_students}}</strong> students already using transport from this location</h4> 
+              <h3>Location Stats</h3> 
+              <h4>Total Students Enquired - <strong>{{totalEnquiredFromThisLocation}}</strong></h4>
+              <h4>Total Students Admitted - <strong>{{totalAdmittedFromThisLocation}}</strong></h4>
+              <h4>Total Students Provisionally Admitted - <strong>{{totalProvisionallyAdmittedFromThisLocation}}</strong></h4>
             </div>
           </div>
         </paper-dialog-scrollable>
@@ -1001,27 +1007,20 @@
       guardianoccupationinfo = (e.target.selectedItem.textContent).trim();
     },
     getstudentsinlocation:function(location){
-      if(grade==null) {
-        alert('Select the grade your seeking for admission');
-      } else{
-        if(grade=='Nursery'||grade=='LKG'||grade=='UKG'){
-          trip = 2;
-          this.$.preapps.getstudentsinlocation(location, trip);
-        } else{
-          trip = 1;
-          this.$.preapps.getstudentsinlocation(location, trip);
-        }
-      }
-      
+      this.$.preapps.getstudentsinlocation(location);
     },
-    opentotalstudentdialog:function(result){
-      if(result == 0){
+    opentotalstudentdialog:function(enquired, admitted, provisionally_admitted){
+      /*if(result == 0){
         this.total_students = result;
         this.$.totalstudentzero.open();
       } else {
         this.total_students = result;
         this.$.totalstudentnonzero.open();
-      }
+      }*/
+      this.totalEnquiredFromThisLocation = enquired;
+      this.totalAdmittedFromThisLocation = admitted;
+      this.totalProvisionallyAdmittedFromThisLocation = provisionally_admitted;
+      this.$.totalstudentnonzero.open();
     },
     getsiblingdetails(siblingid){
       this.$.preapps.siblingdetails(siblingid);
@@ -1398,6 +1397,7 @@
         var place = str_array.length - 4;
         this.textvalue = str_array[place];
         this.closeWindow();
+        this.getstudentsinlocation(this.textvalue);
       }
     });
   })();
