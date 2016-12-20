@@ -98,6 +98,46 @@
         on-response="fetchsplitupResponse"
         debounce-duration="300"
         >
+        <iron-ajax
+        method="post"
+        id="processbouncechequeajax"
+        url="{{processbouncechequeurl}}"
+        params="{{processbouncechequeparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="processbouncechequeResponse"
+        debounce-duration="300"
+        >
+        <iron-ajax
+        method="post"
+        id="fetchchequeforeditordeleteajax"
+        url="{{fetchchequeforeditordeleteurl}}"
+        params="{{fetchchequeforeditordeleteparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchchequeforeditordeleteResponse"
+        debounce-duration="300"
+        >
+        <iron-ajax
+        method="post"
+        id="editchequeajax"
+        url="{{editchequeurl}}"
+        params="{{editchequeparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="editchequeResponse"
+        debounce-duration="300"
+        >
+        <iron-ajax
+        method="post"
+        id="deletechequeajax"
+        url="{{deletechequeurl}}"
+        params="{{deletechequeparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="deletechequeResponse"
+        debounce-duration="300"
+        >
   </template>
   <script>
   (function() {
@@ -553,6 +593,76 @@
         feechequecount=0;
         feetransfercount=0;
         arr=[];
+      },
+      processbouncechequeService:function(searchvalue){
+        this.processbouncechequeurl=sessionStorage.getItem("addrinfo")+"/processbouncecheque-service";
+        var obj={"schoolid":""};
+        obj.searchvalue=searchvalue;
+        obj.schoolid=localStorage.getItem("schoolid");
+        this.processbouncechequeparam=obj;
+        this.$.processbouncechequeajax.generateRequest();
+      },
+      processbouncechequeResponse:function(e){
+        var arr=e.detail.response.returnval;
+        if(arr.length>0){
+          for(var i=0;i<arr.length;i++){
+            arr[i].sno=parseInt(i)+1;
+            arr[i].flag=0;
+          }
+        document.querySelector('chequebounceorcancel-card').chequearr=arr;
+        document.querySelector('chequebounceorcancel-card').FnSetChequeArray(arr);
+        }
+      },
+      fetchchequeforeditordelete:function(searchvalue){
+        this.fetchchequeforeditordeleteurl=sessionStorage.getItem("addrinfo")+"/fetchchequeforeditordelete-service";
+        var obj={"schoolid":""};
+        obj.searchvalue=searchvalue;
+        obj.schoolid=localStorage.getItem("schoolid");
+        this.fetchchequeforeditordeleteparam=obj;
+        this.$.fetchchequeforeditordeleteajax.generateRequest();
+      },
+      fetchchequeforeditordeleteResponse:function(e){
+        var arr=e.detail.response.returnval;
+        if(arr.length>0){
+          for(var i=0;i<arr.length;i++){
+            arr[i].sno=parseInt(i)+1;
+            arr[i].flag=0;
+          }
+        document.querySelector('editdelete-cheques-card').chequearr=arr;
+        document.querySelector('editdelete-cheques-card').FnSetChequeArray(arr);
+        }
+      },
+      editchequeService:function(enrno,chequeno,bankname,chequedate,installmentamount,paiddate){
+        this.editchequeurl=sessionStorage.getItem("addrinfo")+"/editcheque-service";
+        var obj={"schoolid":""};
+        obj.schoolid=localStorage.getItem("schoolid");
+        obj.admissionno=enrno;
+        obj.chequeno=chequeno;
+        obj.bankname=bankname;
+        obj.chequedate=localStorage.getItem("curr_sess_chequedate");
+        obj.amount=installmentamount;
+        this.editchequeparam=obj;
+        this.$.editchequeajax.generateRequest();
+      },
+      editchequeResponse:function(e){
+        alert(e.detail.response.returnval);
+        this.fetchchequeforeditordelete(localStorage.getItem("curr_sess_enquiryno"));
+      },
+      deletechequeService:function(enrno,chequeno,bankname,chequedate,installmentamount,paiddate){
+        this.deletechequeurl=sessionStorage.getItem("addrinfo")+"/deletecheque-service";
+        var obj={"schoolid":""};
+        obj.schoolid=localStorage.getItem("schoolid");
+        obj.admissionno=enrno;
+        obj.chequeno=chequeno;
+        obj.bankname=bankname;
+        obj.chequedate=localStorage.getItem("curr_sess_chequedate");
+        obj.amount=installmentamount;
+        this.deletechequeparam=obj;
+        this.$.deletechequeajax.generateRequest();
+      },
+      deletechequeResponse:function(e){
+        alert(e.detail.response.returnval);
+        this.fetchchequeforeditordelete(localStorage.getItem("curr_sess_enquiryno"));
       }
     });
   })();
