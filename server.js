@@ -542,7 +542,8 @@ app.post('/creatediscountcode-service',  urlencodedParser,function (req, res){
       from_date:req.query.fromdate,
       to_date:req.query.todate,
       created_by:req.query.createdby,
-      amount:req.query.amount
+      amount:req.query.amount,
+      discount_percentage:req.query.percentage
     };
 
     console.log(response);
@@ -1492,7 +1493,7 @@ app.post('/checkregfeepaidstatus-service',  urlencodedParser,function (req, res)
     {
       connection.query("SELECT * FROM fee_splitup WHERE fee_code='"+rows[0].fee_code+"' and school_id='"+req.query.schoolid+"' and fee_type='Registration fee'",function(err, rows){
         if(rows.length>0){
-          connection.query("SELECT * FROM md_student_paidfee WHERE fee_code='"+rows[0].fee_code+"' and school_id='"+req.query.schoolid+"' and installment='Registration fee' and admission_no='"+req.query.admissionno+"' and paid_status in('inprogress','cleared','paid')",function(err, rows){
+          connection.query("SELECT * FROM md_student_paidfee WHERE fee_code='"+rows[0].fee_code+"' and school_id='"+req.query.schoolid+"' and installment='Registration fee' and admission_no='"+req.query.admissionno+"' and paid_status in('inprogress','cleared','paid','waiveoff')",function(err, rows){
             if(rows.length>0){
               res.status(200).json({'returnval': 'paid'});
             }
@@ -2214,22 +2215,28 @@ app.post('/fetchfees',  urlencodedParser,function (req, res){
     {
       response.fee_code=rows[0].fee_code;
       response.total_fees=rows[0].fees;
-      var qur1="SELECT total_fee FROM fee_splitup WHERE school_id='"+req.query.schoolid+"' and fee_code='"+response.fee_code+"' and fee_type='Registration fee'";
+      var qur1="SELECT * FROM fee_splitup WHERE school_id='"+req.query.schoolid+"' and fee_code='"+response.fee_code+"' ";
       connection.query(qur1,function(err, rows){
         var result=[];
         var obj={"fee_code":"","fees":""};
         obj.fee_code=response.fee_code;
+        var regfee=0;
         if(rows.length>0){
-        obj.fees=parseFloat(parseFloat(response.total_fees)-parseFloat(rows[0].total_fee)).toFixed(2);
+        for(var i=0;i<rows.length;i++)
+        {
+          if(rows[i].fee_type=='Registration fee')
+            regfee=rows[i].total_fee;
+        }  
+        obj.fees=parseFloat(parseFloat(response.total_fees)-parseFloat(regfee)).toFixed(2);
         console.log('fees..............'+obj.fees);
         }
-        else{
-        obj.fees=parseFloat(response.total_fees).toFixed(2);
-        console.log('fees..............'+obj.fees);
-        }
+        // else{
+        // obj.fees=parseFloat(response.total_fees).toFixed(2);
+        // console.log('fees..............'+obj.fees);
+        // }
         result.push(obj);
         if(result.length>0)
-        res.status(200).json({'returnval': result});
+        res.status(200).json({'returnval': result,'feesplitup':rows});
       });
       // res.status(200).json({'returnval': rows});
     }
@@ -2259,7 +2266,7 @@ app.post('/fetchdiscount-service',  urlencodedParser,function (req, res){
     " AND grade=(SELECT grade_id FROM grade_master WHERE grade_name='"+req.query.grade+"') "+
     " and from_date<='"+req.query.currdate+"' and to_date>='"+req.query.currdate+"' and fee_type not in ('Registration fee','Lumpsum')";
     else
-    var qur="SELECT * FROM md_discount_master WHERE school_id='"+req.query.schoolid+"' AND academic_year='"+req.query.academicyear+"' AND admission_year='"+req.query.admissionyear+"' "+
+    var qur="SELECT * FROM md_discount_master WHERE school_id='"+req.query.schoolid+"' AND academic_year='"+req.query.academicyear+"' AND admission_year='"+req.query.admissionyear+"' AND discount_type_code in ('"+req.query.discounttype+"','5') "+
     " AND grade=(SELECT grade_id FROM grade_master WHERE grade_name='"+req.query.grade+"') "+
     " and from_date<='"+req.query.currdate+"' and to_date>='"+req.query.currdate+"' and fee_type not in ('Registration fee')";
     
@@ -5104,6 +5111,7 @@ console.log(queeyy);
       }
     });
 });
+
 app.post('/getenquiryreferrals',  urlencodedParser,function (req, res){
   var queeyy="SELECT * FROM md_referrals where school_id='"+req.query.schol+"'";
   connection.query(queeyy,
@@ -5114,6 +5122,104 @@ app.post('/getenquiryreferrals',  urlencodedParser,function (req, res){
         } else {
           console.log(err);
           res.status(200).json({'returnval':null});
+        }
+      } else {
+        console.log(err);
+      }
+    });
+});
+
+
+app.post('/fetchallstudentforsearch-service',  urlencodedParser,function (req, res){
+  var qur="SELECT distinct(admission_no),student_name FROM md_student_paidfee where school_id='"+req.query.schoolid+"' and installment!='Application fee'";
+  connection.query(qur,
+    function(err, rows){
+      if(!err){
+        if(rows.length>0){
+          res.status(200).json({'returnval': rows});
+        } else {
+          console.log(err);
+          res.status(200).json({'returnval': 'no rows'});
+        }
+      } else {
+        console.log(err);
+      }
+    });
+});
+
+
+app.post('/processbouncecheque-service',  urlencodedParser,function (req, res){
+  var qur="SELECT * FROM md_student_paidfee where school_id='"+req.query.schoolid+"' and (admission_no like '%"+req.query.searchvalue+"%' or cheque_no like '%"+req.query.searchvalue+"%') and mode_of_payment='Cheque'";
+  console.log('-------------------------------------------');
+  console.log(qur);
+  connection.query(qur,
+    function(err, rows){
+      if(!err){
+        if(rows.length>0){
+          res.status(200).json({'returnval': rows});
+        } else {
+          console.log(err);
+          res.status(200).json({'returnval': 'no rows'});
+        }
+      } else {
+        console.log(err);
+      }
+    });
+});
+
+
+app.post('/fetchchequeforeditordelete-service',  urlencodedParser,function (req, res){
+  var qur="SELECT * FROM md_student_paidfee where school_id='"+req.query.schoolid+"' and (admission_no like '%"+req.query.searchvalue+"%' or cheque_no like '%"+req.query.searchvalue+"%') and mode_of_payment='Cheque'";
+  console.log('-------------------------------------------');
+  console.log(qur);
+  connection.query(qur,
+    function(err, rows){
+      if(!err){
+        if(rows.length>0){
+          res.status(200).json({'returnval': rows});
+        } else {
+          console.log(err);
+          res.status(200).json({'returnval': 'no rows'});
+        }
+      } else {
+        console.log(err);
+      }
+    });
+});
+
+
+app.post('/editcheque-Service',  urlencodedParser,function (req, res){
+  var qur="UPDATE md_student_paidfee SET cheque_no='"+req.query.chequeno+"',bank_name='"+req.query.bankname+"',cheque_date='"+req.query.chequedate+"',installment_amount='"+req.query.amount+"' where school_id='"+req.query.schoolid+"' and admission_no='"+req.query.admissionno+"' and cheque_no='"+req.query.chequeno+"' ";
+  console.log('-------------------------------------------');
+  console.log(qur);
+  connection.query(qur,
+    function(err, result){
+      if(!err){
+        if(result.affectedRows>0){
+          res.status(200).json({'returnval': 'Updated!'});
+        } else {
+          console.log(err);
+          res.status(200).json({'returnval': 'Not Updated!'});
+        }
+      } else {
+        console.log(err);
+      }
+    });
+});
+
+
+app.post('/deletecheque-Service',  urlencodedParser,function (req, res){
+  var qur="DELETE FROM md_student_paidfee WHERE school_id='"+req.query.schoolid+"' and admission_no='"+req.query.admissionno+"' and cheque_no='"+req.query.chequeno+"' ";
+  console.log('-------------------------------------------');
+  console.log(qur);
+  connection.query(qur,
+    function(err, result){
+      if(!err){
+        if(result.affectedRows>0){
+          res.status(200).json({'returnval': 'Deleted!'});
+        } else {
+          console.log(err);
+          res.status(200).json({'returnval': 'Not Deleted!'});
         }
       } else {
         console.log(err);

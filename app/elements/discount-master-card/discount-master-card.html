@@ -116,6 +116,7 @@
         this.gradearr=[];
         this.hidegradecard=true;
         this.hidepercent=true;
+        this.percentage=0;
       },
       allHandler:function(){
         if(document.querySelector("#discountformall").checked==true)
@@ -142,6 +143,7 @@
           this.hidepercent=true;
           document.querySelector("#discountformpercent").checked=false;
           valuetype="Amount";
+          this.percentage=0;
         }
       },
       percentHandler:function(){
@@ -151,6 +153,7 @@
           this.hidepercent=false;
           document.querySelector("#discountformamount").checked=false;
           valuetype="Percent";
+          this.amount=0;
         }
       },
       FnSetGrades:function(arr){
@@ -180,6 +183,7 @@
         this.amount="";
         discounttype="";
         discounttypecode="";
+        this.percentage=0;
         // document.querySelector('#discountgrade').selected=-1;
         document.querySelector('#discountacademicyear').selected=-1;
         document.querySelector('#discountadmissionyear').selected=-1;

@@ -3,6 +3,17 @@
 
 <dom-module id="admission-service">
   <template>
+  <!-- It would fetch the enquiry no's -->
+     <iron-ajax
+        method="post"
+        id="fetchallstudentforsearchajax"
+        url="{{fetchallstudentforsearchurl}}"
+        params="{{fetchallstudentforsearchparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchallstudentforsearchResponse"
+        debounce-duration="300"
+        >
    <!-- It would fetch the enquiry no's -->
      <iron-ajax
         method="post"
@@ -1106,14 +1117,14 @@ insertstudenthistoryResponse:function(e){
         if(e.detail.response.returnval=="no regfee"){
             this.fetchinstallmentdateService();
             this.callfetchfeesService(localStorage.getItem("curr_sess_academicyear"),localStorage.getItem("curr_sess_admissionyear"),localStorage.getItem("curr_sess_grade"));        
-            this.callfetchdiscountService(localStorage.getItem("curr_sess_academicyear"),localStorage.getItem("curr_sess_admissionyear"),localStorage.getItem("curr_sess_grade"),localStorage.getItem("curr_sess_discounttype"));
-            this.fetchfeesplitup(localStorage.getItem("curr_sess_academicyear"),localStorage.getItem("curr_sess_admissionyear"),localStorage.getItem("curr_sess_grade"));
+            // this.callfetchdiscountService(localStorage.getItem("curr_sess_academicyear"),localStorage.getItem("curr_sess_admissionyear"),localStorage.getItem("curr_sess_grade"),localStorage.getItem("curr_sess_discounttype"));
+            // this.fetchfeesplitup(localStorage.getItem("curr_sess_academicyear"),localStorage.getItem("curr_sess_admissionyear"),localStorage.getItem("curr_sess_grade"));
         }
         if(e.detail.response.returnval=="paid"){
             this.fetchinstallmentdateService();
             this.callfetchfeesService(localStorage.getItem("curr_sess_academicyear"),localStorage.getItem("curr_sess_admissionyear"),localStorage.getItem("curr_sess_grade"));        
-            this.callfetchdiscountService(localStorage.getItem("curr_sess_academicyear"),localStorage.getItem("curr_sess_admissionyear"),localStorage.getItem("curr_sess_grade"),localStorage.getItem("curr_sess_discounttype"));
-            this.fetchfeesplitup(localStorage.getItem("curr_sess_academicyear"),localStorage.getItem("curr_sess_admissionyear"),localStorage.getItem("curr_sess_grade"));
+            // this.callfetchdiscountService(localStorage.getItem("curr_sess_academicyear"),localStorage.getItem("curr_sess_admissionyear"),localStorage.getItem("curr_sess_grade"),localStorage.getItem("curr_sess_discounttype"));
+            // this.fetchfeesplitup(localStorage.getItem("curr_sess_academicyear"),localStorage.getItem("curr_sess_admissionyear"),localStorage.getItem("curr_sess_grade"));
         }
         if(e.detail.response.returnval=="not paid"){
             alert('Please pay registeration fee before!!');
@@ -1131,13 +1142,17 @@ insertstudenthistoryResponse:function(e){
         this.$.fetchfeesajax.generateRequest();
       },      
       fetchfeesResponse:function(e){        
-        var arr=e.detail.response.returnval;  
-        // alert(JSON.stringify(arr));      
-        if(arr.length>0){
+        var arr=e.detail.response.returnval; 
+        this.splituparr=[]; 
+        this.splituparr=e.detail.response.feesplitup;
+        // alert(JSON.stringify(this.splituparr));      
+        if(arr.length>0&&(this.splituparr).length>0){
             localStorage.setItem("curr_sess_feecode",arr[0].fee_code); 
             localStorage.setItem("curr_sess_totalfees",arr[0].fees); 
             document.querySelector('fees-card').totalfees=arr[0].fees;
             // this.fetchfeesplitup();
+             this.callfetchdiscountService(localStorage.getItem("curr_sess_academicyear"),localStorage.getItem("curr_sess_admissionyear"),localStorage.getItem("curr_sess_grade"),localStorage.getItem("curr_sess_discounttype"));
+            this.fetchfeesplitup(localStorage.getItem("curr_sess_academicyear"),localStorage.getItem("curr_sess_admissionyear"),localStorage.getItem("curr_sess_grade"));
         }
         else
         {
@@ -1163,7 +1178,8 @@ insertstudenthistoryResponse:function(e){
         obj.currdate=m+"/"+d+"/"+y;  
         // obj.noofinstallment=localStorage.getItem("curr_sess_noofinstallment");
         obj.schoolid=localStorage.getItem("schoolid");     
-        this.fetchdiscountparam=obj;       
+        this.fetchdiscountparam=obj; 
+        // alert(JSON.stringify(obj));      
         this.$.fetchdiscountajax.generateRequest();
       },
       fetchdiscountResponse:function(e){
@@ -1172,41 +1188,60 @@ insertstudenthistoryResponse:function(e){
         var discountamt=0;
         var discountpercent=0; 
         var discountpercentamt=0;         
+
+        if(discountarr.length>0){
+            for(var i=0;i<(this.splituparr).length;i++){
+                for(var j=0;j<discountarr.length;j++){
+                    // alert(this.splituparr[i].fee_type+"  "+discountarr[j].fee_type+"  "+discountarr[j].discount_percentage);
+                if(this.splituparr[i].fee_type==discountarr[j].fee_type&&discountarr[j].discount_percentage!='0'){
+                    discountarr[j].amount=parseFloat(this.splituparr[i].total_fee)*(parseFloat((parseFloat(discountarr[j].discount_percentage)/100)))
+                   
+                }
+                }
+            }
+        }
+
+        // alert(JSON.stringify(discountarr));
+
         if(discountarr.length>0){
         // alert(localStorage.getItem("curr_sess_installmentpattern"));
         // if(localStorage.getItem("curr_sess_installmentpattern")!='3'){
         for(var i=0;i<discountarr.length;i++){
             
-            // if(localStorage.getItem("curr_sess_installmentpattern")!='3')
+            if(discountarr[i].discount_type_code!='5')
             discountamt=parseFloat(discountarr[i].amount)+parseFloat(discountamt);
-            // if(localStorage.getItem("curr_sess_installmentpattern")=='3')
-            // discountpercent=localStorage.getItem("curr_sess_discountpercent");  
+            if(localStorage.getItem("curr_sess_installmentpattern")=='3'&&discountarr[i].discount_type_code=='5')
+            {
+            discountpercentamt=parseFloat(discountpercentamt)+parseFloat(discountarr[i].amount);
+            discountpercent=parseFloat(discountpercent)+parseFloat(discountarr[i].discount_percentage);
+            }
             
         }
-        // }
-        // else{   
-        if(localStorage.getItem("curr_sess_installmentpattern")=='3'){            
-            // alert(discountpercent+"  "+discountamt);   
-            discountpercent=localStorage.getItem("curr_sess_discountpercent");         
-            var amount=parseFloat(localStorage.getItem("curr_sess_totalfees"))-discountamt; 
-            // alert(amount); 
-            discountpercentamt=(parseFloat(amount)*(parseFloat(discountpercent)/100));               
-            // discountamt=parseFloat(discountamt)+(parseFloat(amount)*(parseFloat(discountpercent)/100));
-            // alert(discountamt);
-        // }
         }
-        }
+        // alert(discountamt+"  "+discountpercentamt+"  "+discountpercent);
+        // // else{   
+        // if(localStorage.getItem("curr_sess_installmentpattern")=='3'){            
+        //     // alert(discountpercent+"  "+discountamt);   
+        //     discountpercent=localStorage.getItem("curr_sess_discountpercent");         
+        //     var amount=parseFloat(localStorage.getItem("curr_sess_totalfees"))-discountamt; 
+        //     // alert(amount); 
+        //     discountpercentamt=(parseFloat(amount)*(parseFloat(discountpercent)/100));               
+        //     // discountamt=parseFloat(discountamt)+(parseFloat(amount)*(parseFloat(discountpercent)/100));
+        //     // alert(discountamt);
+        // // }
+        // }
+        // }
 
 
         var totalpayableamount=parseFloat(localStorage.getItem("curr_sess_totalfees"))-parseFloat(discountamt);
-        var payableamount=parseFloat(totalpayableamount)-(parseFloat(totalpayableamount)*(parseFloat(discountpercent)/100));
+        var payableamount=parseFloat(totalpayableamount)-(parseFloat(discountpercentamt));
         document.querySelector('fees-card').totaldiscount=discountamt;
         localStorage.setItem("curr_sess_totaldiscount",discountamt);
         document.querySelector('fees-card').totalpayableamount=totalpayableamount;
         localStorage.setItem("curr_sess_payablefees",totalpayableamount);
         document.querySelector('fees-card').discountpercent=discountpercent+"%";
         document.querySelector('fees-card').payableamount=payableamount;
-        var totaldiscount=parseFloat(discountamt)+(parseFloat(totalpayableamount)*(parseFloat(discountpercent)/100));
+        var totaldiscount=parseFloat(discountamt)+(parseFloat(discountpercentamt));
         localStorage.setItem("curr_sess_payablediscount",totaldiscount);
         localStorage.setItem("curr_sess_payableamount",payableamount);
         // alert(discountamt);
@@ -1806,6 +1841,18 @@ insertstudenthistoryResponse:function(e){
        }
        // alert(JSON.stringify(installmentarr));
        document.querySelector('fees-card').feearr=installmentarr; 
+      },
+      fetchallstudentforsearchService:function(){
+        this.fetchallstudentforsearchurl=sessionStorage.getItem("addrinfo")+"/fetchallstudentforsearch-service";
+        var obj={"schoolid":"","academicyear":"","statusflag":""}        
+        // obj.academicyear=localStorage.getItem("curr_sess_academicyear");        
+        obj.schoolid=localStorage.getItem("schoolid");  
+        this.fetchallstudentforsearchparam=obj;     
+        this.$.fetchallstudentforsearchajax.generateRequest();
+      },
+      fetchallstudentforsearchResponse:function(e){
+        document.querySelector('chequebounceorcancel-card').autocompletearr(e.detail.response.returnval);
+        document.querySelector('editdelete-cheques-card').autocompletearr(e.detail.response.returnval);
       }   
 
     });

@@ -337,7 +337,13 @@
            </li>
            <li id="searchreceipt">
             <a href="" aria-hidden="true" on-click="FnSearchReceipt">Search Receipt</a>
-           </li>           
+           </li> 
+            <li id="bounceprocess">
+            <a href="" aria-hidden="true" on-click="FnBounceProcessing">Bounce/Cancel Process</a>
+            </li> 
+            <li id="bounceprocess">
+            <a href="" aria-hidden="true" on-click="FnChequeEditDelete">Edit/Delete Cheques</a>
+            </li>        
             </ul>
             </li>
             <li id="pendingreport">
@@ -850,6 +856,14 @@
       },
       Fncounsellorreport:function(){
         document.querySelector('app-list').setPage("counsellor-report","Counsellor Report");
+      },
+      FnBounceProcessing:function(){
+        document.querySelector('app-list').setPage("chequebounceorcancel-card","Cheque Bounce / Cancel");
+        document.querySelector('chequebounceorcancel-card').callService();
+      },
+      FnChequeEditDelete:function(){
+        document.querySelector('app-list').setPage("editdelete-cheques-card","Edit/Delete Cheques");
+        document.querySelector('editdelete-cheques-card').callService();
       }
 
     });
