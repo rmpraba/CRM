@@ -1,5 +1,6 @@
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/iron-icons/maps-icons.html">
+<link rel="import" href="../showgmap-card/showgmap-card.html">
 
 <dom-module id="pre-apps">
   <template>
@@ -232,7 +233,7 @@
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-4">
-          <paper-input  id="idlocality" required error-message="needs locality!" label="Enter location/Landmark" is="" value="{{textvalue}}" on-keydown="FnInputChanged"></paper-input>
+          <paper-input  id="idlocality" required readonly error-message="needs locality!" label="Enter location/Landmark" is="" value="{{textvalue}}" on-keydown="FnInputChanged"></paper-input>
           <paper-listbox class="dropdown-content" id="iditemlist" on-iron-select="Fnselected" valueattr="value">
             <template is="dom-repeat" items="{{itemArray}}" as="item">
               <paper-item value="{{item.itemid}}">{{item.itemdes}}</paper-item>
@@ -241,6 +242,13 @@
         </div>
         <div class="col-sm-4" style="margin-top: 2%;">
         <paper-icon-button icon="maps:place" on-click="FnToggleMap"></paper-icon-button>
+        <paper-icon-button icon="check" on-click="getmapvalue"></paper-icon-button>
+        <paper-dialog id="googlemap" modal>
+          <showgmap-card></showgmap-card>
+          <div class="buttons">
+            <paper-button dialog-confirm autofocus>Tap me to close</paper-button>
+          </div>
+        </paper-dialog>
         </div>
         <div class="col-sm-4" style='margin-top: -1%;'>
           <paper-dropdown-menu label="Enquiry Source" style="margin-top: 3%;">
@@ -408,6 +416,7 @@
     var guardianmobileno = true;    
     var enquiry_date;
     var referralvalue;
+    var windowmap;
     Polymer({
       is: 'pre-apps',
 
@@ -420,7 +429,7 @@
       this.$.preapps.getenquirysource();
       this.$.preapps.getenquiryreferrals();
       this.$.preapps.getcounsellorattendedby();
-      this.$.preapps.getlocation();
+      /*this.$.preapps.getlocation();*/
       this.$.preapps.getmothertongue();
       this.$.preapps.getprofession();
       this.$.sibname.hidden=true;
@@ -517,7 +526,6 @@
       enquiry_date =  yyyy + '-' + (mmChars[1]?mm:"0"+mmChars[0]) + '-' + (ddChars[1]?dd:"0"+ddChars[0]);
     },
     getdate:function(dates){
-      alert(dates);
       var dt1=new Date(dates);
       dobdate=dates;
       var dt=new Date();
@@ -768,7 +776,7 @@
     },
     attendedby:function(e){
       
-    },
+    },/*
     autocompletename(nameitem){
       namearr=nameitem;
     },
@@ -844,7 +852,7 @@
       this.itemArray=[];
       document.querySelector('#iditemlist').selected=-1;
       this.$.iditemlist.hidden=true;
-    },
+    },*/
     SibFnlistboxz:function(siblingnameitem){
       sibnamearr=siblingnameitem;
     },
@@ -1381,7 +1389,21 @@
         this.guardianmobile = "";
       },
       FnToggleMap:function(){
-        window.open('../elements/showgmap-card.html', '_blank');
+        //window.open('../elements/showgmap-card.html');
+        windowmap = window.open('../elements/showgmap-card.html', '_blank', 'toolbar=0,location=0,menubar=0');
+      },
+      closeWindow:function(){
+        windowmap.close();
+      },
+      getmapvalue:function(){
+        var str = localStorage.getItem("map_point");
+        var str_array = str.split(',');
+        for(var i = 0; i < str_array.length; i++) {
+          str_array[i] = str_array[i].replace(/^\s*/, "").replace(/\s*$/, "");
+        }
+        var place = str_array.length - 4;
+        this.textvalue = str_array[place];
+        this.closeWindow();
       }
     });
   })();

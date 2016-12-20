@@ -8,7 +8,7 @@
 
 <link rel="import" href="../fee-card/fee-card.html">
 <link rel="import" href="../followup-details/followup-details.html">
-
+<link rel="import" href="../fee-reports/fee-reports.html">
 <link rel="import" href="../feetype-schedule-card/feetype-schedule-card.html">
 <link rel="import" href="../discount-schedule-card/discount-schedule-card.html">
 
@@ -222,12 +222,12 @@
             <a href="" aria-hidden="true" on-click="enquiry"><i class="fa fa-phone-square fa-fw"></i> Enquiry<span class="fa arrow"></span></a>
             <ul class="nav nav-second-level">
               <li>
-              <a href="" on-click="Fnpreapp">Enquiry Form</a>
+              <a href="" on-click="Fnpreapp">Pre Apps</a>
                 <!-- <a href="flot.html"></a> -->
               </li>
-              <!-- <li>
+              <li>
                 <a href="" on-click="Fnenqform" aria-hidden="true" data-toggle="modal" data-target="#addDetailedEnquiry">Enquiry Form</a>
-              </li> -->
+              </li>
                <li id="">
             <a href="" aria-hidden="true" on-click="followupdashboard" data-toggle="modal"> Follow Up</a>
           </li>
@@ -239,7 +239,12 @@
           <li id="exchange-followup">
             <a href="" on-click="exchange_followup" ><i class="fa fa-exchange fa-fw"></i>Balance Followup</a>
           </li>
-          <li id="enquiry">
+
+           <li id="fee-reports">
+           <a href="" aria-hidden="true" on-click="feereports"><i class="fa fa-table fa-fw"></i>Fee Structures Reports</a>
+           </li>
+
+          <li id="feestructure">
             <a href="" aria-hidden="true" on-click="schedule"><i class="fa fa-check fa-fw"></i>Fees Structure</a>
             <ul class="nav nav-second-level">
               <li>
@@ -285,14 +290,26 @@
                 <a href="" aria-hidden="true" data-toggle="modal" data-target="#registerationfee" on-click="FnRegister">Registration fee</a>
               </li>
               <li>
-                <a href="" aria-hidden="true" data-toggle="modal" data-target="#feepayment"  on-click="FnKit">School fee</a>
-              </li>     
-              <li>
-                <a href="" aria-hidden="true" data-toggle="modal" data-target="#provisionalfee"  on-click="FnProvisional">Provisional fee</a>
-              </li>                     
+                <a href="" aria-hidden="true" data-toggle="modal" data-target="#feepayment"  on-click="FnKit">Term fee</a>
+              </li>             
             </ul>
             </nav-second-level>
           </li>
+
+           <li id="masterreport">
+            <a href="#" aria-hidden="true" data-toggle="modal" on-click="Master"><i class="fa fa-money fa-fw"></i>Master Reports<span class="fa arrow"></span></a>
+            <ul class="nav nav-second-level">
+              <li>
+              <a href="" aria-hidden="true" data-toggle="modal" data-target="#discountmaster" on-click="FnDiscount">Discount Type</a>
+              </li>
+              <li>
+                <a href="" aria-hidden="true" data-toggle="modal" data-target="#installmentmaster" on-click="FnInstallment">Installment Date</a>
+              </li>             
+            </ul>
+            </nav-second-level>
+          </li>
+
+
 
           <li id="reports">
             <a href="" aria-hidden="true"><i class="fa fa-table fa-fw"></i>Report<span class="fa arrow"></span></a>
@@ -409,7 +426,7 @@
                 <span aria-hidden="true">&times;</span>
               </button>
               <h4 class="center-block event-title" id="eventTitle">
-                Enquiry Form
+                Pre Apps
               </h4>
             </div>
             <div class="modal-body">
@@ -481,7 +498,7 @@
               <span aria-hidden="true">&times;</span>
             </button>
             <h4 class="center-block event-title" id="">
-              School Fee 
+              Term Fee 
             </h4>
           </div>
           <div class="modal-body">
@@ -544,7 +561,6 @@
         </div>
       </div>
     </div>
-
   
      <div class="modal fade bd-example-modal-lg" id="feetypeschedule" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg">
@@ -643,6 +659,7 @@
     <crm-service id="service"></crm-service>
     <followup-service id="followupservice"></followup-service>
     <schedule-service id="scheduleservice"></schedule-service>
+    <reporting-service id="reportingservice"></reporting-service>
   </template>
   <script>
   (function() {
@@ -744,10 +761,20 @@
         document.querySelector('fees-card').FnRefresh();
         // document.querySelector('admission-service').FnRefresh();
       },
-      enquiry:function(){
+      enquiry:function()
+      {
         this.$.service.getenquirycount();
         document.querySelector('detailed-enquiry-form').country();
         document.querySelector('app-list').setPage("enquiry");
+
+      },
+      Master:function()
+      {
+          //this.$.service.getinstallmentdetails();
+      },
+      schedule:function(){
+        this.$.service.getfeecount();
+        document.querySelector('app-list').setPage("feestructure-dashboard");
 
       },
       walkin_analysis:function(){
@@ -771,7 +798,7 @@
       },
 
       Fnpreapp:function(){
-        document.querySelector('app-list').setPage("pre-apps","Enquiry Form");
+        document.querySelector('app-list').setPage("pre-apps","Pre Apps");
         document.querySelector('pre-apps').ready();
         document.querySelector('pre-apps').callnextyearhandler();
           // document.querySelector('newenquiry-card').Fnclear();
@@ -781,6 +808,22 @@
       Fnenqform:function(){
           document.querySelector('detailed-enquiry-form').Fnclear();
           document.querySelector('detailed-enquiry-form').ready();
+      },
+      
+
+      FnDiscount:function()
+      {
+        document.querySelector('app-list').setPage("discount-type-ui","Discount Type");
+        document.querySelector('discount-type-ui-card').ready();
+        document.querySelector('discount-display-card').ready();        
+      },
+      
+       FnInstallment:function()
+      {
+
+        document.querySelector('app-list').setPage("installment-master-ui-card","Installment Date");
+        //document.querySelector('installment-master-ui-card').ready();
+          
       },
       Fnmasteranalysis:function(){
           document.querySelector('app-list').setPage("master-enquiry-analysis","Master Walk-in Analysis");
@@ -794,6 +837,7 @@
           document.querySelector('fees-card').FnRefresh();
           document.querySelector('fees-card').ready();
       },
+     
       call_analysis:function(){
         document.querySelector('app-list').setPage("callanalysis-report-card","Follow-Up Call Analysis Report");
           document.querySelector('callanalysis-report-card').ready();
@@ -809,6 +853,11 @@
         document.querySelector('app-list').setPage("exchange-followup","Balance Followup");
         document.querySelector('exchange-followup').ready();
       },  
+      feereports:function(){
+        document.querySelector('app-list').setPage("fee-reports","Fee Structure Reports");
+        this.$.reportingservice.getfeedetails();
+       // document.querySelector('fee-reports').ready();
+      },
       gettodayfollowups:function(){
         document.querySelector('app-list').setPage("followup-today-report","Today's Follow Up");
         this.$.followupservice.getfollowupdetailstoday();
@@ -826,6 +875,7 @@
         this.$.scheduleservice.fetchacademicyearService();
         this.$.scheduleservice.fetchadmissionyearService();
       },
+
       FnSearchReceipt:function(){
         this.$.scheduleservice.fetchacademicyearService();
         document.querySelector('app-list').setPage("searchreceipt","Search Receipt");
@@ -856,6 +906,7 @@
       },
       Fncounsellorreport:function(){
         document.querySelector('app-list').setPage("counsellor-report","Counsellor Report");
+        document.querySelector('reporting-service').counsellorreport();
       },
       FnBounceProcessing:function(){
         document.querySelector('app-list').setPage("chequebounceorcancel-card","Cheque Bounce / Cancel");
@@ -865,6 +916,7 @@
         document.querySelector('app-list').setPage("editdelete-cheques-card","Edit/Delete Cheques");
         document.querySelector('editdelete-cheques-card').callService();
       }
+
 
     });
   })();

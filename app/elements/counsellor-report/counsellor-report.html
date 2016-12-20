@@ -9,14 +9,20 @@
         <th>Student Name</th>
         <th>Grade</th>
         <th>Parent Name</th>
-        <th>Father Mobile No</th>
-        <th>Mother Mobile No</th>
+        <th>Mobile No</th>
         <th>Follow Up</th>
       </tr>
       </thead>
       <tbody>
-        <template  is="dom-repeat" items="{{}}" as="view">
-          <tr></tr>
+        <template  is="dom-repeat" items="{{counsellorarr}}" as="view">
+          <tr>
+            <td>{{view.id}}</td>
+            <td>{{view.name}}</td>
+            <td>{{view.grade}}</td>
+            <td>{{view.parent_name}}</td>
+            <td>{{view.mobile_no}}</td>
+            <td>{{view.followup}}</td>
+          </tr>
         </template>
       </tbody>
     </table>

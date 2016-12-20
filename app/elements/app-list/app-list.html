@@ -1,8 +1,12 @@
+
+
 <script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
 <link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../enquiry-card/enquiry-card.html">
+<link rel="import" href="../discount-type-ui-card/discount-type-ui-card.html">
+<link rel="import" href="../discount-display-card/discount-display-card.html">
 <link rel="import" href="../walkin-analysis-card/walkin-analysis-card.html">
 <link rel="stylesheet" type="text/css" href="../../styles/styles.css">
   <dom-module id="app-list">
@@ -44,9 +48,40 @@
               <enquiry-card></enquiry-card>
             </div>
           </section>
+          
+           <section data-category="master-report">
+            <div class="col-md-6">
+              <mastercreation-report-card></mastercreation-report-card>
+            </div>
+          </section>
+
+           <section data-category="installment-master-ui">
+            <div class="col-md-6">
+              <installment-master-ui-card></installment-master-ui-card>
+            </div>
+          </section>
+
+           <section data-category="discount-type-ui">
+            <div class="col-md-12">
+              <discount-type-ui-card></discount-type-ui-card>
+            </div>
+          </section>
+
+          <!-- <section data-category="discount-display">
+            <div class="col-md-6">
+              <discount-display-card></discount-display-card>
+            </div>
+          </section> -->
+
           <section data-category="follow-up">
             <div class="col-md-12">
               <followup-dashboard></followup-dashboard>
+            </div>
+          </section>
+
+          <section data-category="fee-reports">
+            <div class="col-md-12">
+              <fee-reports></fee-reports>
             </div>
           </section>
 
@@ -152,6 +187,7 @@
        </div>
        <div class="footer"></div>
        <attendance-service id="service"></attendance-service>
+       <!-- <reporting-service id="reportservice"></reporting-service> -->
   </template>
   <script>
   Polymer({
