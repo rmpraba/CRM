@@ -403,6 +403,17 @@
         debounce-duration="300"
         >
 
+         <iron-ajax
+        method="post"
+        id="fetchstudentforsearchajax"
+        url="{{fetchstudentforsearchurl}}"
+        params="{{fetchstudentforsearchparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchstudentforsearchResponse"
+        debounce-duration="300"
+        >
+
   </template>
   <script>
   (function() {
@@ -413,6 +424,20 @@
     var installmentarr=[];
     Polymer({
       is: 'admission-service',
+      fetchstudentforsearchService:function(status){
+        this.fetchstudentforsearchurl=sessionStorage.getItem("addrinfo")+"/fetchstudentforsearch-service";
+        var obj={"schoolid":"","status":""};
+        obj.schoolid=localStorage.getItem("schoolid");
+        obj.status=status;
+        this.fetchstudentforsearchparam=obj;
+        this.$.fetchstudentforsearchajax.generateRequest();
+      },
+      fetchstudentforsearchResponse:function(e){
+        var arr=e.detail.response.returnval;
+        // alert(JSON.stringify(arr));
+        if(arr.length>0)
+        document.querySelector('provisionalfee-card').autocompletearr(arr);
+      },
       callSearchenquiryService:function(enquiryno){        
         this.searchenquiryurl=sessionStorage.getItem("addrinfo")+"/searchenquiry";
         localStorage.setItem("curr_sess_insertflag",1);
@@ -1491,189 +1516,7 @@ insertstudenthistoryResponse:function(e){
         arr.push(obj);
         this.FnPrepareInstallment(arr);
       },
-      // FnFormFeestructure:function(arr){
-      //   // alert(JSON.stringify(arr));
-      //   // alert(JSON.stringify(discountarr));
-      //   var noofinstallment=localStorage.getItem("curr_sess_noofinstallment");
-      //   if(localStorage.getItem("curr_sess_installmentpattern")!='3'){
-      //   if(discountarr.length>0){
-      //   for(var i=0;i<arr.length;i++){
-      //       var flag=0;
-      //       for(var j=0;j<discountarr.length;j++){
-      //           if(arr[i].base_fee_type=="Commitmentfee"){                    
-      //               if(arr[i].fee_type==discountarr[j].fee_type){ 
-      //                 flag=1;                       
-      //                 if(arr[i].fee_type=="Kit fee"){
-      //                 arr[i].actualamount=parseFloat(arr[i].amount);
-      //                 arr[i].amount=parseFloat(parseFloat(arr[i].amount)-parseFloat(discountarr[j].amount)).toFixed(2);
-      //                 // arr[i].discount=parseFloat(discountarr[j].amount);
-      //                   discountarr.splice(j,1);
-      //                 }
-      //                 else{
-      //                 arr[i].actualamount=parseFloat(arr[i].amount);
-      //                 arr[i].amount=parseFloat(parseFloat(arr[i].amount)-(Math.ceil(parseFloat(parseFloat(discountarr[j].amount)/parseInt(noofinstallment))/1000)*1000)).toFixed(2);
-      //                 // arr[i].discount=(Math.ceil(parseFloat(parseFloat(discountarr[j].amount)/parseInt(noofinstallment))/1000)*1000);
-      //                 discountarr[j].amount=parseFloat(parseFloat(discountarr[j].amount)-(Math.ceil(parseFloat(parseFloat(discountarr[j].amount)/parseInt(noofinstallment))/1000)*1000)).toFixed(2);
-      //                 }
-      //               }
-      //           }
-      //           else{
-      //               if(arr[i].fee_type==discountarr[j].fee_type){
-      //                  flag=1;
-      //                  arr[i].actualamount=parseFloat(arr[i].amount);
-      //                  arr[i].amount=parseFloat(parseFloat(arr[i].amount)-parseFloat(discountarr[j].amount)).toFixed(2);
-      //                  // arr[i].discount=parseFloat(discountarr[j].amount);
-      //               }
-      //           }
-      //       }
-      //       if(flag==0){
-      //          arr[i].actualamount=parseFloat(arr[i].amount); 
-      //          arr[i].amount=parseFloat(arr[i].amount);
-      //       }
-      //   }
-      //   }
-      //   // alert(JSON.stringify(arr));
-      //   // var noofinstallment=localStorage.getItem("curr_sess_noofinstallment");
-      //   var termarr=[];
-      //   var installmentarr=[];
-        
-      //   for(var i=0;i<arr.length;i++){
-      //     var amt=0;
-      //     var actamt=0;
-      //     var temp=1;          
-      //     if(arr[i].base_fee_type!="Commitmentfee"){
-      //       while(parseFloat(arr[i].amount)>0){
-      //         var obj={"insno":"","feetype":"","amount":""};
-      //         if(parseInt(noofinstallment)-parseInt(temp)==1){
-      //         amt=parseFloat(arr[i].amount);
-      //         actamt=parseFloat(arr[i].actualamount);
-      //         }
-      //         else{
-      //         amt=Math.ceil(parseFloat(parseFloat(arr[i].amount)/(parseInt(noofinstallment)-parseInt(temp)))/1000)*1000;
-      //         actamt=Math.ceil(parseFloat(parseFloat(arr[i].actualamount)/(parseInt(noofinstallment)-parseInt(temp)))/1000)*1000;
-      //         }
-      //         arr[i].actualamount=parseFloat(arr[i].actualamount)-parseFloat(actamt);
-      //         arr[i].amount=parseFloat(arr[i].amount)-parseFloat(amt);
-      //         obj.insno="Installment"+temp;
-      //         obj.feetype=arr[i].fee_type;
-      //         obj.amount=amt;
-      //         obj.actualamount=actamt;
-      //         // obj.discountamount=parseFloat(actamt)-parseFloat(amt);
-      //         termarr.push(obj);
-      //         installmentarr.push(obj);
-      //         temp++;
-      //       }
-      //     }
-      //     else{
-      //       var obj={"insno":"","feetype":"","amount":""};
-      //       obj.insno=arr[i].base_fee_type;
-      //       obj.feetype=arr[i].fee_type;
-      //       obj.amount=arr[i].amount;
-      //       obj.actualamount=arr[i].actualamount;
-      //       // obj.discountamount=parseFloat(arr[i].actualamount)-parseFloat(arr[i].amount);
-      //       installmentarr.push(obj);
-      //       termarr.push(obj);
-      //     }
-      //   }
-      //   document.querySelector('fees-card').FnSetInstallmentSplitup(installmentarr);
-
-      //   // alert(JSON.stringify(installmentdatearr[0].installment));
-
-      //   var a=[];
-      //   var splituparr=[];
-
-      //   var f=new Date();
-      //   var y=f.getFullYear();
-      //   var m=parseInt(f.getMonth())+1;
-      //   var d=f.getDate();
-      //   if(m<10)
-      //     m="0"+m;
-      //   if(d<10)
-      //     d="0"+d;
-      //   var current_date=m+"/"+d+"/"+y;
-
-      //   for(var i=0;i<termarr.length;i++){
-      //       // alert(i+"  "+termarr[i].insno+"  "+installmentdatearr[i].installment);
-      //       for(var j=0;j<installmentdatearr.length;j++){
-      //       if(termarr[i].insno!="Commitmentfee"){
-      //       if(termarr[i].insno==installmentdatearr[j].installment)
-      //           termarr[i].installmentdate=installmentdatearr[j].installment_date;
-      //       }
-      //       else
-      //           termarr[i].installmentdate=current_date; 
-      //       }
-      //   }
-        
-      //  for(var i=0;i<termarr.length;i++)
-      //  {       
-      //   var nameobj={"installment":"","installmentamount":""};
-      //   // alert(JSON.stringify(installmentdatearr[0].installment));
-      //   nameobj.installment=termarr[i].insno; 
-      //   nameobj.installmentdate=termarr[i].installmentdate;
-      //   // if((installmentdatearr).length>0){
-      //       // alert('yes'+installmentdatearr[i].installment);
-      //   // if(installmentdatearr[i].installment==termarr[i].insno)
-      //   //     nameobj.installmentdate=installmentdatearr[i].installment_date;
-      //   // }
-        
-      //   var amt=0;
-      //   var actamt=0;
-      //   var obj={"feetype":"","amount":""};
-      //   obj.feetype=termarr[i].feetype;
-      //   obj.amount=termarr[i].amount;
-      //   obj.actualamount=termarr[i].actualamount;
-      //   amt=parseFloat(amt)+parseFloat(termarr[i].amount);
-      //   actamt=parseFloat(actamt)+parseFloat(termarr[i].actualamount);
-      //   a.push(obj);
-      //   for(var j=i+1;j<termarr.length;j++)
-      //   {
-      //      if(termarr[i].insno==termarr[j].insno)
-      //      {
-      //        var obj1={"feetype":"","amount":""}
-      //        obj1.feetype=termarr[j].feetype;
-      //        obj1.amount=termarr[j].amount;
-      //        obj1.actualamount=termarr[j].actualamount;
-      //        amt=parseFloat(amt)+parseFloat(termarr[j].amount);
-      //        actamt=parseFloat(actamt)+parseFloat(termarr[j].actualamount);
-      //        a.push(obj1);
-      //        termarr.splice(j,1);
-      //        j--;
-      //      }
-      //   }
-      //   nameobj.installmentamount=amt;
-      //   nameobj.actualamount=actamt;
-      //   nameobj.discountamount=parseFloat(actamt)-parseFloat(amt);
-      //   nameobj.fees=a;
-      //   splituparr.push(nameobj);
-      //   a=[];        
-      //  }
-      // }
-      // else{
-
-      // }
-      // this.FnPrepareInstallment(splituparr);
-      // // alert(JSON.stringify(splituparr));
-      // },
-      // FnFormLumsumFeestructure:function(){
-      //   var arr=[];
-      //   var f=new Date();
-      //   var y=f.getFullYear();
-      //   var m=parseInt(f.getMonth())+1;
-      //   var d=f.getDate();
-      //   if(m<10)
-      //     m="0"+m;
-      //   if(d<10)
-      //     d="0"+d;
-      //   var current_date=m+"/"+d+"/"+y;
-      //   var obj={"installment":"","actualamount":"","discountamount":"","installmentamount":""};
-      //   obj.installment="Lumpsum";
-      //   obj.actualamount=localStorage.getItem("curr_sess_totalfees");
-      //   obj.discountamount=localStorage.getItem("curr_sess_totaldiscount");
-      //   obj.installmentamount=localStorage.getItem("curr_sess_payablefees");
-      //   obj.installmentdate=current_date;
-      //   arr.push(obj);
-      //   this.FnPrepareInstallment(arr);
-      // },
+    
       FnPrepareInstallment:function(arr){
         // alert(JSON.stringify(arr));
         if(paidfeearr!='no rows'){

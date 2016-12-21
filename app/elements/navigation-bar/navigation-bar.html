@@ -292,6 +292,9 @@
               <li>
                 <a href="" aria-hidden="true" data-toggle="modal" data-target="#feepayment"  on-click="FnKit">Term fee</a>
               </li>             
+              <li>
+                <a href="" aria-hidden="true" data-toggle="modal" data-target="#provisionfee"  on-click="FnProvisionfee">Provision fee</a>
+              </li> 
             </ul>
             </nav-second-level>
           </li>
@@ -544,7 +547,7 @@
       </div>
     </div>
 
-    <div class="modal fade bd-example-modal-lg" id="provisionalfee" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal fade bd-example-modal-lg" id="provisionfee" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg" id ="fee-dialog">
         <div class="modal-content" id="fee-content">
           <div class="modal-header">
@@ -915,9 +918,11 @@
       FnChequeEditDelete:function(){
         document.querySelector('app-list').setPage("editdelete-cheques-card","Edit/Delete Cheques");
         document.querySelector('editdelete-cheques-card').callService();
+      },
+      FnProvisionfee:function(){
+        localStorage.setItem("curr_sess_feetypepayment","Commitment Fee (Ins1)");
+        document.querySelector('provisionalfee-card').callService();
       }
-
-
     });
   })();
   </script>

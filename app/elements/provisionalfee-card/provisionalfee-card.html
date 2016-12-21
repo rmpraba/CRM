@@ -1,8 +1,9 @@
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
 <link rel="import" href="..\..\bower_components/iron-collapse/iron-collapse.html">
 <link rel="import" href="..\..\bower_components/paper-button/paper-button.html">
-<link rel="import" href="..\appregfee-service/appregfee-service.html">
-<link rel="import" href="..\appregfee-installment-card/appregfee-installment-card.html">
+<link rel="import" href="..\provisional-installment-card/provisional-installment-card.html">
+<link rel="import" href="..\admission-service/admission-service.html">
+<link rel="import" href="..\provisional-service/provisional-service.html">
 
 <dom-module id="provisionalfee-card">
 <style>
@@ -23,21 +24,14 @@
     <div class="row enquiry-form">
       
      <div class="list-group col-sm-12 panel-body form-category">
-          <div class="col-sm-5">
-          <paper-input id="searchtext" label="Enter Admission Number/Name" value="{{enquiryno}}">
-            <paper-icon-button suffix icon="search" on-click="FnSearchEnquiry" title="Search"></paper-icon-button>
-          </paper-input>
-          </div>
-          <div class="col-sm-5" style="margin-top: 2%;">
-          <paper-dropdown-menu label="Select Enquiry/Admission No" on-iron-select="FnSelectEnquiry">
-            <paper-listbox class="dropdown-content" id="regenradmnsearch">
-            <template  is="dom-repeat" items="{{enquiryarr}}" as="item">
-              <paper-item value="{{item.enquiry_no}}">{{item.enquiry_no}}-{{item.enquiry_name}}</paper-item>
+        <div class="col-md-5" style="margin-top: -1%;">
+            <paper-input  label="Student Name" is="" value="{{value}}" on-keydown="FnSearchEnquiry"></paper-input>
+            <paper-listbox class="dropdown-content" id="input1" on-iron-select="FnSelectEnquiry">
+            <template is="dom-repeat" items="{{itemArray}}" as="item">
+            <paper-item value="{{item.enquiry_no}}">{{item.itemdes}}</paper-item>
             </template>
             </paper-listbox>
-          </paper-dropdown-menu>
-          </div> 
-  
+        </div>
      </div>
 
      <div class="list-group col-sm-12 panel-body form-category">
@@ -56,46 +50,33 @@
         <h4>Student Detail</h4>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
-        <div class="col-sm-6 enquiry-input">
+        <div class="col-sm-4 enquiry-input">
           <paper-input label="Student Name" value="{{studentname}}"></paper-input>
         </div>
-        <div class="col-sm-6 enquiry-input">
+        <div class="col-sm-4 enquiry-input">
           <paper-input label="Parent Name" value="{{parentname}}"></paper-input>
         </div>
-      </div>
-      <div class="list-group col-sm-12 panel-body form-category">
-        <div class="col-sm-4 enquiry-input">
-          <!-- <paper-input label="Date of Birth" value="{{dob}}"></paper-input> -->
-          <paper-input  readonly label="Actual Fees" value="{{totalfees}}"></paper-input><!-- <paper-input label="Total Discount" value="{{totaldiscount}}"></paper-input> -->
+        <div class="col-sm-4 enquiry-input">          
+          <paper-input  readonly label="Actual Fees" value="{{totalfees}}"></paper-input>
         </div>
-        <div class="col-sm-4 enquiry-input">
-          <!-- <paper-input label="Total Fees" value="{{totalfees}}"></paper-input> -->
-          <paper-input readonly label="Payable Amount" value="{{payableamount}}"></paper-input>
-        </div>
-        <div class="col-sm-4 enquiry-input">
-          <!-- <paper-input label="Total Fees" value="{{totalfees}}"></paper-input> -->
-          <paper-input readonly label="Total Discount" value="{{totaldiscount}}"></paper-input>
-        </div>
-      </div>
-    
-      <div class="form-group-heading">
-        <span><h4 class="col-sm-3">Payment</h4><paper-checkbox class="col-sm-6" id="regwaiveoffhandler" class="checkbox" on-change="waiveoffHandler">Waiveoff</paper-checkbox></span>
-      </div>
-      
-      <div class="list-group col-sm-12 panel-body form-category" hidden$="{{hiddenpayment}}">
+      </div>    
        
-            <!-- <div><paper-checkbox id="waiveoff" class="checkbox" on-change="waiveoffHandler">Waiveoff</paper-checkbox></div> -->
+      <div class="list-group col-sm-12 panel-body form-category" hidden$="{{hiddenpayment}}">
+
             <div class="inshead" hidden$="{{hiddeninstallment}}">                        
-                    <div style="width: 18%;margin-left: 4%;">Installment</div>
-                    <div style="width: 10%;margin-left:10%;">Amount</div>                    
-                    <div style="margin-left:8%; width: 20%;">Mode of Payment</div>
-                    <div style="margin-left:5%; width: 10%;" hidden$="{{hiddentitleflag}}">Cheque No</div>
-                    <div style="width: 10%;margin-left:5%;" hidden$="{{hiddentitleflag}}">Paid Date</div>                 
+                    <div style="width: 23%;margin-left: 2%;">Installment</div>
+                    <!-- <div style="width: 9%;margin-left: 1%;">Actual Amount</div>
+                    <div style="width: 6%;margin-left: 2%;">Discount</div> -->
+                    <div style="width: 10%;margin-left:2%;">Payable Amount</div>                    
+                    <div style="margin-left:2%; width: 12%;">Mode of Payment</div>
+                    <div style="margin-left:3%; width: 7%;" hidden$="{{hiddentitleflag}}">Cheque No</div>
+                    <div style="margin-left:3%; width: 7%;" hidden$="{{hiddentitleflag}}">Bank Name</div>
+                    <div style="width: 10%;margin-left:3%;" hidden$="{{hiddentitleflag}}">Payment Date</div>
+                    <div style="width: 10%;margin-left:3%;" hidden$="{{hiddentitleflag}}">Receipt Date</div>
             </div>
             <div style="margin-left:12%;" hidden$="{{hiddeninstallment}}"> 
               <template  is="dom-repeat" items="{{feearr}}" as="view">
-                <appregfee-installment-card  hiddenpayflag="{{view.hiddenpayflag}}" modeofpayment="{{view.modeofpayment}}" paidflag="{{view.paidflag}}" readonlyflag="{{view.readonlyflag}}" hiddenflag="{{view.hiddenflag}}" installment="{{view.installment}}" installmenttype="{{view.installment_type}}" amount="{{view.payableamount}}" actualamount="{{view.actualamount}}"
-                discountamount="{{view.discountamount}}" installmentdate="{{view.installment_date}}" chequeno="{{view.chequeno}}" paiddate="{{view.paiddate}}"></appregfee-installment-card>
+                <provisional-installment-card  installmentid="{{view.installmentid}}" hiddenpayflag="{{view.hiddenpayflag}}" modeofpayment="{{view.modeofpayment}}" paidflag="{{view.paidflag}}" readonlyflag="{{view.readonlyflag}}" hiddenflag="{{view.hiddenflag}}" installment="{{view.installment}}" installmenttype="{{view.installment}}" actualamount="{{view.actualamount}}" amount="{{view.installmentamount}}" discountamount="{{view.discountamount}}" installmentdate="{{view.installmentdate}}" chequeno="{{view.chequeno}}" paiddate="{{view.paiddate}}" bankname="{{view.bankname}}" chequedate="{{view.chequedate}}" receiptdate="{{view.installmentdate}}" hiddencommitinput="{{view.hiddencommitinput}}" hiddencommititem="{{view.hiddencommititem}}"></provisional-installment-card>
               </template>
             </div>
             <div >
@@ -107,13 +88,8 @@
     </div>
     <br><br>
 
-    <paper-dialog id="waiveoffdialog" modal>
-      <div><paper-input label="Amount to waiveoff" value="{{waiveoff}}"></paper-input></div>
-      <paper-button on-click="FnConfirm">Ok</paper-button>
-      <paper-button on-click="FnCancel">Cancel</paper-button>
-    </paper-dialog>
-
-    <appregfee-service id="appregfeeservice"></appregfee-service>
+    <admission-service id="admissionservice"></admission-service>
+    <provisional-service id="provisionalservice"></provisional-service>
     <fees-service id="feeservice"></fees-service>
   </template>
   <script>
@@ -122,6 +98,7 @@
       var installment="";
       var paymentmode="";
       var feepaytype="";
+      var item=[];
     Polymer({
       is: 'provisionalfee-card',
       ready:function(){
@@ -133,6 +110,7 @@
         this.hiddenprocessbtn=true;
         localStorage.setItem("curr_sess_waiveoff",0);
         localStorage.setItem("curr_sess_fees",0); 
+        this.querySelector('paper-listbox').style.visibility='hidden';
       },  
       waiveoffHandler:function(){
         if(document.querySelector('#regwaiveoffhandler').checked==true){
@@ -151,32 +129,15 @@
       FnProcessfee:function(){
         this.$.appregfeeservice.callInsertCashfeesService(this.feearr);
       }, 
-      FnSearchEnquiry:function(){
-        document.querySelector('#regenradmnsearch').selected="-1";
-        this.$.appregfeeservice.searchfeeadmissionService(this.enquiryno);        
-      },
-      FnSelectEnquiry:function(e){
-        // this.FnRefresh1();
-        var enquiry=(e.target.selectedItem.textContent).trim();
-        var inx=enquiry.indexOf('-');
-        var enquiry_no=enquiry.substring(0,inx);
-        var enquiry_name=enquiry.substring(inx+1);
-        localStorage.setItem("curr_sess_enquiryno",enquiry_no);
-        localStorage.setItem("curr_sess_enquiryname",enquiry_name);
-        this.$.appregfeeservice.searchfeeadmissionpaidinfoService(enquiry_no);
-        this.$.appregfeeservice.searchfeeadmissioninfoService(enquiry_no);
-      },
       FnHiddenPayment:function(){
         this.hiddenpayment=false;
       },
       FnSetfee:function(installmentarr){
-        installment=installmentarr;
-        // alert(JSON.stringify(installment));
-        // paymentmode=paymenttype;        
+        this.hiddentitleflag=false;
+        installment=installmentarr;      
       },
       FnPayfee:function(){        
       for(var i=0;i<installment.length;i++){ 
-      // alert(installment[i].paymenttype); 
       if(installment[i].paymenttype=="Cash")
         this.$.feeservice.callInsertCashfeesService(installment[i],installment.length);
       if(installment[i].paymenttype=="Cheque")
@@ -221,8 +182,93 @@
         this.payableamount="";
         this.feearr=[];
         this.enquiryarr=[];
+        this.querySelector('paper-listbox').style.visibility='hidden';
+      },
+      callService:function(){
+        this.$.admissionservice.fetchstudentforsearchService("Provision");
+      },
+      autocompletearr:function(autocompletearr)
+      {
+         item=autocompletearr;
+         // alert(JSON.stringify(item));
+      },
+      FnSearchEnquiry:function(e){
+      if(e.keyCode==13|| e.keyCode==40)
+      this.querySelector('paper-listbox').focus();
+      var arr=[];
+      arr.push({"itemdes":"-----Select-----"});
+      this.querySelector('paper-listbox').style.visibility='visible';
+      if(e.keyCode==8){
+        this.itemflag="true";
+        this.itemval="";
+        //alert('yes');
+        var len=(this.value).length;
+        if(len<=1){
+          this.querySelector('paper-listbox').style.visibility='hidden';
+          this.itemArray="";
+          this.itemval="";
+        }
+        if(len>1){
+          this.querySelector('paper-listbox').style.visibility='visible';
+          var backsubval=(((this.value).substring(0,(len-1))).trim()).toUpperCase();
+          for(var i=0;i<item.length;i++)
+          {
+            var subval=((item[i].enquiry_name).trim()).substring(0,backsubval.length);
+            if((item[i].enquiry_name).toUpperCase().indexOf((this.value).toUpperCase())!=-1)
+            {
+              var obj={"itemdes":"","enquiry_no":""};
+              obj.itemdes=item[i].enquiry_name;
+              obj.enquiry_no=item[i].enquiry_no;
+              arr.push(obj);
+            }
+          }
+          this.itemArray=arr;
+        }
       }
-
+      if(e.keyCode!=8&& e.keyCode!=16&& e.keyCode!=13 && e.keyCode!=38&&e.keyCode!=40&&e.keyCode!=37&&e.keyCode!=39){
+        if(this.itemflag=="true") {
+          this.itemval = (this.value).toUpperCase()+String.fromCharCode((e.keyCode)).toUpperCase();
+          this.itemflag="false";
+        }
+        else
+        this.itemval = this.value +String.fromCharCode((e.keyCode));
+        if(this.itemval.length>0)
+        {
+          for(var i=0;i<item.length;i++)
+          {
+            var subval=((item[i].enquiry_name).trim()).substring(0,this.itemval.length);
+            if((item[i].enquiry_name).toUpperCase().indexOf((this.itemval).toUpperCase())!=-1)
+            {
+              var obj={"itemdes":"","enquiry_no":""};
+              obj.itemdes=item[i].enquiry_name;
+              obj.enquiry_no=item[i].enquiry_no;
+              arr.push(obj);
+            }
+          }
+          if(arr.length>0)
+            this.itemArray=arr;
+          else
+          {
+            var obj={"itemdes":"","enquiry_no":""};
+            obj.itemdes="No items found";
+            arr.push(obj);
+            this.itemArray=arr;
+          }
+        }
+      }
+    },
+    FnSelectEnquiry:function(e){
+    this.querySelector('paper-listbox').style.visibility='hidden';
+    var enquiry_name = e.target.selectedItem.textContent.trim();
+    var enquiry_no = e.target.selectedItem.value.trim();
+    localStorage.setItem("curr_sess_enquiryno",enquiry_no);
+    localStorage.setItem("curr_sess_enquiryname",enquiry_name);
+    this.$.provisionalservice.searchfeeadmissionpaidinfoService(enquiry_no);
+    this.$.provisionalservice.searchfeeadmissioninfoService(enquiry_no);
+    this.itemArray=[];
+    document.querySelector('#input1').selected=-1;
+    this.value=enquiry_name;
+    }
     });
   })();
   </script>

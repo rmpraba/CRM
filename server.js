@@ -1574,6 +1574,32 @@ app.post('/fetchexistingadmissionpaidinfo',  urlencodedParser,function (req, res
 });
 
 
+// Fetching admission paid info
+app.post('/fetchexistingprovisionpaidinfo',  urlencodedParser,function (req, res){
+    var qur="SELECT * FROM md_student_paidfee WHERE school_id='"+req.query.schoolid+"' and (admission_no = '"+req.query.admissionno+"' or enquiry_no='"+req.query.admissionno+"') and installment in ('Commitment Fee (Ins1)')";
+   // console.log(qur);
+    connection.query(qur,
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'no rows'});
+    }
+  }
+  else{
+     console.log(err);
+  }
+});
+});
+
+
 // Fetching admission info
 app.post('/fetchexistingadmissioninfo',  urlencodedParser,function (req, res){
     var qur="SELECT * FROM md_admission WHERE school_id='"+req.query.schoolid+"' and (admission_no = '"+req.query.admissionno+"' or enquiry_no='"+req.query.admissionno+"')";
@@ -5241,9 +5267,7 @@ app.post('/fetchdiscountseq',  urlencodedParser,function (req,res)
   });
 });
 
-
 /*these functions are used to update and delete the discount types*/
-
 app.post('/deletediscount' ,  urlencodedParser,function (req, res)
 {  
    
@@ -5396,6 +5420,26 @@ app.post('/deletecheque-Service',  urlencodedParser,function (req, res){
         } else {
           console.log(err);
           res.status(200).json({'returnval': 'Not Deleted!'});
+        }
+      } else {
+        console.log(err);
+      }
+    });
+});
+
+
+app.post('/fetchstudentforsearch-service',  urlencodedParser,function (req, res){
+  var qur="SELECT * FROM student_enquiry_details where school_id='"+req.query.schoolid+"' and status='"+req.query.status+"'";
+  console.log('-------------------------------');
+  console.log(qur);
+  connection.query(qur,
+    function(err, rows){
+      if(!err){
+        if(rows.length>0){
+          res.status(200).json({'returnval': rows});
+        } else {
+          console.log(err);
+          res.status(200).json({'returnval': 'no rows'});
         }
       } else {
         console.log(err);
