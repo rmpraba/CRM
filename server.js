@@ -3790,6 +3790,29 @@ app.post('/getlistdetails',  urlencodedParser,function (req, res){
      });
  });
 
+ app.post('/gettotalprovisionaladmissioncount',  urlencodedParser,function (req, res){
+   connection.query("SELECT class as classes, COUNT( status ) AS provision FROM  student_enquiry_details WHERE `school_id` =  '"+req.query.schoolid+"' AND academic_year='"+req.query.academicyr+"' AND status='Provision' GROUP BY class ORDER BY (`class`)",
+     function(err, rows)
+     {
+       if(!err)
+       {
+         if(rows.length>0)
+         {
+           //console.log(rows);
+           res.status(200).json({'returnval': rows});
+         }
+         else
+         {
+           console.log(err);
+           res.status(200).json({'returnval':null});
+         }
+       }
+       else{
+         console.log(err);
+       }
+     });
+ });
+
 /*this function is used to update the followup details of the current followup*/
  app.post('/updatefollowupdetails',  urlencodedParser,function (req, res)
 {

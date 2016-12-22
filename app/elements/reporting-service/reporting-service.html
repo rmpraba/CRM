@@ -158,17 +158,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         on-response="fetchdiscountseqResponse"
         debounce-duration="300"
     ></iron-ajax>
-
-        <iron-ajax
-        method="post"
-        id="counsellorreportajax"
-        url="{{counsellorreporturl}}"
-        params="{{counsellorreportparam}}"
-        handle-as="json"
-        content-type="application/json"
-        on-response="counsellorreportResponse"
-        debounce-duration="300"
-        ></iron-ajax>
+    <iron-ajax
+      method="post"
+      id="getprovisionaladmissioncountajax"
+      url="{{getprovisionaladmissioncounturl}}"
+      params="{{getprovisionaladmissioncountparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="getprovisionaladmissioncountResponse"
+      debounce-duration="300"
+      >
+    </iron-ajax>
 
   </template>
   <script>
@@ -182,10 +182,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       var reportfordays=[];
       var reportwithcapacity=[];
       var report=[];
+      var reportwithprovision = [];
       var dat=new Date();
       var montharrlength ="";
       var academicarrlength = "";
       var admissioncountarrlength ="";
+      var provisionaladmissioncountarrlength = "";
       var counsellorarr =[];
     Polymer({
       is: 'reporting-service',
@@ -403,9 +405,59 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           }
           report.push(obj);
         }
-        document.querySelector('master-report-card').reportarr=report;
+        this.getprovisionaladmissioncount();
       },
-
+      getprovisionaladmissioncount:function(){
+        if((dat.getMonth()+1)>=7){
+          academic_year='AY-'+(dat.getFullYear()+1)+'-'+(dat.getFullYear()+2);
+        } else if((dat.getMonth()+1)<=6){
+          academic_year='AY-'+(dat.getFullYear())+'-'+(dat.getFullYear()+1);
+        }
+        this.getprovisionaladmissioncounturl=sessionStorage.getItem("addrinfo")+"/gettotalprovisionaladmissioncount";
+        var obj={"schoolid":"","academic_year":""};
+        obj.schoolid=localStorage.getItem("schoolid");
+        obj.academicyr=academic_year;
+        this.getprovisionaladmissioncountparam=obj;
+        //alert(JSON.stringify(obj));
+        this.$.getprovisionaladmissioncountajax.generateRequest();
+      },
+      getprovisionaladmissioncountResponse:function(e){
+        var provisionaladmissioncountarr=e.detail.response.returnval;
+        if(provisionaladmissioncountarr == null){
+          provisionaladmissioncountarrlength = 0;
+        }else {
+          provisionaladmissioncountarrlength = provisionaladmissioncountarr.length;
+        }
+        for(var i=0; i<report.length;i++){
+          var f=0;
+          var obj = {"grade":"","year":"","month":"","day":"","max_capacity":"","current_capacity":"","admission":"","provision":""};
+          for(var j=0; j<provisionaladmissioncountarrlength; j++){
+            if(report[i].grade == provisionaladmissioncountarr[j].classes){
+              f=1;
+              obj.grade=report[i].grade;
+              obj.year=report[i].year;
+              obj.month=report[i].month;
+              obj.day= report[i].day;
+              obj.max_capacity=report[i].max_capacity;
+              obj.current_capacity=report[i].current_capacity;
+              obj.admission=report[i].admission;
+              obj.provision = provisionaladmissioncountarr[j].provision;
+            }
+          }
+          if(f==0){
+            obj.grade=report[i].grade;
+            obj.year=report[i].year;
+            obj.month=report[i].month;
+            obj.day=report[i].day;
+            obj.max_capacity=report[i].max_capacity;
+            obj.current_capacity=report[i].current_capacity;
+            obj.admission=report[i].admission;
+            obj.provision = 0;
+          }
+          reportwithprovision.push(obj);
+        }
+        document.querySelector('master-report-card').reportarr=reportwithprovision;
+      },
       getinstallmentdetails:function()
       {
         this.fetchinstallmentreporturl=sessionStorage.getItem("addrinfo")+"/fetchinstallmentdatereport-service";
