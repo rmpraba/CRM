@@ -136,7 +136,8 @@
         this.hiddentitleflag=false;
         installment=installmentarr;      
       },
-      FnPayfee:function(){        
+      FnPayfee:function(){  
+      // alert(JSON.stringify(installment));      
       for(var i=0;i<installment.length;i++){ 
       if(installment[i].paymenttype=="Cash")
         this.$.feeservice.callInsertCashfeesService(installment[i],installment.length);

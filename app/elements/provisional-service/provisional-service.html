@@ -74,6 +74,7 @@
      searchfeeadmissioninfoResponse:function(e){
         var arr=e.detail.response.returnval;
         if(arr.length>0){
+        localStorage.setItem("curr_sess_enquiryno",arr[0].admission_no);
         document.querySelector('provisionalfee-card').acyear=arr[0].academic_year;
         document.querySelector('provisionalfee-card').academicyear=arr[0].admission_year;
         document.querySelector('provisionalfee-card').enquiredclass=arr[0].class_for_admission;

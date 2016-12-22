@@ -267,59 +267,7 @@ app.post('/generatefeecode-service',  urlencodedParser,function (req, res){
     if(!err)
        res.status(200).json({'returnval': 'done'});
   });
-  //   var schoolid=req.query.schoolid;
-  //   var prefixid=req.query.prefixid;
-  //   var response={"prefixname":""};
-  //   var qur="SELECT * FROM fee_master WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' "+
-  //   " and admission_year='"+req.query.admissionyear+"' and grade_id='"+req.query.grade+"'";
-  //   connection.query(qur,function(err, rows){
-  //   if(rows.length==0){
-  //   connection.query("SELECT * FROM prefix_master WHERE prefix_id='"+prefixid+"'",function(err, rows)
-  //   {
-  //   if(!err)
-  //   {
-  //   if(rows.length>0)
-  //   {
-  //     response.prefixname=rows[0].prefix_name;
-  //     connection.query("SELECT * FROM fee_code_sequence WHERE school_id='"+schoolid+"'",function(err, rows){
-  //       if(rows.length>0){
-  //         var feecode=response.prefixname+rows[0].fee_sequence;
-  //         var grade=req.query.grade;
-  //         var new_seq=parseInt(rows[0].fee_sequence)+1;
-  //         connection.query("UPDATE fee_code_sequence SET fee_sequence='"+new_seq+"' WHERE school_id='"+schoolid+"'",function(err, result){
-  //         if(!err)
-  //         if(result.affectedRows==1)
-  //         res.status(200).json({'returnval': feecode,'returngrade':grade});
-  //         });
-  //       }
-  //       else{
-  //         console.log(err);
-  //         res.status(200).json({'returnval': 'seqfail'});
-  //       }
-  //     });
-  //   }
-  //   else
-  //   {
-  //     console.log(err);
-  //     res.status(200).json({'returnval': 'prefixfail'});
-  //   }
-  // }
-  // else{
-  //    console.log(err);
-  // }
-  // });
-  // }
-  // else
-  // {
-  //   res.status(200).json({'returnval': rows[0].fee_code});
-    // connection.query("SELECT * FROM fee_code_sequence WHERE school_id='"+schoolid+"'",function(err, rows){
-    //     if(rows.length>0){
-    //       var feecode=response.prefixname+rows[0].fee_sequence;
-    //       res.status(200).json({'returnval': feecode});
-    //     }
-    // });
-  // }
-  // });
+  
 });
 
 
@@ -458,73 +406,7 @@ app.post('/generatediscountcode-service',  urlencodedParser,function (req, res){
     if(!err)
        res.status(200).json({'returnval': 'done'});
   });
-  //   var schoolid=req.query.schoolid;
-  //   var prefixid=req.query.prefixid;
-  //   var response={"prefixname":""};
-
-  //   var checkqur="SELECT * FROM md_discount_master WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' "+
-  //   " and admission_year='"+req.query.admissionyear+"' and grade='"+req.query.grade+"' and discount_type_code='"+req.query.discounttypecode+"' "+
-  //   " and admission_type='"+req.query.admissiontype+"' and (from_date<='"+req.query.fromdate+"' and to_date>='"+req.query.fromdate+"') and fee_type='"+req.query.feetype+"'";
-
-  //   var qur="SELECT * FROM md_discount_master WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' "+
-  //   " and admission_year='"+req.query.admissionyear+"' and grade='"+req.query.grade+"' and fee_type='"+req.query.feetype+"' and discount_type_code='"+req.query.discounttypecode+"' and admission_type='"+req.query.admissiontype+"'";
-    
-  //   console.log('-------------------------------------');
-  //   console.log(checkqur);
-  //   console.log('-------------------------------------');
-  //   console.log(qur);
-  //   connection.query(checkqur,function(err, rows){
-  //   if(rows.length==0){
-  //   connection.query(qur,function(err, rows){
-  //   if(rows.length==0){
-  //   connection.query("SELECT * FROM prefix_master WHERE prefix_id='"+prefixid+"'",function(err, rows)
-  //   {
-  //   if(!err)
-  //   {
-  //   if(rows.length>0)
-  //   {
-  //     response.prefixname=rows[0].prefix_name;
-  //     connection.query("SELECT * FROM fee_code_sequence WHERE school_id='"+schoolid+"'",function(err, rows){
-  //       if(rows.length>0){
-  //         var discountcode=response.prefixname+rows[0].discount_sequence;
-  //         var new_seq=parseInt(rows[0].discount_sequence)+1;
-  //         connection.query("UPDATE fee_code_sequence SET discount_sequence='"+new_seq+"' WHERE school_id='"+schoolid+"'",function(err, rows){
-  //         if(!err)
-  //         res.status(200).json({'returnval': discountcode});
-  //         });
-  //       }
-  //       else{
-  //         console.log(err);
-  //         res.status(200).json({'returnval': 'seqfail'});
-  //       }
-  //     });
-  //   }
-  //   else
-  //   {
-  //     console.log(err);
-  //     res.status(200).json({'returnval': 'prefixfail'});
-  //   }
-  // }
-  // else{
-  //    console.log(err);
-  // }
-  // });
-  // }
-  // else
-  // {
-  //   res.status(200).json({'returnval': rows[0].discount_code});
-  //   // connection.query("SELECT * FROM fee_code_sequence WHERE school_id='"+schoolid+"'",function(err, rows){
-  //   //     if(rows.length>0){
-  //   //       var feecode=response.prefixname+rows[0].fee_sequence;
-  //   //       res.status(200).json({'returnval': feecode});
-  //   //     }
-  //   // });
-  // }
-  // });
-  // }
-  // else
-  //   res.status(200).json({'returnval': 'exist'});
-  // });
+ 
 });
 
 
@@ -1767,6 +1649,9 @@ app.post('/insertadmission',  urlencodedParser,function (req, res){
       response.admission_no="ENR"+rows[0].Admission_No;
       new_admission_no=parseInt(rows[0].Admission_No)+1;
       var status="";
+      console.log('------------------------mdadmission-----------------------');
+      console.log(req.query.discounttype);
+      console.log('----------------------------------------------------------');
       if(req.query.discounttype=='7')
       status='Provision';
       else
@@ -1802,8 +1687,17 @@ app.post('/insertadmission',  urlencodedParser,function (req, res){
     }
     else{
       connection.query("UPDATE md_admission SET ? WHERE enquiry_no='"+req.query.enquiryno+"'",[response],function(err, result){
-        if(result.affectedRows>0)
-        res.status(200).json({'returnval': 'Updated!'});
+        if(result.affectedRows>0){
+          connection.query("UPDATE student_enquiry_details SET status='"+status+"' where enquiry_no='"+req.query.enquiryno+"'",function(err, result){
+              if(result.affectedRows>0){
+              // res.status(200).json({'returnval': response.admission_no});
+              res.status(200).json({'returnval': 'Updated!'});
+              }
+              else
+              res.status(200).json({'returnval': 'Not Updated!'});
+            });
+        }
+        // res.status(200).json({'returnval': 'Updated!'});
         else
         res.status(200).json({'returnval': 'Not Updated!'});
       });
@@ -2555,6 +2449,7 @@ app.post('/insertcashfees',  urlencodedParser,function (req, res){
         cheque_status:req.query.paidstatus,
         created_by:req.query.createdby,
         fine_amount:req.query.fineamount,
+        provision_payment:req.query.provisionflag,
         receipt_no:""
     };
 
@@ -2665,6 +2560,7 @@ app.post('/insertchequefees',  urlencodedParser,function (req, res){
         created_by:req.query.createdby,
         bank_name:req.query.bankname,
         fine_amount:req.query.fineamount,
+        provision_payment:req.query.provisionflag,
         receipt_no:""
     };
 
@@ -2767,6 +2663,7 @@ app.post('/inserttransferfees',  urlencodedParser,function (req, res){
         created_by:req.query.createdby,
         bank_name:req.query.bankname,
         fine_amount:req.query.fineamount,
+        provision_payment:req.query.provisionflag,
         receipt_no:""
     };
 

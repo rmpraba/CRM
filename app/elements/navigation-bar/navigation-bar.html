@@ -222,12 +222,12 @@
             <a href="" aria-hidden="true" on-click="enquiry"><i class="fa fa-phone-square fa-fw"></i> Enquiry<span class="fa arrow"></span></a>
             <ul class="nav nav-second-level">
               <li>
-              <a href="" on-click="Fnpreapp">Pre Apps</a>
+              <a href="" on-click="Fnpreapp">Enquiry Form</a>
                 <!-- <a href="flot.html"></a> -->
               </li>
-              <li>
+              <!-- <li>
                 <a href="" on-click="Fnenqform" aria-hidden="true" data-toggle="modal" data-target="#addDetailedEnquiry">Enquiry Form</a>
-              </li>
+              </li> -->
                <li id="">
             <a href="" aria-hidden="true" on-click="followupdashboard" data-toggle="modal"> Follow Up</a>
           </li>
@@ -290,7 +290,7 @@
                 <a href="" aria-hidden="true" data-toggle="modal" data-target="#registerationfee" on-click="FnRegister">Registration fee</a>
               </li>
               <li>
-                <a href="" aria-hidden="true" data-toggle="modal" data-target="#feepayment"  on-click="FnKit">Term fee</a>
+                <a href="" aria-hidden="true" data-toggle="modal" data-target="#feepayment"  on-click="FnKit">School fee</a>
               </li>             
               <li>
                 <a href="" aria-hidden="true" data-toggle="modal" data-target="#provisionfee"  on-click="FnProvisionfee">Provision fee</a>
@@ -429,7 +429,7 @@
                 <span aria-hidden="true">&times;</span>
               </button>
               <h4 class="center-block event-title" id="eventTitle">
-                Pre Apps
+                Enquiry Form
               </h4>
             </div>
             <div class="modal-body">
@@ -501,7 +501,7 @@
               <span aria-hidden="true">&times;</span>
             </button>
             <h4 class="center-block event-title" id="">
-              Term Fee 
+              School Fee 
             </h4>
           </div>
           <div class="modal-body">
@@ -748,6 +748,7 @@
       },
       FnKit:function(e){
         localStorage.setItem("curr_sess_feetype",e.target.text);
+        localStorage.setItem("curr_sess_provisionflag",0);
         this.FnRefresh();
       },
       FnMiscellaneous:function(e){
@@ -801,7 +802,7 @@
       },
 
       Fnpreapp:function(){
-        document.querySelector('app-list').setPage("pre-apps","Pre Apps");
+        document.querySelector('app-list').setPage("pre-apps","Enquiry Form");
         document.querySelector('pre-apps').ready();
         document.querySelector('pre-apps').callnextyearhandler();
           // document.querySelector('newenquiry-card').Fnclear();
@@ -921,6 +922,7 @@
       },
       FnProvisionfee:function(){
         localStorage.setItem("curr_sess_feetypepayment","Commitment Fee (Ins1)");
+        localStorage.setItem("curr_sess_provisionflag",1);
         document.querySelector('provisionalfee-card').callService();
       }
     });
