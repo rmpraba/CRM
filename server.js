@@ -3711,7 +3711,7 @@ app.post('/getlistdetails',  urlencodedParser,function (req, res){
  });
 
  app.post('/getwithdrawn',  urlencodedParser,function (req, res){
-   connection.query("SELECT class as classes, COUNT( status ) AS provision FROM  student_enquiry_details WHERE `school_id` =  '"+req.query.schoolid+"' AND academic_year='"+req.query.academicyr+"' AND status='Withdrawn' GROUP BY class ORDER BY (`class`)",
+   connection.query("SELECT class as classes, COUNT( status ) AS withdrawncount FROM  student_enquiry_details WHERE `school_id` =  '"+req.query.schoolid+"' AND academic_year='"+req.query.academicyr+"' AND status='Withdrawn' GROUP BY class ORDER BY (`class`)",
      function(err, rows)
      {
        if(!err)
