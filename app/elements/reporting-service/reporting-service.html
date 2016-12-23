@@ -601,7 +601,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               obj.month=reportwithprovision[i].month;
               obj.day= reportwithprovision[i].day;
               obj.max_capacity=reportwithprovision[i].max_capacity;
-              obj.current_capacity=reportwithprovision[i].current_capacity;
+              obj.current_capacity=reportwithprovision[i].max_capacity - reportwithprovision[i].current_capacity;
               obj.admission=reportwithprovision[i].admission;
               obj.provision = reportwithprovision[i].provision;
               obj.withdrawn = withdrawnadmissioncountarr[j].withdrawncount;
@@ -613,7 +613,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             obj.month=reportwithprovision[i].month;
             obj.day=reportwithprovision[i].day;
             obj.max_capacity=reportwithprovision[i].max_capacity;
-            obj.current_capacity=reportwithprovision[i].current_capacity;
+            obj.current_capacity=reportwithprovision[i].max_capacity - reportwithprovision[i].current_capacity;
             obj.admission=reportwithprovision[i].admission;
             obj.provision = reportwithprovision[i].provision;
             obj.withdrawn = 0;
@@ -747,7 +747,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         obj.totaladmission = totaladmission;
         obj.totalwithdrawals = totalwithdrawals;
         obj.totalcapacity = totalcapacity;
-        obj.totaladmissionrequired = totaladmissionrequired;
+        obj.totaladmissionrequired = totalcapacity - totaladmissionrequired;
         totalresultarray.push(obj);
         document.querySelector('master-report-card').totalresultarray=totalresultarray;
       },
