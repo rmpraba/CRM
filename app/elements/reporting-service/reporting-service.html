@@ -169,7 +169,105 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       debounce-duration="300"
       >
     </iron-ajax>
-
+    <iron-ajax
+      method="post"
+      id="totalyearcountenquiryajax"
+      url="{{totalyearcountenquiryurl}}"
+      params="{{totalyearcountenquiryparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="totalyearcountenquiryResponse"
+      debounce-duration="300"
+      >
+    </iron-ajax>
+    <iron-ajax
+      method="post"
+      id="totalmonthcountenquiryajax"
+      url="{{totalmonthcountenquiryurl}}"
+      params="{{totalmonthcountenquiryparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="totalmonthcountenquiryResponse"
+      debounce-duration="300"
+      >
+    </iron-ajax>
+    <iron-ajax
+      method="post"
+      id="totaldaycountenquiryajax"
+      url="{{totaldaycountenquiryurl}}"
+      params="{{totaldaycountenquiryparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="totaldaycountenquiryResponse"
+      debounce-duration="300"
+      >
+    </iron-ajax>
+    <iron-ajax
+      method="post"
+      id="totalprovisionaladmissionajax"
+      url="{{totalprovisionaladmissionurl}}"
+      params="{{totalprovisionaladmissionparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="totalprovisionaladmissionResponse"
+      debounce-duration="300"
+      >
+    </iron-ajax>
+    <iron-ajax
+      method="post"
+      id="totaladmissionajax"
+      url="{{totaladmissionurl}}"
+      params="{{totaladmissionparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="totaladmissionResponse"
+      debounce-duration="300"
+      >
+    </iron-ajax>
+    <iron-ajax
+      method="post"
+      id="totalcapacityajax"
+      url="{{totalcapacityurl}}"
+      params="{{totalcapacityparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="totalcapacityResponse"
+      debounce-duration="300"
+      >
+    </iron-ajax>
+    <iron-ajax
+      method="post"
+      id="admissionsrequiredajax"
+      url="{{admissionsrequiredurl}}"
+      params="{{admissionsrequiredparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="admissionsrequiredResponse"
+      debounce-duration="300"
+      >
+    </iron-ajax>
+    <iron-ajax
+      method="post"
+      id="totalwithdrawalsajax"
+      url="{{totalwithdrawalsurl}}"
+      params="{{totalwithdrawalsparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="totalwithdrawalsResponse"
+      debounce-duration="300"
+      >
+    </iron-ajax>
+    <iron-ajax
+      method="post"
+      id="getwithdrawnajax"
+      url="{{getwithdrawnurl}}"
+      params="{{getwithdrawnparam}}"
+      handle-as="json"
+      content-type="application/json"
+      on-response="getwithdrawnResponse"
+      debounce-duration="300"
+      >
+    </iron-ajax>
   </template>
   <script>
   (function() {
@@ -188,7 +286,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       var academicarrlength = "";
       var admissioncountarrlength ="";
       var provisionaladmissioncountarrlength = "";
+      var withdrawnadmissioncountarrlength = "";
       var counsellorarr =[];
+      var totalwalkinyear;
+      var totalwalkinmonth;
+      var totalwalkinday;
+      var totalprovisionaladmission;
+      var totaladmission;
+      var totalwithdrawals;
+      var totalcapacity;
+      var totaladmissionrequired;
+      var totalresultarray = [];
+      var reportwithwithdrawn = [];
     Polymer({
       is: 'reporting-service',
       masterReportService:function(){
@@ -457,6 +566,190 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           reportwithprovision.push(obj);
         }
         document.querySelector('master-report-card').reportarr=reportwithprovision;
+        this.getwithdrawn();
+      },
+      getwithdrawn:function(){
+        if((dat.getMonth()+1)>=7){
+          academic_year='AY-'+(dat.getFullYear()+1)+'-'+(dat.getFullYear()+2);
+        } else if((dat.getMonth()+1)<=6){
+          academic_year='AY-'+(dat.getFullYear())+'-'+(dat.getFullYear()+1);
+        }
+        this.getwithdrawnurl=sessionStorage.getItem("addrinfo")+"/getwithdrawn";
+        var obj={"schoolid":"","academic_year":""};
+        obj.schoolid=localStorage.getItem("schoolid");
+        obj.academicyr=academic_year;
+        this.getwithdrawnparam=obj;
+        //alert(JSON.stringify(obj));
+        this.$.getwithdrawnajax.generateRequest();
+
+      },
+      getwithdrawnResponse:function(e){
+        var withdrawnadmissioncountarr = e.detail.response.returnval;
+        if(withdrawnadmissioncountarr == null){
+          withdrawnadmissioncountarrlength = 0;
+        }else {
+          withdrawnadmissioncountarrlength = withdrawnadmissioncountarr.length;
+        }
+        for(var i=0; i<reportwithprovision.length;i++){
+          var f=0;
+          var obj = {"grade":"","year":"","month":"","day":"","max_capacity":"","current_capacity":"","admission":"","provision":"","withdrawn":""};
+          for(var j=0; j<withdrawnadmissioncountarrlength; j++){
+            if(reportwithprovision[i].grade == withdrawnadmissioncountarr[j].classes){
+              f=1;
+              obj.grade=reportwithprovision[i].grade;
+              obj.year=reportwithprovision[i].year;
+              obj.month=reportwithprovision[i].month;
+              obj.day= reportwithprovision[i].day;
+              obj.max_capacity=reportwithprovision[i].max_capacity;
+              obj.current_capacity=reportwithprovision[i].max_capacity - reportwithprovision[i].current_capacity;
+              obj.admission=reportwithprovision[i].admission;
+              obj.provision = reportwithprovision[i].provision;
+              obj.withdrawn = withdrawnadmissioncountarr[j].withdrawncount;
+            }
+          }
+          if(f==0){
+            obj.grade=reportwithprovision[i].grade;
+            obj.year=reportwithprovision[i].year;
+            obj.month=reportwithprovision[i].month;
+            obj.day=reportwithprovision[i].day;
+            obj.max_capacity=reportwithprovision[i].max_capacity;
+            obj.current_capacity=reportwithprovision[i].max_capacity - reportwithprovision[i].current_capacity;
+            obj.admission=reportwithprovision[i].admission;
+            obj.provision = reportwithprovision[i].provision;
+            obj.withdrawn = 0;
+          }
+          reportwithwithdrawn.push(obj);
+        }
+        document.querySelector('master-report-card').reportarr=reportwithwithdrawn;
+        this.totalyearcountenquiry();
+      },
+      totalyearcountenquiry:function(){
+        if((dat.getMonth()+1)>=7){
+          academic_year='AY-'+(dat.getFullYear()+1)+'-'+(dat.getFullYear()+2);
+        } else if((dat.getMonth()+1)<=6){
+          academic_year='AY-'+(dat.getFullYear())+'-'+(dat.getFullYear()+1);
+        }
+        this.totalyearcountenquiryurl=sessionStorage.getItem("addrinfo")+"/totalyearcount-enquiry";
+        var obj={"schoolid":"","academicyr":""};
+        obj.schoolid=localStorage.getItem("schoolid");
+        obj.academicyr=academic_year;
+        this.totalyearcountenquiryparam=obj;
+        this.$.totalyearcountenquiryajax.generateRequest();
+      },
+      totalyearcountenquiryResponse:function(e){
+        totalwalkinyear = e.detail.response.returnval[0].totalcountyear;
+
+        this.totalmonthcountenquiryurl=sessionStorage.getItem("addrinfo")+"/totalmonthcount-enquiry";
+        var obj={"schoolid":"","currmonth":""};
+        obj.schoolid=localStorage.getItem("schoolid");
+        obj.currmonth=dat.getFullYear()+'-'+(dat.getMonth()+1)+'-'+'%';
+        this.totalmonthcountenquiryparam=obj;
+        //alert(JSON.stringify(obj));
+        this.$.totalmonthcountenquiryajax.generateRequest();
+      },
+      totalmonthcountenquiryResponse:function(e){
+        totalwalkinmonth = e.detail.response.returnval[0].totalcountmonth;
+
+        this.totaldaycountenquiryurl=sessionStorage.getItem("addrinfo")+"/totaldaycount-enquiry";
+        var obj={"schoolid":"","todate":""};
+        obj.schoolid=localStorage.getItem("schoolid");
+        obj.todate=dat.getFullYear()+'-'+(dat.getMonth()+1)+'-'+dat.getDate();
+        this.totaldaycountenquiryparam=obj;
+        //alert(JSON.stringify(obj));
+        this.$.totaldaycountenquiryajax.generateRequest();
+      },
+      totaldaycountenquiryResponse:function(e){
+        totalwalkinday = e.detail.response.returnval[0].totalcountday;
+
+        if((dat.getMonth()+1)>=7){
+          academic_year='AY-'+(dat.getFullYear()+1)+'-'+(dat.getFullYear()+2);
+        } else if((dat.getMonth()+1)<=6){
+          academic_year='AY-'+(dat.getFullYear())+'-'+(dat.getFullYear()+1);
+        }
+        this.totalprovisionaladmissionurl=sessionStorage.getItem("addrinfo")+"/totalprovisionaladmission";
+        var obj={"schoolid":"","academic_year":""};
+        obj.schoolid=localStorage.getItem("schoolid");
+        obj.academicyr=academic_year;
+        this.totalprovisionaladmissionparam=obj;
+        //alert(JSON.stringify(obj));
+        this.$.totalprovisionaladmissionajax.generateRequest()
+      },
+      totalprovisionaladmissionResponse:function(e){
+        totalprovisionaladmission = e.detail.response.returnval[0].totalprovision;
+
+        if((dat.getMonth()+1)>=7){
+          academic_year='AY-'+(dat.getFullYear()+1)+'-'+(dat.getFullYear()+2);
+        } else if((dat.getMonth()+1)<=6){
+          academic_year='AY-'+(dat.getFullYear())+'-'+(dat.getFullYear()+1);
+        }
+        this.totaladmissionurl=sessionStorage.getItem("addrinfo")+"/totaladmission";
+        var obj={"schoolid":"","academic_year":""};
+        obj.schoolid=localStorage.getItem("schoolid");
+        obj.academicyr=academic_year;
+        this.totaladmissionparam=obj;
+        //alert(JSON.stringify(obj));
+        this.$.totaladmissionajax.generateRequest();
+      },
+      totaladmissionResponse:function(e){
+        totaladmission = e.detail.response.returnval[0].totaladmission;
+
+        if((dat.getMonth()+1)>=7){
+          academic_year='AY-'+(dat.getFullYear()+1)+'-'+(dat.getFullYear()+2);
+        } else if((dat.getMonth()+1)<=6){
+          academic_year='AY-'+(dat.getFullYear())+'-'+(dat.getFullYear()+1);
+        }
+        this.totalcapacityurl=sessionStorage.getItem("addrinfo")+"/totalcapacity";
+        var obj={"schoolid":"","academic_year":""};
+        obj.schoolid=localStorage.getItem("schoolid");
+        obj.academicyr=academic_year;
+        this.totalcapacityparam=obj;
+        //alert(JSON.stringify(obj));
+        this.$.totalcapacityajax.generateRequest();
+      },
+      totalcapacityResponse:function(e){
+        totalcapacity = e.detail.response.returnval[0].max_capacity;
+
+        if((dat.getMonth()+1)>=7){
+          academic_year='AY-'+(dat.getFullYear()+1)+'-'+(dat.getFullYear()+2);
+        } else if((dat.getMonth()+1)<=6){
+          academic_year='AY-'+(dat.getFullYear())+'-'+(dat.getFullYear()+1);
+        }
+        this.admissionsrequiredurl=sessionStorage.getItem("addrinfo")+"/admissionsrequired";
+        var obj={"schoolid":"","academic_year":""};
+        obj.schoolid=localStorage.getItem("schoolid");
+        obj.academicyr=academic_year;
+        this.admissionsrequiredparam=obj;
+        //alert(JSON.stringify(obj));
+        this.$.admissionsrequiredajax.generateRequest();
+      },
+      admissionsrequiredResponse:function(e){
+        totaladmissionrequired = e.detail.response.returnval[0].current_capacity;
+
+        if((dat.getMonth()+1)>=7){
+          academic_year='AY-'+(dat.getFullYear()+1)+'-'+(dat.getFullYear()+2);
+        } else if((dat.getMonth()+1)<=6){
+          academic_year='AY-'+(dat.getFullYear())+'-'+(dat.getFullYear()+1);
+        }
+        this.totalwithdrawalsurl=sessionStorage.getItem("addrinfo")+"/totalwithdrawals";
+        var obj={"schoolid":"","academic_year":""};
+        obj.schoolid=localStorage.getItem("schoolid");
+        obj.academicyr=academic_year;
+        this.totalwithdrawalsparam=obj;
+        this.$.totalwithdrawalsajax.generateRequest();
+      },
+      totalwithdrawalsResponse:function(e){
+        totalwithdrawals = e.detail.response.returnval[0].totalwithdrawals;
+        var obj = {"totalwalkinyear":"","totalwalkinmonth":"","totalwalkinday":"","totalprovisionaladmission":"","totaladmission":"","totalwithdrawals":"","totalcapacity":"","totaladmissionrequired":"",};
+        obj.totalwalkinyear = totalwalkinyear;
+        obj.totalwalkinmonth = totalwalkinmonth;
+        obj.totalwalkinday = totalwalkinday;
+        obj.totalprovisionaladmission = totalprovisionaladmission;
+        obj.totaladmission = totaladmission;
+        obj.totalwithdrawals = totalwithdrawals;
+        obj.totalcapacity = totalcapacity;
+        obj.totaladmissionrequired = totalcapacity - totaladmissionrequired;
+        totalresultarray.push(obj);
+        document.querySelector('master-report-card').totalresultarray=totalresultarray;
       },
       getinstallmentdetails:function()
       {

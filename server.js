@@ -3708,6 +3708,28 @@ app.post('/getlistdetails',  urlencodedParser,function (req, res){
      });
  });
 
+ app.post('/getwithdrawn',  urlencodedParser,function (req, res){
+   connection.query("SELECT class as classes, COUNT( status ) AS withdrawncount FROM  student_enquiry_details WHERE `school_id` =  '"+req.query.schoolid+"' AND academic_year='"+req.query.academicyr+"' AND status='Withdrawn' GROUP BY class ORDER BY (`class`)",
+     function(err, rows)
+     {
+       if(!err)
+       {
+         if(rows.length>0)
+         {
+           //console.log(rows);
+           res.status(200).json({'returnval': rows});
+         }
+         else
+         {
+           console.log(err);
+           res.status(200).json({'returnval':null});
+         }
+       }
+       else{
+         console.log(err);
+       }
+     });
+ });
 /*this function is used to update the followup details of the current followup*/
  app.post('/updatefollowupdetails',  urlencodedParser,function (req, res)
 {
@@ -5365,7 +5387,192 @@ app.post('/fetchstudentforsearch-service',  urlencodedParser,function (req, res)
     });
 });
 
+app.post('/totalyearcount-enquiry', urlencodedParser,function(req, res){
+  connection.query("select count(*) as totalcountyear FROM student_enquiry_details WHERE school_id='"+req.query.schoolid+"' AND academic_year='"+req.query.academicyr+"'",
+     function(err, rows)
+     {
+       if(!err)
+       {
+         if(rows.length>0)
+         {
+           //console.log(rows);
+           res.status(200).json({'returnval': rows});
+         }
+         else
+         {
+           console.log(err);
+           res.status(200).json({'returnval':null});
+         }
+       }
+       else{
+         console.log(err);
+       }
+     });
+});
 
+app.post('/totalmonthcount-enquiry', urlencodedParser,function(req, res){
+    var querryyy="select count(*) as totalcountmonth FROM student_enquiry_details WHERE school_id='"+req.query.schoolid+"' AND created_on like '"+req.query.currmonth+"'";
+    //console.log(querryyy);
+    connection.query(querryyy,
+     function(err, rows)
+     {
+       if(!err)
+       {
+         if(rows.length>0)
+         {
+           //console.log(rows);
+           res.status(200).json({'returnval': rows});
+         }
+         else
+         {
+           console.log(err);
+           res.status(200).json({'returnval':null});
+         }
+       }
+       else{
+         console.log(err);
+       }
+     });
+});
+
+ app.post('/totaldaycount-enquiry',  urlencodedParser,function (req, res){
+  var querryyy="select count(*) as totalcountday FROM student_enquiry_details WHERE school_id='"+req.query.schoolid+"' AND  created_on='"+req.query.todate+"'";
+  //console.log(querryyy);
+   connection.query(querryyy,
+     function(err, rows)
+     {
+       if(!err)
+       {
+         if(rows.length>0)
+         {
+           //console.log(rows);
+           res.status(200).json({'returnval': rows});
+         }
+         else
+         {
+           console.log(err);
+           res.status(200).json({'returnval':null});
+         }
+       }
+       else{
+         console.log(err);
+       }
+     });
+ });
+
+app.post('/totalprovisionaladmission',  urlencodedParser,function (req, res){
+   connection.query("SELECT COUNT( * ) AS totalprovision FROM  student_enquiry_details WHERE `school_id` =  '"+req.query.schoolid+"' AND academic_year='"+req.query.academicyr+"' AND status='Provision'",
+     function(err, rows)
+     {
+       if(!err)
+       {
+         if(rows.length>0)
+         {
+           //console.log(rows);
+           res.status(200).json({'returnval': rows});
+         }
+         else
+         {
+           console.log(err);
+           res.status(200).json({'returnval':null});
+         }
+       }
+       else{
+         console.log(err);
+       }
+     });
+ });
+
+app.post('/totaladmission',  urlencodedParser,function (req, res){
+  connection.query("SELECT COUNT( * ) AS totaladmission FROM  student_enquiry_details WHERE `school_id` =  '"+req.query.schoolid+"' AND academic_year='"+req.query.academicyr+"' AND status='Admitted'",
+     function(err, rows)
+     {
+       if(!err)
+       {
+         if(rows.length>0)
+         {
+           //console.log(rows);
+           res.status(200).json({'returnval': rows});
+         }
+         else
+         {
+           console.log(err);
+           res.status(200).json({'returnval':null});
+         }
+       }
+       else{
+         console.log(err);
+       }
+     });
+});
+
+app.post('/totalwithdrawals',  urlencodedParser,function (req, res){
+  connection.query("SELECT COUNT( * ) AS totalwithdrawals FROM  student_enquiry_details WHERE `school_id` =  '"+req.query.schoolid+"' AND academic_year='"+req.query.academicyr+"' AND status='Withdrawn'",
+     function(err, rows)
+     {
+       if(!err)
+       {
+         if(rows.length>0)
+         {
+           //console.log(rows);
+           res.status(200).json({'returnval': rows});
+         }
+         else
+         {
+           console.log(err);
+           res.status(200).json({'returnval':null});
+         }
+       }
+       else{
+         console.log(err);
+       }
+     });
+});
+app.post('/totalcapacity',  urlencodedParser,function (req, res){
+  connection.query("select sum(max_capacity) as max_capacity from tr_current_capacity WHERE `school_id` =  '"+req.query.schoolid+"'",
+     function(err, rows)
+     {
+       if(!err)
+       {
+         if(rows.length>0)
+         {
+           //console.log(rows);
+           res.status(200).json({'returnval': rows});
+         }
+         else
+         {
+           console.log(err);
+           res.status(200).json({'returnval':null});
+         }
+       }
+       else{
+         console.log(err);
+       }
+     });
+});
+
+app.post('/admissionsrequired',  urlencodedParser,function (req, res){
+  connection.query("select sum(current_capacity) as current_capacity from tr_current_capacity WHERE `school_id` =  '"+req.query.schoolid+"'",
+     function(err, rows)
+     {
+       if(!err)
+       {
+         if(rows.length>0)
+         {
+           //console.log(rows);
+           res.status(200).json({'returnval': rows});
+         }
+         else
+         {
+           console.log(err);
+           res.status(200).json({'returnval':null});
+         }
+       }
+       else{
+         console.log(err);
+       }
+     });
+});
 function setvalue(){
   console.log("calling setvalue.....");
 }

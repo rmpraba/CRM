@@ -40,9 +40,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <td>{{view.day}}</td>
             <td>{{view.provision}}</td>
             <td>{{view.admission}}</td>
-            <td>0</td>
+            <td>{{view.withdrawn}}</td>
             <td>{{view.max_capacity}}</td>
             <td>{{view.current_capacity}}</td>
+          </tr>
+        </template>
+        <template  is="dom-repeat" items="{{totalresultarray}}" as="view">
+          <tr>
+            <td style="width:10%;" class="h5">Total</td>
+            <td class="h5">{{view.totalwalkinyear}}</td>
+            <td class="h5">{{view.totalwalkinmonth}}</td>
+            <td class="h5">{{view.totalwalkinday}}</td>
+            <td class="h5">{{view.totalprovisionaladmission}}</td>
+            <td class="h5">{{view.totaladmission}}</td>
+            <td class="h5">{{view.totalwithdrawals}}</td>
+            <td class="h5">{{view.totalcapacity}}</td>
+            <td class="h5">{{view.totaladmissionrequired}}</td>
           </tr>
         </template>
       </tbody>
