@@ -468,7 +468,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var followenqid;
     var upnextdate;
     var reschconfidence;
-    var resultarray;
+    var resultarray=[];
     var newscheduleno;
     var usernameattend;
     var fnacademicyr;
@@ -499,7 +499,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       masterfollowupinfoResponse:function(e){
         //alert(JSON.stringify(e.detail.response.returnval));
         newscheduleno=0;
-       var newdate=new Date();
+        var newdate=new Date();
           resultarr=e.detail.response.returnval;
             var lastdate=new Date();
              var temp=resultarr[0].no_of_days;
@@ -512,10 +512,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               datesarr.push(obj);
               temp=temp+resultarr[0].no_of_days;
           }
-//alert(JSON.stringify(datesarr));
+      //alert(JSON.stringify(datesarr));
           generateid=Math.floor(100000 + Math.random() * 900000);
 
-newdate.setDate(newdate.getDate()+resultarr[0].no_of_days);
+          newdate.setDate(newdate.getDate()+resultarr[0].no_of_days);
 
          this.updatefollowurl=sessionStorage.getItem("addrinfo")+"/updatefollow";
         var obj={"schol":"","id":"","enquiryno":"","schedule":"","currconfidence":"","schedulestatus":"","scheduleflag":"","noofdays":"","noofschedule":"","upcomingdate":"","lastscheduleon":"","createdby":"","createdon":"","followername":""}
@@ -540,7 +540,7 @@ newdate.setDate(newdate.getDate()+resultarr[0].no_of_days);
 
       updatefollowResponse:function(e){
           if(e.detail.response.returnval=='success'){
-countresult=0;
+          countresult=0;
             //alert(e.detail.response.returnval);
               this.updatefollowdetailurl=sessionStorage.getItem("addrinfo")+"/updatefollowdetail";
       for(var j=0;j<(resultarr[0].no_of_calls);j++){
@@ -576,120 +576,55 @@ countresult=0;
       updatefollowdetailResponse:function(e){
         
         if(e.detail.response.returnval=='success'){
-          //alert(e.detail.response.returnval);
           if(resultarr.length>0){
             calls=resultarr[0].no_of_calls;
           }
           if(resultarray.length>0){
             schedule=resultarray[0].no_of_schedules;
           }
-
-//alert(calls+'   '+schedule);
+          // alert(calls+'   '+schedule+" "+countresult);
           countresult=countresult+1;
           if((countresult==calls)||(countresult==schedule)){
             this.getfollowupcount();
-          alert('The follwup schedule is updated successfully');
+            alert('The follwup schedule is updated successfully');
           }
         }
         else{
-          alert('Interrupted');
+            alert('Interrupted');
         }
       },
       getfollowupcount:function(){
-          //alert('call');
-      var dt=new Date();
+        var dt=new Date();
         this.getopenfollowupcounturl=sessionStorage.getItem("addrinfo")+"/getfollowupcount";
         var obj={"schol":"","status":""}
         obj.status="Open";
         obj.schol=localStorage.getItem("schoolid");
         this.getopenfollowupcountparam=obj;
-       //alert(JSON.stringify(obj));
+        //alert(JSON.stringify(obj));
         this.$.getopenfollowupcountajax.generateRequest();
-
         this.getclosedfollowupcounturl=sessionStorage.getItem("addrinfo")+"/getfollowupcount";
         var obj={"schol":"","status":""}
         obj.status="Closed";
         obj.schol=localStorage.getItem("schoolid");
         this.getclosedfollowupcountparam=obj;
-       //alert(JSON.stringify(obj));
+        //alert(JSON.stringify(obj));
         this.$.getclosedfollowupcountajax.generateRequest();
-
 
         this.getprocessfollowupcounturl=sessionStorage.getItem("addrinfo")+"/getfollowupcount";
         var obj={"schol":"","status":""}
         obj.status="Inprogress";
         obj.schol=localStorage.getItem("schoolid");
         this.getprocessfollowupcountparam=obj;
-       //alert(JSON.stringify(obj));
+        //alert(JSON.stringify(obj));
         this.$.getprocessfollowupcountajax.generateRequest();
-
 
         this.getexhaustfollowupcounturl=sessionStorage.getItem("addrinfo")+"/getfollowupcount";
         var obj={"schol":"","status":""}
         obj.status="Exhausted";
         obj.schol=localStorage.getItem("schoolid");
         this.getexhaustfollowupcountparam=obj;
-       //alert(JSON.stringify(obj));
+        //alert(JSON.stringify(obj));
         this.$.getexhaustfollowupcountajax.generateRequest();
-
-
-      /*  this.greater95url=sessionStorage.getItem("addrinfo")+"/getconfidencecount";
-        var obj={"schol":"","status":""}
-        obj.status=">90%";
-        obj.schol=localStorage.getItem("schoolid");
-        this.greater95param=obj;
-       //alert(JSON.stringify(obj));
-        this.$.greater95ajax.generateRequest();
-
-         this.greater75url=sessionStorage.getItem("addrinfo")+"/getconfidencecount";
-        var obj={"schol":"","status":""}
-        obj.status=">75%";
-        obj.schol=localStorage.getItem("schoolid");
-        this.greater75param=obj;
-       //alert(JSON.stringify(obj));
-        this.$.greater75ajax.generateRequest();
-
-         this.greater50url=sessionStorage.getItem("addrinfo")+"/getconfidencecount";
-        var obj={"schol":"","status":""}
-        obj.status=">50%";
-        obj.schol=localStorage.getItem("schoolid");
-        this.greater50param=obj;
-       //alert(JSON.stringify(obj));
-        this.$.greater50ajax.generateRequest();
-
-         this.less50url=sessionStorage.getItem("addrinfo")+"/getconfidencecount";
-        var obj={"schol":"","status":""}
-        obj.status="<50%";
-        obj.schol=localStorage.getItem("schoolid");
-        this.less50param=obj;
-       //alert(JSON.stringify(obj));
-        this.$.less50ajax.generateRequest();
-
-         this.less35url=sessionStorage.getItem("addrinfo")+"/getconfidencecount";
-        var obj={"schol":"","status":""}
-        obj.status="<35%";
-        obj.schol=localStorage.getItem("schoolid");
-        this.less35param=obj;
-       //alert(JSON.stringify(obj));
-        this.$.less35ajax.generateRequest();
-
-        this.less10url=sessionStorage.getItem("addrinfo")+"/getconfidencecount";
-        var obj={"schol":"","status":""}
-        obj.status="<15%";
-        obj.schol=localStorage.getItem("schoolid");
-        this.less10param=obj;
-       //alert(JSON.stringify(obj));
-        this.$.less10ajax.generateRequest();
-
-        this.TBDurl=sessionStorage.getItem("addrinfo")+"/getconfidencecount";
-        var obj={"schol":"","status":""}
-        obj.status="TBD";
-        obj.schol=localStorage.getItem("schoolid");
-        this.TBDparam=obj;
-       //alert(JSON.stringify(obj));
-        this.$.TBDajax.generateRequest();*/
-
-
      },
      getopenfollowupcountResponse:function(e){
       var res=e.detail.response.returnval;
@@ -733,25 +668,25 @@ countresult=0;
      },
      TBDResponse:function(e){
        var res=e.detail.response.returnval;
+
       document.querySelector('followup-dashboard').arrtbd=res;
      },
      getfollowupstudents:function(grade,status){
-      localStorage.setItem("grade_list",grade);
-      localStorage.setItem("open_list",status);
+        localStorage.setItem("grade_list",grade);
+        localStorage.setItem("open_list",status);
         this.getfollowupstudentsurl=sessionStorage.getItem("addrinfo")+"/getfollowupstudents";
         var obj={"schol":"","fngrade":"","fnstatus":"","user":""};
         obj.schol=localStorage.getItem("schoolid");
         obj.fngrade=grade;
         obj.fnstatus=status;
-        obj.user=localStorage.getItem("employeename");
+        obj.user=localStorage.getItem("employeeid");
         this.getfollowupstudentsparam=obj;
         //alert(JSON.stringify(obj));
         this.$.getfollowupstudentsajax.generateRequest();
-
       },
       getfollowupstudentsResponse:function(e){
        var res=e.detail.response.returnval;
-       //alert(JSON.stringify(res));
+       // alert(JSON.stringify(res));
        var requery=[];
               for(var i=0;i<res.length;i++){
                 var dsta=new Date(res[i].upcoming_date);
@@ -765,8 +700,9 @@ countresult=0;
                     obj.id=res[i].id;
                     requery.push(obj);              
               }
-       document.querySelector('followup-details').followuparr=requery;
+        
         document.querySelector('app-list').setPage("followup-details","Followup Student List");
+        document.querySelector('followup-details').followuparr=requery;
 
       },
       getenqdetails:function(grade,status){
@@ -878,8 +814,8 @@ document.querySelector('followup-student-detail').followid=res[0].id;
         }
 
 
-         document.querySelector('followup-student-detail').testdetails(res[0].enquiry_no,parentid,guardianid);
-         this.getlistdetails(res[0].enquiry_no,res[0].id,res[0].schedule_no);
+        document.querySelector('followup-student-detail').testdetails(res[0].enquiry_no,parentid,guardianid);
+        this.getlistdetails(res[0].enquiry_no,res[0].id,res[0].schedule_no);
         //document.querySelector('followup-student-detail').Fncheck();
       },
       getsubjectinfo:function(enqno,enquiredon){
@@ -937,9 +873,7 @@ document.querySelector('followup-student-detail').followid=res[0].id;
         obj.fid=followypid;
         obj.flag=schedule;
         this.getlistdetailsparam=obj;
-       //alert(JSON.stringify(obj));
         this.$.getlistdetailsajax.generateRequest();
-
       },
       getlistdetailsResponse:function(e){
         var resultarrS=[];
@@ -971,16 +905,12 @@ document.querySelector('followup-student-detail').followid=res[0].id;
         document.querySelector('followup-student-detail').followupdetailarr=resultarrS;
         //document.querySelector('followup-listitem-card').ready();
 
-
-
         this.scheduledatesurl=sessionStorage.getItem("addrinfo")+"/scheduledates";
         var obj2={"schol":"","folowid":""};
         obj2.schol=localStorage.getItem("schoolid");
         obj2.folowid=result[0].schedule_id;
         this.scheduledatesparam=obj2;
         this.$.scheduledatesajax.generateRequest();
-  
-
       },
       scheduledatesResponse:function(e){
           var restultarrz=e.detail.response.returnval;
@@ -1173,7 +1103,6 @@ newdate.setDate(newdate.getDate()+resultarray[0].no_of_days);
               obj.followed_by=rmnames;
               obj.academicsyr='AY-'+(dt.getFullYear()+1)+'-'+(dt.getFullYear()+2);
               this.getrmenquirydetailsparam=obj;
-             alert(JSON.stringify(obj));
               this.$.getrmenquirydetailsajax.generateRequest();
     },
     getrmenquirydetailsResponse:function(e){
@@ -1318,7 +1247,7 @@ newdate.setDate(newdate.getDate()+resultarray[0].no_of_days);
         var obj={"schol":"","status":"","counsellor":""}
         obj.status="Open";
         obj.schol=localStorage.getItem("schoolid");
-        obj.counsellor = localStorage.getItem("employeename");
+        obj.counsellor = localStorage.getItem("employeeid");
         this.gettotalfollowupcounttodayparam=obj;
        //alert(JSON.stringify(obj));
         this.$.gettotalfollowupcounttodayajax.generateRequest();
@@ -1332,7 +1261,7 @@ newdate.setDate(newdate.getDate()+resultarray[0].no_of_days);
         var obj={"schol":"","status":"","counsellor":""}
         obj.status="Open";
         obj.schol=localStorage.getItem("schoolid");
-        obj.counsellor = localStorage.getItem("employeename");
+        obj.counsellor = localStorage.getItem("employeeid");
         this.getfollowupdetailstodayparam=obj;
        //alert(JSON.stringify(obj));
         this.$.getfollowupdetailstodayajax.generateRequest();

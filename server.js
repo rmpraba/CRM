@@ -2944,8 +2944,6 @@ app.post('/getfollowupcount',  urlencodedParser,function (req, res){
 });
 
 
-
-
  app.post('/getfollowupstudents',  urlencodedParser,function (req, res)
  {
    var school={"school_id":req.query.schol};
