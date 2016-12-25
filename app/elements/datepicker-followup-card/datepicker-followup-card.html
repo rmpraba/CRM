@@ -45,6 +45,7 @@ var sdat;
       ready:function()
       {
         this.showdate=moment(new Date(this.showdate)).format('L');
+        localStorage.setItem("localsess_nextfollowup_date",this.showdate);
          // document.querySelector('followup-listitem-card').showbutton(this.showdate);
       },
       FnShowDialog:function(){
@@ -76,8 +77,8 @@ var sdat;
           var dt =new Date(moment(this.$.picker.date).format('L'));
           dt.setTime(dt.getTime() +(dt.getTimezoneOffset()+330)*60*1000);
           this.showdate=dt.getFullYear()+'-'+(dt.getMonth()+1)+'-'+dt.getDate();
-          localStorage.setItem("localsess_start_date",this.showdate);
-          document.querySelector('followup-listitem-card').getdate(this.showdate);
+          localStorage.setItem("localsess_nextfollowup_date",this.showdate);
+          // document.querySelector('followup-listitem-card').getdate(this.showdate);
           }
         }
       

@@ -42,8 +42,8 @@
        
           <div class="col-sm-12">
           <!-- <followup-datepicker-card id="dates" showdate="{{nextdate}}"></followup-datepicker-card> -->
-          <paper-input id="dates" label="Date" error-message="needs next followup date!" readonly required value="{{nextdate}}"></paper-input>
-          <div id="reschedule" style=" padding-top: 16%; padding-left: 33%;  margin-left: -28%;">
+          <paper-input id="dates" label="Date" error-message="needs next followup date!" readonly required value="{{nextdate}}" hidden$="{{dates}}"></paper-input>
+          <div id="reschedule" style=" padding-top: 16%; padding-left: 33%;  margin-left: -28%;" hidden$="{{reschedule}}">
           <paper-button raised style="background-color: silver;" class="button" on-click="Rescheduling" >Reschedule</paper-button></div>
           </div>
         
@@ -51,8 +51,8 @@
           </td>
             <!-- <div id="confidencelabel">{{confidencelvl}}</div> -->
           
-          <td class="col-sm-3" style="text-align:center; padding-top: 6%;"><div hidden="{{viewdetail}}"><a href="" on-click="fnviewdetailshow">view details</a></div>
-          <div hidden="{{notcompleted">Still not completed</div></td>
+          <td class="col-sm-3" style="text-align:center; padding-top: 6%;"><div hidden$="{{viewdetail}}"><a href="" on-click="fnviewdetailshow">view details</a></div>
+          <div hidden$="{{notcompleted}}">Still not completed</div></td>
         </tr>
         </tbody>
         <div hidden>{{callstatus}}/{{confidencelvl}}/{{followupno}}/{{fid}}/{{nextdate}}/{{scheid}}</div>
@@ -107,7 +107,8 @@
 
             <iron-autogrow-textarea id="followbox2" placeholder="Please type your comments here..." error-message="needs comments!" required bind-value="{{value}}"></iron-autogrow-textarea>
             <div>
-              <followup-datepicker-card scheduledon="{{scheduledate}}" showdate="{{nextdate}}"></followup-datepicker-card>
+              <!-- <followup-datepicker-card scheduledon="{{scheduledate}}" showdate="{{nextdate}}"></followup-datepicker-card> -->
+              <datepicker-followup-card scheduledon="{{scheduledate}}" showdate="{{nextdate}}"></datepicker-followup-card>
             </div>
       </div>
         <div class="buttons">
@@ -127,7 +128,7 @@
               <paper-radio-button id="customdate" on-click="Fncustomdate">Custom Date.</paper-radio-button>
             </paper-radio-group>
               
-                  <custom-datepicker-card id="custdate"></custom-datepicker-card>
+            <custom-datepicker-card id="custdate"></custom-datepicker-card>
       </div>
         <div class="buttons">
           <paper-button id="followdisk4" style="background-color: silver;" class="btn glyphicon glyphicon-floppy-disk" raised on-click="savecustomdate">Save</paper-button>
@@ -189,44 +190,10 @@
         confidencelvl="TBD";
         currentdate=sessionStorage.getItem("todaydate");
 
-        //this.$.followdrop.hidden=false;
-        
-        /*if(this.comments!=""||this.comments!=null){
-          this.$.followupcmnts.hidden=true;
-            //this.disableyes=true;
-            //this.disableno=true;
-            //this.disabledrop=true;
-            this.disabledate=true;
-        }
-        else{
-          this.$.followbox.hidden=true;
-        }*/
-        // vnextdate=this.nextdate;
-        
-        if(this.callstatus=="Yes"){
-          this.disableyes=true;
-          this.disableno=true;
-              this.yesbox=true;
-              this.notcompleted=true;
-            this.viewdetail=false;
-        }
-        else if(this.callstatus=="No"){
-          this.disableyes=true;
-          this.disableno=true;
-              this.nobox=true;
-              this.notcompleted=true;
-            this.viewdetail=false;
-        }
-        else{
-            this.notcompleted=false;
-            this.viewdetail=true;
-        }
         if(this.confidencelvl==''||this.confidencelvl==null){
           this.$.confidencelevel.selected=0;
-          //this.$.confidencelabel.hidden=true;
         }
         else{
-          //this.$.followdrop.hidden=true;
               if(this.confidencelvl=='>90%'){
                 this.$.confidencelevel.selected=1;
               }
@@ -246,44 +213,27 @@
                 this.$.confidencelevel.selected=6;
               }
         }
-        
-
-         if((this.nextdate=='NaN-NaN-NaN')||(this.nextdate=='0000-00-00 00:00:00')){
-           this.$.dates.hidden=true;
-          this.$.reschedule.hidden=false;
-        }
-        else{
-           this.$.dates.hidden=false;
-          this.$.reschedule.hidden=true; 
-        }
-        //this.Fnrefresh();
       },
       yescallstatusHandler:function(){
         if(document.getElementById('callyes'+this.followupno).checked==true){
           callstatus="Yes";
-           flwno=this.sno;
-          //alert(callstatus);
-          //this.$.followdisk.disabled=false;
+          flwno=this.sno;
           document.getElementById('callno'+this.followupno).checked=false;
           this.$.dialog2.open();
         }
         else{
           callstatus=null;
-          //this.$.followdisk.disabled=true; 
         }
       },
       nocallstatusHandler:function(){
           if(document.getElementById('callno'+this.followupno).checked==true){
           callstatus="No";
-           flwno=this.sno;
-          //alert(callstatus);
-          //this.$.followdisk.disabled=false;
+          flwno=this.sno;
           document.getElementById('callyes'+this.followupno).checked=false;
           this.$.dialog3.open();
         }
         else{
           callstatus=null;
-          //this.$.followdisk.disabled=true; 
         }
       },
       FnConfidenceLevel:function(e){
@@ -299,47 +249,49 @@
         this.ready();
       },
       getdate:function(nextdatez){
-
-          var selected=new Date(this.scheduledate);
-          var sdat=new Date(nextdatez);
-        // alert(sdat+'  '+selected);
+        var selected=new Date(this.scheduledate);
+        var sdat=new Date(nextdatez);
         var res=parseInt(sdat-selected);
-        // alert(res);
         if(res==0){
           alert('Kindly, select different followup date than scheduled date.. ');
           this.showdate='';
         }else{
           vnextdate=new Date(nextdatez);
-
-        this.nextdate=nextdatez;
-        flagz=1;  
-        }
-        //alert(vnextdate);
-          //alert(checkdates);
-        //this.$.confidencelabel.hidden=false
-        
+          this.nextdate=nextdatez;
+          flagz=1;  
+        }      
       },
       FollowUp:function(){
+        var selected=new Date(this.scheduledate);
+        var nextdatez=localStorage.getItem("localsess_nextfollowup_date");
+        var sdat=new Date(nextdatez);
+        var res=parseInt(sdat-selected);
+        if(res==0){
+          alert('Kindly, select different date, The date which you have selected same with the current scheduledate ... ');
+          this.showdate='';
+        }
+        else{
+          vnextdate=new Date(nextdatez);
+          this.nextdate=nextdatez;
+          flagz=1;  
+        }
         if(this.value==""||confidencelvl==null){
-          //this.$.dates.validate();
           this.$.followbox1.validate();
           this.$.followbox2.validate();
-          if(confidencelvl==null){
+          if(confidencelvl==null||confidencelvl==""){
             alert('Please select the Confidence level of this followup');
           }
-          
         }
         else{
           if(flagz==1){
-          this.datesdiff();
-              }
-          //alert(this.fid+this.scheduledate+this.followupno+currentdate+ckdt1+this.value+callstatus+confidencelvl+nextdatsd);
+            this.datesdiff();
             this.$.followupservice.updatefolowup(this.fid,this.scheduledate,this.followupno,currentdate,nextdatsd,this.value,callstatus,confidencelvl,this.sno);  
             this.$.dialog2.close();
-             this.$.dialog3.close();
-             document.getElementById('followbox1').value="";
-             document.getElementById('followbox2').value="";
-             this.value="";
+            this.$.dialog3.close();
+            document.getElementById('followbox1').value="";
+            document.getElementById('followbox2').value="";
+            this.value="";
+          }         
         }
         
       },
@@ -355,15 +307,7 @@
         var dt=new Date(pickdate);
        var datesx=dt.getDate()+'/'+(dt.getMonth()+1)+'/'+dt.getFullYear();
        this.nextdate=datesx;
-       
-       //document.getElementById('fndates'+this.followupno).value=datesx;
-      // document.querySelector('followup-listitem-card').setdate(datesx);
-     /*if(this.followupdate5==datesx){  
-          alert('Date Repeated! Please select difference date..');
-      }
-      else {
-          this.followupdate4 = dt.getDate()+'/'+(dt.getMonth()+1)+'/'+dt.getFullYear();
-        }*/
+
         document.getElementById('dialog1').close();
       },
       Rescheduling:function(){
@@ -407,12 +351,9 @@
           takedate=null;
       },
       customgetdate:function(datzxc){
-        //alert(datzxc);
           takedate=datzxc;
-          //this.$.followupservice.Fnreschedule(this.confidencelvl,this.fid,takedate);
       },
       savecustomdate:function(){
-        //alert(this.confidencelvl+'  '+this.fid+'  '+takedate);
          this.$.followupservice.Fnreschedule(this.confidencelvl,this.fid,takedate);
          this.$.dialog4.close();
       },
@@ -422,55 +363,47 @@
         this.$.dialog4.close();
       },
       datesdiff:function(){
-          for(var j=0;j<checkdates.length;j++){
-           
+        for(var j=0;j<checkdates.length;j++){           
             var et=checkdates[j].schedule_date;
             var  asdf=new Date(et);
              asdf.setTime(asdf.getTime() +(asdf.getTimezoneOffset()+330)*60*1000);
-           //alert(JSON.stringify(asdf));
-          }
-          var fno=parseInt(flwno)-1;
-        //alert(flwno+'    '+fno);
+        }
+        var fno=parseInt(flwno)-1;
         var flag=0;
         var flag2=0;
         var dt=new Date(vnextdate.getFullYear()+'-'+(vnextdate.getMonth()+1)+'-'+vnextdate.getDate());
         var ltdat=new Date(asdf.getFullYear()+'-'+(asdf.getMonth()+1)+'-'+asdf.getDate());
- //alert(dt+'    '+ltdat+'    '+this.sno);       
-         dt.setTime(dt.getTime() +(dt.getTimezoneOffset()+330)*60*1000);
-          ltdat.setTime(ltdat.getTime() +(ltdat.getTimezoneOffset()+330)*60*1000);
- //alert(dt+'    '+ltdat+'    '+this.sno);
-            if((dt<ltdat)&&(dt!=ltdat)){
-                    //alert('the date is lessr than last date');
-                    for(var l=flwno;l<checkdates.length;l++){
-              ckdt1=new Date(vnextdate);
-                      var et2=checkdates[l].schedule_date;
-                      var temp=new Date(et2);
+             
+        dt.setTime(dt.getTime() +(dt.getTimezoneOffset()+330)*60*1000);
+        ltdat.setTime(ltdat.getTime() +(ltdat.getTimezoneOffset()+330)*60*1000);
+        
+        if((dt<ltdat)&&(dt!=ltdat)){
+          for(var l=flwno;l<checkdates.length;l++){
+            ckdt1=new Date(vnextdate);
+            var et2=checkdates[l].schedule_date;
+            var temp=new Date(et2);
             ckdt2=new Date(temp);
-                      ckdt2.setTime(ckdt2.getTime() +(ckdt2.getTimezoneOffset()+330)*60*1000);
-                      var res=ckdt1-ckdt2;
-     //alert(ckdt1+'    '+ckdt2+'   '+res);
-
-                      if((res<0)&&(flag==0)&&(flag2==0)){
-                        flag=1;
-                          //alert('Insert a new row');
-                          sum=parseInt(checkdates.length)+1;
-                          nextdatsd=ckdt1;
-                          //alert(sum+'   '+this.scheid+'   '+this.fid+'   '+ckdt1+'   '+ckdt2);
-                          this.$.followupservice.insertnewfollowup(sum,this.scheid,this.fid,ckdt1,ckdt2);
-                      }
-                      else if((res>0)&&(flag2==0)){
-                        folwno=(parseInt(l)+1);
-                        //alert('Deactivate the corresponding dates and insert new row');
-                        //alert(this.scheid+'   '+this.fid+'  '+folwno+'   '+ckdt2);
-                        this.$.followupservice.deactivatefollowup(this.scheid,this.fid,folwno,ckdt2);
-                      }
-                      else if(res==0){
-//alert('same date  '+vnextdate);
-
-                          flag2=1;
-                      }
-
-                    }
+            ckdt2.setTime(ckdt2.getTime() +(ckdt2.getTimezoneOffset()+330)*60*1000);
+            var res=ckdt1-ckdt2;
+            // alert(ckdt1+'    '+ckdt2+'   '+res+'  '+flag+'  '+flag2);
+            if((res<0)&&(flag==0)&&(flag2==0)){
+            flag=1;
+            //alert('Insert a new row');
+            sum=parseInt(checkdates.length)+1;
+            nextdatsd=ckdt1;
+            // alert(sum+'   '+this.scheid+'   '+this.fid+'   '+ckdt1+'   '+ckdt2);
+            this.$.followupservice.insertnewfollowup(sum,this.scheid,this.fid,ckdt1,ckdt2);
+            }
+            else if((res>0)&&(flag2==0)){
+            folwno=(parseInt(l)+1);
+            //alert('Deactivate the corresponding dates and insert new row');
+            //alert(this.scheid+'   '+this.fid+'  '+folwno+'   '+ckdt2);
+            this.$.followupservice.deactivatefollowup(this.scheid,this.fid,folwno,ckdt2);
+            }
+            else if(res==0){
+            flag2=1;
+            }
+            }
             }
             else if(dt>ltdat){
                 alert('The given date is greater than last date. \n So, please Re-schedule it..');
@@ -486,7 +419,6 @@
             this.actualdate=detailarr[0].actual_date;
             this.confidencegiven=detailarr[0].confidence_level;
             this.comments=detailarr[0].followup_comments;
-
             this.$.dialogdetailshow.open();
       },
       closedetaildialog:function(){
