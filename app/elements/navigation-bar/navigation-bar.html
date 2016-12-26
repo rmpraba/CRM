@@ -878,9 +878,12 @@
         this.totalfollowupstodaycount = count;
       },
       FnFeesplitupschedule:function(){
+        document.querySelector('feesplitup-structure-card').ready();
+        document.querySelector('feesplitup-structure-card').FnRefresh();
         this.$.scheduleservice.fetchgradeService();
         this.$.scheduleservice.fetchacademicyearService();
         this.$.scheduleservice.fetchadmissionyearService();
+
       },
       FnSearchReceipt:function(){
         this.$.scheduleservice.fetchacademicyearService();
