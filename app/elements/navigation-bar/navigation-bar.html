@@ -3,9 +3,7 @@
 <link rel="import" href="../detailed-enquiry-form/detailed-enquiry-form.html">
 <link rel="import" href="../admission-form/admission-form.html">
 <link rel="import" href="../followup-card/followup-card.html">
-
 <link rel="import" href="../schedulefee-card/schedulefee-card.html">
-
 <link rel="import" href="../fee-card/fee-card.html">
 <link rel="import" href="../followup-details/followup-details.html">
 <link rel="import" href="../fee-reports/fee-reports.html">
@@ -38,9 +36,7 @@
       <a class="navbar-brand" href="index.html">{{schoolname}}</a>
     </div>
 
-
     <ul class="nav navbar-top-links navbar-right">
-
       <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
           <i class="fa fa-envelope fa-fw"></i>  <i class="fa fa-caret-down"></i>
@@ -50,7 +46,7 @@
             <a href="#">
               <div>
                 <strong>John Smith</strong>
-                                    <span class="pull-right text-muted">
+                  <span class="pull-right text-muted">
                                         <em>Yesterday</em>
                                     </span>
               </div>
@@ -191,7 +187,7 @@
           <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
           </li>
           <li class="divider"></li>
-          <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+          <li><a href="login.html" on-click="FnSignout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
           </li>
         </ul>
         <!-- /.dropdown-user -->
@@ -214,11 +210,11 @@
             </div>
             <!-- /input-group -->
           </li>
-          <li id="dashboard">
+         <!--  <li id="dashboard">
             <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
-          </li>
+          </li> -->
           
-          <li id="enquiry">
+          <li id="enquiry" hidden$="{{hideenquirymenu}}">
             <a href="" aria-hidden="true" on-click="enquiry"><i class="fa fa-phone-square fa-fw"></i> Enquiry<span class="fa arrow"></span></a>
             <ul class="nav nav-second-level">
               <li>
@@ -236,16 +232,16 @@
 
           <!-- <li id="admission"> -->
             <!-- <a href="" aria-hidden="true" on-click="schedule"><i class="fa fa-check fa-fw"></i>Fees Structure</a> -->
-          <li id="exchange-followup">
+          <li id="exchange-followup" hidden$="{{hidebalancefollowupmenu}}">
             <a href="" on-click="exchange_followup" ><i class="fa fa-exchange fa-fw"></i>Balance Followup</a>
           </li>
 
-           <li id="fee-reports">
+           <li id="fee-reports" hidden$="{{hidefeestructurereportmenu}}">
            <a href="" aria-hidden="true" on-click="feereports"><i class="fa fa-table fa-fw"></i>Fee Structures Reports</a>
            </li>
 
-          <li id="feestructure">
-            <a href="" aria-hidden="true" on-click="schedule"><i class="fa fa-check fa-fw"></i>Fees Structure</a>
+          <li id="feestructure" hidden$="{{hidefeestructuremenu}}">
+            <a href="" aria-hidden="true" ><i class="fa fa-check fa-fw"></i>Fees Structure</a>
             <ul class="nav nav-second-level">
               <li>
                 <a href="" aria-hidden="true" data-toggle="modal" data-target="#feetypeschedule" on-click="FnFeetypeschedule">Fee Type Schedule</a>
@@ -262,7 +258,7 @@
               </ul>
            </li>
 
-        <li id="enrollment">
+        <li id="enrollment" hidden$="{{hideenrollmentmenu}}">
             <a href="" aria-hidden="true"><i class="fa fa-phone-square fa-fw"></i> Enrollment<span class="fa arrow"></span></a>
             <ul class="nav nav-second-level">         
           <li id="adtest">
@@ -280,7 +276,7 @@
             <a href="" aria-hidden="true" data-toggle="modal" data-target="#feepayment"><i class="fa fa-money fa-fw"></i>Fee Payment</a>
           </li> -->
 
-           <li id="payment">
+           <li id="payment" hidden$="{{hidefeepaymentmenu}}">
             <a href="#" aria-hidden="true" data-toggle="modal" on-click="FnFeePayment"><i class="fa fa-money fa-fw"></i> Fee Payment<span class="fa arrow"></span></a>
             <ul class="nav nav-second-level">
               <li>
@@ -299,7 +295,7 @@
             </nav-second-level>
           </li>
 
-           <li id="masterreport">
+           <li id="masterreport" hidden$="{{hidemasterreportmenu}}">
             <a href="#" aria-hidden="true" data-toggle="modal" on-click="Master"><i class="fa fa-money fa-fw"></i>Master Reports<span class="fa arrow"></span></a>
             <ul class="nav nav-second-level">
               <li>
@@ -312,9 +308,7 @@
             </nav-second-level>
           </li>
 
-
-
-          <li id="reports">
+          <li id="reports" hidden$="{{hidereportmenu}}">
             <a href="" aria-hidden="true"><i class="fa fa-table fa-fw"></i>Report<span class="fa arrow"></span></a>
             <ul class="nav nav-second-level">
             <li id="enquiryreports">
@@ -374,19 +368,20 @@
             </li>
             <li id="pendingcheques">
             <a href="" aria-hidden="true" on-click="FnPendingCheques">Pending Cheques</a>
-           </li>
+            </li>
+            <li id="pdccheques">
+            <a href="" aria-hidden="true" on-click="FnPdcCheques">PDC Cheques</a>
+            </li>
            </ul>
             </li>
             </ul>
-          </li> 
-
-           
-           
+          </li>         
           
-          <li id="admform">
-            <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Admission Form<!-- <span class="fa arrow"></span> --></a>
-          </li>
-          <li id="collcnentry">
+          <!-- <li id="admform">
+            <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Admission Form<!-- <span class="fa arrow"></span> -->
+            <!-- </a>
+          </li> --> 
+          <!-- <li id="collcnentry">
             <a href="#"><i class="fa fa-wrench fa-fw"></i> Collection Entry<span class="fa arrow"></span></a>
             <ul class="nav nav-second-level">
               <li>
@@ -409,11 +404,11 @@
               </li>
             </ul>
             <!-- /.nav-second-level -->
-          </li>
+          <!-- </li> 
           <li id="admapp">
             <a href="#"><i class="fa fa-sitemap fa-fw"></i> Admission Approval
                         <!-- /.nav-second-level -->
-          </li>
+          <!-- </li>  -->
 
         </ul>
       </div>
@@ -674,26 +669,34 @@
       ready:function(){
         this.schoolname=localStorage.getItem("schoolname");
         this.username=localStorage.getItem("employeename");
+        this.hideenquirymenu=true;
+        this.hidebalancefollowupmenu=true;
+        this.hidefeestructurereportmenu=true;
+        this.hidefeestructuremenu=true;
+        this.hideenrollmentmenu=true;
+        this.hidefeepaymentmenu=true;
+        this.hidemasterreportmenu=true;
+        this.hidereportmenu=true;
       },
       Fncheck:function(){
-        if(localStorage.getItem("enquiry")=='true'){
-          this.$.enquiry.hidden=true;
-        }
-        if(localStorage.getItem("dashboard")=='true'){
-          this.$.dashboard.hidden=true;
-        }
-        if(localStorage.getItem("followup")=='true'){
-          this.$.followup.hidden=true;
-        }
-        if(localStorage.getItem("admissionform")=='true'){
-          this.$.admform.hidden=true;
-        }
-        if(localStorage.getItem("collectionentry")=='true'){
-          this.$.collcnentry.hidden=true;
-        }
-        if(localStorage.getItem("admapproval")=='true'){
-          this.$.admapp.hidden=true;
-        }
+        // if(localStorage.getItem("enquiry")=='true'){
+        //   this.$.enquiry.hidden=true;
+        // }
+        // if(localStorage.getItem("dashboard")=='true'){
+        //   this.$.dashboard.hidden=true;
+        // }
+        // if(localStorage.getItem("followup")=='true'){
+        //   this.$.followup.hidden=true;
+        // }
+        // if(localStorage.getItem("admissionform")=='true'){
+        //   this.$.admform.hidden=true;
+        // }
+        // if(localStorage.getItem("collectionentry")=='true'){
+        //   this.$.collcnentry.hidden=true;
+        // }
+        // if(localStorage.getItem("admapproval")=='true'){
+        //   this.$.admapp.hidden=true;
+        // }
 
       },
       FnFeetypeschedule:function(e){
@@ -879,13 +882,11 @@
         this.$.scheduleservice.fetchacademicyearService();
         this.$.scheduleservice.fetchadmissionyearService();
       },
-
       FnSearchReceipt:function(){
         this.$.scheduleservice.fetchacademicyearService();
         document.querySelector('app-list').setPage("searchreceipt","Search Receipt");
         document.querySelector('searchreceipt-card').ready();
       },
-
       FnPendingCheques:function(){
         document.querySelector('app-list').setPage("pendingcheques-report","Pending Cheques Report");
         document.querySelector('pendingcheques-report').ready();
@@ -900,8 +901,6 @@
       },
       FnDailyCollectionReport:function(){
         document.querySelector('app-list').setPage("dailycollection-report","Daily Collection Report");
-        // document.querySelector('dailycollection-report').ready();
-        // document.querySelector('dailycollection-report').FnRefresh();
         document.querySelector('dailycollection-report').FnCallService();
       },
       FnShowBounceCheques:function(){
@@ -924,6 +923,58 @@
         localStorage.setItem("curr_sess_feetypepayment","Commitment Fee (Ins1)");
         localStorage.setItem("curr_sess_provisionflag",1);
         document.querySelector('provisionalfee-card').callService();
+      },
+      FnPdcCheques:function(){
+
+      },
+      setRoleview:function(){
+       if(localStorage.getItem("roleid")=="ROLE101") 
+       {
+        this.hideenquirymenu=false;
+        this.hidebalancefollowupmenu=true;
+        this.hidefeestructurereportmenu=true;
+        this.hidefeestructuremenu=true;
+        this.hideenrollmentmenu=false;
+        this.hidefeepaymentmenu=false;
+        this.hidemasterreportmenu=true;
+        this.hidereportmenu=false;
+       }
+       else if(localStorage.getItem("roleid")=="ROLE102") 
+       {
+        this.hideenquirymenu=false;
+        this.hidebalancefollowupmenu=false;
+        this.hidefeestructurereportmenu=true;
+        this.hidefeestructuremenu=true;
+        this.hideenrollmentmenu=false;
+        this.hidefeepaymentmenu=false;
+        this.hidemasterreportmenu=true;
+        this.hidereportmenu=false;
+       }
+       else if(localStorage.getItem("roleid")=="ROLE103") 
+       {
+        this.hideenquirymenu=false;
+        this.hidebalancefollowupmenu=true;
+        this.hidefeestructurereportmenu=false;
+        this.hidefeestructuremenu=true;
+        this.hideenrollmentmenu=false;
+        this.hidefeepaymentmenu=false;
+        this.hidemasterreportmenu=false;
+        this.hidereportmenu=false;
+       }
+       if(localStorage.getItem("roleid")=="ROLE106") 
+       {
+        this.hideenquirymenu=true;
+        this.hidebalancefollowupmenu=true;
+        this.hidefeestructurereportmenu=false;
+        this.hidefeestructuremenu=false;
+        this.hideenrollmentmenu=true;
+        this.hidefeepaymentmenu=false;
+        this.hidemasterreportmenu=false;
+        this.hidereportmenu=false;
+       }
+      },
+      FnSignout:function(){
+        window.location.href="../index.html";
       }
     });
   })();

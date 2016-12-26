@@ -56,6 +56,7 @@
       <h4>ADD CHEQUE DETAILS</h4>
        <div  class="layout" style='margin-left: -4%;'><paper-input required error-message="needs Cheque number!" allowed-pattern="[1-9a-zA-Z]" id="chequeno" label="Enter the Cheque No:" value="{{chequeno}}"> </paper-input></div>
        <div  class="layout" style='margin-left: 8%;'> <paper-input required allowed-pattern="[a-zA-Z ]"  error-message="Requires bankName!"  id="bankname" label="Enter the Bank Name" value="{{bankname}}"> </paper-input></div>
+       <div><installment-date-picker showdate="{{installmentdate}}"></installment-date-picker></div>
        <div>
        <receiptdatepicker-card showdate="{{installmentdate}}"></receiptdatepicker-card></div>
       <div class="buttons">
@@ -69,6 +70,7 @@
     <h4>ADD CREDIT DETAILS</h4>
      <div  class="layout" style='margin-left: -4%;'><paper-input required allowed-pattern="[1-9a-zA-Z]" error-message="Requiress Reference number!"  id="chequeno" label="Enter Reference No:" value="{{referenceno}}"> </paper-input></div>
      <div  class="layout" style='margin-left: 8%;'> <paper-input required allowed-pattern="[a-zA-Z ]"  error-message="Requires BankName!"  id="bankname" label="Enter the Bank Name" value="{{refbankname}}"> </paper-input></div>
+     <div><installment-date-picker showdate="{{installmentdate}}"></installment-date-picker></div>
      <div>
      <receiptdatepicker-card showdate="{{installmentdate}}"></receiptdatepicker-card></div>
     <div class="buttons">
@@ -105,15 +107,6 @@
           d="0"+d;
         var current_date=m+"/"+d+"/"+y;
 
-        /*for(var i=0i<installmentarr.length;i++){
-          if(installmentarr[i].installmenttype==localStorage.getItem("curr_sess_feetype")&&installmentarr[i].installment==this.installment&&installmentarr[i].paymentmode==paymenttype){
-            
-          }
-          else if(installmentarr[i].installmenttype==localStorage.getItem("curr_sess_feetype")&&installmentarr[i].installment==this.installment&&installmentarr[i].paymentmode!=paymenttype){
-            installmentarr.splice(i,1);
-          }
-        }*/
-        
         if(paymenttype=="Cash"){ 
           // var installmentarr=[];
             obj.paymenttype=paymenttype;
@@ -129,11 +122,12 @@
             obj.paiddate=current_date;
             obj.receiptdate=localStorage.getItem("curr_sess_receiptdate");
             obj.paidstatus="paid";
-            installmentarr.push(obj);
-            if(localStorage.getItem("curr_sess_feetypepayment")=="Registration fee")
-            document.querySelector('registerationfee-card').FnSetfee(installmentarr); 
-            else if(localStorage.getItem("curr_sess_feetypepayment")=="Application fee")
-            document.querySelector('prospectousfee-card').FnSetfee(installmentarr);     
+            this.FnPrepareInstallment(obj);   
+            // installmentarr.push(obj);
+            // if(localStorage.getItem("curr_sess_feetypepayment")=="Registration fee")
+            // document.querySelector('registerationfee-card').FnSetfee(installmentarr); 
+            // else if(localStorage.getItem("curr_sess_feetypepayment")=="Application fee")
+            // document.querySelector('prospectousfee-card').FnSetfee(installmentarr);     
         }
         if(paymenttype=="Cheque"){          
           this.$.chequeinfo.toggle();                               
@@ -168,17 +162,18 @@
             obj.installmentdate=this.installmentdate;
             obj.chequeno=this.chequeno;
             obj.bankname=this.bankname;
-            obj.chequedate=localStorage.getItem("curr_sess_chequedate");
+            obj.chequedate=localStorage.getItem("curr_sess_installmentdate");
             obj.receiveddate=current_date;            
             obj.chequestatus="inprogress";          
             obj.paidstatus="paid";
-            obj.receiptdate=localStorage.getItem("curr_sess_receiptdate");           
-            installmentarr.push(obj);
-            // alert(JSON.stringify(installmentarr));
-            if(localStorage.getItem("curr_sess_feetypepayment")=="Registration fee")
-            document.querySelector('registerationfee-card').FnSetfee(installmentarr); 
-            else if(localStorage.getItem("curr_sess_feetypepayment")=="Application fee")
-            document.querySelector('prospectousfee-card').FnSetfee(installmentarr); 
+            obj.receiptdate=localStorage.getItem("curr_sess_receiptdate");
+            this.FnPrepareInstallment(obj);              
+            // installmentarr.push(obj);
+            // // alert(JSON.stringify(installmentarr));
+            // if(localStorage.getItem("curr_sess_feetypepayment")=="Registration fee")
+            // document.querySelector('registerationfee-card').FnSetfee(installmentarr); 
+            // else if(localStorage.getItem("curr_sess_feetypepayment")=="Application fee")
+            // document.querySelector('prospectousfee-card').FnSetfee(installmentarr); 
       },
       FnCancelcheque:function(){
         this.$.chequeinfo.toggle();
@@ -214,12 +209,9 @@
             obj.paiddate=localStorage.getItem("curr_sess_chequedate");            
             obj.paidstatus="paid";  
             obj.receiptdate=localStorage.getItem("curr_sess_receiptdate");        
-            installmentarr.push(obj);
+            // installmentarr.push(obj);
             // alert(JSON.stringify(installmentarr));
-            if(localStorage.getItem("curr_sess_feetypepayment")=="Registration fee")
-            document.querySelector('registerationfee-card').FnSetfee(installmentarr); 
-            else if(localStorage.getItem("curr_sess_feetypepayment")=="Application fee")
-            document.querySelector('prospectousfee-card').FnSetfee(installmentarr); 
+            this.FnPrepareInstallment(obj);   
       },
       FnCancelcredit:function(){
         this.$.chequeinfo.toggle();
@@ -227,6 +219,20 @@
       },
       FnRefresh:function(){
         installmentarr=[];
+      },
+      FnPrepareInstallment:function(obj){        
+        for(var i=0;i<installmentarr.length;i++){
+          if(installmentarr[i].installment==obj.installment){
+            installmentarr.splice(i,1);
+          }
+        }
+        installmentarr.push(obj);
+        // alert(JSON.stringify(installmentarr));
+        // document.querySelector('fees-card').FnSetfee(installmentarr); 
+          if(localStorage.getItem("curr_sess_feetypepayment")=="Registration fee")
+          document.querySelector('registerationfee-card').FnSetfee(installmentarr); 
+            else if(localStorage.getItem("curr_sess_feetypepayment")=="Application fee")
+            document.querySelector('prospectousfee-card').FnSetfee(installmentarr); 
       }
     });
   })();

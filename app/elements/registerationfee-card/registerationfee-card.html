@@ -205,7 +205,7 @@
         this.fees=localStorage.getItem("curr_sess_fees");
         this.hiddeninstallment=false;
         this.hiddenaddbtn=false;
-        document.querySelector('#waiveoff').checked=false;
+        document.querySelector('#regwaiveoffhandler').checked=false;
       },
       FnRefresh:function(){
         installment=[];
@@ -223,6 +223,7 @@
         this.payableamount="";
         this.feearr=[];
         this.enquiryarr=[];
+        document.querySelector('#regwaiveoffhandler').checked=false;
       }
 
     });

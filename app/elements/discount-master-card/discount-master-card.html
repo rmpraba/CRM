@@ -117,6 +117,7 @@
         this.hidegradecard=true;
         this.hidepercent=true;
         this.percentage=0;
+        gradearr=[];
       },
       allHandler:function(){
         if(document.querySelector("#discountformall").checked==true)
@@ -157,6 +158,7 @@
         }
       },
       FnSetGrades:function(arr){
+        // alert(JSON.stringify(arr));
         gradearr=arr;
       },
       FnSelectGrade:function(e){
@@ -189,11 +191,12 @@
         document.querySelector('#discountadmissionyear').selected=-1;
         document.querySelector('#distype').selected=-1;
         document.querySelector('#discountfeetype').selected=-1;
-         this.$.discountformall.checked=true;
+        this.$.discountformall.checked=true;
         this.$.discountformspec.checked=false;
         this.hidegradecard=true;
-        document.querySelector('schooltype-to-grade-displaycard').ready();
         document.querySelector('schooltype-to-grade-displaycard').FnRefresh();
+        document.querySelector('schooltype-to-grade-displaycard').ready();
+        
       },
       FnSubmit:function(){
         // alert(JSON.stringify(gradearr));

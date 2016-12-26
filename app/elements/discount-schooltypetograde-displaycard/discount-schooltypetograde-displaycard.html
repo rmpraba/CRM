@@ -3,7 +3,7 @@
 <link rel="import" href="../schooltype-checkcard/schooltype-checkcard.html">
 <link rel="import" href="../schooltypegrade-checkcard/schooltypegrade-checkcard.html">
 
-<dom-module id="schooltype-to-grade-displaycard">
+<dom-module id="discount-schooltypetograde-displaycard">
   <template>
     <style>
     .schooltype{
@@ -13,6 +13,7 @@
       @apply(--layout-horizontal);
     }
     </style>
+
     <div class='schooltype' hidden$="{{hidegradecard}}">   
       <template  is="dom-repeat" items="{{schooltypearr}}" as="item">
         <div class='schooltype'> 
@@ -20,6 +21,7 @@
         </div>
       </template>     
     </div> 
+
   <!-- Fetching grade -->
   <iron-ajax
         method="post"
@@ -39,9 +41,8 @@
     var allgrades=[];
     var type="";
     Polymer({
-      is: 'schooltype-to-grade-displaycard',
+      is: 'discount-schooltypetograde-displaycard',
       ready:function(){
-        // alert('ready');
         this.schooltypearr=[];
         this.hidegradecard=true;
         this.fetchschooltypegradeurl=sessionStorage.getItem("addrinfo")+"/fetchschooltypegrade-service";
@@ -52,9 +53,7 @@
         for(var i=0;i<schooltypearr.length;i++){
           allgrades.push(schooltypearr[i].grade_id);
         }
-        document.querySelector('feetype-schedule-card').FnSetGrades(allgrades);
         document.querySelector('discount-master-card').FnSetGrades(allgrades);
-        // document.querySelector('fee-structure-schedulecard').FnSetGrades(allgrades);
         var a=[];
         var overall=[];
         var arr=[];
@@ -104,13 +103,9 @@
         if(temp==0)
           gradearr.push(gradeid);
         }
-        
-        document.querySelector('feetype-schedule-card').FnSetGrades(gradearr);
         document.querySelector('discount-master-card').FnSetGrades(gradearr);
-        // document.querySelector('fee-structure-schedulecard').FnSetGrades(gradearr);
       },
       FnRefresh:function(){
-        // alert('refresh');
         gradearr=[];
         allgrades=[];
         type="";

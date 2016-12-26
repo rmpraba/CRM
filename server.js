@@ -2561,6 +2561,7 @@ app.post('/insertchequefees',  urlencodedParser,function (req, res){
         bank_name:req.query.bankname,
         fine_amount:req.query.fineamount,
         provision_payment:req.query.provisionflag,
+        cheque_date:req.query.chequedate,
         receipt_no:""
     };
 
