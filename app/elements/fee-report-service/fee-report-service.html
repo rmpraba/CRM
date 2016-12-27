@@ -80,7 +80,7 @@
         on-response="fetchbouncechequesResponse"
         debounce-duration="300"
         >
-        <!-- It would fetch pdc cheques-->
+     <!-- It would fetch pdc cheques-->
      <iron-ajax
         method="post"
         id="fetchpdcchequesajax"
@@ -89,6 +89,17 @@
         handle-as="json"
         content-type="application/json"
         on-response="fetchpdcchequesResponse"
+        debounce-duration="300"
+        >
+     <!-- It would fetch discount structure-->
+     <iron-ajax
+        method="post"
+        id="fetchdiscountstructureajax"
+        url="{{fetchdiscountstructureurl}}"
+        params="{{fetchdiscountstructureparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchdiscountstructureResponse"
         debounce-duration="300"
         >
         
@@ -414,7 +425,7 @@
       },
       fetchpdcchequesResponse:function(e){
         var arr=e.detail.response.returnval;
-        alert(JSON.stringify(arr));
+        // alert(JSON.stringify(arr));
         var noofstudents=0;
         var totalamount=0;
         if(arr!='no rows'){
@@ -432,6 +443,33 @@
         {
           arr=[];
           document.querySelector('pdccheques-report-card').pdcarr=arr;
+        }
+      },
+      FnFetchDiscountStructureService:function(admissionyear
+          ,academicyear){
+        this.fetchdiscountstructureurl=sessionStorage.getItem("addrinfo")+"/fetchdiscountstructure-service";
+        var obj={"schoolid":"","fromdate":"","todate":""};
+        obj.schoolid=localStorage.getItem("schoolid");
+        obj.fromdate=localStorage.getItem("localsess_from_date");
+        obj.todate=localStorage.getItem("localsess_to_date");
+        obj.admissionyear=admissionyear;
+        obj.academicyear=academicyear;
+        this.fetchdiscountstructureparam=obj;
+        this.$.fetchdiscountstructureajax.generateRequest();
+      },
+      fetchdiscountstructureResponse:function(e){
+        var arr=e.detail.response.returnval;
+        if(arr!='no rows'){
+          for(var i=0;i<arr.length;i++)
+          {
+          arr[i].sno=i+1;        
+          }
+          document.querySelector('discount-structure-report').discountarr=arr;
+        }
+        else
+        {
+          arr=[];
+          document.querySelector('discount-structure-report').discountarr=arr;
         }
       }      
     });

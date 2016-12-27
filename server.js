@@ -5110,6 +5110,28 @@ app.post('/fetchpdccheques-service',  urlencodedParser,function (req, res){
  });
 
 
+app.post('/fetchdiscountstructure-service',  urlencodedParser,function (req, res){
+   var qur = "SELECT * FROM mlzscrm.md_discount_master where academic_year='"+req.query.academicyear+"' and admission_year='"+req.query.admissionyear+"' and (from_date>='"+req.query.fromdate+"' "+
+             "or to_date<='"+req.query.todate+"') and school_id='"+req.query.schoolid+"' ";
+ console.log('-----------------------fetch discount structure--------------------------');
+ console.log(qur);
+ console.log('-------------------------------------------------');
+   connection.query(qur,
+     function(err, rows){
+       if(!err){
+         if(rows.length>0){
+           res.status(200).json({'returnval': rows});
+         }else{
+           console.log(err);
+           res.status(200).json({'returnval':'no rows'});
+         }
+       }else{
+         console.log(err);
+       }
+     });
+ });
+
+
 /*this function is used to fetch the detail of the follow up detail of the specific followup no and by its id*/
 app.post('/detailshow',  urlencodedParser,function (req, res){
 
