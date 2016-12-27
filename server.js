@@ -5088,6 +5088,26 @@ app.post('/fetchbouncecheques-service',  urlencodedParser,function (req, res){
      });
  });
 
+app.post('/fetchpdccheques-service',  urlencodedParser,function (req, res){
+   var qur = "SELECT * FROM mlzscrm.md_student_paidfee where cheque_date>='"+req.query.fromdate+"' "+
+             "and cheque_date<='"+req.query.todate+"' and school_id='"+req.query.schoolid+"' and paid_status in('inprogress') or cheque_status in('inprogress') and cheque_status not in('bounced','cancelled')";
+ console.log('-----------------------fetch pdc cheque--------------------------');
+ console.log(qur);
+ console.log('-------------------------------------------------');
+   connection.query(qur,
+     function(err, rows){
+       if(!err){
+         if(rows.length>0){
+           res.status(200).json({'returnval': rows});
+         }else{
+           console.log(err);
+           res.status(200).json({'returnval':'no rows'});
+         }
+       }else{
+         console.log(err);
+       }
+     });
+ });
 
 
 /*this function is used to fetch the detail of the follow up detail of the specific followup no and by its id*/

@@ -69,7 +69,7 @@
         on-response="dailycollectionreportResponse"
         debounce-duration="300"
         >
-           <!-- It would fetch bounce cheques-->
+        <!-- It would fetch bounce cheques-->
      <iron-ajax
         method="post"
         id="fetchbouncechequesajax"
@@ -80,6 +80,18 @@
         on-response="fetchbouncechequesResponse"
         debounce-duration="300"
         >
+        <!-- It would fetch pdc cheques-->
+     <iron-ajax
+        method="post"
+        id="fetchpdcchequesajax"
+        url="{{fetchpdcchequesurl}}"
+        params="{{fetchpdcchequesparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchpdcchequesResponse"
+        debounce-duration="300"
+        >
+        
   </template>
   <script>
   (function() {
@@ -389,6 +401,37 @@
         {
           arr=[];
           document.querySelector('bouncecheque-displaycard').bouncechequearr=arr;
+        }
+      },
+      FnFetchPDCService:function(){
+        this.fetchpdcchequesurl=sessionStorage.getItem("addrinfo")+"/fetchpdccheques-service";
+        var obj={"schoolid":"","fromdate":"","todate":""};
+        obj.schoolid=localStorage.getItem("schoolid");
+        obj.fromdate=localStorage.getItem("localsess_from_date");
+        obj.todate=localStorage.getItem("localsess_to_date");
+        this.fetchpdcchequesparam=obj;
+        this.$.fetchpdcchequesajax.generateRequest();
+      },
+      fetchpdcchequesResponse:function(e){
+        var arr=e.detail.response.returnval;
+        alert(JSON.stringify(arr));
+        var noofstudents=0;
+        var totalamount=0;
+        if(arr!='no rows'){
+        for(var i=0;i<arr.length;i++)
+        {
+        arr[i].sno=i+1;        
+        noofstudents=parseFloat(noofstudents)+1;
+        totalamount=parseFloat(totalamount)+parseFloat(arr[i].installment_amount);
+        }
+        document.querySelector('pdccheques-report-card').pdcarr=arr;
+        document.querySelector('pdccheques-report-card').noofstudents=noofstudents;
+        document.querySelector('pdccheques-report-card').totalcollection=totalamount;
+        }
+        else
+        {
+          arr=[];
+          document.querySelector('pdccheques-report-card').pdcarr=arr;
         }
       }      
     });

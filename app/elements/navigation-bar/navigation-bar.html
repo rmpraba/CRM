@@ -7,7 +7,7 @@
 <link rel="import" href="../fee-card/fee-card.html">
 <link rel="import" href="../followup-details/followup-details.html">
 <link rel="import" href="../fee-reports/fee-reports.html">
-<link rel="import" href="../feetype-schedule-card/feetype-schedule-card.html">
+<link rel="import" href="../feetype-schedule-capdcrd/feetype-schedule-card.html">
 <link rel="import" href="../discount-schedule-card/discount-schedule-card.html">
 
 <dom-module id="navigation-bar">
@@ -928,7 +928,8 @@
         document.querySelector('provisionalfee-card').callService();
       },
       FnPdcCheques:function(){
-
+        document.querySelector('app-list').setPage("pdccheques-report-card","PDC Cheques");
+        document.querySelector('pdccheques-report-card').callService();
       },
       setRoleview:function(){
        if(localStorage.getItem("roleid")=="ROLE101") 
