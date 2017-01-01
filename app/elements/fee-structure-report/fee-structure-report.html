@@ -1,37 +1,113 @@
-<!--
-@license
-Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="../fee-report-service/fee-report-service.html">
 
 <dom-module id="fee-structure-report">
   <template>
     <style>
-      :host {
-        display: block;
+      .datecard {
+        @apply(--layout-horizontal);
       }
     </style>
-    <div>Hello from <span>{{foo}}</span></div>
+    <div class="row">
+        <div class="well well-sm">
+          <div class="row">
+            <div class="col-md-12">
+              <!-- <div class="col-md-6"> -->
+          <!-- <div class="list-group col-sm-12 panel-body form-category"> -->
+          <div class="col-sm-3 enquiry-input">
+          <paper-dropdown-menu label="Admission Year" attr-for-selected="value">
+            <paper-menu id="discountadmissionyear" class="dropdown-content" required on-iron-select="FnSelectAdmissionYear" valueattr="value" >
+              <template  is="dom-repeat" items="{{admissionarr}}" as="item">
+              <paper-item>{{item.admission_year}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu>
+          </div>
+
+          <div class="col-sm-3">
+          <paper-dropdown-menu label="Academic Year" attr-for-selected="value">
+            <paper-menu id="discountacademicyear" class="dropdown-content" required on-iron-select="FnSelectAcademicYear" valueattr="value" >
+              <template  is="dom-repeat" items="{{academicarr}}" as="item">
+              <paper-item>{{item.academic_year}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu> 
+          </div>
+          <!-- </div> -->
+               <!--  <div class="col-md-3" style="margin-top: -1%;">
+                  <fromdate-pickercard></fromdate-pickercard>
+                </div>
+                <div class="col-md-3" style="margin-top: -1%;">
+                  <todate-pickercard></todate-pickercard>
+                </div> -->
+                <div class="col-md-2" style="margin-top: 1%;">
+                  <paper-button on-click="FnView" class="btn btn-primary">View</paper-button>
+                </div>
+
+                <div class="col-md-2" style="margin-top: 1%;">
+                  <input type="button" id="btn2" onclick="tableToExcel('feestructurereport', 'Fee structure report')" value="Export to Excel">
+                </div>   
+              <!-- </div> -->
+            </div>
+          </div>
+        </div>
+    </div>
+     <table class="table table-hover" id="feestructurereport">
+      <thead>
+      <tr>
+        <!-- <th>#</th><th>Academic Year</th><th>Admission Year</th><th>Grade</th><th>Category</th><th>From Date</th><th>To Date</th><th>Fee Type</th><th>Amount</th><th>Discount %</th> -->
+        <template  is="dom-repeat" items="{{titlearr}}" as="item">
+        <th>{{item}}</th>
+        </template>
+      </tr>
+      </thead>
+      <tbody>
+      <template  is="dom-repeat" items="{{feestructurearr}}" as="item">
+        <tr><td>{{item.sno}}</td><td>{{item.admissionyear}}</td><td>{{item.academicyear}}</td><td>{{item.grade}}</td>
+        <template  is="dom-repeat" items="{{item.feetypes}}" as="i">
+        <td>{{i.kitfee}}</td><td>{{i.annualfee}}</td>
+        <td>{{i.tutionfee}}</td><td>{{i.registrationfee}}</td>
+        </template>
+        <td>{{item.totalfee}}</td>
+        </tr>
+      </template>
+      <!-- <tr><th colspan="11" style="text-align: right;">Total Amount: &nbsp;&nbsp;{{totalamount}}</th></tr> -->
+      </tbody>
+    </table>    
+
+    <fee-report-service id="feereportservice"></fee-report-service>
   </template>
+  <script type="text/javascript">
+      var tableToExcel = (function() {
+      var uri = 'data:application/vnd.ms-excel;base64,'
+      , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
+     , base64 = function(s) { return window.btoa(unescape(encodeURIComponent(s))) }
+     , format = function(s, c) { return s.replace(/{(\w+)}/g, function(m, p) { return c[p]; }) }
+     return function(table, name) {
+     if (!table.nodeType) table = document.getElementById(table)
+     var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}
+     window.location.href = uri + base64(format(template, ctx))
+     }
+     })()
+  </script>
   <script>
   (function() {
     'use strict';
-
+    var admissionyear,academicyear;
     Polymer({
       is: 'fee-structure-report',
-
-      properties: {
-        foo: {
-          type: String,
-          value: 'fee-structure-report',
-          notify: true
-        }
+      FnSelectAdmissionYear:function(e){
+        admissionyear=(e.target.selectedItem.textContent).trim();
+      },
+      FnSelectAcademicYear:function(e){
+        academicyear=(e.target.selectedItem.textContent).trim();
+      },
+      callService:function(){        
+        // this.$.feereportservice.FnFetchDiscountStructureService();
+      },
+      FnView:function(){
+        this.$.feereportservice.FnFetchFeeStructureService(admissionyear,academicyear);
       }
     });
   })();

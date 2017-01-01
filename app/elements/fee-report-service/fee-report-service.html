@@ -102,6 +102,17 @@
         on-response="fetchdiscountstructureResponse"
         debounce-duration="300"
         >
+      <!-- It would fetch fee structure-->
+     <iron-ajax
+        method="post"
+        id="fetchfeestructureajax"
+        url="{{fetchfeestructureurl}}"
+        params="{{fetchfeestructureparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchfeestructureResponse"
+        debounce-duration="300"
+        >
         
   </template>
   <script>
@@ -471,7 +482,103 @@
           arr=[];
           document.querySelector('discount-structure-report').discountarr=arr;
         }
-      }      
+      } ,
+      FnFetchFeeStructureService:function(admissionyear
+          ,academicyear){
+        this.fetchfeestructureurl=sessionStorage.getItem("addrinfo")+"/fetchfeestructure-service";
+        var obj={"schoolid":"","fromdate":"","todate":""};
+        obj.schoolid=localStorage.getItem("schoolid");
+        obj.fromdate=localStorage.getItem("localsess_from_date");
+        obj.todate=localStorage.getItem("localsess_to_date");
+        obj.admissionyear=admissionyear;
+        obj.academicyear=academicyear;
+        this.fetchfeestructureparam=obj;
+        this.$.fetchfeestructureajax.generateRequest();
+      },
+      fetchfeestructureResponse:function(e){
+        var arr=e.detail.response.returnval;
+        var title=e.detail.response.titlearr;
+        var titlearr=[];
+        titlearr.push('#');
+        titlearr.push('Academic Year');
+        titlearr.push('Admission Year');
+        titlearr.push('Grade');
+        for(var i=0;i<title.length;i++){
+          titlearr.push(title[i].fee_type);
+        }
+        titlearr.push('Total');
+        // alert(JSON.stringify(title));
+        // alert(JSON.stringify(arr));
+        
+        // for(var i=0;i<title.length;i++){
+          // obj[title[i].fee_type]=1000;
+        // }
+        // alert(JSON.stringify(obj));
+
+       var a=[];
+       var overall=[];
+       for(var i=0;i<arr.length;i++)
+       {       
+        var nameobj={"feecode":""};
+        nameobj.feecode=arr[i].fee_code; 
+        nameobj.academicyear=arr[i].academic_year;
+        nameobj.admissionyear=arr[i].admission_year; 
+        nameobj.grade=arr[i].grade;
+        nameobj.totalfee=arr[i].fees;
+        var obj={};
+
+        for(var x=0;x<title.length;x++){
+          if(title[x].fee_type==arr[i].fee_type)
+            obj[title[x].fee_type]=arr[i].total_fee;
+        }
+        alert(JSON.stringify(obj));
+        a.push(obj);
+        for(var j=i+1;j<arr.length;j++)
+        {
+           // alert(arr[i].fee_code+"  "+arr[j].fee_code);
+           var f=0;
+           if(arr[i].fee_code==arr[j].fee_code)
+           {
+             var obj1={};             
+             var currfeetype="";             
+             for(var x=0;x<title.length;x++){              
+              currfeetype=title[x].fee_type;
+              f=1;
+              obj1[title[x].fee_type]=arr[j].total_fee;
+              }
+            }
+             if(f==0){
+              // alert('coming');
+              obj1[currfeetype]="0";
+             }
+             alert(JSON.stringify(obj1));
+             a.push(obj1);
+             arr.splice(j,1);
+             j--;
+        }
+        // }
+        nameobj.feetypes=a;
+        overall.push(nameobj);
+        a=[];        
+       }
+
+      alert(JSON.stringify(titlearr));
+      alert(JSON.stringify(overall));
+
+      document.querySelector('fee-structure-report').titlearr=titlearr;
+        if(overall!='no rows'){
+          for(var i=0;i<overall.length;i++)
+          {
+          overall[i].sno=i+1;        
+          }
+          document.querySelector('fee-structure-report').feestructurearr=overall;
+        }
+        else
+        {
+          overall=[];
+          document.querySelector('fee-structure-report').feestructurearr=overall;
+        }
+      }           
     });
   })();
   </script>

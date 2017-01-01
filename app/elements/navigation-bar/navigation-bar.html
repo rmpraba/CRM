@@ -946,6 +946,12 @@
         document.querySelector('app-list').setPage("discount-structure-report","Discount master");
         document.querySelector('discount-structure-report').callService();
       },
+      FnFeeStructureReport:function(){
+        this.$.scheduleservice.fetchacademicyearService();
+        this.$.scheduleservice.fetchadmissionyearService();
+        document.querySelector('app-list').setPage("fee-structure-report","Fee master");
+        document.querySelector('fee-structure-report').callService();
+      },
       setRoleview:function(){
        if(localStorage.getItem("roleid")=="ROLE101") 
        {

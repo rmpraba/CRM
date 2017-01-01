@@ -16,7 +16,7 @@
           <!-- <div class="list-group col-sm-12 panel-body form-category"> -->
           <div class="col-sm-2 enquiry-input">
           <paper-dropdown-menu label="Admission Year" attr-for-selected="value">
-            <paper-menu id="discountadmissionyear" class="dropdown-content" required on-iron-select="FnSelectAdmissionYear" valueattr="value" >
+            <paper-menu id="discountstructadmissionyear" class="dropdown-content" required on-iron-select="FnSelectAdmissionYear" valueattr="value" >
               <template  is="dom-repeat" items="{{admissionarr}}" as="item">
               <paper-item>{{item.admission_year}}</paper-item>
               </template>
@@ -26,7 +26,7 @@
 
           <div class="col-sm-2">
           <paper-dropdown-menu label="Academic Year" attr-for-selected="value">
-            <paper-menu id="discountacademicyear" class="dropdown-content" required on-iron-select="FnSelectAcademicYear" valueattr="value" >
+            <paper-menu id="discountstructacademicyear" class="dropdown-content" required on-iron-select="FnSelectAcademicYear" valueattr="value" >
               <template  is="dom-repeat" items="{{academicarr}}" as="item">
               <paper-item>{{item.academic_year}}</paper-item>
               </template>
@@ -110,6 +110,10 @@
       FnView:function(){
         this.$.feereportservice.FnFetchDiscountStructureService(admissionyear
           ,academicyear);
+      },
+      FnRefresh:function(){
+        document.querySelector('#discountstructacademicyear').selected=-1;
+        document.querySelector('#discountstructadmissionyear').selected=-1;
       }
     });
   })();

@@ -1345,13 +1345,12 @@ insertstudenthistoryResponse:function(e){
                       if(arr[i].fee_type=="Kit fee"){
                       arr[i].actualamount=parseFloat(arr[i].amount);
                       arr[i].amount=parseFloat(parseFloat(arr[i].amount)-parseFloat(discountarr[j].amount)).toFixed(2);
-                      // arr[i].discount=parseFloat(discountarr[j].amount);
-                        discountarr.splice(j,1);
+                      discountarr.splice(j,1);
                       }
                       else{
                       arr[i].actualamount=parseFloat(arr[i].amount);
-                      arr[i].amount=parseFloat(parseFloat(arr[i].amount)-(Math.ceil(parseFloat(parseFloat(discountarr[j].amount)/(parseInt(noofinstallment)-parseInt(arr[i].installment_no)))/1000)*1000)).toFixed(2);
-                      // arr[i].discount=(Math.ceil(parseFloat(parseFloat(discountarr[j].amount)/parseInt(noofinstallment))/1000)*1000);
+                      arr[i].amount=parseFloat(parseFloat(arr[i].amount)-(Math.ceil(parseFloat(parseFloat(discountarr[j].amount)/(parseInt(noofinstallment)-parseInt(arr[i].installment_amounto)))/1000)*1000)).toFixed(2);
+                      
                       discountarr[j].amount=parseFloat(parseFloat(discountarr[j].amount)-(Math.ceil(parseFloat(parseFloat(discountarr[j].amount)/(parseInt(noofinstallment)-parseInt(arr[i].installment_no)))/1000)*1000)).toFixed(2);
                       }
                       }
@@ -1359,17 +1358,12 @@ insertstudenthistoryResponse:function(e){
                 }
                 else{
                     if(arr[i].fee_type==discountarr[j].fee_type){
-                        // alert(i+ "  " +(arr.length));
                        if(arr[i].amount>0&&(i!=(parseInt(arr.length)))){
-                        // alert('come');
                        flag=1;
                        arr[i].actualamount=parseFloat(arr[i].amount);
-                       // arr[i].amount=parseFloat(parseFloat(arr[i].amount)-parseFloat(discountarr[j].amount)).toFixed(2);
                        arr[i].amount=parseFloat(parseFloat(arr[i].amount)-(Math.ceil(parseFloat(parseFloat(discountarr[j].amount)/(parseInt(noofinstallment)-parseInt(arr[i].installment_no)))/1000)*1000)).toFixed(2);
-                      // arr[i].discount=(Math.ceil(parseFloat(parseFloat(discountarr[j].amount)/parseInt(noofinstallment))/1000)*1000);
                       discountarr[j].amount=parseFloat(parseFloat(discountarr[j].amount)-(Math.ceil(parseFloat(parseFloat(discountarr[j].amount)/(parseInt(noofinstallment)-parseInt(arr[i].installment_no)))/1000)*1000)).toFixed(2);
                        }
-                       // arr[i].discount=parseFloat(discountarr[j].amount);
                     }
                 }
             }
@@ -1379,10 +1373,40 @@ insertstudenthistoryResponse:function(e){
             }
             }
             }
-        
-
+            else
+            {
+            for(var i=0;i<arr.length;i++){
+               arr[i].actualamount=parseFloat(arr[i].amount); 
+               arr[i].amount=parseFloat(arr[i].amount);
+            }    
+            //     var flag=0;                 
+            //     if(arr[i].base_fee_type=="Commitment Fee"){ 
+            //           if(arr[i].amount>0) {  
+            //           flag=1;                    
+            //           if(arr[i].fee_type=="Kit fee"){
+            //           arr[i].actualamount=parseFloat(arr[i].amount);
+            //           arr[i].amount=parseFloat(parseFloat(arr[i].amount)-parseFloat(0)).toFixed(2);
+            //           }
+            //           else{
+            //           arr[i].actualamount=parseFloat(arr[i].amount);
+            //           arr[i].amount=parseFloat(parseFloat(arr[i].amount)-(Math.ceil(parseFloat(parseFloat(0)/(parseInt(noofinstallment)-parseInt(arr[i].installment_amounto)))/1000)*1000)).toFixed(2);
+            //           }
+            //           }
+            //     }
+            //     else{
+            //            if(arr[i].amount>0&&(i!=(parseInt(arr.length)))){
+            //            flag=1;
+            //            arr[i].actualamount=parseFloat(arr[i].amount);
+            //            arr[i].amount=parseFloat(parseFloat(arr[i].amount)-(Math.ceil(parseFloat(parseFloat(0)/(parseInt(noofinstallment)-parseInt(arr[i].installment_no)))/1000)*1000)).toFixed(2);
+            //            }
+            //     }
+            // if(flag==0){
+            //    arr[i].actualamount=parseFloat(arr[i].amount); 
+            //    arr[i].amount=parseFloat(arr[i].amount);
+            // }
+            // }
+            }
         // alert(JSON.stringify(arr));
-
         var termarr=[];
         var installmentarr=[];
         
