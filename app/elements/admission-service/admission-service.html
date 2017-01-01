@@ -1729,8 +1729,7 @@ insertstudenthistoryResponse:function(e){
       },
       fetchallstudentforsearchService:function(){
         this.fetchallstudentforsearchurl=sessionStorage.getItem("addrinfo")+"/fetchallstudentforsearch-service";
-        var obj={"schoolid":"","academicyear":"","statusflag":""}        
-        // obj.academicyear=localStorage.getItem("curr_sess_academicyear");        
+        var obj={"schoolid":"","academicyear":"","statusflag":""}  
         obj.schoolid=localStorage.getItem("schoolid");  
         this.fetchallstudentforsearchparam=obj;     
         this.$.fetchallstudentforsearchajax.generateRequest();

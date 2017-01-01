@@ -5645,6 +5645,42 @@ app.post('/admissionsrequired',  urlencodedParser,function (req, res){
        }
      });
 });
+
+
+app.post('/fetchallstudentenquirysearch-service',  urlencodedParser,function (req, res){
+  var qur="SELECT distinct(enquiry_no),enquiry_name FROM student_enquiry_details where school_id='"+req.query.schoolid+"' and status='Enquired'";
+  connection.query(qur,
+    function(err, rows){
+      if(!err){
+        if(rows.length>0){
+          res.status(200).json({'returnval': rows});
+        } else {
+          console.log(err);
+          res.status(200).json({'returnval': 'no rows'});
+        }
+      } else {
+        console.log(err);
+      }
+    });
+});
+
+app.post('/fetchallstudentadmissionsearch-service',  urlencodedParser,function (req, res){
+  var qur="SELECT distinct(admission_no),student_name FROM md_admission where school_id='"+req.query.schoolid+"' ";
+  connection.query(qur,
+    function(err, rows){
+      if(!err){
+        if(rows.length>0){
+          res.status(200).json({'returnval': rows});
+        } else {
+          console.log(err);
+          res.status(200).json({'returnval': 'no rows'});
+        }
+      } else {
+        console.log(err);
+      }
+    });
+});
+
 function setvalue(){
   console.log("calling setvalue.....");
 }

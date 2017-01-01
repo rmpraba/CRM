@@ -4,6 +4,7 @@
 <link rel="import" href="..\admission-service/admission-service.html">
 <link rel="import" href="..\installment-card/installment-card.html">
 <link rel="import" href="..\fees-service/fees-service.html">
+<link rel="import" href="..\appregfee-service/appregfee-service.html">
 
 <dom-module id="fees-card">
 <style>
@@ -33,7 +34,7 @@
           <paper-icon-button suffix icon="search" on-click="FnSearchEnquiry" title="Search"></paper-icon-button>
           </paper-input>
           </div>
-          <div class="col-sm-5" style="margin-top: 2%;">
+          <div class="col-sm-4" style="margin-top: 2%;">
           <paper-dropdown-menu label="Select Enquiry/Admission No" on-iron-select="FnSelectEnquiry">
             <paper-listbox class="dropdown-content" id="feecardsearch">
             <template  is="dom-repeat" items="{{enquiryarr}}" as="item">
@@ -42,23 +43,32 @@
             </paper-listbox>
           </paper-dropdown-menu>
           </div> 
-          <div class="col-sm-3 enquiry-input" style="margin-top: 2%;margin-left: -5%;">
-          <paper-input label="Academic Year" value="{{academicyear}}"></paper-input>
-          </div>  
+          
+          <div class="col-md-4" style="margin-top: 2%;">
+                   <paper-input  label="Student Name" is="" value="{{value}}" on-keydown="FnSearchEnquiryy"></paper-input>
+                   <paper-listbox class="dropdown-content" id="schoolfeeinput" on-iron-select="FnSelectEnquiryy">
+                   <template is="dom-repeat" items="{{itemArray}}" as="item">
+                   <paper-item value="{{item.admission_no}}">{{item.itemdes}}</paper-item>
+                   </template>
+                   </paper-listbox>
+        </div>
      </div>
 
      <div class="form-group-heading">
         <h4>Student Detail</h4>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
-        <div class="col-sm-4 enquiry-input">
+        <div class="col-sm-3 enquiry-input">
           <paper-input label="Student Name" value="{{studentname}}"></paper-input>
         </div>
-        <div class="col-sm-4 enquiry-input">
+        <div class="col-sm-3 enquiry-input">
           <paper-input label="Parent Name" value="{{parentname}}"></paper-input>
         </div>
-         <div class="col-sm-4 enquiry-input">
+         <div class="col-sm-3 enquiry-input">
           <paper-input label="Grade" value="{{enquiredclass}}"></paper-input>
+        </div>
+        <div class="col-sm-3 enquiry-input" style="margin-top: 2%;margin-left: -5%;">
+          <paper-input label="Academic Year" value="{{academicyear}}"></paper-input>
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
@@ -161,6 +171,7 @@
     <admission-service id="admissionservice"></admission-service>
     <fees-service id="feeservice"></fees-service>
     <schedule-service id="schedulefee"></schedule-service>
+    <appregfee-service id="appregfeeservice"></appregfee-service>
        <!-- Fetch no of installment-->
      <iron-ajax
         method="post"
@@ -184,6 +195,7 @@
       var splitarr=[];
       var installmentarr=[];
       var installmenttemparr=[];
+      var item=[];
     Polymer({
       is: 'fees-card',
       ready:function(){
@@ -379,6 +391,7 @@
         document.querySelector('#feecardsearch').selected=-1;
         localStorage.setItem("curr_sess_enquiryno","");
         document.querySelector('#structuregeneral1').checked=true;
+         this.querySelector('#schoolfeeinput').style.visibility='hidden';
       },
       FnRefresh1:function(){
         this.flag=0;        
@@ -405,6 +418,7 @@
         document.querySelector('#feecardsearch').selected=-1;
         localStorage.setItem("curr_sess_enquiryno","");
         document.querySelector('#structuregeneral1').checked=true;
+         this.querySelector('#schoolfeeinput').style.visibility='hidden';
       },
       generalHandler:function(e){
         if(document.querySelector("#structuregeneral1").checked==true)
@@ -476,7 +490,95 @@
       } ,
       FnShowTitleFlag:function(){
         this.hiddentitleflag=false;
+      },
+      callService:function(){
+        this.$.appregfeeservice.fetchallstudentadmissionsearchService();
+      },
+      autocompletearr:function(autocompletearr)
+      {
+         item=autocompletearr;
+      },
+      FnSearchEnquiryy:function(e){
+      if(e.keyCode==13|| e.keyCode==40)
+      this.querySelector('#schoolfeeinput').focus();
+      var arr=[];
+      arr.push({"itemdes":"-----Select-----"});
+      this.querySelector('#schoolfeeinput').style.visibility='visible';
+      if(e.keyCode==8){
+        this.itemflag="true";
+        this.itemval="";
+        //alert('yes');
+        var len=(this.value).length;
+        if(len<=1){
+          this.querySelector('#schoolfeeinput').style.visibility='hidden';
+          this.itemArray="";
+          this.itemval="";
+        }
+        if(len>1){
+          this.querySelector('#schoolfeeinput').style.visibility='visible';
+          var backsubval=(((this.value).substring(0,(len-1))).trim()).toUpperCase();
+          for(var i=0;i<item.length;i++)
+          {
+            var subval=((item[i].student_name).trim()).substring(0,backsubval.length);
+            if((item[i].enquiry_name).toUpperCase().indexOf((this.value).toUpperCase())!=-1)
+            {
+              var obj={"itemdes":"","enquiry_no":""};
+              obj.itemdes=item[i].student_name;
+              obj.admission_no=item[i].admission_no;
+              arr.push(obj);
+            }
+          }
+          this.itemArray=arr;
+        }
       }
+      if(e.keyCode!=8&& e.keyCode!=16&& e.keyCode!=13 && e.keyCode!=38&&e.keyCode!=40&&e.keyCode!=37&&e.keyCode!=39){
+        if(this.itemflag=="true") {
+          this.itemval = (this.value).toUpperCase()+String.fromCharCode((e.keyCode)).toUpperCase();
+          this.itemflag="false";
+        }
+        else
+        this.itemval = this.value +String.fromCharCode((e.keyCode));
+        if(this.itemval.length>0)
+        {
+          for(var i=0;i<item.length;i++)
+          {
+            var subval=((item[i].student_name).trim()).substring(0,this.itemval.length);
+            if((item[i].student_name).toUpperCase().indexOf((this.itemval).toUpperCase())!=-1)
+            {
+              var obj={"itemdes":"","enquiry_no":""};
+              obj.itemdes=item[i].student_name;
+              obj.admission_no=item[i].admission_no;
+              arr.push(obj);
+            }
+          }
+          if(arr.length>0)
+            this.itemArray=arr;
+          else
+          {
+            var obj={"itemdes":"","enquiry_no":""};
+            obj.itemdes="No items found";
+            arr.push(obj);
+            this.itemArray=arr;
+          }
+        }
+      }
+    },
+    FnSelectEnquiryy:function(e){
+    this.querySelector('#schoolfeeinput').style.visibility='hidden';
+    var enquiry_name = e.target.selectedItem.textContent.trim();
+    var enquiry_no = e.target.selectedItem.value.trim();
+    localStorage.setItem("curr_sess_enquiryno",enquiry_no);
+    localStorage.setItem("curr_sess_enquiryname",enquiry_name);
+    this.itemArray=[];
+    document.querySelector('#schoolfeeinput').selected=-1;
+    this.value=enquiry_name;
+    // this.$.processingservice.fetchchequeforeditordelete(admission_no);
+    // localStorage.setItem("curr_sess_enquiryno",enquiry_no);
+    // localStorage.setItem("curr_sess_enquiryname",enquiry_name);
+    this.$.admissionservice.searchfeeadmissionpaidinfoService(enquiry_no);
+    this.$.admissionservice.searchfeeadmissioninfoService(enquiry_no);
+    }
+
     });
   })();
   </script>

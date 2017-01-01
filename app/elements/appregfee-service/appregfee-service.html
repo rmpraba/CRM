@@ -99,7 +99,7 @@
         on-response="searchprospectenquiryinfoResponse"
         debounce-duration="300"
         >
-<!-- It would insert the cash fee -->
+     <!-- It would insert the cash fee -->
      <iron-ajax
         method="post"
         id="insertcashfeesajax"
@@ -108,6 +108,29 @@
         handle-as="json"
         content-type="application/json"
         on-response="insertcashfeesResponse"
+        debounce-duration="300"
+        >
+     <!-- It would insert the cash fee -->
+     <iron-ajax
+        method="post"
+        id="fetchallstudentenquirysearchajax"
+        url="{{fetchallstudentenquirysearchurl}}"
+        params="{{fetchallstudentenquirysearchparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchallstudentenquirysearchResponse"
+        debounce-duration="300"
+        >
+        
+     <!-- It would insert the cash fee -->
+     <iron-ajax
+        method="post"
+        id="fetchallstudentadmissionsearchajax"
+        url="{{fetchallstudentadmissionsearchurl}}"
+        params="{{fetchallstudentadmissionsearchparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchallstudentadmissionsearchResponse"
         debounce-duration="300"
         >
   </template>
@@ -449,6 +472,28 @@
           if(e.detail.response.returnval=="Fee paid!"){
             alert('Fee waived off!!');
           }
+      },
+      fetchallstudentenquirysearchService:function(){
+        this.fetchallstudentenquirysearchurl=sessionStorage.getItem("addrinfo")+"/fetchallstudentenquirysearch-service";
+        var obj={"schoolid":"","academicyear":"","statusflag":""}  
+        obj.schoolid=localStorage.getItem("schoolid");  
+        this.fetchallstudentenquirysearchparam=obj;     
+        this.$.fetchallstudentenquirysearchajax.generateRequest();
+      },
+      fetchallstudentenquirysearchResponse:function(e){
+        document.querySelector('prospectousfee-card').autocompletearr(e.detail.response.returnval);
+      },
+      fetchallstudentadmissionsearchService:function(){
+        this.fetchallstudentadmissionsearchurl=sessionStorage.getItem("addrinfo")+"/fetchallstudentadmissionsearch-service";
+        var obj={"schoolid":"","academicyear":"","statusflag":""}  
+        obj.schoolid=localStorage.getItem("schoolid");  
+        this.fetchallstudentadmissionsearchparam=obj;     
+        this.$.fetchallstudentadmissionsearchajax.generateRequest();
+      },
+      fetchallstudentadmissionsearchResponse:function(e){
+        // alert(JSON.stringify(e.detail.response.returnval));
+        document.querySelector('registerationfee-card').autocompletearr(e.detail.response.returnval);
+        document.querySelector('fees-card').autocompletearr(e.detail.response.returnval);
       }
     });
   })();
