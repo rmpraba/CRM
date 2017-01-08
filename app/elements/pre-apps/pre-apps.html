@@ -235,15 +235,18 @@
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
-        <div class="col-sm-4">
-          <paper-input  id="idlocality" required readonly error-message="needs locality!" label="Enter location/Landmark" is="" value="{{textvalue}}" on-keydown="FnInputChanged"></paper-input>
+        <div class="col-sm-3" style="margin-top: 2%;">
+        <label>{{textvalue}}</label>
+        
+          <!-- <paper-input  id="idlocality" required readonly error-message="needs locality!" label="Enter location/Landmark" is="" value="{{textvalue}}" on-keydown="FnInputChanged"></paper-input>
           <paper-listbox class="dropdown-content" id="iditemlist" on-iron-select="Fnselected" valueattr="value">
             <template is="dom-repeat" items="{{itemArray}}" as="item">
               <paper-item value="{{item.itemid}}">{{item.itemdes}}</paper-item>
             </template>
-          </paper-listbox>
+          </paper-listbox> -->
         </div>
-        <div class="col-sm-4" style="margin-top: 2%;">
+        
+        <div class="col-sm-2" style="margin-top: 1.5%;margin-left: -5%;">
         <paper-icon-button icon="maps:place" on-click="FnToggleMap"></paper-icon-button>
         <paper-icon-button icon="check" on-click="getmapvalue"></paper-icon-button>
         <paper-dialog id="googlemap" modal>
@@ -253,7 +256,12 @@
           </div>
         </paper-dialog>
         </div>
-        <div class="col-sm-4" style='margin-top: -1%;'>
+        
+       <!--  <div class="col-sm-3" hidden$="{{hidelocation}}" style='margin-top: 2%;margin-left: -5%;'>
+        <label>Location:  {{textvalue}}</label>
+        </div> -->
+
+        <div class="col-sm-4" style='margin-top: -2%;'>
           <paper-dropdown-menu label="Enquiry Source" style="margin-top: 3%;">
             <paper-menu class="dropdown-content"  class="dropdown-content" id="enquiry-source" on-iron-select="source" >
               <template  is="dom-repeat" items="{{sourcearr}}" as="item">
@@ -262,16 +270,19 @@
             </paper-menu>
           </paper-dropdown-menu>
         </div>
-        <div class="col-sm-4" style='margin-top: -1%;' hidden$="{{selectreferral}}">
+
+        <div class="col-sm-3" style='margin-top: -2%;' hidden$="{{selectreferral}}">
           <paper-dropdown-menu label="Referral" style="margin-top: 3%;">
             <paper-menu class="dropdown-content"  class="dropdown-content" id="referral" on-iron-select="Fnreferral" >
               <template  is="dom-repeat" items="{{referralarr}}" as="item">
                 <paper-item>{{item.referral}}</paper-item>
-              </template>+
+              </template>
             </paper-menu>
           </paper-dropdown-menu>
         </div>
-      </div>  
+
+        </div>
+   
       <div class="list-group col-sm-12 panel-body form-category" hidden$="{{schooldetail}}">
         <div class="col-sm-6">
           <paper-input label="School Name" id = "schoolname" value="{{schoolname}}"></paper-input>
@@ -427,6 +438,10 @@
       is: 'pre-apps',
 
     ready:function(){
+      this.$.iditemlistz.hidden=true;
+      this.$.sibiditemlist.hidden=true;
+      this.textvalue="Pick your Location";
+      this.hidelocation=true;
       this.$.idparenthandler.checked=true;
       this.$.nextacademicyear.checked=true;
       this.guardianinfo=true;
@@ -481,9 +496,9 @@
         enrolltype="midyear";
         var dt=new Date();
         var month=dt.getMonth()+1;
-        yr1=(dt.getFullYear())-2000;
-        yr2=(dt.getFullYear()+1)-2000;
-        yearsxz='AY-'+dt.getFullYear()+'-'+(dt.getFullYear()+1);
+        yr1=(dt.getFullYear()-1)-2000;
+        yr2=(dt.getFullYear())-2000;
+        yearsxz='AY-'+(dt.getFullYear()-1)+'-'+(dt.getFullYear());
         this.academicyear=yearsxz;
       } else {
         enrolltype=null;
@@ -493,9 +508,9 @@
     callnextyearhandler:function(e){
       enrolltype="fullyear";
       var dt=new Date();
-      yr1=(dt.getFullYear()+1)-2000;
-      yr2=(dt.getFullYear()+2)-2000;
-      yearsxz='AY-'+(dt.getFullYear()+1)+'-'+(dt.getFullYear()+2);
+      yr1=(dt.getFullYear()+0)-2000;
+      yr2=(dt.getFullYear()+1)-2000;
+      yearsxz='AY-'+(dt.getFullYear()+0)+'-'+(dt.getFullYear()+1);
       this.academicyear=yearsxz;
     },
     nextyearhandler:function(e){
@@ -503,9 +518,9 @@
         document.getElementById("thismidyear").checked=false;
         enrolltype="fullyear";
         var dt=new Date();
-        yr1=(dt.getFullYear()+1)-2000;
-        yr2=(dt.getFullYear()+2)-2000;
-        yearsxz='AY-'+(dt.getFullYear()+1)+'-'+(dt.getFullYear()+2);
+        yr1=(dt.getFullYear()+0)-2000;
+        yr2=(dt.getFullYear()+1)-2000;
+        yearsxz='AY-'+(dt.getFullYear()+0)+'-'+(dt.getFullYear()+1);
         this.academicyear=yearsxz;
       }else{
         enrolltype=null;
@@ -663,12 +678,14 @@
     source:function(e){
       enquiysource=(e.target.selectedItem.textContent).trim();
       if(enquiysource=="Sibling"){
+        this.schooldetail = true;
         this.$.sibname.hidden=false;
         this.$.referrer.hidden=true;
         this.sibdetail = false;
         this.sibling = false;
         this.referraldetail =true;
         this.referral = true;
+        this.selectreferral=true;
         this.$.preapps.getreferrername();
       } else if(enquiysource=="Referral") {
         
@@ -676,7 +693,15 @@
         this.selectreferral = false;
         this.sibdetail = true;
         this.sibling = true;
+
       } else {
+        this.schooldetail = true;
+        this.referraldetail =true;
+        this.referral = true;
+        this.selectreferral=true;
+        this.sibdetail = true;
+        this.selectreferral=true;
+        this.sibling=true;
         this.$.sibname.hidden=true;
         this.$.referrer.hidden=true;
       }
@@ -694,7 +719,7 @@
       }
       if(referralvalue == "Zee Kids School" || referralvalue == "Feeder School"){
         this.schooldetail = false;
-        document.querySelector('referral-detail-card').FnClear();
+        // document.querySelector('referral-detail-card').FnClear();
         this.referraldetail = true;
         this.itemArrayz = [];
         this.referraldetailsarr = [];
@@ -1013,6 +1038,7 @@
       guardianoccupationinfo = (e.target.selectedItem.textContent).trim();
     },
     getstudentsinlocation:function(location){
+      this.hidelocation=false;
       this.$.preapps.getstudentsinlocation(location);
     },
     opentotalstudentdialog:function(enquired, admitted, provisionally_admitted){
@@ -1240,7 +1266,7 @@
       }
     },
     getvalues:function(){
-      this.$.preapps.submitenqdetails(enquiry_date,enrolltype,this.academicyear,grade,this.firstname,this.middlename,this.lastname,gender,havesibling,this.ageofyr,dobdate,mothertonguelanguage,this.fathername,this.mothername,this.mob,this.mothermob,this.email,this.motheremail,this.guardianname,this.guardianmobile,this.guardianemail,dadoccupationinfo,motheroccupationinfo,this.textvalue,enquiysource,this.attenedcounsellorname,this.enquiry_number,guardianoccupationinfo,parent_or_guardian_work, referralvalue, this.schoolname, this.schoolarea,this.siblingremark);
+      this.$.preapps.submitenqdetails(enquiry_date,enrolltype,this.academicyear,grade,this.firstname,this.middlename,this.lastname,gender,havesibling,this.ageofyr,dobdate,mothertonguelanguage,this.fathername,this.mothername,this.mob,this.mothermob,this.email,this.motheremail,this.guardianname,this.guardianmobile,this.guardianemail,dadoccupationinfo,motheroccupationinfo,this.textvalue,enquiysource,this.attenedcounsellorname,this.enquiry_number,guardianoccupationinfo,parent_or_guardian_work, referralvalue, this.schoolname, this.schoolarea,this.siblingremark,paga);
     },
     FnClear:function(){
       this.callnextyearhandler();
@@ -1401,9 +1427,9 @@
           str_array[i] = str_array[i].replace(/^\s*/, "").replace(/\s*$/, "");
         }
         var place = str_array.length - 4;
-        this.textvalue = str_array[place];
+        this.textvalue = "Location: "+str_array[place];
         this.closeWindow();
-        this.getstudentsinlocation(this.textvalue);
+        this.getstudentsinlocation(str_array[place]);
       }
     });
   })();

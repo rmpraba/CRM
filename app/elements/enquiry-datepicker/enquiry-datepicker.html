@@ -7,13 +7,12 @@
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 
-
-
 <dom-module id="enquiry-datepicker">
 <style>
   paper-input{
     --paper-input-container-label: { color: red };
     width: 70%;
+    text-align:center;
   }
 </style>
   <template>
@@ -52,9 +51,17 @@
           var dd1=new Date();
           var dd2=new Date(pickdate);
           var days=parseInt((dd1 - dd2) / (1000 * 60 * 60 * 24));
-          if(days<0){
+          // alert(dd1 +"  "+ dd2);
+          if(days<=0){
+          if(dd1.getDate()==dd2.getDate()){
+          this.showdate = moment(this.$.picker.date).format('L');
+          localStorage.setItem("localsess_start_date",this.showdate);
+          document.querySelector('pre-apps').getenquirydate(this.showdate);
+          }
+          else{
           document.querySelector('pre-apps').enquirydate();
           this.showdate="";
+          }
           }
           else{
           this.showdate = moment(this.$.picker.date).format('L');

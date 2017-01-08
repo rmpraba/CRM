@@ -142,8 +142,8 @@
           }
       }, 
       FnProcessfee:function(){
-        // this.$.appregfeeservice.callInsertCashfeesService(this.feearr);
-        this.$.admissionservice.fetchallstudentforsearchService();
+        this.$.appregfeeservice.callInsertCashfeesService(this.feearr);
+        // this.$.admissionservice.fetchallstudentforsearchService();
       },
       FnSearchEnquiry:function(){
         document.querySelector('#prospectenradmnsearch').selected="-1";
@@ -201,6 +201,7 @@
         document.querySelector('#waiveoffhandler').checked=false;
       },
       FnRefresh:function(){
+        this.value="";
         installment=[];
         paymentmode="";
         this.enquiryno="";

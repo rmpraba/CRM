@@ -404,7 +404,7 @@
         var result=e.detail.response.returnval;
         document.querySelector('pre-apps').professionarr=result;
       },
-      submitenqdetails:function(todate,enrolltype,academicyear,grade,firstname,middlename,lastname,gender,havesibling,ageofyr,dobdate,mothertonguelanguage,fathername,mothername,mob,mothermob,email,motheremail,guardianname,guardianmobile,guardianemail,dadoccupationinfo,motheroccupationinfo,textvalue,enquiysource,attenedcounsellorname,enqno,guardianoccupationinfo,parent_or_guardian_work,referralvalue, schoolname,schoolarea,siblingremark){
+      submitenqdetails:function(todate,enrolltype,academicyear,grade,firstname,middlename,lastname,gender,havesibling,ageofyr,dobdate,mothertonguelanguage,fathername,mothername,mob,mothermob,email,motheremail,guardianname,guardianmobile,guardianemail,dadoccupationinfo,motheroccupationinfo,textvalue,enquiysource,attenedcounsellorname,enqno,guardianoccupationinfo,parent_or_guardian_work,referralvalue, schoolname,schoolarea,siblingremark,paga){
         this.submitenqdetailsurl=sessionStorage.getItem("addrinfo")+"/submitenqdetails";
         var obj={"schol":"","createdon":"","enrolltype":"","academicyear":"","grade":"","firstname":"","middlename":"","lastname":"","gender":"","havesibling":"","ageofyr":"","dobdate":"","mothertonguelanguage":"","fathername":"","mothername":"","mob":"","mothermob":"","email":"","motheremail":"","guardianname":"","guardianmobile":"","guardianemail":"","dadoccupationinfo":"","motheroccupationinfo":"","location":"","enquiysource":"","attenedcounsellorname":"","status":"","enquiryname":"","enquiry_no":"","parent_or_guardian_work":"","guardianoccupationinfo":"","referralvalue":"","school_name":"","school_area":"","sibling_remark":""};
         obj.schol=localStorage.getItem("schoolid");
@@ -443,6 +443,7 @@
         obj.school_name = schoolname;
         obj.school_area = schoolarea;
         obj.sibling_remark = siblingremark;
+        obj.parentorguard=paga;
         this.submitenqdetailsparam=obj;
         this.$.submitenqdetailsajax.generateRequest();
 
