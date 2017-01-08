@@ -5135,8 +5135,9 @@ app.post('/fetchfeestructure-service',  urlencodedParser,function (req, res){
 
  var titlequr="SELECT distinct(fee_type) FROM fee_splitup where school_id='"+req.query.schoolid+"'"; 
 
- var qur = "SELECT * FROM mlzscrm.fee_master fm join fee_splitup fs on (fm.fee_code=fs.fee_code) where fm.academic_year='"+req.query.academicyear+"' and fm.admission_year='"+req.query.admissionyear+"' "+
-             " and fm.school_id='"+req.query.schoolid+"' and fs.school_id='"+req.query.schoolid+"' ";
+ var qur = "SELECT * FROM mlzscrm.fee_master fm join "+
+ "fee_splitup fs on (fm.fee_code=fs.fee_code) where fm.academic_year='"+req.query.academicyear+"' and fm.admission_year='"+req.query.admissionyear+"' "+
+ " and fm.school_id='"+req.query.schoolid+"' and fs.school_id='"+req.query.schoolid+"' ";
  console.log('-----------------------fetch fee structure structure--------------------------');
  console.log(qur);
  console.log('-------------------------------------------------');

@@ -3,7 +3,7 @@
 <link rel="import" href="../receiptdatepicker-card/receiptdatepicker-card.html">
 <link rel="import" href="../installment-date-picker/installment-date-picker.html">
 <link rel="import" href="../editreceipt-datepicker/editreceipt-datepicker.html">
-
+<link rel="import" href="../editcheque-datepicker/editcheque-datepicker.html">
 <dom-module id="installment-card">
 <style type="text/css">
   .layout{
@@ -99,7 +99,8 @@
    <!-- <paper-input id="paymentmode" hidden$="{{hiddeninputmodeflag}}">{{modeofpayment}}</paper-input> -->
    <paper-input id="inputchequeno" hidden$="{{hiddeninputtflag}}" value="{{chequeno}}"></paper-input>
    <paper-input id="inputbankname" hidden$="{{hiddeninputtflag}}" value="{{bankname}}"></paper-input>
-   <paper-item id="inputpaiddate" hidden$="{{hiddeninputflag}}" value="{{chequedate}}">{{chequedate}}</paper-item>
+   <!-- <paper-item id="inputpaiddate" hidden$="{{hiddeninputflag}}" value="{{chequedate}}">{{chequedate}}</paper-item> -->
+   <editcheque-datepicker showdate="{{chequedate}}" hidden$="{{hiddeninputflag}}"></editcheque-datepicker>
    <editreceipt-datepicker showdate="{{receiptdate}}" hidden$="{{hiddeninputflag}}" style="width:6%;right:6%;position: absolute;"></editreceipt-datepicker>
    <!-- <paper-input id="paiddate" hidden$="{{hiddeninputflag}}" value="{{chequedate}}"></paper-input> -->
    <!-- <paper-input id="receiptdate" hidden$="{{hiddeninputflag}}" value="{{receiptdate}}"></paper-input> -->
@@ -110,9 +111,11 @@
 
     <paper-dialog id="chequeinfo" modal>
       <h4>ADD CHEQUE DETAILS</h4>
-       <div  class="layout" style='margin-left: 5%;'><paper-input required error-message="needs Cheque number!" allowed-pattern="[1-9a-zA-Z ]" id="chequeno1" label="Enter Cheque Number" value="{{chequeno}}"> </paper-input></div>
-       <div  class="layout" style='margin-left: 5%;margin-top: -2%;'> <paper-input required allowed-pattern="[a-zA-Z ]"  error-message="Requires bankName!"  id="bankname1" label="Enter Bank Name" value="{{bankname}}"> </paper-input></div>
-       <div style="width: 68%;margin-top: -2%;margin-left: 3%;"><installment-date-picker showdate="{{installmentdate}}"></installment-date-picker></div>
+       <div  class="layout" style='margin-left: 5%;'>
+       <paper-input required allowed-pattern="[1-9a-zA-Z]" error-message="Requires Cheque number!"  id="chequeschoolfeechequeno" label="Enter Cheque Number" value="{{chequeno}}"> 
+       </paper-input></div>
+       <div  class="layout" style='margin-left: 5%;margin-top: -2%;'><paper-input required allowed-pattern="[a-zA-Z ]"  error-message="Requires bankName!"  id="chequeschoolfeebankname" label="Enter Bank Name" value="{{bankname}}"> </paper-input></div>
+       <div style="width: 68%;margin-top: -2%;margin-left: 3%;"><installment-date-picker editdate="{{editdate}}" showdate="{{installmentdate}}"></installment-date-picker></div>
        <div style="margin-top: -6%;margin-left: 2%;"><receiptdatepicker-card showdate="{{receiptdate}}"></receiptdatepicker-card></div>
       <div class="buttons" style="margin-left: -5%;">
         <paper-button id="{{installment}}" class="btn btn-primary left" on-click="FnAddcheque">Add</paper-button>
@@ -122,9 +125,9 @@
 
     <paper-dialog id="creditinfo" modal>
     <h4>ADD CREDIT DETAILS</h4>
-     <div  class="layout" style='margin-left: 5%;'><paper-input required allowed-pattern="[1-9a-zA-Z]" error-message="Requiress Reference number!"  id="chequeno1" label="Enter Reference No:" value="{{chequeno}}"> </paper-input>
+     <div  class="layout" style='margin-left: 5%;'><paper-input required allowed-pattern="[1-9a-zA-Z]" error-message="Requiress Reference number!"  id="creditschoolfeechequeno" label="Enter Reference No:" value="{{chequeno}}"> </paper-input>
      </div>
-     <div  class="layout" style='margin-left: 5%;margin-top: -2%;'> <paper-input required allowed-pattern="[a-zA-Z ]"  error-message="Requires BankName!"  id="bankname1" label="Enter the Bank Name" value="{{bankname}}"> </paper-input></div>     
+     <div  class="layout" style='margin-left: 5%;margin-top: -2%;'> <paper-input required allowed-pattern="[a-zA-Z ]"  error-message="Requires BankName!"  id="creditschoolfeebankname" label="Enter the Bank Name" value="{{bankname}}"> </paper-input></div>     
      <div style="width: 68%;margin-top: -2%;margin-left: 3%;"><installment-date-picker showdate="{{installmentdate}}"></installment-date-picker></div>
      <div style="margin-top: -6%;margin-left: 2%;"><receiptdatepicker-card showdate="{{receiptdate}}"></receiptdatepicker-card></div>
     <div class="buttons" style="margin-left: -5%;">
@@ -147,6 +150,7 @@
         this.hiddeninputflag=true;
         this.hiddeninputtflag=true;
         this.flag=0;
+        this.chequeno="";
         localStorage.setItem("curr_sess_waiveoff",0);
         localStorage.setItem("curr_sess_changeinamountflag",0);
       },
@@ -231,6 +235,12 @@
       },
       FnAddcheque:function(){
         // var installmentarr=[];
+        // alert(this.chequeno+"  "+(this.chequeno).length);
+        if((this.chequeno).trim()==""||(this.chequeno).trim()==null||this.bankname==""||this.bankname==null){
+          this.$.chequeschoolfeechequeno.validate();
+          this.$.chequeschoolfeebankname.validate();
+        }
+        else{
         this.$.chequeinfo.toggle();
         var obj={"installmenttype":"","installment":"","amount":"","waiveoff":"","paymentmode":"","installmentdate":"","receiptdate":"","paiddate":"","paidstatus":""};
         
@@ -272,7 +282,8 @@
             this.FnPrepareInstallment(obj);   
             // installmentarr.push(obj);
             // alert(JSON.stringify(installmentarr));
-            // document.querySelector('fees-card').FnSetfee(installmentarr);  
+            // document.querySelector('fees-card').FnSetfee(installmentarr);
+            }  
       },
       FnCancelcheque:function(){
         this.$.chequeinfo.toggle();
@@ -281,6 +292,11 @@
       },
       FnAddcredit:function(){
         // var installmentarr=[];
+         if((this.chequeno).trim()==""||(this.chequeno).trim()==null||this.bankname==""||this.bankname==null){
+          this.$.creditschoolfeechequeno.validate();
+          this.$.creditschoolfeebankname.validate();
+        }
+        else{
         this.$.creditinfo.toggle();
         var obj={"installmenttype":"","installment":"","amount":"","waiveoff":"","paymentmode":"","installmentdate":"","receiptdate":"","paiddate":"","paidstatus":""};
         
@@ -321,6 +337,7 @@
             // installmentarr.push(obj);
             // alert(JSON.stringify(installmentarr));
             // document.querySelector('fees-card').FnSetfee(installmentarr);  
+          }
       },
       FnCancelcredit:function(){
         this.$.creditinfo.toggle();

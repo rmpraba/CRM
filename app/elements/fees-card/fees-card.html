@@ -67,7 +67,7 @@
          <div class="col-sm-3 enquiry-input">
           <paper-input label="Grade" value="{{enquiredclass}}"></paper-input>
         </div>
-        <div class="col-sm-3 enquiry-input" style="margin-top: 2%;margin-left: -5%;">
+        <div class="col-sm-3 enquiry-input">
           <paper-input label="Academic Year" value="{{academicyear}}"></paper-input>
         </div>
       </div>
@@ -110,7 +110,7 @@
             </div>
       </div>
 
-      <div class="list-group col-sm-12 panel-body form-category">
+      <div class="list-group col-sm-12 panel-body form-category" hidden$="{{hidecommitinstallment}}">
             <div class="col-sm-4 enquiry-input">
             <label>Installment required in commitment fee?</label>
             </div>
@@ -146,12 +146,12 @@
                     <div style="margin-left:2%; width: 12%;">Mode of Payment</div>
                     <div style="margin-left:2%; width: 7%;" hidden$="{{hiddentitleflag}}">Cheque No</div>
                     <div style="margin-left:2%; width: 7%;" hidden$="{{hiddentitleflag}}">Bank Name</div>
-                    <div style="width: 9%;margin-left:2%;" hidden$="{{hiddentitleflag}}">Payment Date</div>
+                    <div style="width: 9%;margin-left:2%;" hidden$="{{hiddentitleflag}}">Cheque Date</div>
                     <div style="width: 9%;margin-left:2%;" hidden$="{{hiddentitleflag}}">Receipt Date</div>              
             </div>
             <div style="margin-left:12%;" hidden$="{{hiddeninstallment}}"> 
               <template  is="dom-repeat" items="{{feearr}}" as="view">
-                <installment-card  installmentid="{{view.installmentid}}" hiddenpayflag="{{view.hiddenpayflag}}" modeofpayment="{{view.modeofpayment}}" paidflag="{{view.paidflag}}" readonlyflag="{{view.readonlyflag}}" hiddenflag="{{view.hiddenflag}}" installment="{{view.installment}}" installmenttype="{{view.installment}}" actualamount="{{view.actualamount}}" amount="{{view.installmentamount}}" discountamount="{{view.discountamount}}" installmentdate="{{view.installmentdate}}" chequeno="{{view.chequeno}}" paiddate="{{view.paiddate}}" bankname="{{view.bankname}}" chequedate="{{view.chequedate}}" receiptdate="{{view.installmentdate}}" hiddencommitinput="{{view.hiddencommitinput}}" hiddencommititem="{{view.hiddencommititem}}"></installment-card>
+                <installment-card  installmentid="{{view.installmentid}}" hiddenpayflag="{{view.hiddenpayflag}}" modeofpayment="{{view.modeofpayment}}" paidflag="{{view.paidflag}}" readonlyflag="{{view.readonlyflag}}" hiddenflag="{{view.hiddenflag}}" installment="{{view.installment}}" installmenttype="{{view.installment}}" actualamount="{{view.actualamount}}" amount="{{view.installmentamount}}" discountamount="{{view.discountamount}}" installmentdate="{{view.installmentdate}}" chequeno="{{view.chequeno}}" paiddate="{{view.paiddate}}" bankname="{{view.bankname}}" chequedate="{{view.chequedate}}" receiptdate="{{view.receiptdate}}" hiddencommitinput="{{view.hiddencommitinput}}" hiddencommititem="{{view.hiddencommititem}}" editdate="{{view.editdate}}"></installment-card>
               </template>
             </div>
             <div>
@@ -229,13 +229,15 @@
         {
           localStorage.setItem("curr_sess_insrequirement",'yes');
           this.$.admissionservice.searchfeeadmissionpaidinfoService(localStorage.getItem("curr_sess_enquiryno"));
-         this.$.admissionservice.searchfeeadmissioninfoService(localStorage.getItem("curr_sess_enquiryno"));
+          this.$.admissionservice.searchfeeadmissioninfoService(localStorage.getItem("curr_sess_enquiryno"));
           // this.FnCreateCommitmentfeeInstallment();
           // this.$.admissionservice.FnCreateCommitmentfeeInstallment();
         }
         else if(document.querySelector('#insrequirement').checked==false)
         {
           localStorage.setItem("curr_sess_insrequirement",'no');
+          this.$.admissionservice.searchfeeadmissionpaidinfoService(localStorage.getItem("curr_sess_enquiryno"));
+          this.$.admissionservice.searchfeeadmissioninfoService(localStorage.getItem("curr_sess_enquiryno"));
         }
       },
       Fnsetinstallmentarr:function(arr){
@@ -366,6 +368,7 @@
         document.querySelector('#waiveoff').checked=false;
       },
       FnRefresh:function(){
+        document.querySelector('#insrequirement').checked=false;
         this.flag=0;
         installment=[];
         paymentmode="";
@@ -391,9 +394,18 @@
         document.querySelector('#feecardsearch').selected=-1;
         localStorage.setItem("curr_sess_enquiryno","");
         document.querySelector('#structuregeneral1').checked=true;
-         this.querySelector('#schoolfeeinput').style.visibility='hidden';
+        this.querySelector('#schoolfeeinput').style.visibility='hidden';
+        this.value="";
+        this.itemArray=[];
+        this.totalpayableamount="";
+        this.discountpercent="";
       },
       FnRefresh1:function(){
+        this.totalpayableamount="";
+        this.discountpercent="";
+        document.querySelector('#insrequirement').checked=false;
+        this.value="";
+        this.itemArray=[];
         this.flag=0;        
         installment=[];
         paymentmode="";
@@ -520,7 +532,7 @@
           for(var i=0;i<item.length;i++)
           {
             var subval=((item[i].student_name).trim()).substring(0,backsubval.length);
-            if((item[i].enquiry_name).toUpperCase().indexOf((this.value).toUpperCase())!=-1)
+            if((item[i].student_name).toUpperCase().indexOf((this.value).toUpperCase())!=-1)
             {
               var obj={"itemdes":"","enquiry_no":""};
               obj.itemdes=item[i].student_name;
@@ -577,6 +589,9 @@
     // localStorage.setItem("curr_sess_enquiryname",enquiry_name);
     this.$.admissionservice.searchfeeadmissionpaidinfoService(enquiry_no);
     this.$.admissionservice.searchfeeadmissioninfoService(enquiry_no);
+    },
+    Fnhidecommitinstallment:function(flag){
+      this.hidecommitinstallment=flag;
     }
 
     });

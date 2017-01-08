@@ -64,10 +64,10 @@
       </thead>
       <tbody>
       <template  is="dom-repeat" items="{{feestructurearr}}" as="item">
-        <tr><td>{{item.sno}}</td><td>{{item.admissionyear}}</td><td>{{item.academicyear}}</td><td>{{item.grade}}</td>
+        <tr><td>{{item.sno}}</td><td>{{item.admissionyear}}</td><td>{{item.academicyear}}</td><td>{{item.grade_id}}</td>
         <template  is="dom-repeat" items="{{item.feetypes}}" as="i">
-        <td>{{i.kitfee}}</td><td>{{i.annualfee}}</td>
-        <td>{{i.tutionfee}}</td><td>{{i.registrationfee}}</td>
+        <td>{{i.Kitfee}}</td><td>{{i.Annualfee}}</td>
+        <td>{{i.Tutionfee}}</td><td>{{i.Registrationfee}}</td>
         </template>
         <td>{{item.totalfee}}</td>
         </tr>

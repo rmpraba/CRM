@@ -759,11 +759,11 @@
           obj.flag=discountarr[i].flag;                 
           this.creatediscountcodeparam=obj;
           this.$.creatediscountcodeajax.generateRequest();
-        }
-        
+        }        
       },
       creatediscountcodeResponse:function(e){
         alert(e.detail.response.returnval);
+        document.querySelector('discount-master-card').FnRefresh();
         // alert(JSON.stringify(e.detail.response.returnval));
       },
       generateinstallmentscheduleService:function(consolidatedinsfeearr){

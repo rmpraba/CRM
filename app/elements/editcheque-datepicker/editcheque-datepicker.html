@@ -9,7 +9,7 @@
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 
 
-<dom-module id="editreceipt-datepicker">
+<dom-module id="editcheque-datepicker">
   <template>
     <!--component which invokes the predefined date picker control-->
     <div class="datepicker">
@@ -30,12 +30,12 @@
   <!--JS file import-->
   <script>
     Polymer({
-      is: 'editreceipt-datepicker',
+      is: 'editcheque-datepicker',
 
       ready:function()
       {
         this.showdate=moment(new Date()).format('L');
-        localStorage.setItem("curr_sess_receiptdate",this.showdate);
+        localStorage.setItem("curr_sess_installmentdate",this.showdate);
         //this.$.service.feereport(this.showdate);
       },
       FnShowDialog:function(){
@@ -51,7 +51,7 @@
           var dd2=new Date(pickdate);
           var days=parseInt((dd1 - dd2) / (1000 * 60 * 60 * 24));
           this.showdate = moment(this.$.picker.date).format('L');
-          localStorage.setItem("curr_sess_receiptdate",this.showdate);          
+          localStorage.setItem("curr_sess_installmentdate",this.showdate);          
         }
       },
       FnClear:function(){
@@ -61,7 +61,7 @@
       {
       var d1=installmentdate;
       this.showdate=d1;
-      localStorage.setItem("curr_sess_receiptdate",this.showdate);
+      localStorage.setItem("curr_sess_installmentdate",this.showdate);
       }
     });
   </script>

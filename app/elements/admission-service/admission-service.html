@@ -1523,7 +1523,18 @@ insertstudenthistoryResponse:function(e){
         var tempdisamount=0;
         var tempobj;
 
+        var f=new Date();
+        var y=f.getFullYear();
+        var m=parseInt(f.getMonth())+1;
+        var d=f.getDate();
+        if(m<10)
+          m="0"+m;
+        if(d<10)
+          d="0"+d;
+        var current_date=m+"/"+d+"/"+y;
+
         if(paidfeearr!='no rows'){
+            document.querySelector('fees-card').Fnhidecommitinstallment(true);
             var t=0;
             for(var i=0;i<paidfeearr.length;i++){
                 for(var j=0;j<arr.length;j++){
@@ -1596,6 +1607,7 @@ insertstudenthistoryResponse:function(e){
                         arr[i].chequedate=paidfeearr[j].installment_date;
                         arr[i].bankname=paidfeearr[j].bank_name;
                         arr[i].installmentdate=paidfeearr[j].receipt_date;
+                        arr[i].receiptdate=paidfeearr[j].receipt_date;
                         arr[i].paiddate=paidfeearr[j].paid_date;
                         arr[i].modeofpayment=paidfeearr[j].mode_of_payment;
                     }
@@ -1609,7 +1621,7 @@ insertstudenthistoryResponse:function(e){
                        arr[i].hiddenflag=true;
                        arr[i].readonlyflag=false;
                        arr[i].hiddenpayflag=false;
-                       arr[i].chequeno='       ';
+                       arr[i].chequeno='';
                        arr[i].paiddate=''; 
                        arr[i].modeofpayment='';
                     }
@@ -1623,13 +1635,14 @@ insertstudenthistoryResponse:function(e){
                    arr[i].hiddenflag=true;
                    arr[i].readonlyflag=false;
                    arr[i].hiddenpayflag=false;
-                   arr[i].chequeno='       ';
+                   arr[i].chequeno='';
                    arr[i].paiddate=''; 
                    arr[i].modeofpayment='';
                 }
             }
         }
         else{
+        document.querySelector('fees-card').Fnhidecommitinstallment(false);
         document.querySelector('fees-card').hiddentitleflag=true;
         for(var i=0;i<arr.length;i++){
             arr[i].hiddencommitinput=true;
@@ -1638,9 +1651,15 @@ insertstudenthistoryResponse:function(e){
                    arr[i].hiddenflag=true;
                    arr[i].readonlyflag=false;
                    arr[i].hiddenpayflag=false;
-                   arr[i].chequeno='       ';
+                   arr[i].chequeno='';
                    arr[i].paiddate=''; 
                    arr[i].modeofpayment='';
+                   arr[i].receiptdate=current_date;
+                   // alert(arr[i].installmentdate+"  "+current_date);
+                   if(arr[i].installmentdate<=current_date)
+                    arr[i].editdate=false;
+                   else
+                    arr[i].editdate=true;
         }
         } 
         // alert(JSON.stringify(arr));
@@ -1671,7 +1690,7 @@ insertstudenthistoryResponse:function(e){
             row.hiddenflag=true;
             row.readonlyflag=false;
             row.hiddenpayflag=false;
-            row.chequeno='       ';
+            row.chequeno='';
             row.paiddate=''; 
             row.modeofpayment='';
             arr.splice(1,0,row);
@@ -1701,16 +1720,35 @@ insertstudenthistoryResponse:function(e){
         arr[i].hiddencommitinput=true;
         arr[i].hiddencommititem=false;
        }
+       }
+
+        var finalarr=[];
+
+        for(var i=0;i<arr.length;i++){
+            if(arr[i].installment=="Commitment Fee (Ins1)"||arr[i].installment=="Commitment Fee"){
+                finalarr.push(arr[i]);
+                arr.splice(i,1);
+            }
+            if(arr[i].installment=="Commitment Fee (Ins2)"){
+                finalarr.push(arr[i]);
+                arr.splice(i,1);
+            }
         }
+
+        for(var i=0;i<arr.length;i++){
+           finalarr.push(arr[i]); 
+        }
+
         // alert(JSON.stringify(arr));
-        document.querySelector('fees-card').feearr=arr; 
+        document.querySelector('fees-card').feearr=finalarr; 
         // document.querySelector('fees-card').Fnsetinstallmentarr(arr);
         document.querySelector('fees-card').FnHiddenPayment();  
-        installmentarr=arr;
+        installmentarr=finalarr;
         paidfeearr=[];
         discountarr=[];
         installmentdatearr=[];
         arr=[]; 
+        finalarr=[];
       },
       FnCreateCommitmentfeeInstallment:function(amount){
        var ramount=0;
