@@ -548,41 +548,12 @@
         obj.newseq=this.sequence;
         this.generatefeecodeparam=obj;
         this.$.generatefeecodeajax.generateRequest();
-        // obj.admissionyear=this.admissionyear;
-        // obj.academicyear=this.academicyear;
-        // obj.prefixid=1;
-        // for(var i=0;i<gradearr.length;i++){
-        //   obj.grade=gradearr[i].grade;
-        //   obj.feecodeseq=gradearr[i].feecode;
-        //   obj.flag=gradearr[i].flag;
-        //   this.generatefeecodeparam=obj;
-        //   this.$.generatefeecodeajax.generateRequest();
-        // }   
       },
       generatefeecodeResponse:function(e){
         // alert(e.detail.response.returnval);
         if(e.detail.response.returnval=="done"){
           this.createfeecodeService();
         }
-        // if(e.detail.response.returnval=="seqfail"){
-        //   alert('Feecode creation fail!!');
-        // }
-        // else if(e.detail.response.returnval=="prefixfail"){
-        //   alert('Feecode creation fail!!');
-        // }
-        // else{        
-        //   count2++; 
-        //   alert(e.detail.response.returnval+"  "+e.detail.response.returngrade); 
-        //   var obj={"feecode":"","gradeid":""};
-        //   obj.feecode=e.detail.response.returnval;
-        //   obj.gradeid=e.detail.response.returngrade;
-        //   feecode.push(obj)
-        //   if(count1==count2){
-        //   this.createfeecodeService();
-        //   count1=0;
-        //   count2=0;
-        //   }
-        // }
       },
       createfeecodeService:function(){
         this.createfeecodeurl=sessionStorage.getItem("addrinfo")+"/createfeecode-service";
@@ -596,6 +567,8 @@
         obj.createdby=localStorage.getItem("employeeid");
         obj.feetype=this.feetype;
         obj.totalfees=this.totalfees;
+        count1=gradearr.length;
+        // alert(JSON.stringify(gradearr));
         for(var i=0;i<gradearr.length;i++){
           obj.grade=gradearr[i].grade;      
           obj.feecode=gradearr[i].feecode;                  
@@ -604,7 +577,14 @@
         }
       },
       createfeecodeResponse:function(e){
-        alert(e.detail.response.returnval);
+        count2++;
+        if(count1==count2){
+        // alert(e.detail.response.returnval);
+        gradearr=[];
+        document.querySelector('feetype-schedule-card').FnRefresh();
+        count1=0;
+        count2=0;
+        }
       },
       setDiscountInfo:function(schoolname,gradearr,admissionyear,academicyear,discounttypecode,discounttype,feetype,fromdate,todate,amount,admissiontype,percentage){
         this.schoolname=schoolname;
@@ -633,7 +613,7 @@
       fetchdiscountcodeseqResponse:function(e){
         this.sequence=e.detail.response.sequence;
         this.prefixid=e.detail.response.prefix;
-        // alert(this.sequence+"  "+this.prefixid);
+        alert(this.sequence+"  "+this.prefixid);
         this.fetchdiscountcodesService();
       },
       fetchdiscountcodesService:function(){
@@ -651,7 +631,7 @@
       },
       fetchdiscountcodesResponse:function(e){
         discountcodes=e.detail.response.returnval;
-        // alert(JSON.stringify(discountcodes));
+        alert(JSON.stringify(discountcodes));
         if(discountcodes.length>0){
         for(var j=0;j<(this.grade).length;j++){
           var f=0;
@@ -695,19 +675,6 @@
         var obj={"schoolid":"","prefixid":"","grade":"","admissionyear":"","academicyear":""};
         obj.schoolid=localStorage.getItem("schoolid");
         obj.newseq=this.sequence;
-        // obj.grade=this.grade;
-        // obj.admissionyear=this.admissionyear;
-        // obj.academicyear=this.academicyear;
-        // obj.feecode=this.feecode;        
-        // obj.feetype=this.feetype;
-        // obj.discounttypecode=this.discounttypecode;
-        // obj.discounttype=this.discounttype;
-        // obj.admissiontype=this.admissiontype;
-        // obj.amount=this.amount;
-        // obj.prefixid=2;
-        // obj.fromdate=this.fromdate;
-        // obj.todate=this.todate;
-        // this.discountname=localStorage.getItem("shortname")+"-Ad"+(admissionyear).substring(3)+"-Ac"+(academicyear).substring(3)+"-"+grade;
         this.generatediscountcodeparam=obj;
         // alert(JSON.stringify(obj));
         this.$.generatediscountcodeajax.generateRequest();
@@ -718,20 +685,6 @@
           // alert('yes');
           this.creatediscountcodeService();
         }
-        // alert(e.detail.response.returnval);
-        // if(e.detail.response.returnval=="seqfail"){
-        //   alert('Discountcode creation fail!!');
-        // }
-        // else if(e.detail.response.returnval=="prefixfail"){
-        //   alert('Discountcode creation fail!!');
-        // }
-        // else if(e.detail.response.returnval=="exist"){
-        //   alert('Discount of this feetype for this period already exist!!');
-        // }
-        // else{          
-        //   this.discountcode=e.detail.response.returnval;
-        //   this.creatediscountcodeService();
-        // }
       },
       creatediscountcodeService:function(){
         this.creatediscountcodeurl=sessionStorage.getItem("addrinfo")+"/creatediscountcode-service";
@@ -752,7 +705,8 @@
         obj.todate=this.todate;  
 
         obj.createdby=localStorage.getItem("employeeid");
-
+        alert(JSON.stringify(discountarr));
+        count1=discountarr.length;
         for(var i=0;i<discountarr.length;i++){
           obj.grade=discountarr[i].grade;      
           obj.discountcode=discountarr[i].discountcode; 
@@ -762,9 +716,17 @@
         }        
       },
       creatediscountcodeResponse:function(e){
+        count2++;
+        if(count1==count2){
         alert(e.detail.response.returnval);
         document.querySelector('discount-master-card').FnRefresh();
+        document.querySelector('fromdate-pickercard').ready();
+        document.querySelector('todate-pickercard').ready();
+        discountarr=[];
+        count1=0;
+        count2=0;
         // alert(JSON.stringify(e.detail.response.returnval));
+        }
       },
       generateinstallmentscheduleService:function(consolidatedinsfeearr){
         // alert(localStorage.getItem("curr_sess_noofinstallment"));

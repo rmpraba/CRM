@@ -2,13 +2,12 @@
 <link rel="import" href="../schedule-service/schedule-service.html">
 <link rel="import" href="../schooltype-to-grade-displaycard/schooltype-to-grade-displaycard.html">
 
-
 <dom-module id="feetype-schedule-card">
   <template>
     <div class="row enquiry-form">
 
       <div class="list-group col-sm-12 panel-body form-category">
-        <div class="col-sm-6 enquiry-input">
+        <div class="col-sm-6 enquiry-inpt">
             <paper-input label="School Name" value="{{schoolname}}"></paper-input>
         </div>
         <div class="col-sm-2 enquiry-input" style="margin-top:3%;">
@@ -95,6 +94,8 @@
           this.hidegradecard=false;
           document.querySelector("#stformall").checked=false;
           gradetype="Specific";
+          // document.querySelector('schooltype-to-grade-displaycard').ready();
+          // document.querySelector('schooltype-to-grade-displaycard').FnRefresh();
         }
       },
       FnSelectGrade:function(e){

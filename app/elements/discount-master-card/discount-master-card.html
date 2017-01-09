@@ -117,7 +117,7 @@
         this.hidegradecard=true;
         this.hidepercent=true;
         this.percentage=0;
-        gradearr=[];
+        // gradearr=[];
       },
       allHandler:function(){
         if(document.querySelector("#discountformall").checked==true)
@@ -199,7 +199,7 @@
         
       },
       FnSubmit:function(){
-        // alert(JSON.stringify(gradearr));
+        alert(JSON.stringify(gradearr));
         // alert(this.schoolname+" "+grade+" "+academicyear+" "+admissionyear+" "+feetype+" "+this.totalfees);
         this.$.schedulefee.setDiscountInfo(this.schoolname,gradearr,admissionyear,academicyear,discounttypecode,discounttype,feetype,this.fromdate,this.todate,this.amount,admissiontype,this.percentage);
       },
