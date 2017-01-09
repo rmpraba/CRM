@@ -183,6 +183,9 @@
           </paper-dropdown-menu>
         </div>
       </div>
+      <div class="form-group-heading">
+        <h4>Additional Information</h4>
+      </div>
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-8">
           <span class="col-sm-12"><h5>Caste</h5></span>
@@ -197,11 +200,14 @@
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
-        <div class="col-sm-6">
+        <div class="col-sm-4">
           <paper-input id="Nationality" label="Nationality" value="{{nationality}}"></paper-input>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-4">
           <paper-input label="Mother Tongue" value="{{mothertongue}}"></paper-input>
+        </div>
+        <div class="col-sm-4">
+          <paper-input label="Aadhar or Reference Number" value="{{aadharno}}"></paper-input>
         </div>
       </div>
       <div class="form-group-heading">
@@ -535,11 +541,14 @@
       </div>
 
       <div class="list-group col-sm-12 panel-body form-category" hidden$="{{parentguardhandlerdiv}}">
-        <div class="col-sm-6">
+        <div class="col-sm-4">
           <paper-input label="Relationship" value="{{relationship1}}"></paper-input>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-4">
           <paper-input label="Guardian's Name" value="{{guardianname1}}"></paper-input>
+        </div>
+        <div class="col-sm-4">
+          <paper-input label="Guardian's occupation" value="{{guardianoccupation}}"></paper-input>
         </div>
       </div>
       <!-- <div class="list-group col-sm-12 panel-body form-category">
@@ -576,21 +585,22 @@
         </div>
       </div>
       <div class="list-group col-sm-12 panel-body form-category" hidden$="{{parentguardhandlerdiv}}">
-        <div class="col-sm-6">
+        <div class="col-sm-3">
           <paper-input label="Contact No (Residential)" value="{{gresidentialcontact}}"></paper-input>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-3">
           <paper-input label="Contact No (Office)" value="{{gofficecontact}}"></paper-input>
         </div>
-      </div>
-      <div class="list-group col-sm-12 panel-body form-category" hidden$="{{parentguardhandlerdiv}}">
-        <div class="col-sm-6">
+        <div class="col-sm-3">
           <paper-input label="Mobile Number" value="{{gmobileno}}"></paper-input>
         </div>
-        <div class="col-sm-6">
-          <paper-input label="Fax" value="{{gfax}}"></paper-input>
+        <div class="col-sm-3">
+          <paper-input label="E-mail Id" value="{{gfax}}"></paper-input>
         </div>
       </div>
+      <!-- <div class="list-group col-sm-12 panel-body form-category" hidden$="{{parentguardhandlerdiv}}">
+        
+      </div> -->
       <div class="list-group col-sm-12 panel-body form-category">
         <div class="col-sm-4">
           Like to Avail Transport ?<span><paper-checkbox id="TYes" class="checkbox" on-change="transportyesHandler">Yes</paper-checkbox></span>
@@ -1070,12 +1080,13 @@
       },
       FnSetParentguard:function(value){
         pghandler=value;
-        if(value=="yes"){
-          this.$.divsiblinghandler.hidden=false;
-        document.querySelector("#sib"+value).checked=true;
+        // alert(value);
+        if(value=="Yes"){
+        this.parentguardhandlerdiv=false;
+        document.querySelector("#pg"+value).checked=true;
         }
-        if(value=="no")
-        document.querySelector("#sib"+value).checked=true;
+        if(value=="No")
+        document.querySelector("#pg"+value).checked=true;
       },
       FnSetDisabled:function(value){
         handler=value;
@@ -1202,9 +1213,23 @@
         this.acheivehandlerdiv=false;
       },
       FnSubmitAdmission:function(){     
-
-        if (admissionyear==null||admissionyear=="") {
-          alert("Please fill the mandatory fields");
+        // alert(admissionyear);
+        if (admissionyear==null||admissionyear==""||this.nationality==""||this.nationality==null||this.relegion==""||this.relegion==null) {
+          if (admissionyear==null||admissionyear==""){
+          alert('Please select admission year!!');
+          // document.querySelector('#admnformadmnyear').validate();
+          // document.querySelector('#admnformadmnyear').focus();
+          }
+          if (this.relegion==null||this.relegion==""){
+          document.querySelector('#Religion').validate();
+          document.querySelector('#Religion').focus();
+          }
+          if (this.nationality==null||this.nationality==""){
+          document.querySelector('#Nationality').validate();
+          document.querySelector('#Nationality').focus();
+          }
+          
+          // alert("Please fill the mandatory fields");
         }          
         else{
           // alert(JSON.stringify(localStorage.getItem("curr_sess_insertflag")));
@@ -1231,14 +1256,16 @@
           if(localStorage.getItem("curr_sess_insertflag")=="1")
 
           this.$.admissionservice.callInsertAdmissionService(localStorage.getItem("curr_sess_enquiryno"),localStorage.getItem("curr_sess_enquiryname"),this.applicationno,this.schoolname,this.enquiredyear,admissionyear,this.firstname,this.middlename,this.lastname,this.gradeselection,secondlanguage,thirdlanguage,this.dob,this.age,gender,this.flatno,
-            this.bulidingname,this.street,this.city,this.town,this.state,this.pincode,this.height,this.weight,FnBlood,relegions,this.relegion,this.nationality,this.mothertongue,this.siblingname,this.siblingclass,this.prevschoolname,fromgrade,tograde,FnBo,this.yearfrom,this.yearto,this.medium,this.lastclassmark,this.reasonforleaving,handler,this.physicdetail,this.physicstatus,this.mentaldetail,this.mentalstatus,this.illnessdetail,this.illnessstatus,this.allergydetail,this.allergystatus,this.chronicdetail,this.chronicstatus,acheivehandler,this.fathername,this.mothername,this.fatherqualification,this.motherqualification,this.fatheroccupation,this.motheroccupation,this.fatherincome,this.motherincome,this.fathertelno,this.mothertelno,this.fathermobile,this.mothermobile,this.fatheremail,this.motheremail,this.fatherdob,this.motherdob,this.pflatno,this.pbuildingname,this.pstreet,this.pdistrict,this.ptown,this.pstate,this.ppincode,this.guardianname1,this.guardianname2,this.relationship1,this.relationship2,this.gflatno,this.gbulidingname,this.gstreet,this.gcity,this.gtown,this.gstate,this.gpincode,this.gresidentialcontact,this.gofficecontact,this.gmobileno,this.gfax,admissiontransport,admissioncanteen,this.field1,this.year1,this.event1,this.prizedetail1,this.field2,this.year2,this.event2,this.prizedetail2,this.field3,this.year3,this.event3,this.prizedetail3,admissiontype,discounttype,admissionsibling,admissionhistory);
+            this.bulidingname,this.street,this.city,this.town,this.state,this.pincode,this.height,this.weight,FnBlood,relegions,this.relegion,this.nationality,this.mothertongue,this.siblingname,this.siblingclass,this.prevschoolname,fromgrade,tograde,FnBo,this.yearfrom,this.yearto,this.medium,this.lastclassmark,this.reasonforleaving,handler,this.physicdetail,this.physicstatus,this.mentaldetail,this.mentalstatus,this.illnessdetail,this.illnessstatus,this.allergydetail,this.allergystatus,this.chronicdetail,this.chronicstatus,acheivehandler,this.fathername,this.mothername,this.fatherqualification,this.motherqualification,this.fatheroccupation,this.motheroccupation,this.fatherincome,this.motherincome,this.fathertelno,this.mothertelno,this.fathermobile,this.mothermobile,this.fatheremail,this.motheremail,this.fatherdob,this.motherdob,this.pflatno,this.pbuildingname,this.pstreet,this.pdistrict,this.ptown,this.pstate,this.ppincode,this.guardianname1,this.guardianname2,this.relationship1,this.relationship2,this.gflatno,this.gbulidingname,this.gstreet,this.gcity,this.gtown,this.gstate,this.gpincode,this.gresidentialcontact,this.gofficecontact,this.gmobileno,this.gfax,admissiontransport,admissioncanteen,this.field1,this.year1,this.event1,this.prizedetail1,this.field2,this.year2,this.event2,this.prizedetail2,this.field3,this.year3,this.event3,this.prizedetail3,admissiontype,discounttype,admissionsibling,admissionhistory,this.aadharno);
           if(localStorage.getItem("curr_sess_insertflag")=="2")
 
           this.$.admissionservice.callInsertAdmissionService(localStorage.getItem("curr_sess_admnenquiryno"),localStorage.getItem("curr_sess_enquiryname"),this.applicationno,this.schoolname,this.enquiredyear,admissionyear,this.firstname,this.middlename,this.lastname,this.gradeselection,secondlanguage,thirdlanguage,this.dob,this.age,gender,this.flatno,
-            this.bulidingname,this.street,this.city,this.town,this.state,this.pincode,this.height,this.weight,FnBlood,relegions,this.relegion,this.nationality,this.mothertongue,this.siblingname,this.siblingclass,this.prevschoolname,fromgrade,tograde,FnBo,this.yearfrom,this.yearto,this.medium,this.lastclassmark,this.reasonforleaving,handler,this.physicdetail,this.physicstatus,this.mentaldetail,this.mentalstatus,this.illnessdetail,this.illnessstatus,this.allergydetail,this.allergystatus,this.chronicdetail,this.chronicstatus,acheivehandler,this.fathername,this.mothername,this.fatherqualification,this.motherqualification,this.fatheroccupation,this.motheroccupation,this.fatherincome,this.motherincome,this.fathertelno,this.mothertelno,this.fathermobile,this.mothermobile,this.fatheremail,this.motheremail,this.fatherdob,this.motherdob,this.pflatno,this.pbuildingname,this.pstreet,this.pdistrict,this.ptown,this.pstate,this.ppincode,this.guardianname1,this.guardianname2,this.relationship1,this.relationship2,this.gflatno,this.gbulidingname,this.gstreet,this.gcity,this.gtown,this.gstate,this.gpincode,this.gresidentialcontact,this.gofficecontact,this.gmobileno,this.gfax,admissiontransport,admissioncanteen,this.field1,this.year1,this.event1,this.prizedetail1,this.field2,this.year2,this.event2,this.prizedetail2,this.field3,this.year3,this.event3,this.prizedetail3,admissiontype,discounttype,admissionsibling,admissionhistory);
+            this.bulidingname,this.street,this.city,this.town,this.state,this.pincode,this.height,this.weight,FnBlood,relegions,this.relegion,this.nationality,this.mothertongue,this.siblingname,this.siblingclass,this.prevschoolname,fromgrade,tograde,FnBo,this.yearfrom,this.yearto,this.medium,this.lastclassmark,this.reasonforleaving,handler,this.physicdetail,this.physicstatus,this.mentaldetail,this.mentalstatus,this.illnessdetail,this.illnessstatus,this.allergydetail,this.allergystatus,this.chronicdetail,this.chronicstatus,acheivehandler,this.fathername,this.mothername,this.fatherqualification,this.motherqualification,this.fatheroccupation,this.motheroccupation,this.fatherincome,this.motherincome,this.fathertelno,this.mothertelno,this.fathermobile,this.mothermobile,this.fatheremail,this.motheremail,this.fatherdob,this.motherdob,this.pflatno,this.pbuildingname,this.pstreet,this.pdistrict,this.ptown,this.pstate,this.ppincode,this.guardianname1,this.guardianname2,this.relationship1,this.relationship2,this.gflatno,this.gbulidingname,this.gstreet,this.gcity,this.gtown,this.gstate,this.gpincode,this.gresidentialcontact,this.gofficecontact,this.gmobileno,this.gfax,admissiontransport,admissioncanteen,this.field1,this.year1,this.event1,this.prizedetail1,this.field2,this.year2,this.event2,this.prizedetail2,this.field3,this.year3,this.event3,this.prizedetail3,admissiontype,discounttype,admissionsibling,admissionhistory,this.aadharno);
         }
         },
        FnRefresh:function(){
+        this.aadharno="";
+        this.parentguardhandlerdiv=true;
         admissionyear="";
         admissiongrade="";
         admissiondob="";
@@ -1300,7 +1327,7 @@
         this.$.OBC.checked=false;
         this.$.Others.checked=false;
         this.relegion="";
-        this.nationality="";
+        this.nationality="Indian";
         this.mothertongue="";
         this.siblingname="";
         this.siblingclass="";
@@ -1393,6 +1420,7 @@
         admissiontype="0";
         discounttype="";
         discountname="";
+        this.guardianoccupation="";
         // this.$.spot.checked=false;
         // this.$.general.checked=true;  
         this.$.divsiblinghandler.hidden=true;
@@ -1403,6 +1431,9 @@
         document.querySelector('#hisno').checked=false;
       },
       FnRefresh1:function(){
+        this.aadharno="";
+        this.guardianoccupation="";
+        this.parentguardhandlerdiv=true;
         admissionyear="";
         admissiongrade="";
         admissiondob="";

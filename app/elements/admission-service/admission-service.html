@@ -555,6 +555,18 @@
         document.querySelector('admission-form').motheremail=arr[0].mother_email;
 
         document.querySelector('admission-form').FnSetSibling(arr[0].have_sibling);
+        if(arr[0].parent_or_guard=="parent")
+        document.querySelector('admission-form').FnSetParentguard("No");
+        if(arr[0].parent_or_guard=="guardian"){
+        document.querySelector('admission-form').guardianname1=arr[0].guardian_name;
+        document.querySelector('admission-form').gmobileno=arr[0].guardian_mobile;
+        document.querySelector('admission-form').gfax=arr[0].guardian_mail;
+        if(arr[0].guardian_occup!='undefined')
+        document.querySelector('admission-form').guardianoccupation=arr[0].guardian_occup;
+        document.querySelector('admission-form').FnSetParentguard("Yes");
+        }
+
+
         // document.querySelector('admission-form').fatherincome=arr[0].father_income;
         // document.querySelector('admission-form').motherincome=arr[0].mother_income;
         // document.querySelector('admission-form').FnSetTransport(arr[0].transport_requirment);
@@ -791,7 +803,7 @@
         document.querySelector('admission-form').reasonforleaving=arr[0].reason;
         }
       },
-      callInsertAdmissionService:function(enquiryno,enquiryname,applicationno,schoolname,enquiredyear,admissionyear,firstname,middlename,lastname,gradeselection,secondlanguage,thirdlanguage,dob,age,gender,flatno,bulidingname,street,city,town,state,pincode,height,weight,FnBlood,relegions,relegion,nationality,mothertongue,siblingname,siblingclass,prevschoolname,fromgrade,tograde,FnBo,yearfrom,yearto,medium,lastclassmark,reasonforleaving,handler,physicdetail,physicstatus,mentaldetail,mentalstatus,illnessdetail,illnessstatus,allergydetail,allergystatus,chronicdetail,chronicstatus,acheivehandler,fathername,mothername,fatherqualification,motherqualification,fatheroccupation,motheroccupation,fatherincome,motherincome,fathertelno,mothertelno,fathermobile,mothermobile,fatheremail,motheremail,fatherdob,motherdob,pflatno,pbuildingname,pstreet,pdistrict,ptown,pstate,ppincode,guardianname1,guardianname2,relationship1,relationship2,gflatno,gbuildingname,gstreet,gcity,gtown,gstate,gpincode,gresidentialcontact,gofficecontact,gmobileno,gfax,admissiontransport,admissioncanteen,field1,year1,event1,prizedetail1,field2,year2,event2,prizedetail2,field3,year3,event3,prizedetail3,admissiontype,discounttype,admissionsibling,admissionhistory){
+      callInsertAdmissionService:function(enquiryno,enquiryname,applicationno,schoolname,enquiredyear,admissionyear,firstname,middlename,lastname,gradeselection,secondlanguage,thirdlanguage,dob,age,gender,flatno,bulidingname,street,city,town,state,pincode,height,weight,FnBlood,relegions,relegion,nationality,mothertongue,siblingname,siblingclass,prevschoolname,fromgrade,tograde,FnBo,yearfrom,yearto,medium,lastclassmark,reasonforleaving,handler,physicdetail,physicstatus,mentaldetail,mentalstatus,illnessdetail,illnessstatus,allergydetail,allergystatus,chronicdetail,chronicstatus,acheivehandler,fathername,mothername,fatherqualification,motherqualification,fatheroccupation,motheroccupation,fatherincome,motherincome,fathertelno,mothertelno,fathermobile,mothermobile,fatheremail,motheremail,fatherdob,motherdob,pflatno,pbuildingname,pstreet,pdistrict,ptown,pstate,ppincode,guardianname1,guardianname2,relationship1,relationship2,gflatno,gbuildingname,gstreet,gcity,gtown,gstate,gpincode,gresidentialcontact,gofficecontact,gmobileno,gfax,admissiontransport,admissioncanteen,field1,year1,event1,prizedetail1,field2,year2,event2,prizedetail2,field3,year3,event3,prizedetail3,admissiontype,discounttype,admissionsibling,admissionhistory,aadharno){
 
         this.studentphysicalurl=sessionStorage.getItem("addrinfo")+"/studentphysical_service";
         
@@ -891,6 +903,7 @@
         obj.gmobileno=gmobileno;
         obj.religion=relegion;
         obj.caste=relegions;
+        obj.aadharno=aadharno;
         obj.createdby=localStorage.getItem("employeeid"); 
 
         this.studentfulldetailsparam=obj;

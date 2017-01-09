@@ -1836,7 +1836,8 @@ app.post('/studentfulldetails_service',  urlencodedParser,function (req, res){
    "guard_mobile_no":req.query.gmobileno,
    "guard_fax":req.query.gfax,
    "caste":req.query.caste,
-   "religion":req.query.religion
+   "religion":req.query.religion,
+   "aadhar_no":req.query.aadharno
  };
    connection.query("SELECT * FROM md_student WHERE enquiry_no='"+req.query.enquiryno+"'",function(err, rows){
    if(rows.length==0){
