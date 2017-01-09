@@ -519,10 +519,22 @@
         </div>
       </div>
      
-      <div class="form-group-heading">
+      <!-- <div class="form-group-heading">
         <h4>Local Guardian</h4>
+      </div> -->
+
+      <div class="form-group-heading">
+        <h4>Guardian Details</h4>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
+       <div class="col-sm-4">
+       Local Guardian?
+       </div>
+       <div class="col-sm-2"><paper-checkbox id="pgYes" class="checkbox" on-change="parentguardyesHandler">Yes</paper-checkbox></div>
+       <div class="col-sm-2"><paper-checkbox id="pgNo" class="checkbox" on-change="parentguardnoHandler">No</paper-checkbox></div>   
+      </div>
+
+      <div class="list-group col-sm-12 panel-body form-category" hidden$="{{parentguardhandlerdiv}}">
         <div class="col-sm-6">
           <paper-input label="Relationship" value="{{relationship1}}"></paper-input>
         </div>
@@ -538,7 +550,7 @@
           <paper-input label="Guardian's Name" value="{{guardianname2}}"></paper-input>
         </div>
       </div> -->
-      <div class="list-group col-sm-12 panel-body form-category">
+      <div class="list-group col-sm-12 panel-body form-category" hidden$="{{parentguardhandlerdiv}}">
         <div class="col-sm-4">
           <paper-input label="Flat/House No" value="{{gflatno}}"></paper-input>
         </div>
@@ -549,7 +561,7 @@
           <paper-input label="Street/Road" value="{{gstreet}}"></paper-input>
         </div>
       </div>
-      <div class="list-group col-sm-12 panel-body form-category">
+      <div class="list-group col-sm-12 panel-body form-category" hidden$="{{parentguardhandlerdiv}}">
         <div class="col-sm-3">
           <paper-input label="Village/Town" value="{{gtown}}"></paper-input>
         </div>
@@ -563,7 +575,7 @@
           <paper-input label="Pincode" value="{{gpincode}}"></paper-input>
         </div>
       </div>
-      <div class="list-group col-sm-12 panel-body form-category">
+      <div class="list-group col-sm-12 panel-body form-category" hidden$="{{parentguardhandlerdiv}}">
         <div class="col-sm-6">
           <paper-input label="Contact No (Residential)" value="{{gresidentialcontact}}"></paper-input>
         </div>
@@ -571,7 +583,7 @@
           <paper-input label="Contact No (Office)" value="{{gofficecontact}}"></paper-input>
         </div>
       </div>
-      <div class="list-group col-sm-12 panel-body form-category">
+      <div class="list-group col-sm-12 panel-body form-category" hidden$="{{parentguardhandlerdiv}}">
         <div class="col-sm-6">
           <paper-input label="Mobile Number" value="{{gmobileno}}"></paper-input>
         </div>
@@ -635,6 +647,7 @@
   <script>
   (function() {
     'use strict';
+    var pghandler;
     var admissionyear;
     var admissiongrade;
     var admissiondob;
@@ -672,6 +685,7 @@
         this.$.acheivehandlerdiv.hidden=true;
         this.$.divsiblinghandler.hidden=true;
         this.$.divhistoryhandler.hidden=true;
+        this.parentguardhandlerdiv=true;
         this.$.scheduleservice.fetchgradeService();
         this.$.scheduleservice.fetchacademicyearService();
         this.$.scheduleservice.fetchadmissionyearService();
@@ -959,6 +973,26 @@
     FnSelectToGrade:function(e){
       tograde=(e.target.selectedItem.textContent).trim();
     },
+    parentguardyesHandler:function(e){
+        // acheivements=e.target.id;
+        // acheivements=acheivements.substring(2);
+        if(document.querySelector("#pgYes").checked==true){
+           pghandler="Yes";
+           this.parentguardhandlerdiv=false;
+           document.querySelector("#pgNo").checked=false;
+          }
+          else{pghandler=null;}
+    },
+    parentguardnoHandler:function(e){
+        // acheivements=e.target.id;
+        // acheivements=acheivements.substring(2);
+        if(document.querySelector("#pgNo").checked==true){
+           pghandler="No";
+           this.parentguardhandlerdiv=true;
+           document.querySelector("#pgYes").checked=false;
+          }
+          else{pghandler=null;}
+    },
     // spotHandler:function(){
     //     if(document.querySelector("#spot").checked==true)
     //     {
@@ -1027,6 +1061,15 @@
       },
       FnSetSibling:function(value){
         admissionsibling=value;
+        if(value=="yes"){
+          this.$.divsiblinghandler.hidden=false;
+        document.querySelector("#sib"+value).checked=true;
+        }
+        if(value=="no")
+        document.querySelector("#sib"+value).checked=true;
+      },
+      FnSetParentguard:function(value){
+        pghandler=value;
         if(value=="yes"){
           this.$.divsiblinghandler.hidden=false;
         document.querySelector("#sib"+value).checked=true;
