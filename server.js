@@ -4804,6 +4804,31 @@ app.post('/fetchfeecodeforsplitup-service',  urlencodedParser,function (req, res
  });
 
 
+
+app.post('/fetchinstallmentsplit-service',  urlencodedParser,function (req, res){
+   connection.query("SELECT * FROM md_fee_splitup_master WHERE school_id='"+req.query.schoolid+"' and grade='"+req.query.grade+"' and academic_year='"+req.query.academicyear+"' and admission_year='"+req.query.admissionyear+"'",
+     function(err, rows)
+     {
+       if(!err)
+       {
+         if(rows.length>0)
+         {
+            //console.log(rows);
+            res.status(200).json({'returnval': rows});
+         }
+         else
+         {
+           console.log(err);
+           res.status(200).json({'returnval': 'no rows'});
+         }
+       }
+       else{
+         console.log(err);
+       }
+     });
+ });
+
+
 app.post('/fetchfeesplitup-service',  urlencodedParser,function (req, res){
    connection.query("SELECT * FROM fee_splitup WHERE school_id='"+req.query.schoolid+"' and fee_code='"+req.query.feecode+"' and fee_type not in('Registration fee')",
      function(err, rows)

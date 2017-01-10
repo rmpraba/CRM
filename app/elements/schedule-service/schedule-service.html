@@ -374,6 +374,18 @@
         on-response="fetchtotalsplitupamountResponse"
         debounce-duration="300"
         >
+        
+        <!-- fetch ins splitup -->
+     <iron-ajax
+        method="post"
+        id="fetchinstallmentsplitajax"
+        url="{{fetchinstallmentspliturl}}"
+        params="{{fetchinstallmentsplitparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchinstallmentsplitResponse"
+        debounce-duration="300"
+        >
   </template>
   <script>
   (function() {
@@ -613,7 +625,7 @@
       fetchdiscountcodeseqResponse:function(e){
         this.sequence=e.detail.response.sequence;
         this.prefixid=e.detail.response.prefix;
-        alert(this.sequence+"  "+this.prefixid);
+        // alert(this.sequence+"  "+this.prefixid);
         this.fetchdiscountcodesService();
       },
       fetchdiscountcodesService:function(){
@@ -631,7 +643,7 @@
       },
       fetchdiscountcodesResponse:function(e){
         discountcodes=e.detail.response.returnval;
-        alert(JSON.stringify(discountcodes));
+        // alert(JSON.stringify(discountcodes));
         if(discountcodes.length>0){
         for(var j=0;j<(this.grade).length;j++){
           var f=0;
@@ -705,7 +717,7 @@
         obj.todate=this.todate;  
 
         obj.createdby=localStorage.getItem("employeeid");
-        alert(JSON.stringify(discountarr));
+        // alert(JSON.stringify(discountarr));
         count1=discountarr.length;
         for(var i=0;i<discountarr.length;i++){
           obj.grade=discountarr[i].grade;      
@@ -718,7 +730,7 @@
       creatediscountcodeResponse:function(e){
         count2++;
         if(count1==count2){
-        alert(e.detail.response.returnval);
+        // alert(e.detail.response.returnval);
         document.querySelector('discount-master-card').FnRefresh();
         document.querySelector('fromdate-pickercard').ready();
         document.querySelector('todate-pickercard').ready();
@@ -903,6 +915,20 @@
         document.querySelector('fee-structure-schedulecard').FnRefresh();
         document.querySelector('fee-structure-schedulecard').ready();
        }
+      },
+      fetchinstallmentsplitStructure:function(grade,academicyear,admissionyear){
+        this.fetchinstallmentspliturl=sessionStorage.getItem("addrinfo")+"/fetchinstallmentsplit-service";
+        var obj={"schoolid":"","schoolname":"","grade":"","admissionyear":"","academicyear":""};
+        obj.schoolid=localStorage.getItem("schoolid");
+        obj.grade=grade;
+        obj.admissionyear=admissionyear;
+        obj.academicyear=academicyear;        
+        this.fetchinstallmentsplitparam=obj;
+        this.$.fetchinstallmentsplitajax.generateRequest(); 
+      },
+      fetchinstallmentsplitResponse:function(e){
+        var arr=e.detail.response.returnval;
+        document.querySelector('fee-structure-schedulecard').FnFormInstallmentStructure(arr);
       },
       fetchinstallmentStructure:function(grade,academicyear,admissionyear){
         this.grade=grade;

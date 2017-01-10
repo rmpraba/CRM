@@ -18,7 +18,7 @@
           <paper-dropdown-menu label="Grade" >
             <paper-menu id="insgrade" class="dropdown-content" required on-iron-select="FnSelectGrade" valueattr="value" >
               <template  is="dom-repeat" items="{{gradearr}}" as="item">
-              <paper-item>{{item.grade_name}}</paper-item>
+              <paper-item value="{{item.grade_id}}">{{item.grade_name}}</paper-item>
               </template>
             </paper-menu>
           </paper-dropdown-menu>
@@ -45,27 +45,29 @@
             </paper-menu>
           </paper-dropdown-menu>
         </div>
- 
-        <div class="list-group col-sm-12 panel-body form-category">
-          <div class="inshead">  
-                    <div style="width: 15%;">Installment</div>                      
-                    <div style="width: 12%;margin-left:6%;">Fee Type</div>                      
-                    <div style="width: 10%;margin-left:4%;">Amount</div>                      
-                    <div style="width: 10%;margin-left:4%;">Discount</div>                      
-                    <div style="width: 12%;margin-left:5%;">Actual Amount</div>                      
-                    <div style="width: 15%;margin-left:5%;">Installment Date</div>                      
-                    <!-- <div style="width: 18%;margin-left: 4%;">Installment</div>
-                    <div style="width: 12%;margin-left:8%;">Fee Type</div>                    
-                    <div style="margin-left:10%; width: 30%;">Amount</div>
-                    <div style="width: 30%;margin-left:0%;position: absolute; left: 80%;">Discount</div>                 
-                    <div style="width: 30%;margin-left:0%;position: absolute; left: 80%;">Actual Amount</div>
-                    <div style="width: 30%;margin-left:0%;position: absolute; left: 80%;">Installment Date</div> -->
-          </div>
-          <template  is="dom-repeat" items="{{installmentmasterarr}}" as="item">
-          <installment-master-itemcard schoolid="{{item.schoolid}}" academicyear="{{item.academicyear}}" admissionyear="{{item.admissionyear}}" grade="{{item.grade}}" installmentcode="{{item.installmentcode}}" feecode="{{item.feecode}}" discountcode="{{item.discountcode}}" installment="{{item.installment}}" installmenttype="{{item.installmenttype}}" feetype="{{item.feetype}}" totalamount="{{item.totalamount}}" discount="{{item.discount}}" payableamount="{{item.payableamount}}"></installment-master-itemcard>
-          </template>
         </div>
 
+        <div class="list-group col-sm-12 panel-body form-category">
+        <table style="width:100%;">
+          <tr><th>Installment</th><th>Fee Type</th><th>Amount</th></tr>
+          <tr style="height: 10px;"><td colspan="3"></td></tr>
+          <template  is="dom-repeat" items="{{inssplituparr}}" as="split">
+          <tr>
+            <td>{{split.installment}}</td>
+            <td>
+              <table style="width:120%;">
+              <template  is="dom-repeat" items="{{split.fees}}" as="f">
+                <tr><td>{{f.feetype}}</td><td style="text-align: right;">{{f.installmentfee}}</td></tr>
+              </template>
+              </table>
+            </td>
+          </tr>
+          <tr style="height: 15px;"><td colspan="3"></td></tr>
+          </template>
+        </table>
+        <br>
+      </div>
+ 
       <div class="col-md-12 form-button">
           <paper-button class="btn btn-primary" on-click="FnGenerate">Generate</paper-button>  
           <paper-button class="btn btn-primary" on-click="FnSubmit">Submit</paper-button>          
@@ -78,7 +80,7 @@
   <script>
   (function() {
     'use strict';
-    var grade,admissionyear,academicyear;  
+    var grade,gradeid,admissionyear,academicyear;  
     var insarr=[];  
     var flag=0;
     Polymer({
@@ -88,6 +90,7 @@
       },
       FnSelectGrade:function(e){
         grade=(e.target.selectedItem.textContent).trim();
+        gradeid=(e.target.selectedItem.value).trim();
       },
       FnSelectAdmissionYear:function(e){
         admissionyear=(e.target.selectedItem.textContent).trim();
@@ -96,7 +99,7 @@
         academicyear=(e.target.selectedItem.textContent).trim();
       },
       FnGenerate:function(){
-        this.$.schedulefee.fetchinstallmentStructure(grade,academicyear,admissionyear);
+        this.$.schedulefee.fetchinstallmentsplitStructure(gradeid,academicyear,admissionyear);
       },
       FnSubmit:function(){
 
@@ -117,6 +120,42 @@
         document.querySelector('#insacademicyear').selected=-1;
         document.querySelector('#insadmissionyear').selected=-1;
       },
+      FnFormInstallmentStructure:function(arr){
+       // alert(JSON.stringify(installmentsplituparr));
+        
+       var a=[];
+       var sarr=[];
+       var temparr=arr;
+
+       for(var i=0;i<temparr.length;i++)
+       {       
+        var nameobj={"installment":"","totalfee":""};
+        nameobj.installment=temparr[i].installment;
+        var obj={"feetype":"","installmentfee":""};
+        obj.feetype=temparr[i].feetype;
+        obj.installmentfee=temparr[i].installmentfee;
+        if(temparr[i].installmentfee>0)
+        a.push(obj);
+        for(var j=i+1;j<temparr.length;j++)
+        {
+           if(temparr[i].insno==temparr[j].insno)
+           {
+             var obj1={"feetype":"","installmentfee":""}
+             obj1.feetype=temparr[j].feetype;
+             obj1.installmentfee=temparr[j].installmentfee;
+             if(temparr[j].installmentfee>0)
+             a.push(obj1);
+             temparr.splice(j,1);
+             j--;
+           }
+        }
+        nameobj.fees=a;
+        sarr.push(nameobj);
+        a=[];        
+       }
+       this.inssplituparr=sarr;
+       // alert(JSON.stringify(sarr));
+      },
       FnSetInstallmentschedule:function(insobj){
         
         // alert(insarr.length);
@@ -124,8 +163,6 @@
           insarr.push(insobj);
         else{
         for(var i=0;i<insarr.length;i++){
-          // flag=0;
-          // alert(insarr[i].installment+"  "+insobj.installment+"  "+insarr[i].installmenttype+"  "+insobj.installmenttype+"  "+insarr[i].feetype+"  "+insobj.feetype+"  "+insarr[i].totalamount+"  "+insobj.totalamount+"  "+insarr[i].discount+" "+insobj.discount+"  "+insarr[i].payableamount+"  "+insobj.payableamount+"  "+insarr[i].installmentdate+"  "+insobj.installmentdate);
           if((insarr[i].installment).trim()==(insobj.installment).trim()&&(insarr[i].installmentttype).trim()==(insobj.installmenttype).trim()&&(insarr[i].feetype).trim()==(insobj.feetype).trim()&&(insarr[i].totalamount).trim()==(insobj.totalamount).trim()&&(insarr[i].discount).trim()==(insobj.discount).trim()&&(insarr[i].payableamount).trim()==(insobj.payableamount).trim()&&(insarr[i].installmentdate).trim()==(insobj.installmentdate).trim()){
             // alert('yes');
             flag=1;

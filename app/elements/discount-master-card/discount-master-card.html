@@ -186,6 +186,7 @@
         discounttype="";
         discounttypecode="";
         this.percentage=0;
+        gradearr=[];
         // document.querySelector('#discountgrade').selected=-1;
         document.querySelector('#discountacademicyear').selected=-1;
         document.querySelector('#discountadmissionyear').selected=-1;
@@ -199,7 +200,7 @@
         
       },
       FnSubmit:function(){
-        alert(JSON.stringify(gradearr));
+        // alert(JSON.stringify(gradearr));
         // alert(this.schoolname+" "+grade+" "+academicyear+" "+admissionyear+" "+feetype+" "+this.totalfees);
         this.$.schedulefee.setDiscountInfo(this.schoolname,gradearr,admissionyear,academicyear,discounttypecode,discounttype,feetype,this.fromdate,this.todate,this.amount,admissiontype,this.percentage);
       },
@@ -211,6 +212,7 @@
         this.amount="";
         discounttype="";
         admissiontype="";
+        gradearr=[];
         // document.querySelector('#discountgrade').selected=-1;
         document.querySelector('#discountacademicyear').selected=-1;
         document.querySelector('#discountadmissionyear').selected=-1;

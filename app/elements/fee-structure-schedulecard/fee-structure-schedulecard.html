@@ -71,46 +71,32 @@
             <span><paper-checkbox class="col-sm-3" id="structuregeneral" readonly class="checkbox" on-change="generalHandler" checked>Standard Pattern</paper-checkbox></span>
             <span><paper-checkbox class="col-sm-3" id="structureinstallmentt" readonly class="checkbox" on-change="installmentHandler">Custom Pattern</paper-checkbox></span>
             <span><paper-checkbox class="col-sm-3" id="structurelumpsum" readonly class="checkbox" on-change="lumpsumHandler">Lumpsum</paper-checkbox></span>
-            <!-- <span><paper-checkbox class="col-sm-3" id="structurethirdparty" readonly class="checkbox" on-change="thirdpartyHandler">Thirdparty</paper-checkbox></span> -->
             </div>
       </div>
 
-      <div class="list-group col-sm-12 panel-body form-category" hidden$="{{hidefeecomponentcard}}">
-        <div class="col-sm-4 enquiry-input">
-        <paper-input value="{{payableamount}}" label="Total Amount"></paper-input>
-        </div>
-      </div>
-
         <div class="list-group col-sm-12 panel-body form-category" hidden$="{{hidefeecomponentcard}}">
-          <template  is="dom-repeat" items="{{installmentarr}}" as="item">
-            <fee-structure-display-card type="{{item.type}}" feesplitarr="{{item.fees}}"></fee-structure-display-card> 
-          </template>       
+        <table style="width:70%;margin-left: 10%;">
+          <tr><th>Installment</th><th>Fee Type</th><th>Amount</th></tr>
+          <tr style="height: 10px;"><td colspan="3"></td></tr>
+          <template  is="dom-repeat" items="{{inssplituparr}}" as="split">
+          <tr>
+            <td>{{split.installment}}</td>
+            <td>
+              <table style="width:105%;">
+              <template  is="dom-repeat" items="{{split.fees}}" as="f">
+                <tr><td>{{f.feetype}}</td><td style="text-align: right;">{{f.installmentfee}}</td></tr>
+              </template>
+              </table>
+            </td>
+          </tr>
+          <tr style="height: 15px;"><td colspan="3"></td></tr>
+          </template>
+        </table>
+        <br>    
         </div>
-
-        <!-- <div class="list-group col-sm-12 panel-body form-category" hidden$="{{hidefeecomponentcard}}">
-          <template  is="dom-repeat" items="{{installmentarr}}" as="item">
-            <fee-component-card installment="{{item.val}}" no="{{item.no}}" actualamount="{{item.actualamount}}" discount="{{item.discount}}" payableamount="{{item.payableamount}}"></fee-component-card> 
-          </template>       
-        </div>
-
-        <div class="list-group col-sm-12 panel-body form-category" hidden$="{{hideinstallmentfeecomponentcard}}">
-          <template  is="dom-repeat" items="{{installmentarr}}" as="item">
-            <installment-fee-component-card installment="{{item.val}}" no="{{item.no}}" actualamount="{{item.actualamount}}" discount="{{item.discount}}" payableamount="{{item.payableamount}}"></installment-fee-component-card> 
-          </template>       
-        </div>
-
-        <div class="list-group col-sm-12 panel-body form-category" hidden$="{{hidelumpsumfeecomponentcard}}">
-          <template  is="dom-repeat" items="{{installmentarr}}" as="item">
-            <lumpsum-fee-component-card installment="{{item.val}}" no="{{item.no}}" actualamount="{{item.actualamount}}" discount="{{item.discount}}" payableamount="{{item.payableamount}}"></lumpsum-fee-component-card> 
-          </template>       
-        </div> -->
 
         <div class="col-md-12 form-button" hidden$="{{hidegenerateinstallment}}">
           <paper-button class="btn btn-primary" on-click="FnGenerate">Generate</paper-button>          
-          <paper-button hidden$="{{hidefeecomponent}}" class="btn btn-primary" on-click="FnCancel">Cancel</paper-button>
-        </div>
-        <div class="col-md-12 form-button" hidden$="{{hidesubmitinstallment}}">
-          <paper-button class="btn btn-primary" on-click="FnSubmit">Submit</paper-button>          
           <paper-button hidden$="{{hidefeecomponent}}" class="btn btn-primary" on-click="FnCancel">Cancel</paper-button>
         </div>
       </div>
@@ -150,7 +136,7 @@
         // this.hideinstallmentpattern=true;
         this.hideinstallmentfeecomponentcard=true;
         this.hidenoofinstallment=true;
-        this.hidesubmitinstallment=true;
+        // this.hidesubmitinstallment=true;
         this.hidegenerateinstallment=false;
         this.hidelumpsumfeecomponentcard=true;
         this.fetchnoofinstallmenturl=sessionStorage.getItem("addrinfo")+"/fetchnoofinstallment-service";
@@ -180,63 +166,64 @@
         }      
         else
         {
-        this.$.schedulefee.fetchtotalsplitupamountService();
-        // this.$.schedulefee.fetchtotalinstallmentfeecode(discountcode,discounttype,admissiontype);
-        // var ins=[];
-        // noofinstallment=noofinstallment;
-        // for(var i=0;i<noofinstallment;i++)
-        // {
-        //   var obj={"val":"","no":""};
-        //   obj.no=i+1;
-        //   obj.val="Installment"+(i+1);
-        //   ins.push(obj);
-        // }        
-        // this.installmentarr=ins;
-        // if(installmentpattern=="2")
-        //   this.hideinstallmentfeecomponentcard=false;
-        // else if(installmentpattern=="3")
-        //   this.hidelumpsumfeecomponentcard=false;
-        // else
-        //   this.hidefeecomponentcard=false;
-        // }
-        this.hidesubmitinstallment=false;
-        this.hidegenerateinstallment=true;
+        // this.$.schedulefee.fetchtotalsplitupamountService();
+        this.$.schedulefee.fetchinstallmentsplitStructure(grade,academicyear,admissionyear);
+        // this.hidesubmitinstallment=false;
+        // this.hidegenerateinstallment=true;
         }
+      },
+      FnFormInstallmentStructure:function(arr){
+       alert(JSON.stringify(arr));
+       var a=[];
+       var sarr=[];
+       var temparr=arr;
+
+       for(var i=0;i<temparr.length;i++)
+       {       
+        var nameobj={"installment":"","totalfee":""};
+        nameobj.installment=temparr[i].base_fee_type;
+        var obj={"feetype":"","installmentfee":""};
+        obj.feetype=temparr[i].fee_type;
+        obj.installmentfee=temparr[i].amount;
+        if(temparr[i].amount>0)
+        a.push(obj);
+        for(var j=i+1;j<temparr.length;j++)
+        {
+           if(temparr[i].base_fee_type==temparr[j].base_fee_type)
+           {
+             var obj1={"feetype":"","installmentfee":""}
+             obj1.feetype=temparr[j].fee_type;
+             obj1.installmentfee=temparr[j].amount;
+             if(temparr[j].amount>0)
+             a.push(obj1);
+             temparr.splice(j,1);
+             j--;
+           }
+        }
+        nameobj.fees=a;
+        sarr.push(nameobj);
+        a=[];        
+       }
+       this.inssplituparr=sarr;
+       this.hidefeecomponentcard=false;
+       // alert(JSON.stringify(sarr));
       },
       FnSelectInsatllmentNo:function(e){
         noofinstallment=(e.target.selectedItem.textContent).trim();  
         localStorage.setItem("curr_sess_noofinstallment",noofinstallment);
       },
       FnMakeVisbleInstallmentCard:function(){
-        // var ins=[];
-        // noofinstallment=noofinstallment+insno;
-        // for(var i=0;i<noofinstallment;i++)
-        // {
-        //   var obj={"val":"","no":""};
-        //   obj.no=i+1;
-        //   obj.val="Installment"+(i+1);
-        //   ins.push(obj);
-        // }        
-        // this.installmentarr=ins;
         this.hidefeecomponentcard=false;
       },
       FnSetInstallment:function(arr){
         installmentarr=arr;
       },
       FnSubmit:function(){
-        // if((this.installmentarr).length==installmentarr.length)
-        // this.$.schedulefee.setInstallmentFeecomponent(this.schoolname,grade,admissionyear,academicyear,noofinstallment,discountcode,discounttype,installmentarr,installmentsubarr,admissiontype);
-        // else
-        //   alert('Please schedule all the installments!!');
-        if((installmentarr).length>0){
-          this.$.schedulefee.setInstallmentFeecomponent(grade,academicyear,admissionyear,noofinstallment,installmentpattern,installmentarr);
-        }
-        installmentarr=[];
-
+        // if((installmentarr).length>0){
+        //   this.$.schedulefee.setInstallmentFeecomponent(grade,academicyear,admissionyear,noofinstallment,installmentpattern,installmentarr);
+        // }
+        // installmentarr=[];
       },
-      // FnViewFeeComponent:function(){
-      //   this.hidefeecomponent=false;
-      // },
       FnRefresh:function(){
         grade="";
         admissionyear="";
@@ -260,12 +247,7 @@
         feecomponentarr=[];
         installmentarr=[];
         installmentsubarr=[];
-        // var installmentpattern="";
-        // this.$.structureformall.checked=true;
-        // this.$.structureformspec.checked=false;
-        // this.hidegradecard=true;
-        // document.querySelector('schooltype-to-grade-displaycard').ready();
-        // document.querySelector('schooltype-to-grade-displaycard').FnRefresh();
+
       },
       FnRefresh1:function(){
         grade="";
@@ -287,11 +269,6 @@
         // document.querySelector('#structurespotyes').selected=-1;
         // document.querySelector('#structurespotno').selected=-1;
         localStorage.setItem("curr_sess_installmentpattern",installmentpattern);
-        // this.$.structureformall.checked=true;
-        // this.$.structureformspec.checked=false;
-        // this.hidegradecard=true;
-        // document.querySelector('schooltype-to-grade-displaycard').ready();
-        // document.querySelector('schooltype-to-grade-displaycard').FnRefresh();
       },
       FnCancel:function(){
         grade="";
@@ -314,60 +291,12 @@
         // document.querySelector('#structurespotyes').selected=-1;
         // document.querySelector('#structurespotno').selected=-1;
         localStorage.setItem("curr_sess_installmentpattern",installmentpattern);
-        // this.$.structureformall.checked=true;
-        // this.$.structureformspec.checked=false;
-        // this.hidegradecard=true;
-        // document.querySelector('schooltype-to-grade-displaycard').ready();
-        // document.querySelector('schooltype-to-grade-displaycard').FnRefresh();
         feecomponentarr=[];
         installmentarr=[];
         installmentsubarr=[];
         // var installmentpattern="";
       },
-      // FnSetFeeComponent:function(arr){
-      //   feecomponentarr=[];
-      //   for(var i=0;i<arr.length;i++){          
-      //     feecomponentarr.push(arr[i]);
-      //   }
-      // },
-      // FnSetInsatllment:function(insarr,inssubarr)
-      // {
-      //   installmentarr=insarr;
-      //   installmentsubarr=inssubarr;
-      //   // alert(JSON.stringify(installmentarr));
-      //   // alert(JSON.stringify(installmentsubarr));
-      // },
-      // FnSelectDiscountType:function(e){
-      //   discountcode=(e.target.selectedItem.value).trim();
-      //   discounttype=(e.target.selectedItem.textContent).trim();
-      //   if(discountcode==2){
-      //     this.hideadmissiontype=true;
-      //     // this.hideinstallmentpattern=false;
-      //     admissiontype="0";
-      //   }
-      //   else{
-      //     this.hideadmissiontype=false;
-      //     // this.hideinstallmentpattern=true;
-      //   }
-      //   localStorage.setItem("curr_sess_discounttypecode",discountcode);
-      //   localStorage.setItem("curr_sess_discounttype",discounttype);
-      // },
-      // spotyesHandler:function(e){
-      //   if(document.querySelector("#structurespotyes").checked==true)
-      //   {
-      //    document.querySelector("#structurespotno").checked=false;
-      //    admissiontype="1";
-      //    localStorage.setItem("curr_sess_admissiontype",admissiontype);
-      //   }
-      // },
-      // spotnoHandler:function(e){
-      //   document.querySelector("#structurespotno").checked=true;
-      //   {
-      //    document.querySelector("#structurespotyes").checked=false;
-      //    admissiontype="0";
-      //    localStorage.setItem("curr_sess_admissiontype",admissiontype);
-      //   }
-      // },
+     
       generalHandler:function(e){
         if(document.querySelector("#structuregeneral").checked==true)
         {
@@ -377,8 +306,8 @@
          this.hidenoofinstallment=true;
          installmentpattern="1";
          localStorage.setItem("curr_sess_installmentpattern",installmentpattern);
-         this.hidesubmitinstallment=true;
-         this.hidegenerateinstallment=false;
+         // this.hidesubmitinstallment=true;
+         // this.hidegenerateinstallment=false;
          this.installmentarr=[];
         }
       },
@@ -392,8 +321,8 @@
          this.hidenoofinstallment=false;
          installmentpattern="2";
          localStorage.setItem("curr_sess_installmentpattern",installmentpattern);
-         this.hidesubmitinstallment=true;
-         this.hidegenerateinstallment=false;
+         // this.hidesubmitinstallment=true;
+         // this.hidegenerateinstallment=false;
          this.installmentarr=[];
         }
       },
@@ -409,26 +338,11 @@
          noofinstallment=1;
          localStorage.setItem("curr_sess_noofinstallment",noofinstallment);         
          localStorage.setItem("curr_sess_installmentpattern",installmentpattern);
-         this.hidesubmitinstallment=true;
-         this.hidegenerateinstallment=false;
+         // this.hidesubmitinstallment=true;
+         // this.hidegenerateinstallment=false;
          this.installmentarr=[];
         }
        }
-       // ,
-      // thirdpartyHandler:function(e){
-      //   if(document.querySelector("#structurethirdparty").checked==true)
-      //   {
-      //    document.querySelector("#structuregeneral").checked=false;
-      //    document.querySelector("#structureinstallment").checked=false;
-      //    document.querySelector("#structurelumpsum").checked=false;
-      //    this.hidenoofinstallment=true;
-      //    installmentpattern="4";
-      //    noofinstallment=0;
-      //    localStorage.setItem("curr_sess_noofinstallment",noofinstallment);
-         
-      //    localStorage.setItem("curr_sess_installmentpattern",installmentpattern);
-      //   }
-      // }  
       });  
   })();
   </script>

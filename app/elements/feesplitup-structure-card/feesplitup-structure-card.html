@@ -17,6 +17,11 @@
     .outcard{
       @apply(--layout-vertical);
     }
+    paper-dialog{
+      border-radius: 2px;
+      border-color: darkslategrey;
+      background-color: whitesmoke;
+    }
 </style>
   <template>
     <style>
@@ -81,7 +86,7 @@
 
       <div class="list-group col-sm-12 panel-body form-category" hidden$="{{hidefeestructure}}">
       <div>
-      <table style="width:100%;">
+      <table style="width:98%;">
         <tr><th>Fee Type</th><th>Total Fee</th>
           <template  is="dom-repeat" items="{{feesinstallmentarr}}" as="ins">
             <th>{{ins.installment}}</th>
@@ -93,7 +98,7 @@
       <table style="width:100%;">
       <template  is="dom-repeat" items="{{feesplitarr}}" as="item">
       <tr style="width:100%;"><td style="width:12%;">{{item.fee_type}}</td><td style="width:12%;">{{item.total_fee}}</td>
-      <td style="width:70%;">
+      <td style="width:60%;">
       <div class="incard">
       <template  is="dom-repeat" items="{{insarr}}" as="f">
       <feesplitup-structure-feetypecard feetype="{{item.fee_type}}" totalfee="{{item.total_fee}}" noofinstallment="{{noofinstallment}}" basefeetype="{{f.installment}}" splitarr="{{feesplitarr}}" insno="{{f.insno}}" typeinput="{{typeinput}}"  showinput="{{showinput}}"></feesplitup-structure-feetypecard>
@@ -111,6 +116,33 @@
         <paper-button id="splitupsubmit" hidden$="{{hidesubmit}}" on-click="FnSubmit" class="btn btn-primary center" style="margin-left: 40%;">Submit</paper-button>
         <paper-button id="splitupcancel" hidden$="{{hidecancel}}" on-click="FnCancel" class="btn btn-primary center">Cancel</paper-button>
       </div>
+
+      <paper-dialog id="installmentschdialog" style="width:80%;" modal>
+      <div>
+        <table style="width:100%;">
+          <tr><th>Installment</th><th>Fee Type</th><th>Amount</th></tr>
+          <tr style="height: 10px;"><td colspan="3"></td></tr>
+          <template  is="dom-repeat" items="{{inssplituparr}}" as="split">
+          <tr>
+            <td>{{split.installment}}</td>
+            <td>
+              <table style="width:120%;">
+              <template  is="dom-repeat" items="{{split.fees}}" as="f">
+                <tr><td>{{f.feetype}}</td><td style="text-align: right;">{{f.installmentfee}}</td></tr>
+              </template>
+              </table>
+            </td>
+          </tr>
+          <tr style="height: 15px;"><td colspan="3"></td></tr>
+          </template>
+        </table>
+        <br>
+        <div style="margin-left: 70%;">
+          <paper-button on-click="FnDialogOk" class="btn btn-primary center">Ok</paper-button>
+          <paper-button on-click="FnDialogCancel" class="btn btn-primary center">Cancel</paper-button>
+        </div>
+      </div>
+      </paper-dialog>
 
       <!-- It would fetch fee type -->
       <iron-ajax
@@ -289,6 +321,7 @@
         this.hidefeestructure=false;
         this.feesinstallmentarr=installmentarr;
         this.insarr=installmentarr;
+        alert(JSON.stringify(this.insarr));
         this.feesplitarr=splitarr;
         // document.querySelector('feesplitup-structure-feetypecard').setSplitFee(splitarr);
         installmentarr=[];
@@ -309,12 +342,48 @@
         installmentsplituparr.push(obj);
       },
       FnSubmit:function(){
+        this.$.installmentschdialog.toggle();
         // alert(JSON.stringify(installmentsplituparr));
-        this.$.service.generatemasterfeesplitupcodeService(installmentsplituparr);
-        installmentsplituparr=[];
-        feetypearr=[];
-        splitarr=[];
-        overall=[];
+        this.FnFormInstallmentStructure();
+      },
+      FnFormInstallmentStructure:function(){
+        // alert(JSON.stringify(installmentsplituparr));
+        
+        var a=[];
+        var sarr=[];
+        var temparr=[];
+       for(var i=0;i<installmentsplituparr.length;i++){
+        temparr.push(installmentsplituparr[i]);
+       }
+
+       for(var i=0;i<temparr.length;i++)
+       {       
+        var nameobj={"installment":"","totalfee":""};
+        nameobj.installment=temparr[i].installment;
+        var obj={"feetype":"","installmentfee":""};
+        obj.feetype=temparr[i].feetype;
+        obj.installmentfee=temparr[i].installmentfee;
+        if(temparr[i].installmentfee>0)
+        a.push(obj);
+        for(var j=i+1;j<temparr.length;j++)
+        {
+           if(temparr[i].insno==temparr[j].insno)
+           {
+             var obj1={"feetype":"","installmentfee":""}
+             obj1.feetype=temparr[j].feetype;
+             obj1.installmentfee=temparr[j].installmentfee;
+             if(temparr[j].installmentfee>0)
+             a.push(obj1);
+             temparr.splice(j,1);
+             j--;
+           }
+        }
+        nameobj.fees=a;
+        sarr.push(nameobj);
+        a=[];        
+       }
+       this.inssplituparr=sarr;
+       // alert(JSON.stringify(sarr));
       },
       FnRefresh:function(){
         document.querySelector('#splitupgrade').selected=-1;
@@ -331,6 +400,18 @@
       },
       FnSetSplitarr:function(splitarr){
         this.feesplitarr=splitarr;
+      },
+      FnDialogOk:function(){
+        this.$.installmentschdialog.toggle();
+        this.$.service.generatemasterfeesplitupcodeService(installmentsplituparr);
+        installmentsplituparr=[];
+        feetypearr=[];
+        splitarr=[];
+        overall=[];
+        this.FnRefresh();
+      },
+      FnDialogCancel:function(){
+        this.$.installmentschdialog.toggle();
       }
     });
   })();
