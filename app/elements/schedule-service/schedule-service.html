@@ -14,6 +14,17 @@
         on-response="fetchgradeResponse"
         debounce-duration="300"
         >
+        <!-- It would fetch the grade -->
+     <iron-ajax
+        method="post"
+        id="fetchgradeforreportajax"
+        url="{{fetchgradeforreporturl}}"
+        params="{{fetchgradeforreportparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchgradeforreportResponse"
+        debounce-duration="300"
+        >
          <!-- It would fetch the academic year -->
      <iron-ajax
         method="post"
@@ -407,6 +418,19 @@
     var feemastersplitarr=[];
     Polymer({
       is: 'schedule-service',
+      fetchgradeforreportService:function(){       
+        this.fetchgradeforreporturl=sessionStorage.getItem("addrinfo")+"/fetchgrade-service"
+        this.$.fetchgradeforreportajax.generateRequest();
+      },
+      fetchgradeforreportResponse:function(e){
+        var arr=e.detail.response.returnval;
+        var gradearr=[];
+        gradearr.push({"grade_id":"all","grade_name":"All Grades"});
+        for(var i=0;i<arr.length;i++){
+            gradearr.push(arr[i]);
+        }
+        document.querySelector('discount-structure-report').gradearr=gradearr;
+      },
       fetchgradeService:function(){       
         this.fetchgradeurl=sessionStorage.getItem("addrinfo")+"/fetchgrade-service"
         this.$.fetchgradeajax.generateRequest();

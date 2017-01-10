@@ -873,8 +873,8 @@
         document.querySelector('exchange-followup').ready();
       },  
       feereports:function(){
-        document.querySelector('app-list').setPage("fee-reports","Fee Structure Reports");
-        this.$.reportingservice.getfeedetails();
+        // document.querySelector('app-list').setPage("fee-reports","Fee Structure Reports");
+        // this.$.reportingservice.getfeedetails();
        // document.querySelector('fee-reports').ready();
       },
       gettodayfollowups:function(){
@@ -944,6 +944,7 @@
         document.querySelector('pdccheques-report-card').callService();
       },
       FnDiscountStructureReport:function(){
+        this.$.scheduleservice.fetchgradeforreportService();
         this.$.scheduleservice.fetchacademicyearService();
         this.$.scheduleservice.fetchadmissionyearService();
         document.querySelector('app-list').setPage("discount-structure-report","Discount master");

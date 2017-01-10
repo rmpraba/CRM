@@ -1,5 +1,7 @@
 
 <link rel="import" href="..\..\bower_components/polymer/polymer.html">
+<link rel="import" href="../fromdate-icon-pickercard/fromdate-icon-pickercard.html">
+<link rel="import" href="../todate-icon-pickercard/todate-icon-pickercard.html">
 
 <dom-module id="discount-structure-report">
   <template>
@@ -11,9 +13,7 @@
     <div class="row">
         <div class="well well-sm">
           <div class="row">
-            <div class="col-md-12">
-              <!-- <div class="col-md-6"> -->
-          <!-- <div class="list-group col-sm-12 panel-body form-category"> -->
+          <div class="col-md-12">
           <div class="col-sm-2 enquiry-input">
           <paper-dropdown-menu label="Admission Year" attr-for-selected="value">
             <paper-menu id="discountstructadmissionyear" class="dropdown-content" required on-iron-select="FnSelectAdmissionYear" valueattr="value" >
@@ -23,7 +23,6 @@
             </paper-menu>
           </paper-dropdown-menu>
           </div>
-
           <div class="col-sm-2">
           <paper-dropdown-menu label="Academic Year" attr-for-selected="value">
             <paper-menu id="discountstructacademicyear" class="dropdown-content" required on-iron-select="FnSelectAcademicYear" valueattr="value" >
@@ -33,19 +32,33 @@
             </paper-menu>
           </paper-dropdown-menu> 
           </div>
+          <div class="col-sm-2">
+          <paper-dropdown-menu label="Grade" attr-for-selected="value">
+            <paper-menu id="discountstructgrade" class="dropdown-content" required on-iron-select="FnSelectGrade" valueattr="value" >
+              <template  is="dom-repeat" items="{{gradearr}}" as="item">
+              <paper-item value="{{item.grade_id}}">{{item.grade_name}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu> 
+          </div>
           <!-- </div> -->
-                <div class="col-md-3" style="margin-top: -1%;">
-                  <fromdate-pickercard></fromdate-pickercard>
+                <div class="col-md-2" style="margin-top: 3%;">
+                  <fromdate-icon-pickercard></fromdate-icon-pickercard>
                 </div>
-                <div class="col-md-3" style="margin-top: -1%;">
-                  <todate-pickercard></todate-pickercard>
+                <div class="col-md-1" style="margin-top: 3%;margin-left: -3%;">
+                  <todate-icon-pickercard></todate-icon-pickercard>
                 </div>
-                <div class="col-md-1" style="margin-top: 1%;">
-                  <paper-button on-click="FnView" class="btn btn-primary">View</paper-button>
+                <div class="col-md-1" style="margin-top: 2.5%;margin-left: 2%;">
+                  <paper-button style="height:30px;text-transform: none;" on-click="FnView" class="btn btn-primary">View</paper-button>
                 </div>
 
-                <div class="col-md-1" style="margin-top: 1%;">
-                  <input type="button" id="btn2" onclick="tableToExcel('discountstructurereport', 'Discount structure report')" value="Export to Excel">
+                <div class="col-md-1" style="margin-top: -3%;margin-left: 15%;">
+                <p>Download
+                <a href="#" disabled="{{disabledownload}}">
+                <span class="glyphicon glyphicon-download-alt" onclick="tableToExcel('discountstructurereport', 'Discount structure report')"></span>
+                </a>
+                </p>
+                  <!-- <input type="button" id="btn2" onclick="tableToExcel('discountstructurereport', 'Discount structure report')" value="Export"> -->
                 </div>   
               <!-- </div> -->
             </div>
@@ -63,20 +76,9 @@
         <tr><td>{{item.sno}}</td><td>{{item.admission_year}}</td><td>{{item.academic_year}}</td><td>{{item.grade}}</td>
         <td>{{item.discount_type}}</td><td>{{item.from_date}}</td><td>{{item.to_date}}</td><td>{{item.fee_type}}</td><td>{{item.amount}}</td><td>{{item.discount_percentage}}</td></tr>
       </template>
-      <!-- <tr><th colspan="11" style="text-align: right;">Total Amount: &nbsp;&nbsp;{{totalamount}}</th></tr> -->
       </tbody>
     </table>    
-       <!--  <div style='margin-left: 30%;'>
-    <table>
-    <tr>
-    <th>Total no of cheques: </th><th style="width: 3%;"></th><th>{{noofstudents}}</th>
-    </tr>
-    <tr><br></tr>
-    <tr>
-    <th>Total Collection : </th><th style="width: 3%;"></th><th>{{totalcollection}}</th>
-    </tr>
-    </table>
-    </div> -->
+
     <fee-report-service id="feereportservice"></fee-report-service>
   </template>
   <script type="text/javascript">
@@ -95,21 +97,28 @@
   <script>
   (function() {
     'use strict';
-    var admissionyear,academicyear;
+    var admissionyear,academicyear,grade;
     Polymer({
       is: 'discount-structure-report',
+      ready:function(){
+        this.disabledownload=true;
+      },
       FnSelectAdmissionYear:function(e){
         admissionyear=(e.target.selectedItem.textContent).trim();
       },
       FnSelectAcademicYear:function(e){
         academicyear=(e.target.selectedItem.textContent).trim();
       },
+      FnSelectGrade:function(e){
+        grade=(e.target.selectedItem.value).trim();
+      },
       callService:function(){        
         // this.$.feereportservice.FnFetchDiscountStructureService();
       },
       FnView:function(){
         this.$.feereportservice.FnFetchDiscountStructureService(admissionyear
-          ,academicyear);
+          ,academicyear,grade);
+        this.disabledownload=false;
       },
       FnRefresh:function(){
         document.querySelector('#discountstructacademicyear').selected=-1;

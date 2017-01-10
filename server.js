@@ -4803,8 +4803,6 @@ app.post('/fetchfeecodeforsplitup-service',  urlencodedParser,function (req, res
      });
  });
 
-
-
 app.post('/fetchinstallmentsplit-service',  urlencodedParser,function (req, res){
    connection.query("SELECT * FROM md_fee_splitup_master WHERE school_id='"+req.query.schoolid+"' and grade='"+req.query.grade+"' and academic_year='"+req.query.academicyear+"' and admission_year='"+req.query.admissionyear+"'",
      function(err, rows)
@@ -5138,8 +5136,13 @@ app.post('/fetchpdccheques-service',  urlencodedParser,function (req, res){
 
 
 app.post('/fetchdiscountstructure-service',  urlencodedParser,function (req, res){
- var qur = "SELECT * FROM mlzscrm.md_discount_master where academic_year='"+req.query.academicyear+"' and admission_year='"+req.query.admissionyear+"' and (from_date>='"+req.query.fromdate+"' "+
+ if(req.query.grade!="all")
+ var qur = "SELECT * FROM mlzscrm.md_discount_master where academic_year='"+req.query.academicyear+"' and admission_year='"+req.query.admissionyear+"' and grade='"+req.query.grade+"' and (from_date>='"+req.query.fromdate+"' "+
              "or to_date<='"+req.query.todate+"') and school_id='"+req.query.schoolid+"' ";
+ else
+  var qur = "SELECT * FROM mlzscrm.md_discount_master where academic_year='"+req.query.academicyear+"' and admission_year='"+req.query.admissionyear+"' and (from_date>='"+req.query.fromdate+"' "+
+             "or to_date<='"+req.query.todate+"') and school_id='"+req.query.schoolid+"' ";
+ 
  console.log('-----------------------fetch discount structure--------------------------');
  console.log(qur);
  console.log('-------------------------------------------------');
