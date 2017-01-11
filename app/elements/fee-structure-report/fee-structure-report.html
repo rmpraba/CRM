@@ -12,12 +12,10 @@
     <div class="row">
         <div class="well well-sm">
           <div class="row">
-            <div class="col-md-12">
-              <!-- <div class="col-md-6"> -->
-          <!-- <div class="list-group col-sm-12 panel-body form-category"> -->
+          <div class="col-md-12">
           <div class="col-sm-3 enquiry-input">
           <paper-dropdown-menu label="Admission Year" attr-for-selected="value">
-            <paper-menu id="discountadmissionyear" class="dropdown-content" required on-iron-select="FnSelectAdmissionYear" valueattr="value" >
+            <paper-menu id="feestructadmissionyear" class="dropdown-content" required on-iron-select="FnSelectAdmissionYear" valueattr="value" >
               <template  is="dom-repeat" items="{{admissionarr}}" as="item">
               <paper-item>{{item.admission_year}}</paper-item>
               </template>
@@ -27,52 +25,59 @@
 
           <div class="col-sm-3">
           <paper-dropdown-menu label="Academic Year" attr-for-selected="value">
-            <paper-menu id="discountacademicyear" class="dropdown-content" required on-iron-select="FnSelectAcademicYear" valueattr="value" >
+            <paper-menu id="feestructacademicyear" class="dropdown-content" required on-iron-select="FnSelectAcademicYear" valueattr="value" >
               <template  is="dom-repeat" items="{{academicarr}}" as="item">
               <paper-item>{{item.academic_year}}</paper-item>
               </template>
             </paper-menu>
           </paper-dropdown-menu> 
           </div>
-          <!-- </div> -->
-               <!--  <div class="col-md-3" style="margin-top: -1%;">
-                  <fromdate-pickercard></fromdate-pickercard>
-                </div>
-                <div class="col-md-3" style="margin-top: -1%;">
-                  <todate-pickercard></todate-pickercard>
-                </div> -->
-                <div class="col-md-2" style="margin-top: 1%;">
-                  <paper-button on-click="FnView" class="btn btn-primary">View</paper-button>
-                </div>
+          <div class="col-sm-2">
+          <paper-dropdown-menu label="Grade" attr-for-selected="value">
+            <paper-menu id="feestructgrade" class="dropdown-content" required on-iron-select="FnSelectGrade" valueattr="value" >
+              <template  is="dom-repeat" items="{{gradearr}}" as="item">
+              <paper-item value="{{item.grade_id}}">{{item.grade_name}}</paper-item>
+              </template>
+            </paper-menu>
+          </paper-dropdown-menu> 
+          </div>
+          <div class="col-md-1" style="margin-top: 2.5%;margin-left: 2%;">
+                <paper-button style="height:30px;text-transform: none;" on-click="FnView" class="btn btn-primary">View</paper-button>
+          </div>
 
-                <div class="col-md-2" style="margin-top: 1%;">
-                  <input type="button" id="btn2" onclick="tableToExcel('feestructurereport', 'Fee structure report')" value="Export to Excel">
-                </div>   
-              <!-- </div> -->
-            </div>
+          <div class="col-md-1" style="margin-top: -3%;margin-left: 25%;">
+                <p>Download
+                <a href="#">
+                <span disabled="{{disabledownload}}" class="glyphicon glyphicon-download-alt" onclick="tableToExcel('feestructurereport', 'Fee structure report')"></span>
+                </a>
+                </p>
+          </div>   
+          </div>
           </div>
         </div>
     </div>
-     <table class="table table-hover" id="feestructurereport">
+     <table class="table table-hover" id="feestructurereportt">
       <thead>
       <tr>
-        <!-- <th>#</th><th>Academic Year</th><th>Admission Year</th><th>Grade</th><th>Category</th><th>From Date</th><th>To Date</th><th>Fee Type</th><th>Amount</th><th>Discount %</th> -->
         <template  is="dom-repeat" items="{{titlearr}}" as="item">
         <th>{{item}}</th>
         </template>
       </tr>
       </thead>
+      </table>
+      <table class="table table-hover" id="feestructurereport" style="width: 140%;">
       <tbody>
       <template  is="dom-repeat" items="{{feestructurearr}}" as="item">
-        <tr><td>{{item.sno}}</td><td>{{item.admissionyear}}</td><td>{{item.academicyear}}</td><td>{{item.grade_id}}</td>
+        <tr><td style="width: 5%;">{{item.sno}}</td><td style="width: 20%;">{{item.admissionyear}}</td><td style="width: 20%;">{{item.academicyear}}</td><td style="width: 15%;">{{item.grade}}</td>
+        <td style="width: 75%;"><table width='100%'><tr>
         <template  is="dom-repeat" items="{{item.feetypes}}" as="i">
         <td>{{i.Kitfee}}</td><td>{{i.Annualfee}}</td>
         <td>{{i.Tutionfee}}</td><td>{{i.Registrationfee}}</td>
         </template>
-        <td>{{item.totalfee}}</td>
+        </tr></table></td>
+        <td style="width: 15%;">{{item.totalfee}}</td>
         </tr>
       </template>
-      <!-- <tr><th colspan="11" style="text-align: right;">Total Amount: &nbsp;&nbsp;{{totalamount}}</th></tr> -->
       </tbody>
     </table>    
 
@@ -94,7 +99,7 @@
   <script>
   (function() {
     'use strict';
-    var admissionyear,academicyear;
+    var admissionyear,academicyear,grade;
     Polymer({
       is: 'fee-structure-report',
       FnSelectAdmissionYear:function(e){
@@ -103,11 +108,22 @@
       FnSelectAcademicYear:function(e){
         academicyear=(e.target.selectedItem.textContent).trim();
       },
+      FnSelectGrade:function(e){
+        grade=(e.target.selectedItem.value).trim();
+      },
       callService:function(){        
         // this.$.feereportservice.FnFetchDiscountStructureService();
       },
       FnView:function(){
-        this.$.feereportservice.FnFetchFeeStructureService(admissionyear,academicyear);
+        this.$.feereportservice.FnFetchFeeStructureService(admissionyear,academicyear,grade);
+      },
+      FnRefresh:function(){
+        document.querySelector('#feestructacademicyear').selected=-1;
+        document.querySelector('#feestructadmissionyear').selected=-1;
+        document.querySelector('#feestructgrade').selected=-1;
+        admissionyear="";
+        academicyear="";
+        grade="";
       }
     });
   })();

@@ -948,12 +948,15 @@
         this.$.scheduleservice.fetchacademicyearService();
         this.$.scheduleservice.fetchadmissionyearService();
         document.querySelector('app-list').setPage("discount-structure-report","Discount master");
+        document.querySelector('discount-structure-report').FnRefresh();
         document.querySelector('discount-structure-report').callService();
       },
       FnFeeStructureReport:function(){
+        this.$.scheduleservice.fetchgradeforreportService();
         this.$.scheduleservice.fetchacademicyearService();
         this.$.scheduleservice.fetchadmissionyearService();
         document.querySelector('app-list').setPage("fee-structure-report","Fee master");
+        document.querySelector('fee-structure-report').FnRefresh();
         document.querySelector('fee-structure-report').callService();
       },
       setRoleview:function(){

@@ -430,6 +430,7 @@
             gradearr.push(arr[i]);
         }
         document.querySelector('discount-structure-report').gradearr=gradearr;
+        document.querySelector('fee-structure-report').gradearr=gradearr;
       },
       fetchgradeService:function(){       
         this.fetchgradeurl=sessionStorage.getItem("addrinfo")+"/fetchgrade-service"

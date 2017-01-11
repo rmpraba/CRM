@@ -488,7 +488,7 @@
         arr=[];
       } ,
       FnFetchFeeStructureService:function(admissionyear
-          ,academicyear){
+          ,academicyear,grade){
         this.fetchfeestructureurl=sessionStorage.getItem("addrinfo")+"/fetchfeestructure-service";
         var obj={"schoolid":"","fromdate":"","todate":""};
         obj.schoolid=localStorage.getItem("schoolid");
@@ -496,6 +496,7 @@
         obj.todate=localStorage.getItem("localsess_to_date");
         obj.admissionyear=admissionyear;
         obj.academicyear=academicyear;
+        obj.grade=grade;
         this.fetchfeestructureparam=obj;
         this.$.fetchfeestructureajax.generateRequest();
       },
@@ -522,7 +523,7 @@
         nameobj.feecode=arr[i].fee_code; 
         nameobj.academicyear=arr[i].academic_year;
         nameobj.admissionyear=arr[i].admission_year; 
-        nameobj.grade=arr[i].grade;
+        nameobj.grade=arr[i].grade_id;
         nameobj.totalfee=arr[i].fees;
         var obj1={};
         for(var x=0;x<title.length;x++){
