@@ -13,58 +13,62 @@
           <div class="row">
             <div class="col-md-12">
               <!-- <div class="col-md-6"> -->
-                <div class="col-md-3" style="margin-top: -1%;">
-                  <fromdate-pickercard></fromdate-pickercard>
+                <div class="col-md-2" style="margin-top: 2%;">
+                  <fromdate-icon-pickercard></fromdate-icon-pickercard>
                 </div>
-                <div class="col-md-3" style="margin-top: -1%;">
-                  <todate-pickercard></todate-pickercard>
+                <div class="col-md-1" style="margin-top: 2%;margin-left: -3%;">
+                  <todate-icon-pickercard></todate-icon-pickercard>
                 </div>
-                <div class="col-md-2" style="margin-top: 1%;">
-                  <paper-button on-click="FnView" class="btn btn-primary">View</paper-button>
+                <div class="col-sm-2" style="margin-left: 5%;">
+                <paper-dropdown-menu label="Grade" attr-for-selected="value">
+                  <paper-menu id="dailycollectiongrade" class="dropdown-content" required on-iron-select="FnSelectGrade" valueattr="value" >
+                    <template  is="dom-repeat" items="{{gradearr}}" as="item">
+                    <paper-item value="{{item.grade_id}}">{{item.grade_name}}</paper-item>
+                    </template>
+                  </paper-menu>
+                </paper-dropdown-menu> 
+                </div>
+                <div class="col-md-1" style="margin-top: 2.5%;margin-left: 10%;">
+                  <paper-button style="height:30px;text-transform: none;" on-click="FnView" class="btn btn-primary">View</paper-button>
                 </div>
 
-                <div class="col-md-2" style="margin-top: 1%;">
-                  <input type="button" id="btn2" onclick="tableToExcel('dailycollectionreport', 'DailyFee Collection Report')" value="Export to Excel">
-                </div>   
-              <!-- </div> -->
+                <div class="col-md-1" style="margin-top: 1%;margin-left: 22%;">
+                <p>Download
+                <a href="#">
+                <span disabled="{{disabledownload}}" class="glyphicon glyphicon-download-alt" onclick="tableToExcel('dailycollectionreport', 'Daily collection report')"></span>
+                </a>
+                </p>
+                </div>  
             </div>
           </div>
         </div>
     </div>
+    <div  id="dailycollectionreport">
     <template is="dom-repeat" items="{{dailycollectionarr}}" as="item">
     
     <template is="dom-repeat" items="{{item.feearr}}" as="f">
     <h4>{{item.installment}}: {{f.collectiontype}}</h4>
-     <table class="table table-hover" id="dailycollectionreport">
+     <table class="table table-hover">
       <thead>
       <tr>
-        <th>Sno</th><th>Enr/Enq No</th><th>Student Name</th><th>Grade</th><th hidden$="{{f.hidecheque}}">Cheque No</th><th hidden$="{{f.hidecheque}}">Bank Name</th><th hidden$="{{f.hidecheque}}">Cheque Date</th><th>Receipt/Ack No</th><th>Amount</th>
+        <!-- <th>Sno</th> -->
+        <th>Enr/Enq No</th><th>Student Name</th><th>Grade</th><th hidden$="{{f.hidecheque}}">Cheque No</th><th hidden$="{{f.hidecheque}}">Bank Name</th><th hidden$="{{f.hidecheque}}">Cheque Date</th><th>Receipt/Ack No</th><th>Amount</th>
       </tr>
       </thead>
       <tbody>
       <template  is="dom-repeat" items="{{f.Cash}}" as="cash">
-        <tr><td>{{cash.sno}}</td><td>{{cash.admissionno}}</td><td>{{cash.studentname}}</td><td>{{cash.grade}}</td><td hidden$="{{f.hidecheque}}">{{cash.chequeno}}</td><td hidden$="{{f.hidecheque}}">{{cash.bankname}}</td><td hidden$="{{f.hidecheque}}">{{cash.chequedate}}</td>
+        <tr>
+        <!-- <td>{{cash.sno}}</td> -->
+        <td>{{cash.admissionno}}</td><td>{{cash.studentname}}</td><td>{{cash.grade}}</td><td hidden$="{{f.hidecheque}}">{{cash.chequeno}}</td><td hidden$="{{f.hidecheque}}">{{cash.bankname}}</td><td hidden$="{{f.hidecheque}}">{{cash.chequedate}}</td>
         <td>{{cash.receiptno}}</td><td>{{cash.installmentamount}}</td></tr>
       </template>
       <tr><th colspan="8"></th> <th style="text-align: right;right:5%;position: absolute;">Total Amount: &nbsp;&nbsp;{{f.total}}</th></tr>
       </tbody>
     </table> 
-    <!-- <h2>{{item.installment}}: {{f.collectiontype}}</h2>
-     <table class="table table-hover" id="dailycollectionreport">
-      <thead>
-      <tr>
-        <th>Sno</th><th>Enr/Enq No</th><th>Student Name</th><th>Grade</th><th hidden$="{{f.hidecheque}}">Cheque No</th><th hidden$="{{f.hidecheque}}">Bank Name</th><th hidden$="{{f.hidecheque}}">Cheque Date</th><th>Receipt/Ack No</th><th>Amount</th>
-      </tr>
-      </thead>
-      <tbody>
-      <template  is="dom-repeat" items="{{f.Cheque}}" as="cheque">
-        <tr><td>{{cheque.sno}}</td><td>{{chque.admission_no}}</td><td>{{cheque.student_name}}</td><td>{{cheque.grade}}</td><td hidden$="{{f.hidecheque}}">{{cheque.cheque_no}}</td><td hidden$="{{f.hidecheque}}">{{cheque.bank_name}}</td><td hidden$="{{f.hidecheque}}">{{cheque.installment_date}}</td><td>{{cheque.receipt_no}}</td><td>{{cheque.installment_amount}}</td></tr>
-      </template>
-      <tr><th colspan="11" style="text-align: right;">Total Amount: &nbsp;&nbsp;{{totalamount}}</th></tr> -->
-     <!--  </tbody>
-    </table>  --> 
+   
     </template>   
     </template>
+    <br>
     <div style='margin-left: 30%;'>
     <table>
     <tr>
@@ -76,7 +80,8 @@
     <tr>
     <th>Total Collection : </th><th style="width: 3%;"></th><th>{{totalcollection}}</th>
     </tr>
-    </table>
+    </table>    
+    </div>
     </div>
     <fee-report-service id="feereportservice"></fee-report-service>
   </template>
@@ -96,13 +101,26 @@
   <script>
   (function() {
     'use strict';
+    var grade;
     Polymer({
       is: 'dailycollection-report',
       FnCallService:function(){        
-        this.$.feereportservice.FnFetchDailyFeeReportService();
+        this.$.feereportservice.FnFetchDailyFeeReportService("All Grades");
       },
       FnView:function(){
-        this.$.feereportservice.FnFetchDailyFeeReportService();
+        this.$.feereportservice.FnFetchDailyFeeReportService(grade);
+      },
+      FnSelectGrade:function(e){
+        grade=(e.target.selectedItem.textContent).trim();
+      },
+      FnRefresh:function(){
+        document.querySelector('#dailycollectiongrade').selected=-1;
+        this.dailycollectionarr="";
+        this.collectionbycash="";
+        this.collectionbycheque="";
+        this.totalcollection="";
+        document.querySelector('fromdate-icon-pickercard').ready();
+        document.querySelector('todate-icon-pickercard').ready();
       }
     });
   })();

@@ -13,15 +13,24 @@
           <div class="row">
             <div class="col-md-12">
               <!-- <div class="col-md-6"> -->
-                <div class="col-md-3" style="margin-top: -1%;">
-                  <fromdate-pickercard></fromdate-pickercard>
+              <div class="col-md-2" style="margin-top: 2%;">
+                  <fromdate-icon-pickercard></fromdate-icon-pickercard>
                 </div>
-                <div class="col-md-3" style="margin-top: -1%;">
-                  <todate-pickercard></todate-pickercard>
+                <div class="col-md-1" style="margin-top: 2%;margin-left: -3%;">
+                  <todate-icon-pickercard></todate-icon-pickercard>
                 </div>
-                <div class="col-md-2" style="margin-top: -1%;">
+                <div class="col-sm-2" style="margin-left: 5%;">
+                <paper-dropdown-menu label="Grade" attr-for-selected="value">
+                  <paper-menu id="feecollectiongrade" class="dropdown-content" required on-iron-select="FnSelectGrade" valueattr="value" >
+                    <template  is="dom-repeat" items="{{gradearr}}" as="item">
+                    <paper-item value="{{item.grade_id}}">{{item.grade_name}}</paper-item>
+                    </template>
+                  </paper-menu>
+                </paper-dropdown-menu> 
+                </div>                
+                <div class="col-md-2" style="margin-top: 0%;">
                 <paper-dropdown-menu label="Select Category" attr-for-selected="value">
-                <paper-menu id="reportfiltertype" class="dropdown-content" required on-iron-select="FnSelectFilterType" valueattr="value" >
+                <paper-menu id="reportfiltertype" class="dropdown-content" required on-iron-select="FnSelectFilterType" valueattr="  value" >
                   <!-- <template  is="dom-repeat" items="{{discountarr}}" as="item"> -->
                   <paper-item value="General">General</paper-item>
                   <paper-item value="Cheque Collection">Cheque Collection</paper-item>
@@ -32,13 +41,16 @@
                 </paper-menu>
                 </paper-dropdown-menu> 
                 </div>
-                <div class="col-md-2" style="margin-top: 1%;">
-                  <paper-button on-click="FnView" class="btn btn-primary">View</paper-button>
+                <div class="col-md-1" style="margin-top: 2.5%;margin-left: 10%;">
+                  <paper-button style="height:30px;text-transform: none;" on-click="FnView" class="btn btn-primary">View</paper-button>
                 </div>
-
-                <div class="col-md-2" style="margin-top: 1%;">
-                  <input type="button" id="btn2" onclick="tableToExcel('collectionreport', 'Fee Collection Report')" value="Export to Excel">
-                </div>
+                <div class="col-md-1" style="margin-top: 2%;margin-left: 10%;">
+                <p>Download
+                <a href="#">
+                <span disabled="{{disabledownload}}" class="glyphicon glyphicon-download-alt" onclick="tableToExcel('collectionreport', 'Collection report')"></span>
+                </a>
+                </p>
+                </div> 
                 
               <!-- </div> -->
             </div>
@@ -79,19 +91,30 @@
   <script>
   (function() {
     'use strict';
+    var grade="All Grades";
     var filtertype="1";
     Polymer({
       is: 'fee-collection-report-card',
       FnCallService:function(){        
-        this.$.feereportservice.FnFetchFeeReportService();
+        this.$.feereportservice.FnFetchFeeReportService(grade);
       },
       FnView:function(){
-        this.$.feereportservice.FnFetchFeeReportService();
+        this.$.feereportservice.FnFetchFeeReportService(grade);
       },
       FnSelectFilterType:function(e){
         // alert(e.target.selectedItem.textContent);
         filtertype=(e.target.selectedItem.textContent).trim();
-        this.$.feereportservice.FnFilterReportService(filtertype);
+        this.$.feereportservice.FnFilterReportService(grade,filtertype);
+      },
+      FnSelectGrade:function(e){
+        grade=(e.target.selectedItem.textContent).trim();
+      },
+      FnRefresh:function(){
+        document.querySelector('#feecollectiongrade').selected=-1;
+        document.querySelector('#reportfiltertype').selected=-1;
+        this.collectionarr="";
+        document.querySelector('fromdate-icon-pickercard').ready();
+        document.querySelector('todate-icon-pickercard').ready();
       }
     });
   })();

@@ -1635,7 +1635,8 @@ app.post('/insertadmission',  urlencodedParser,function (req, res){
         // admission_type:req.query.admissiontype,
         discount_type:req.query.discounttype,
         previous_history:req.query.admissionhistory,
-        having_sibling:req.query.admissionsibling
+        having_sibling:req.query.admissionsibling,
+        admission_status:'New'
     }
 
     var qur="SELECT * FROM auto_admission_no";
@@ -3786,8 +3787,13 @@ app.post('/getlistdetails',  urlencodedParser,function (req, res){
   });
 
 app.post('/fetchfeecollectionreport-service',  urlencodedParser,function (req, res){
+   if(req.query.grade=="All Grades")
    var qur = "SELECT * FROM mlzscrm.md_student_paidfee where paid_date>='"+req.query.fromdate+"' "+
              "and paid_date<='"+req.query.todate+"' and school_id='"+req.query.schoolid+"' and paid_status in('paid','inprogress','cleared')";
+   else
+   var qur = "SELECT * FROM mlzscrm.md_student_paidfee where paid_date>='"+req.query.fromdate+"' "+
+             "and paid_date<='"+req.query.todate+"' and grade='"+req.query.grade+"' and school_id='"+req.query.schoolid+"' and paid_status in('paid','inprogress','cleared')";
+   
  console.log('-----------------------collection report--------------------------');
  console.log(qur);
  console.log('-------------------------------------------------');
@@ -3808,6 +3814,7 @@ app.post('/fetchfeecollectionreport-service',  urlencodedParser,function (req, r
 
 
 app.post('/fetchfilterreport-service',  urlencodedParser,function (req, res){
+  if(req.query.grade=="All Grades"){
   if(req.query.filtertype=="General")
     var qur = "SELECT * FROM mlzscrm.md_student_paidfee where paid_date>='"+req.query.fromdate+"' "+
              "and paid_date<='"+req.query.todate+"' and school_id='"+req.query.schoolid+"' and paid_status in('paid','inprogress','cleared') order by paid_date";
@@ -3815,7 +3822,7 @@ app.post('/fetchfilterreport-service',  urlencodedParser,function (req, res){
     var qur = "SELECT * FROM mlzscrm.md_student_paidfee where paid_date>='"+req.query.fromdate+"' "+
              "and paid_date<='"+req.query.todate+"' and school_id='"+req.query.schoolid+"' and paid_status in('paid','inprogress','cleared') "+
              " and mode_of_payment='Cheque' order by paid_date";
-  else if(req.query.filtertype=="Fee Collection")
+  else if(req.query.filtertype=="Cash Collection")
     var qur = "SELECT * FROM mlzscrm.md_student_paidfee where paid_date>='"+req.query.fromdate+"' "+
              "and paid_date<='"+req.query.todate+"' and school_id='"+req.query.schoolid+"' and paid_status in('paid','inprogress','cleared') "+
              " and mode_of_payment='Cash' order by paid_date";
@@ -3825,7 +3832,27 @@ app.post('/fetchfilterreport-service',  urlencodedParser,function (req, res){
    else if(req.query.filtertype=="Overall Collection")
     var qur = "SELECT * FROM mlzscrm.md_student_paidfee where paid_date>='"+req.query.fromdate+"' "+
              "and paid_date<='"+req.query.todate+"' and school_id='"+req.query.schoolid+"' and paid_status in('paid','inprogress','cleared') order by installment_type";
-  
+  }
+  else{
+  if(req.query.filtertype=="General")
+    var qur = "SELECT * FROM mlzscrm.md_student_paidfee where paid_date>='"+req.query.fromdate+"' "+
+             "and paid_date<='"+req.query.todate+"' and school_id='"+req.query.schoolid+"' and paid_status in('paid','inprogress','cleared') order by paid_date";
+  else if(req.query.filtertype=="Cheque Collection")
+    var qur = "SELECT * FROM mlzscrm.md_student_paidfee where paid_date>='"+req.query.fromdate+"' "+
+             "and paid_date<='"+req.query.todate+"' and grade='"+req.query.grade+"' and school_id='"+req.query.schoolid+"' and paid_status in('paid','inprogress','cleared') "+
+             " and mode_of_payment='Cheque' order by paid_date";
+  else if(req.query.filtertype=="Cash Collection")
+    var qur = "SELECT * FROM mlzscrm.md_student_paidfee where paid_date>='"+req.query.fromdate+"' "+
+             "and paid_date<='"+req.query.todate+"' and grade='"+req.query.grade+"' and school_id='"+req.query.schoolid+"' and paid_status in('paid','inprogress','cleared') "+
+             " and mode_of_payment='Cash' order by paid_date";
+  else if(req.query.filtertype=="FeeTypewise Collection")
+    var qur = "SELECT * FROM mlzscrm.md_student_paidfee where paid_date>='"+req.query.fromdate+"' "+
+             "and paid_date<='"+req.query.todate+"' and grade='"+req.query.grade+"' and school_id='"+req.query.schoolid+"' and paid_status in('paid','inprogress','cleared') order by installment_type";
+   else if(req.query.filtertype=="Overall Collection")
+    var qur = "SELECT * FROM mlzscrm.md_student_paidfee where paid_date>='"+req.query.fromdate+"' "+
+             "and paid_date<='"+req.query.todate+"' and grade='"+req.query.grade+"' and school_id='"+req.query.schoolid+"' and paid_status in('paid','inprogress','cleared') order by installment_type";
+
+  }
   console.log('-----------------------Filter report--------------------------');
   console.log(qur);
   console.log('-------------------------------------------------');
@@ -5031,14 +5058,26 @@ app.post('/pendingfeereport-service',  urlencodedParser,function (req, res){
 
 
 app.post('/pendingfeecollectionreport-service',  urlencodedParser,function (req, res){
+   if(req.query.grade=='All Grades'){
    var totalqur = "select admission_no,student_name,grade,sum(actual_amount) as actualamount,sum(discount_amount) as discountamount,sum(installment_amount) as payableamount from "+
-   "md_student_paidfee where school_id='"+req.query.schoolid+"' and cheque_status not in('bounced') group by school_id,admission_no,student_name,grade";
+   "md_student_paidfee where academic_year='"+req.query.academicyear+"' and school_id='"+req.query.schoolid+"' and cheque_status not in('bounced') group by school_id,admission_no,student_name,grade";
    var paidqur = "select admission_no,student_name,grade,sum(installment_amount) as paidamount  from "+
-   "md_student_paidfee where school_id='"+req.query.schoolid+"' and paid_status in "+
-   "('paid','cleared') and cheque_status not in('bounced') group by school_id,admission_no,student_name,grade";
+   "md_student_paidfee where academic_year='"+req.query.academicyear+"' and school_id='"+req.query.schoolid+"' and paid_status in "+
+   "('paid','cleared','inprogress') and cheque_status not in('bounced','cancelled') group by school_id,admission_no,student_name,grade";
    var pendingqur = "select admission_no,student_name,grade,sum(installment_amount) as pendingamount from "+
-   "md_student_paidfee where school_id='"+req.query.schoolid+"' and paid_status not in "+
-   "('paid','cleared') and cheque_status not in('bounced') group by school_id,admission_no,student_name,grade";
+   "md_student_paidfee where academic_year='"+req.query.academicyear+"' and school_id='"+req.query.schoolid+"' and paid_status not in "+
+   "('paid','cleared','inprogress') and cheque_status in('bounced','cancelled') group by school_id,admission_no,student_name,grade";
+  }
+  else{
+   var totalqur = "select admission_no,student_name,grade,sum(actual_amount) as actualamount,sum(discount_amount) as discountamount,sum(installment_amount) as payableamount from "+
+   "md_student_paidfee where academic_year='"+req.query.academicyear+"' and school_id='"+req.query.schoolid+"' and grade='"+req.query.grade+"' and cheque_status not in('bounced') group by school_id,admission_no,student_name,grade";
+   var paidqur = "select admission_no,student_name,grade,sum(installment_amount) as paidamount  from "+
+   "md_student_paidfee where academic_year='"+req.query.academicyear+"' and school_id='"+req.query.schoolid+"' and grade='"+req.query.grade+"' and paid_status in "+
+   "('paid','cleared','inprogress') and cheque_status not in('bounced','cancelled') group by school_id,admission_no,student_name,grade";
+   var pendingqur = "select admission_no,student_name,grade,sum(installment_amount) as pendingamount from "+
+   "md_student_paidfee where academic_year='"+req.query.academicyear+"' AND school_id='"+req.query.schoolid+"' and grade='"+req.query.grade+"' and  paid_status not in "+
+   "('paid','cleared','inprogress') and cheque_status in('bounced','cancelled') group by school_id,admission_no,student_name,grade";
+  }
  console.log('-----------------------pending fee report--------------------------');
  console.log(totalqur);
  console.log('-------------------------------------------------');
@@ -5071,8 +5110,13 @@ app.post('/pendingfeecollectionreport-service',  urlencodedParser,function (req,
  });
 
 app.post('/dailycollectionreport-service',  urlencodedParser,function (req, res){
-   var qur = "SELECT * FROM mlzscrm.md_student_paidfee where paid_date>='"+req.query.fromdate+"' "+
+ if(req.query.grade=="All Grades")
+ var qur = "SELECT * FROM mlzscrm.md_student_paidfee where paid_date>='"+req.query.fromdate+"' "+
              "and paid_date<='"+req.query.todate+"' and school_id='"+req.query.schoolid+"' and paid_status in('paid','cleared','inprogress')";
+ else
+ var qur = "SELECT * FROM mlzscrm.md_student_paidfee where paid_date>='"+req.query.fromdate+"' "+
+             "and paid_date<='"+req.query.todate+"' and grade='"+req.query.grade+"' and school_id='"+req.query.schoolid+"' and paid_status in('paid','cleared','inprogress')";
+
  console.log('-----------------------daily fee report--------------------------');
  console.log(qur);
  console.log('-------------------------------------------------');

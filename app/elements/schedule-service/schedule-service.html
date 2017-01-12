@@ -431,6 +431,9 @@
         }
         document.querySelector('discount-structure-report').gradearr=gradearr;
         document.querySelector('fee-structure-report').gradearr=gradearr;
+        document.querySelector('dailycollection-report').gradearr=gradearr;
+        document.querySelector('fee-collection-report-card').gradearr=gradearr;
+        document.querySelector('pendingfee-report').gradearr=gradearr;
       },
       fetchgradeService:function(){       
         this.fetchgradeurl=sessionStorage.getItem("addrinfo")+"/fetchgrade-service"
@@ -461,6 +464,7 @@
         // document.querySelector('fee-splitup-card').academicarr=e.detail.response.returnval;
         document.querySelector('feesplitup-structure-card').academicarr=e.detail.response.returnval;
         document.querySelector('searchreceipt-card').academicarr=e.detail.response.returnval;
+        document.querySelector('pendingfee-report').academicarr=e.detail.response.returnval;
       },
       fetchadmissionyearService:function(){        
         this.fetchadmissionyearurl=sessionStorage.getItem("addrinfo")+"/fetchadmissionyear-service"

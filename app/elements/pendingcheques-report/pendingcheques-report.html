@@ -12,18 +12,22 @@
         <div class="well well-sm">
           <div class="row">
             <div class="col-md-12">
-                <div class="col-md-3" style="margin-top: -1%;">
-                  <fromdate-pickercard></fromdate-pickercard>
+                <div class="col-md-2" style="margin-top: 2%;">
+                  <fromdate-icon-pickercard></fromdate-icon-pickercard>
                 </div>
-                <div class="col-md-3" style="margin-top: -1%;">
-                  <todate-pickercard></todate-pickercard>
-                </div>                
-                <div class="col-md-2" style="margin-top: 1%;">
-                  <paper-button on-click="FnView" class="btn btn-primary">View</paper-button>
+                <div class="col-md-1" style="margin-top: 2%;margin-left: -3%;">
+                  <todate-icon-pickercard></todate-icon-pickercard>
+                </div>               
+                <div class="col-md-1" style="margin-top: 2.5%;margin-left: 10%;">
+                  <paper-button style="height:30px;text-transform: none;" on-click="FnView" class="btn btn-primary">View</paper-button>
                 </div>
-                <div class="col-md-2" style="margin-top: 1%;">
-                  <input type="button" id="btn2" onclick="tableToExcel('pendingreport', 'Fee Pending Report')" value="Export to Excel">
-                </div>
+                <div class="col-md-1" style="margin-top: 1%;margin-left: 45%;">
+                <p>Download
+                <a href="#">
+                <span disabled="{{disabledownload}}" class="glyphicon glyphicon-download-alt" onclick="tableToExcel('pendingreport', 'Pending report')"></span>
+                </a>
+                </p>
+                </div> 
             </div>
           </div>
         </div>

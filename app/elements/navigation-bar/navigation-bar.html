@@ -276,6 +276,9 @@
           <li id="admission">
             <a href="" aria-hidden="true" data-toggle="modal" data-target="#newadmission" data-backdrop="static" data-keyboard="false" on-click="FnAdmission">Admission</a>
           </li>
+          <li id="promotion">
+            <a href="" aria-hidden="true" on-click="FnPromotion">Promotion</a>
+           </li>
            <li id="withdrawalprocess">
             <a href="" aria-hidden="true" on-click="FnWithdrawal">Wthdrawal Processing</a>
            </li>
@@ -848,7 +851,9 @@
           document.querySelector('master-report-card').Fncall();
       },
       FnFeeCollectionReport:function(){
+          this.$.scheduleservice.fetchgradeforreportService();
           document.querySelector('app-list').setPage("fee-collection-report-card","Collection Report");
+          document.querySelector('fee-collection-report-card').FnRefresh();
           document.querySelector('fee-collection-report-card').FnCallService();
       },
       FnFeePayment:function(){
@@ -909,13 +914,17 @@
         document.querySelector('pendingcheques-report').FnCallService();
       },
       FnPendingFeeReport:function(){
+        this.$.scheduleservice.fetchacademicyearService();
+        this.$.scheduleservice.fetchgradeforreportService();
         document.querySelector('app-list').setPage("pendingfee-report","Pending Fee Report");
         document.querySelector('pendingfee-report').ready();
         document.querySelector('pendingfee-report').FnRefresh();
         document.querySelector('pendingfee-report').FnCallService();
       },
       FnDailyCollectionReport:function(){
+        this.$.scheduleservice.fetchgradeforreportService();
         document.querySelector('app-list').setPage("dailycollection-report","Daily Collection Report");
+        document.querySelector('dailycollection-report').FnRefresh();
         document.querySelector('dailycollection-report').FnCallService();
       },
       FnShowBounceCheques:function(){
@@ -942,6 +951,9 @@
       FnPdcCheques:function(){
         document.querySelector('app-list').setPage("pdccheques-report-card","PDC Cheques");
         document.querySelector('pdccheques-report-card').callService();
+      },
+      FnPromotion:function(){
+          document.querySelector('app-list').setPage("promotion-card","Promotion");
       },
       FnDiscountStructureReport:function(){
         this.$.scheduleservice.fetchgradeforreportService();

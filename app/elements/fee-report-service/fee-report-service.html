@@ -122,12 +122,13 @@
     var overallamountarr=[];
     Polymer({
       is: 'fee-report-service',
-      FnFetchFeeReportService:function(){
+      FnFetchFeeReportService:function(grade){
         this.fetchfeecollectionreporturl=sessionStorage.getItem("addrinfo")+"/fetchfeecollectionreport-service";
         var obj={"schoolid":"","fromdate":"","todate":""};
         obj.schoolid=localStorage.getItem("schoolid");
         obj.fromdate=localStorage.getItem("localsess_from_date");
         obj.todate=localStorage.getItem("localsess_to_date");
+        obj.grade=grade;
         this.fetchfeecollectionreportparam=obj;
         this.$.fetchfeecollectionreportajax.generateRequest();
       },
@@ -148,13 +149,14 @@
         document.querySelector('fee-collection-report-card').totalamount=totalamount;
         document.querySelector('fee-collection-report-card').collectionarr=arr;
       },
-      FnFilterReportService:function(filtertype){
+      FnFilterReportService:function(grade,filtertype){
         this.fetchfilterreporturl=sessionStorage.getItem("addrinfo")+"/fetchfilterreport-service";
         var obj={"schoolid":"","fromdate":"","todate":"","filtertype":""};
         obj.schoolid=localStorage.getItem("schoolid");
         obj.fromdate=localStorage.getItem("localsess_from_date");
         obj.todate=localStorage.getItem("localsess_to_date");
         obj.filtertype=filtertype;
+        obj.grade=grade;
         this.fetchfilterreportparam=obj;
         this.$.fetchfilterreportajax.generateRequest();
       },
@@ -214,10 +216,12 @@
         document.querySelector('pendingcheques-report').totalamount=totalamount;
         document.querySelector('pendingcheques-report').pendingarr=arr;
       },
-      FnFetchPendingCollectionReportService:function(){
+      FnFetchPendingCollectionReportService:function(academicyear,grade){
         this.pendingfeecollectionreporturl=sessionStorage.getItem("addrinfo")+"/pendingfeecollectionreport-service";
         var obj={"schoolid":""};
         obj.schoolid=localStorage.getItem("schoolid");
+        obj.academicyear=academicyear;
+        obj.grade=grade;
         this.pendingfeecollectionreportparam=obj;
         this.$.pendingfeecollectionreportajax.generateRequest();
       },
@@ -233,7 +237,7 @@
           var paidflag=0;
           var pendingamount=0;
           var pendingflag=0;
-          if(paidarr.length){
+          if(paidarr.length>0){
           for(var j=0;j<paidarr.length;j++){
             if(totalarr[i].admission_no==paidarr[j].admission_no)
             {
@@ -250,7 +254,7 @@
           paidamount=0;
           paidflag=0;
           }
-          if(pendingarr.length){
+          if(pendingarr.length>0){
           for(var j=0;j<pendingarr.length;j++){
             if(totalarr[i].admission_no==pendingarr[j].admission_no)
             {
@@ -267,6 +271,8 @@
           pendingamount=0;
           pendingflag=0;
           }
+          else
+            totalarr[i].pending_amount=pendingamount;
         }
         }
         // alert(JSON.stringify(totalarr));
@@ -280,17 +286,19 @@
           document.querySelector('pendingfee-report').pendingfeearr=totalarr;
         }
       },
-      FnFetchDailyFeeReportService:function(){
+      FnFetchDailyFeeReportService:function(grade){
         this.dailycollectionreporturl=sessionStorage.getItem("addrinfo")+"/dailycollectionreport-service";
         var obj={"schoolid":"","fromdate":"","todate":""};
         obj.schoolid=localStorage.getItem("schoolid");
         obj.fromdate=localStorage.getItem("localsess_from_date");
         obj.todate=localStorage.getItem("localsess_to_date");
+        obj.grade=grade;
         this.dailycollectionreportparam=obj;
         this.$.dailycollectionreportajax.generateRequest();
       },
       dailycollectionreportResponse:function(e){
         var arr=e.detail.response.returnval;
+        // alert(JSON.stringify(arr));
         var a=[];
         var b=[];
         var c=[];
@@ -300,6 +308,7 @@
         var collectionbycash=0;
         var collectionbycheque=0;
         var totalcollection=0;
+       if(arr!='no rows'){
        for(var i=0;i<arr.length;i++)
        {       
         var nameobj={"installment":""};
@@ -402,6 +411,18 @@
        document.querySelector('dailycollection-report').collectionbycash=collectionbycash;
        document.querySelector('dailycollection-report').collectionbycheque=collectionbycheque;
        document.querySelector('dailycollection-report').totalcollection=totalcollection;
+       overall=[];
+       collectionbycash="";
+       collectionbycheque="";
+       totalcollection="";
+       }
+      else{
+        // alert('coming..');
+      document.querySelector('dailycollection-report').dailycollectionarr=overall;
+       document.querySelector('dailycollection-report').collectionbycash=collectionbycash;
+       document.querySelector('dailycollection-report').collectionbycheque=collectionbycheque;
+       document.querySelector('dailycollection-report').totalcollection=totalcollection;
+       }
       },
       FnFetchBounceChequesService:function(){
         this.fetchbouncechequesurl=sessionStorage.getItem("addrinfo")+"/fetchbouncecheques-service";
