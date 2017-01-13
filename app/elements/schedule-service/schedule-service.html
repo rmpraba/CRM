@@ -448,6 +448,7 @@
         document.querySelector('admission-form').togradearr=e.detail.response.returnval;
         // document.querySelector('fee-splitup-card').gradearr=e.detail.response.returnval;
         document.querySelector('feesplitup-structure-card').gradearr=e.detail.response.returnval;
+        document.querySelector('promotion-card').gradearr=e.detail.response.returnval;
       },
       fetchacademicyearService:function(){        
         this.fetchacademicyearurl=sessionStorage.getItem("addrinfo")+"/fetchacademicyear-service"
@@ -465,6 +466,7 @@
         document.querySelector('feesplitup-structure-card').academicarr=e.detail.response.returnval;
         document.querySelector('searchreceipt-card').academicarr=e.detail.response.returnval;
         document.querySelector('pendingfee-report').academicarr=e.detail.response.returnval;
+        document.querySelector('promotion-card').academicarr=e.detail.response.returnval;
       },
       fetchadmissionyearService:function(){        
         this.fetchadmissionyearurl=sessionStorage.getItem("addrinfo")+"/fetchadmissionyear-service"

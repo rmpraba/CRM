@@ -5761,6 +5761,69 @@ app.post('/fetchallstudentadmissionsearch-service',  urlencodedParser,function (
     });
 });
 
+
+app.post('/fetchstudentforpromotion-service',  urlencodedParser,function (req, res){
+  var qur="SELECT * FROM md_admission where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.fromac+"' and class_for_admission='"+req.query.fromgrade+"'";
+  console.log(qur);
+  connection.query(qur,
+    function(err, rows){
+      if(!err){
+        if(rows.length>0){
+          res.status(200).json({'returnval': rows});
+        } else {
+          console.log(err);
+          res.status(200).json({'returnval': 'no rows'});
+        }
+      } else {
+        console.log(err);
+      }
+    });
+});
+
+
+app.post('/promotioninsert-service',  urlencodedParser,function (req, res){
+  // var qur1="SELECT * from md_admission where school_id='"+req.query.schoolid+"' and admission_no='"+req.query.admissionno+"' and academic_year='"+req.query.fromac+"' and admission_year!='"+req.query.toac+"' and class_for_admission='"+req.query.fromgrade+"'";
+  var qur="INSERT INTO student_history SELECT * from md_admission where school_id='"+req.query.schoolid+"' and admission_no='"+req.query.admissionno+"' and academic_year='"+req.query.fromac+"' and class_for_admission='"+req.query.fromgrade+"' and admission_year!='"+req.query.toac+"'";
+  // var qur3="UPDATE md_admission set academic_year='"+req.query.toac+"',class_for_admission='"+req.query.tograde+"',admission_status='Promoted' where school_id='"+req.query.schoolid+"' and academic_year='"+req.query.fromac+"' and class_for_admission='"+req.query.fromgrade+"' and admission_year!='"+req.query.toac+"'";
+  // console.log(qur1);
+  console.log('------------------------------------------------------');
+  console.log(qur);
+  console.log('------------------------------------------------------');
+  // console.log(qur3);
+  connection.query(qur,function(err , result){
+      if(!err){     
+              if(result.affectedRows>0){
+              res.status(200).json({'returnval': 'updated'});
+              }
+              else{
+              res.status(200).json({'returnval': 'not updated'});
+              }   
+      }
+    });
+});
+
+app.post('/promotionoldactonewac-service',  urlencodedParser,function (req, res){
+  // var qur1="SELECT * from md_admission where school_id='"+req.query.schoolid+"' and admission_no='"+req.query.admissionno+"' and academic_year='"+req.query.fromac+"' and admission_year!='"+req.query.toac+"' and class_for_admission='"+req.query.fromgrade+"'";
+  // var qur2="INSERT INTO student_history SELECT * from md_admission where school_id='"+req.query.schoolid+"' and admission_no='"+req.query.admissionno+"' and academic_year='"+req.query.fromac+"' and class_for_admission='"+req.query.fromgrade+"' and admission_year!='"+req.query.toac+"'";
+  var qur="UPDATE md_admission set academic_year='"+req.query.toac+"',class_for_admission='"+req.query.tograde+"',admission_status='Promoted' where admission_no='"+req.query.admissionno+"' and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.fromac+"' and class_for_admission='"+req.query.fromgrade+"' and admission_year!='"+req.query.toac+"'";
+  // console.log(qur1);
+  console.log('------------------------------------------------------');
+  console.log(qur);
+  console.log('------------------------------------------------------');
+  // console.log(qur3);
+  connection.query(qur,function(err, result){
+      if(!err){
+              if(result.affectedRows>0){
+              res.status(200).json({'returnval': 'updated'});
+              }
+              else{
+              res.status(200).json({'returnval': 'not updated'});
+              }              
+            }
+          });
+});
+
+
 function setvalue(){
   console.log("calling setvalue.....");
 }

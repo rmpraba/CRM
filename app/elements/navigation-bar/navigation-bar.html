@@ -953,7 +953,9 @@
         document.querySelector('pdccheques-report-card').callService();
       },
       FnPromotion:function(){
-          document.querySelector('app-list').setPage("promotion-card","Promotion");
+          this.$.scheduleservice.fetchgradeService();
+          this.$.scheduleservice.fetchacademicyearService();
+          document.querySelector('app-list').setPage("promotion-card","Promote Students");
       },
       FnDiscountStructureReport:function(){
         this.$.scheduleservice.fetchgradeforreportService();
