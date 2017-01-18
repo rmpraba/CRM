@@ -2762,14 +2762,13 @@ app.post('/updateprospectno',  urlencodedParser,function (req, res)
 });
   });
 
-
-
 /*this function is to get the count of enquiry takes placed by grade wise*/
 app.post('/getenquirycount',  urlencodedParser,function (req, res){
     var qur={"school_id":req.query.schol};
     var state={"status":req.query.status};
+    var acyear={"academic_year":req.query.academicyear};
     //console.log('qur');
-    connection.query('SELECT status,class,count(*) as total FROM `student_enquiry_details` WHERE ? and ? group by (class)',[qur,state],
+    connection.query('SELECT status,class,count(*) as total FROM `student_enquiry_details` WHERE ? and ? and ? group by (class)',[qur,state,acyear],
     function(err, rows)
     {
     if(!err)
@@ -2795,8 +2794,9 @@ app.post('/getenquirycount',  urlencodedParser,function (req, res){
 app.post('/getadmittedcount',  urlencodedParser,function (req, res){
     var qur={"school_id":req.query.schol};
     var state={"status":req.query.status};
+    var acyear={"academic_year":req.query.academicyear};
     //console.log('qur');
-    connection.query('SELECT *,class,count(*) as total FROM `student_enquiry_details` WHERE ? and ? group by (class)',[qur,state],
+    connection.query('SELECT *,class,count(*) as total FROM `student_enquiry_details` WHERE ? and ? and ? group by (class)',[qur,state,acyear],
     function(err, rows)
     {
     if(!err)
@@ -2816,9 +2816,35 @@ app.post('/getadmittedcount',  urlencodedParser,function (req, res){
      console.log(err);
   }
 });
-  });
+});
 
-
+/*this function is to get the count of admission cancellation takes placed by grade wise*/
+app.post('/getcancelledcount',  urlencodedParser,function (req, res){
+    var qur={"school_id":req.query.schol};
+    var state={"status":req.query.status};
+    var acyear={"academic_year":req.query.academicyear};
+    //console.log('qur');
+    connection.query('SELECT *,class,count(*) as total FROM `student_enquiry_details` WHERE ? and ? and ? group by (class)',[qur,state,acyear],
+    function(err, rows)
+    {
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+      //console.log(rows);
+      res.status(200).json({'returnval': rows});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': ''});
+    }
+  }
+  else{
+     console.log(err);
+  }
+});
+});
 
 
 /*this function insert the followup information in followup table*/
@@ -5823,6 +5849,101 @@ app.post('/promotionoldactonewac-service',  urlencodedParser,function (req, res)
           });
 });
 
+
+app.post('/fetchallenrollmentsforsearch-service',  urlencodedParser,function (req, res){
+  var qur="SELECT * FROM md_admission WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and active_status!='Cancelled'";
+  console.log('------------------------------------------------------');
+  console.log(qur);
+  console.log('------------------------------------------------------');
+  // console.log(qur3);
+  connection.query(qur,function(err, rows){
+      if(!err){
+              if(rows.length>0){
+              res.status(200).json({'returnval': rows});
+              }
+              else{
+              res.status(200).json({'returnval': 'no rows'});
+              }              
+            }
+          });
+});
+
+
+
+app.post('/fetchstudentinfoforpreview-service',  urlencodedParser,function (req, res){
+  var qur="SELECT * FROM md_admission WHERE admission_no='"+req.query.admissionno+"' and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"'";
+  console.log('------------------------------------------------------');
+  console.log(qur);
+  console.log('------------------------------------------------------');
+  // console.log(qur3);
+  connection.query(qur,function(err, rows){
+      if(!err){
+              if(rows.length>0){
+              res.status(200).json({'returnval': rows});
+              }
+              else{
+              res.status(200).json({'returnval': 'no rows'});
+              }              
+            }
+          });
+});
+
+app.post('/cancelenrollment-service',  urlencodedParser,function (req, res){
+  var qur1="SELECT * FROM md_admission WHERE admission_no='"+req.query.admissionno+"' and class_for_admission='"+req.query.grade+"' and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"'";
+  var qur2="UPDATE md_admission set active_status='Cancelled' where admission_no='"+req.query.admissionno+"' and class_for_admission='"+req.query.grade+"' and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"'";
+  
+  console.log('------------------------------------------------------');
+  console.log(qur1);
+  console.log('------------------------------------------------------');
+  connection.query(qur1,function(err, rows){
+      if(!err){
+        if(rows.length==1){
+              var enquiryno=rows[0].enquiry_no;
+              console.log(enquiryno);
+              connection.query(qur2,function(err, result){
+              if(result.affectedRows>0){
+                console.log('Coming for update!');
+                var qur3="UPDATE student_enquiry_details set status='Cancelled' where enquiry_no='"+enquiryno+"' and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"'";
+                connection.query(qur3,function(err, result){
+                  if(result.affectedRows>0){
+                  var qur4="INSERT INTO md_tchistory select *,'"+req.query.reason+"' from md_admission where admission_no='"+req.query.admissionno+"' and school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"'";  
+                  connection.query(qur4,function(err, result){
+                  if(result.affectedRows>0){
+                  res.status(200).json({'returnval': 'Cancelled!'});
+                  }
+                  else
+                  res.status(200).json({'returnval': 'Unable to Cancel!'}); 
+                  });
+                  }
+                  });
+              }
+              else{
+              res.status(200).json({'returnval': 'not updated'});
+              } 
+              });             
+        }
+      }
+          });
+});
+
+
+app.post('/fetchinfofortc-service',  urlencodedParser,function (req, res){
+  var qur="SELECT * FROM md_tchistory tc join md_student s on (tc.admission_no=s.admission_no) WHERE tc.admission_no='"+req.query.admissionno+"' and s.admission_no='"+req.query.admissionno+"' and tc.school_id='"+req.query.schoolid+"' and s.school_id='"+req.query.schoolid+"' and tc.academic_year='"+req.query.academicyear+"' and s.academic_year='"+req.query.academicyear+"'";
+  console.log('------------------------------------------------------');
+  console.log(qur);
+  console.log('------------------------------------------------------');
+  // console.log(qur3);
+  connection.query(qur,function(err, rows){
+      if(!err){
+              if(rows.length>0){
+              res.status(200).json({'returnval': rows});
+              }
+              else{
+              res.status(200).json({'returnval': 'no rows'});
+              }              
+            }
+          });
+});
 
 function setvalue(){
   console.log("calling setvalue.....");
