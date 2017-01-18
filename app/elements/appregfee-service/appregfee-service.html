@@ -169,7 +169,7 @@
         document.querySelector('prospectousfee-card').studentname=enqarr[0].enquiry_name;
         document.querySelector('prospectousfee-card').parentname=enqarr[0].father_name;
 
-        localStorage.setItem("curr_sess_academicyear",enqarr[0].academic_year);
+        // localStorage.setItem("curr_sess_academicyear",enqarr[0].academic_year);
         localStorage.setItem("curr_sess_grade",enqarr[0].class);
         localStorage.setItem("curr_sess_studentname",enqarr[0].enquiry_name);
         localStorage.setItem("curr_sess_feecode",""); 
@@ -262,6 +262,7 @@
         obj.admissionno=admissionno;
         obj.feetype=localStorage.getItem("curr_sess_feetypepayment");
         obj.schoolid=localStorage.getItem("schoolid");
+        obj.academicyear=localStorage.getItem("curr_sess_academicyear");
         this.searchfeeadmissionpaidinfoparam=obj;
         this.$.searchfeeadmissionpaidinfoajax.generateRequest();
      },

@@ -1099,6 +1099,7 @@ insertstudenthistoryResponse:function(e){
         var obj={"admissionno":"","schoolid":""};
         obj.admissionno=admissionno;
         obj.schoolid=localStorage.getItem("schoolid");
+        obj.academicyear=localStorage.getItem("curr_sess_academicyear");
         this.searchfeeadmissionpaidinfoparam=obj;
         this.$.searchfeeadmissionpaidinfoajax.generateRequest();
      },
