@@ -29,12 +29,12 @@
     <div class="row enquiry-form">
       
      <div class="list-group col-sm-12 panel-body form-category">
-          <div class="col-sm-4">
+          <div class="col-sm-4" hidden>
           <paper-input id="searchtext" label="Enter Admission Number/Name" value="{{enquiryno}}">
           <paper-icon-button suffix icon="search" on-click="FnSearchEnquiry" title="Search"></paper-icon-button>
           </paper-input>
           </div>
-          <div class="col-sm-4" style="margin-top: 2%;">
+          <div class="col-sm-4" style="margin-top: 2%;" hidden>
           <paper-dropdown-menu label="Select Enquiry/Admission No" on-iron-select="FnSelectEnquiry">
             <paper-listbox class="dropdown-content" id="feecardsearch">
             <template  is="dom-repeat" items="{{enquiryarr}}" as="item">
@@ -51,7 +51,12 @@
                    <paper-item value="{{item.admission_no}}">{{item.itemdes}}</paper-item>
                    </template>
                    </paper-listbox>
-        </div>
+          </div>
+          <div class="col-md-6" style="margin-top: 5%;">
+          <paper-checkbox id="schoolfeecurrentyear" on-change="FnCurrentHandler" checked style="margin-left: 5%;">Current Year</paper-checkbox>
+          <paper-checkbox id="schoolfeenextyear" on-change="FnNextHandler" style="margin-left: 5%;">Next Year</paper-checkbox>
+          </div>
+
      </div>
 
      <div class="form-group-heading">
@@ -213,8 +218,75 @@
         localStorage.setItem("curr_sess_installmentpattern",installmentpattern);
         localStorage.setItem("curr_sess_insrequirement",'no');
         this.flag=0;
+        var academicyear=""; 
+          var date=new Date();
+          var y=date.getFullYear();  
+          var m=date.getMonth();
+          var d=date.getDate(); 
+          if(m<4){ 
+          var y1=y-1;
+          var y2=y;  
+          academicyear="AY-"+y1+"-"+y2;
+          } 
+          else{
+          var y1=y;
+          var y2=y+1;  
+          academicyear="AY-"+y1+"-"+y2;
+          }
+          localStorage.setItem("curr_sess_academicyear",academicyear); 
         // document.querySelector('#structuregeneral1').checked=true;
       },  
+      FnCurrentHandler:function(e){
+        this.FnRefresh1();
+        if(document.querySelector('#schoolfeecurrentyear').checked==true)
+        {  
+          document.querySelector('#schoolfeenextyear').checked=false;
+          var academicyear=""; 
+          var date=new Date();
+          var y=date.getFullYear();  
+          var m=date.getMonth();
+          var d=date.getDate(); 
+          if(m<4){ 
+          var y1=y-1;
+          var y2=y;  
+          academicyear="AY-"+y1+"-"+y2;
+          } 
+          else{
+          var y1=y;
+          var y2=y+1;  
+          academicyear="AY-"+y1+"-"+y2;
+          }
+          localStorage.setItem("curr_sess_academicyear",academicyear);
+          // alert(academicyear);
+        this.$.admissionservice.searchfeeadmissionpaidinfoService(localStorage.getItem("curr_sess_enquiryno"));
+        this.$.admissionservice.searchfeeadmissioninfoService(localStorage.getItem("curr_sess_enquiryno"));
+        }
+      },
+      FnNextHandler:function(e){
+        this.FnRefresh1();
+        if(document.querySelector('#schoolfeenextyear').checked==true)
+        {
+          document.querySelector('#schoolfeecurrentyear').checked=false;
+          var academicyear=""; 
+          var date=new Date();
+          var y=date.getFullYear();  
+          var m=date.getMonth();
+          var d=date.getDate(); 
+          if(m<4){ 
+          var y1=(y-1)+1;
+          var y2=y+1;  
+          academicyear="AY-"+y1+"-"+y2;
+          } 
+          else{
+          var y1=y+1;
+          var y2=y+1+1;  
+          academicyear="AY-"+y1+"-"+y2;
+          }
+          localStorage.setItem("curr_sess_academicyear",academicyear);
+          this.$.admissionservice.searchfeeadmissionpaidinfoService(localStorage.getItem("curr_sess_enquiryno"));
+          this.$.admissionservice.searchfeeadmissioninfoService(localStorage.getItem("curr_sess_enquiryno"));
+        }
+      },
       fetchnoofinstallmentResponse:function(e){
         noofinstallment=e.detail.response.returnval;
         localStorage.setItem("curr_sess_noofinstallment",noofinstallment);
@@ -399,6 +471,8 @@
         this.itemArray=[];
         this.totalpayableamount="";
         this.discountpercent="";
+        document.querySelector('#schoolfeenextyear').checked=false;
+        document.querySelector('#schoolfeecurrentyear').checked=true;
       },
       FnRefresh1:function(){
         this.totalpayableamount="";
@@ -424,13 +498,15 @@
         this.payableamount="";
         this.discountamount="";
         this.hiddenpayment=true;
-        document.querySelector("#structuregeneral1").checked=false;
+        // document.querySelector("#structuregeneral1").checked=false;
         document.querySelector("#structureinstallment1").checked=false;
         document.querySelector("#structurelumpsum1").checked=false;
         document.querySelector('#feecardsearch').selected=-1;
-        localStorage.setItem("curr_sess_enquiryno","");
+        // localStorage.setItem("curr_sess_enquiryno","");
         document.querySelector('#structuregeneral1').checked=true;
          this.querySelector('#schoolfeeinput').style.visibility='hidden';
+        // document.querySelector('#schoolfeenextyear').checked=false;
+        // document.querySelector('#schoolfeecurrentyear').checked=true;
       },
       generalHandler:function(e){
         if(document.querySelector("#structuregeneral1").checked==true)

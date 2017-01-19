@@ -2270,7 +2270,9 @@ app.post('/fetchfeesplitup',  urlencodedParser,function (req, res){
 app.post('/fetchregfeesinfo-service',  urlencodedParser,function (req, res){
 
     var qur="SELECT * FROM fee_splitup WHERE fee_code='"+req.query.feecode+"' and school_id='"+req.query.schoolid+"' and fee_type='Registration fee'";
-  //  console.log(qur);
+    console.log('-----------------fecth fee splitup------------------');
+    console.log(qur);
+    console.log('----------------------------------------------------');
     connection.query(qur,
     function(err, rows)
     {
