@@ -1613,7 +1613,7 @@ app.post('/insertadmission',  urlencodedParser,function (req, res){
     var response={
         enquiry_no: req.query.enquiryno,
         admission_no: "",
-        prospect_application_no:req.query.applicationno,
+        // prospect_application_no:req.query.applicationno,
         school_id:req.query.schoolid,
         school_name:req.query.schoolname,
         academic_year:req.query.academicyear,
@@ -1658,7 +1658,6 @@ app.post('/insertadmission',  urlencodedParser,function (req, res){
       else
       status='Admitted';
       
-     
       connection.query("SELECT * FROM md_admission WHERE enquiry_no='"+req.query.enquiryno+"'",function(err, rows){
         if(rows.length==0){
       connection.query("INSERT INTO md_admission SET ?",[response],function(err, rows){
@@ -1667,7 +1666,11 @@ app.post('/insertadmission',  urlencodedParser,function (req, res){
           if(result.affectedRows>0){
             connection.query("UPDATE student_enquiry_details SET status='"+status+"' where enquiry_no='"+req.query.enquiryno+"'",function(err, result){
               if(result.affectedRows>0){
+              connection.query("UPDATE md_student SET admission_no='"+response.admission_no+"' where enquiry_no='"+req.query.enquiryno+"'",function(err, result){
+              if(result.affectedRows>0){
               res.status(200).json({'returnval': response.admission_no});
+              }
+              });
               }
               else
               res.status(200).json({'returnval': 'admissionfail'});
@@ -1715,7 +1718,7 @@ app.post('/studentphysical_service',  urlencodedParser,function (req, res){
    var event = {
 
      "enquiry_no":req.query.enquiryno,
-     "prospect_application_no":req.query.applicationno,
+     // "prospect_application_no":req.query.applicationno,
      "school_id":req.query.schoolid,
      "academic_year":req.query.academicyear,
      "first_name":req.query.firstname,
@@ -1773,7 +1776,7 @@ app.post('/studentphysical_service',  urlencodedParser,function (req, res){
 app.post('/studentfulldetails_service',  urlencodedParser,function (req, res){
    var event = {
    "enquiry_no":req.query.enquiryno,
-   "prospect_application_no":req.query.applicationno,
+   // "prospect_application_no":req.query.applicationno,
    "school_id":req.query.schoolid,
    "academic_year":req.query.academicyear,
    "first_name":req.query.firstname,
@@ -1875,7 +1878,7 @@ app.post('/studentfulldetails_service',  urlencodedParser,function (req, res){
 app.post('/studentcocurricular_service',  urlencodedParser,function (req, res){
    var event = {
 "enquiry_no":req.query.enquiryno,
-"prospect_application_no":req.query.applicationno,
+// "prospect_application_no":req.query.applicationno,
 "school_id":req.query.schoolid,
 "academic_year":req.query.admissionyear,
 "first_name":req.query.firstname,
@@ -1937,7 +1940,7 @@ app.post('/studenthistory_service', urlencodedParser,function (req, res){
    var event = {
     "enquiry_no":req.query.enquiryno,
     "school_id":req.query.schoolid,
-    "prospect_application_no":req.query.applicationno,
+    // "prospect_application_no":req.query.applicationno,
     "academic_year":req.query.admissionyear,
     "first_name":req.query.firstname,
     "middle_name":req.query.middlename,
@@ -2129,7 +2132,7 @@ app.post('/fetchfees',  urlencodedParser,function (req, res){
     var qur="SELECT * FROM fee_master WHERE school_id='"+req.query.schoolid+"' and admission_year = '"+req.query.admissionyear+"' and academic_year='"+req.query.academicyear+"' and grade_id=(SELECT grade_id FROM grade_master WHERE grade_name='"+req.query.grade+"')";
 
     // var qur1="SELECT total_fee FROM fee_splitup WHERE school_id='"+req.query.schoolid+"' and fee_code='"++"'";
-   // console.log(qur);
+    console.log(qur);
     connection.query(qur,function(err, rows){
     if(!err)
     {
@@ -2165,7 +2168,7 @@ app.post('/fetchfees',  urlencodedParser,function (req, res){
     else
     {
       console.log(err);
-      res.status(200).json({'returnval': ''});
+      res.status(200).json({'returnval': 'no rows'});
     }
   }
   else{
@@ -2280,7 +2283,7 @@ app.post('/fetchregfeesinfo-service',  urlencodedParser,function (req, res){
     else
     {
       console.log(err);
-      res.status(200).json({'returnval': ''});
+      res.status(200).json({'returnval': 'no rows'});
     }
   }
   else{
@@ -2307,7 +2310,7 @@ app.post('/fetchregfeediscount-service',  urlencodedParser,function (req, res){
     else
     {
       console.log(err);
-      res.status(200).json({'returnval': ''});
+      res.status(200).json({'returnval': 'no rows'});
     }
   }
   else{

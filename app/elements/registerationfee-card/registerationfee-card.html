@@ -25,12 +25,12 @@
     <div class="row enquiry-form">
       
      <div class="list-group col-sm-12 panel-body form-category">
-          <div class="col-sm-4">
+          <div class="col-sm-4" hidden>
           <paper-input id="searchtext" label="Enter Admission Number/Name" value="{{enquiryno}}">
             <paper-icon-button suffix icon="search" on-click="FnSearchEnquiry" title="Search"></paper-icon-button>
           </paper-input>
           </div>
-          <div class="col-sm-4" style="margin-top: 2%;">
+          <div class="col-sm-4" style="margin-top: 2%;" hidden>
           <paper-dropdown-menu label="Select Enquiry/Admission No" on-iron-select="FnSelectEnquiry">
             <paper-listbox class="dropdown-content" id="regenradmnsearch">
             <template  is="dom-repeat" items="{{enquiryarr}}" as="item">
@@ -46,6 +46,10 @@
                    <paper-item value="{{item.admission_no}}">{{item.itemdes}}</paper-item>
                    </template>
                    </paper-listbox>
+        </div>
+        <div class="col-md-6" style="margin-top: 5%;">
+        <paper-checkbox id="regfeecurrentyear" on-change="FnCurrentHandler" checked style="margin-left: 5%;">Current Year</paper-checkbox>
+        <paper-checkbox id="regfeenextyear" on-change="FnNextHandler" style="margin-left: 5%;">Next Year</paper-checkbox>
         </div>
        </div>
 
@@ -143,7 +147,80 @@
         this.hiddenprocessbtn=true;
         localStorage.setItem("curr_sess_waiveoff",0);
         localStorage.setItem("curr_sess_fees",0); 
+        var academicyear=""; 
+          var date=new Date();
+          var y=date.getFullYear();  
+          var m=date.getMonth();
+          var d=date.getDate(); 
+          if(m<4){ 
+          var y1=y-1;
+          var y2=y;  
+          academicyear="AY-"+y1+"-"+y2;
+          } 
+          else{
+          var y1=y;
+          var y2=y+1;  
+          academicyear="AY-"+y1+"-"+y2;
+          }
+          localStorage.setItem("curr_sess_academicyear",academicyear); 
       },  
+      FnCurrentHandler:function(e){
+        this.totalfees="";
+        this.totaldiscount="";
+        this.payableamount="";
+        this.feearr="";
+        if(document.querySelector('#regfeecurrentyear').checked==true)
+        {  
+          document.querySelector('#regfeenextyear').checked=false;
+          var academicyear=""; 
+          var date=new Date();
+          var y=date.getFullYear();  
+          var m=date.getMonth();
+          var d=date.getDate(); 
+          if(m<4){ 
+          var y1=y-1;
+          var y2=y;  
+          academicyear="AY-"+y1+"-"+y2;
+          } 
+          else{
+          var y1=y;
+          var y2=y+1;  
+          academicyear="AY-"+y1+"-"+y2;
+          }
+          localStorage.setItem("curr_sess_academicyear",academicyear);
+          // alert(academicyear);
+        this.$.appregfeeservice.searchfeeadmissionpaidinfoService(localStorage.getItem("curr_sess_enquiryno"));
+        this.$.appregfeeservice.searchfeeadmissioninfoService(localStorage.getItem("curr_sess_enquiryno"));
+        }
+      },
+      FnNextHandler:function(e){
+        this.totalfees="";
+        this.totaldiscount="";
+        this.payableamount="";
+        this.feearr="";
+        if(document.querySelector('#regfeenextyear').checked==true)
+        {
+          document.querySelector('#regfeecurrentyear').checked=false;
+          var academicyear=""; 
+          var date=new Date();
+          var y=date.getFullYear();  
+          var m=date.getMonth();
+          var d=date.getDate(); 
+          if(m<4){ 
+          var y1=(y-1)+1;
+          var y2=y+1;  
+          academicyear="AY-"+y1+"-"+y2;
+          } 
+          else{
+          var y1=y+1;
+          var y2=y+1+1;  
+          academicyear="AY-"+y1+"-"+y2;
+          }
+          localStorage.setItem("curr_sess_academicyear",academicyear);
+          this.$.appregfeeservice.searchfeeadmissionpaidinfoService(localStorage.getItem("curr_sess_enquiryno"));
+          this.$.appregfeeservice.searchfeeadmissioninfoService(localStorage.getItem("curr_sess_enquiryno"));
+        }
+      },
       waiveoffHandler:function(){
         if(document.querySelector('#regwaiveoffhandler').checked==true){
           localStorage.setItem("curr_sess_waiveoff",1);
@@ -233,6 +310,8 @@
         this.enquiryarr=[];
         document.querySelector('#regwaiveoffhandler').checked=false;
         this.querySelector('#registrationinput').style.visibility='hidden';
+        document.querySelector('#regfeenextyear').checked=false;
+        document.querySelector('#regfeecurrentyear').checked=true;
       },
       callService:function(){
         this.$.appregfeeservice.fetchallstudentadmissionsearchService();
