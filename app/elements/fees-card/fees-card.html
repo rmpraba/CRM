@@ -102,16 +102,23 @@
           <paper-input readonly label="Payable Amount" value="{{payableamount}}"></paper-input>
         </div>
       </div> -->
+      <div class="form-group-heading">
+        <h4>Payment Mode</h4>
+      </div>
+      <div class="list-group col-sm-12 panel-body form-category">
+      <span><paper-checkbox class="col-sm-3" id="structureselfmode" readonly class="checkbox" on-change="selfHandler" style="margin-left: 1%;"  checked>Self</paper-checkbox></span>
+      <span><paper-checkbox class="col-sm-3" id="structurethirdpartymode" readonly class="checkbox" on-change="thirdpartyHandler">Thirdparty</paper-checkbox></span>
+      </div>
 
       <div class="form-group-heading">
         <h4>Installment Pattern</h4>
       </div>
       <div class="list-group col-sm-12 panel-body form-category">
             <div class="col-sm-12 enquiry-input" hidden$="{{hideinstallmentpattern}}">
-            <span><paper-checkbox class="col-sm-3" id="structuregeneral1" readonly class="checkbox" on-change="generalHandler" checked>Standard Pattern</paper-checkbox></span>
-            <span><paper-checkbox class="col-sm-3" id="structureinstallment1" readonly class="checkbox" on-change="installmentHandler">Custom Pattern</paper-checkbox></span>
+            <span hidden$="{{hidestandardpattern}}"><paper-checkbox class="col-sm-3" id="structuregeneral1" readonly class="checkbox" on-change="generalHandler" checked>Standard Pattern</paper-checkbox></span>
+            <!-- <span><paper-checkbox class="col-sm-3" id="structureinstallment1" readonly class="checkbox" on-change="installmentHandler">Custom Pattern</paper-checkbox></span> -->
             <span><paper-checkbox class="col-sm-3" id="structurelumpsum1" readonly class="checkbox" on-change="lumpsumHandler">Lumpsum</paper-checkbox></span>
-            <span><paper-checkbox class="col-sm-3" id="structurethirdparty1" readonly class="checkbox" on-change="thirdpartyHandler">Thirdparty</paper-checkbox></span>
+            <span><paper-checkbox class="col-sm-3" id="structurelumpsumcommit1" readonly class="checkbox" on-change="lumpsumcommitHandler">Lumpsum With Commitment Fee</paper-checkbox></span>
             </div>
       </div>
 
@@ -236,6 +243,20 @@
           localStorage.setItem("curr_sess_academicyear",academicyear); 
         // document.querySelector('#structuregeneral1').checked=true;
       },  
+      selfHandler:function(e){
+        if(document.querySelector('#structureselfmode').checked==true)
+        {  
+          document.querySelector('#structurethirdpartymode').checked=false;
+          this.hidestandardpattern=false;
+        }
+      },
+      thirdpartyHandler:function(e){
+        if(document.querySelector('#structurethirdpartymode').checked==true)
+        {  
+          document.querySelector('#structureselfmode').checked=false;
+          this.hidestandardpattern=true;
+        }
+      },
       FnCurrentHandler:function(e){
         this.FnRefresh1();
         if(document.querySelector('#schoolfeecurrentyear').checked==true)
@@ -440,6 +461,7 @@
         document.querySelector('#waiveoff').checked=false;
       },
       FnRefresh:function(){
+        document.querySelector('#structureselfmode').checked=true;
         document.querySelector('#insrequirement').checked=false;
         this.flag=0;
         installment=[];
@@ -461,7 +483,7 @@
         this.discountamount="";
         this.hiddenpayment=true;
         document.querySelector("#structuregeneral1").checked=false;
-        document.querySelector("#structureinstallment1").checked=false;
+        document.querySelector("#structurelumpsumcommit1").checked=false;
         document.querySelector("#structurelumpsum1").checked=false;
         document.querySelector('#feecardsearch').selected=-1;
         localStorage.setItem("curr_sess_enquiryno","");
@@ -475,6 +497,7 @@
         document.querySelector('#schoolfeecurrentyear').checked=true;
       },
       FnRefresh1:function(){
+        document.querySelector('#structureselfmode').checked=true;
         this.totalpayableamount="";
         this.discountpercent="";
         document.querySelector('#insrequirement').checked=false;
@@ -499,7 +522,7 @@
         this.discountamount="";
         this.hiddenpayment=true;
         // document.querySelector("#structuregeneral1").checked=false;
-        document.querySelector("#structureinstallment1").checked=false;
+        document.querySelector("#structurelumpsumcommit1").checked=false;
         document.querySelector("#structurelumpsum1").checked=false;
         document.querySelector('#feecardsearch').selected=-1;
         // localStorage.setItem("curr_sess_enquiryno","");
@@ -512,7 +535,7 @@
         if(document.querySelector("#structuregeneral1").checked==true)
         {
          this.flag=1;
-         document.querySelector("#structureinstallment1").checked=false;
+         document.querySelector("#structurelumpsumcommit1").checked=false;
          document.querySelector("#structurelumpsum1").checked=false;
          this.totalfees="";
          this.discountamount="";
@@ -525,25 +548,25 @@
          this.$.fetchnoofinstallmentajax.generateRequest();
         }
       },
-      installmentHandler:function(e){
-        if(document.querySelector("#structureinstallment1").checked==true)
-        {
-         document.querySelector("#structuregeneral1").checked=false;
-         document.querySelector("#structurelumpsum1").checked=false;
-         this.feearr=[];
-         this.totalfees="";
-         this.discountamount="";
-         this.payableamount="";
-         this.hidenoofinstallment=false;
-         installmentpattern="2";
-         localStorage.setItem("curr_sess_installmentpattern",installmentpattern);
-        }
-      },
+      // installmentHandler:function(e){
+      //   if(document.querySelector("#structureinstallment1").checked==true)
+      //   {
+      //    document.querySelector("#structuregeneral1").checked=false;
+      //    document.querySelector("#structurelumpsum1").checked=false;
+      //    this.feearr=[];
+      //    this.totalfees="";
+      //    this.discountamount="";
+      //    this.payableamount="";
+      //    this.hidenoofinstallment=false;
+      //    installmentpattern="2";
+      //    localStorage.setItem("curr_sess_installmentpattern",installmentpattern);
+      //   }
+      // },
       lumpsumHandler:function(e){
         if(document.querySelector("#structurelumpsum1").checked==true)
         {
          document.querySelector("#structuregeneral1").checked=false;
-         document.querySelector("#structureinstallment1").checked=false;
+         document.querySelector("#structurelumpsumcommit1").checked=false;
          this.feearr=[];
          this.totalfees="";
          this.discountamount="";
@@ -557,6 +580,21 @@
          this.$.admissionservice.searchfeeadmissioninfoService(localStorage.getItem("curr_sess_enquiryno"));
         }
       },
+      lumpsumcommitHandler:function(e){
+        if(document.querySelector("#structurelumpsumcommit1").checked==true)
+        {
+         document.querySelector("#structuregeneral1").checked=false;
+         // document.querySelector("#structureinstallment1").checked=false;
+         document.querySelector("#structurelumpsum1").checked=false;
+         this.hidenoofinstallment=true;
+         installmentpattern="4";
+         noofinstallment=4;
+         localStorage.setItem("curr_sess_noofinstallment",4);
+         localStorage.setItem("curr_sess_installmentpattern",installmentpattern);
+         this.$.admissionservice.searchfeeadmissionpaidinfoService(localStorage.getItem("curr_sess_enquiryno"));
+         this.$.admissionservice.searchfeeadmissioninfoService(localStorage.getItem("curr_sess_enquiryno"));
+        }
+      } ,
       // thirdpartyHandler:function(e){
       //   if(document.querySelector("#structurethirdparty1").checked==true)
       //   {
