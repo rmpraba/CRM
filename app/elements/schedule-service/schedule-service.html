@@ -434,6 +434,7 @@
         document.querySelector('dailycollection-report').gradearr=gradearr;
         document.querySelector('fee-collection-report-card').gradearr=gradearr;
         document.querySelector('pendingfee-report').gradearr=gradearr;
+        document.querySelector('gradewise-fee-structure-report').gradearr=gradearr;
       },
       fetchgradeService:function(){       
         this.fetchgradeurl=sessionStorage.getItem("addrinfo")+"/fetchgrade-service"
@@ -468,6 +469,7 @@
         document.querySelector('pendingfee-report').academicarr=e.detail.response.returnval;
         document.querySelector('promotion-card').academicarr=e.detail.response.returnval;
         document.querySelector('cancel-enrollment-card').academicarr=e.detail.response.returnval;
+        document.querySelector('gradewise-fee-structure-report').academicarr=e.detail.response.returnval;;
       },
       fetchadmissionyearService:function(){        
         this.fetchadmissionyearurl=sessionStorage.getItem("addrinfo")+"/fetchadmissionyear-service"
@@ -482,6 +484,7 @@
         document.querySelector('fee-structure-report').admissionarr=e.detail.response.returnval;
         // document.querySelector('fee-splitup-card').admissionarr=e.detail.response.returnval;
         document.querySelector('feesplitup-structure-card').admissionarr=e.detail.response.returnval;
+        document.querySelector('gradewise-fee-structure-report').admissionarr=e.detail.response.returnval;
       },
       fetchfeetypeService:function(){        
         this.fetchfeetypeurl=sessionStorage.getItem("addrinfo")+"/fetchfeetype-service"
@@ -623,7 +626,7 @@
       createfeecodeResponse:function(e){
         count2++;
         if(count1==count2){
-        // alert(e.detail.response.returnval);
+        alert('Feetype Created!');
         gradearr=[];
         document.querySelector('feetype-schedule-card').FnRefresh();
         count1=0;
@@ -762,7 +765,7 @@
       creatediscountcodeResponse:function(e){
         count2++;
         if(count1==count2){
-        // alert(e.detail.response.returnval);
+        alert('Discount Created!');
         document.querySelector('discount-master-card').FnRefresh();
         document.querySelector('fromdate-pickercard').ready();
         document.querySelector('todate-pickercard').ready();
@@ -1240,8 +1243,11 @@
         if(e.detail.response.returnval=="Inserted!"){
           count2++;
         }
-        if(count1==count2)
+        if(count1==count2){
           alert("Created Successfully!!");
+          count1=0;
+          count2=0;
+        }
       },
       fetchtotalsplitupamountService:function(){
         this.fetchtotalsplitupamounturl=sessionStorage.getItem("addrinfo")+"/fetchtotalsplitupamount-service";

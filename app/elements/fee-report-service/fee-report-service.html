@@ -113,7 +113,31 @@
         on-response="fetchfeestructureResponse"
         debounce-duration="300"
         >
+
+        <!-- It would fetch fee structure-->
+     <iron-ajax
+        method="post"
+        id="fetchgradewisefeestructureajax"
+        url="{{fetchgradewisefeestructureurl}}"
+        params="{{fetchgradewisefeestructureparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchgradewisefeestructureResponse"
+        debounce-duration="300"
+        >
         
+
+        <!-- It would fetch fee structure-->
+     <iron-ajax
+        method="post"
+        id="fetchstructureallstudentajax"
+        url="{{fetchstructureallstudenturl}}"
+        params="{{fetchstructureallstudentparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchstructureallstudentResponse"
+        debounce-duration="300"
+        >
   </template>
   <script>
   (function() {
@@ -598,7 +622,76 @@
           overall=[];
           document.querySelector('fee-structure-report').feestructurearr=overall;
         }
-      }           
+      },
+      FnFetchGradewiseFeeStructureService:function(admissionyear
+          ,academicyear,grade){
+        this.fetchgradewisefeestructureurl=sessionStorage.getItem("addrinfo")+"/fetchgradewisefeestructure-service";
+        var obj={"schoolid":"","fromdate":"","todate":""};
+        obj.schoolid=localStorage.getItem("schoolid");
+        obj.admissionyear=admissionyear;
+        obj.academicyear=academicyear;
+        obj.grade=grade;
+        this.fetchgradewisefeestructureparam=obj;
+        this.$.fetchgradewisefeestructureajax.generateRequest();
+      },
+      fetchgradewisefeestructureResponse:function(e){
+        if(e.detail.response.returnval!='no rows'){
+          var feemaster=e.detail.response.returnval;
+          // alert(JSON.stringify(feemaster));
+          for(var i=0;i<(this.allstud).length;i++){
+            var flag=0;
+          for(var j=0;j<feemaster.length;j++){
+            // alert(this.allstud[i].academic_year+" "+feemaster[j].academic_year+" "+this.allstud[i].admission_year+" "+feemaster[j].admission_year+" "+this.allstud[i].class_for_admission+" "+feemaster[j].grade);
+            if(this.allstud[i].academic_year==feemaster[j].academic_year&&this.allstud[i].admission_year==feemaster[j].admission_year&&this.allstud[i].class_for_admission==feemaster[j].grade){
+              flag=1;
+              this.allstud[i].feecode=feemaster[j].fee_code;
+              this.allstud[i].fees=feemaster[j].fees;
+            }
+          }
+          if(flag==0){
+             this.allstud[i].feecode='-';
+             this.allstud[i].fees='-';
+           }
+          }
+          // alert(JSON.stringify(this.allstud));
+          document.querySelector('gradewise-fee-structure-report').gradewisefeestructurearr=this.allstud;
+        }
+        else{
+
+        }
+      },
+      FnFetchAllStudentService:function(admissionyear,academicyear,grade){
+        this.fetchstructureallstudenturl=sessionStorage.getItem("addrinfo")+"/fetchstructureallstudent-service";
+        var obj={"schoolid":"","fromdate":"","todate":""};
+        obj.schoolid=localStorage.getItem("schoolid");
+        obj.admissionyear=admissionyear;
+        obj.academicyear=academicyear;
+        obj.grade=grade;
+        this.fetchstructureallstudentparam=obj;
+        this.$.fetchstructureallstudentajax.generateRequest();
+      },
+      fetchstructureallstudentResponse:function(e){
+        this.allstud=e.detail.response.returnval;
+      },
+      FnFetchGradewiseDiscountStructureService:function(admissionyear
+          ,academicyear,grade){
+        this.fetchgradewisediscountstructureurl=sessionStorage.getItem("addrinfo")+"/fetchgradewisediscountstructure-service";
+        var obj={"schoolid":"","fromdate":"","todate":""};
+        obj.schoolid=localStorage.getItem("schoolid");
+        obj.admissionyear=admissionyear;
+        obj.academicyear=academicyear;
+        obj.grade=grade;
+        this.fetchgradewisediscountstructureparam=obj;
+        this.$.fetchgradewisediscountstructureajax.generateRequest();
+      },
+      fetchgradewisediscountstructureResponse:function(e){
+        if(e.detail.response.returnval!='no rows'){
+          this.discountmaster=e.detail.response.returnval;
+        }
+        else{
+
+        }
+      }          
     });
   })();
   </script>

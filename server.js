@@ -5955,6 +5955,74 @@ app.post('/fetchinfofortc-service',  urlencodedParser,function (req, res){
           });
 });
 
+
+app.post('/fetchstructureallstudent-service',  urlencodedParser,function (req, res){
+  console.log('ady..'+req.query.admissionyear);
+  console.log('acy..'+req.query.academicyear);
+  if(req.query.grade=='All Grades')
+  var qur="SELECT * FROM md_admission WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and admission_year='"+req.query.admissionyear+"'";
+  else
+  var qur="SELECT * FROM md_admission WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and admission_year='"+req.query.admissionyear+"' and class_for_admission='"+req.query.grade+"')";  
+  console.log('------------------------------------------------------');
+  console.log(qur);
+  console.log('------------------------------------------------------');
+  // console.log(qur3);
+  connection.query(qur,function(err, rows){
+      if(!err){
+              if(rows.length>0){
+              res.status(200).json({'returnval': rows});
+              }
+              else{
+              res.status(200).json({'returnval': 'no rows'});
+              }              
+            }
+          });
+});
+
+
+app.post('/fetchgradewisefeestructure-service',  urlencodedParser,function (req, res){
+  if(req.query.grade=='All Grades')
+  var qur="SELECT *,(SELECT grade_name from grade_master WHERE grade_id=f.grade_id) as grade FROM fee_master f WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and admission_year='"+req.query.admissionyear+"'";
+  else
+  var qur="SELECT *,,(SELECT grade_name from grade_master WHERE grade_id=f.grade_id) as grade FROM fee_master f WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and admission_year='"+req.query.admissionyear+"' and grade_id=(SELECT grade_id FROM grade_master WHERE grade_name='"+req.query.grade+"')";  
+  console.log('------------------------------------------------------');
+  console.log(qur);
+  console.log('------------------------------------------------------');
+  // console.log(qur3);
+  connection.query(qur,function(err, rows){
+      if(!err){
+              if(rows.length>0){
+              res.status(200).json({'returnval': rows});
+              }
+              else{
+              res.status(200).json({'returnval': 'no rows'});
+              }              
+            }
+          });
+});
+
+
+app.post('/fetchgradewisediscountstructure-service',  urlencodedParser,function (req, res){
+  if(req.query.grade=='All Grades')
+  var qur="SELECT * FROM md_discount_master WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and admission_year='"+req.query.admissionyear+"'";
+  else
+  var qur="SELECT * FROM fee_master WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and admission_year='"+req.query.admissionyear+"' and grade_id=(SELECT grade_id FROM grade_master WHERE grade_name='"+req.query.grade+"')";  
+  console.log('------------------------------------------------------');
+  console.log(qur);
+  console.log('------------------------------------------------------');
+  // console.log(qur3);
+  connection.query(qur,function(err, rows){
+      if(!err){
+              if(rows.length>0){
+              res.status(200).json({'returnval': rows});
+              }
+              else{
+              res.status(200).json({'returnval': 'no rows'});
+              }              
+            }
+          });
+});
+
 function setvalue(){
   console.log("calling setvalue.....");
 }

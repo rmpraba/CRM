@@ -321,7 +321,7 @@
         this.hidefeestructure=false;
         this.feesinstallmentarr=installmentarr;
         this.insarr=installmentarr;
-        alert(JSON.stringify(this.insarr));
+        // alert(JSON.stringify(this.insarr));
         this.feesplitarr=splitarr;
         // document.querySelector('feesplitup-structure-feetypecard').setSplitFee(splitarr);
         installmentarr=[];
@@ -397,6 +397,7 @@
         this.hidefeestructure=true;
         this.feesinstallmentarr=[];
         this.feesplitarr=[];
+        this.ready();
       },
       FnSetSplitarr:function(splitarr){
         this.feesplitarr=splitarr;

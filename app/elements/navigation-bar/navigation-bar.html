@@ -263,6 +263,9 @@
            <li id="fee-structure-report">
             <a href="" aria-hidden="true" data-target="#feestructurereport" data-backdrop="static" data-keyboard="false" on-click="FnFeeStructureReport">Fee Structure Report</a>
            </li>
+           <li id="fee-structure-report">
+            <a href="" aria-hidden="true" data-target="#feestructureforgradereport" data-backdrop="static" data-keyboard="false" on-click="FnFeeStructureForGradeReport">Fee Structure For Grades</a>
+           </li>
            </ul>
            </li>
 
@@ -980,6 +983,14 @@
         document.querySelector('app-list').setPage("fee-structure-report","Fee master");
         document.querySelector('fee-structure-report').FnRefresh();
         document.querySelector('fee-structure-report').callService();
+      },
+      FnFeeStructureForGradeReport:function(){
+        this.$.scheduleservice.fetchgradeforreportService();
+        this.$.scheduleservice.fetchacademicyearService();
+        this.$.scheduleservice.fetchadmissionyearService();
+        document.querySelector('app-list').setPage("gradewise-fee-structure-report","Fee master");
+        document.querySelector('gradewise-fee-structure-report').FnRefresh();
+        document.querySelector('gradewise-fee-structure-report').callService();
       },
       setRoleview:function(){
        if(localStorage.getItem("roleid")=="ROLE101") 
