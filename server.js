@@ -5962,7 +5962,7 @@ app.post('/fetchstructureallstudent-service',  urlencodedParser,function (req, r
   if(req.query.grade=='All Grades')
   var qur="SELECT * FROM md_admission WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and admission_year='"+req.query.admissionyear+"'";
   else
-  var qur="SELECT * FROM md_admission WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and admission_year='"+req.query.admissionyear+"' and class_for_admission='"+req.query.grade+"')";  
+  var qur="SELECT * FROM md_admission WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and admission_year='"+req.query.admissionyear+"' and class_for_admission='"+req.query.grade+"'";  
   console.log('------------------------------------------------------');
   console.log(qur);
   console.log('------------------------------------------------------');
@@ -5984,7 +5984,7 @@ app.post('/fetchgradewisefeestructure-service',  urlencodedParser,function (req,
   if(req.query.grade=='All Grades')
   var qur="SELECT *,(SELECT grade_name from grade_master WHERE grade_id=f.grade_id) as grade FROM fee_master f WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and admission_year='"+req.query.admissionyear+"'";
   else
-  var qur="SELECT *,,(SELECT grade_name from grade_master WHERE grade_id=f.grade_id) as grade FROM fee_master f WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and admission_year='"+req.query.admissionyear+"' and grade_id=(SELECT grade_id FROM grade_master WHERE grade_name='"+req.query.grade+"')";  
+  var qur="SELECT *,(SELECT grade_name from grade_master WHERE grade_id=f.grade_id) as grade FROM fee_master f WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' and admission_year='"+req.query.admissionyear+"' and grade_id=(SELECT grade_id FROM grade_master WHERE grade_name='"+req.query.grade+"')";  
   console.log('------------------------------------------------------');
   console.log(qur);
   console.log('------------------------------------------------------');
