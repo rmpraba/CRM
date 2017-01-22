@@ -367,6 +367,9 @@
             <li id="chequerealization">
             <a href="" aria-hidden="true" on-click="FnChequerealization">Cheque Realization</a>
            </li>
+           <li id="tprealisation">
+            <a href="" aria-hidden="true" on-click="FnTprealisation">Third Party Realization</a>
+           </li>
            <li id="bouncecheques">
             <a href="" aria-hidden="true" on-click="FnShowBounceCheques">Bounce Cheques</a>
            </li>
@@ -879,6 +882,7 @@
           document.querySelector('app-list').setPage("cheque-realization-card","Cheque Processing");
           document.querySelector('cheque-realization-card').FnCallService();
       },
+
       FnWithdrawal:function(){
           document.querySelector('app-list').setPage("withdrawal-card","Withdrawal Processing");
       },
@@ -947,6 +951,10 @@
       FnBounceProcessing:function(){
         document.querySelector('app-list').setPage("chequebounceorcancel-card","Cheque Bounce / Cancel");
         document.querySelector('chequebounceorcancel-card').callService();
+      },
+      FnTprealisation:function(){
+        document.querySelector('app-list').setPage("tp-realisation-card","Third Party Realization");
+        document.querySelector('tp-realisation-card').callService();
       },
       FnChequeEditDelete:function(){
         document.querySelector('app-list').setPage("editdelete-cheques-card","Edit/Delete Cheques");

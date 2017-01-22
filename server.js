@@ -2781,8 +2781,8 @@ app.post('/insertthirdpartyfees',  urlencodedParser,function (req, res){
         actual_amount:req.query.actualamount,
         discount_amount:req.query.discountamount,
         receipt_date:req.query.receiptdate,
-        received_date:req.query.receiveddate,
-        paid_date:req.query.receiveddate,
+        received_date:req.query.paiddate,
+        paid_date:req.query.paiddate,
         paid_status:req.query.paidstatus,
         // cheque_status:req.query.paidstatus,
         created_by:req.query.createdby,
@@ -6157,6 +6157,62 @@ app.post('/fetchallenrolledadmissions-service',  urlencodedParser,function (req,
             }
           });
 });
+
+
+app.post('/fetchtpstudentforsearch-service',  urlencodedParser,function (req, res){
+  var qur="SELECT distinct(admission_no),student_name FROM md_student_paidfee where school_id='"+req.query.schoolid+"' and mode_of_payment='Third Party' and payment_through='thirdparty' and paid_status='inprogress'";
+  connection.query(qur,
+    function(err, rows){
+      if(!err){
+        if(rows.length>0){
+          res.status(200).json({'returnval': rows});
+        } else {
+          console.log(err);
+          res.status(200).json({'returnval': 'no rows'});
+        }
+      } else {
+        console.log(err);
+      }
+    });
+});
+
+app.post('/fetchtpstudinfo-service',  urlencodedParser,function (req, res){
+  var qur="SELECT * from md_student_paidfee where school_id='"+req.query.schoolid+"' and admission_no='"+req.query.admissionno+"'and mode_of_payment='Third Party' and payment_through='thirdparty' and mode_of_payment='Third Party' and payment_through='thirdparty'";
+  connection.query(qur,
+    function(err, rows){
+      if(!err){
+        if(rows.length>0){
+          res.status(200).json({'returnval': rows});
+        } else {
+          console.log(err);
+          res.status(200).json({'returnval': 'no rows'});
+        }
+      } else {
+        console.log(err);
+      }
+    });
+});
+
+
+app.post('/processtprealisation-service',  urlencodedParser,function (req, res){
+  var qur="UPDATE md_student_paidfee SET installment_amount='"+req.query.amount+"',"+
+  " paid_status='paid',realised_date='"+req.query.realiseddate+"',difference_amount='"+req.query.diffamount+"',cheque_no='"+req.query.refno+"' "+
+  " where school_id='"+req.query.schoolid+"' and admission_no='"+req.query.admissionno+"' and installment='"+req.query.installment+"'";
+  connection.query(qur,
+    function(err, result){
+      if(!err){
+        if(result.affectedRows>0){
+          res.status(200).json({'returnval': 'Done!!'});
+        } else {
+          console.log(err);
+          res.status(200).json({'returnval': 'Unable to process!!'});
+        }
+      } else {
+        console.log(err);
+      }
+    });
+});
+
 
 function setvalue(){
   console.log("calling setvalue.....");
