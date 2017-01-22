@@ -138,6 +138,27 @@
         on-response="fetchstructureallstudentResponse"
         debounce-duration="300"
         >
+        
+     <iron-ajax
+        method="post"
+        id="fetchallenrolledadmissionsajax"
+        url="{{fetchallenrolledadmissionsurl}}"
+        params="{{fetchallenrolledadmissionsparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchallenrolledadmissionsResponse"
+        debounce-duration="300"
+        >
+     <iron-ajax
+        method="post"
+        id="fetchallenrolledstudentsajax"
+        url="{{fetchallenrolledstudentsurl}}"
+        params="{{fetchallenrolledstudentsparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="fetchallenrolledstudentsResponse"
+        debounce-duration="300"
+        >
   </template>
   <script>
   (function() {
@@ -692,7 +713,44 @@
         else{
 
         }
-      }          
+      },
+      FnFetchAllAdmissionService:function(academicyear,grade){
+        this.fetchallenrolledadmissionsurl=sessionStorage.getItem("addrinfo")+"/fetchallenrolledadmissions-service";
+        var obj={"schoolid":"","fromdate":"","todate":""};
+        obj.schoolid=localStorage.getItem("schoolid");
+        obj.academicyear=academicyear;
+        obj.grade=grade;
+        this.fetchallenrolledadmissionsparam=obj;
+        this.$.fetchallenrolledadmissionsajax.generateRequest();
+      }, 
+      fetchallenrolledadmissionsResponse:function(e){
+        if(e.detail.response.returnval!='no rows'){
+        this.admission=e.detail.response.returnval;
+        document.querySelector('enrollment-report').enrollmentarr=e.detail.response.returnval;
+        }
+        else
+        {
+
+        }
+      },
+      FnFetchAllStudentsService:function(academicyear,grade){
+        this.fetchallenrolledstudentsurl=sessionStorage.getItem("addrinfo")+"/fetchallenrolledstudents-service";
+        var obj={"schoolid":"","fromdate":"","todate":""};
+        obj.schoolid=localStorage.getItem("schoolid");
+        obj.academicyear=academicyear;
+        obj.grade=grade;
+        this.fetchallenrolledstudentsparam=obj;
+        this.$.fetchallenrolledstudentsajax.generateRequest();
+      },
+      fetchallenrolledstudentsResponse:function(e){
+        if(e.detail.response.returnval!='no rows'){
+        this.students=e.detail.response.returnval;
+        }
+        else
+        {
+
+        }
+      }         
     });
   })();
   </script>

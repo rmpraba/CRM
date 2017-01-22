@@ -288,6 +288,9 @@
            <li id="withdrawalprocess">
             <a href="" aria-hidden="true" on-click="FnWithdrawal">Wthdrawal Processing</a>
            </li>
+           <li id="enrollmentreport">
+            <a href="" aria-hidden="true" on-click="FnEnrollmentreport">Enrollment Report</a>
+           </li>
           </ul>
           </li>
           <!-- <li id="payment">
@@ -991,6 +994,14 @@
         document.querySelector('app-list').setPage("gradewise-fee-structure-report","Fee master");
         document.querySelector('gradewise-fee-structure-report').FnRefresh();
         document.querySelector('gradewise-fee-structure-report').callService();
+      },
+      FnEnrollmentreport:function(){
+        this.$.scheduleservice.fetchgradeforreportService();
+        this.$.scheduleservice.fetchacademicyearService();
+        this.$.scheduleservice.fetchadmissionyearService();
+        document.querySelector('app-list').setPage("enrollment-report","Enrollments");
+        document.querySelector('enrollment-report').FnRefresh();
+        document.querySelector('enrollment-report').callService();
       },
       setRoleview:function(){
        if(localStorage.getItem("roleid")=="ROLE101") 

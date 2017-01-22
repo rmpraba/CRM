@@ -6023,6 +6023,28 @@ app.post('/fetchgradewisediscountstructure-service',  urlencodedParser,function 
           });
 });
 
+
+app.post('/fetchallenrolledadmissions-service',  urlencodedParser,function (req, res){
+  if(req.query.grade=='All Grades')
+  var qur="SELECT * FROM md_admission a join md_student s on(s.admission_no=a.admission_no) WHERE a.school_id='"+req.query.schoolid+"' and s.school_id='"+req.query.schoolid+"' and a.academic_year='"+req.query.academicyear+"' and s.academic_year='"+req.query.academicyear+"'";
+  else
+  var qur="SELECT * FROM md_admission a join md_student s on(s.admission_no=a.admission_no) WHERE a.school_id='"+req.query.schoolid+"' and s.school_id='"+req.query.schoolid+"' and a.academic_year='"+req.query.academicyear+"' and s.academic_year='"+req.query.academicyear+"' and a.class_for_admission='"+req.query.grade+"' and s.class_for_admission='"+req.query.grade+"'";
+  console.log('------------------------------------------------------');
+  console.log(qur);
+  console.log('------------------------------------------------------');
+  // console.log(qur3);
+  connection.query(qur,function(err, rows){
+      if(!err){
+              if(rows.length>0){
+              res.status(200).json({'returnval': rows});
+              }
+              else{
+              res.status(200).json({'returnval': 'no rows'});
+              }              
+            }
+          });
+});
+
 function setvalue(){
   console.log("calling setvalue.....");
 }
