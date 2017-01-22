@@ -1639,7 +1639,8 @@ app.post('/insertadmission',  urlencodedParser,function (req, res){
         discount_type:req.query.discounttype,
         previous_history:req.query.admissionhistory,
         having_sibling:req.query.admissionsibling,
-        admission_status:'New'
+        admission_status:'New',
+        active_status:'Admitted'
     }
 
     var qur="SELECT * FROM auto_admission_no";
