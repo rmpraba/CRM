@@ -441,6 +441,8 @@
         this.$.feeservice.callInsertChequefeesService(installment[i],installment.length);
       if(installment[i].paymenttype=="Transfer")
         this.$.feeservice.callInsertTransferfeesService(installment[i],installment.length);
+      if(installment[i].paymenttype=="Third Party")
+        this.$.feeservice.callInsertThirdpartyfeesService(installment[i],installment.length);
       }
       installment=[];
       document.querySelector('installment-card').FnRefresh();

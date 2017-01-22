@@ -239,6 +239,7 @@ res.status(200).json({'returnval': '0'});
 });
 });
 
+
 app.post('/fetchfeecodeseq-service',  urlencodedParser,function (req, res){
 var response={"prefix":"","feecode":""};
 connection.query("SELECT * FROM prefix_master WHERE prefix_id='"+req.query.prefixid+"'",function(err, rows){
@@ -252,6 +253,8 @@ connection.query("SELECT * FROM prefix_master WHERE prefix_id='"+req.query.prefi
 });
 
 });
+
+
 app.post('/fetchfeecodes-service',  urlencodedParser,function (req, res){
     var qur="SELECT * FROM fee_master WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' "+
     " and admission_year='"+req.query.admissionyear+"'";
@@ -2690,6 +2693,112 @@ app.post('/inserttransferfees',  urlencodedParser,function (req, res){
     connection.query("SELECT * FROM receipt_sequence",function(err, rows){
     response.receipt_no="REC-"+response.academic_year+"-"+rows[0].transfer_seq;
     response1.receipt_no="REC-"+response.academic_year+"-"+rows[0].transfer_seq;
+    var new_receipt_no=parseInt(rows[0].transfer_seq)+1;
+    connection.query(masterinsert,[response1],function(err, rows){
+    if(!err){
+    connection.query(qur,[response],function(err, rows){
+    if(!err)
+    {
+      if(req.query.feetransfercount=='0'){
+      connection.query("UPDATE receipt_sequence SET transfer_seq='"+new_receipt_no+"'",function(err, result){
+        if(result.affectedRows>0){
+            if(req.query.installment=="Application fee")
+          connection.query("UPDATE student_enquiry_details SET prospectus_status='yes' where school_id='"+req.query.schoolid+"' and enquiry_no='"+req.query.admissionno+"'",function(err, result){
+         
+          res.status(200).json({'returnval': 'Fee paid!','info':response,'receiptno':response.receipt_no,'receiptdate':response1.receipt_date});
+        });
+        else
+         res.status(200).json({'returnval': 'Fee paid!','info':response,'receiptno':response.receipt_no,'receiptdate':response1.receipt_date}); 
+        }
+        else
+          res.status(200).json({'returnval': 'Seq not updated!'});
+      });
+      }
+      else
+          res.status(200).json({'returnval': 'Fee paid!','info':response,'receiptno':response.receipt_no,'receiptdate':response1.receipt_date});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'Fee not paid'});
+    }
+  });
+  }
+  else
+    console.log(err);
+  });
+  });
+});
+
+
+// Fetching fees splitup
+app.post('/insertthirdpartyfees',  urlencodedParser,function (req, res){
+    var qur="INSERT INTO tr_thirdparty_details SET ?";
+    console.log(qur);
+
+    var response={
+       school_id:req.query.schoolid,
+       academic_year:req.query.academicyear,
+        enquiry_no:req.query.enquiryno,
+        admission_no:req.query.admissionno,
+        student_name:req.query.studentname,
+        grade:req.query.grade,
+        fee_type:req.query.feetype,
+        fee_code:req.query.feecode,
+        installment_type:req.query.installmenttype,
+        installment:req.query.installment,
+        installment_date:req.query.installmentdate,
+        installment_amount:req.query.installmentamount,
+        waiveoff_amount:req.query.waiveoffamount,
+
+        mode_of_payment:req.query.modeofpayment,
+        received_date:req.query.receiveddate,
+
+        paid_date:req.query.paiddate,
+        paid_status:req.query.paidstatus,
+        // reference_no:req.query.referenceno,
+        // bank_name:req.query.bankname,
+        "receipt_no":""
+    };
+
+    var response1={
+        school_id:req.query.schoolid,
+        academic_year:req.query.academicyear,
+        enquiry_no:req.query.enquiryno,
+        admission_no:req.query.admissionno,
+        student_name:req.query.studentname,
+        grade:req.query.grade,
+        // fee_type:req.query.feetype,
+        waiveoff_amount:req.query.waiveoffamount,
+        installment_date:req.query.installmentdate,
+        fee_code:req.query.feecode,
+        discount_code:req.query.discountcode,
+        installment_type:req.query.installmenttype,
+        installment:req.query.installment,
+        mode_of_payment:req.query.modeofpayment,
+        // cheque_no:req.query.referenceno,
+        installment_amount:req.query.installmentamount,
+        actual_amount:req.query.actualamount,
+        discount_amount:req.query.discountamount,
+        receipt_date:req.query.receiptdate,
+        received_date:req.query.receiveddate,
+        paid_date:req.query.receiveddate,
+        paid_status:req.query.paidstatus,
+        // cheque_status:req.query.paidstatus,
+        created_by:req.query.createdby,
+        // bank_name:req.query.bankname,
+        fine_amount:req.query.fineamount,
+        provision_payment:req.query.provisionflag,
+        payment_through:req.query.paymentthrough,
+        receipt_no:""
+    };
+
+    var masterinsert="INSERT INTO md_student_paidfee SET ?";
+
+
+    connection.query("SELECT * FROM receipt_sequence",function(err, rows){
+    response.receipt_no="ACK-"+response.academic_year+"-"+rows[0].transfer_seq;
+    response1.receipt_no="ACK-"+response.academic_year+"-"+rows[0].transfer_seq;
     var new_receipt_no=parseInt(rows[0].transfer_seq)+1;
     connection.query(masterinsert,[response1],function(err, rows){
     if(!err){
