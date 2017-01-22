@@ -99,7 +99,8 @@
         obj.paiddate=cash[i].paiddate; 
         obj.paidstatus=cash[i].paidstatus;   
         obj.feecashcount=feecashcount;
-        obj.fineamount=0;     
+        obj.fineamount=0;  
+        obj.paymentthrough=localStorage.getItem("curr_sess_paymentthrough");   
         obj.createdby=localStorage.getItem("employeeid"); 
         obj.provisionflag=localStorage.getItem("curr_sess_provisionflag");   
         this.insertcashfeesparam=obj;   
@@ -162,7 +163,8 @@
         obj.chequedate=cheque[i].chequedate; 
         obj.chequestatus=cheque[i].chequestatus; 
         obj.feechequecount=feechequecount;
-        obj.fineamount=0;   
+        obj.fineamount=0; 
+        obj.paymentthrough=localStorage.getItem("curr_sess_paymentthrough");  
         obj.createdby=localStorage.getItem("employeeid"); 
         obj.provisionflag=localStorage.getItem("curr_sess_provisionflag");   
         obj.receiptdate=cheque[i].receiptdate;     
@@ -227,6 +229,7 @@
         obj.chequedate=transfer[i].chequedate;
         obj.feetransfercount=feetransfercount; 
         obj.fineamount=0;         
+        obj.paymentthrough=localStorage.getItem("curr_sess_paymentthrough");
         obj.createdby=localStorage.getItem("employeeid"); 
         obj.provisionflag=localStorage.getItem("curr_sess_provisionflag");   
         obj.receiptdate=transfer[i].receiptdate;     

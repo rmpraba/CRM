@@ -2434,6 +2434,7 @@ app.post('/insertcashfees',  urlencodedParser,function (req, res){
         paid_date:req.query.paiddate,
         paid_status:req.query.paidstatus,
         created_by:req.query.createdby,
+        // payment_through:req.query.paymentthrough,
         receipt_no:""
     };
 
@@ -2462,6 +2463,7 @@ app.post('/insertcashfees',  urlencodedParser,function (req, res){
         created_by:req.query.createdby,
         fine_amount:req.query.fineamount,
         provision_payment:req.query.provisionflag,
+        payment_through:req.query.paymentthrough,
         receipt_no:""
     };
 
@@ -2574,6 +2576,7 @@ app.post('/insertchequefees',  urlencodedParser,function (req, res){
         fine_amount:req.query.fineamount,
         provision_payment:req.query.provisionflag,
         cheque_date:req.query.chequedate,
+        payment_through:req.query.paymentthrough,
         receipt_no:""
     };
 
@@ -2677,6 +2680,7 @@ app.post('/inserttransferfees',  urlencodedParser,function (req, res){
         bank_name:req.query.bankname,
         fine_amount:req.query.fineamount,
         provision_payment:req.query.provisionflag,
+        payment_through:req.query.paymentthrough,
         receipt_no:""
     };
 

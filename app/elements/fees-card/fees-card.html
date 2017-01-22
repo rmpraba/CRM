@@ -220,6 +220,7 @@
         localStorage.setItem("curr_sess_waiveoff",0);
         localStorage.setItem("curr_sess_fees",0); 
         localStorage.setItem("curr_sess_enquiryno","");
+        localStorage.setItem("curr_sess_paymentthrough","self");
         this.fetchnoofinstallmenturl=sessionStorage.getItem("addrinfo")+"/fetchnoofinstallment-service";
         this.$.fetchnoofinstallmentajax.generateRequest();
         localStorage.setItem("curr_sess_installmentpattern",installmentpattern);
@@ -246,6 +247,7 @@
       selfHandler:function(e){
         if(document.querySelector('#structureselfmode').checked==true)
         {  
+          localStorage.setItem("curr_sess_paymentthrough","self");
           document.querySelector('#structurethirdpartymode').checked=false;
           this.hidestandardpattern=false;
         }
@@ -253,6 +255,7 @@
       thirdpartyHandler:function(e){
         if(document.querySelector('#structurethirdpartymode').checked==true)
         {  
+          localStorage.setItem("curr_sess_paymentthrough","thirdparty");
           document.querySelector('#structureselfmode').checked=false;
           this.hidestandardpattern=true;
         }
