@@ -1364,6 +1364,28 @@ app.post('/searchfeeadmission',  urlencodedParser,function (req, res){
 });
 
 // Searching admitted student info for fee payment
+app.post('/checkdefaulterstatus-service',  urlencodedParser,function (req, res){
+    var qur="SELECT * FROM md_admission WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' "+
+    " and admission_year='"+req.query.admissionyear+"' and class_for_admission='"+req.query.grade+"' and admission_no='"+req.query.admissionno+"'";
+    console.log('---------------------defaulter--------------');
+    console.log(qur);
+    connection.query(qur,function(err, rows){
+    if(!err)
+    {
+    if(rows.length>0)
+    {
+       res.status(200).json({'returnval': rows[0].active_status});
+    }
+    else{
+       res.status(200).json({'returnval': 'no rows'});
+    }
+    }
+});
+});
+
+
+
+// Searching admitted student info for fee payment
 app.post('/checkregfeepaidstatus-service',  urlencodedParser,function (req, res){
     var qur1="SELECT * FROM fee_master WHERE school_id='"+req.query.schoolid+"' and academic_year='"+req.query.academicyear+"' "+
     " and admission_year='"+req.query.admissionyear+"' and grade_id=(SELECT grade_id FROM grade_master WHERE grade_name='"+req.query.grade+"')";

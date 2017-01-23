@@ -703,6 +703,11 @@
     this.itemArray=[];
     document.querySelector('#schoolfeeinput').selected=-1;
     this.value=enquiry_name;
+    document.querySelector("#structuregeneral1").checked=true;
+    document.querySelector("#structurelumpsumcommit1").checked=false;
+    document.querySelector("#structurelumpsum1").checked=false;
+    localStorage.setItem("curr_sess_installmentpattern",1);
+
     // this.$.processingservice.fetchchequeforeditordelete(admission_no);
     // localStorage.setItem("curr_sess_enquiryno",enquiry_no);
     // localStorage.setItem("curr_sess_enquiryname",enquiry_name);
@@ -711,6 +716,19 @@
     },
     Fnhidecommitinstallment:function(flag){
       this.hidecommitinstallment=flag;
+    },
+    Fnhidepattern:function(flag){
+    if(flag==true){
+      document.querySelector('#structurelumpsum1').checked=true;
+      // document.querySelector('#structuregeneral1').checked=false;
+      // document.querySelector('#structurelumpsumcommit1').checked=false;
+    }
+    // else{
+    //   document.querySelector('#structurelumpsum1').checked=false;
+    //   document.querySelector('#structuregeneral1').checked=false;
+    //   document.querySelector('#structurelumpsumcommit1').checked=false;
+    // }
+    this.hidestandardpattern=flag;
     }
 
     });

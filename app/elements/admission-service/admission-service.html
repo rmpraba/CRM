@@ -403,6 +403,17 @@
         debounce-duration="300"
         >
 
+         <iron-ajax
+        method="post"
+        id="checkdefaulterstatusajax"
+        url="{{checkdefaulterstatusurl}}"
+        params="{{checkdefaulterstatusparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="checkdefaulterstatusResponse"
+        debounce-duration="300"
+        >
+
         <iron-ajax
         method="post"
         id="fetchstudentforsearchajax"
@@ -1131,12 +1142,41 @@ insertstudenthistoryResponse:function(e){
         localStorage.setItem("curr_sess_grade",arr[0].class_for_admission);
         localStorage.setItem("curr_sess_studentname",arr[0].student_name);
 
-        this.checkregfeepaidstatusService(localStorage.getItem("curr_sess_academicyear"),arr[0].admission_year,arr[0].class_for_admission,localStorage.getItem("curr_sess_enquiryno"));
+        this.checkdefaulterstatusService(localStorage.getItem("curr_sess_academicyear"),arr[0].admission_year,arr[0].class_for_admission,localStorage.getItem("curr_sess_enquiryno"));
+        
         // this.fetchinstallmentdateService();
         // this.callfetchfeesService(arr[0].academic_year,arr[0].admission_year,arr[0].class_for_admission);        
         // this.callfetchdiscountService(arr[0].academic_year,arr[0].admission_year,arr[0].class_for_admission,arr[0].discount_type);
         // // this.callfetchfeesinfoService(arr[0].academic_year,arr[0].admission_year,arr[0].class_for_admission,arr[0].admission_type,arr[0].discount_type);
         // this.fetchfeesplitup(arr[0].academic_year,arr[0].admission_year,arr[0].class_for_admission);
+        }
+     },
+     checkdefaulterstatusService:function(academicyear,admissionyear,grade,admissionno){
+        this.checkdefaulterstatusurl=sessionStorage.getItem("addrinfo")+"/checkdefaulterstatus-service";
+        var obj={"admissionno":"","schoolid":""};
+        obj.admissionno=admissionno;
+        obj.admissionyear=admissionyear; 
+        obj.academicyear=academicyear;
+        // alert(academicyear); 
+        obj.grade=grade; 
+        obj.schoolid=localStorage.getItem("schoolid"); 
+        this.checkdefaulterstatusparam=obj;
+        this.$.checkdefaulterstatusajax.generateRequest();
+     },
+     checkdefaulterstatusResponse:function(e){
+        // alert(e.detail.response.returnval);
+        if(e.detail.response.returnval=='Admitted'){
+            document.querySelector('fees-card').Fnhidepattern(false);
+            this.checkregfeepaidstatusService(localStorage.getItem("curr_sess_academicyear"),localStorage.getItem("curr_sess_admissionyear"),localStorage.getItem("curr_sess_grade"),localStorage.getItem("curr_sess_enquiryno"));
+        }
+        if(e.detail.response.returnval=='Default'){           
+            if(localStorage.getItem("curr_sess_installmentpattern")==1)
+            {
+            document.querySelector('fees-card').Fnhidepattern(true);
+            localStorage.setItem("curr_sess_noofinstallment",1);
+            localStorage.setItem("curr_sess_installmentpattern",3);
+            }
+            this.checkregfeepaidstatusService(localStorage.getItem("curr_sess_academicyear"),localStorage.getItem("curr_sess_admissionyear"),localStorage.getItem("curr_sess_grade"),localStorage.getItem("curr_sess_enquiryno"));
         }
      },
       checkregfeepaidstatusService:function(academicyear,admissionyear,grade,admissionno){
