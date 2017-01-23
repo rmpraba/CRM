@@ -1717,10 +1717,15 @@ insertstudenthistoryResponse:function(e){
                    arr[i].modeofpayment='';
                    arr[i].receiptdate=current_date;
                    // alert(arr[i].installmentdate+"  "+current_date);
-                   if(arr[i].installmentdate<=current_date)
+                   if(arr[i].installmentdate<=current_date){
+                    // alert('true');
                     arr[i].editdate=false;
+                   }
                    else
+                   {
+                    // alert('false');
                     arr[i].editdate=true;
+                   }
         }
         } 
         // alert(JSON.stringify(arr));
@@ -1853,7 +1858,7 @@ insertstudenthistoryResponse:function(e){
            finalarr.push(arr[i]); 
            }
         }
-        // alert(JSON.stringify(arr));
+        // alert(JSON.stringify(finalarr));
         document.querySelector('fees-card').feearr=finalarr; 
         // document.querySelector('fees-card').Fnsetinstallmentarr(arr);
         document.querySelector('fees-card').FnHiddenPayment();  

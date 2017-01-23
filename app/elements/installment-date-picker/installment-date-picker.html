@@ -16,12 +16,13 @@
     width: 120%;
     margin-top: -3%;
     margin-left: -5%;
+    --paper-input-container-input-color: red;    
   }
 </style>
   <template>
     <!--component which invokes the predefined date picker control-->
     <div class="datepicker">
-      <paper-input readonly="{{editdate}}" class="btn" on-click="FnShowDialog" label="Cheque Date" raised value="{{showdate}}"></paper-input>
+      <paper-input disabled="{{editdate}}" class="btn" on-click="FnShowDialog" label="Cheque Date" raised value="{{showdate}}"></paper-input>
       <paper-dialog id="dialog" class="paper-date-picker-dialog" modal on-iron-overlay-closed="FnDismissDialog" style="left: 0 !important;">
         <paper-date-picker id="picker" date="{{date}}"></paper-date-picker>
         <div class="buttons">
