@@ -448,6 +448,7 @@
         for(var i=0;i<paymentarr.length;i++){
             if(paymentarr[i].mode_of_payment=="Cash"){
                 var obj={"schoolid":"","academicyear":"","admissionno":"","studentname":"","grade":"","installment":"","paiddate":"","receiptno":"","receipttype":"","hidereceipt":"","hideack":"","chequeview":"","transferview":"","paymentarr":""};
+                obj.modeofpayment=paymentarr[i].mode_of_payment;
                 obj.schoolid=paymentarr[i].school_id;
                 obj.academicyear=paymentarr[i].academic_year;
                 obj.admissionno=paymentarr[i].admission_no;
@@ -477,6 +478,7 @@
             // for(var i=0;i<paymentarr.length;i++){
             if(paymentarr[i].mode_of_payment=="Third Party"){
                 var obj={"schoolid":"","academicyear":"","admissionno":"","studentname":"","grade":"","installment":"","paiddate":"","receiptno":"","receipttype":"","hidereceipt":"","hideack":"","chequeview":"","transferview":"","paymentarr":""};
+                obj.modeofpayment=paymentarr[i].mode_of_payment;
                 obj.schoolid=paymentarr[i].school_id;
                 obj.academicyear=paymentarr[i].academic_year;
                 obj.admissionno=paymentarr[i].admission_no;
@@ -505,6 +507,7 @@
             }
             if(paymentarr[i].mode_of_payment=="Cheque"){
                 var obj={"schoolid":"","academicyear":"","admissionno":"","studentname":"","grade":"","installment":"","paiddate":"","receiptno":"","receipttype":"","hidereceipt":"","hideack":"","chequeview":"","transferview":"","paymentarr":""};
+                obj.modeofpayment=paymentarr[i].mode_of_payment;
                 obj.schoolid=paymentarr[i].school_id;
                 obj.academicyear=paymentarr[i].academic_year;
                 obj.admissionno=paymentarr[i].admission_no;
@@ -531,6 +534,7 @@
             }
             if(paymentarr[i].mode_of_payment=="Transfer"){
                 var obj={"schoolid":"","academicyear":"","admissionno":"","studentname":"","grade":"","installment":"","paiddate":"","receiptno":"","receipttype":"","hidereceipt":"","hideack":"","chequeview":"","transferview":"","paymentarr":""};
+                obj.modeofpayment=paymentarr[i].mode_of_payment;
                 obj.schoolid=paymentarr[i].school_id;
                 obj.academicyear=paymentarr[i].academic_year;
                 obj.admissionno=paymentarr[i].admission_no;
@@ -567,7 +571,8 @@
       callFeeReceipt:function(){
         alert('Fee paid!!');
         // alert('calling receipt');
-        // alert(JSON.stringify(paymentarr));
+        // alert(JSON.stringify(feereceiptarr));
+        document.querySelector('feereceipt-outcard').Fnsetinfo();
         document.querySelector('feereceipt-outcard').paymentreceiptarr=feereceiptarr;
         // document.querySelector('feereceipt-outcard').paymentreceiptarr=paymentarr;
         // document.querySelector('CRM-app').setPage('feereceipt-outcard');

@@ -24,7 +24,7 @@ app.post('/loginpage',  urlencodedParser,function (req, res)
   var pass={"password":req.query.password};
 //console.log('hi');
 
-  connection.query('SELECT (select short_name from md_school where id=e.school_id) as shortname,(select name from md_school where id=e.school_id) as schoolname,e.school_id,e.employee_id, e.employee_name,e.role_id, r.role_name, a.rt_dashboard, a.rt_enquiry,a.rt_admission_form,a.rt_adm_approval, a.rt_followup, a.rt_collectionentry FROM md_employee as e JOIN md_role as r JOIN md_access_rights as a on r.role_id=e.role_id and a.role_id=e.role_id where ? and ?',[user,pass],
+  connection.query('SELECT (select short_name from md_school where id=e.school_id) as shortname,(select address from md_school where id=e.school_id) as address,(select name from md_school where id=e.school_id) as schoolname,e.school_id,e.employee_id, e.employee_name,e.role_id, r.role_name, a.rt_dashboard, a.rt_enquiry,a.rt_admission_form,a.rt_adm_approval, a.rt_followup, a.rt_collectionentry FROM md_employee as e JOIN md_role as r JOIN md_access_rights as a on r.role_id=e.role_id and a.role_id=e.role_id where ? and ?',[user,pass],
 
         function(err, rows)
         {

@@ -53,8 +53,8 @@
                    </paper-listbox>
           </div>
           <div class="col-md-6" style="margin-top: 5%;">
-          <paper-checkbox id="schoolfeecurrentyear" on-change="FnCurrentHandler" checked style="margin-left: 5%;">Current Year</paper-checkbox>
-          <paper-checkbox id="schoolfeenextyear" on-change="FnNextHandler" style="margin-left: 5%;">Next Year</paper-checkbox>
+          <paper-checkbox id="schoolfeecurrentyear" on-change="FnCurrentHandler" style="margin-left: 5%;">Current Year</paper-checkbox>
+          <paper-checkbox id="schoolfeenextyear" on-change="FnNextHandler" checked style="margin-left: 5%;">Next Year</paper-checkbox>
           </div>
 
      </div>
@@ -226,19 +226,33 @@
         localStorage.setItem("curr_sess_installmentpattern",installmentpattern);
         localStorage.setItem("curr_sess_insrequirement",'no');
         this.flag=0;
-        var academicyear=""; 
+          // var date=new Date();
+          // var y=date.getFullYear();  
+          // var m=date.getMonth();
+          // var d=date.getDate(); 
+          // if(m<4){ 
+          // var y1=y-1;
+          // var y2=y;  
+          // academicyear="AY-"+y1+"-"+y2;
+          // } 
+          // else{
+          // var y1=y;
+          // var y2=y+1;  
+          // academicyear="AY-"+y1+"-"+y2;
+          // }
+          var academicyear=""; 
           var date=new Date();
           var y=date.getFullYear();  
           var m=date.getMonth();
           var d=date.getDate(); 
           if(m<4){ 
-          var y1=y-1;
-          var y2=y;  
+          var y1=(y-1)+1;
+          var y2=y+1;  
           academicyear="AY-"+y1+"-"+y2;
           } 
           else{
-          var y1=y;
-          var y2=y+1;  
+          var y1=y+1;
+          var y2=y+1+1;  
           academicyear="AY-"+y1+"-"+y2;
           }
           localStorage.setItem("curr_sess_academicyear",academicyear); 
@@ -509,8 +523,8 @@
         this.itemArray=[];
         this.totalpayableamount="";
         this.discountpercent="";
-        document.querySelector('#schoolfeenextyear').checked=false;
-        document.querySelector('#schoolfeecurrentyear').checked=true;
+        document.querySelector('#schoolfeenextyear').checked=true;
+        document.querySelector('#schoolfeecurrentyear').checked=false;
       },
       FnRefresh1:function(){
         document.querySelector('#structureselfmode').checked=true;

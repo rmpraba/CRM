@@ -29,15 +29,17 @@
     <div class="receiptcard">
       <h4 style="margin-left: 300px;">FEE&nbsp;&nbsp;{{receipttype}}</h4><br>
       <table>
-        <tr hidden$="{{hidereceipt}}"><td style="text-align: left;">Receipt No: {{receiptno}}</td><td style="text-align: left;"></td><td colspan="4"></td><td style="text-align: center;">Receipt Date: {{paiddate}}</td><td style="text-align: left;"></td></tr>
+        <tr hidden$="{{hidereceipt}}"><td style="text-align: left;">Receipt No: {{receiptno}}</td><td style="text-align: left;"></td><td colspan="4"></td><td style="text-align: right;">Receipt Date: {{paiddate}}</td><td style="text-align: left;"></td></tr>
 
         <tr hidden$="{{hideack}}"><td style="text-align: left;">Acknowledgement No: {{ackno}}</td><td style="text-align: left;"></td><td colspan="4"></td>
-        <td style="text-align: center;" hidden$="{{hideack}}">Acknowledgement Date: {{receiveddate}}</td><td style="text-align: left;"></td>
-        <td style="text-align: center;" hidden$="{{hidereceipt}}">Receipt Date: {{paiddate}}</td><td style="text-align: left;"></td></tr>
+        <td style="text-align: right;" hidden$="{{hideack}}">Acknowledgement Date: {{receiveddate}}</td><td style="text-align: left;"></td>
+        <td style="text-align: right;" hidden$="{{hidereceipt}}">Receipt Date: {{paiddate}}</td><td style="text-align: left;"></td></tr>
       </table>
       <hr></hr>
       <table >
-        <tr><td style="text-align: left;">Student Name: {{studentname}}</td><td style="text-align: left;"></td><td colspan="3"></td><td style="text-align: center;">Grade: {{grade}}</td><td style="text-align: left;"></td></tr>
+        <tr><td style="text-align: left;">Enrollment No: {{admissionno}}</td><td colspan="7"></td><td style="text-align: right;">Student Name: {{studentname}}</td></tr>
+        <tr><td></td><td></td><td colspan="3"></td>
+        <tr><td style="text-align: left;">Parent Name: {{parentname}}</td><td colspan="7"></td><td style="text-align: right;">Grade: {{grade}}</td></tr>
         <tr><td></td><td></td><td colspan="3"></td><!-- <td style="text-align: left;">Academic Year: {{academicyear}}</td><td style="text-align: left;"></td> --></tr>
       </table>
       <hr></hr>
@@ -60,10 +62,10 @@
       </template>
       </table>
        <table hidden$="{{hidetransferparticular}}">
-       <template  is="dom-repeat" items="{{paymentreceiptarr}}" as="pay">
+       <!-- <template  is="dom-repeat" items="{{paymentreceiptarr}}" as="pay"> -->
         <tr style="text-align: center;"><th colspan="2" style="text-align: center;">Sl.No</th><th colspan="3" style="text-align: center;">Particulars</th><th colspan="2" style="text-align: right;margin-left:30px;">Bank Name</th><th colspan="2" style="text-align: center;">Reference No</th><th colspan="2" style="text-align: center;">Received Date</th><th colspan="2" style="text-align: center;">Amount</th></tr>
+      <!-- </template> -->
       </table>
-      </template>
       <hr hidden$="{{hidetransferparticular}}"></hr>
       <table hidden$="{{hidetransferparticular}}">
       <template  is="dom-repeat" items="{{paymentarr}}" as="pay">
@@ -76,10 +78,19 @@
       </table>
       <hr hidden$="{{chequeview}}"></hr> -->
       <table hidden$="{{hidecashparticular}}">
-        <tr style="text-align: left;"><td colspan="5" width="290px"></td><td style="margin-left: 25px;">Total Fee: {{totalfees}}</td></tr>
+        <tr style="text-align: left;"><td colspan="5" width="290px">
+         Payment Mode: {{modeofpayment}} 
+        </td><td style="margin-left: 25px;">Total Fee: {{totalfees}}</td></tr>
       </table>
       <table hidden$="{{hidechequeparticular}}">
-        <tr style="text-align: left;"><td colspan="5" width="450px"></td><td style="margin-left: 25px;">Total Fee: {{totalfees}}</td></tr>
+        <tr style="text-align: left;"><td colspan="5" width="450px">
+        Payment Mode: {{modeofpayment}} 
+        </td><td style="margin-left: 25px;">Total Fee: {{totalfees}}</td></tr>
+      </table>
+      <table hidden$="{{hidetransferparticular}}">
+        <tr style="text-align: left;"><td colspan="5" width="450px">
+        Payment Mode: {{modeofpayment}} 
+        </td><td style="margin-left: 25px;">Total Fee: {{totalfees}}</td></tr>
       </table>
       <hr></hr>
       <!-- <table hidden$="{{chequeview}}">

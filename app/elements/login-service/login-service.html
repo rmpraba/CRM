@@ -45,7 +45,7 @@
      addressResponse:function(e)
       {
         addr=e.detail.response.address;
-        //alert(addr);
+        // alert(addr);
         sessionStorage.setItem("addrinfo",addr);
         //alert(JSON.stringify(e.detail.response.address));
       },
@@ -71,6 +71,7 @@
           var roleid=result[0].role_id;
           var schoolid=result[0].school_id;
           var employeeid=result[0].employee_id;
+          var address=result[0].address;
 
           var pr_dashboear=result[0].rt_dashboard;
           var pr_enquiry=result[0].rt_enquiry;
@@ -97,6 +98,7 @@
           localStorage.setItem("schoolid",schoolid);
           localStorage.setItem("roleid",roleid);
           localStorage.setItem("employeeid",employeeid);
+          localStorage.setItem("schooladdress",address);
 
         document.querySelector('navigation-bar').setRoleview();
         //alert(school+'   '+role+'    '+employeename+'    '+roleid);
@@ -104,7 +106,7 @@
         document.querySelector('app-list').setPage("enquiry","Enquiry");
         document.querySelector('followup-service').gettotalfollowupcounttoday();
         }
-      },
+      }
 
 
      
