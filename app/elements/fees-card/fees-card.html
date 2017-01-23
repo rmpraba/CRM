@@ -246,15 +246,18 @@
       },  
       selfHandler:function(e){
         if(document.querySelector('#structureselfmode').checked==true)
-        {  
+        { 
+          this.feearr=""; 
           localStorage.setItem("curr_sess_paymentthrough","self");
           document.querySelector('#structurethirdpartymode').checked=false;
           this.hidestandardpattern=false;
         }
       },
       thirdpartyHandler:function(e){
+
         if(document.querySelector('#structurethirdpartymode').checked==true)
-        {  
+        { 
+          this.feearr=""; 
           localStorage.setItem("curr_sess_paymentthrough","thirdparty");
           document.querySelector('#structureselfmode').checked=false;
           this.hidestandardpattern=true;
@@ -546,6 +549,7 @@
          this.discountamount="";
          this.payableamount="";
          this.feearr=[];
+         // this.hidecommitinstallment=false;
          this.hidenoofinstallment=true;
          installmentpattern="1";
          localStorage.setItem("curr_sess_installmentpattern",installmentpattern);
@@ -579,6 +583,7 @@
          this.hidenoofinstallment=true;
          installmentpattern="3";
          noofinstallment=1;
+         // this.hidecommitinstallment=true;
          localStorage.setItem("curr_sess_noofinstallment",1);
          localStorage.setItem("curr_sess_installmentpattern",installmentpattern);
          this.$.admissionservice.searchfeeadmissionpaidinfoService(localStorage.getItem("curr_sess_enquiryno"));
@@ -594,6 +599,7 @@
          this.hidenoofinstallment=true;
          installmentpattern="4";
          noofinstallment=4;
+         // this.hidecommitinstallment=false;
          localStorage.setItem("curr_sess_noofinstallment",4);
          localStorage.setItem("curr_sess_installmentpattern",installmentpattern);
          this.$.admissionservice.searchfeeadmissionpaidinfoService(localStorage.getItem("curr_sess_enquiryno"));
@@ -718,6 +724,7 @@
       this.hidecommitinstallment=flag;
     },
     Fnhidepattern:function(flag){
+    // alert(flag);
     if(flag==true){
       document.querySelector('#structurelumpsum1').checked=true;
       // document.querySelector('#structuregeneral1').checked=false;
@@ -728,6 +735,7 @@
     //   document.querySelector('#structuregeneral1').checked=false;
     //   document.querySelector('#structurelumpsumcommit1').checked=false;
     // }
+    if(localStorage.getItem("curr_sess_paymentthrough")=="self")
     this.hidestandardpattern=flag;
     }
 
