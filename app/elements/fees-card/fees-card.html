@@ -251,6 +251,8 @@
           localStorage.setItem("curr_sess_paymentthrough","self");
           document.querySelector('#structurethirdpartymode').checked=false;
           this.hidestandardpattern=false;
+          this.$.admissionservice.searchfeeadmissionpaidinfoService(localStorage.getItem("curr_sess_enquiryno"));
+          this.$.admissionservice.searchfeeadmissioninfoService(localStorage.getItem("curr_sess_enquiryno"));
         }
       },
       thirdpartyHandler:function(e){
@@ -260,7 +262,13 @@
           this.feearr=""; 
           localStorage.setItem("curr_sess_paymentthrough","thirdparty");
           document.querySelector('#structureselfmode').checked=false;
+          document.querySelector('#structurelumpsum1').checked=true;
+          localStorage.setItem("curr_sess_noofinstallment",1);
+          localStorage.setItem("curr_sess_installmentpattern",3);
+            
           this.hidestandardpattern=true;
+          this.$.admissionservice.searchfeeadmissionpaidinfoService(localStorage.getItem("curr_sess_enquiryno"));
+          this.$.admissionservice.searchfeeadmissioninfoService(localStorage.getItem("curr_sess_enquiryno"));
         }
       },
       FnCurrentHandler:function(e){
