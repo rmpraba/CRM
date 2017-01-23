@@ -47,7 +47,7 @@
       <hr hidden$="{{hidecashparticular}}"></hr>
       <table hidden$="{{hidecashparticular}}">
       <template  is="dom-repeat" items="{{paymentarr}}" as="pay">
-        <tr><td colspan="2" width="50px" style="text-align: center;">{{pay.slno}}</td><td  colspan="2" width="150px" style="text-align: center;">{{pay.installment}}-({{pay.feetype}})</td><td colspan="2" width="100px" style="text-align: center;margin-left: 20px;">{{pay.installmentamount}}</td></tr>
+        <tr><td colspan="2" width="50px" style="text-align: center;">{{pay.slno}}</td><td  colspan="2" width="150px" style="text-align: center;">{{pay.installment}}&nbsp;&nbsp;&nbsp;{{pay.feetype}}</td><td colspan="2" width="100px" style="text-align: center;margin-left: 20px;">{{pay.installmentamount}}</td></tr>
       </template>
       </table>
        <table hidden$="{{hidechequeparticular}}">       

@@ -57,6 +57,15 @@
       <template  is="dom-repeat" items="{{paymentreceiptarr}}" as="pay">
         <feereceipt-card receipttype="{{pay.receipttype}}" enquiryno="{{pay.enquiryno}}" studentname="{{pay.studentname}}" grade="{{pay.grade}}" feetype="{{pay.feetype}}" installment="{{pay.installment}}" installmentdate="{{pay.installmentdate}}" installmentamount="{{pay.installmentamount}}" waiveoffamount="{{pay.waiveoffamount}}" modeofpayment="{{pay.modeofpayment}}" receiveddate="{{pay.receiptdate}}" chequeno="{{pay.chequeno}}" bankname="{{pay.bankname}}" chequedate="{{pay.chequedate}}" ackno="{{pay.ackno}}" receiptno="{{pay.receiptno}}" referenceno="{{pay.referenceno}}" hidereceipt="{{pay.hidereceipt}}" hideack="{{pay.hideack}}" chequeview="{{pay.chequeview}}" transferview="{{pay.transferview}}" paiddate="{{pay.receiptdate}}" totalfees="{{pay.totalfees}}" paymentarr="{{pay.paymentarr}}" hidecashparticular="{{pay.hidecashparticular}}" hidechequeparticular="{{pay.hidechequeparticular}}" hidetransferparticular="{{pay.hidetransferparticular}}"></feereceipt-card>
       </template>
+      <table><tr><th><U>TERMS AND CONDITIONS FOR FEE PAYMENTS</U></th></tr>
+      <tr><td>1.  In Case the cheque is not honoured by the bank, service charge of Rs.250/- will be levied and the amount has to be<br> paid by Cash / DD.</td></tr>
+      <tr><td>2.  Fees once paid will not be refunded at any given circumstances.</td></tr>
+      <tr><td>3.  Cheque Subject to realization.</td></tr>
+      <tr><td>4.  Please retain this receipt for future correspondence.</td></tr>
+      <tr><td>
+        <strong>THIS IS SYSTEM GENERATED RECEIPT, NO SIGNATURE IS REQUIRED.</strong>
+      </td></tr>
+      </table>
       <div class="row-buttons" id="btn">
       <paper-button id="pdf"   style="height: 34px  !important;" on-click="downloadpdf" class="btn btn-primary center">PDF</paper-button>
       <paper-button id="email" style="height: 34px  !important;" on-click="email" class="btn btn-primary center">Email</paper-button>
