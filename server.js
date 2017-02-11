@@ -5,7 +5,7 @@
    host     : 'localhost',
    user     : 'root',
    password : 'admin',
-   database : 'mlzscrm'
+   database : 'mlzscrm'   
  });
 
 var bodyParser = require('body-parser');
